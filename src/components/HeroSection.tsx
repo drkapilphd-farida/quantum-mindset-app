@@ -92,7 +92,7 @@ export default function HeroSection(): React.JSX.Element {
         {/* portrait card */}
         <div className="relative mx-auto w-full max-w-[360px] lg:mx-0 lg:ml-auto">
           <div className="relative overflow-hidden rounded-sm border border-line-strong bg-panel2">
-            <div className="relative aspect-[520/660] w-full">
+            <div className="relative aspect-[590/630] w-full">
               {/* Approved Founder Asset™ — dr-kapil-home-hero-portrait.png
                   is a crop of the real supplied file (dr-kapil-home-hero
                   .png.png, untouched, unchanged, still on disk exactly as
@@ -101,16 +101,15 @@ export default function HeroSection(): React.JSX.Element {
                   the left half and a "More Within You" signature
                   bottom-right, and the founder himself gesturing with
                   BOTH arms spread wide — too wide to fit a tall portrait
-                  card without either cutting one hand off mid-gesture
-                  (the previous crop's actual defect: his left hand was
-                  sliced at the frame edge, leaving a stray blurred
-                  fragment) or bleeding in the left-side text. This crop
-                  (x:960-1480, y:0-660) instead frames head, glasses,
-                  shoulders and upper torso only, stopping above where
-                  either hand enters frame — no partial limb, no baked-in
-                  text/logo/signature, nothing accidentally clipped. The
-                  aspect-ratio below matches these exact pixel dimensions
-                  and object-contain is used (not object-cover) so the
+                  card without cutting a hand or bleeding in the left-side
+                  text. This crop (x:890-1480, y:0-630) frames head,
+                  glasses, shoulders and upper torso only, with real
+                  margin on every side — verified pixel-by-pixel that his
+                  hair doesn't touch the left edge (the previous crop at
+                  x:960 ran his hairline right up against it) and neither
+                  hand enters the frame at this height. The aspect-ratio
+                  below matches these exact pixel dimensions and
+                  object-contain is used (not object-cover) so the
                   browser can never crop any further, at any container
                   width — the full portrait is always visible. */}
               <Image

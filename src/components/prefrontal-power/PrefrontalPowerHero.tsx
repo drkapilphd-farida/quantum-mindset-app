@@ -71,17 +71,19 @@ export default function PrefrontalPowerHero(): React.JSX.Element {
         </div>
 
         <div className="relative mx-auto w-full max-w-[300px] lg:mx-0 lg:max-w-none lg:justify-self-end">
-          {/* aspect-[750/1020] matches dr-kapil-prefrontal-hero-portrait
+          {/* aspect-[800/1020] matches dr-kapil-prefrontal-hero-portrait
               .png's exact crop dimensions — a crop of the approved
-              dr-kapil-about.png.png, x:330-1080, y:0-1020. The previous
-              crop (x:500-1080) sliced through his raised hand, leaving a
-              stray cut-off fingers fragment at the left edge — the
-              actual defect. Shifting the left edge to x:330 falls in the
-              vertical gap between the wall-text block (which sits higher,
-              y:100-400) and the hand's own position (y:540+), so the
-              full hand is visible with no text/logo bleeding in and
-              object-contain never has to crop anything further. */}
-          <div className="relative aspect-[750/1020] w-full max-w-[340px] overflow-hidden rounded-sm border border-line-strong bg-panel2 shadow-[0_28px_60px_rgba(34,31,29,0.14)] lg:ml-auto">
+              dr-kapil-about.png.png, x:280-1080, y:0-1020. The previous
+              crop (x:330-1080) still ran the hand's leftmost knuckle right
+              up against the frame edge (verified pixel-by-pixel — the
+              wall-text block's real right edge is well before x:330, so
+              there was room to spare that wasn't being used). Shifting
+              the left edge out to x:280 gives the whole hand genuine
+              clearance — it lands on a plain, blurred wall/picture-frame
+              edge with no readable text — and object-contain still never
+              has to crop anything further since the container's aspect
+              ratio matches the file exactly. */}
+          <div className="relative aspect-[800/1020] w-full max-w-[340px] overflow-hidden rounded-sm border border-line-strong bg-panel2 shadow-[0_28px_60px_rgba(34,31,29,0.14)] lg:ml-auto">
             <Image
               src="/dr-kapil-prefrontal-hero-portrait.png"
               alt="Dr. Kapil Sharma, trainer of PREfrontal POWER"
