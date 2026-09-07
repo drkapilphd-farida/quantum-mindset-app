@@ -71,27 +71,36 @@ export default function PrefrontalPowerHero(): React.JSX.Element {
         </div>
 
         <div className="relative mx-auto w-full max-w-[300px] lg:mx-0 lg:max-w-none lg:justify-self-end">
-          {/* aspect-[800/1020] matches dr-kapil-prefrontal-hero-portrait
-              .png's exact crop dimensions — a crop of the approved
-              dr-kapil-about.png.png, x:280-1080, y:0-1020. The previous
-              crop (x:330-1080) still ran the hand's leftmost knuckle right
-              up against the frame edge (verified pixel-by-pixel — the
-              wall-text block's real right edge is well before x:330, so
-              there was room to spare that wasn't being used). Shifting
-              the left edge out to x:280 gives the whole hand genuine
-              clearance — it lands on a plain, blurred wall/picture-frame
-              edge with no readable text — and object-contain still never
-              has to crop anything further since the container's aspect
-              ratio matches the file exactly. */}
-          <div className="relative aspect-[800/1020] w-full max-w-[340px] overflow-hidden rounded-sm border border-line-strong bg-panel2 shadow-[0_28px_60px_rgba(34,31,29,0.14)] lg:ml-auto">
-            <Image
-              src="/dr-kapil-prefrontal-hero-portrait.png"
-              alt="Dr. Kapil Sharma, trainer of PREfrontal POWER"
-              fill
-              priority
-              sizes="(min-width: 1024px) 340px, (min-width: 640px) 300px, 78vw"
-              className="object-contain"
-            />
+          {/* Breathing-Room Frame™ — padding lives on the card div below,
+              not on the same element as the aspect-ratio box. A
+              Next/Image `fill` child is absolutely positioned with
+              inset:0, which CSS resolves against the containing block's
+              PADDING edge — so padding on that same positioned element
+              would be ignored by the fill child and the photo would
+              still touch the border. Splitting it into an outer padded
+              card + an inner aspect-ratio box guarantees real visual
+              margin around the photo on every side. */}
+          <div className="w-full max-w-[340px] overflow-hidden rounded-sm border border-line-strong bg-panel2 shadow-[0_28px_60px_rgba(34,31,29,0.14)] lg:ml-auto">
+            <div className="p-4 sm:p-5">
+              {/* aspect-[800/1020] matches dr-kapil-prefrontal-hero-portrait
+                  .png's exact crop dimensions — the real supplied
+                  dr-kapil-about.png.png, cropped to frame his full head,
+                  glasses and gesturing hand. object-contain (not
+                  object-cover) means the browser only ever shrinks the
+                  photo to fit — it can't crop it — and the p-4/p-5
+                  padding above adds further margin on every side beyond
+                  that, so no part of him is ever near the card's edge. */}
+              <div className="relative aspect-[800/1020] w-full">
+                <Image
+                  src="/dr-kapil-prefrontal-hero-portrait.png"
+                  alt="Dr. Kapil Sharma, trainer of PREfrontal POWER"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 310px, (min-width: 640px) 275px, 72vw"
+                  className="object-contain"
+                />
+              </div>
+            </div>
           </div>
           <div
             className="pointer-events-none absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-sm border border-gold/40 lg:-right-5"

@@ -92,34 +92,36 @@ export default function HeroSection(): React.JSX.Element {
         {/* portrait card */}
         <div className="relative mx-auto w-full max-w-[360px] lg:mx-0 lg:ml-auto">
           <div className="relative overflow-hidden rounded-sm border border-line-strong bg-panel2">
-            <div className="relative aspect-[590/630] w-full">
-              {/* Approved Founder Asset™ — dr-kapil-home-hero-portrait.png
-                  is a crop of the real supplied file (dr-kapil-home-hero
-                  .png.png, untouched, unchanged, still on disk exactly as
-                  delivered). That source is a full 1672x941 marketing
-                  composition with its own baked-in logo/headline/CTA on
-                  the left half and a "More Within You" signature
-                  bottom-right, and the founder himself gesturing with
-                  BOTH arms spread wide — too wide to fit a tall portrait
-                  card without cutting a hand or bleeding in the left-side
-                  text. This crop (x:890-1480, y:0-630) frames head,
-                  glasses, shoulders and upper torso only, with real
-                  margin on every side — verified pixel-by-pixel that his
-                  hair doesn't touch the left edge (the previous crop at
-                  x:960 ran his hairline right up against it) and neither
-                  hand enters the frame at this height. The aspect-ratio
-                  below matches these exact pixel dimensions and
-                  object-contain is used (not object-cover) so the
-                  browser can never crop any further, at any container
-                  width — the full portrait is always visible. */}
-              <Image
-                src="/dr-kapil-home-hero-portrait.png"
-                alt={t.hero.portraitName}
-                fill
-                sizes="(min-width: 1024px) 360px, 85vw"
-                className="object-contain"
-                priority
-              />
+            {/* Breathing-Room Frame™ — padding lives on THIS div, not on
+                the image's own positioned box. A Next/Image `fill` child
+                is absolutely positioned with inset:0, and per the CSS
+                spec that's relative to the containing block's PADDING
+                edge — so padding placed directly on the same element as
+                `relative` would be ignored by the fill child and the
+                photo would still touch the border. Padding here, on the
+                outer card, guarantees real visual margin around the
+                inner sized box on every side, independent of exactly how
+                tightly the source photo itself was cropped. */}
+            <div className="p-4 sm:p-5">
+              <div className="relative aspect-[590/630] w-full">
+                {/* Approved Founder Asset™ — dr-kapil-home-hero-portrait.png,
+                    the real supplied file (untouched, unchanged, still on
+                    disk exactly as delivered), cropped to frame head,
+                    glasses, shoulders and upper torso. object-contain (not
+                    object-cover) means the browser only ever shrinks the
+                    photo to fit this box — it can't crop it — and the
+                    p-4/p-5 padding above adds further margin beyond that
+                    on every side, so the head/hair are never anywhere
+                    near the card's outer border. */}
+                <Image
+                  src="/dr-kapil-home-hero-portrait.png"
+                  alt={t.hero.portraitName}
+                  fill
+                  sizes="(min-width: 1024px) 330px, 78vw"
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </div>
             <div className="border-t border-line-strong px-6 py-4 text-center">
               <div className="text-[15px] font-bold text-ink">{t.hero.portraitName}</div>
