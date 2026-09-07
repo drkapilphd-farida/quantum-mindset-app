@@ -90,7 +90,7 @@ export default function HeroSection(): React.JSX.Element {
         </div>
 
         {/* portrait card */}
-        <div className="relative mx-auto w-full max-w-[360px] lg:mx-0 lg:ml-auto">
+        <div className="relative mx-auto w-full max-w-[440px] lg:mx-0 lg:ml-auto">
           <div className="relative overflow-hidden rounded-sm border border-line-strong bg-panel2">
             {/* Breathing-Room Frame™ — padding lives on THIS div, not on
                 the image's own positioned box. A Next/Image `fill` child
@@ -102,22 +102,31 @@ export default function HeroSection(): React.JSX.Element {
                 outer card, guarantees real visual margin around the
                 inner sized box on every side, independent of exactly how
                 tightly the source photo itself was cropped. */}
-            <div className="p-4 sm:p-5">
-              <div className="relative aspect-[590/630] w-full">
-                {/* Approved Founder Asset™ — dr-kapil-home-hero-portrait.png,
-                    the real supplied file (untouched, unchanged, still on
-                    disk exactly as delivered), cropped to frame head,
-                    glasses, shoulders and upper torso. object-contain (not
-                    object-cover) means the browser only ever shrinks the
-                    photo to fit this box — it can't crop it — and the
-                    p-4/p-5 padding above adds further margin beyond that
-                    on every side, so the head/hair are never anywhere
-                    near the card's outer border. */}
+            <div className="p-5 sm:p-6">
+              <div className="relative aspect-[1374/1145] w-full">
+                {/* Approved Founder Asset™ — dr-kapil-founder-hero.png
+                    (public/images/), a copy of the real supplied file
+                    dr-kapil-founder.png.png (brown/tan blazer, both hands
+                    pointing forward) — untouched, full original frame,
+                    no crop, because the photographer's own framing
+                    already leaves real margin on every side: clear
+                    headroom above his hair, and both elbows well inside
+                    the left/right edges (verified directly against the
+                    source — a tighter crop tried first cut into that
+                    existing margin and clipped an elbow, so the fix was
+                    to use the full frame, not a narrower one). This is a
+                    noticeably wider stance than the previous portrait, so
+                    aspect-[1374/1145] (this file's exact dimensions,
+                    landscape-ish rather than tall) and the wider max-w
+                    above replace the old narrow portrait proportions —
+                    object-contain plus the p-5/p-6 padding on the card
+                    means his hands/fingers/elbows always have visible
+                    clearance and are never clipped by the rounded frame. */}
                 <Image
-                  src="/dr-kapil-home-hero-portrait.png"
+                  src="/images/dr-kapil-founder-hero.png"
                   alt={t.hero.portraitName}
                   fill
-                  sizes="(min-width: 1024px) 330px, 78vw"
+                  sizes="(min-width: 1024px) 400px, 82vw"
                   className="object-contain"
                   priority
                 />
