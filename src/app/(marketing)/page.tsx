@@ -17,15 +17,14 @@ import HomeFranchiseTeaser from '@/components/HomeFranchiseTeaser'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 
-const homeTitle = 'Quantum Speed Reading for Students & Exam Aspirants | Mind Ur Mind – Dr. Kapil Dev Sharma'
-// Trimmed to ~60 chars for OG/Twitter cards specifically, per the SEO
-// brief's own instruction — the full title above is what the brief's
-// literal spec asked for in the actual <title> tag, but a ~90-char
-// string gets truncated (often mid-word) in link-preview cards, so OG/
-// Twitter get this shorter version instead.
-const homeOgTitle = 'Quantum Speed Reading for Students & Exam Aspirants'
+// Final, length-tested strings (53-char title, 145-char description) —
+// short enough to render in full everywhere (browser tab, Google SERP,
+// OG/Twitter link previews), so one pair is now used for all of them
+// instead of a full-length tag title + a separately-trimmed OG/Twitter
+// variant.
+const homeTitle = 'Quantum Speed Reading for Exam Success | Mind Ur Mind'
 const homeDescription =
-  "Read 2–3x faster, retain more, and prepare smarter for exams. Dr. Kapil Dev Sharma's Quantum Speed Reading Masterclass — trusted by 10,000+ students, professionals & exam aspirants since 2015."
+  'Read faster, retain more, and prepare smarter for exams. Trusted speed reading masterclass by Dr. Kapil Dev Sharma — 10,000+ students since 2015.'
 
 export const metadata: Metadata = {
   // { absolute: homeTitle }, not a plain string — the root layout defines
@@ -47,12 +46,12 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: homeOgTitle,
+    title: homeTitle,
     description: homeDescription,
     url: '/',
   },
   twitter: {
-    title: homeOgTitle,
+    title: homeTitle,
     description: homeDescription,
   },
 }
