@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { buildCourseSchema } from '@/lib/seo/courseSchema'
 import QsrNav from '@/components/qsr/QsrNav'
 import QsrHero from '@/components/qsr/QsrHero'
 import QsrBrainScience from '@/components/qsr/QsrBrainScience'
@@ -28,7 +29,9 @@ import QsrWhatsAppWidget from '@/components/qsr/QsrWhatsAppWidget'
 import { WORKSHOP_CITIES } from '@/config/workshopCities'
 
 export const metadata: Metadata = {
-  title: '30-Day Quantum Speed Reading Masterclass — Dr. Kapil Dev Sharma',
+  // { absolute } bypasses the root layout's title.template — see the
+  // matching note in retreats/online-11-day/page.tsx.
+  title: { absolute: '30-Day Quantum Speed Reading Masterclass — Dr. Kapil Dev Sharma' },
   description:
     'Read 5x faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked drills, ₹4,999 one-time enrollment.',
 }
@@ -62,10 +65,21 @@ export const metadata: Metadata = {
 // fourth or sticky/floating version, to avoid feeling spammy.
 export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
   const faqSchema = buildFaqPageSchema(translations.en.qsrLanding.faq.items)
+  // Primary Course entity — Quantum Speed Reading is this site's primary,
+  // front-facing brand identity (see Positioning SEO Fix), targeted at
+  // students, exam aspirants, and lifelong learners.
+  const courseSchema = buildCourseSchema({
+    name: 'Quantum Speed Reading — 30-Day Masterclass',
+    description:
+      'Read faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked drills, guided by Dr. Kapil Dev Sharma.',
+    url: '/programs/quantum-speed-reading',
+    audienceType: 'Students, exam aspirants, and lifelong learners',
+  })
 
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: courseSchema }} />
       <QsrNav />
       <main>
         <QsrHero />

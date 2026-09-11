@@ -20,7 +20,9 @@ import ResidentialStickyBar from '@/components/residential/ResidentialStickyBar'
 import ResidentialWhatsAppWidget from '@/components/residential/ResidentialWhatsAppWidget'
 
 export const metadata: Metadata = {
-  title: 'Residential Retreats — Lonavala & Rishikesh — Dr. Kapil Dev Sharma',
+  // { absolute } bypasses the root layout's title.template — see the
+  // matching note in retreats/online-11-day/page.tsx.
+  title: { absolute: 'Residential Retreats — Lonavala & Rishikesh — Dr. Kapil Dev Sharma' },
   description:
     'Small-group, fully immersive residential retreats guided in person by Dr. Kapil Dev Sharma since 2014. Lonavala and Rishikesh, 2026–2027. Kriya Yoga, Prana, and cosmic energy work — ₹35,000 sharing, ₹45,000 private.',
 }

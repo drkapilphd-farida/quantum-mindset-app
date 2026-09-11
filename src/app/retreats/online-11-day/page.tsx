@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { buildCourseSchema } from '@/lib/seo/courseSchema'
 import RetreatNav from '@/components/retreat/RetreatNav'
 import RetreatHero from '@/components/retreat/RetreatHero'
 import RetreatCoreProblem from '@/components/retreat/RetreatCoreProblem'
@@ -19,7 +20,11 @@ import RetreatStickyBar from '@/components/retreat/RetreatStickyBar'
 import RetreatWhatsAppWidget from '@/components/retreat/RetreatWhatsAppWidget'
 
 export const metadata: Metadata = {
-  title: '11-Day Online Psychic & Spiritual Retreat — Dr. Kapil Dev Sharma',
+  // { absolute } bypasses the root layout's title.template ('%s |
+  // Quantum Mind') — confirmed via a real page load that without it,
+  // every marketing-site page's <title> silently got that in-app-product
+  // name appended, e.g. "...Dr. Kapil Dev Sharma | Quantum Mind".
+  title: { absolute: '11-Day Online Meditation & Inner Mastery Retreat — Dr. Kapil Dev Sharma' },
   description:
     'Authentic Kriya Yoga, Prana, and cosmic energy — an intensive, live, 11-day journey through telepathy, aura reading, Samadhi meditation, chakra activation, Kundalini meditation, and astral projection. Guided nightly by Dr. Kapil Dev Sharma, teaching since 2014. Monthly batch, 10th–20th, 7:30–10:30 PM.',
 }
@@ -46,10 +51,23 @@ export const metadata: Metadata = {
 // before the footer.
 export default function OnlineElevenDayRetreatPage(): React.JSX.Element {
   const faqSchema = buildFaqPageSchema(translations.en.retreatLanding.faq.items)
+  // Secondary Course entity — retreats are a secondary offer for warm/
+  // returning audiences going deeper, not the primary cold-traffic brand
+  // (see Positioning SEO Fix). Plain, non-spiritual/psychic wording in
+  // the schema text specifically; the page's own body content still
+  // fully describes the real curriculum for visitors who click through.
+  const courseSchema = buildCourseSchema({
+    name: '11-Day Online Meditation & Inner Mastery Retreat',
+    description:
+      'An intensive, live, 11-day meditation and inner-mastery retreat guided nightly by Dr. Kapil Dev Sharma. Monthly batch, 10th–20th, 7:30–10:30 PM.',
+    url: '/retreats/online-11-day',
+    audienceType: 'Adults seeking guided meditation and inner-work practice',
+  })
 
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: courseSchema }} />
       <RetreatNav />
       <main>
         <RetreatHero />

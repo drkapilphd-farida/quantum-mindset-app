@@ -51,16 +51,16 @@ export const translations = {
         "India's First QSR Pioneer (Since 2015)",
         "10,000+ Students Guided",
       ],
-      headline: "Train Your Mind.",
-      headlineEm: "Transform Your Life.",
-      sub: "Build better habits, learn faster, think clearer and explore deeper dimensions of your mind — through guided programs designed around the way you learn and grow.",
+      headline: "Read Faster. Retain More.",
+      headlineEm: "Perform Better in Exams.",
+      sub: "Science-based speed reading and focus training for students, exam aspirants, and lifelong learners — guided by Dr. Kapil Dev Sharma since 2015.",
       ctaPrimary: "Start 7 Days Free",
       ctaSecondary: "Explore Your Path",
       portraitName: "Dr. Kapil Dev Sharma",
       portraitTitle: "Founder, Mind Ur Mind",
       stats: [
         { value: "30-Day Streak", label: "Quantum Speed Reading" },
-        { value: "11 Days, Monthly", label: "Online Psychic & Spiritual Retreat" },
+        { value: "11 Days, Monthly", label: "Online Meditation & Inner Mastery Retreat" },
         { value: "3–4× / Year", label: "Residential · Rishikesh & Lonavala" },
         { value: "1-on-1", label: "Personal Class" },
       ],
@@ -88,13 +88,13 @@ export const translations = {
       eyebrow: "Tier 02 · Deep Immersive Retreats",
       title: "Go beyond technique —",
       titleEm: "into direct experience",
-      desc: "For those ready to move past reading and into the psychic and spiritual dimensions of the mind, online or in person.",
+      desc: "For those ready to move past reading and into meditation and inner mastery, online or in person.",
       online: {
         tag: "Online · Monthly Batch",
         audienceTag: "For Deep Seekers",
         urgency: "Small Cohort · Limited Enrollment",
-        title: "11-Day Online Psychic & Spiritual & Mastery Retreat",
-        desc: "An intensive, live, 11-day journey through the core psychic and spiritual disciplines — guided daily by Dr. Sharma.",
+        title: "11-Day Online Meditation & Inner Mastery Retreat",
+        desc: "An intensive, live, 11-day journey through meditation and inner mastery disciplines — guided daily by Dr. Sharma.",
         pills: [
           "Telepathy Send/Receive",
           "Aura Scanning & Reading",
@@ -528,8 +528,8 @@ export const translations = {
     },
     testimonials: {
       eyebrow: "Real People, Real Shifts",
-      title: "What changes when the mind changes",
-      desc: "A few of the people who moved through these programs — in their own words.",
+      title: "What changes when you read differently",
+      desc: "A few of the students, professionals, and exam aspirants who've been through Quantum Speed Reading — in their own words.",
       videoLabel: "Watch Real Stories",
       viewAll: "Watch More Stories",
       items: [
@@ -673,7 +673,7 @@ export const translations = {
         {
           question: "I'm completely new to speed reading or meditation — is this really for beginners?",
           answer:
-            "Yes. Every program starts from zero. Quantum Speed Reading assumes no prior skill, and the Psychic & Spiritual Retreats build up gradually — Dr. Sharma has guided 10,000+ students from complete beginners to advanced practitioners since 2014.",
+            "Yes. Every program starts from zero. Quantum Speed Reading assumes no prior skill, and the Meditation & Inner Mastery Retreats build up gradually — Dr. Sharma has guided 10,000+ students from complete beginners to advanced practitioners since 2014.",
         },
         {
           question: "What age group are these programs designed for?",
@@ -688,7 +688,7 @@ export const translations = {
         {
           question: "Are the retreats online or residential?",
           answer:
-            "Both. The 11-Day Online Psychic & Spiritual Retreat runs monthly from wherever you are; Residential Retreats in Rishikesh and Lonavala run 3–4 times a year in small groups for those who want the fully in-person format.",
+            "Both. The 11-Day Online Meditation & Inner Mastery Retreat runs monthly from wherever you are; Residential Retreats in Rishikesh and Lonavala run 3–4 times a year in small groups for those who want the fully in-person format.",
         },
         {
           question: "How does 1-on-1 mentoring work?",
@@ -698,7 +698,7 @@ export const translations = {
         {
           question: "Do I need to believe in anything specific — is this religious?",
           answer:
-            "No particular belief system is required. The psychic and spiritual work draws on meditation, breathwork, and awareness practices — you bring your own openness, we guide the method.",
+            "No particular belief system is required. The meditation and awareness work draws on breathwork and inner-awareness practices — you bring your own openness, we guide the method.",
         },
         {
           question: "What if I have a question this didn't answer?",
@@ -1293,7 +1293,7 @@ export const translations = {
       hero: {
         eyebrow: "Online · Since 2014 · Small Cohort",
         headline: "Awaken Your Higher Mind",
-        headlineEm: "The 11-Day Online Psychic & Spiritual Retreat",
+        headlineEm: "The 11-Day Online Meditation & Inner Mastery Retreat",
         sub: "Not another meditation app that leaves you exactly where you started. An intensive, live, 11-day journey into authentic Kriya Yoga, Prana, and cosmic energy — guided nightly by Dr. Kapil Dev Sharma, personally teaching this path since 2014.",
         ctaPrimary: "Secure Your Retreat Spot",
         ctaPrimaryMeta: "Secure Checkout via Razorpay",
@@ -1443,7 +1443,7 @@ export const translations = {
         title: "Questions people ask before Day 1",
         items: [
           {
-            question: "Do I need any prior experience with meditation or psychic work?",
+            question: "Do I need any prior experience with meditation or energy work?",
             answer:
               "No particular belief system or prior experience is required. Kriya Yoga builds up gradually across the 11 nights — you bring your own openness, Dr. Sharma guides the method, step by step.",
           },
@@ -1492,7 +1492,7 @@ export const translations = {
         cta: "Secure Your Retreat Spot",
       },
       stickyBar: {
-        text: "11-Day Online Psychic & Spiritual Retreat",
+        text: "11-Day Online Meditation & Inner Mastery Retreat",
         price: "Small Cohort · Limited Enrollment",
         cta: "Secure Your Retreat Spot",
       },
@@ -2054,16 +2054,16 @@ export const translations = {
         "भारत में QSR के प्रणेता (2015 से)",
         "10,000+ विद्यार्थियों का मार्गदर्शन",
       ],
-      headline: "अपने मन को प्रशिक्षित करें।",
-      headlineEm: "अपना जीवन बदलें।",
-      sub: "बेहतर आदतें बनाएं, तेज़ी से सीखें, स्पष्ट रूप से सोचें और अपने मन के गहरे आयामों का अन्वेषण करें — ऐसे guided प्रोग्राम्स के ज़रिए जो आपके सीखने और बढ़ने के तरीके के हिसाब से बनाए गए हैं।",
+      headline: "तेज़ी से पढ़ें। ज़्यादा याद रखें।",
+      headlineEm: "परीक्षा में बेहतर प्रदर्शन करें।",
+      sub: "विद्यार्थियों, परीक्षा उम्मीदवारों और आजीवन सीखने वालों के लिए विज्ञान-आधारित स्पीड रीडिंग और फोकस ट्रेनिंग — डॉ. कपिल देव शर्मा द्वारा 2015 से मार्गदर्शित।",
       ctaPrimary: "7 दिन मुफ़्त शुरू करें",
       ctaSecondary: "अपना रास्ता एक्सप्लोर करें",
       portraitName: "डॉ. कपिल देव शर्मा",
       portraitTitle: "संस्थापक, माइंड उर माइंड",
       stats: [
         { value: "30-दिन की स्ट्रीक", label: "क्वांटम स्पीड रीडिंग" },
-        { value: "11 दिन, मासिक", label: "ऑनलाइन साइकिक एंड स्पिरिचुअल रिट्रीट" },
+        { value: "11 दिन, मासिक", label: "ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट" },
         { value: "वर्ष में 3–4 बार", label: "रेजिडेंशियल · ऋषिकेश और लोनावला" },
         { value: "1-ऑन-1", label: "पर्सनल क्लास" },
       ],
@@ -2091,13 +2091,13 @@ export const translations = {
       eyebrow: "टियर 02 · गहन इमर्सिव रिट्रीट",
       title: "तकनीक से आगे —",
       titleEm: "प्रत्यक्ष अनुभव की ओर",
-      desc: "जो लोग रीडिंग से आगे बढ़कर मन के साइकिक और आध्यात्मिक आयामों में जाने के लिए तैयार हैं, उनके लिए — ऑनलाइन या व्यक्तिगत रूप से।",
+      desc: "जो लोग रीडिंग से आगे बढ़कर ध्यान और आंतरिक मास्टरी में जाने के लिए तैयार हैं, उनके लिए — ऑनलाइन या व्यक्तिगत रूप से।",
       online: {
         tag: "ऑनलाइन · मासिक बैच",
         audienceTag: "गहरी खोज करने वालों के लिए",
         urgency: "छोटा समूह · सीमित नामांकन",
-        title: "11-दिवसीय ऑनलाइन साइकिक एंड स्पिरिचुअल एंड मास्टरी रिट्रीट",
-        desc: "मुख्य साइकिक और आध्यात्मिक अनुशासनों के माध्यम से एक गहन, लाइव, 11-दिवसीय यात्रा — प्रतिदिन डॉ. शर्मा द्वारा मार्गदर्शित।",
+        title: "11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट",
+        desc: "ध्यान और आंतरिक मास्टरी के मुख्य अनुशासनों के माध्यम से एक गहन, लाइव, 11-दिवसीय यात्रा — प्रतिदिन डॉ. शर्मा द्वारा मार्गदर्शित।",
         pills: [
           "मानसिक तरंग संचार (टेलीपैथी)",
           "आभा स्कैनिंग और रीडिंग",
@@ -2531,8 +2531,8 @@ export const translations = {
     },
     testimonials: {
       eyebrow: "वास्तविक लोग, वास्तविक बदलाव",
-      title: "जब मन बदलता है, तो क्या बदलता है",
-      desc: "इन कार्यक्रमों से गुज़रे कुछ लोग — उन्हीं के शब्दों में।",
+      title: "जब आप अलग तरीके से पढ़ते हैं, तो क्या बदलता है",
+      desc: "क्वांटम स्पीड रीडिंग से गुज़रे कुछ विद्यार्थी, पेशेवर और परीक्षा उम्मीदवार — उन्हीं के शब्दों में।",
       videoLabel: "असली कहानियां देखें",
       viewAll: "और कहानियां देखें",
       items: [
@@ -2676,7 +2676,7 @@ export const translations = {
         {
           question: "मुझे स्पीड रीडिंग या ध्यान का कोई अनुभव नहीं है — क्या यह वाकई शुरुआती लोगों के लिए है?",
           answer:
-            "हां, बिल्कुल। हर कार्यक्रम शून्य से शुरू होता है। क्वांटम स्पीड रीडिंग में किसी पूर्व कौशल की ज़रूरत नहीं, और साइकिक एंड स्पिरिचुअल रिट्रीट धीरे-धीरे आगे बढ़ते हैं — डॉ. शर्मा ने 2014 से अब तक 10,000+ विद्यार्थियों को पूर्ण शुरुआती से उन्नत अभ्यासी तक मार्गदर्शन दिया है।",
+            "हां, बिल्कुल। हर कार्यक्रम शून्य से शुरू होता है। क्वांटम स्पीड रीडिंग में किसी पूर्व कौशल की ज़रूरत नहीं, और ध्यान एंड इनर मास्टरी रिट्रीट धीरे-धीरे आगे बढ़ते हैं — डॉ. शर्मा ने 2014 से अब तक 10,000+ विद्यार्थियों को पूर्ण शुरुआती से उन्नत अभ्यासी तक मार्गदर्शन दिया है।",
         },
         {
           question: "ये कार्यक्रम किस आयु वर्ग के लिए बने हैं?",
@@ -2696,7 +2696,7 @@ export const translations = {
         {
           question: "क्या रिट्रीट्स ऑनलाइन हैं या रेजिडेंशियल?",
           answer:
-            "दोनों। 11-दिवसीय ऑनलाइन साइकिक एंड स्पिरिचुअल रिट्रीट हर महीने चलता है, जहां से भी आप हों; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में उन लोगों के लिए होते हैं जो पूरी तरह व्यक्तिगत उपस्थिति वाला प्रारूप चाहते हैं।",
+            "दोनों। 11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट हर महीने चलता है, जहां से भी आप हों; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में उन लोगों के लिए होते हैं जो पूरी तरह व्यक्तिगत उपस्थिति वाला प्रारूप चाहते हैं।",
         },
         {
           question: "1-ऑन-1 मेंटरिंग कैसे काम करती है?",
@@ -2706,7 +2706,7 @@ export const translations = {
         {
           question: "क्या मुझे किसी विशेष चीज़ में विश्वास रखना ज़रूरी है — क्या यह धार्मिक है?",
           answer:
-            "किसी विशेष विश्वास प्रणाली की आवश्यकता नहीं है। साइकिक और आध्यात्मिक कार्य ध्यान, श्वास-अभ्यास, और जागरूकता की तकनीकों पर आधारित है — आप अपना खुलापन लाएं, विधि हम बताएंगे।",
+            "किसी विशेष विश्वास प्रणाली की आवश्यकता नहीं है। ध्यान और जागरूकता का यह कार्य श्वास-अभ्यास और आंतरिक-जागरूकता की तकनीकों पर आधारित है — आप अपना खुलापन लाएं, विधि हम बताएंगे।",
         },
         {
           question: "अगर मेरा सवाल यहां नहीं है तो?",
@@ -3301,7 +3301,7 @@ export const translations = {
       hero: {
         eyebrow: "ऑनलाइन · 2014 से · छोटा समूह",
         headline: "अपने उच्च मन को जगाएं",
-        headlineEm: "11-दिवसीय ऑनलाइन साइकिक एंड स्पिरिचुअल रिट्रीट",
+        headlineEm: "11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट",
         sub: "कोई और मेडिटेशन ऐप नहीं, जो आपको वहीं छोड़ दे जहां से आपने शुरुआत की थी। यह असली क्रिया योग, प्राण, और ब्रह्मांडीय ऊर्जा में एक गहन, लाइव, 11-दिवसीय यात्रा है — प्रतिरात डॉ. कपिल देव शर्मा द्वारा मार्गदर्शित, जो 2014 से व्यक्तिगत रूप से यह मार्ग सिखा रहे हैं।",
         ctaPrimary: "अपनी रिट्रीट सीट सुरक्षित करें",
         ctaPrimaryMeta: "Razorpay के ज़रिए सुरक्षित चेकआउट",
@@ -3451,7 +3451,7 @@ export const translations = {
         title: "दिन 1 से पहले लोग जो सवाल पूछते हैं",
         items: [
           {
-            question: "क्या मुझे ध्यान या साइकिक कार्य का कोई पूर्व अनुभव चाहिए?",
+            question: "क्या मुझे ध्यान या ऊर्जा-कार्य का कोई पूर्व अनुभव चाहिए?",
             answer:
               "किसी विशेष विश्वास प्रणाली या पूर्व अनुभव की ज़रूरत नहीं है। क्रिया योग 11 रातों में धीरे-धीरे आगे बढ़ता है — आप अपना खुलापन लाएं, डॉ. शर्मा हर कदम पर विधि बताएंगे।",
           },
@@ -3500,7 +3500,7 @@ export const translations = {
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
       },
       stickyBar: {
-        text: "11-दिवसीय ऑनलाइन साइकिक एंड स्पिरिचुअल रिट्रीट",
+        text: "11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट",
         price: "छोटा समूह · सीमित नामांकन",
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
       },

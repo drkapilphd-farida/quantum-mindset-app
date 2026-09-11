@@ -9,13 +9,17 @@ import { QSR_ADULT_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
 export default function Testimonials(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.testimonials;
-  // Cross-Program Scoping™ — this section is a general, cross-program
-  // overview, so highly QSR-specific quotes (medical journals, market
-  // reports — real, but confusing next to retreat/mentoring/course
-  // quotes here) are excluded via `qsrPageOnly`, matching the same
-  // exclusion RetreatVideoTestimonials.tsx applies. Ananya R.'s quote
-  // stays: general enough to represent QSR here without that mismatch.
-  const items = section.items.filter((item) => !item.qsrPageOnly);
+  // QSR-Only Social Proof™ — Quantum Speed Reading is the primary,
+  // front-facing brand identity, so this shared homepage carousel now
+  // shows only QSR testimonials (every item with programKey "qsr",
+  // regardless of the `qsrPageOnly` flag — that flag only ever meant
+  // "too QSR-specific for a general cross-program section," which no
+  // longer applies now that this section IS the QSR section). Retreat,
+  // Personal Class, and Overthinking Mastery testimonials moved out of
+  // here and live only within their own program sections/pages now
+  // (RetreatVideoTestimonials.tsx, MentoringTestimonials.tsx,
+  // CourseTestimonials.tsx) — no cross-program mixing on the homepage.
+  const items = section.items.filter((item) => item.programKey === "qsr");
 
   return (
     <section id="proof" className="border-b border-line px-6 py-24 sm:px-8 lg:py-20">

@@ -35,7 +35,7 @@ export const WHATSAPP_GENERAL_INQUIRY_LINK =
 // so this is the real primary conversion path for that page, not a
 // placeholder standing in for a missing checkout.
 export const WHATSAPP_RETREAT_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20secure%20my%20spot%20in%20the%2011-Day%20Online%20Psychic%20%26%20Spiritual%20Retreat'
+  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20secure%20my%20spot%20in%20the%2011-Day%20Online%20Meditation%20%26%20Inner%20Mastery%20Retreat'
 
 // Same number, Residential Retreat-specific message — for the dedicated
 // /retreats/residential landing page. Like the online retreat, there's no

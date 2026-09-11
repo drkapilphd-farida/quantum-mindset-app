@@ -1,4 +1,4 @@
-// 11-Day Online Psychic & Spiritual Retreat™ — the real, hosted Razorpay
+// 11-Day Online Meditation & Inner Mastery Retreat™ — the real, hosted Razorpay
 // Payment Link for enrollment. Single source of truth so every placement
 // (pricing section, sticky bar, final CTA) never risks drifting to two
 // different URLs. Same pattern as masterclassPaymentLink.ts: completing

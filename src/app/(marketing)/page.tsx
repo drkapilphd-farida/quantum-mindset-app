@@ -17,9 +17,44 @@ import HomeFranchiseTeaser from '@/components/HomeFranchiseTeaser'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 
+const homeTitle = 'Quantum Speed Reading for Students & Exam Aspirants | Mind Ur Mind – Dr. Kapil Dev Sharma'
+// Trimmed to ~60 chars for OG/Twitter cards specifically, per the SEO
+// brief's own instruction — the full title above is what the brief's
+// literal spec asked for in the actual <title> tag, but a ~90-char
+// string gets truncated (often mid-word) in link-preview cards, so OG/
+// Twitter get this shorter version instead.
+const homeOgTitle = 'Quantum Speed Reading for Students & Exam Aspirants'
+const homeDescription =
+  "Read 2–3x faster, retain more, and prepare smarter for exams. Dr. Kapil Dev Sharma's Quantum Speed Reading Masterclass — trusted by 10,000+ students, professionals & exam aspirants since 2015."
+
 export const metadata: Metadata = {
-  title: 'Mind Ur Mind — Dr. Kapil Dev Sharma | Quantum Speed Reading & Psychic-Spiritual Mastery',
-  description: 'The 30-Day Quantum Speed Reading Live Masterclass, psychic & spiritual retreats, and 1-on-1 mentoring — under Dr. Kapil Dev Sharma.',
+  // { absolute: homeTitle }, not a plain string — the root layout defines
+  // title.template ('%s | Quantum Mind'), and a plain string here would
+  // get that template applied on top (rendering as "...Sharma | Quantum
+  // Mind" in the actual <title> tag, confirmed via a real page load).
+  // `absolute` is Next's documented escape hatch to bypass an inherited
+  // template for exactly this page.
+  title: { absolute: homeTitle },
+  description: homeDescription,
+  keywords: [
+    'speed reading for students',
+    'exam preparation reading speed',
+    'competitive exam study techniques',
+    'reading speed test India',
+    'quantum speed reading Vadodara',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: homeOgTitle,
+    description: homeDescription,
+    url: '/',
+  },
+  twitter: {
+    title: homeOgTitle,
+    description: homeDescription,
+  },
 }
 
 // Homepage V2™ — rebuilt around the explicit "Discover → Start Small →

@@ -10,8 +10,9 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function HeroSection(): React.JSX.Element {
   const { t } = useLanguage();
-  // General, cross-program quote (qsrPageOnly: false) — appropriate for
-  // the homepage hero, which isn't specific to any one offer.
+  // Ananya R.'s quote (programKey: "qsr") — QSR is the primary,
+  // front-facing brand identity, so the hero badge features a QSR
+  // testimonial rather than a cross-program one.
   const featuredTestimonial = t.testimonials.items.find((item) => item.id === "ananya-r");
 
   return (
