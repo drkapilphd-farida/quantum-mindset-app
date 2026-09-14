@@ -16,12 +16,8 @@ type PageProps = {
   params: Promise<{ id: string }>
 }
 
-// Branding Header™ — the same brand-logo-wrap/brand-gradient-text
-// technique AppSidebar.tsx already established for the persistent
-// wordmark, reused here without a `missedDays` prop (this page has no
-// streak data of its own) — the CSS's own fallback values
-// (`var(--missed-intensity, 0)`, `var(--logo-glow-a, #2b4ce8aa)`, etc.)
-// mean the breathing glow still renders correctly with zero extra CSS.
+// Branding Header™ — the same brand-gradient-text technique AppSidebar.tsx
+// already established for the persistent wordmark.
 function DocumentDetailHeader(): React.JSX.Element {
   return (
     <div className="flex items-center justify-between gap-4">
@@ -34,10 +30,7 @@ function DocumentDetailHeader(): React.JSX.Element {
       </Link>
 
       <div className="flex items-center gap-2">
-        <span className="brand-logo-wrap">
-          <LivingBrainLogo size={22} decorative={false} animated={false} />
-          <span className="brand-logo-warmth" aria-hidden="true" />
-        </span>
+        <LivingBrainLogo size={22} decorative={false} animated={false} />
         <span className="brand-gradient-text text-sm font-bold tracking-tight">Quantum Mind</span>
       </div>
     </div>

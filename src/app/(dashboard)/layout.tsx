@@ -2,8 +2,6 @@ import { redirect } from 'next/navigation'
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
-import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
-import { computeDailyStreak, computeStreakWarmthIntensity, computeTodaysProgress } from '@/lib/exercises/practiceHistory'
 import { getTenantBrandingForUser } from '@/features/school-dashboard/queries/getTenantBrandingForUser'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { AppSidebar } from '@/components/AppSidebar'
@@ -30,31 +28,17 @@ export default async function DashboardLayout({
 
   if (!user) redirect('/login')
 
-  const [profile, labSessions, tenantBranding, appDomain] = await Promise.all([
+  const [profile, tenantBranding, appDomain] = await Promise.all([
     getCurrentUserProfile(user.id),
-    getPracticeSessions('quantum-speed-reading'),
     getTenantBrandingForUser(user.id),
     getAppDomain(),
   ])
-
-  // Brand Logo Warmth™ — the header logo's streak-based tint needs a real
-  // intensity figure on every dashboard-group page, not just /dashboard —
-  // same streak data that page already computes for itself, fetched here
-  // once for the shared chrome instead of duplicating the query per-page.
-  // Computed once and passed to BOTH AppSidebar (desktop) and Topbar
-  // (mobile) — Topbar used to render with no missedDays prop at all, so
-  // the warmth effect was inert for every mobile user regardless of
-  // actual streak state.
-  const labStreak = computeDailyStreak(labSessions)
-  const todaysProgress = computeTodaysProgress(labSessions)
-  const warmthIntensity = computeStreakWarmthIntensity(labStreak, todaysProgress)
 
   return (
     <div className={`bg-muted/30 flex h-screen overflow-hidden ${plusJakartaSans.variable} ${inter.variable}`}>
       {/* Desktop sidebar — hidden on mobile */}
       <div className="hidden md:flex">
         <AppSidebar
-          warmthIntensity={warmthIntensity}
           brandName={tenantBranding?.name ?? null}
           brandLogoUrl={tenantBranding?.logoUrl ?? null}
           appDomain={appDomain}
@@ -70,7 +54,6 @@ export default async function DashboardLayout({
           fullName={profile?.fullName ?? null}
           avatarUrl={profile?.avatarUrl ?? null}
           email={user.email ?? ''}
-          warmthIntensity={warmthIntensity}
           brandName={tenantBranding?.name ?? null}
           brandLogoUrl={tenantBranding?.logoUrl ?? null}
           appDomain={appDomain}

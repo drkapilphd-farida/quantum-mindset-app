@@ -68,30 +68,6 @@ export function computeDailyStreak(
   return { currentStreak, bestStreak, lastPracticedDateKey }
 }
 
-// Brand Logo Warmth™ — real, derived "how many days in a row has this
-// user skipped" figure, never a fabricated counter. An active streak
-// (currentStreak > 0) always means 0 missed days by definition — the
-// streak logic above already resets currentStreak to 0 the moment a full
-// day passes with no practice, so a broken streak (currentStreak === 0)
-// with a real lastPracticedDateKey is exactly when days have actually
-// been missed. A user who has never practiced (lastPracticedDateKey is
-// null) shows 0, not a warning — they haven't skipped anything, they
-// just haven't started.
-export function computeMissedDaysSinceLastPractice(
-  { currentStreak, lastPracticedDateKey }: Pick<DailyStreak, 'currentStreak' | 'lastPracticedDateKey'>,
-  referenceDateKey: string = todayDateKey(),
-): number {
-  if (currentStreak > 0 || lastPracticedDateKey === null) return 0
-
-  let missed = 0
-  let cursor = dateKeyOffset(lastPracticedDateKey, 1)
-  while (cursor <= referenceDateKey) {
-    missed += 1
-    cursor = dateKeyOffset(cursor, 1)
-  }
-  return missed
-}
-
 export type TodaysProgress = {
   exercisesCompletedToday: number
   totalDurationMsToday: number
@@ -108,27 +84,6 @@ export function computeTodaysProgress(
   const totalDurationMsToday = todaysSessions.reduce((sum, session) => sum + session.durationMs, 0)
 
   return { exercisesCompletedToday: completedExerciseIds.size, totalDurationMsToday }
-}
-
-// Brand Logo Warmth™ intensity (0–1) — the single formula both AppSidebar
-// (desktop) and Topbar (mobile) drive their streak-urgency tint from, so
-// "what counts as urgent" can never silently drift between the two
-// surfaces. Two real states, both reachable from actual practice history:
-//  - A fully broken streak (missedDays > 0) ramps to full warning
-//    intensity by 5 consecutive missed days — a cap, not a hard wall, so
-//    it reads as "increasingly urgent," not an instant jump to alarming.
-//  - A currently-alive streak (or a brand-new user) with today's practice
-//    not yet done gets a fixed, gentler nudge — real and today-not-done,
-//    but not yet a broken streak, so it reads as "don't lose it" rather
-//    than the same alarm as an actually-broken one.
-const MAX_WARNING_MISSED_DAYS = 5
-const PENDING_TODAY_INTENSITY = 0.3
-
-export function computeStreakWarmthIntensity(streak: DailyStreak, todaysProgress: TodaysProgress): number {
-  const missedDays = computeMissedDaysSinceLastPractice(streak)
-  if (missedDays > 0) return Math.min(missedDays / MAX_WARNING_MISSED_DAYS, 1)
-  if (todaysProgress.exercisesCompletedToday === 0) return PENDING_TODAY_INTENSITY
-  return 0
 }
 
 export type DayActivity = {
