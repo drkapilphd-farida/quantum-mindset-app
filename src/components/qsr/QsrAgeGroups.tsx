@@ -7,10 +7,12 @@ import { Eyebrow } from "../ui";
 const PATHWAY_ICONS = [Baby, BookOpenCheck] as const;
 
 // One Masterclass, Two Real Pathways™ — replaces the earlier myth/reality
-// framing. Blindfold reading for children is presented honestly here as
-// what it is: a trained skill visible in the student video reviews, not
-// an independently verified/tested ability — the copy deliberately
-// avoids "verified" (see the ADR/session note on this) — paired with
+// framing. Positioning fix (see the "QSR Page Cleanup & Credibility
+// Fixes" task, Fix 1): the children's pathway used to describe "intuitive
+// vision" and blindfolded practice, which read as ESP/pseudoscience-
+// adjacent and undermined the page's science-backed positioning. Now
+// framed strictly in neuroplasticity/peripheral-vision/pattern-
+// recognition terms — no blindfold or ESP-adjacent language, paired with
 // the adult open-eye pathway, tied together by the shared underlying
 // training (peripheral vision, concentration, right-brain engagement)
 // already covered in QsrBrainScience above.

@@ -78,10 +78,31 @@ export default function HeroSection(): React.JSX.Element {
             />
           )}
 
+          {/* Positioning fix (see the "QSR Page Cleanup & Credibility
+              Fixes" task, Fix 6) — these four stats used to render with
+              identical visual weight. The hero content above this strip
+              leans QSR (reading/exam-focused headline, a QSR credential
+              chip) but its own primary CTA button actually targets the
+              Habit Builder signup, not QSR, so this strip can't rely on
+              the hero alone to establish hierarchy. First item (QSR,
+              always index 0 in `hero.stats`) now gets a small gold
+              accent — a left border plus gold value text — consistent
+              with the site's existing QSR = Tier 1 / gold-accent rule
+              used everywhere else (ProgramSelector's flagship block,
+              tier1's own eyebrow, etc.); the other three stay plain. */}
           <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-line pt-6 sm:grid-cols-3 lg:grid-cols-none lg:flex lg:flex-wrap">
-            {t.hero.stats.map((stat) => (
-              <div key={stat.label} className="lg:min-w-[130px]">
-                <div className="text-[14px] font-bold text-ink">{stat.value}</div>
+            {t.hero.stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className={
+                  index === 0
+                    ? "border-l-2 border-gold/60 pl-3 lg:min-w-[140px]"
+                    : "lg:min-w-[130px]"
+                }
+              >
+                <div className={index === 0 ? "text-[15px] font-bold text-gold" : "text-[14px] font-bold text-ink"}>
+                  {stat.value}
+                </div>
                 <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
                   {stat.label}
                 </div>

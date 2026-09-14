@@ -1,18 +1,19 @@
 "use client";
 
-import Link from "next/link";
 import { Eye, Timer, PhoneOff } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 
 const TIP_ICONS = [Eye, Timer, PhoneOff] as const;
 
-// Quantum Mindset & Habit Builder™ cross-sell — links to its real,
-// public, logged-out-accessible landing page (/programs/habit-builder,
-// built separately). Previously text-only with no CTA, since that page
-// didn't exist yet and the product's real UI lived entirely behind
-// /labs/quantum-speed-reading/journey/*, which middleware.ts gates
-// behind login.
+// Positioning fix (see the "QSR Page Cleanup & Credibility Fixes" task,
+// Fix 2) — this used to end with a styled "Pairs Well With QSR" cross-
+// sell card promoting the ₹99 Quantum Mindset & Habit Builder inside the
+// body of this ₹9,999 flagship page, a second price point diluting the
+// one offer this page should be selling. Removed; the Habit Builder
+// still has a real link on this page via the shared Footer's own
+// program column (see Footer.tsx), just no longer a promotional card in
+// the body.
 export default function QsrFocusScreenTime(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.qsrLanding.focusInDistractedWorld;
@@ -41,23 +42,6 @@ export default function QsrFocusScreenTime(): React.JSX.Element {
               </div>
             );
           })}
-        </div>
-
-        <div className="mt-8 flex flex-col items-start gap-5 rounded-sm border border-teal/30 bg-teal-soft p-7 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-          <div>
-            <span className="font-mono text-[11px] uppercase tracking-[0.09em] text-teal">
-              {section.habitAppCard.eyebrow}
-            </span>
-            <h3 className="mb-2 mt-2 text-[19px] font-bold leading-snug text-ink">{section.habitAppCard.title}</h3>
-            <p className="max-w-xl text-[16px] leading-relaxed text-ink-dim">{section.habitAppCard.desc}</p>
-            <p className="mt-2 text-[13.5px] font-semibold text-teal">{section.habitAppCard.price}</p>
-          </div>
-          <Link
-            href="/programs/habit-builder"
-            className="inline-flex flex-none items-center gap-2.5 whitespace-nowrap rounded-sm border border-teal/60 bg-panel px-7 py-[15px] text-[14.5px] font-semibold text-teal transition-colors hover:bg-teal hover:text-white"
-          >
-            {section.habitAppCard.cta}
-          </Link>
         </div>
       </div>
     </section>

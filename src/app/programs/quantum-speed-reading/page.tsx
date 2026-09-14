@@ -51,18 +51,27 @@ export const metadata: Metadata = {
 // the technique itself (SpeedTestInlineCta) → how the training meets
 // kids and adults differently (AgeGroups) → what daily practice feels
 // like (AppPreview) → how the program is structured (Mechanics) → what
-// it covers beyond raw reading speed (MoreThanSpeed, FocusScreenTime —
-// the latter cross-sells the standalone Habit App) → a real, separate
-// AI-powered bonus feature (DocumentMastery — Upload & Learn, five real
-// product screenshots) → the week-by-week breakdown (Curriculum) → who
-// is actually teaching it (Authority, CredibilityStrip, FounderVideo) →
-// a focused parent-facing outcomes note (Audience) → the same free test
-// again, now as a lower-commitment alternative right where a hesitant
-// visitor is deciding whether to commit to ₹9,999 (SpeedTestInlineCta)
-// → social proof (VideoTestimonials) → final objection handling (Faq)
-// → real batch cadence + final push (BatchNotice) before the footer.
+// it covers beyond raw reading speed (MoreThanSpeed, FocusScreenTime) →
+// a compact "what's included" mention of a real, separate in-app feature
+// (DocumentMastery — Upload & Learn) → the week-by-week breakdown
+// (Curriculum) → who is actually teaching it (Authority, CredibilityStrip,
+// FounderVideo) → a focused parent-facing outcomes note (Audience) → the
+// same free test again, now as a lower-commitment alternative right where
+// a hesitant visitor is deciding whether to commit to ₹9,999
+// (SpeedTestInlineCta) → social proof (VideoTestimonials) → final
+// objection handling (Faq) → real batch cadence + final push
+// (BatchNotice) before the footer.
 //
-// Positioning fix (see the "Fix Homepage & QSR Page Positioning" task):
+// Positioning fix (see the "QSR Page Cleanup & Credibility Fixes" task,
+// Fixes 2 & 3): FocusScreenTime's "Pairs Well With QSR" Habit Builder
+// cross-sell card (a second, ₹99 price point inside this ₹9,999 page's
+// body) was removed entirely — the Habit Builder still has a real link
+// via the shared Footer's own program column, just no longer a
+// promotional card in the body. DocumentMastery shrunk from a 5-
+// screenshot promotional showcase down to a single compact "what's
+// included" list, for the same "one clear offer per page" reason.
+//
+// Positioning fix (see the earlier "Fix Homepage & QSR Page Positioning" task):
 // removed QsrAllRoundDevelopment entirely — its "Complete Development,
 // Not Just Speed Reading" framing (Reading & Memory + Focus & Calm +
 // Life Skills + Family Bonding as four equal pillars) diluted the core

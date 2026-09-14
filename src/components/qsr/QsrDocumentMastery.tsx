@@ -1,95 +1,46 @@
 "use client";
 
-import Image from "next/image";
+import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 
-// Document Mastery Studio Showcase™ — the app's separate Tier 1 "Upload &
-// Learn" feature (AI Document Transformer) has never been shown anywhere
-// on the public QSR landing page before this; five real screenshots
-// (public/images/quantum-mind/09–13-*.png) now give it one compact
-// section, positioned right after FocusScreenTime ("what else you get
-// beyond raw speed practice") and before Curriculum, matching that same
-// narrative beat.
-//
-// Primary + Supporting Hierarchy™ — Phase 2: `09` (Upload & Learn, the
-// literal entry point of the feature) is the one large primary visual;
-// `10`–`13` are a smaller supporting row beneath it (image + title only,
-// no description — keeps the section from reading as five equal-weight
-// cards, "visually heavy" per the same brief this responds to). Still
-// one section, same five images, same copy content — only the visual
-// weighting changed.
-const PRIMARY_IMAGE = "09-document-mastery-studio.png";
-const SUPPORTING_IMAGES = [
-  "10-document-mastery-overview.png",
-  "11-document-knowledge-map.png",
-  "12-document-key-concepts.png",
-  "13-document-memory-notes.png",
-] as const;
-
+// Positioning fix (see the "QSR Page Cleanup & Credibility Fixes" task,
+// Fix 3) — this used to be a 5-screenshot promotional showcase (one large
+// primary image + a 4-image supporting grid) for the app's separate
+// "AI Document Supercharger" (Upload & Learn) feature. That much visual
+// weight, on a page that should have exactly one clear offer (₹9,999
+// QSR), risked reading as a second product pitch — shrunk to a single
+// compact "what's included" list instead, no screenshots, no separate
+// CTA. Deliberately doesn't claim this is free/included with enrollment
+// (see the i18n `documentMastery` block's own doc comment on why).
 export default function QsrDocumentMastery(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.qsrLanding.documentMastery;
-  const [primaryItem, ...supportingItems] = section.items;
 
   return (
     // Visual Rhythm™ — deliberately NOT `bg-panel`, so it still alternates
     // correctly against QsrCurriculum (`bg-panel`) right after it. Since
-    // QsrAllRoundDevelopment was removed (positioning fix — see page.tsx's
-    // own doc comment), this now sits directly after QsrFocusScreenTime,
-    // also plain — a minor, accepted same-background adjacency rather
-    // than cascading a background flip through several unrelated sections
-    // just to keep the whole page perfectly alternating. `lg:py-20` (was
-    // flat `py-24` at every breakpoint, mobile/tablet unchanged) trims a
-    // little of the desktop-only vertical rhythm this section doesn't
-    // need as much of, given how visually full its own content already is.
-    <section id="document-mastery" className="border-b border-line px-6 py-24 sm:px-8 lg:py-20">
+    // QsrAllRoundDevelopment was removed (an earlier positioning fix —
+    // see page.tsx's own doc comment), this sits directly after
+    // QsrFocusScreenTime, also plain — a minor, accepted same-background
+    // adjacency rather than cascading a background flip through several
+    // unrelated sections.
+    <section id="document-mastery" className="border-b border-line px-6 py-16 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-content">
-        <div className="mb-14 max-w-xl lg:mb-10">
+        <div className="mx-auto max-w-2xl rounded-sm border border-line-strong bg-panel2 px-7 py-6">
           <Eyebrow color="text-teal">{section.eyebrow}</Eyebrow>
-          <h2 className="mt-4 text-[28px] font-extrabold leading-tight sm:text-[34px]">{section.title}</h2>
-          <p className="mt-3 text-[15.5px] text-ink-dim">{section.desc}</p>
-        </div>
-
-        {primaryItem !== undefined && (
-          <div className="mb-6 overflow-hidden rounded-sm border border-line-strong bg-panel2">
-            <div className="relative aspect-[2442/1317] w-full">
-              <Image
-                src={`/images/quantum-mind/${PRIMARY_IMAGE}`}
-                alt={primaryItem.title}
-                fill
-                sizes="(min-width: 1024px) 760px, 90vw"
-                className="object-contain"
-              />
-            </div>
-            <div className="p-5 sm:p-6">
-              <h3 className="text-[17px] font-bold leading-snug text-ink">{primaryItem.title}</h3>
-              <p className="mt-1.5 text-[16px] leading-relaxed text-ink-dim">{primaryItem.desc}</p>
-            </div>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
-          {supportingItems.map((item, index) => {
-            const image = SUPPORTING_IMAGES[index];
-            if (image === undefined) return null;
-            return (
-              <div key={item.title} className="overflow-hidden rounded-sm border border-line-strong bg-panel2">
-                <div className="relative aspect-[2442/1317] w-full">
-                  <Image
-                    src={`/images/quantum-mind/${image}`}
-                    alt={item.title}
-                    fill
-                    sizes="(min-width: 1024px) 270px, 45vw"
-                    className="object-contain"
-                  />
-                </div>
-                <div className="p-3">
-                  <h3 className="text-[12.5px] font-bold leading-snug text-ink">{item.title}</h3>
-                </div>
+          <h2 className="mt-3 text-[18px] font-bold text-ink">{section.title}</h2>
+          <p className="mt-2 text-[14.5px] leading-relaxed text-ink-dim">{section.desc}</p>
+          <div className="mt-4 space-y-2.5">
+            {section.items.map((item) => (
+              <div key={item.title} className="flex items-start gap-2.5">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-teal" aria-hidden="true" />
+                <p className="text-[14.5px] leading-relaxed text-ink-dim">
+                  <span className="font-semibold text-ink">{item.title}</span> — {item.desc}
+                </p>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
     </section>

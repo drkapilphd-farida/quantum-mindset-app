@@ -930,7 +930,7 @@ export const translations = {
           {
             title: "For Children",
             tag: "High Neuroplasticity",
-            desc: "Younger minds have exceptional neuroplasticity — the raw capacity to build entirely new sensory pathways. With guided training, many children develop what we call intuitive vision and work with blindfolds as part of the training — you can see these sessions in our student video reviews.",
+            desc: "Younger minds have exceptional neuroplasticity — the raw capacity to build new visual and cognitive pathways quickly. With guided training, many children develop rapid peripheral vision and pattern-recognition skills well beyond their starting point — you can see these sessions in our student video reviews.",
           },
           {
             title: "For Adults & Professionals",
@@ -943,6 +943,19 @@ export const translations = {
         ctaLabel: "Watch Real Student Videos",
       },
       authority: {
+        // TODO(Dr. Sharma): the "10,000+ students" figure appears
+        // sitewide (this card, QSR hero credentials/stat/secondaryLine,
+        // the QSR FAQ, homepage meta description, the franchise page,
+        // and both retreat/residential pages — see the "QSR Page Cleanup
+        // & Credibility Fixes" task, Fix 5, for the full list) as a
+        // specific, checkable statistic. Please confirm it's accurate
+        // before it stays live; if not verified, it should be replaced
+        // or softened per the site's existing "no fabricated statistics"
+        // standard. Also note a real internal inconsistency sitting in
+        // this exact card list: "India's First QSR Pioneer (Since 2015)"
+        // right next to "Conducting live teaching workshops since 2014"
+        // below — two different start years for what reads like the
+        // same claim. Please confirm which year is correct.
         eyebrow: "Direct From The Source",
         title: "Learn From The Person Who Brought QSR To India",
         desc: "Not a licensed instructor teaching someone else's system — the person who introduced it.",
@@ -1056,18 +1069,22 @@ export const translations = {
             desc: "Simple habits — like keeping the phone away for 10 minutes before practice.",
           },
         ],
-        habitAppCard: {
-          eyebrow: "Pairs Well With QSR",
-          title: "Quantum Mindset & Habit Builder™",
-          desc: "A 21-day guided program pairing daily reading practice with focus, memory, and mindset exercises alongside your Quantum Speed Reading training.",
-          price: "Free for Days 1–7, then a one-time payment of ₹99 to continue through Day 21.",
-          cta: "Learn More",
-        },
       },
       documentMastery: {
-        eyebrow: "Beyond The 30-Day Program",
-        title: "Turn Any Book Into Speed-Reading Drills",
-        desc: "The same AI-powered Document Studio available inside the Quantum Mind app — upload any PDF, textbook, or research paper and instantly get speed-reading drills, mind maps, and revision notes built from it.",
+        // Judgment call (see the "QSR Page Cleanup & Credibility Fixes"
+        // task, Fix 3): reframed from a 5-screenshot promotional showcase
+        // (its own primary image + 4 supporting images) down to a single
+        // compact "what's included" list — see QsrDocumentMastery.tsx.
+        // Deliberately NOT claiming this is free/included with the
+        // ₹9,999 enrollment: the app's real pricing page
+        // (PricingPlansGrid.tsx) shows this Document Studio feature has
+        // its own separate ₹399–₹699/month subscription tiers, a fact
+        // this rewritten copy avoids contradicting rather than guessing
+        // at the real relationship between Masterclass enrollment and
+        // Document Studio access.
+        eyebrow: "Also In The App",
+        title: "The AI Document Studio",
+        desc: "The same AI-powered Document Studio available inside the Quantum Mind app — upload any PDF, textbook, or research paper and get speed-reading drills, mind maps, and revision notes built from it.",
         items: [
           {
             title: "Upload & Learn",
@@ -1188,7 +1205,7 @@ export const translations = {
           {
             question: "What exactly do I get for ₹9,999?",
             answer:
-              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Vadodara-based students additionally get in-person physical EEG brain mapping and neurofeedback sessions at Dr. Sharma's center, layered on top of the same curriculum. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
+              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Vadodara-based students additionally get in-person EEG-based attention & focus engagement sessions at Dr. Sharma's center, layered on top of the same curriculum. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
           },
           {
             question: "What if it doesn't work for me?",
@@ -3108,7 +3125,7 @@ export const translations = {
           {
             title: "बच्चों के लिए",
             tag: "उच्च न्यूरोप्लास्टिसिटी",
-            desc: "युवा मस्तिष्क में असाधारण न्यूरोप्लास्टिसिटी होती है — बिल्कुल नए संवेदी मार्ग बनाने की मूल क्षमता। सही मार्गदर्शन के साथ, कई बच्चे उसे विकसित करते हैं जिसे हम सहज दृष्टि (intuitive vision) कहते हैं, और प्रशिक्षण के हिस्से के रूप में आंखों पर पट्टी बांधकर अभ्यास करते हैं — आप ये सत्र हमारे विद्यार्थियों के वीडियो रिव्यूज़ में देख सकते हैं।",
+            desc: "युवा मस्तिष्क में असाधारण न्यूरोप्लास्टिसिटी होती है — नए विज़ुअल और कॉग्निटिव मार्ग तेज़ी से बनाने की मूल क्षमता। सही मार्गदर्शन के साथ, कई बच्चे अपनी शुरुआती क्षमता से कहीं आगे तेज़ पेरिफेरल विज़न और पैटर्न-पहचान कौशल विकसित करते हैं — आप ये सत्र हमारे विद्यार्थियों के वीडियो रिव्यूज़ में देख सकते हैं।",
           },
           {
             title: "वयस्कों और पेशेवरों के लिए",
@@ -3234,18 +3251,11 @@ export const translations = {
             desc: "आसान आदतें — जैसे प्रैक्टिस से पहले 10 मिनट के लिए फोन दूर रखना।",
           },
         ],
-        habitAppCard: {
-          eyebrow: "QSR के साथ बेहतरीन जोड़ी",
-          title: "Quantum Mindset & Habit Builder™",
-          desc: "एक 21-दिवसीय गाइडेड प्रोग्राम, जो आपकी Quantum Speed Reading ट्रेनिंग के साथ-साथ दैनिक रीडिंग प्रैक्टिस को फोकस, मेमोरी, और माइंडसेट अभ्यासों से जोड़ता है।",
-          price: "दिन 1–7 मुफ़्त, फिर Day 21 तक जारी रखने के लिए सिर्फ ₹99 का एक one-time payment।",
-          cta: "और जानें",
-        },
       },
       documentMastery: {
-        eyebrow: "30-दिन प्रोग्राम से आगे",
-        title: "किसी भी किताब को स्पीड-रीडिंग ड्रिल्स में बदलें",
-        desc: "Quantum Mind app के अंदर मौजूद वही AI-पावर्ड Document Studio — कोई भी PDF, टेक्स्टबुक या रिसर्च पेपर अपलोड करें और उससे तुरंत स्पीड-रीडिंग ड्रिल्स, माइंड मैप्स, और रिवीज़न नोट्स पाएं।",
+        eyebrow: "ऐप में यह भी है",
+        title: "AI Document Studio",
+        desc: "Quantum Mind app के अंदर मौजूद वही AI-पावर्ड Document Studio — कोई भी PDF, टेक्स्टबुक या रिसर्च पेपर अपलोड करें और उससे स्पीड-रीडिंग ड्रिल्स, माइंड मैप्स, और रिवीज़न नोट्स पाएं।",
         items: [
           {
             title: "अपलोड करें और सीखें",
@@ -3351,7 +3361,7 @@ export const translations = {
           {
             question: "₹9,999 में मुझे वास्तव में क्या मिलता है?",
             answer:
-              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। वडोदरा-आधारित विद्यार्थियों को डॉ. शर्मा के सेंटर पर व्यक्तिगत रूप से फिज़िकल EEG ब्रेन मैपिंग और न्यूरोफीडबैक सेशन भी मिलते हैं, उसी पाठ्यक्रम के साथ। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
+              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। वडोदरा-आधारित विद्यार्थियों को डॉ. शर्मा के सेंटर पर व्यक्तिगत रूप से EEG-आधारित अटेंशन व फोकस एंगेजमेंट सेशन भी मिलते हैं, उसी पाठ्यक्रम के साथ। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
           },
           {
             question: "अगर यह मेरे लिए काम नहीं करता तो?",
