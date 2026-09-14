@@ -37,7 +37,7 @@ export default function QsrFocusScreenTime(): React.JSX.Element {
                   <Icon className="h-5 w-5 text-teal" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 text-[16px] font-bold leading-snug text-ink">{tip.title}</h3>
-                <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink-dim">{tip.desc}</p>
+                <p className="mt-2.5 text-[15.5px] leading-relaxed text-ink-dim">{tip.desc}</p>
               </div>
             );
           })}
@@ -49,7 +49,7 @@ export default function QsrFocusScreenTime(): React.JSX.Element {
               {section.habitAppCard.eyebrow}
             </span>
             <h3 className="mb-2 mt-2 text-[19px] font-bold leading-snug text-ink">{section.habitAppCard.title}</h3>
-            <p className="max-w-xl text-[14px] leading-relaxed text-ink-dim">{section.habitAppCard.desc}</p>
+            <p className="max-w-xl text-[16px] leading-relaxed text-ink-dim">{section.habitAppCard.desc}</p>
             <p className="mt-2 text-[13.5px] font-semibold text-teal">{section.habitAppCard.price}</p>
           </div>
           <Link

@@ -28,7 +28,7 @@ export default function QsrFaq(): React.JSX.Element {
                   +
                 </span>
               </summary>
-              <p className="mt-3 pr-10 text-[14.5px] leading-relaxed text-ink-dim">{item.answer}</p>
+              <p className="mt-3 pr-10 text-[16.5px] leading-relaxed text-ink-dim">{item.answer}</p>
             </details>
           ))}
         </div>

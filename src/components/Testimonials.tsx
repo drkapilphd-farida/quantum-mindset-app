@@ -80,7 +80,7 @@ export default function Testimonials(): React.JSX.Element {
                 ) : (
                   thumbnail
                 )}
-                <p className="mb-5 flex-1 text-[14px] italic leading-relaxed text-ink">
+                <p className="mb-5 flex-1 text-[16px] italic leading-relaxed text-ink">
                   &ldquo;{item.quote}&rdquo;
                 </p>
                 <div>

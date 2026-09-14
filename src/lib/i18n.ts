@@ -148,23 +148,32 @@ export const translations = {
     },
     programSelector: {
       title: "Where Would You Like to Begin?",
-      subtitle: "Choose the path that matches your goal.",
+      subtitle: "Most people start here.",
+      // Positioning fix (see the "Fix Homepage & QSR Page Positioning"
+      // task) — this section used to render 4 visually identical cards
+      // (Habit Builder got quiet gold styling, the other 3 including QSR
+      // itself got none), which read as "pick any door" instead of naming
+      // a flagship. QSR now gets its own dedicated, dominant block
+      // (`flagship`, reusing the exact headline/price already used on the
+      // QSR page's own hero for consistency) with the other three paths
+      // demoted underneath it as clearly secondary, grouped under
+      // `otherPathsLabel`.
+      flagship: {
+        eyebrowLabel: "The Flagship Program",
+        title: "Read 5x Faster. Retain 100%.",
+        desc: "The 30-Day Quantum Speed Reading Masterclass — a science-backed, live-guided transformation in how you read, learn and remember, taught live by Dr. Kapil Dev Sharma.",
+        priceLine: "₹9,999 · One-Time Enrollment",
+        cta: "Explore the Masterclass",
+      },
+      otherPathsLabel: "Or explore other paths",
       paths: [
         {
           key: "habit",
-          eyebrowLabel: "Build Better Habits",
+          eyebrowLabel: "Not Ready for the Full Masterclass?",
           title: "Quantum Mind & Habit Builder",
-          desc: "A 21-day streak-based journey to train your mindset, focus and daily habits.",
+          desc: "A low-commitment 21-day streak-based on-ramp to train your mindset, focus and daily habits.",
           priceLine: "7 Days Free · ₹99 one-time",
           cta: "Start Free",
-        },
-        {
-          key: "reading",
-          eyebrowLabel: "Learn Faster",
-          title: "Quantum Speed Reading",
-          desc: "Transform the way you read, learn and process information — with greater speed and clarity.",
-          priceLine: undefined,
-          cta: "Explore Program",
         },
         {
           key: "retreats",
@@ -222,21 +231,32 @@ export const translations = {
       },
     },
     homeHabitFeature: {
-      eyebrow: "Quantum Mindset & Habit Builder™",
-      title: "Build Better Habits. 10 Minutes a Day.",
-      lead: "A 21-day guided experience to help you build better daily mental and focus habits.",
-      desc: "Mindset practices, focus exercises, visualization, breathing and progressive habit-building challenges — in just 10 minutes a day.",
+      // Positioning fix (see the "Fix Homepage & QSR Page Positioning"
+      // task) — this section previously got homepage-hero-level visual
+      // treatment (a large headline, a dominant 250px phone mockup, four
+      // supporting thumbnails), which competed with the QSR flagship for
+      // attention. Copy now explicitly frames this as a low-commitment
+      // on-ramp for a visitor not ready for the full Masterclass, rather
+      // than implying it via layout alone.
+      eyebrow: "Not Ready for the Full Masterclass?",
+      title: "Start With This Free 7-Day Habit Builder",
+      lead: "A low-commitment, 21-day guided on-ramp to build better daily mental and focus habits — no pressure to enroll in anything else.",
       freeLabel: "7 DAYS FREE",
       priceLabel: "₹99 one-time",
       noSubscriptionLabel: "No monthly subscription.",
       cta: "Start 7 Days Free",
       mainScreenshotAlt: "The Quantum Mindset & Habit Builder dashboard — a real streak and daily continue screen",
-      screenshotLabels: {
-        programIntro: "Program Intro",
-        day1Complete: "Day 1 Complete",
-        boxBreathing: "Box Breathing",
-        readingMode: "Reading Mode",
-      },
+    },
+    // Mumbai in-person QSR workshop — a small, secondary homepage card
+    // (see the "Add Mumbai In-Person QSR Workshop" task), styled no more
+    // prominently than the site's other Tier-2/3 secondary cards, never
+    // hero-scale like the QSR flagship block above it.
+    homeMumbaiWorkshop: {
+      eyebrow: "New · Pilot Batch",
+      title: "QSR, Now Live In-Person in Mumbai",
+      desc: "A 2-day in-person extension of the Masterclass — live coaching, an attention & focus engagement demo, and the same ₹9,999 price.",
+      meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
+      cta: "Learn More",
     },
     homeOverviewVideo: {
       eyebrow: "Real People. Real Sessions.",
@@ -1044,31 +1064,6 @@ export const translations = {
           cta: "Learn More",
         },
       },
-      allRoundDevelopment: {
-        eyebrow: "All-Round Development",
-        title: "Complete Development, Not Just Speed Reading",
-        desc: "Designed to build more than reading speed — real focus, better habits, and a more intentional relationship with learning, developed together across the four areas below.",
-        progressCaption: "Example preview — your own numbers build from your first real session.",
-        items: [
-          {
-            title: "Reading & Memory",
-            desc: "Faster reading, better comprehension, and practical memory techniques.",
-          },
-          {
-            title: "Focus & Calm",
-            desc: "A short daily meditation and breathing practice for concentration.",
-          },
-          {
-            title: "Life Skills",
-            desc: "Goal-setting, a gratitude habit, and posture and screen-care habits.",
-          },
-          {
-            title: "Family Bonding",
-            desc: "A monthly parent-child reading activity.",
-          },
-        ],
-        disclaimer: "These are program design elements based on practice, not guaranteed outcomes.",
-      },
       documentMastery: {
         eyebrow: "Beyond The 30-Day Program",
         title: "Turn Any Book Into Speed-Reading Drills",
@@ -1141,31 +1136,30 @@ export const translations = {
           },
         ],
       },
+      // Positioning fix — this used to open with a "Three kinds of people
+      // take this Masterclass" 3-persona grid (Students/Professionals/
+      // Lifelong Learners), which diluted the ICP by trying to speak to
+      // everyone equally. Removed: real testimonials elsewhere on this
+      // page already show who this is for (a business owner, a doctor,
+      // students) without a dedicated multi-persona pitch, and the
+      // homepage/hero already lead with students & exam aspirants as the
+      // primary audience. What's left is the one piece of this section
+      // that was never about persona-spreading — concrete, day-to-day
+      // parent-facing outcomes — now flattened to one level instead of
+      // nested under a `parentSection` key that no longer needs to share
+      // space with anything else. The fourth item (a monthly parent-child
+      // reading activity) moved here from the removed AllRoundDevelopment
+      // section's "Family Bonding" card — same real detail, just no
+      // longer pitched as a fourth equal "pillar" of the program.
       audience: {
-        eyebrow: "Who This Is Built For",
-        title: "Three kinds of people take this Masterclass",
-        groups: [
-          {
-            title: "Students",
-            desc: "Preparing for competitive exams where syllabus volume, not intelligence, is the real bottleneck.",
-          },
-          {
-            title: "Professionals",
-            desc: "Drowning in reports, research, and email — information overload that no productivity app has fixed.",
-          },
-          {
-            title: "Lifelong Learners",
-            desc: "Anyone chasing elite cognitive performance, at any age, who wants their mind to do more with what it reads.",
-          },
+        eyebrow: "For Parents",
+        title: "What Changes Day to Day",
+        items: [
+          "Homework and reading sessions that used to drag on start finishing faster",
+          "Your child sees a book through instead of abandoning it midway",
+          "Less last-minute panic before exams, because syllabus gets covered on schedule",
+          "A monthly parent-child reading activity, built into the program",
         ],
-        parentSection: {
-          title: "For Parents: What Changes Day to Day",
-          items: [
-            "Homework and reading sessions that used to drag on start finishing faster",
-            "Your child sees a book through instead of abandoning it midway",
-            "Less last-minute panic before exams, because syllabus gets covered on schedule",
-          ],
-        },
       },
       faq: {
         eyebrow: "Before You Enroll",
@@ -1232,6 +1226,163 @@ export const translations = {
         bubble: "Have questions about the QSR batch? Chat with Dr. Kapil's team instantly.",
         button: "Chat on WhatsApp",
         ariaLabel: "Chat with Dr. Kapil's team on WhatsApp about the Quantum Speed Reading Masterclass",
+      },
+      // Mumbai in-person workshop — the one small, deliberately minor
+      // addition to this otherwise-locked page (see the "Add Mumbai
+      // In-Person QSR Workshop" task). Not styled or worded to compete
+      // with the hero/CTA above it.
+      mumbaiBanner: {
+        text: "Now also available as a live 2-day workshop in Mumbai",
+        cta: "Learn more",
+      },
+    },
+    // Mumbai In-Person Workshop™ — a hybrid extension of the QSR 30-Day
+    // Masterclass (see the "Add Mumbai In-Person QSR Workshop" task): a
+    // live, 2-day, in-person kickoff in Mumbai (Attention & Focus
+    // Engagement Snapshot demo, in-person coaching, WPM + retention
+    // measured across an overnight gap), after which the same 30-day
+    // app curriculum as the online track continues. Deliberately its own
+    // i18n block (not folded into qsrLanding) since it's a distinct page
+    // with its own nav/sticky bar/WhatsApp widget, mirroring the
+    // retreatLanding/residentialLanding pattern for a dedicated landing
+    // page. EEG language throughout is deliberately "engagement/attention
+    // snapshot," never "brain test," "brain mapping," or "diagnostic" —
+    // an explicit, non-negotiable framing rule for this page (contrast
+    // with qsrLanding.neuroCognitive.eeg above, which predates this rule
+    // and describes a different, hardware-verified Vadodara offering in
+    // clinical language — that section is out of scope for this task and
+    // was left untouched, but the inconsistency is worth a look).
+    qsrMumbaiLanding: {
+      hero: {
+        eyebrow: "Live, In-Person · Mumbai · Pilot Batch",
+        headline: "Read 5x Faster.",
+        headlineEm: "Live, In Person, in Mumbai.",
+        sub: "A 2-day, in-person extension of the 30-Day Quantum Speed Reading Masterclass — live coaching from Dr. Kapil Dev Sharma, a real-time attention & focus engagement demo, and your reading speed measured on Day 1 and again on Day 2, after an overnight gap. The remaining curriculum then continues through the same app as our online track.",
+        ctaPrimary: "Reserve a Pilot Batch Seat",
+        ctaPrimaryMeta: "₹9,999 · Same Price as the Online Masterclass",
+        ctaSecondary: "See the 2-Day Schedule",
+        badge: "2-Day Live Event",
+      },
+      whatsDifferent: {
+        eyebrow: "In-Person vs. Online",
+        title: "What's Different From the Online Program",
+        items: [
+          {
+            title: "A Live Attention & Focus Engagement Demo",
+            desc: "A short, in-person engagement snapshot using a Muse 2 headband on Day 1 — see below for exactly what this is, and isn't.",
+          },
+          {
+            title: "In-Person Coaching From Dr. Kapil Dev Sharma",
+            desc: "Live, face-to-face technique correction across both days — not a video call.",
+          },
+          {
+            title: "Reading Speed Measured Twice, a Night Apart",
+            desc: "An initial WPM reading on Day 1, then a final WPM and retention check on Day 2 — after a real overnight gap, not back-to-back.",
+          },
+          {
+            title: "Then the Same App-Based Curriculum",
+            desc: "After the 2-day event, the rest of the 30-day program continues through the same Quantum Speed Reading app our online students use — no separate, disconnected track.",
+          },
+        ],
+      },
+      schedule: {
+        eyebrow: "The 2 Days",
+        title: "How the Workshop Runs",
+        day1: {
+          label: "Day 1 · Saturday",
+          title: "Baseline & Technique",
+          items: [
+            "Attention & focus engagement demo (Muse 2 headband)",
+            "Core Quantum Speed Reading technique, taught live",
+            "First guided practice session",
+            "Initial reading speed (WPM) measurement",
+          ],
+        },
+        day2: {
+          label: "Day 2 · Sunday",
+          title: "Practice & Results",
+          items: [
+            "Further guided practice",
+            "Final WPM and retention measurement",
+            "Certificate of completion",
+            "Optional video testimonial recording",
+          ],
+        },
+        overnightCallout: {
+          title: "Why Two Days, Not One?",
+          desc: "Retention is measured after a full night's sleep, not in the same session it was taught in — sleep-based consolidation is part of how the technique is designed to stick, so the gap between Day 1 and Day 2 is a deliberate design choice, not a scheduling convenience.",
+        },
+      },
+      venue: {
+        eyebrow: "Venue & Batch",
+        title: "Mumbai · Pilot Batch",
+        venueLine: "[Venue name & address to be confirmed — Powai or Bandra West area]",
+        dateLine: "[Exact dates to be confirmed]",
+        timeLine: "[Timings to be confirmed]",
+        pilotNote: "This is our first in-person batch in this format — seats are genuinely limited, and we're keeping it small on purpose. Batches are grouped by age (a younger group and an older/adult group run separately, not mixed), for delivery quality.",
+      },
+      eegDemo: {
+        eyebrow: "Day 1",
+        title: "Attention & Focus Engagement Snapshot",
+        desc: "On Day 1, we use a Muse 2 headband to give you a live, real-time snapshot of your attention and focus engagement while you practice — a way to see the training happening, not just take our word for it.",
+        disclaimer: "This is an engagement demo tool, not a diagnostic or medical device. It does not produce a clinical brain report, and it isn't a substitute for any medical or neurological assessment.",
+        addOn: {
+          title: "Optional: A Detailed Personal Engagement Report",
+          desc: "For those who want it, a more detailed personal engagement report based on your session is available as a paid add-on.",
+          pricePlaceholder: "[Add-on price to be confirmed]",
+        },
+      },
+      pricing: {
+        title: "₹9,999",
+        priceNote: "One-time — same price as the online Masterclass. Includes both days in Mumbai plus the full 30-day app curriculum that follows.",
+        addOnNote: "The personal engagement report above is a separate, optional add-on.",
+        cta: "Reserve a Pilot Batch Seat",
+      },
+      faq: {
+        eyebrow: "Questions",
+        title: "Before You Reserve a Seat",
+        items: [
+          {
+            question: "How is this different from the online program?",
+            answer: "The curriculum is the same 30-day program. This adds a live, in-person 2-day kickoff in Mumbai — a face-to-face session with Dr. Kapil Dev Sharma, a live attention & focus engagement demo, and reading speed measured on both days with an overnight gap in between. After Day 2, you continue on the same app the online track uses.",
+          },
+          {
+            question: "What does the EEG device do — is it a medical test?",
+            answer: "No. It's a live engagement/attention snapshot using a Muse 2 headband, meant to show your focus during practice in real time. It is not a diagnostic or medical device, and it does not produce a clinical or medical brain report.",
+          },
+          {
+            question: "What if my child can only attend one day, not both?",
+            answer: "The two days are designed to build on each other — Day 1 teaches the technique and takes a baseline, Day 2 measures real retention after an overnight gap. We'd strongly recommend attending both. [Exact policy for partial attendance to be confirmed.]",
+          },
+          {
+            question: "How does the rest of the 30-day program continue after the 2 days?",
+            answer: "After the in-person weekend, you continue through the same Quantum Speed Reading app used by our online students, for the remainder of the 30-day curriculum.",
+          },
+          {
+            question: "Is this for children of all ages?",
+            answer: "Yes — but we run separate batches by age group (a younger group and an older/adult group) rather than mixing all ages in one session, so the pace and delivery suit each group properly.",
+          },
+          {
+            question: "What's the refund policy for the in-person workshop?",
+            answer: "[Refund & cancellation terms for the in-person format are pending confirmation before this page goes live — the online program's refund policy is WPM-improvement-based and may not translate directly to a 2-day in-person event.]",
+          },
+        ],
+        ctaLabel: "Ask on WhatsApp",
+      },
+      testimonialsPlaceholder: {
+        eyebrow: "Social Proof",
+        title: "Real Stories, Coming After the Pilot Batch",
+        desc: "This is our first in-person batch in this format. We'll add real video testimonials from Mumbai participants here after the pilot batch runs — nothing fabricated in the meantime.",
+      },
+      stickyBar: {
+        text: "Mumbai Workshop · 2-Day Pilot Batch",
+        price: "₹9,999 · One-Time",
+        cta: "Reserve a Seat",
+      },
+      whatsapp: {
+        bubble: "Have questions about the Mumbai workshop? Chat with Dr. Kapil's team instantly.",
+        button: "Chat on WhatsApp",
+        ariaLabel: "Chat with Dr. Kapil's team on WhatsApp about the Mumbai in-person workshop",
       },
     },
     habitBuilderLanding: {
@@ -2201,23 +2352,23 @@ export const translations = {
     },
     programSelector: {
       title: "आप कहां से शुरू करना चाहेंगे?",
-      subtitle: "वह रास्ता चुनें जो आपके लक्ष्य से मेल खाता हो।",
+      subtitle: "ज़्यादातर लोग यहीं से शुरू करते हैं।",
+      flagship: {
+        eyebrowLabel: "हमारा फ्लैगशिप प्रोग्राम",
+        title: "5 गुना तेज़ पढ़ें। 100% याद रखें।",
+        desc: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास — डॉ. कपिल देव शर्मा द्वारा लाइव मार्गदर्शित, आपके पढ़ने, सीखने और याद रखने के तरीके में एक साइंस-बैक्ड परिवर्तन।",
+        priceLine: "₹9,999 · एकमुश्त नामांकन",
+        cta: "मास्टरक्लास एक्सप्लोर करें",
+      },
+      otherPathsLabel: "या अन्य रास्ते एक्सप्लोर करें",
       paths: [
         {
           key: "habit",
-          eyebrowLabel: "बेहतर आदतें बनाएं",
+          eyebrowLabel: "पूरे मास्टरक्लास के लिए तैयार नहीं?",
           title: "Quantum Mind & Habit Builder",
-          desc: "अपनी सोच, फोकस और रोज़ की आदतों को प्रशिक्षित करने के लिए एक 21-दिवसीय स्ट्रीक-आधारित यात्रा।",
+          desc: "अपनी सोच, फोकस और रोज़ की आदतों को प्रशिक्षित करने के लिए एक कम-प्रतिबद्धता वाली 21-दिवसीय स्ट्रीक-आधारित शुरुआत।",
           priceLine: "7 दिन मुफ़्त · ₹99 एकमुश्त",
           cta: "मुफ़्त शुरू करें",
-        },
-        {
-          key: "reading",
-          eyebrowLabel: "तेज़ी से सीखें",
-          title: "क्वांटम स्पीड रीडिंग",
-          desc: "अधिक गति और स्पष्टता के साथ — आपके पढ़ने, सीखने और जानकारी प्रोसेस करने के तरीके को बदल दें।",
-          priceLine: undefined,
-          cta: "प्रोग्राम एक्सप्लोर करें",
         },
         {
           key: "retreats",
@@ -2275,21 +2426,21 @@ export const translations = {
       },
     },
     homeHabitFeature: {
-      eyebrow: "Quantum Mindset & Habit Builder™",
-      title: "बेहतर आदतें बनाएं। दिन के सिर्फ़ 10 मिनट।",
-      lead: "बेहतर दैनिक मानसिक और फोकस आदतें बनाने में मदद करने वाला एक 21-दिवसीय गाइडेड अनुभव।",
-      desc: "मानसिकता अभ्यास, फोकस एक्सरसाइज़, विज़ुअलाइज़ेशन, ब्रीदिंग और प्रगतिशील habit-building चैलेंजेस — दिन के सिर्फ़ 10 मिनट में।",
+      eyebrow: "पूरे मास्टरक्लास के लिए तैयार नहीं?",
+      title: "इस मुफ़्त 7-दिवसीय हैबिट बिल्डर से शुरू करें",
+      lead: "बेहतर दैनिक मानसिक और फोकस आदतें बनाने के लिए एक कम-प्रतिबद्धता वाला 21-दिवसीय गाइडेड शुरुआत — किसी और चीज़ में दाखिला लेने का कोई दबाव नहीं।",
       freeLabel: "7 दिन मुफ़्त",
       priceLabel: "₹99 एकमुश्त",
       noSubscriptionLabel: "कोई मंथली सब्सक्रिप्शन नहीं।",
       cta: "7 दिन मुफ़्त शुरू करें",
       mainScreenshotAlt: "Quantum Mindset & Habit Builder डैशबोर्ड — असली स्ट्रीक और डेली continue स्क्रीन",
-      screenshotLabels: {
-        programIntro: "प्रोग्राम इंट्रो",
-        day1Complete: "दिन 1 पूरा",
-        boxBreathing: "बॉक्स ब्रीदिंग",
-        readingMode: "रीडिंग मोड",
-      },
+    },
+    homeMumbaiWorkshop: {
+      eyebrow: "नया · पायलट बैच",
+      title: "QSR, अब मुंबई में लाइव व्यक्तिगत रूप से",
+      desc: "मास्टरक्लास का एक 2-दिवसीय व्यक्तिगत विस्तार — लाइव कोचिंग, एक अटेंशन व फोकस एंगेजमेंट डेमो, और वही ₹9,999 कीमत।",
+      meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
+      cta: "और जानें",
     },
     homeOverviewVideo: {
       eyebrow: "असली लोग। असली सेशन।",
@@ -3091,31 +3242,6 @@ export const translations = {
           cta: "और जानें",
         },
       },
-      allRoundDevelopment: {
-        eyebrow: "सर्वांगीण विकास",
-        title: "सिर्फ स्पीड रीडिंग नहीं, संपूर्ण विकास",
-        desc: "सिर्फ तेज़ रीडिंग नहीं — असली फोकस, बेहतर आदतें, और सीखने के प्रति एक ज़्यादा सोच-समझकर बना रिश्ता, नीचे दिए गए चारों क्षेत्रों में एक साथ विकसित होता है।",
-        progressCaption: "उदाहरण के तौर पर पूर्वावलोकन — आपके असली आंकड़े आपके पहले असली सेशन से बनना शुरू होंगे।",
-        items: [
-          {
-            title: "रीडिंग और मेमोरी",
-            desc: "तेज़ रीडिंग, बेहतर समझ, और प्रैक्टिकल मेमोरी तकनीकें।",
-          },
-          {
-            title: "फोकस और शांति",
-            desc: "एकाग्रता के लिए एक छोटा दैनिक मेडिटेशन और ब्रीदिंग अभ्यास।",
-          },
-          {
-            title: "लाइफ स्किल्स",
-            desc: "गोल-सेटिंग, आभार (gratitude) की आदत, और पोश्चर व स्क्रीन-केयर हैबिट्स।",
-          },
-          {
-            title: "फैमिली बॉन्डिंग",
-            desc: "एक मासिक पेरेंट-चाइल्ड रीडिंग एक्टिविटी।",
-          },
-        ],
-        disclaimer: "ये practice पर आधारित program design elements हैं, गारंटीड परिणाम नहीं।",
-      },
       documentMastery: {
         eyebrow: "30-दिन प्रोग्राम से आगे",
         title: "किसी भी किताब को स्पीड-रीडिंग ड्रिल्स में बदलें",
@@ -3189,30 +3315,14 @@ export const translations = {
         ],
       },
       audience: {
-        eyebrow: "यह किसके लिए बना है",
-        title: "तीन तरह के लोग यह मास्टरक्लास लेते हैं",
-        groups: [
-          {
-            title: "विद्यार्थी",
-            desc: "प्रतियोगी परीक्षाओं की तैयारी करने वाले, जहां सिलेबस की मात्रा — न कि बुद्धिमत्ता — असली रुकावट है।",
-          },
-          {
-            title: "पेशेवर",
-            desc: "रिपोर्ट्स, रिसर्च, और ईमेल में डूबे हुए — सूचना का वह बोझ जिसे किसी प्रोडक्टिविटी ऐप ने ठीक नहीं किया।",
-          },
-          {
-            title: "आजीवन सीखने वाले",
-            desc: "किसी भी उम्र में उत्कृष्ट संज्ञानात्मक प्रदर्शन चाहने वाला कोई भी व्यक्ति, जो चाहता है कि उसका मन जो पढ़े उसका ज़्यादा उपयोग कर सके।",
-          },
+        eyebrow: "अभिभावकों के लिए",
+        title: "दिन-प्रतिदिन क्या बदलता है",
+        items: [
+          "होमवर्क और पढ़ाई के सेशन जो पहले लंबे खिंचते थे, अब जल्दी खत्म होने लगते हैं",
+          "आपका बच्चा किताब को बीच में छोड़ने के बजाय पूरा पढ़ता है",
+          "परीक्षा से पहले आखिरी समय की घबराहट कम होती है, क्योंकि सिलेबस समय पर कवर हो जाता है",
+          "एक मासिक पेरेंट-चाइल्ड रीडिंग एक्टिविटी, प्रोग्राम में शामिल",
         ],
-        parentSection: {
-          title: "अभिभावकों के लिए: दिन-प्रतिदिन क्या बदलता है",
-          items: [
-            "होमवर्क और पढ़ाई के सेशन जो पहले लंबे खिंचते थे, अब जल्दी खत्म होने लगते हैं",
-            "आपका बच्चा किताब को बीच में छोड़ने के बजाय पूरा पढ़ता है",
-            "परीक्षा से पहले आखिरी समय की घबराहट कम होती है, क्योंकि सिलेबस समय पर कवर हो जाता है",
-          ],
-        },
       },
       faq: {
         eyebrow: "नामांकन से पहले",
@@ -3279,6 +3389,143 @@ export const translations = {
         bubble: "QSR बैच के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
         button: "WhatsApp पर चैट करें",
         ariaLabel: "क्वांटम स्पीड रीडिंग मास्टरक्लास के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+      },
+      mumbaiBanner: {
+        text: "अब मुंबई में लाइव 2-दिवसीय वर्कशॉप के रूप में भी उपलब्ध",
+        cta: "और जानें",
+      },
+    },
+    qsrMumbaiLanding: {
+      hero: {
+        eyebrow: "लाइव, व्यक्तिगत रूप से · मुंबई · पायलट बैच",
+        headline: "5 गुना तेज़ पढ़ें।",
+        headlineEm: "मुंबई में लाइव, व्यक्तिगत रूप से।",
+        sub: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास का एक 2-दिवसीय, व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक रियल-टाइम अटेंशन व फोकस एंगेजमेंट डेमो, और आपकी रीडिंग स्पीड दिन 1 और फिर एक रात के अंतराल के बाद दिन 2 पर मापी जाती है। इसके बाद बाकी पाठ्यक्रम उसी ऐप के ज़रिए जारी रहता है जो हमारे ऑनलाइन ट्रैक में इस्तेमाल होता है।",
+        ctaPrimary: "पायलट बैच सीट सुरक्षित करें",
+        ctaPrimaryMeta: "₹9,999 · ऑनलाइन मास्टरक्लास जैसी ही कीमत",
+        ctaSecondary: "2-दिवसीय शेड्यूल देखें",
+        badge: "2-दिवसीय लाइव इवेंट",
+      },
+      whatsDifferent: {
+        eyebrow: "व्यक्तिगत बनाम ऑनलाइन",
+        title: "ऑनलाइन प्रोग्राम से क्या अलग है",
+        items: [
+          {
+            title: "एक लाइव अटेंशन व फोकस एंगेजमेंट डेमो",
+            desc: "दिन 1 पर Muse 2 हेडबैंड का उपयोग करते हुए एक संक्षिप्त, व्यक्तिगत एंगेजमेंट स्नैपशॉट — यह वास्तव में क्या है (और क्या नहीं) यह नीचे देखें।",
+          },
+          {
+            title: "डॉ. कपिल देव शर्मा से व्यक्तिगत कोचिंग",
+            desc: "दोनों दिनों में लाइव, आमने-सामने तकनीक सुधार — कोई वीडियो कॉल नहीं।",
+          },
+          {
+            title: "रीडिंग स्पीड दो बार, एक रात के अंतराल पर मापी जाती है",
+            desc: "दिन 1 पर एक शुरुआती WPM रीडिंग, फिर दिन 2 पर एक अंतिम WPM और रिटेंशन चेक — एक असली रात के अंतराल के बाद, लगातार नहीं।",
+          },
+          {
+            title: "फिर वही ऐप-आधारित पाठ्यक्रम",
+            desc: "2-दिवसीय इवेंट के बाद, बाकी 30-दिवसीय प्रोग्राम उसी Quantum Speed Reading ऐप के ज़रिए जारी रहता है जो हमारे ऑनलाइन विद्यार्थी इस्तेमाल करते हैं — कोई अलग, डिस्कनेक्टेड ट्रैक नहीं।",
+          },
+        ],
+      },
+      schedule: {
+        eyebrow: "2 दिन",
+        title: "वर्कशॉप कैसे चलती है",
+        day1: {
+          label: "दिन 1 · शनिवार",
+          title: "बेसलाइन और तकनीक",
+          items: [
+            "अटेंशन व फोकस एंगेजमेंट डेमो (Muse 2 हेडबैंड)",
+            "मुख्य Quantum Speed Reading तकनीक, लाइव सिखाई जाएगी",
+            "पहला गाइडेड प्रैक्टिस सेशन",
+            "शुरुआती रीडिंग स्पीड (WPM) मापन",
+          ],
+        },
+        day2: {
+          label: "दिन 2 · रविवार",
+          title: "अभ्यास और परिणाम",
+          items: [
+            "आगे का गाइडेड अभ्यास",
+            "अंतिम WPM और रिटेंशन मापन",
+            "पूर्णता प्रमाणपत्र",
+            "वैकल्पिक वीडियो टेस्टिमोनियल रिकॉर्डिंग",
+          ],
+        },
+        overnightCallout: {
+          title: "दो दिन ही क्यों, एक क्यों नहीं?",
+          desc: "रिटेंशन एक पूरी रात की नींद के बाद मापी जाती है, उसी सेशन में नहीं जिसमें सिखाई गई थी — स्लीप-आधारित कंसॉलिडेशन इस बात का हिस्सा है कि यह तकनीक टिकने के लिए कैसे डिज़ाइन की गई है, इसलिए दिन 1 और दिन 2 के बीच का अंतराल एक जानबूझकर लिया गया डिज़ाइन निर्णय है, कोई शेड्यूलिंग सुविधा नहीं।",
+        },
+      },
+      venue: {
+        eyebrow: "वेन्यू और बैच",
+        title: "मुंबई · पायलट बैच",
+        venueLine: "[वेन्यू का नाम व पता पुष्टि होना बाकी — पवई या बांद्रा वेस्ट क्षेत्र]",
+        dateLine: "[सटीक तारीखें पुष्टि होना बाकी]",
+        timeLine: "[समय पुष्टि होना बाकी]",
+        pilotNote: "यह इस फॉर्मेट में हमारा पहला व्यक्तिगत बैच है — सीटें वाकई सीमित हैं, और हम इसे जानबूझकर छोटा रख रहे हैं। बैच उम्र के अनुसार बांटे जाते हैं (एक युवा समूह और एक बड़ा/वयस्क समूह अलग-अलग चलाया जाता है, मिलाकर नहीं), डिलीवरी की गुणवत्ता के लिए।",
+      },
+      eegDemo: {
+        eyebrow: "दिन 1",
+        title: "अटेंशन व फोकस एंगेजमेंट स्नैपशॉट",
+        desc: "दिन 1 पर, हम Muse 2 हेडबैंड का उपयोग करके अभ्यास के दौरान आपके अटेंशन और फोकस एंगेजमेंट का एक लाइव, रियल-टाइम स्नैपशॉट देते हैं — ट्रेनिंग को होते हुए देखने का एक तरीका, सिर्फ़ हमारी बात मान लेने के बजाय।",
+        disclaimer: "यह एक एंगेजमेंट डेमो टूल है, कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं। यह कोई क्लिनिकल ब्रेन रिपोर्ट नहीं बनाता, और यह किसी भी मेडिकल या न्यूरोलॉजिकल असेसमेंट का विकल्प नहीं है।",
+        addOn: {
+          title: "वैकल्पिक: एक विस्तृत व्यक्तिगत एंगेजमेंट रिपोर्ट",
+          desc: "जो चाहें उनके लिए, आपके सेशन पर आधारित एक अधिक विस्तृत व्यक्तिगत एंगेजमेंट रिपोर्ट एक पेड ऐड-ऑन के रूप में उपलब्ध है।",
+          pricePlaceholder: "[ऐड-ऑन की कीमत पुष्टि होना बाकी]",
+        },
+      },
+      pricing: {
+        title: "₹9,999",
+        priceNote: "एकमुश्त — ऑनलाइन मास्टरक्लास जैसी ही कीमत। इसमें मुंबई के दोनों दिन और उसके बाद आने वाला पूरा 30-दिवसीय ऐप पाठ्यक्रम शामिल है।",
+        addOnNote: "ऊपर बताई गई व्यक्तिगत एंगेजमेंट रिपोर्ट एक अलग, वैकल्पिक ऐड-ऑन है।",
+        cta: "पायलट बैच सीट सुरक्षित करें",
+      },
+      faq: {
+        eyebrow: "सवाल",
+        title: "सीट सुरक्षित करने से पहले",
+        items: [
+          {
+            question: "यह ऑनलाइन प्रोग्राम से कैसे अलग है?",
+            answer: "पाठ्यक्रम वही 30-दिवसीय प्रोग्राम है। इसमें मुंबई में एक लाइव, व्यक्तिगत 2-दिवसीय शुरुआत जुड़ती है — डॉ. कपिल देव शर्मा के साथ आमने-सामने सेशन, एक लाइव अटेंशन व फोकस एंगेजमेंट डेमो, और दोनों दिनों में एक रात के अंतराल के साथ मापी गई रीडिंग स्पीड। दिन 2 के बाद, आप उसी ऐप पर जारी रखते हैं जो ऑनलाइन ट्रैक इस्तेमाल करता है।",
+          },
+          {
+            question: "EEG डिवाइस क्या करता है — क्या यह एक मेडिकल टेस्ट है?",
+            answer: "नहीं। यह Muse 2 हेडबैंड का उपयोग करते हुए एक लाइव एंगेजमेंट/अटेंशन स्नैपशॉट है, जिसका मकसद अभ्यास के दौरान आपका फोकस रियल-टाइम में दिखाना है। यह कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं है, और यह कोई क्लिनिकल या मेडिकल ब्रेन रिपोर्ट नहीं बनाता।",
+          },
+          {
+            question: "अगर मेरा बच्चा एक दिन ही आ सकता है, दोनों दिन नहीं — तो क्या होगा?",
+            answer: "दोनों दिन एक-दूसरे पर बनने के लिए डिज़ाइन किए गए हैं — दिन 1 तकनीक सिखाता है और एक बेसलाइन लेता है, दिन 2 एक रात के अंतराल के बाद असली रिटेंशन मापता है। हम दोनों दिन आने की ज़ोरदार सलाह देंगे। [आंशिक उपस्थिति के लिए सटीक नीति पुष्टि होना बाकी।]",
+          },
+          {
+            question: "2 दिन के बाद बाकी 30-day प्रोग्राम कैसे continue होगा?",
+            answer: "व्यक्तिगत वीकेंड के बाद, आप बाकी 30-दिवसीय पाठ्यक्रम के लिए उसी Quantum Speed Reading ऐप के ज़रिए जारी रखते हैं जो हमारे ऑनलाइन विद्यार्थी इस्तेमाल करते हैं।",
+          },
+          {
+            question: "क्या यह सभी उम्र के बच्चों के लिए है?",
+            answer: "हां — लेकिन हम उम्र के अनुसार अलग बैच चलाते हैं (एक युवा समूह और एक बड़ा/वयस्क समूह) बजाय सभी उम्र को एक सेशन में मिलाने के, ताकि गति और डिलीवरी हर समूह के लिए सही रहे।",
+          },
+          {
+            question: "Refund policy in-person workshop के लिए क्या है?",
+            answer: "[व्यक्तिगत फॉर्मेट के लिए रिफ़ंड व कैंसिलेशन शर्तें इस पेज के लाइव होने से पहले पुष्टि होना बाकी हैं — ऑनलाइन प्रोग्राम की रिफ़ंड पॉलिसी WPM-सुधार पर आधारित है और यह 2-दिवसीय व्यक्तिगत इवेंट पर सीधे लागू न हो सकती हो।]",
+          },
+        ],
+        ctaLabel: "WhatsApp पर पूछें",
+      },
+      testimonialsPlaceholder: {
+        eyebrow: "सोशल प्रूफ़",
+        title: "असली कहानियां, पायलट बैच के बाद आएंगी",
+        desc: "यह इस फॉर्मेट में हमारा पहला व्यक्तिगत बैच है। पायलट बैच चलने के बाद हम यहां मुंबई के प्रतिभागियों के असली वीडियो टेस्टिमोनियल जोड़ेंगे — तब तक कुछ भी गढ़ा हुआ नहीं।",
+      },
+      stickyBar: {
+        text: "मुंबई वर्कशॉप · 2-दिवसीय पायलट बैच",
+        price: "₹9,999 · एकमुश्त",
+        cta: "सीट सुरक्षित करें",
+      },
+      whatsapp: {
+        bubble: "मुंबई वर्कशॉप के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
+        button: "WhatsApp पर चैट करें",
+        ariaLabel: "मुंबई व्यक्तिगत वर्कशॉप के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
       },
     },
     habitBuilderLanding: {

@@ -107,7 +107,7 @@ export default function QsrVideoTestimonials(): React.JSX.Element {
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {others.map((item) => (
                 <div key={item.id} className="flex flex-col rounded-sm border border-line bg-panel p-6">
-                  <p className="mb-5 flex-1 text-[14px] italic leading-relaxed text-ink">&ldquo;{item.quote}&rdquo;</p>
+                  <p className="mb-5 flex-1 text-[16px] italic leading-relaxed text-ink">&ldquo;{item.quote}&rdquo;</p>
                   <div>
                     <div className="text-[13.5px] font-semibold text-ink">{item.name}</div>
                     <div className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">

@@ -43,14 +43,14 @@ export default function QsrAgeGroups(): React.JSX.Element {
                   </span>
                 </div>
                 <h3 className="mt-4 text-[19px] font-bold leading-snug text-ink">{pathway.title}</h3>
-                <p className="mt-2.5 text-[14px] leading-relaxed text-ink-dim">{pathway.desc}</p>
+                <p className="mt-2.5 text-[16px] leading-relaxed text-ink-dim">{pathway.desc}</p>
               </div>
             );
           })}
         </div>
 
         <div className="mx-auto mt-8 max-w-3xl rounded-sm border border-line-strong bg-panel px-7 py-6 text-center">
-          <p className="text-[14.5px] leading-relaxed text-ink-dim">{section.unifyingLine}</p>
+          <p className="text-[16.5px] leading-relaxed text-ink-dim">{section.unifyingLine}</p>
           <a
             href="#testimonials"
             className="mt-4 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.06em] text-gold transition-colors hover:text-[#8f6820]"

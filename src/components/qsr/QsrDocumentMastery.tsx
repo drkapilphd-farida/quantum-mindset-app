@@ -8,9 +8,9 @@ import { Eyebrow } from "../ui";
 // Learn" feature (AI Document Transformer) has never been shown anywhere
 // on the public QSR landing page before this; five real screenshots
 // (public/images/quantum-mind/09–13-*.png) now give it one compact
-// section, positioned right after AllRoundDevelopment ("what else you
-// get beyond raw speed practice") and before Curriculum, matching that
-// same narrative beat.
+// section, positioned right after FocusScreenTime ("what else you get
+// beyond raw speed practice") and before Curriculum, matching that same
+// narrative beat.
 //
 // Primary + Supporting Hierarchy™ — Phase 2: `09` (Upload & Learn, the
 // literal entry point of the feature) is the one large primary visual;
@@ -33,14 +33,16 @@ export default function QsrDocumentMastery(): React.JSX.Element {
   const [primaryItem, ...supportingItems] = section.items;
 
   return (
-    // Visual Rhythm™ — deliberately NOT `bg-panel`: this used to sit
-    // between QsrAllRoundDevelopment and QsrCurriculum, both `bg-panel`,
-    // making three identical-background sections in a row read as one
-    // long undifferentiated white zone. Transparent here restores proper
-    // alternation. `lg:py-20` (was flat `py-24` at every breakpoint,
-    // mobile/tablet unchanged) trims a little of the desktop-only
-    // vertical rhythm this section doesn't need as much of, given how
-    // visually full its own content already is.
+    // Visual Rhythm™ — deliberately NOT `bg-panel`, so it still alternates
+    // correctly against QsrCurriculum (`bg-panel`) right after it. Since
+    // QsrAllRoundDevelopment was removed (positioning fix — see page.tsx's
+    // own doc comment), this now sits directly after QsrFocusScreenTime,
+    // also plain — a minor, accepted same-background adjacency rather
+    // than cascading a background flip through several unrelated sections
+    // just to keep the whole page perfectly alternating. `lg:py-20` (was
+    // flat `py-24` at every breakpoint, mobile/tablet unchanged) trims a
+    // little of the desktop-only vertical rhythm this section doesn't
+    // need as much of, given how visually full its own content already is.
     <section id="document-mastery" className="border-b border-line px-6 py-24 sm:px-8 lg:py-20">
       <div className="mx-auto max-w-content">
         <div className="mb-14 max-w-xl lg:mb-10">
@@ -62,7 +64,7 @@ export default function QsrDocumentMastery(): React.JSX.Element {
             </div>
             <div className="p-5 sm:p-6">
               <h3 className="text-[17px] font-bold leading-snug text-ink">{primaryItem.title}</h3>
-              <p className="mt-1.5 text-[14px] leading-relaxed text-ink-dim">{primaryItem.desc}</p>
+              <p className="mt-1.5 text-[16px] leading-relaxed text-ink-dim">{primaryItem.desc}</p>
             </div>
           </div>
         )}

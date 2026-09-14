@@ -68,10 +68,10 @@ export default function QsrMechanics(): React.JSX.Element {
                 {data.tag}
               </span>
               <h3 className="mb-3 mt-3 text-[21px] font-bold leading-snug">{data.title}</h3>
-              <p className="mb-6 text-[14.5px] leading-relaxed text-ink-dim">{data.desc}</p>
+              <p className="mb-6 text-[16.5px] leading-relaxed text-ink-dim">{data.desc}</p>
               <ul className="mt-auto space-y-3">
                 {data.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-start gap-2.5 text-[14px] text-ink">
+                  <li key={bullet} className="flex items-start gap-2.5 text-[16px] leading-relaxed text-ink">
                     <span
                       className={`mt-[7px] h-1.5 w-1.5 flex-none rounded-full ${
                         accent === "gold" ? "bg-gold" : "bg-teal"

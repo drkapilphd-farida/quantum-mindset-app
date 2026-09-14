@@ -31,7 +31,7 @@ export default function QsrBrainScience(): React.JSX.Element {
                   <Icon className="h-5 w-5 text-gold" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 text-[16.5px] font-bold leading-snug text-ink">{card.title}</h3>
-                <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink-dim">{card.desc}</p>
+                <p className="mt-2.5 text-[15.5px] leading-relaxed text-ink-dim">{card.desc}</p>
               </div>
             );
           })}

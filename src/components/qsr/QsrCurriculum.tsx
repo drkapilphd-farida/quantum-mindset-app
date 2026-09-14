@@ -52,7 +52,7 @@ export default function QsrCurriculum(): React.JSX.Element {
                   {week.range}
                 </span>
                 <h3 className="mt-1.5 text-[19px] font-bold leading-snug sm:text-[21px]">{week.title}</h3>
-                <p className="mt-2.5 max-w-xl text-[14.5px] leading-relaxed text-ink-dim">{week.desc}</p>
+                <p className="mt-2.5 max-w-xl text-[16.5px] leading-relaxed text-ink-dim">{week.desc}</p>
               </div>
             </div>
           ))}

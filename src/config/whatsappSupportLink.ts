@@ -157,6 +157,19 @@ export function buildResidentialWhatsAppLink(detail: string): string {
   return `https://wa.me/919540123161?text=${encodeURIComponent(`Hi Dr. Kapil, I want to secure my seat — ${detail}`)}`
 }
 
+// Mumbai in-person QSR workshop (pilot batch, 2 days, ₹9,999) — same "no
+// dedicated checkout exists yet" situation as the other date-bound/
+// limited-seat offers above, so this is the real, working primary
+// registration path today. Deliberately NOT reusing
+// RAZORPAY_MASTERCLASS_PAYMENT_LINK: that link has no way to tag a buyer
+// as "Mumbai pilot batch" vs. "online," and batch/seat confirmation for a
+// small, age-segmented pilot cohort needs a real person to coordinate
+// anyway — same reasoning as the Retreats/Residential/Mentoring links
+// above. If a dedicated payment link is set up later, only this constant
+// needs to change.
+export const WHATSAPP_MUMBAI_WORKSHOP_INQUIRY_LINK =
+  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20know%20more%20about%20the%20Mumbai%20in-person%20Quantum%20Speed%20Reading%20workshop%20(pilot%20batch)'
+
 // PREfrontal POWER (27 Sept 2026, Mumbai, ₹3,500, 40 seats) — same "no
 // dedicated checkout exists yet" situation as the Retreats and Personal
 // Class links above, so this is the real, working, primary registration

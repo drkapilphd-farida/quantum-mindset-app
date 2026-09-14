@@ -38,7 +38,7 @@ export default function QsrMoreThanSpeed(): React.JSX.Element {
                 {data.tag}
               </span>
               <h3 className="mb-3 mt-3 text-[21px] font-bold leading-snug">{data.title}</h3>
-              <p className="text-[14.5px] leading-relaxed text-ink-dim">{data.desc}</p>
+              <p className="text-[16.5px] leading-relaxed text-ink-dim">{data.desc}</p>
             </div>
           ))}
         </div>

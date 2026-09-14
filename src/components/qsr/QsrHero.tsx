@@ -60,7 +60,7 @@ export default function QsrHero(): React.JSX.Element {
                   small text, distinct from QsrGuaranteeBadge's full box
                   further below, which stays as the complete-detail
                   version. */}
-              <p className="mt-1.5 max-w-[240px] text-[11px] leading-snug text-ink-faint">{qsr.guarantee.heroLine}</p>
+              <p className="mt-1.5 max-w-[240px] text-[11px] leading-snug text-ink-dim">{qsr.guarantee.heroLine}</p>
             </div>
             <Link
               href="/programs/quantum-speed-reading/speed-test"

@@ -39,7 +39,7 @@ export default function QsrNeuroCognitiveScience(): React.JSX.Element {
                   <Icon className="h-5 w-5 text-gold" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 text-[16.5px] font-bold leading-snug text-ink">{metric.label}</h3>
-                <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink-dim">{metric.desc}</p>
+                <p className="mt-2.5 text-[15.5px] leading-relaxed text-ink-dim">{metric.desc}</p>
               </div>
             );
           })}
@@ -54,18 +54,18 @@ export default function QsrNeuroCognitiveScience(): React.JSX.Element {
               <Waves className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
               <div>
                 <p className="text-[14.5px] font-bold text-ink">{section.brainStates.alpha.title}</p>
-                <p className="mt-1 text-[13px] leading-relaxed text-ink-dim">{section.brainStates.alpha.desc}</p>
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-dim">{section.brainStates.alpha.desc}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <Brain className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
               <div>
                 <p className="text-[14.5px] font-bold text-ink">{section.brainStates.theta.title}</p>
-                <p className="mt-1 text-[13px] leading-relaxed text-ink-dim">{section.brainStates.theta.desc}</p>
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-dim">{section.brainStates.theta.desc}</p>
               </div>
             </div>
           </div>
-          <p className="mt-6 border-t border-line pt-4 text-[11.5px] leading-relaxed text-ink-faint">
+          <p className="mt-6 border-t border-line pt-4 text-[11.5px] leading-relaxed text-ink-dim">
             {section.disclaimer}
           </p>
         </div>
@@ -90,7 +90,7 @@ export default function QsrNeuroCognitiveScience(): React.JSX.Element {
           </div>
 
           <h3 className="mt-6 text-[16.5px] font-bold text-ink">{eeg.title}</h3>
-          <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-ink-dim">{eeg.desc}</p>
+          <p className="mt-2 max-w-2xl text-[15.5px] leading-relaxed text-ink-dim">{eeg.desc}</p>
 
           <div className="mt-5 flex flex-wrap gap-2.5">
             {eeg.pills.map((pill) => (

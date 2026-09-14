@@ -1,26 +1,20 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { Eyebrow } from "./ui";
-import { WHATSAPP_GENERAL_INQUIRY_LINK } from "@/config/whatsappSupportLink";
+import { Eyebrow } from "../ui";
+import { WHATSAPP_MUMBAI_WORKSHOP_INQUIRY_LINK } from "@/config/whatsappSupportLink";
+import { trackGaEvent } from "@/lib/analytics/ga4";
 
-// Native <details>/<summary> accordion — zero-dependency disclosure
-// pattern (matches WhyThisDrillWorks.tsx elsewhere in the app), placed
-// right above the footer to catch last-minute objections (pricing,
-// schedule, age, beginner-friendliness) before the visitor bounces.
-export default function FAQSection(): React.JSX.Element {
+export default function QsrMumbaiFaq(): React.JSX.Element {
   const { t } = useLanguage();
-  const section = t.faq;
+  const section = t.qsrMumbaiLanding.faq;
 
   return (
-    <section id="faq" className="border-b border-line px-6 py-24 sm:px-8 lg:py-20">
+    <section id="faq" className="border-b border-line px-6 py-20 sm:px-8 lg:py-16">
       <div className="mx-auto max-w-content">
-        <div className="mb-14 max-w-xl">
+        <div className="mb-12 max-w-xl">
           <Eyebrow>{section.eyebrow}</Eyebrow>
-          <h2 className="mt-4 text-[28px] font-extrabold leading-tight sm:text-[34px]">
-            {section.title}
-          </h2>
-          <p className="mt-3 text-[15.5px] text-ink-dim">{section.desc}</p>
+          <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[32px]">{section.title}</h2>
         </div>
 
         <div className="mx-auto max-w-3xl divide-y divide-line border-y border-line">
@@ -32,18 +26,17 @@ export default function FAQSection(): React.JSX.Element {
                   +
                 </span>
               </summary>
-              <p className="mt-3 pr-10 text-[16.5px] leading-relaxed text-ink-dim">
-                {item.answer}
-              </p>
+              <p className="mt-3 pr-10 text-[16px] leading-relaxed text-ink-dim">{item.answer}</p>
             </details>
           ))}
         </div>
 
         <div className="mx-auto mt-10 flex max-w-3xl justify-center">
           <a
-            href={WHATSAPP_GENERAL_INQUIRY_LINK}
+            href={WHATSAPP_MUMBAI_WORKSHOP_INQUIRY_LINK}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackGaEvent("whatsapp_click", { location: "qsr_mumbai_faq" })}
             className="group inline-flex items-center gap-2.5 rounded-sm border border-teal/60 px-7 py-[15px] text-[14.5px] font-semibold text-teal transition-colors hover:bg-teal-soft"
           >
             {section.ctaLabel}
