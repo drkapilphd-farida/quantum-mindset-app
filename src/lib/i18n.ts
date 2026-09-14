@@ -39,7 +39,7 @@ export const translations = {
     // Reading Speed Test, the live intro session) lives in its own
     // sections, never framed as "free access to the program."
     accessModel: {
-      masterclassLabel: "Live Masterclass — ₹4,999",
+      masterclassLabel: "Live Masterclass — ₹9,999",
       masterclassDesc: "The full 30-day curriculum, 7 live sessions with Dr. Sharma, and app access throughout — one-time.",
       continueLabel: "Continue — ₹499/mo",
       continueDesc: "For graduates who've completed the program and want continued app practice afterward.",
@@ -683,7 +683,7 @@ export const translations = {
         {
           question: "How much does the Quantum Speed Reading Masterclass cost?",
           answer:
-            "The 30-Day Quantum Speed Reading Live Masterclass is ₹4,999, one-time — the full curriculum, 7 live sessions with Dr. Sharma, and app access throughout, backed by our 7-Day Result Guarantee. We don't offer free access to the program itself, but you can try our free 2-minute Reading Speed Test or join a free live intro session first. Graduates who want continued app practice afterward can continue for ₹499/month. The Retreats and 1-on-1 Mentoring are priced by program; message us on WhatsApp for exact pricing and current batch availability.",
+            "The 30-Day Quantum Speed Reading Live Masterclass is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Sharma, and app access throughout, backed by our 100% Results Guarantee for online students. We don't offer free access to the program itself, but you can try our free 2-minute Reading Speed Test or join a free live intro session first. Graduates who want continued app practice afterward can continue for ₹499/month. The Retreats and 1-on-1 Mentoring are priced by program; message us on WhatsApp for exact pricing and current batch availability.",
         },
         {
           question: "Are the retreats online or residential?",
@@ -791,12 +791,12 @@ export const translations = {
     },
     qsrLanding: {
       hero: {
-        eyebrow: "30-Day Quantum Speed Reading Masterclass",
+        eyebrow: "Science-Backed Advanced Neuro-Cognitive Transformation Program",
         headline: "Read 5x Faster. Retain 100%.",
         headlineEm: "Master any book.",
-        sub: "Not a webinar. A 30-day psychological and cognitive rebuild of how your mind processes, absorbs, and retains information. Guided live by Dr. Kapil Dev Sharma.",
+        sub: "Not a webinar. A 30-day, science-backed neuro-cognitive rebuild of how your mind processes, absorbs, and retains information — with your progress tracked on real cognitive performance metrics throughout. Guided live by Dr. Kapil Dev Sharma.",
         ctaPrimary: "Secure Your Batch Spot",
-        ctaPrimaryMeta: "₹4,999 · One-Time Enrollment",
+        ctaPrimaryMeta: "₹9,999 · One-Time Enrollment",
         ctaSecondary: "Take the Free 2-Min Reading Speed Test",
         trustLine: "For students, professionals, and lifelong learners of every age group.",
         visualCaption: "Your 30-Day Streak Starts Day 1",
@@ -811,10 +811,10 @@ export const translations = {
         secondaryLine: "Secure checkout via Razorpay · 10,000+ students since 2014",
       },
       guarantee: {
-        title: "7-Day Result Guarantee",
-        desc: "Complete the first 7 days of the program as instructed. If your WPM hasn't measurably improved, tell us and we'll issue a full refund — no questions asked.",
+        title: "100% Results Guaranteed for Online Students",
+        desc: "Complete the full 30-day protocol as instructed — every app session, all 7 live masterclasses. If you do, and your reading speed and comprehension haven't measurably improved, tell us and we'll issue a full refund.",
         policyLabel: "See our Refund & Cancellation Policy",
-        heroLine: "Try the first 7 days risk-free — if your WPM hasn't measurably improved, full refund.",
+        heroLine: "100% Results Guaranteed — complete the full 30-day protocol, or get a full refund.",
       },
       brainScience: {
         eyebrow: "The Science Behind It",
@@ -838,6 +838,56 @@ export const translations = {
             desc: "None of the above holds without sustained, distraction-free focus. The same daily drills that build reading speed also train your ability to hold attention on one task for longer stretches.",
           },
         ],
+      },
+      // Science-Backed Neuro-Cognitive Positioning™ — the program's own
+      // real, already-computed metrics (Brain Score, comprehension %,
+      // daily-streak consistency — see practiceHistory.ts /
+      // ThirtyDayCurriculumOverview.tsx) presented as clean typographic
+      // stat callouts, never a chart or dashboard screenshot standing in
+      // for real EEG data that doesn't exist for the online cohort.
+      // Alpha/Theta are framed as the states the breathing/concentration
+      // and visualization/memory drills are designed to help a student
+      // access — a training target, not a per-session measured claim,
+      // since only the Vadodara in-person track has physical EEG
+      // hardware to actually verify brain state (see eeg below).
+      neuroCognitive: {
+        eyebrow: "Advanced Neuro-Cognitive Training",
+        title: "A Science-Backed Neuro-Cognitive Transformation Program",
+        desc: "This isn't just faster reading — it's structured training toward the brain states linked to deep focus and durable memory, with your own progress tracked on real cognitive metrics from Day 1.",
+        metrics: [
+          {
+            label: "Brain Score",
+            desc: "A composite score built from your real reading growth and comprehension data, tracked from your own Day 1 baseline.",
+          },
+          {
+            label: "Comprehension %",
+            desc: "How much of what you read you actually retain, scored every session — never speed reported without it.",
+          },
+          {
+            label: "Consistency",
+            desc: "Your daily practice streak — the single strongest real predictor of whether the training actually sticks.",
+          },
+        ],
+        brainStates: {
+          title: "Trained Toward Two Brain States",
+          alpha: {
+            title: "Alpha State",
+            desc: "A relaxed, alert focus — what the program's breathing and concentration drills are designed to help you access before a reading session.",
+          },
+          theta: {
+            title: "Theta State",
+            desc: "A deeper, meditative state associated with memory consolidation — supported by the visualization and memory-anchoring techniques in Weeks 3–4.",
+          },
+        },
+        disclaimer: "Brain-state framing describes the design intent of these drills, not a per-session measured guarantee for online students — see the Vadodara EEG track below for hardware-verified sessions.",
+      },
+      eeg: {
+        badge: "Physical EEG Brain Mapping & Neurofeedback Sessions Included",
+        badgeLocation: "Exclusively in Vadodara",
+        title: "Research-Grade EEG Integration, In Person",
+        desc: "Online students train through the app and all 7 live masterclasses. Students based in Vadodara additionally get real, in-person physical EEG brain mapping and neurofeedback sessions at Dr. Kapil's own center — hardware-based, clinical cognitive tracking layered on top of the same 30-day curriculum, not a substitute for it.",
+        pills: ["Research-Grade EEG Integration", "Neural Pathway Expansion", "Clinical Cognitive Tracking"],
+        ctaLabel: "Ask About Vadodara In-Person Sessions",
       },
       appPreview: {
         eyebrow: "Inside the App",
@@ -1139,17 +1189,17 @@ export const translations = {
           {
             question: "Is any of this actually free?",
             answer:
-              "The Masterclass itself is a fully paid, result-oriented program — ₹4,999 one-time for the full 30-day curriculum, all 7 live sessions with Dr. Sharma, and app access throughout. We don't offer free access to the program, because neither the app alone nor the live sessions alone deliver the result — they're built to work together. What is free: our 2-minute Reading Speed Test, and our free 45-minute live intro session with Dr. Sharma — see below.",
+              "The Masterclass itself is a fully paid, result-oriented program — ₹9,999 one-time for the full 30-day curriculum, all 7 live sessions with Dr. Sharma, and app access throughout. We don't offer free access to the program, because neither the app alone nor the live sessions alone deliver the result — they're built to work together. What is free: our 2-minute Reading Speed Test, and our free 45-minute live intro session with Dr. Sharma — see below.",
           },
           {
-            question: "What exactly do I get for ₹4,999?",
+            question: "What exactly do I get for ₹9,999?",
             answer:
-              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
+              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Vadodara-based students additionally get in-person physical EEG brain mapping and neurofeedback sessions at Dr. Sharma's center, layered on top of the same curriculum. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
           },
           {
             question: "What if it doesn't work for me?",
             answer:
-              "You're backed by our 7-Day Result Guarantee: complete the first 7 days of the program as instructed, and if your WPM hasn't measurably improved, tell us and we'll issue a full refund — no questions asked. See our Refund & Cancellation Policy for the full terms.",
+              "You're backed by our 100% Results Guarantee for online students: complete the full 30-day protocol as instructed — every app session, all 7 live masterclasses — and if your reading speed and comprehension haven't measurably improved, tell us and we'll issue a full refund. See our Refund & Cancellation Policy for the full terms.",
           },
           {
             question: "What happens right after I pay?",
@@ -1168,14 +1218,14 @@ export const translations = {
         title: "Your 30 Days Start With One Decision",
         desc: "Enrollment is confirmed personally by Dr. Kapil's own team, not an automated system.",
         cta: "Secure Your Batch Spot",
-        ctaMeta: "₹4,999 · One-Time Enrollment",
+        ctaMeta: "₹9,999 · One-Time Enrollment",
         batchNoticeLabel: "Next Batch Starts",
         cadenceLine: "New batches begin twice a month — the 7th and the 25th.",
         structureLine: "7 live classes across your 30 days · daily practice through the app",
       },
       stickyBar: {
         text: "30-Day Quantum Speed Reading Masterclass",
-        price: "₹4,999 · One-Time",
+        price: "₹9,999 · One-Time",
         cta: "Secure Your Batch Spot",
       },
       whatsapp: {
@@ -2042,7 +2092,7 @@ export const translations = {
       line: "यह एक आध्यात्मिक और व्यक्तिगत-विकास अभ्यास है, लाइसेंस-प्राप्त चिकित्सा या मानसिक स्वास्थ्य उपचार का विकल्प नहीं। यदि आप संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर या स्थानीय आपातकालीन सेवाओं से संपर्क करें।",
     },
     accessModel: {
-      masterclassLabel: "लाइव मास्टरक्लास — ₹4,999",
+      masterclassLabel: "लाइव मास्टरक्लास — ₹9,999",
       masterclassDesc: "पूरा 30-दिवसीय पाठ्यक्रम, डॉ. शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस — एकमुश्त।",
       continueLabel: "जारी रखें — ₹499/माह",
       continueDesc: "उन ग्रेजुएट्स के लिए जिन्होंने प्रोग्राम पूरा कर लिया है और बाद में भी ऐप अभ्यास जारी रखना चाहते हैं।",
@@ -2686,7 +2736,7 @@ export const translations = {
         {
           question: "क्वांटम स्पीड रीडिंग मास्टरक्लास की कीमत कितनी है?",
           answer:
-            "30-दिवसीय क्वांटम स्पीड रीडिंग लाइव मास्टरक्लास की कीमत ₹4,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, हमारी 7-दिवसीय रिज़ल्ट गारंटी के साथ। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं या एक मुफ़्त लाइव इंट्रो सेशन जॉइन कर सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं। रिट्रीट्स और 1-ऑन-1 मेंटरिंग की कीमत कार्यक्रम अनुसार अलग होती है; सटीक कीमत और मौजूदा बैच उपलब्धता के लिए हमें WhatsApp पर संदेश भेजें।",
+            "30-दिवसीय क्वांटम स्पीड रीडिंग लाइव मास्टरक्लास की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी के साथ। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं या एक मुफ़्त लाइव इंट्रो सेशन जॉइन कर सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं। रिट्रीट्स और 1-ऑन-1 मेंटरिंग की कीमत कार्यक्रम अनुसार अलग होती है; सटीक कीमत और मौजूदा बैच उपलब्धता के लिए हमें WhatsApp पर संदेश भेजें।",
         },
         {
           question: "अगला ऑनलाइन रिट्रीट या रेजिडेंशियल बैच कब है?",
@@ -2799,12 +2849,12 @@ export const translations = {
     },
     qsrLanding: {
       hero: {
-        eyebrow: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास",
+        eyebrow: "साइंस-बैक्ड एडवांस्ड न्यूरो-कॉग्निटिव ट्रांसफॉर्मेशन प्रोग्राम",
         headline: "5 गुना तेज़ पढ़ें। 100% याद रखें।",
         headlineEm: "कोई भी किताब मास्टर करें।",
-        sub: "यह कोई वेबिनार नहीं है। यह 30 दिनों में आपके मस्तिष्क के सूचना ग्रहण करने, समझने और याद रखने के तरीके का एक मनोवैज्ञानिक और संज्ञानात्मक पुनर्निर्माण है — डॉ. कपिल देव शर्मा द्वारा लाइव मार्गदर्शित।",
+        sub: "यह कोई वेबिनार नहीं है। यह 30 दिनों में आपके मस्तिष्क के सूचना ग्रहण करने, समझने और याद रखने के तरीके का एक साइंस-बैक्ड न्यूरो-कॉग्निटिव पुनर्निर्माण है — जिसमें आपकी प्रगति असली कॉग्निटिव परफॉर्मेंस मेट्रिक्स पर ट्रैक होती है। डॉ. कपिल देव शर्मा द्वारा लाइव मार्गदर्शित।",
         ctaPrimary: "अपनी बैच सीट सुरक्षित करें",
-        ctaPrimaryMeta: "₹4,999 · एकमुश्त नामांकन",
+        ctaPrimaryMeta: "₹9,999 · एकमुश्त नामांकन",
         ctaSecondary: "मुफ़्त 2-मिनट रीडिंग स्पीड टेस्ट लें",
         trustLine: "विद्यार्थियों, पेशेवरों, और हर आयु वर्ग के आजीवन सीखने वालों के लिए।",
         visualCaption: "आपकी 30-दिवसीय स्ट्रीक दिन 1 से शुरू होती है",
@@ -2819,10 +2869,10 @@ export const translations = {
         secondaryLine: "Razorpay के ज़रिए सुरक्षित चेकआउट · 2014 से 10,000+ विद्यार्थी",
       },
       guarantee: {
-        title: "7-दिवसीय रिज़ल्ट गारंटी",
-        desc: "प्रोग्राम के पहले 7 दिन निर्देशानुसार पूरे करें। अगर आपका WPM मापने योग्य रूप से नहीं सुधरा है, तो हमें बताएं और हम पूरा रिफंड जारी करेंगे — कोई सवाल नहीं पूछा जाएगा।",
+        title: "ऑनलाइन विद्यार्थियों के लिए 100% रिज़ल्ट गारंटी",
+        desc: "पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें — हर ऐप सेशन, सभी 7 लाइव मास्टरक्लास। अगर आपने ऐसा किया और आपकी रीडिंग स्पीड व समझ मापने योग्य रूप से नहीं सुधरी, तो हमें बताएं और हम पूरा रिफंड जारी करेंगे।",
         policyLabel: "हमारी रिफंड और कैंसिलेशन नीति देखें",
-        heroLine: "पहले 7 दिन जोखिम-मुक्त आज़माएं — अगर आपका WPM मापने योग्य रूप से नहीं सुधरा, तो पूरा रिफंड।",
+        heroLine: "100% रिज़ल्ट गारंटी — पूरा 30-दिवसीय प्रोटोकॉल पूरा करें, या पूरा रिफंड पाएं।",
       },
       brainScience: {
         eyebrow: "इसके पीछे का विज्ञान",
@@ -2846,6 +2896,45 @@ export const translations = {
             desc: "ऊपर बताई गई कोई भी बात बिना निरंतर, विकर्षण-मुक्त फोकस के टिक नहीं पाती। वही दैनिक अभ्यास जो पढ़ने की गति बढ़ाते हैं, आपकी लंबे समय तक एक ही काम पर ध्यान केंद्रित करने की क्षमता को भी प्रशिक्षित करते हैं।",
           },
         ],
+      },
+      neuroCognitive: {
+        eyebrow: "एडवांस्ड न्यूरो-कॉग्निटिव ट्रेनिंग",
+        title: "एक साइंस-बैक्ड न्यूरो-कॉग्निटिव ट्रांसफॉर्मेशन प्रोग्राम",
+        desc: "यह सिर्फ़ तेज़ पढ़ना नहीं है — यह गहन फोकस और स्थायी याददाश्त से जुड़ी मस्तिष्क अवस्थाओं की ओर संरचित प्रशिक्षण है, जिसमें आपकी अपनी प्रगति Day 1 से ही असली कॉग्निटिव मेट्रिक्स पर ट्रैक होती है।",
+        metrics: [
+          {
+            label: "ब्रेन स्कोर",
+            desc: "आपकी असली रीडिंग ग्रोथ और कॉम्प्रिहेंशन डेटा से बना एक समग्र स्कोर, आपकी अपनी Day 1 बेसलाइन से ट्रैक किया जाता है।",
+          },
+          {
+            label: "कॉम्प्रिहेंशन %",
+            desc: "आप जो पढ़ते हैं उसमें से वास्तव में कितना याद रखते हैं — हर सेशन में स्कोर होता है, स्पीड कभी अकेले नहीं बताई जाती।",
+          },
+          {
+            label: "कंसिस्टेंसी",
+            desc: "आपकी दैनिक अभ्यास स्ट्रीक — यह सबसे मज़बूत असली संकेतक है कि ट्रेनिंग वाकई असर करेगी या नहीं।",
+          },
+        ],
+        brainStates: {
+          title: "दो मस्तिष्क अवस्थाओं की ओर प्रशिक्षित",
+          alpha: {
+            title: "अल्फा अवस्था",
+            desc: "एक शांत, सजग फोकस — जिसे हासिल करने में प्रोग्राम के श्वास और एकाग्रता अभ्यास आपकी मदद करने के लिए बनाए गए हैं, पढ़ने के सेशन से पहले।",
+          },
+          theta: {
+            title: "थीटा अवस्था",
+            desc: "एक गहरी, ध्यानपूर्ण अवस्था जो याददाश्त के सुदृढ़ीकरण से जुड़ी है — जिसे सप्ताह 3–4 की विज़ुअलाइज़ेशन और मेमोरी-एंकरिंग तकनीकों से समर्थन मिलता है।",
+          },
+        },
+        disclaimer: "ब्रेन-स्टेट फ़्रेमिंग इन अभ्यासों के डिज़ाइन इरादे को बताती है, ऑनलाइन विद्यार्थियों के लिए हर-सेशन मापी गई गारंटी नहीं — हार्डवेयर-सत्यापित सेशन के लिए नीचे वडोदरा EEG ट्रैक देखें।",
+      },
+      eeg: {
+        badge: "फिज़िकल EEG ब्रेन मैपिंग और न्यूरोफीडबैक सेशन शामिल",
+        badgeLocation: "केवल वडोदरा में",
+        title: "रिसर्च-ग्रेड EEG इंटीग्रेशन, व्यक्तिगत रूप से",
+        desc: "ऑनलाइन विद्यार्थी ऐप और सभी 7 लाइव मास्टरक्लास के ज़रिए प्रशिक्षण लेते हैं। वडोदरा-आधारित विद्यार्थियों को डॉ. कपिल के अपने सेंटर पर असली, व्यक्तिगत फिज़िकल EEG ब्रेन मैपिंग और न्यूरोफीडबैक सेशन भी मिलते हैं — हार्डवेयर-आधारित, क्लिनिकल कॉग्निटिव ट्रैकिंग, उसी 30-दिवसीय पाठ्यक्रम के ऊपर, उसकी जगह नहीं।",
+        pills: ["रिसर्च-ग्रेड EEG इंटीग्रेशन", "न्यूरल पाथवे एक्सपैंशन", "क्लिनिकल कॉग्निटिव ट्रैकिंग"],
+        ctaLabel: "वडोदरा इन-पर्सन सेशन के बारे में पूछें",
       },
       appPreview: {
         eyebrow: "ऐप के भीतर",
@@ -3147,17 +3236,17 @@ export const translations = {
           {
             question: "क्या इसमें से कुछ वास्तव में मुफ़्त है?",
             answer:
-              "मास्टरक्लास खुद एक पूरी तरह से भुगतान वाला, परिणाम-उन्मुख प्रोग्राम है — ₹4,999 एकमुश्त में पूरा 30-दिवसीय पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव सेशन, और पूरे समय ऐप एक्सेस मिलता है। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, क्योंकि न तो अकेले ऐप और न ही अकेले लाइव सेशन पूरा परिणाम देते हैं — दोनों एक साथ काम करने के लिए बनाए गए हैं। जो मुफ़्त है: हमारा 2-मिनट रीडिंग स्पीड टेस्ट, और डॉ. शर्मा के साथ हमारा मुफ़्त 45-मिनट लाइव इंट्रो सेशन — नीचे देखें।",
+              "मास्टरक्लास खुद एक पूरी तरह से भुगतान वाला, परिणाम-उन्मुख प्रोग्राम है — ₹9,999 एकमुश्त में पूरा 30-दिवसीय पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव सेशन, और पूरे समय ऐप एक्सेस मिलता है। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, क्योंकि न तो अकेले ऐप और न ही अकेले लाइव सेशन पूरा परिणाम देते हैं — दोनों एक साथ काम करने के लिए बनाए गए हैं। जो मुफ़्त है: हमारा 2-मिनट रीडिंग स्पीड टेस्ट, और डॉ. शर्मा के साथ हमारा मुफ़्त 45-मिनट लाइव इंट्रो सेशन — नीचे देखें।",
           },
           {
-            question: "₹4,999 में मुझे वास्तव में क्या मिलता है?",
+            question: "₹9,999 में मुझे वास्तव में क्या मिलता है?",
             answer:
-              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
+              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। वडोदरा-आधारित विद्यार्थियों को डॉ. शर्मा के सेंटर पर व्यक्तिगत रूप से फिज़िकल EEG ब्रेन मैपिंग और न्यूरोफीडबैक सेशन भी मिलते हैं, उसी पाठ्यक्रम के साथ। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
           },
           {
             question: "अगर यह मेरे लिए काम नहीं करता तो?",
             answer:
-              "आप हमारी 7-दिवसीय रिज़ल्ट गारंटी से सुरक्षित हैं: प्रोग्राम के पहले 7 दिन निर्देशानुसार पूरे करें, और अगर आपका WPM मापने योग्य रूप से नहीं सुधरा है, तो हमें बताएं और हम पूरा रिफंड जारी करेंगे — कोई सवाल नहीं पूछा जाएगा। पूरी शर्तों के लिए हमारी रिफंड और कैंसिलेशन नीति देखें।",
+              "आप ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी से सुरक्षित हैं: पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें — हर ऐप सेशन, सभी 7 लाइव मास्टरक्लास — और अगर आपकी रीडिंग स्पीड व समझ मापने योग्य रूप से नहीं सुधरी, तो हमें बताएं और हम पूरा रिफंड जारी करेंगे। पूरी शर्तों के लिए हमारी रिफंड और कैंसिलेशन नीति देखें।",
           },
           {
             question: "भुगतान के तुरंत बाद क्या होता है?",
@@ -3176,14 +3265,14 @@ export const translations = {
         title: "आपके 30 दिन एक फैसले से शुरू होते हैं",
         desc: "नामांकन की पुष्टि डॉ. कपिल की अपनी टीम व्यक्तिगत रूप से करती है, कोई ऑटोमेटेड सिस्टम नहीं।",
         cta: "अपनी बैच सीट सुरक्षित करें",
-        ctaMeta: "₹4,999 · एकमुश्त नामांकन",
+        ctaMeta: "₹9,999 · एकमुश्त नामांकन",
         batchNoticeLabel: "अगला बैच शुरू होता है",
         cadenceLine: "नए बैच महीने में दो बार शुरू होते हैं — 7 तारीख और 25 तारीख को।",
         structureLine: "आपके 30 दिनों में 7 लाइव क्लासेज़ · दैनिक अभ्यास ऐप के ज़रिए",
       },
       stickyBar: {
         text: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास",
-        price: "₹4,999 · एकमुश्त",
+        price: "₹9,999 · एकमुश्त",
         cta: "अपनी बैच सीट सुरक्षित करें",
       },
       whatsapp: {

@@ -217,12 +217,12 @@ export function PricingPlansGrid(): React.JSX.Element {
         <div>
           <p className="text-lg font-semibold text-foreground">30-Day Quantum Speed Reading Mastery + Live Cohort</p>
           <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
-            The self-paced 30-day curriculum, paired with 7 live mentorship sessions from Dr. Kapil Dev Sharma. One-time enrollment — ₹4,999.
+            The self-paced 30-day curriculum, paired with 7 live mentorship sessions from Dr. Kapil Dev Sharma. One-time enrollment — ₹9,999.
           </p>
         </div>
         <Button asChild size="lg" className="w-full shrink-0 rounded-full sm:w-auto">
           <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-            Enroll Now for ₹4,999
+            Enroll Now for ₹9,999
             <ExternalLink className="size-4" aria-hidden="true" />
           </a>
         </Button>

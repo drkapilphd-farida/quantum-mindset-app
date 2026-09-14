@@ -6,7 +6,7 @@ import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLi
 // highest-intent moment: a learner who just finished all 21 real days
 // and measured real WPM growth is the warmest possible audience for the
 // next real step. "App 2" here is the real 30-Day Quantum Speed Reading
-// Mastery Curriculum™ — the same ₹4,999 Razorpay link already sells
+// Mastery Curriculum™ — the same ₹9,999 Razorpay link already sells
 // elsewhere (ThirtyDayMasterclassHeroCard, MasterclassPaywallModal),
 // reused rather than inventing a second checkout URL. Server-renderable
 // on purpose (no 'use client', no hooks) so both the client-only
@@ -28,7 +28,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
       </div>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed font-medium text-foreground sm:text-base">
         अब अपनी इस नई स्पीड को अपने खुद के डॉक्यूमेंट्स और किताबों पर आजमाएं — Get 30-Day QSR Pro Suite (App 2) with Upload Documents, Spider
-        Notes, &amp; Memory Techniques at ₹4,999.
+        Notes, &amp; Memory Techniques at ₹9,999.
       </p>
       <a
         href={RAZORPAY_MASTERCLASS_PAYMENT_LINK}
@@ -38,7 +38,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
         data-enroll-button="true"
       >
         <Sparkles className="size-4" aria-hidden="true" />
-        Enroll Now for ₹4,999 →
+        Enroll Now for ₹9,999 →
       </a>
     </div>
   )

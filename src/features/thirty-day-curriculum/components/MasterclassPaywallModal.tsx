@@ -43,7 +43,7 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
           </div>
 
           <div className="w-full rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4">
-            <p className="font-heading text-3xl font-bold tabular-nums text-foreground">₹4,999</p>
+            <p className="font-heading text-3xl font-bold tabular-nums text-foreground">₹9,999</p>
             <p className="mt-0.5 text-xs text-muted-foreground">One-time enrollment · full 30-day curriculum + live cohort</p>
           </div>
 
@@ -55,7 +55,7 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
           >
             <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
-              Enroll Now for ₹4,999 →
+              Enroll Now for ₹9,999 →
             </a>
           </Button>
 

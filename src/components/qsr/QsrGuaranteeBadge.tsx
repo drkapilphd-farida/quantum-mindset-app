@@ -8,15 +8,16 @@ type QsrGuaranteeBadgeProps = {
   className?: string;
 };
 
-// 7-Day Result Guarantee™ — the risk-reversal mechanism replacing the
-// removed "free access" framing (see getIsPaidUser.ts and
-// accessModel's doc comment). Deliberately specific and measurable
-// ("7 days" + "WPM hasn't measurably improved"), never softened into
-// vague "satisfaction guaranteed" language — that's the real policy.
-// Links to the existing Refund & Cancellation Policy (Section 2 of
-// /terms, already anchored at #billing — see CheckoutTrustLine.tsx)
-// rather than duplicating its legal text here. Shown near the primary
-// CTA in both the hero and the final batch-notice section.
+// 100% Results Guarantee™ — the risk-reversal mechanism replacing the
+// removed "free access" framing (see getIsPaidUser.ts and accessModel's
+// doc comment). Previously a "7-Day Result Guarantee" (7 days + WPM);
+// replaced with a broader but still specific and measurable condition —
+// the full 30-day protocol, reading speed AND comprehension — never
+// softened into vague "satisfaction guaranteed" language. Links to the
+// existing Refund & Cancellation Policy (Section 2 of /terms, already
+// anchored at #billing — see CheckoutTrustLine.tsx) rather than
+// duplicating its legal text here. Shown near the primary CTA in both
+// the hero and the final batch-notice section.
 export default function QsrGuaranteeBadge({ className = "" }: QsrGuaranteeBadgeProps): React.JSX.Element {
   const { t } = useLanguage();
   const g = t.qsrLanding.guarantee;

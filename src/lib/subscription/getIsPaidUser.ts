@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 // Real, RLS-respecting check against the `subscriptions` table (see
 // supabase/migrations/20260711000005_create_plans_subscriptions_entitlements.sql).
 // No free-access window: a user is paid if and only if they have a real
-// `active`/`trialing` subscription row — qsr-masterclass (₹4,999,
+// `active`/`trialing` subscription row — qsr-masterclass (₹9,999,
 // granted by the masterclass webhook on payment) or qsr-app-continued
 // (₹499/mo). Every existing paid gate in the app calls this one
 // function (directly or via hasQuantumSpeedReadingProAccess), so this

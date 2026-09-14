@@ -31,7 +31,7 @@ export default function ReviewsPage(): React.JSX.Element {
           <Button asChild size="sm" className="brand-gradient w-full rounded-full text-white shadow-md hover:opacity-90 sm:w-auto">
             <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
-              Enroll Now for ₹4,999 →
+              Enroll Now for ₹9,999 →
             </a>
           </Button>
         </div>
@@ -63,7 +63,7 @@ export default function ReviewsPage(): React.JSX.Element {
           >
             <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
-              Enroll Now for ₹4,999 →
+              Enroll Now for ₹9,999 →
             </a>
           </Button>
           <Button
@@ -142,14 +142,14 @@ export default function ReviewsPage(): React.JSX.Element {
           <div>
             <p className="text-lg font-semibold text-foreground">Convinced? Your transformation starts on Day 1.</p>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              30-day structured curriculum, 7 live mentorship sessions, real WPM checkpoints. One-time enrollment — ₹4,999.
+              30-day structured curriculum, 7 live mentorship sessions, real WPM checkpoints. One-time enrollment — ₹9,999.
             </p>
           </div>
           <div className="flex w-full flex-col gap-2.5 sm:w-fit sm:flex-row">
             <Button asChild size="lg" className="brand-gradient w-full rounded-full text-white shadow-lg hover:opacity-90 sm:w-auto">
               <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                 <Sparkles className="size-4" aria-hidden="true" />
-                Enroll Now for ₹4,999 →
+                Enroll Now for ₹9,999 →
               </a>
             </Button>
             <Button asChild size="lg" className="w-full rounded-full bg-[#25D366] text-white shadow-lg hover:bg-[#1EBE5B] sm:w-auto">

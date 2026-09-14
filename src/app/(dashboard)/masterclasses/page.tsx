@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 }
 
 // Pillar 1 — Live Member Training Hub™. Member-Exclusive Simplification™:
-// this used to also carry public enrollment copy (₹4,999 CTA, a WhatsApp
+// this used to also carry public enrollment copy (₹9,999 CTA, a WhatsApp
 // promo banner, a reviews link) — all of that moves to a future public
 // landing page, out of scope here. This tab now assumes the visitor is
 // already a member and shows only real, admin-authored data from the

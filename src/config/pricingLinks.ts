@@ -19,6 +19,7 @@ export const FAMILY_PRO_MONTHLY_699 = 'https://api.razorpay.com/v1/l/subscriptio
 export const FAMILY_PRO_YEARLY = 'https://api.razorpay.com/v1/l/subscriptions/sub_TLgH5ZTb2slwOc'
 
 // Re-exported (not duplicated) from masterclassPaymentLink.ts, which
-// stays the literal source of truth for this one URL — it's also
-// consumed on its own by the dashboard hero card and /reviews page.
-export const FLAGSHIP_4999 = RAZORPAY_MASTERCLASS_PAYMENT_LINK
+// stays the literal source of truth for this one URL. Named without the
+// price baked in (unlike the old FLAGSHIP_4999) specifically so a future
+// price change never leaves a stale number sitting in an identifier.
+export const FLAGSHIP_MASTERCLASS = RAZORPAY_MASTERCLASS_PAYMENT_LINK

@@ -21,6 +21,14 @@ export const WHATSAPP_ENROLLMENT_INQUIRY_LINK =
 export const WHATSAPP_FREE_INTRO_SESSION_LINK =
   'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20join%20the%20free%2045-minute%20live%20intro%20session'
 
+// Same number, Vadodara EEG/neurofeedback-specific message — for the
+// QsrEegSection on the QSR landing page. In-person scheduling for this
+// track is handled the same way batch enrollment is (a real person on
+// Dr. Kapil's team, not an automated booking system), so WhatsApp is the
+// real registration path here too, not a placeholder.
+export const WHATSAPP_VADODARA_EEG_INQUIRY_LINK =
+  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%27m%20based%20in%20Vadodara%20and%20want%20to%20know%20more%20about%20the%20in-person%20EEG%20brain%20mapping%20and%20neurofeedback%20sessions'
+
 // Same number, program-agnostic message — for the homepage's floating
 // widget and FAQ section, where the visitor may be asking about any of
 // the five offers (Masterclass, Retreats, Mentoring, Course, Habit App),
@@ -30,7 +38,7 @@ export const WHATSAPP_GENERAL_INQUIRY_LINK =
 
 // Same number, 11-Day Online Retreat-specific message — for the
 // dedicated /retreats/online-11-day landing page. No Razorpay payment
-// link exists for the retreats (unlike the Masterclass's real ₹4,999
+// link exists for the retreats (unlike the Masterclass's real ₹9,999
 // link) — pricing and batch enrollment are WhatsApp-inquiry-based today,
 // so this is the real primary conversion path for that page, not a
 // placeholder standing in for a missing checkout.

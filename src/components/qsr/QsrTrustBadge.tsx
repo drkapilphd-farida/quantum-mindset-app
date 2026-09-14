@@ -6,7 +6,7 @@ import { useLanguage } from "@/context/LanguageContext";
 // Honest Trust Badge™ — deliberately NOT a "risk-free" or "money-back
 // guarantee" claim: no such policy exists (Terms of Service explicitly
 // states fees are non-refundable except where required by law), and this
-// sits next to a real ₹4,999 checkout button, so a fabricated guarantee
+// sits next to a real ₹9,999 checkout button, so a fabricated guarantee
 // here would be a real, live false claim. What IS true and worth
 // surfacing instead: enrollment is confirmed by a real person on Dr.
 // Kapil's team, not an automated system — see masterclassPaymentLink.ts.

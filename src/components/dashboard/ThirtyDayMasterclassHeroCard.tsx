@@ -14,7 +14,7 @@ import {
 
 const CURRICULUM_ROUTE = '/labs/quantum-speed-reading/thirty-day-curriculum'
 
-// Member-Exclusive Simplification™ — this used to also carry the ₹4,999
+// Member-Exclusive Simplification™ — this used to also carry the ₹9,999
 // enrollment CTA, a WhatsApp promo banner, and a reviews link. All
 // sales/enrollment copy now lives only wherever eventually becomes the
 // public landing page (out of scope here) — this card, shown to

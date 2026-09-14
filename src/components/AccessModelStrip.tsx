@@ -7,7 +7,7 @@ type AccessModelStripProps = {
 };
 
 // The Access Model™ — one shared, reusable explainer for the two real
-// pricing tiers: the Live Masterclass (₹4,999, one-time) and the
+// pricing tiers: the Live Masterclass (₹9,999, one-time) and the
 // post-program continuation plan (₹499/mo). Previously a 3-box strip
 // that included a "free for 60 days" tier — removed per explicit
 // correction: there is no free-access tier to the program itself (see

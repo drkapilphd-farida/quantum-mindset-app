@@ -5,6 +5,7 @@ import { buildCourseSchema } from '@/lib/seo/courseSchema'
 import QsrNav from '@/components/qsr/QsrNav'
 import QsrHero from '@/components/qsr/QsrHero'
 import QsrBrainScience from '@/components/qsr/QsrBrainScience'
+import QsrNeuroCognitiveScience from '@/components/qsr/QsrNeuroCognitiveScience'
 import QsrAgeGroups from '@/components/qsr/QsrAgeGroups'
 import QsrAppPreview from '@/components/qsr/QsrAppPreview'
 import QsrMechanics from '@/components/qsr/QsrMechanics'
@@ -31,9 +32,9 @@ import { WORKSHOP_CITIES } from '@/config/workshopCities'
 export const metadata: Metadata = {
   // { absolute } bypasses the root layout's title.template — see the
   // matching note in retreats/online-11-day/page.tsx.
-  title: { absolute: '30-Day Quantum Speed Reading Masterclass — Dr. Kapil Dev Sharma' },
+  title: { absolute: 'Quantum Speed Reading — Science-Backed Neuro-Cognitive Masterclass | Dr. Kapil Dev Sharma' },
   description:
-    'Read 5x faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked drills, ₹4,999 one-time enrollment.',
+    'Read 5x faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked cognitive metrics, ₹9,999 one-time enrollment.',
 }
 
 // Flagship Program Landing Page™ — the real destination TierFlagship's
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
 // CredibilityStrip, FounderVideo) → fit
 // (Audience) → the same free test again, now as a lower-commitment
 // alternative right where a hesitant visitor is deciding whether to
-// commit to ₹4,999 (SpeedTestInlineCta) → social proof
+// commit to ₹9,999 (SpeedTestInlineCta) → social proof
 // (VideoTestimonials) → final objection handling (Faq) → real batch
 // cadence + final push (BatchNotice) before the footer. Three total
 // speed-test CTAs on this page (Hero + these two) — deliberately no
@@ -84,6 +85,7 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
       <main>
         <QsrHero />
         <QsrBrainScience />
+        <QsrNeuroCognitiveScience />
         <QsrSpeedTestInlineCta variant="afterScience" />
         <QsrAgeGroups />
         <QsrAppPreview />
