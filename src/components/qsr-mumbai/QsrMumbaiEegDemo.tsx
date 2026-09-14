@@ -4,18 +4,21 @@ import { Activity, Info } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 
-// Attention & Focus Engagement Snapshot™ — deliberately NOT titled or
-// worded as a "Brain Test" or "Brain Mapping" anywhere (non-negotiable
-// per the "Add Mumbai In-Person QSR Workshop" task). The disclaimer line
-// is rendered as its own visually distinct callout, not buried in the
-// description paragraph, so the "not diagnostic/medical" framing is hard
-// to miss. Note: this is intentionally different, more conservative
-// language than QsrNeuroCognitiveScience.tsx's existing Vadodara EEG
-// section on the main QSR page ("Brain Mapping," "clinical cognitive
-// tracking") — that section predates this rule and describes a
-// different, hardware-verified offline offering; it's out of scope for
-// this task and was left untouched, but the inconsistency between the
-// two is worth flagging for review.
+// Cognitive & Focus Engagement Demo™ — deliberately NOT titled or worded
+// as a "Brain Test" or "Brain Mapping" anywhere (non-negotiable, see the
+// "Build the Mumbai Offline Workshop Feature + Fix EEG Copy" task, Fix
+// A — this exact term was chosen there over an earlier "Attention &
+// Focus Engagement Snapshot" pass). The disclaimer line is rendered as
+// its own visually distinct callout, not buried in the description
+// paragraph, so the "not diagnostic/medical" framing is hard to miss.
+// Note: this is intentionally different, more conservative language
+// than QsrNeuroCognitiveScience.tsx's existing Vadodara EEG section on
+// the main QSR page ("Brain Mapping," "clinical cognitive tracking") —
+// that section predates this rule and describes a different, hardware-
+// verified offline offering; it's out of scope here (the QSR page's own
+// FAQ mention of it was removed in this same task, but the standalone
+// Vadodara section itself was left untouched) and the inconsistency
+// between the two is still worth a dedicated cleanup pass.
 export default function QsrMumbaiEegDemo(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.qsrMumbaiLanding.eegDemo;

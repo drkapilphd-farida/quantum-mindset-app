@@ -247,16 +247,18 @@ export const translations = {
       cta: "Start 7 Days Free",
       mainScreenshotAlt: "The Quantum Mindset & Habit Builder dashboard — a real streak and daily continue screen",
     },
-    // Mumbai in-person QSR workshop — a small, secondary homepage card
-    // (see the "Add Mumbai In-Person QSR Workshop" task), styled no more
-    // prominently than the site's other Tier-2/3 secondary cards, never
-    // hero-scale like the QSR flagship block above it.
+    // Mumbai in-person QSR workshop — a bright, distinct homepage card
+    // (see the "Build the Mumbai Offline Workshop Feature + Fix EEG
+    // Copy" task, Part 2). Deliberately more eye-catching than the
+    // site's other Tier-2/3 secondary cards (a real "NEW" launch worth
+    // standing out), but still placed below and never larger than the
+    // QSR flagship block in ProgramSelector above it.
     homeMumbaiWorkshop: {
-      eyebrow: "New · Pilot Batch",
+      badge: "New · Pilot Batch",
       title: "QSR, Now Live In-Person in Mumbai",
-      desc: "A 2-day in-person extension of the Masterclass — live coaching, an attention & focus engagement demo, and the same ₹9,999 price.",
+      desc: "A 2-day in-person extension of the Masterclass — live coaching, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
       meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
-      cta: "Learn More",
+      cta: "Explore the Mumbai Workshop",
     },
     homeOverviewVideo: {
       eyebrow: "Real People. Real Sessions.",
@@ -1205,7 +1207,7 @@ export const translations = {
           {
             question: "What exactly do I get for ₹9,999?",
             answer:
-              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Vadodara-based students additionally get in-person EEG-based attention & focus engagement sessions at Dr. Sharma's center, layered on top of the same curriculum. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
+              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
           },
           {
             question: "What if it doesn't work for me?",
@@ -1244,37 +1246,44 @@ export const translations = {
         button: "Chat on WhatsApp",
         ariaLabel: "Chat with Dr. Kapil's team on WhatsApp about the Quantum Speed Reading Masterclass",
       },
-      // Mumbai in-person workshop — the one small, deliberately minor
-      // addition to this otherwise-locked page (see the "Add Mumbai
-      // In-Person QSR Workshop" task). Not styled or worded to compete
-      // with the hero/CTA above it.
-      mumbaiBanner: {
-        text: "Now also available as a live 2-day workshop in Mumbai",
-        cta: "Learn more",
+      // Bright, distinct card promoting the Mumbai in-person workshop
+      // (see the "Build the Mumbai Offline Workshop Feature + Fix EEG
+      // Copy" task, Part 3) — replaces the earlier plain text-link
+      // banner. Deliberately worded as a complementary option ("also
+      // available"), not a competing primary offer.
+      mumbaiWorkshopCard: {
+        badge: "New · Pilot Batch",
+        title: "Also Available: Live, In-Person in Mumbai",
+        desc: "A 2-day in-person extension of this Masterclass — live coaching from Dr. Kapil Dev Sharma, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
+        meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
+        cta: "Explore the Mumbai Workshop",
       },
     },
     // Mumbai In-Person Workshop™ — a hybrid extension of the QSR 30-Day
-    // Masterclass (see the "Add Mumbai In-Person QSR Workshop" task): a
-    // live, 2-day, in-person kickoff in Mumbai (Attention & Focus
-    // Engagement Snapshot demo, in-person coaching, WPM + retention
-    // measured across an overnight gap), after which the same 30-day
-    // app curriculum as the online track continues. Deliberately its own
+    // Masterclass: a live, 2-day, in-person kickoff in Mumbai (Cognitive
+    // & Focus Engagement Demo, in-person coaching, WPM + retention
+    // measured across an overnight gap), after which the same app
+    // curriculum as the online track continues. Deliberately its own
     // i18n block (not folded into qsrLanding) since it's a distinct page
     // with its own nav/sticky bar/WhatsApp widget, mirroring the
     // retreatLanding/residentialLanding pattern for a dedicated landing
-    // page. EEG language throughout is deliberately "engagement/attention
-    // snapshot," never "brain test," "brain mapping," or "diagnostic" —
-    // an explicit, non-negotiable framing rule for this page (contrast
-    // with qsrLanding.neuroCognitive.eeg above, which predates this rule
-    // and describes a different, hardware-verified Vadodara offering in
-    // clinical language — that section is out of scope for this task and
-    // was left untouched, but the inconsistency is worth a look).
+    // page. EEG language throughout is deliberately "Cognitive & Focus
+    // Engagement Demo" (see the "Build the Mumbai Offline Workshop
+    // Feature + Fix EEG Copy" task, Fix A, for why this exact term was
+    // chosen over "Attention & Focus Engagement Snapshot," used in an
+    // earlier pass), never "brain test," "brain mapping," or
+    // "diagnostic" — an explicit, non-negotiable framing rule for this
+    // page (contrast with qsrLanding.neuroCognitive.eeg above, which
+    // predates this rule and describes a different, hardware-verified
+    // Vadodara offering in clinical language — that section is out of
+    // scope and was left untouched, but the inconsistency is worth a
+    // look).
     qsrMumbaiLanding: {
       hero: {
         eyebrow: "Live, In-Person · Mumbai · Pilot Batch",
         headline: "Read 5x Faster.",
         headlineEm: "Live, In Person, in Mumbai.",
-        sub: "A 2-day, in-person extension of the 30-Day Quantum Speed Reading Masterclass — live coaching from Dr. Kapil Dev Sharma, a real-time attention & focus engagement demo, and your reading speed measured on Day 1 and again on Day 2, after an overnight gap. The remaining curriculum then continues through the same app as our online track.",
+        sub: "A 2-day, in-person extension of the 30-Day Quantum Speed Reading Masterclass — live coaching from Dr. Kapil Dev Sharma, a real-time cognitive & focus engagement demo, and your reading speed measured on Day 1 and again on Day 2, after an overnight gap. The remaining 28 days then continue through the same app as our online track.",
         ctaPrimary: "Reserve a Pilot Batch Seat",
         ctaPrimaryMeta: "₹9,999 · Same Price as the Online Masterclass",
         ctaSecondary: "See the 2-Day Schedule",
@@ -1285,8 +1294,8 @@ export const translations = {
         title: "What's Different From the Online Program",
         items: [
           {
-            title: "A Live Attention & Focus Engagement Demo",
-            desc: "A short, in-person engagement snapshot using a Muse 2 headband on Day 1 — see below for exactly what this is, and isn't.",
+            title: "A Live Cognitive & Focus Engagement Demo",
+            desc: "A short, in-person cognitive & focus engagement demo using a Muse 2 headband on Day 1 — see below for exactly what this is, and isn't.",
           },
           {
             title: "In-Person Coaching From Dr. Kapil Dev Sharma",
@@ -1298,7 +1307,7 @@ export const translations = {
           },
           {
             title: "Then the Same App-Based Curriculum",
-            desc: "After the 2-day event, the rest of the 30-day program continues through the same Quantum Speed Reading app our online students use — no separate, disconnected track.",
+            desc: "After the 2-day event, the remaining 28 days continue through the same Quantum Speed Reading app our online students use — no separate, disconnected track.",
           },
         ],
       },
@@ -1309,7 +1318,7 @@ export const translations = {
           label: "Day 1 · Saturday",
           title: "Baseline & Technique",
           items: [
-            "Attention & focus engagement demo (Muse 2 headband)",
+            "Cognitive & focus engagement demo (Muse 2 headband)",
             "Core Quantum Speed Reading technique, taught live",
             "First guided practice session",
             "Initial reading speed (WPM) measurement",
@@ -1340,9 +1349,9 @@ export const translations = {
       },
       eegDemo: {
         eyebrow: "Day 1",
-        title: "Attention & Focus Engagement Snapshot",
-        desc: "On Day 1, we use a Muse 2 headband to give you a live, real-time snapshot of your attention and focus engagement while you practice — a way to see the training happening, not just take our word for it.",
-        disclaimer: "This is an engagement demo tool, not a diagnostic or medical device. It does not produce a clinical brain report, and it isn't a substitute for any medical or neurological assessment.",
+        title: "Cognitive & Focus Engagement Demo",
+        desc: "On Day 1, we use a Muse 2 headband to give you a live, real-time demo of your cognitive focus and engagement while you practice — a way to see the training happening, not just take our word for it.",
+        disclaimer: "This is a live engagement demo tool, not a diagnostic or medical device. It does not produce a clinical brain report, and it isn't a substitute for any medical or neurological assessment.",
         addOn: {
           title: "Optional: A Detailed Personal Engagement Report",
           desc: "For those who want it, a more detailed personal engagement report based on your session is available as a paid add-on.",
@@ -1361,11 +1370,11 @@ export const translations = {
         items: [
           {
             question: "How is this different from the online program?",
-            answer: "The curriculum is the same 30-day program. This adds a live, in-person 2-day kickoff in Mumbai — a face-to-face session with Dr. Kapil Dev Sharma, a live attention & focus engagement demo, and reading speed measured on both days with an overnight gap in between. After Day 2, you continue on the same app the online track uses.",
+            answer: "The curriculum is the same 30-day program. This adds a live, in-person 2-day kickoff in Mumbai — a face-to-face session with Dr. Kapil Dev Sharma, a live cognitive & focus engagement demo, and reading speed measured on both days with an overnight gap in between. After Day 2, you continue on the same app the online track uses.",
           },
           {
             question: "What does the EEG device do — is it a medical test?",
-            answer: "No. It's a live engagement/attention snapshot using a Muse 2 headband, meant to show your focus during practice in real time. It is not a diagnostic or medical device, and it does not produce a clinical or medical brain report.",
+            answer: "No. It's a live cognitive & focus engagement demo using a Muse 2 headband, meant to show your focus during practice in real time. It is not a diagnostic or medical device, and it does not produce a clinical or medical brain report.",
           },
           {
             question: "What if my child can only attend one day, not both?",
@@ -2453,11 +2462,11 @@ export const translations = {
       mainScreenshotAlt: "Quantum Mindset & Habit Builder डैशबोर्ड — असली स्ट्रीक और डेली continue स्क्रीन",
     },
     homeMumbaiWorkshop: {
-      eyebrow: "नया · पायलट बैच",
+      badge: "नया · पायलट बैच",
       title: "QSR, अब मुंबई में लाइव व्यक्तिगत रूप से",
-      desc: "मास्टरक्लास का एक 2-दिवसीय व्यक्तिगत विस्तार — लाइव कोचिंग, एक अटेंशन व फोकस एंगेजमेंट डेमो, और वही ₹9,999 कीमत।",
+      desc: "मास्टरक्लास का एक 2-दिवसीय व्यक्तिगत विस्तार — लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
       meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
-      cta: "और जानें",
+      cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
     },
     homeOverviewVideo: {
       eyebrow: "असली लोग। असली सेशन।",
@@ -3361,7 +3370,7 @@ export const translations = {
           {
             question: "₹9,999 में मुझे वास्तव में क्या मिलता है?",
             answer:
-              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। वडोदरा-आधारित विद्यार्थियों को डॉ. शर्मा के सेंटर पर व्यक्तिगत रूप से EEG-आधारित अटेंशन व फोकस एंगेजमेंट सेशन भी मिलते हैं, उसी पाठ्यक्रम के साथ। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
+              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
           },
           {
             question: "अगर यह मेरे लिए काम नहीं करता तो?",
@@ -3400,9 +3409,12 @@ export const translations = {
         button: "WhatsApp पर चैट करें",
         ariaLabel: "क्वांटम स्पीड रीडिंग मास्टरक्लास के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
       },
-      mumbaiBanner: {
-        text: "अब मुंबई में लाइव 2-दिवसीय वर्कशॉप के रूप में भी उपलब्ध",
-        cta: "और जानें",
+      mumbaiWorkshopCard: {
+        badge: "नया · पायलट बैच",
+        title: "यह भी उपलब्ध: मुंबई में लाइव, व्यक्तिगत रूप से",
+        desc: "इस मास्टरक्लास का एक 2-दिवसीय व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
+        meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
+        cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
       },
     },
     qsrMumbaiLanding: {
@@ -3410,7 +3422,7 @@ export const translations = {
         eyebrow: "लाइव, व्यक्तिगत रूप से · मुंबई · पायलट बैच",
         headline: "5 गुना तेज़ पढ़ें।",
         headlineEm: "मुंबई में लाइव, व्यक्तिगत रूप से।",
-        sub: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास का एक 2-दिवसीय, व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक रियल-टाइम अटेंशन व फोकस एंगेजमेंट डेमो, और आपकी रीडिंग स्पीड दिन 1 और फिर एक रात के अंतराल के बाद दिन 2 पर मापी जाती है। इसके बाद बाकी पाठ्यक्रम उसी ऐप के ज़रिए जारी रहता है जो हमारे ऑनलाइन ट्रैक में इस्तेमाल होता है।",
+        sub: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास का एक 2-दिवसीय, व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक रियल-टाइम कॉग्निटिव व फोकस एंगेजमेंट डेमो, और आपकी रीडिंग स्पीड दिन 1 और फिर एक रात के अंतराल के बाद दिन 2 पर मापी जाती है। इसके बाद बाकी 28 दिन उसी ऐप के ज़रिए जारी रहते हैं जो हमारे ऑनलाइन ट्रैक में इस्तेमाल होता है।",
         ctaPrimary: "पायलट बैच सीट सुरक्षित करें",
         ctaPrimaryMeta: "₹9,999 · ऑनलाइन मास्टरक्लास जैसी ही कीमत",
         ctaSecondary: "2-दिवसीय शेड्यूल देखें",
@@ -3421,8 +3433,8 @@ export const translations = {
         title: "ऑनलाइन प्रोग्राम से क्या अलग है",
         items: [
           {
-            title: "एक लाइव अटेंशन व फोकस एंगेजमेंट डेमो",
-            desc: "दिन 1 पर Muse 2 हेडबैंड का उपयोग करते हुए एक संक्षिप्त, व्यक्तिगत एंगेजमेंट स्नैपशॉट — यह वास्तव में क्या है (और क्या नहीं) यह नीचे देखें।",
+            title: "एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो",
+            desc: "दिन 1 पर Muse 2 हेडबैंड का उपयोग करते हुए एक संक्षिप्त, व्यक्तिगत कॉग्निटिव व फोकस एंगेजमेंट डेमो — यह वास्तव में क्या है (और क्या नहीं) यह नीचे देखें।",
           },
           {
             title: "डॉ. कपिल देव शर्मा से व्यक्तिगत कोचिंग",
@@ -3434,7 +3446,7 @@ export const translations = {
           },
           {
             title: "फिर वही ऐप-आधारित पाठ्यक्रम",
-            desc: "2-दिवसीय इवेंट के बाद, बाकी 30-दिवसीय प्रोग्राम उसी Quantum Speed Reading ऐप के ज़रिए जारी रहता है जो हमारे ऑनलाइन विद्यार्थी इस्तेमाल करते हैं — कोई अलग, डिस्कनेक्टेड ट्रैक नहीं।",
+            desc: "2-दिवसीय इवेंट के बाद, बाकी 28 दिन उसी Quantum Speed Reading ऐप के ज़रिए जारी रहते हैं जो हमारे ऑनलाइन विद्यार्थी इस्तेमाल करते हैं — कोई अलग, डिस्कनेक्टेड ट्रैक नहीं।",
           },
         ],
       },
@@ -3445,7 +3457,7 @@ export const translations = {
           label: "दिन 1 · शनिवार",
           title: "बेसलाइन और तकनीक",
           items: [
-            "अटेंशन व फोकस एंगेजमेंट डेमो (Muse 2 हेडबैंड)",
+            "कॉग्निटिव व फोकस एंगेजमेंट डेमो (Muse 2 हेडबैंड)",
             "मुख्य Quantum Speed Reading तकनीक, लाइव सिखाई जाएगी",
             "पहला गाइडेड प्रैक्टिस सेशन",
             "शुरुआती रीडिंग स्पीड (WPM) मापन",
@@ -3476,9 +3488,9 @@ export const translations = {
       },
       eegDemo: {
         eyebrow: "दिन 1",
-        title: "अटेंशन व फोकस एंगेजमेंट स्नैपशॉट",
-        desc: "दिन 1 पर, हम Muse 2 हेडबैंड का उपयोग करके अभ्यास के दौरान आपके अटेंशन और फोकस एंगेजमेंट का एक लाइव, रियल-टाइम स्नैपशॉट देते हैं — ट्रेनिंग को होते हुए देखने का एक तरीका, सिर्फ़ हमारी बात मान लेने के बजाय।",
-        disclaimer: "यह एक एंगेजमेंट डेमो टूल है, कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं। यह कोई क्लिनिकल ब्रेन रिपोर्ट नहीं बनाता, और यह किसी भी मेडिकल या न्यूरोलॉजिकल असेसमेंट का विकल्प नहीं है।",
+        title: "कॉग्निटिव व फोकस एंगेजमेंट डेमो",
+        desc: "दिन 1 पर, हम Muse 2 हेडबैंड का उपयोग करके अभ्यास के दौरान आपके कॉग्निटिव फोकस और एंगेजमेंट का एक लाइव, रियल-टाइम डेमो देते हैं — ट्रेनिंग को होते हुए देखने का एक तरीका, सिर्फ़ हमारी बात मान लेने के बजाय।",
+        disclaimer: "यह एक लाइव एंगेजमेंट डेमो टूल है, कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं। यह कोई क्लिनिकल ब्रेन रिपोर्ट नहीं बनाता, और यह किसी भी मेडिकल या न्यूरोलॉजिकल असेसमेंट का विकल्प नहीं है।",
         addOn: {
           title: "वैकल्पिक: एक विस्तृत व्यक्तिगत एंगेजमेंट रिपोर्ट",
           desc: "जो चाहें उनके लिए, आपके सेशन पर आधारित एक अधिक विस्तृत व्यक्तिगत एंगेजमेंट रिपोर्ट एक पेड ऐड-ऑन के रूप में उपलब्ध है।",
@@ -3497,11 +3509,11 @@ export const translations = {
         items: [
           {
             question: "यह ऑनलाइन प्रोग्राम से कैसे अलग है?",
-            answer: "पाठ्यक्रम वही 30-दिवसीय प्रोग्राम है। इसमें मुंबई में एक लाइव, व्यक्तिगत 2-दिवसीय शुरुआत जुड़ती है — डॉ. कपिल देव शर्मा के साथ आमने-सामने सेशन, एक लाइव अटेंशन व फोकस एंगेजमेंट डेमो, और दोनों दिनों में एक रात के अंतराल के साथ मापी गई रीडिंग स्पीड। दिन 2 के बाद, आप उसी ऐप पर जारी रखते हैं जो ऑनलाइन ट्रैक इस्तेमाल करता है।",
+            answer: "पाठ्यक्रम वही 30-दिवसीय प्रोग्राम है। इसमें मुंबई में एक लाइव, व्यक्तिगत 2-दिवसीय शुरुआत जुड़ती है — डॉ. कपिल देव शर्मा के साथ आमने-सामने सेशन, एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो, और दोनों दिनों में एक रात के अंतराल के साथ मापी गई रीडिंग स्पीड। दिन 2 के बाद, आप उसी ऐप पर जारी रखते हैं जो ऑनलाइन ट्रैक इस्तेमाल करता है।",
           },
           {
             question: "EEG डिवाइस क्या करता है — क्या यह एक मेडिकल टेस्ट है?",
-            answer: "नहीं। यह Muse 2 हेडबैंड का उपयोग करते हुए एक लाइव एंगेजमेंट/अटेंशन स्नैपशॉट है, जिसका मकसद अभ्यास के दौरान आपका फोकस रियल-टाइम में दिखाना है। यह कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं है, और यह कोई क्लिनिकल या मेडिकल ब्रेन रिपोर्ट नहीं बनाता।",
+            answer: "नहीं। यह Muse 2 हेडबैंड का उपयोग करते हुए एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो है, जिसका मकसद अभ्यास के दौरान आपका फोकस रियल-टाइम में दिखाना है। यह कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं है, और यह कोई क्लिनिकल या मेडिकल ब्रेन रिपोर्ट नहीं बनाता।",
           },
           {
             question: "अगर मेरा बच्चा एक दिन ही आ सकता है, दोनों दिन नहीं — तो क्या होगा?",

@@ -3,7 +3,7 @@ import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
 import { buildCourseSchema } from '@/lib/seo/courseSchema'
 import QsrNav from '@/components/qsr/QsrNav'
-import QsrMumbaiBanner from '@/components/qsr/QsrMumbaiBanner'
+import QsrMumbaiWorkshopCard from '@/components/qsr/QsrMumbaiWorkshopCard'
 import QsrHero from '@/components/qsr/QsrHero'
 import QsrBrainScience from '@/components/qsr/QsrBrainScience'
 import QsrNeuroCognitiveScience from '@/components/qsr/QsrNeuroCognitiveScience'
@@ -106,13 +106,16 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: courseSchema }} />
       <QsrNav />
-      {/* Mumbai in-person workshop banner (see the "Add Mumbai In-Person
-          QSR Workshop" task) — the one small addition to this otherwise-
-          locked page. Deliberately a thin inline note between the nav and
-          hero, not a card competing with the hero/CTA below it. */}
-      <QsrMumbaiBanner />
       <main>
         <QsrHero />
+        {/* Mumbai in-person workshop card (see the "Build the Mumbai
+            Offline Workshop Feature + Fix EEG Copy" task, Part 3) — the
+            one new card added to this otherwise-locked page, right after
+            the hero so a visitor evaluating the online program notices
+            the in-person option early, without interrupting the hero's
+            own CTA flow. Teal-accented (not gold) so it never competes
+            visually with the page's one primary conversion action. */}
+        <QsrMumbaiWorkshopCard />
         <QsrBrainScience />
         <QsrNeuroCognitiveScience />
         <QsrSpeedTestInlineCta variant="afterScience" />

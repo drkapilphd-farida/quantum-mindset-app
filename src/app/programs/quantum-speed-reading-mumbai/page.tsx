@@ -17,7 +17,7 @@ import QsrMumbaiWhatsAppWidget from '@/components/qsr-mumbai/QsrMumbaiWhatsAppWi
 export const metadata: Metadata = {
   title: { absolute: 'Quantum Speed Reading — Live 2-Day Workshop in Mumbai | Mind Ur Mind' },
   description:
-    'A 2-day, in-person pilot workshop in Mumbai — live coaching from Dr. Kapil Dev Sharma, an attention & focus engagement demo, and reading speed measured across an overnight gap. Same 30-day curriculum, same ₹9,999 price as the online Masterclass.',
+    'A 2-day, in-person pilot workshop in Mumbai — live coaching from Dr. Kapil Dev Sharma, a Cognitive & Focus Engagement Demo, and reading speed measured across an overnight gap. Same 30-day curriculum, same ₹9,999 price as the online Masterclass.',
   alternates: {
     canonical: '/programs/quantum-speed-reading-mumbai',
   },
