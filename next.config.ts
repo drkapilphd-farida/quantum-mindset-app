@@ -128,6 +128,21 @@ const nextConfig: NextConfig = {
     ]
   },
 
+  // /mentoring/mind-reset-system was a temporary staging route for the
+  // 21-Day Mind Reset System redesign, now promoted in place at
+  // /mentoring/overthinking-course (see that page's own doc comment).
+  // Permanent redirect so anyone who bookmarked/shared the staging link
+  // during review lands on the real page instead of a 404.
+  async redirects() {
+    return [
+      {
+        source: '/mentoring/mind-reset-system',
+        destination: '/mentoring/overthinking-course',
+        permanent: true,
+      },
+    ]
+  },
+
   images: {
     remotePatterns: [
       {

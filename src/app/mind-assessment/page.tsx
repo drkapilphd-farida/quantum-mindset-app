@@ -31,7 +31,7 @@ export default function MindAssessmentPage(): React.JSX.Element {
         </p>
       </div>
       <Link
-        href="/mentoring/mind-reset-system"
+        href="/mentoring/overthinking-course"
         className="inline-flex items-center gap-2 rounded-sm bg-rose px-7 py-[15px] text-[14px] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#b8757e]"
       >
         Back to the 21-Day Mind Reset System

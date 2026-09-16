@@ -4,9 +4,9 @@ import { useLanguage } from "@/context/LanguageContext";
 
 type LanguageToggleProps = {
   // "light" (default): the site's normal .warm-light nav tokens. "dark":
-  // for placement directly on a dark surface (e.g. CourseNav.tsx's hero
-  // nav) — the default's text-ink-dim/border-line-strong tokens resolve
-  // to near-invisible dark-on-dark there, same reasoning as
+  // for placement directly on a dark surface (e.g. MindResetNav.tsx's
+  // hero nav) — the default's text-ink-dim/border-line-strong tokens
+  // resolve to near-invisible dark-on-dark there, same reasoning as
   // LivingBrainLogo's colorMode prop.
   variant?: "light" | "dark";
 };

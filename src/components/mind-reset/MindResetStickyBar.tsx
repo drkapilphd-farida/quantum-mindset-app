@@ -5,9 +5,10 @@ import { useLanguage } from "@/context/LanguageContext";
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from "@/config/overthinkingCoursePaymentLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
-// Same scroll-reveal pattern as CourseStickyBar.tsx. Promotes the ₹499
-// primary offer specifically — the full ₹499/₹999 comparison lives in
-// the dedicated pricing section, not the sticky bar.
+// Same scroll-reveal-after-threshold pattern used by every other sticky
+// CTA bar on this site (QsrStickyBar.tsx etc). Promotes the ₹499 primary
+// offer specifically — the full ₹499/₹999 comparison lives in the
+// dedicated pricing section, not the sticky bar.
 const SCROLL_REVEAL_THRESHOLD_PX = 560;
 
 export default function MindResetStickyBar(): React.JSX.Element {

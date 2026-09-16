@@ -4,9 +4,10 @@ import { useLanguage } from "@/context/LanguageContext";
 import WhatsAppWidget from "../WhatsAppWidget";
 import { WHATSAPP_COURSE_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 
-// Thin translated wrapper — same pattern as CourseWhatsAppWidget.tsx.
-// Pre-purchase questions only — the Classplus link (nav, sticky bar,
-// both pricing CTAs, final CTA) is the real conversion path.
+// Thin translated wrapper around the shared WhatsAppWidget, same pattern
+// used by every other dedicated landing page (QsrWhatsAppWidget.tsx
+// etc). Pre-purchase questions only — the Classplus link (nav, sticky
+// bar, both pricing CTAs, final CTA) is the real conversion path.
 export default function MindResetWhatsAppWidget(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.mindResetLanding.whatsapp;

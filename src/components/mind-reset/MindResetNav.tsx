@@ -7,10 +7,10 @@ import LanguageToggle from "../LanguageToggle";
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from "@/config/overthinkingCoursePaymentLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
-// Distraction-Free Landing Nav™ — same dark treatment as CourseNav.tsx
-// (this page's hero is dark too, see MindResetHero.tsx), reused rather
-// than reinvented per the master prompt's own "follow the existing
-// design system" instruction.
+// Distraction-Free Landing Nav™ — dark treatment matching this page's
+// dark hero (see MindResetHero.tsx), per the master prompt's own
+// "follow the existing design system" instruction (same dark-nav-on-
+// dark-hero pattern this codebase already used elsewhere).
 export default function MindResetNav(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.mindResetLanding;

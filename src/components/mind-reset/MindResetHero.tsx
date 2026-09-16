@@ -4,13 +4,14 @@ import { useLanguage } from "@/context/LanguageContext";
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from "@/config/overthinkingCoursePaymentLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
-// Dark Product Hero™ — same bounded-island treatment as CourseHero.tsx
-// (dark only for this hero + MindResetNav above it; every section below
-// returns to the site's normal light .warm-light treatment). Two CTAs
-// per the master prompt's Section 1 spec (primary purchase, secondary
-// free assessment) — deliberately no embedded pricing-tier row here
-// (unlike CourseHero's three-tier strip), since this page's actual
-// pricing comparison lives in its own dedicated section further down.
+// Dark Product Hero™ — a bounded island (dark only for this hero +
+// MindResetNav above it; every section below returns to the site's
+// normal light .warm-light treatment). Two CTAs per the master prompt's
+// Section 1 spec (primary purchase, secondary free assessment) —
+// deliberately no embedded pricing-tier row here (the old three-tier
+// hero strip this page used to have is gone along with the ₹2,999/
+// ₹5,999/₹8,999 model), since this page's actual pricing comparison
+// lives in its own dedicated section further down.
 export default function MindResetHero(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.mindResetLanding.hero;
