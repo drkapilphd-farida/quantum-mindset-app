@@ -2248,6 +2248,290 @@ export const translations = {
         cta: "Start Now",
       },
     },
+    // 21-Day Mind Reset System™ (v2)™ — a from-scratch redesign of the
+    // same Overthinking Mastery course above (`courseLanding`), per the
+    // "Build the 21-Day Mind Reset System Landing Page" master prompt.
+    // Deliberately its own top-level key, not a replacement of
+    // `courseLanding` in place — the live page at
+    // /mentoring/overthinking-course keeps rendering the old ₹2,999/
+    // ₹5,999/₹8,999 copy unchanged; this new content powers a separate
+    // staging route (/mentoring/mind-reset-system) until Dr. Sharma
+    // decides how/when to cut over. The one thing that changed between
+    // the master prompt and this content: live sessions are now ₹999-
+    // plan-only, never mentioned as a ₹499 feature anywhere below.
+    mindResetLanding: {
+      hero: {
+        eyebrow: "Overthinking & Mental Clarity",
+        productName: "The 21-Day Mind Reset System™",
+        headline: "Stop Getting Lost in Your Thoughts. Start Understanding Your Mind.",
+        tagline: "Understand Your Mind • Build Mental Clarity",
+        sub: "21 days of daily training, meditation, and guided activity. Live sessions with Dr. Kapil included with 6-month access.",
+        ctaPrimary: "Start Your Mind Reset — ₹499",
+        ctaSecondary: "Take Free Mind Assessment",
+        trustLine: "Hindi Online Program • 21 Days • Guided Learning • Meditation",
+      },
+      problem: {
+        eyebrow: "Sound Familiar?",
+        title: "Does Your Mind Feel Busy Even When You Want to Relax?",
+        items: [
+          "Replaying past conversations",
+          "Worrying about what might happen next",
+          "Finding it difficult to switch off your thoughts",
+          "Feeling mentally overloaded by work, family, or daily responsibilities",
+          "Struggling to focus on one thing at a time",
+          "Spending too much time thinking and too little time feeling present",
+        ],
+        closingLine:
+          "You are not expected to change everything in one day. You can begin by understanding what is happening in your mind.",
+      },
+      whatIsOverthinking: {
+        eyebrow: "Understanding the Difference",
+        title: "What Is Overthinking, Really?",
+        desc: "Thinking itself isn't the problem. Overthinking is what happens when thinking stops being useful — the same worry looping again and again, without moving any closer to a decision.",
+        productiveLabel: "Productive Thinking",
+        productiveSteps: ["Understand", "Decide", "Act"],
+        overthinkingLabel: "Overthinking",
+        overthinkingSteps: ["Repeat", "Worry", "Mental Exhaustion"],
+      },
+      assessmentCta: {
+        eyebrow: "Free Self-Assessment",
+        title: "Understand Your Thought, Worry & Stress Patterns",
+        desc: "Take a simple self-awareness assessment to reflect on your experiences related to overthinking, worry, and stress.",
+        scoreCards: [
+          { title: "Overthinking Awareness" },
+          { title: "Anxiety / Worry Awareness" },
+          { title: "Stress Awareness" },
+        ],
+        cta: "Take Your Free Assessment",
+        disclaimer:
+          "For self-awareness and educational purposes only — this is not a clinical diagnostic test, and results are not a medical diagnosis.",
+      },
+      experience: {
+        eyebrow: "What You Will Experience",
+        title: "A Simple 21-Day Journey for Your Mind",
+        desc: "Every day follows the same structured routine, building on the day before.",
+        items: [
+          { title: "Training Video", desc: "A short daily lesson introducing the day's focus." },
+          { title: "Educational Video", desc: "The thinking or psychology behind that day's topic, explained simply." },
+          { title: "Guided Meditation", desc: "A short practice to apply what the day is teaching." },
+          { title: "Daily Activity", desc: "A practical exercise or reflection to make it real, not just theory." },
+          { title: "PDF Workbook", desc: "A place to track your own patterns and progress." },
+        ],
+        liveSessionsNote: {
+          title: "2 Live Sessions with Dr. Kapil",
+          desc: "Included only with 6-Month Access (₹999) — not part of the ₹499 plan.",
+        },
+      },
+      journey: {
+        eyebrow: "Your 21 Days",
+        title: "The 21-Day Course Journey",
+        desc: "A broad overview of the three stages — not the exact daily lesson titles.",
+        stages: [
+          {
+            label: "Days 1–7",
+            title: "Understand Your Mind",
+            topics: [
+              "Understanding overthinking",
+              "Recognising thought patterns",
+              "Understanding the overthinking cycle",
+              "Thought awareness",
+              "Past, present, and future thinking",
+              "Recognising personal triggers",
+              "Week 1 reflection",
+            ],
+          },
+          {
+            label: "Days 8–14",
+            title: "Work With Your Thoughts & Emotions",
+            topics: [
+              "Understanding stress",
+              "Understanding worry and anxiety-related experiences",
+              "The power of pause",
+              "Recognising unhelpful thoughts",
+              "Self-doubt and inner dialogue",
+              "Emotional awareness",
+              "Week 2 reflection",
+            ],
+          },
+          {
+            label: "Days 15–21",
+            title: "Build Mental Clarity & Better Habits",
+            topics: [
+              "Focus and mental clarity",
+              "Mindful living",
+              "Digital overload and mental space",
+              "Better decision-making",
+              "Healthy boundaries",
+              "Creating a personal mind-reset routine",
+              "Final reflection and next steps",
+            ],
+          },
+        ],
+      },
+      whoFor: {
+        eyebrow: "Who Is This For?",
+        title: "Built for Real Indian Lives",
+        items: [
+          { title: "Working Professionals", desc: "Managing work pressure and a mind that won't switch off after hours." },
+          { title: "Parents", desc: "Looking for calmer, clearer thinking amid the daily demands of family life." },
+          { title: "Students", desc: "Learning to manage exam stress and racing thoughts." },
+          { title: "Homemakers", desc: "Wanting a structured practice that fits around a full day at home." },
+          { title: "Entrepreneurs", desc: "Navigating constant decisions and the mental load that comes with them." },
+          { title: "Anyone Curious About Self-Awareness", desc: "You don't need a specific problem to start understanding your own mind better." },
+        ],
+        disclaimer: "This course is educational and self-awareness focused — it is not a substitute for mental-health treatment.",
+      },
+      included: {
+        eyebrow: "What You Get",
+        title: "Everything Included in Your Plan",
+        universalLabel: "Included in Every Plan",
+        universalItems: [
+          "21 days of structured learning",
+          "Hindi training videos",
+          "Educational videos",
+          "Guided meditation",
+          "Daily practical activities",
+          "PDF workbooks",
+          "1-month access with the ₹499 plan, or 6-month access with the ₹999 plan",
+        ],
+        extraLabel: "Additionally With the ₹999 Plan",
+        extraItem: "2 live sessions with Dr. Kapil Dev Sharma",
+      },
+      guide: {
+        eyebrow: "Your Guide",
+        title: "Dr. Kapil Dev Sharma",
+        credential: "Professor · Researcher · Life Coach · 26 Years Experience",
+        bio: "Dr. Kapil Dev Sharma brings 26 years of experience — 15 years as a professor and researcher in formal education, and 11 years as a life coach and mind trainer. That combination of academic rigour and direct coaching practice is what shapes how this course is built.",
+        stats: [
+          { value: "26", label: "Years Total" },
+          { value: "15", label: "Years Professor" },
+          { value: "11", label: "Years Coaching" },
+        ],
+        quote:
+          "Most people already know what they need to change. The harder work is understanding why they haven't — and building the conditions where that becomes possible.",
+      },
+      pricing: {
+        eyebrow: "Pricing",
+        title: "Start Your Mind Reset Journey Today",
+        classplusNote: "Your plan is selected at checkout on Classplus.",
+        card1: {
+          name: "Mind Reset Starter",
+          price: "₹499",
+          period: "1 Month Access",
+          desc: "A complete 21-day Hindi learning experience with training, meditation, activities, and PDFs — fully self-paced.",
+          features: [
+            "Complete 21-day course",
+            "Training videos",
+            "Educational videos",
+            "Guided meditation",
+            "Daily activities",
+            "PDF workbooks",
+          ],
+          cta: "Join for ₹499",
+        },
+        card2: {
+          name: "Mind Reset Extended",
+          price: "₹999",
+          period: "6 Months Access",
+          desc: "Prefer live guidance from Dr. Kapil and more time to practise? Includes everything in the ₹499 plan, plus live sessions with Dr. Kapil.",
+          features: [
+            "Complete 21-day course",
+            "Training videos",
+            "Educational videos",
+            "Guided meditation",
+            "Daily activities",
+            "PDF workbooks",
+          ],
+          liveSessionHighlight: "2 Live Sessions with Dr. Kapil",
+          cta: "Choose 6-Month Access",
+        },
+        comparisonNote:
+          "Both plans include the full 21-day self-paced course. The 6-month plan additionally includes 2 live sessions with Dr. Kapil and more time to complete the program.",
+      },
+      howItWorks: {
+        eyebrow: "How It Works",
+        title: "How It Works",
+        steps: [
+          { title: "Take the Assessment", desc: "Take the free Mind Assessment to reflect on where you're starting from." },
+          { title: "Choose Your Access", desc: "Pick ₹499 for 1 month, or ₹999 for 6 months plus live sessions." },
+          { title: "Learn & Practise", desc: "Follow the daily routine for 21 days — about 20–30 minutes a day." },
+          { title: "Keep Building", desc: "Continue building your own personal mind-reset routine after Day 21." },
+        ],
+      },
+      faq: {
+        eyebrow: "Questions",
+        title: "Before You Start",
+        ctaLabel: "Ask on WhatsApp",
+        items: [
+          {
+            question: "What is the 21-Day Mind Reset System™?",
+            answer:
+              "A 21-day guided Hindi online program to understand overthinking, develop mental clarity, and build better mind habits — through daily training videos, meditation, and activities.",
+          },
+          {
+            question: "Is the course in Hindi?",
+            answer: "Yes. All training videos, educational videos, and guided meditations are in Hindi.",
+          },
+          {
+            question: "What is included in the course?",
+            answer:
+              "Every day includes a training video, an educational video, guided meditation, a daily activity, and PDF workbook material. The ₹999 plan additionally includes 2 live sessions with Dr. Kapil.",
+          },
+          {
+            question: "Are live sessions included in both plans?",
+            answer:
+              "No. Live sessions are included only with the ₹999 / 6-month plan. The ₹499 / 1-month plan is fully self-paced, with no live sessions.",
+          },
+          {
+            question: "What is the difference between ₹499 and ₹999?",
+            answer:
+              "Two things: access validity (1 month with ₹499 vs. 6 months with ₹999), and live sessions — the ₹999 plan includes 2 live sessions with Dr. Kapil, which the ₹499 plan does not.",
+          },
+          {
+            question: "How long is the course?",
+            answer: "21 days of daily content, designed to take about 20–30 minutes a day.",
+          },
+          {
+            question: "Can I learn from my mobile?",
+            answer: "Yes, the course is fully mobile-friendly through the Classplus app or website.",
+          },
+          {
+            question: "Do I need previous meditation experience?",
+            answer: "No prior experience is needed — the course is designed to guide you from wherever you're starting.",
+          },
+          {
+            question: "Is this course a treatment for anxiety or depression?",
+            answer:
+              "No. This is an educational, self-awareness-focused course. It is not a substitute for licensed therapy or psychiatric care. If you're currently in treatment for a mental health condition, or in crisis, please consult a licensed professional or local emergency services.",
+          },
+          {
+            question: "Can I take the assessment before purchasing?",
+            answer: "Yes — the Free Mind Assessment is available to anyone, whether or not you enroll in the course.",
+          },
+          {
+            question: "What happens after I purchase?",
+            answer: "[Access-delivery details to be confirmed — you'll receive instructions for the Classplus platform where the course lives.]",
+          },
+        ],
+      },
+      finalCta: {
+        eyebrow: "Ready When You Are",
+        headline: "Your Mind Deserves Your Attention.",
+        desc: "Start with one small step. Learn, reflect, practise, and build a better relationship with your thoughts.",
+        ctaPrimary: "Start Your Mind Reset — ₹499",
+        ctaSecondary: "Take Free Mind Assessment",
+      },
+      whatsapp: {
+        bubble: "Have questions about the 21-Day Mind Reset System? Chat with Dr. Kapil's team instantly.",
+        button: "Chat on WhatsApp",
+        ariaLabel: "Chat with Dr. Kapil's team about the 21-Day Mind Reset System on WhatsApp",
+      },
+      stickyBar: {
+        text: "The 21-Day Mind Reset System",
+        price: "₹499 · 1 Month Access",
+        cta: "Start for ₹499",
+      },
+    },
   },
 
   hi: {
@@ -4385,6 +4669,279 @@ export const translations = {
         text: "द 21-डे माइंड रीसेट सिस्टम",
         price: "₹2,999 · 30-दिन एक्सेस",
         cta: "अभी शुरू करें",
+      },
+    },
+    mindResetLanding: {
+      hero: {
+        eyebrow: "ओवरथिंकिंग और मानसिक स्पष्टता",
+        productName: "द 21-डे माइंड रीसेट सिस्टम™",
+        headline: "अपने विचारों में उलझना बंद करें। अपने मन को समझना शुरू करें।",
+        tagline: "अपने मन को समझें • मानसिक स्पष्टता बनाएं",
+        sub: "रोज़ाना ट्रेनिंग, मेडिटेशन, और गाइडेड एक्टिविटी के 21 दिन। 6-महीने के एक्सेस के साथ डॉ. कपिल के लाइव सेशंस शामिल हैं।",
+        ctaPrimary: "अपना माइंड रीसेट शुरू करें — ₹499",
+        ctaSecondary: "मुफ़्त माइंड असेसमेंट लें",
+        trustLine: "हिंदी ऑनलाइन प्रोग्राम • 21 दिन • गाइडेड लर्निंग • मेडिटेशन",
+      },
+      problem: {
+        eyebrow: "जाना-पहचाना लगता है?",
+        title: "क्या आपका मन आराम करना चाहते हुए भी व्यस्त रहता है?",
+        items: [
+          "पुरानी बातचीत को बार-बार दोहराना",
+          "आगे क्या होगा, इसकी चिंता करना",
+          "अपने विचारों को बंद करना मुश्किल लगना",
+          "काम, परिवार, या रोज़मर्रा की ज़िम्मेदारियों से मानसिक रूप से अभिभूत महसूस करना",
+          "एक समय में एक चीज़ पर फोकस करने में परेशानी होना",
+          "सोचने में बहुत समय, और वर्तमान में महसूस करने में बहुत कम समय बिताना",
+        ],
+        closingLine:
+          "आपसे यह उम्मीद नहीं है कि आप एक दिन में सब कुछ बदल दें। आप बस यह समझने से शुरू कर सकते हैं कि आपके मन में क्या हो रहा है।",
+      },
+      whatIsOverthinking: {
+        eyebrow: "फर्क को समझना",
+        title: "ओवरथिंकिंग असल में क्या है?",
+        desc: "सोचना खुद कोई समस्या नहीं है। ओवरथिंकिंग तब होती है जब सोचना उपयोगी होना बंद कर देता है — वही चिंता बार-बार दोहराई जाती है, बिना किसी निर्णय के करीब पहुंचे।",
+        productiveLabel: "उपयोगी सोच",
+        productiveSteps: ["समझें", "निर्णय लें", "कार्य करें"],
+        overthinkingLabel: "ओवरथिंकिंग",
+        overthinkingSteps: ["दोहराएं", "चिंता करें", "मानसिक थकान"],
+      },
+      assessmentCta: {
+        eyebrow: "मुफ़्त सेल्फ-असेसमेंट",
+        title: "अपने विचार, चिंता और तनाव के पैटर्न को समझें",
+        desc: "ओवरथिंकिंग, चिंता, और तनाव से जुड़े अपने अनुभवों पर विचार करने के लिए एक सरल सेल्फ-अवेयरनेस असेसमेंट लें।",
+        scoreCards: [
+          { title: "ओवरथिंकिंग अवेयरनेस" },
+          { title: "चिंता/एंग्ज़ायटी अवेयरनेस" },
+          { title: "तनाव अवेयरनेस" },
+        ],
+        cta: "अपना मुफ़्त असेसमेंट लें",
+        disclaimer:
+          "केवल सेल्फ-अवेयरनेस और शैक्षणिक उद्देश्यों के लिए — यह कोई क्लिनिकल डायग्नोस्टिक टेस्ट नहीं है, और परिणाम कोई मेडिकल डायग्नोसिस नहीं हैं।",
+      },
+      experience: {
+        eyebrow: "आप क्या अनुभव करेंगे",
+        title: "आपके मन के लिए एक सरल 21-दिवसीय यात्रा",
+        desc: "हर दिन एक ही संरचित रूटीन का पालन होता है, जो पिछले दिन पर आधारित होता है।",
+        items: [
+          { title: "ट्रेनिंग वीडियो", desc: "उस दिन के फोकस को पेश करने वाला एक छोटा दैनिक पाठ।" },
+          { title: "एजुकेशनल वीडियो", desc: "उस दिन के विषय के पीछे की सोच या मनोविज्ञान, सरल भाषा में समझाया गया।" },
+          { title: "गाइडेड मेडिटेशन", desc: "उस दिन जो सिखाया जा रहा है उसे लागू करने के लिए एक छोटा अभ्यास।" },
+          { title: "दैनिक गतिविधि", desc: "इसे वास्तविक बनाने के लिए एक व्यावहारिक अभ्यास या चिंतन, सिर्फ़ सिद्धांत नहीं।" },
+          { title: "PDF वर्कबुक", desc: "अपने पैटर्न और प्रगति को ट्रैक करने की जगह।" },
+        ],
+        liveSessionsNote: {
+          title: "डॉ. कपिल के साथ 2 लाइव सेशंस",
+          desc: "केवल 6-महीने के एक्सेस (₹999) के साथ शामिल — ₹499 प्लान का हिस्सा नहीं।",
+        },
+      },
+      journey: {
+        eyebrow: "आपके 21 दिन",
+        title: "21-दिवसीय कोर्स यात्रा",
+        desc: "तीन चरणों का एक व्यापक अवलोकन — सटीक दैनिक पाठ शीर्षक नहीं।",
+        stages: [
+          {
+            label: "दिन 1–7",
+            title: "अपने मन को समझें",
+            topics: [
+              "ओवरथिंकिंग को समझना",
+              "विचार पैटर्न पहचानना",
+              "ओवरथिंकिंग साइकल को समझना",
+              "थॉट अवेयरनेस",
+              "भूत, वर्तमान, और भविष्य की सोच",
+              "व्यक्तिगत ट्रिगर्स पहचानना",
+              "सप्ताह 1 चिंतन",
+            ],
+          },
+          {
+            label: "दिन 8–14",
+            title: "अपने विचारों और भावनाओं के साथ काम करें",
+            topics: [
+              "तनाव को समझना",
+              "चिंता और एंग्ज़ायटी से जुड़े अनुभवों को समझना",
+              "रुकने (pause) की शक्ति",
+              "अनुपयोगी विचारों को पहचानना",
+              "आत्म-संदेह और आंतरिक संवाद",
+              "इमोशनल अवेयरनेस",
+              "सप्ताह 2 चिंतन",
+            ],
+          },
+          {
+            label: "दिन 15–21",
+            title: "मानसिक स्पष्टता और बेहतर आदतें बनाएं",
+            topics: [
+              "फोकस और मानसिक स्पष्टता",
+              "माइंडफुल लिविंग",
+              "डिजिटल ओवरलोड और मानसिक स्थान",
+              "बेहतर निर्णय लेना",
+              "स्वस्थ सीमाएं (boundaries)",
+              "एक व्यक्तिगत माइंड-रीसेट रूटीन बनाना",
+              "अंतिम चिंतन और अगले कदम",
+            ],
+          },
+        ],
+      },
+      whoFor: {
+        eyebrow: "यह किसके लिए है?",
+        title: "असली भारतीय जीवन के लिए बनाया गया",
+        items: [
+          { title: "कामकाजी पेशेवर", desc: "काम के दबाव और घंटों बाद भी न रुकने वाले मन को संभालना।" },
+          { title: "माता-पिता", desc: "पारिवारिक जीवन की रोज़ की मांगों के बीच शांत, स्पष्ट सोच की तलाश।" },
+          { title: "विद्यार्थी", desc: "परीक्षा के तनाव और दौड़ते विचारों को संभालना सीखना।" },
+          { title: "गृहणियां", desc: "घर पर पूरे दिन के साथ फिट बैठने वाला एक संरचित अभ्यास चाहने वाली।" },
+          { title: "उद्यमी", desc: "लगातार निर्णयों और उनके साथ आने वाले मानसिक बोझ को संभालना।" },
+          { title: "सेल्फ-अवेयरनेस के बारे में जिज्ञासु कोई भी व्यक्ति", desc: "अपने मन को बेहतर समझना शुरू करने के लिए आपको किसी खास समस्या की ज़रूरत नहीं।" },
+        ],
+        disclaimer: "यह कोर्स शैक्षणिक और सेल्फ-अवेयरनेस पर केंद्रित है — यह मानसिक स्वास्थ्य उपचार का विकल्प नहीं है।",
+      },
+      included: {
+        eyebrow: "आपको क्या मिलता है",
+        title: "आपके प्लान में शामिल सब कुछ",
+        universalLabel: "हर प्लान में शामिल",
+        universalItems: [
+          "21 दिनों की संरचित लर्निंग",
+          "हिंदी ट्रेनिंग वीडियो",
+          "एजुकेशनल वीडियो",
+          "गाइडेड मेडिटेशन",
+          "दैनिक व्यावहारिक गतिविधियां",
+          "PDF वर्कबुक्स",
+          "₹499 प्लान के साथ 1-महीने का एक्सेस, या ₹999 प्लान के साथ 6-महीने का एक्सेस",
+        ],
+        extraLabel: "₹999 प्लान के साथ अतिरिक्त",
+        extraItem: "डॉ. कपिल देव शर्मा के साथ 2 लाइव सेशंस",
+      },
+      guide: {
+        eyebrow: "आपके गुरु",
+        title: "डॉ. कपिल देव शर्मा",
+        credential: "प्रोफेसर · शोधकर्ता · लाइफ कोच · 26 वर्षों का अनुभव",
+        bio: "डॉ. कपिल देव शर्मा 26 वर्षों का अनुभव लाते हैं — औपचारिक शिक्षा में 15 वर्ष प्रोफेसर और शोधकर्ता के रूप में, और 11 वर्ष लाइफ कोच और माइंड ट्रेनर के रूप में। यही शैक्षणिक कठोरता और प्रत्यक्ष कोचिंग अभ्यास का मेल तय करता है कि यह कोर्स कैसे बनाया गया है।",
+        stats: [
+          { value: "26", label: "कुल वर्ष" },
+          { value: "15", label: "वर्ष प्रोफेसर" },
+          { value: "11", label: "वर्ष कोचिंग" },
+        ],
+        quote:
+          "ज़्यादातर लोग पहले से जानते हैं कि उन्हें क्या बदलना है। मुश्किल काम यह समझना है कि उन्होंने अब तक ऐसा क्यों नहीं किया — और वे स्थितियां बनाना जिनमें यह संभव हो सके।",
+      },
+      pricing: {
+        eyebrow: "प्राइसिंग",
+        title: "आज ही अपनी माइंड रीसेट यात्रा शुरू करें",
+        classplusNote: "आपका प्लान Classplus पर चेकआउट के समय चुना जाता है।",
+        card1: {
+          name: "माइंड रीसेट स्टार्टर",
+          price: "₹499",
+          period: "1 महीने का एक्सेस",
+          desc: "ट्रेनिंग, मेडिटेशन, गतिविधियों, और PDFs के साथ एक पूरा 21-दिवसीय हिंदी लर्निंग अनुभव — पूरी तरह सेल्फ-पेस्ड।",
+          features: [
+            "पूरा 21-दिवसीय कोर्स",
+            "ट्रेनिंग वीडियो",
+            "एजुकेशनल वीडियो",
+            "गाइडेड मेडिटेशन",
+            "दैनिक गतिविधियां",
+            "PDF वर्कबुक्स",
+          ],
+          cta: "₹499 में जुड़ें",
+        },
+        card2: {
+          name: "माइंड रीसेट एक्सटेंडेड",
+          price: "₹999",
+          period: "6 महीने का एक्सेस",
+          desc: "डॉ. कपिल से लाइव मार्गदर्शन और अभ्यास के लिए ज़्यादा समय चाहिए? इसमें ₹499 प्लान का सब कुछ शामिल है, साथ ही डॉ. कपिल के साथ लाइव सेशंस।",
+          features: [
+            "पूरा 21-दिवसीय कोर्स",
+            "ट्रेनिंग वीडियो",
+            "एजुकेशनल वीडियो",
+            "गाइडेड मेडिटेशन",
+            "दैनिक गतिविधियां",
+            "PDF वर्कबुक्स",
+          ],
+          liveSessionHighlight: "डॉ. कपिल के साथ 2 लाइव सेशंस",
+          cta: "6-महीने का एक्सेस चुनें",
+        },
+        comparisonNote:
+          "दोनों प्लान में पूरा 21-दिवसीय सेल्फ-पेस्ड कोर्स शामिल है। 6-महीने का प्लान अतिरिक्त रूप से डॉ. कपिल के साथ 2 लाइव सेशंस और प्रोग्राम पूरा करने के लिए ज़्यादा समय देता है।",
+      },
+      howItWorks: {
+        eyebrow: "यह कैसे काम करता है",
+        title: "यह कैसे काम करता है",
+        steps: [
+          { title: "असेसमेंट लें", desc: "आप कहां से शुरू कर रहे हैं यह समझने के लिए मुफ़्त माइंड असेसमेंट लें।" },
+          { title: "अपना एक्सेस चुनें", desc: "1 महीने के लिए ₹499 चुनें, या 6 महीने और लाइव सेशंस के लिए ₹999।" },
+          { title: "सीखें और अभ्यास करें", desc: "21 दिनों तक दैनिक रूटीन का पालन करें — करीब 20–30 मिनट प्रतिदिन।" },
+          { title: "बनाते रहें", desc: "दिन 21 के बाद भी अपना व्यक्तिगत माइंड-रीसेट रूटीन बनाना जारी रखें।" },
+        ],
+      },
+      faq: {
+        eyebrow: "सवाल",
+        title: "शुरू करने से पहले",
+        ctaLabel: "WhatsApp पर पूछें",
+        items: [
+          {
+            question: "द 21-डे माइंड रीसेट सिस्टम™ क्या है?",
+            answer:
+              "ओवरथिंकिंग को समझने, मानसिक स्पष्टता विकसित करने, और बेहतर मन की आदतें बनाने के लिए एक 21-दिवसीय गाइडेड हिंदी ऑनलाइन प्रोग्राम — दैनिक ट्रेनिंग वीडियो, मेडिटेशन, और गतिविधियों के ज़रिए।",
+          },
+          {
+            question: "क्या कोर्स हिंदी में है?",
+            answer: "हां। सभी ट्रेनिंग वीडियो, एजुकेशनल वीडियो, और गाइडेड मेडिटेशन हिंदी में हैं।",
+          },
+          {
+            question: "कोर्स में क्या शामिल है?",
+            answer:
+              "हर दिन में एक ट्रेनिंग वीडियो, एक एजुकेशनल वीडियो, गाइडेड मेडिटेशन, एक दैनिक गतिविधि, और PDF वर्कबुक सामग्री शामिल है। ₹999 प्लान में अतिरिक्त रूप से डॉ. कपिल के साथ 2 लाइव सेशंस शामिल हैं।",
+          },
+          {
+            question: "क्या लाइव सेशंस दोनों प्लान्स में शामिल हैं?",
+            answer:
+              "नहीं। लाइव सेशंस केवल ₹999 / 6-महीने प्लान के साथ शामिल हैं। ₹499 / 1-महीना प्लान पूरी तरह सेल्फ-पेस्ड है, इसमें कोई लाइव सेशन नहीं है।",
+          },
+          {
+            question: "₹499 और ₹999 में क्या फर्क है?",
+            answer:
+              "दो चीज़ें: एक्सेस अवधि (₹499 के साथ 1 महीना बनाम ₹999 के साथ 6 महीने), और लाइव सेशंस — ₹999 प्लान में डॉ. कपिल के साथ 2 लाइव सेशंस शामिल हैं, जो ₹499 प्लान में नहीं हैं।",
+          },
+          {
+            question: "कोर्स कितने दिन का है?",
+            answer: "21 दिनों की दैनिक सामग्री, जिसे रोज़ाना करीब 20–30 मिनट में पूरा करने के लिए डिज़ाइन किया गया है।",
+          },
+          {
+            question: "क्या मैं अपने मोबाइल से सीख सकता/सकती हूं?",
+            answer: "हां, यह कोर्स Classplus ऐप या वेबसाइट के ज़रिए पूरी तरह मोबाइल-फ्रेंडली है।",
+          },
+          {
+            question: "क्या मुझे पहले से मेडिटेशन का अनुभव चाहिए?",
+            answer: "किसी पूर्व अनुभव की ज़रूरत नहीं — यह कोर्स आपको जहां से आप शुरू कर रहे हैं वहीं से मार्गदर्शन देने के लिए बनाया गया है।",
+          },
+          {
+            question: "क्या यह कोर्स एंग्ज़ायटी या डिप्रेशन का इलाज है?",
+            answer:
+              "नहीं। यह एक शैक्षणिक, सेल्फ-अवेयरनेस-केंद्रित कोर्स है। यह लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं है। यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, या संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर या स्थानीय आपातकालीन सेवाओं से संपर्क करें।",
+          },
+          {
+            question: "क्या मैं खरीदने से पहले असेसमेंट ले सकता/सकती हूं?",
+            answer: "हां — मुफ़्त माइंड असेसमेंट किसी के लिए भी उपलब्ध है, चाहे आप कोर्स में नामांकन करें या नहीं।",
+          },
+          {
+            question: "खरीदने के बाद क्या होता है?",
+            answer: "[एक्सेस-डिलीवरी के विवरण पुष्टि होना बाकी — आपको Classplus प्लेटफ़ॉर्म के लिए एक्सेस निर्देश मिलेंगे, जहां यह कोर्स होस्ट है।]",
+          },
+        ],
+      },
+      finalCta: {
+        eyebrow: "जब आप तैयार हों",
+        headline: "आपके मन को आपके ध्यान की ज़रूरत है।",
+        desc: "एक छोटे कदम से शुरू करें। सीखें, चिंतन करें, अभ्यास करें, और अपने विचारों के साथ एक बेहतर रिश्ता बनाएं।",
+        ctaPrimary: "अपना माइंड रीसेट शुरू करें — ₹499",
+        ctaSecondary: "मुफ़्त माइंड असेसमेंट लें",
+      },
+      whatsapp: {
+        bubble: "द 21-डे माइंड रीसेट सिस्टम के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
+        button: "WhatsApp पर चैट करें",
+        ariaLabel: "द 21-डे माइंड रीसेट सिस्टम के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+      },
+      stickyBar: {
+        text: "द 21-डे माइंड रीसेट सिस्टम",
+        price: "₹499 · 1-महीना एक्सेस",
+        cta: "₹499 में शुरू करें",
       },
     },
   },
