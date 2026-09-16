@@ -2142,7 +2142,7 @@ export const translations = {
         tagline: "Understand Your Mind • Build Mental Clarity",
         sub: "21 days of daily training, meditation, and guided activity. Live sessions with Dr. Kapil included with 6-month access.",
         ctaPrimary: "Start Your Mind Reset — ₹499",
-        ctaSecondary: "Take Free Mind Assessment",
+        ctaSecondary: "Take the Free Overthinking Test",
         trustLine: "Hindi Online Program • 21 Days • Guided Learning • Meditation",
       },
       problem: {
@@ -2169,15 +2169,15 @@ export const translations = {
         overthinkingSteps: ["Repeat", "Worry", "Mental Exhaustion"],
       },
       assessmentCta: {
-        eyebrow: "Free Self-Assessment",
+        eyebrow: "Free Overthinking Test",
         title: "Understand Your Thought, Worry & Stress Patterns",
-        desc: "Take a simple self-awareness assessment to reflect on your experiences related to overthinking, worry, and stress.",
+        desc: "Take a simple self-awareness test to reflect on your experiences related to overthinking, worry, and stress.",
         scoreCards: [
           { title: "Overthinking Awareness" },
           { title: "Anxiety / Worry Awareness" },
           { title: "Stress Awareness" },
         ],
-        cta: "Take Your Free Assessment",
+        cta: "Take the Overthinking Test",
         disclaimer:
           "For self-awareness and educational purposes only — this is not a clinical diagnostic test, and results are not a medical diagnosis.",
       },
@@ -2327,7 +2327,7 @@ export const translations = {
         eyebrow: "How It Works",
         title: "How It Works",
         steps: [
-          { title: "Take the Assessment", desc: "Take the free Mind Assessment to reflect on where you're starting from." },
+          { title: "Take the Overthinking Test", desc: "Take the free Overthinking Test to reflect on where you're starting from." },
           { title: "Choose Your Access", desc: "Pick ₹499 for 1 month, or ₹999 for 6 months plus live sessions." },
           { title: "Learn & Practise", desc: "Follow the daily routine for 21 days — about 20–30 minutes a day." },
           { title: "Keep Building", desc: "Continue building your own personal mind-reset routine after Day 21." },
@@ -2380,8 +2380,8 @@ export const translations = {
               "No. This is an educational, self-awareness-focused course. It is not a substitute for licensed therapy or psychiatric care. If you're currently in treatment for a mental health condition, or in crisis, please consult a licensed professional or local emergency services.",
           },
           {
-            question: "Can I take the assessment before purchasing?",
-            answer: "Yes — the Free Mind Assessment is available to anyone, whether or not you enroll in the course.",
+            question: "Can I take the Overthinking Test before purchasing?",
+            answer: "Yes — the Overthinking Test is free and available to anyone, whether or not you enroll in the course.",
           },
           {
             question: "What happens after I purchase?",
@@ -2394,7 +2394,7 @@ export const translations = {
         headline: "Your Mind Deserves Your Attention.",
         desc: "Start with one small step. Learn, reflect, practise, and build a better relationship with your thoughts.",
         ctaPrimary: "Start Your Mind Reset — ₹499",
-        ctaSecondary: "Take Free Mind Assessment",
+        ctaSecondary: "Take the Free Overthinking Test",
       },
       whatsapp: {
         bubble: "Have questions about the 21-Day Mind Reset System? Chat with Dr. Kapil's team instantly.",
@@ -2406,6 +2406,117 @@ export const translations = {
         price: "₹499 · 1 Month Access",
         cta: "Start for ₹499",
       },
+    },
+    // Overthinking Test™ — the real, working assessment at /mind-
+    // assessment (see the "Build the Overthinking Test Free Assessment"
+    // task), replacing the earlier "coming soon" placeholder. 15
+    // statements across 3 categories (5 each), one per screen, 0–4 scored
+    // on a 5-point frequency scale. Band thresholds (0–7 Low / 8–14
+    // Moderate / 15–20 High) are specified per-category (each category
+    // is naturally 0–20, 5 statements × 0–4) — the spec doesn't define a
+    // separate threshold set for the 0–60 overall sum, so the overall
+    // band is derived from the AVERAGE of the three category scores
+    // (0–20) against these same thresholds, and the raw 0–60 sum is
+    // shown only as a number, not banded on its own scale. Documented
+    // here as a judgment call, not silently decided.
+    overthinkingTestLanding: {
+      meta: {
+        title: "Overthinking Test — Free 2-Minute Self-Awareness Test",
+        description:
+          "A free 2-minute self-awareness test for overthinking, worry, and stress patterns — not a diagnosis, just a mirror.",
+      },
+      hero: {
+        eyebrow: "Free · 2 Minutes · 15 Questions",
+        headline: "Do You Overthink Everything?",
+        sub: "A free 2-minute self-awareness test — not a diagnosis, just a mirror.",
+        startCta: "Start the Test",
+      },
+      scaleLabels: ["Never", "Sometimes", "Often", "Most of the time", "Always"],
+      progress: { label: "Question", of: "of" },
+      backLabel: "Back",
+      categories: [
+        {
+          key: "overthinking",
+          label: "Overthinking",
+          statements: [
+            "I can't get even a small thing out of my head",
+            "My mind replays old conversations before I fall asleep",
+            "Even a small decision can take me hours to make",
+            "I keep wondering if I said something wrong",
+            "Before starting anything, I've already imagined every way it could go wrong",
+          ],
+        },
+        {
+          key: "worry",
+          label: "Worry / Anxiety",
+          statements: [
+            "I feel like something bad is about to happen, without any real reason",
+            "Just thinking about the future makes me uneasy",
+            "I get a knot in my stomach or feel jittery before something important",
+            "I assume the worst outcome even for small things",
+            "If someone takes long to reply, I start thinking something's wrong",
+          ],
+        },
+        {
+          key: "stress",
+          label: "Stress",
+          statements: [
+            "I feel like I have too much to do and not enough time",
+            "Small things make me irritable or angry",
+            "I feel tired even after a full night's sleep",
+            "My mind doesn't feel calm even while scrolling my phone or social media",
+            "I feel like I'm juggling too many things at once",
+          ],
+        },
+      ],
+      bands: {
+        low: {
+          label: "Low",
+          shortLine: "This doesn't seem to be affecting you much right now.",
+          title: "This doesn't seem to be affecting you much right now.",
+          desc: "Your answers suggest this isn't weighing heavily on your day-to-day life at the moment. A little structured daily awareness practice can still help keep it that way.",
+        },
+        moderate: {
+          label: "Moderate",
+          shortLine: "Worth paying a little attention to.",
+          title: "Worth paying a little attention to.",
+          desc: "Your answers suggest this shows up often enough to be worth noticing. Structured daily practice can help you build more awareness around it — not a cure, just a steadier starting point.",
+        },
+        high: {
+          label: "High",
+          shortLine: "This may be affecting your daily life more than you realize.",
+          title: "This may be affecting your daily life more than you realize.",
+          desc: "Your answers suggest this shows up often, and often enough to notice in daily life. That's worth paying honest attention to — structured daily practice can help you build awareness and a steadier routine, though it isn't a substitute for professional support if you feel you need it.",
+        },
+      },
+      teaser: {
+        title: "Your Result",
+        overallScoreLabel: "Your Overthinking Score",
+      },
+      gateForm: {
+        title: "See Your Full, Personalized Report",
+        desc: "Enter your name and WhatsApp number to see your full report.",
+        nameLabel: "Name",
+        namePlaceholder: "Your name",
+        phoneLabel: "WhatsApp Number",
+        phonePlaceholder: "10-digit mobile number",
+        consentLine: "We'll only use your name and number to send your report and course-related information.",
+        submitLabel: "Unlock My Full Report",
+        submittingLabel: "Submitting…",
+        errorGeneric: "Something went wrong. Please try again.",
+        nameRequired: "Please enter your name.",
+        phoneInvalid: "Please enter a valid 10-digit Indian mobile number.",
+      },
+      fullReport: {
+        title: "Your Full Report",
+        overallLabel: "Overall",
+        whatsappCta: "Send My Report on WhatsApp",
+        courseTitle: "Not sure what to do next?",
+        courseDesc: "The 21-Day Mind Reset System is a structured, daily Hindi program to build exactly this kind of awareness.",
+        courseCta: "Explore the 21-Day Mind Reset System",
+      },
+      disclaimer: "This is a self-awareness tool, not a clinical diagnosis.",
+      restartLabel: "Retake the Test",
     },
   },
 
@@ -4432,7 +4543,7 @@ export const translations = {
         tagline: "अपने मन को समझें • मानसिक स्पष्टता बनाएं",
         sub: "रोज़ाना ट्रेनिंग, मेडिटेशन, और गाइडेड एक्टिविटी के 21 दिन। 6-महीने के एक्सेस के साथ डॉ. कपिल के लाइव सेशंस शामिल हैं।",
         ctaPrimary: "अपना माइंड रीसेट शुरू करें — ₹499",
-        ctaSecondary: "मुफ़्त माइंड असेसमेंट लें",
+        ctaSecondary: "मुफ़्त ओवरथिंकिंग टेस्ट लें",
         trustLine: "हिंदी ऑनलाइन प्रोग्राम • 21 दिन • गाइडेड लर्निंग • मेडिटेशन",
       },
       problem: {
@@ -4459,15 +4570,15 @@ export const translations = {
         overthinkingSteps: ["दोहराएं", "चिंता करें", "मानसिक थकान"],
       },
       assessmentCta: {
-        eyebrow: "मुफ़्त सेल्फ-असेसमेंट",
+        eyebrow: "मुफ़्त ओवरथिंकिंग टेस्ट",
         title: "अपने विचार, चिंता और तनाव के पैटर्न को समझें",
-        desc: "ओवरथिंकिंग, चिंता, और तनाव से जुड़े अपने अनुभवों पर विचार करने के लिए एक सरल सेल्फ-अवेयरनेस असेसमेंट लें।",
+        desc: "ओवरथिंकिंग, चिंता, और तनाव से जुड़े अपने अनुभवों पर विचार करने के लिए एक सरल सेल्फ-अवेयरनेस टेस्ट लें।",
         scoreCards: [
           { title: "ओवरथिंकिंग अवेयरनेस" },
           { title: "चिंता/एंग्ज़ायटी अवेयरनेस" },
           { title: "तनाव अवेयरनेस" },
         ],
-        cta: "अपना मुफ़्त असेसमेंट लें",
+        cta: "ओवरथिंकिंग टेस्ट लें",
         disclaimer:
           "केवल सेल्फ-अवेयरनेस और शैक्षणिक उद्देश्यों के लिए — यह कोई क्लिनिकल डायग्नोस्टिक टेस्ट नहीं है, और परिणाम कोई मेडिकल डायग्नोसिस नहीं हैं।",
       },
@@ -4617,7 +4728,7 @@ export const translations = {
         eyebrow: "यह कैसे काम करता है",
         title: "यह कैसे काम करता है",
         steps: [
-          { title: "असेसमेंट लें", desc: "आप कहां से शुरू कर रहे हैं यह समझने के लिए मुफ़्त माइंड असेसमेंट लें।" },
+          { title: "ओवरथिंकिंग टेस्ट लें", desc: "आप कहां से शुरू कर रहे हैं यह समझने के लिए मुफ़्त ओवरथिंकिंग टेस्ट लें।" },
           { title: "अपना एक्सेस चुनें", desc: "1 महीने के लिए ₹499 चुनें, या 6 महीने और लाइव सेशंस के लिए ₹999।" },
           { title: "सीखें और अभ्यास करें", desc: "21 दिनों तक दैनिक रूटीन का पालन करें — करीब 20–30 मिनट प्रतिदिन।" },
           { title: "बनाते रहें", desc: "दिन 21 के बाद भी अपना व्यक्तिगत माइंड-रीसेट रूटीन बनाना जारी रखें।" },
@@ -4670,8 +4781,8 @@ export const translations = {
               "नहीं। यह एक शैक्षणिक, सेल्फ-अवेयरनेस-केंद्रित कोर्स है। यह लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं है। यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, या संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर या स्थानीय आपातकालीन सेवाओं से संपर्क करें।",
           },
           {
-            question: "क्या मैं खरीदने से पहले असेसमेंट ले सकता/सकती हूं?",
-            answer: "हां — मुफ़्त माइंड असेसमेंट किसी के लिए भी उपलब्ध है, चाहे आप कोर्स में नामांकन करें या नहीं।",
+            question: "क्या मैं खरीदने से पहले ओवरथिंकिंग टेस्ट ले सकता/सकती हूं?",
+            answer: "हां — ओवरथिंकिंग टेस्ट मुफ़्त है और किसी के लिए भी उपलब्ध है, चाहे आप कोर्स में नामांकन करें या नहीं।",
           },
           {
             question: "खरीदने के बाद क्या होता है?",
@@ -4684,7 +4795,7 @@ export const translations = {
         headline: "आपके मन को आपके ध्यान की ज़रूरत है।",
         desc: "एक छोटे कदम से शुरू करें। सीखें, चिंतन करें, अभ्यास करें, और अपने विचारों के साथ एक बेहतर रिश्ता बनाएं।",
         ctaPrimary: "अपना माइंड रीसेट शुरू करें — ₹499",
-        ctaSecondary: "मुफ़्त माइंड असेसमेंट लें",
+        ctaSecondary: "मुफ़्त ओवरथिंकिंग टेस्ट लें",
       },
       whatsapp: {
         bubble: "द 21-डे माइंड रीसेट सिस्टम के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
@@ -4696,6 +4807,104 @@ export const translations = {
         price: "₹499 · 1-महीना एक्सेस",
         cta: "₹499 में शुरू करें",
       },
+    },
+    overthinkingTestLanding: {
+      meta: {
+        title: "Overthinking Test — मुफ़्त 2-मिनट सेल्फ-अवेयरनेस टेस्ट",
+        description: "ओवरथिंकिंग, चिंता, और तनाव के पैटर्न के लिए एक मुफ़्त 2-मिनट सेल्फ-अवेयरनेस टेस्ट — कोई डायग्नोसिस नहीं, बस एक आईना।",
+      },
+      hero: {
+        eyebrow: "मुफ़्त · 2 मिनट · 15 सवाल",
+        headline: "क्या आप ज़रूरत से ज़्यादा सोचते हैं?",
+        sub: "एक मुफ़्त 2-मिनट सेल्फ-अवेयरनेस टेस्ट — कोई डायग्नोसिस नहीं, बस एक आईना।",
+        startCta: "टेस्ट शुरू करें",
+      },
+      scaleLabels: ["कभी नहीं", "कभी-कभी", "अक्सर", "ज़्यादातर समय", "हमेशा"],
+      progress: { label: "सवाल", of: "में से" },
+      backLabel: "पीछे",
+      categories: [
+        {
+          key: "overthinking",
+          label: "ओवरथिंकिंग",
+          statements: [
+            "मैं किसी छोटी सी बात को भी दिमाग से निकाल नहीं पाता",
+            "रात को सोने से पहले मेरा दिमाग पुरानी बातें दोहराता है",
+            "एक छोटा सा फैसला लेने में भी मुझे घंटों लग जाते हैं",
+            "मैं बार-बार सोचता हूं कि कहीं मैंने कुछ गलत तो नहीं कह दिया",
+            "कोई भी काम शुरू करने से पहले मैं उसके सारे संभावित बुरे नतीजे सोच लेता हूं",
+          ],
+        },
+        {
+          key: "worry",
+          label: "चिंता",
+          statements: [
+            "बिना किसी ठोस वजह के भी मुझे लगता है कुछ बुरा होने वाला है",
+            "भविष्य के बारे में सोचते ही मेरा मन बेचैन हो जाता है",
+            "किसी ज़रूरी काम से पहले पेट में हलचल या घबराहट होती है",
+            "मैं छोटी बातों का भी सबसे बुरा नतीजा सोच लेता हूं",
+            "अगर किसी का जवाब देर से आए, तो मैं सोचने लगता हूं कुछ गड़बड़ है",
+          ],
+        },
+        {
+          key: "stress",
+          label: "तनाव",
+          statements: [
+            "मुझे लगता है मेरे पास काम इतना है कि समय कम पड़ जाता है",
+            "छोटी-छोटी बातों पर भी मुझे चिड़चिड़ाहट या गुस्सा आ जाता है",
+            "पूरी नींद लेने के बावजूद मैं थका हुआ महसूस करता हूं",
+            "फ़ोन या सोशल मीडिया देखते हुए भी मेरा दिमाग शांत नहीं होता",
+            "मुझे लगता है मैं एक साथ बहुत सारी चीज़ें संभाल रहा हूं",
+          ],
+        },
+      ],
+      bands: {
+        low: {
+          label: "कम",
+          shortLine: "अभी इसका असर कम है।",
+          title: "अभी इसका असर कम है।",
+          desc: "आपके जवाब बताते हैं कि यह अभी आपकी रोज़मर्रा की ज़िंदगी पर ज़्यादा असर नहीं डाल रहा। फिर भी, एक हल्का, संरचित दैनिक अभ्यास इसे ऐसे ही बनाए रखने में मदद कर सकता है।",
+        },
+        moderate: {
+          label: "मध्यम",
+          shortLine: "थोड़ा ध्यान देने लायक है।",
+          title: "थोड़ा ध्यान देने लायक है।",
+          desc: "आपके जवाब बताते हैं कि यह अक्सर सामने आता है, इतना कि ध्यान देने लायक है। संरचित दैनिक अभ्यास इसके प्रति जागरूकता बनाने में मदद कर सकता है — कोई इलाज नहीं, बस एक स्थिर शुरुआती बिंदु।",
+        },
+        high: {
+          label: "अधिक",
+          shortLine: "ये आपकी रोज़मर्रा की ज़िंदगी को प्रभावित कर सकता है।",
+          title: "ये आपकी रोज़मर्रा की ज़िंदगी को प्रभावित कर सकता है।",
+          desc: "आपके जवाब बताते हैं कि यह अक्सर सामने आता है, और शायद आपकी रोज़मर्रा की ज़िंदगी में भी दिखता है। इस पर ईमानदारी से ध्यान देना ज़रूरी है — संरचित दैनिक अभ्यास जागरूकता और एक स्थिर रूटीन बनाने में मदद कर सकता है, हालांकि अगर आपको ज़रूरत महसूस हो तो यह किसी पेशेवर मदद का विकल्प नहीं है।",
+        },
+      },
+      teaser: {
+        title: "आपका परिणाम",
+        overallScoreLabel: "आपका Overthinking Score",
+      },
+      gateForm: {
+        title: "अपनी पूरी, personalized रिपोर्ट देखें",
+        desc: "अपनी पूरी रिपोर्ट देखने के लिए अपना नाम और WhatsApp number डालें।",
+        nameLabel: "नाम",
+        namePlaceholder: "आपका नाम",
+        phoneLabel: "WhatsApp नंबर",
+        phonePlaceholder: "10-अंकों का मोबाइल नंबर",
+        consentLine: "हम आपका नाम और नंबर सिर्फ आपकी रिपोर्ट भेजने और कोर्स से जुड़ी जानकारी के लिए इस्तेमाल करेंगे।",
+        submitLabel: "मेरी पूरी रिपोर्ट अनलॉक करें",
+        submittingLabel: "सबमिट हो रहा है…",
+        errorGeneric: "कुछ गलत हो गया। कृपया फिर से कोशिश करें।",
+        nameRequired: "कृपया अपना नाम दर्ज करें।",
+        phoneInvalid: "कृपया एक मान्य 10-अंकों का भारतीय मोबाइल नंबर दर्ज करें।",
+      },
+      fullReport: {
+        title: "आपकी पूरी रिपोर्ट",
+        overallLabel: "ओवरऑल",
+        whatsappCta: "मेरी रिपोर्ट WhatsApp पर भेजें",
+        courseTitle: "आगे क्या करें, समझ नहीं आ रहा?",
+        courseDesc: "द 21-डे माइंड रीसेट सिस्टम एक संरचित, दैनिक हिंदी प्रोग्राम है जो ठीक इसी तरह की जागरूकता बनाने के लिए बनाया गया है।",
+        courseCta: "द 21-डे माइंड रीसेट सिस्टम एक्सप्लोर करें",
+      },
+      disclaimer: "यह एक self-awareness tool है, कोई clinical diagnosis नहीं।",
+      restartLabel: "टेस्ट दोबारा लें",
     },
   },
 };

@@ -148,6 +148,34 @@ export function buildMentoringApplicationWhatsAppLink(details: {
 export const WHATSAPP_COURSE_INQUIRY_LINK =
   'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20have%20a%20question%20about%20the%20Overthinking%20Mastery%20Course'
 
+// Same number, Overthinking Test (/mind-assessment) result hand-off —
+// see the "Build the Overthinking Test Free Assessment" task. Uses the
+// exact Hindi message template that task specified verbatim (not
+// translated per site language toggle — this goes to Dr. Kapil's team,
+// who work in Hindi, regardless of which language the visitor took the
+// test in). Deliberately requires the visitor to tap Send themselves —
+// this is a user-completed hand-off, not a silent auto-send (that would
+// need the WhatsApp Business API, out of scope here). Called only after
+// the lead is already saved via submitOverthinkingTestLead — this is a
+// secondary, best-effort notification step, same division of
+// responsibility as every other buildXWhatsAppLink in this file.
+export function buildOverthinkingTestWhatsAppLink(details: {
+  name: string
+  overthinkingBand: string
+  worryBand: string
+  stressBand: string
+}): string {
+  const lines = [
+    'नमस्ते, मैंने Overthinking Test पूरा किया है।',
+    `नाम: ${details.name}`,
+    `Overthinking Score: ${details.overthinkingBand}`,
+    `Worry Score: ${details.worryBand}`,
+    `Stress Score: ${details.stressBand}`,
+    'कृपया मुझे 21-Day Mind Reset System के बारे में जानकारी भेजें।',
+  ]
+  return `https://wa.me/919540123161?text=${encodeURIComponent(lines.join('\n'))}`
+}
+
 // Same number, for placements on /retreats/residential that know which
 // specific date or room type the visitor is interested in (a roadmap
 // date card, a pricing tier) — pre-filling that detail into the message

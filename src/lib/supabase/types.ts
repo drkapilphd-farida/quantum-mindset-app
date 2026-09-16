@@ -1049,6 +1049,49 @@ export type Database = {
         }
         Relationships: []
       }
+      // Hand-added to match supabase/migrations/20260916000001_create_
+      // overthinking_test_leads.sql, which has NOT been applied to the
+      // live database from this environment (no Supabase CLI/psql
+      // access here — see that migration's own doc comment and the
+      // "Build the Overthinking Test Free Assessment" task's final
+      // report). This entry keeps `submitOverthinkingTestLead.ts`
+      // type-checking against the shape the migration will produce once
+      // it's actually run; regenerate this file for real (`supabase gen
+      // types typescript`) after applying the migration, rather than
+      // trusting this hand-written copy indefinitely.
+      overthinking_test_leads: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          overall_score: number
+          overthinking_score: number
+          stress_score: number
+          whatsapp_number: string
+          worry_score: number
+        }
+        Insert: {
+          created_at?: string
+          full_name: string
+          id?: string
+          overall_score: number
+          overthinking_score: number
+          stress_score: number
+          whatsapp_number: string
+          worry_score: number
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          overall_score?: number
+          overthinking_score?: number
+          stress_score?: number
+          whatsapp_number?: string
+          worry_score?: number
+        }
+        Relationships: []
+      }
       learning_asset_bundles: {
         Row: {
           chapter_order: number

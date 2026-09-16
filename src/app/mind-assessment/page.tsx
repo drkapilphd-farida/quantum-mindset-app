@@ -1,41 +1,42 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Sparkles } from 'lucide-react'
+import { translations } from '@/lib/i18n'
+import MindResetNav from '@/components/mind-reset/MindResetNav'
+import Footer from '@/components/Footer'
+import MindResetWhatsAppWidget from '@/components/mind-reset/MindResetWhatsAppWidget'
+import OverthinkingTestExperience from '@/components/mind-reset/OverthinkingTestExperience'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Mind Assessment — Coming Soon | Mind Ur Mind' },
-  description: 'A free self-awareness assessment for overthinking, worry, and stress patterns — coming soon.',
+  title: { absolute: `${translations.en.overthinkingTestLanding.meta.title} | Mind Ur Mind` },
+  description: translations.en.overthinkingTestLanding.meta.description,
+  alternates: {
+    canonical: '/mind-assessment',
+  },
 }
 
-// Route placeholder only, per the "Build the 21-Day Mind Reset System
-// Landing Page" master prompt's own instruction: "Do not implement the
-// assessment logic itself — CTA and route placeholder only." An honest
-// "coming soon" stop (same discipline as questions-coming-soon/page.tsx
-// elsewhere in this repo), not a faked assessment flow. Links back to
-// the Mind Reset page rather than the homepage, since visitors land here
-// specifically from that page's own assessment CTAs.
+// The Overthinking Test™ — the real, working assessment (see the "Build
+// the Overthinking Test Free Assessment" task), replacing the earlier
+// "Coming Soon" placeholder. Route kept as /mind-assessment (unchanged
+// from the placeholder) even though the product is now named
+// "Overthinking Test" everywhere in the UI — renaming the URL itself
+// wasn't asked for and would orphan the existing links already pointing
+// here from /mentoring/overthinking-course.
+//
+// Reuses this page's existing minimal chrome (MindResetNav + Footer +
+// MindResetWhatsAppWidget — same pattern QsrSpeedTestPage uses for its
+// own dedicated multi-step quiz route) rather than inventing new chrome
+// for a single page. All of the actual quiz/results/lead-capture logic
+// lives in OverthinkingTestExperience, a client component (interactive
+// state machine — question index, per-question answers, submitted
+// lead), imported here into an otherwise-static Server Component page.
 export default function MindAssessmentPage(): React.JSX.Element {
   return (
-    <div className="warm-light flex min-h-screen flex-col items-center justify-center gap-8 px-6 py-16 text-center font-sans">
-      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-rose/40 bg-rose-soft">
-        <Sparkles className="h-7 w-7 text-rose" aria-hidden="true" />
-      </div>
-      <div className="max-w-md">
-        <h1 className="text-[24px] font-extrabold leading-tight text-ink sm:text-[28px]">
-          The Free Mind Assessment Is Coming Soon
-        </h1>
-        <p className="mt-3 text-[14.5px] leading-relaxed text-ink-dim">
-          We&rsquo;re building a simple self-awareness assessment for overthinking, worry, and stress patterns — for
-          educational reflection only, not a clinical diagnosis. Check back soon, or explore the 21-Day Mind Reset
-          System in the meantime.
-        </p>
-      </div>
-      <Link
-        href="/mentoring/overthinking-course"
-        className="inline-flex items-center gap-2 rounded-sm bg-rose px-7 py-[15px] text-[14px] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#b8757e]"
-      >
-        Back to the 21-Day Mind Reset System
-      </Link>
+    <div className="warm-light min-h-screen font-sans antialiased">
+      <MindResetNav />
+      <main>
+        <OverthinkingTestExperience />
+      </main>
+      <Footer />
+      <MindResetWhatsAppWidget />
     </div>
   )
 }
