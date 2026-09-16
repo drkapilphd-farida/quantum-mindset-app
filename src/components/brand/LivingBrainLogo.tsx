@@ -79,9 +79,24 @@ const RIGHT_BOOK_FLAP = mirrorPathX(LEFT_BOOK_FLAP)
 const LEFT_BOOK_FOLDS = ['M96,140 C72,156 40,164 14,172', 'M98,152 C78,168 50,178 24,184'] as const
 const RIGHT_BOOK_FOLDS = LEFT_BOOK_FOLDS.map(mirrorPathX)
 
+// `dark`'s fill was previously pure white (#FFFFFF) — but the gyri
+// lines, node network, and book-fold accents are hardcoded to
+// stroke/fill="white" regardless of colorMode (see the SVG markup
+// below), so on a pure-white fill those details became invisible: the
+// mark rendered as a flat, detail-less blob rather than a legible brain/
+// book silhouette (confirmed via screenshot — see the "Fix Incorrect
+// Logo on Mind Reset Page Header" task). Fixed to a light lavender-gray
+// distinct enough from pure white for those hardcoded-white accents to
+// actually show up, while still reading as a light/monochrome mark
+// appropriate for a dark surface. No current caller uses colorMode
+// "dark" (MindResetNav.tsx, its only caller, switched to the default
+// "full-color" instead, since that reads perfectly well against its
+// navy background too — see that file's own doc comment) — fixed here
+// anyway since it's a real bug in this component's public API, not
+// dead code worth leaving broken for whoever reaches for it next.
 const COLOR_STOPS: Record<ColorMode, { from: string; to: string; ring: string; glow: string; dot: string }> = {
   'full-color': { from: '#2B4CE8', to: '#0FD9A0', ring: '#FFFFFF', glow: '#4FE0FF', dot: '#132A6B' },
-  dark: { from: '#FFFFFF', to: '#FFFFFF', ring: '#FFFFFF', glow: '#FFFFFF', dot: '#FFFFFF' },
+  dark: { from: '#D7DBEA', to: '#D7DBEA', ring: '#FFFFFF', glow: '#FFFFFF', dot: '#FFFFFF' },
   light: { from: '#B8BEC9', to: '#B8BEC9', ring: '#E7ECEF', glow: '#B8E8F2', dot: '#8B96A3' },
 }
 
