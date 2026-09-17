@@ -35,6 +35,13 @@ export function AppSidebar({ brandName = null, brandLogoUrl = null, appDomain, f
           {brandLogoUrl !== null ? (
             <Image src={brandLogoUrl} alt="" width={24} height={24} className="size-6 shrink-0 rounded object-contain" unoptimized />
           ) : (
+            // Always the plain brand mark, unconditionally — a prior
+            // "Duolingo-style" attempt made this shift color (toward red)
+            // when a daily streak was missed; that was deliberately
+            // removed (see commit c2a1179, "Remove streak-driven logo
+            // warmth feature") per explicit product decision that the
+            // logo should never change color based on streak/practice
+            // status. Do not reintroduce that coupling here.
             <LivingBrainLogo size={24} decorative={false} animated={false} />
           )}
           <span className="brand-gradient-text">{brandName ?? 'Quantum Mind'}</span>

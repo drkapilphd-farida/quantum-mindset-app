@@ -61,6 +61,11 @@ export function Topbar({
             {brandLogoUrl !== null ? (
               <Image src={brandLogoUrl} alt="" width={22} height={22} className="size-[22px] rounded object-contain" unoptimized />
             ) : (
+              // Always the plain brand mark, unconditionally — see the
+              // matching note on AppSidebar.tsx's own logo: streak-based
+              // color shifting was tried and deliberately removed
+              // (commit c2a1179), per explicit product decision. Never
+              // reintroduce it here either.
               <LivingBrainLogo size={22} decorative={false} animated={false} />
             )}
             <SheetTitle className="text-sm font-semibold tracking-tight">
@@ -88,6 +93,8 @@ export function Topbar({
         {brandLogoUrl !== null ? (
           <Image src={brandLogoUrl} alt="" width={36} height={36} className="size-9 shrink-0 rounded object-contain" unoptimized />
         ) : (
+          // Same "never streak-conditional" rule as this file's other
+          // LivingBrainLogo usage above.
           <LivingBrainLogo size={36} className="size-9 shrink-0" decorative={false} animated={false} />
         )}
         {/* Mobile Viewport Fix™ — the wordmark text is the single widest
