@@ -980,6 +980,19 @@ export const translations = {
           },
         ],
       },
+      // Brainwave Science Infographic™ (see the "Add Brainwave Science
+      // Infographic to QSR Page" task) — a supplied side-by-side graphic
+      // (public/brainwave-science.png), placed right after the 4-card
+      // "why this works" section and before the metrics/EEG section, so
+      // it reads as the visual payoff of the cards above rather than a
+      // bolted-on addition.
+      brainwaveScience: {
+        eyebrow: "See The Science",
+        title: "The Brainwave Shift, Visualized",
+        desc: "Normal reading keeps your brain in high-alert Beta waves. Quantum Speed Reading trains it into a calmer, more absorptive Alpha/Gamma state — here's what changes.",
+        imageAlt:
+          "Comparison of normal saccadic reading (Beta brainwaves) versus Quantum Speed Reading flow state (Alpha/Gamma brainwaves) and their effects on retention and focus",
+      },
       // Science-Backed Neuro-Cognitive Positioning™ — the program's own
       // real, already-computed metrics (Brain Score, comprehension %,
       // daily-streak consistency — see practiceHistory.ts /
@@ -3532,6 +3545,13 @@ export const translations = {
             desc: "ऊपर बताई गई कोई भी बात बिना निरंतर, विकर्षण-मुक्त फोकस के टिक नहीं पाती। वही दैनिक अभ्यास जो पढ़ने की गति बढ़ाते हैं, आपकी लंबे समय तक एक ही काम पर ध्यान केंद्रित करने की क्षमता को भी प्रशिक्षित करते हैं।",
           },
         ],
+      },
+      brainwaveScience: {
+        eyebrow: "विज्ञान देखें",
+        title: "ब्रेनवेव शिफ्ट, विज़ुअलाइज़्ड",
+        desc: "सामान्य पढ़ाई आपके दिमाग को हाई-अलर्ट बीटा तरंगों में रखती है। क्वांटम स्पीड रीडिंग इसे एक शांत, ज़्यादा ग्रहणशील अल्फा/गामा अवस्था में प्रशिक्षित करती है — यहां देखें क्या बदलता है।",
+        imageAlt:
+          "सामान्य सैकेडिक पढ़ाई (बीटा ब्रेनवेव) बनाम क्वांटम स्पीड रीडिंग फ्लो अवस्था (अल्फा/गामा ब्रेनवेव) की तुलना और याददाश्त व फोकस पर उनके प्रभाव",
       },
       neuroCognitive: {
         eyebrow: "एडवांस्ड न्यूरो-कॉग्निटिव ट्रेनिंग",
