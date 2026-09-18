@@ -9,6 +9,7 @@ import QsrGuaranteeBadge from "./QsrGuaranteeBadge";
 import CheckoutTrustLine from "../CheckoutTrustLine";
 import HeroTestimonialBadge from "../HeroTestimonialBadge";
 import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from "@/config/masterclassPaymentLink";
+import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function QsrHero(): React.JSX.Element {
@@ -19,7 +20,7 @@ export default function QsrHero(): React.JSX.Element {
   const featuredTestimonial = t.testimonials.items.find((item) => item.id === "dr-preeti");
 
   return (
-    <section className="relative overflow-hidden border-b border-line px-6 pb-16 pt-14 sm:px-8 sm:pt-20 lg:pb-24">
+    <section id="qsr-hero" className="relative overflow-hidden border-b border-line px-6 pb-16 pt-14 sm:px-8 sm:pt-20 lg:pb-24">
       <div
         className="pointer-events-none absolute -right-32 top-0 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(184,134,46,0.10),transparent_70%)]"
         aria-hidden="true"
@@ -40,13 +41,21 @@ export default function QsrHero(): React.JSX.Element {
             {qsr.hero.sub}
           </p>
 
+          {/* CTA restructure (see the "Homepage & QSR Conversion Rewrite"
+              task) — the free live intro session is now primary
+              (site-wide standardized copy/target); paid enrollment moves
+              to secondary but keeps its own price meta + checkout
+              trust/guarantee copy, since those are specifically about
+              the paid path. The 2-minute Speed Test drops from a full
+              button to a plain tertiary text link below — it already
+              gets two dedicated sections further down this page. */}
           <div className="mt-10 flex flex-wrap items-start gap-4">
             <div>
               <a
-                href={RAZORPAY_MASTERCLASS_PAYMENT_LINK}
+                href={WHATSAPP_FREE_INTRO_SESSION_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackGaEvent("razorpay_checkout_click", { location: "qsr_hero" })}
+                onClick={() => trackGaEvent("whatsapp_click", { location: "qsr_hero_free_workshop" })}
                 className="group inline-flex items-center gap-2.5 rounded-sm bg-gold px-7 py-[15px] text-[14.5px] font-semibold tracking-tight text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]"
               >
                 {qsr.hero.ctaPrimary}
@@ -55,6 +64,21 @@ export default function QsrHero(): React.JSX.Element {
               <p className="mt-2 font-mono text-[11.5px] uppercase tracking-[0.06em] text-ink-faint">
                 {qsr.hero.ctaPrimaryMeta}
               </p>
+            </div>
+            <div>
+              <a
+                href={RAZORPAY_MASTERCLASS_PAYMENT_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackGaEvent("razorpay_checkout_click", { location: "qsr_hero" })}
+                className="group inline-flex items-center gap-2.5 rounded-sm border border-teal/60 px-7 py-[15px] text-[14.5px] font-semibold text-teal transition-colors hover:bg-teal-soft"
+              >
+                {qsr.hero.ctaSecondary}
+                <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </a>
+              <p className="mt-2 font-mono text-[11.5px] uppercase tracking-[0.06em] text-ink-faint">
+                {qsr.hero.ctaSecondaryMeta}
+              </p>
               <CheckoutTrustLine className="mt-1.5 max-w-[220px]" />
               {/* Short guarantee line right at the CTA itself — one line,
                   small text, distinct from QsrGuaranteeBadge's full box
@@ -62,14 +86,14 @@ export default function QsrHero(): React.JSX.Element {
                   version. */}
               <p className="mt-1.5 max-w-[240px] text-[11px] leading-snug text-ink-dim">{qsr.guarantee.heroLine}</p>
             </div>
-            <Link
-              href="/programs/quantum-speed-reading/speed-test"
-              className="group inline-flex items-center gap-2.5 rounded-sm border border-teal/60 px-7 py-[15px] text-[14.5px] font-semibold text-teal transition-colors hover:bg-teal-soft"
-            >
-              {qsr.hero.ctaSecondary}
-              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </Link>
           </div>
+
+          <Link
+            href="/programs/quantum-speed-reading/speed-test"
+            className="mt-4 inline-block text-[13px] font-semibold text-ink-dim underline decoration-ink-faint/50 underline-offset-2 hover:text-ink"
+          >
+            {qsr.hero.ctaTertiary}
+          </Link>
 
           {featuredTestimonial !== undefined && (
             <HeroTestimonialBadge

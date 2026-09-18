@@ -5,7 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow, CtaButton } from "./ui";
 import FrequencyDial from "./FrequencyDial";
 import HeroTestimonialBadge from "./HeroTestimonialBadge";
-import { HABIT_BUILDER_APP_URL } from "@/config/habitBuilderSignupLink";
+import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function HeroSection(): React.JSX.Element {
@@ -57,14 +57,14 @@ export default function HeroSection(): React.JSX.Element {
 
           <div className="mt-10 flex flex-wrap gap-4">
             <CtaButton
-              href={HABIT_BUILDER_APP_URL}
+              href={WHATSAPP_FREE_INTRO_SESSION_LINK}
               variant="primary"
               accent="gold"
               onClick={() => trackGaEvent("signup_cta_click", { location: "home_hero" })}
             >
               {t.hero.ctaPrimary}
             </CtaButton>
-            <CtaButton href="#begin" variant="ghost" accent="teal">
+            <CtaButton href="/programs/quantum-speed-reading/speed-test" variant="ghost" accent="teal">
               {t.hero.ctaSecondary}
             </CtaButton>
           </div>
@@ -80,16 +80,11 @@ export default function HeroSection(): React.JSX.Element {
 
           {/* Positioning fix (see the "QSR Page Cleanup & Credibility
               Fixes" task, Fix 6) — these four stats used to render with
-              identical visual weight. The hero content above this strip
-              leans QSR (reading/exam-focused headline, a QSR credential
-              chip) but its own primary CTA button actually targets the
-              Habit Builder signup, not QSR, so this strip can't rely on
-              the hero alone to establish hierarchy. First item (QSR,
-              always index 0 in `hero.stats`) now gets a small gold
-              accent — a left border plus gold value text — consistent
-              with the site's existing QSR = Tier 1 / gold-accent rule
-              used everywhere else (ProgramSelector's flagship block,
-              tier1's own eyebrow, etc.); the other three stay plain. */}
+              identical visual weight. First item (QSR, always index 0 in
+              `hero.stats`) gets a small gold accent — a left border plus
+              gold value text — consistent with the site's existing QSR =
+              Tier 1 / gold-accent rule used everywhere else (tier1's own
+              eyebrow, etc.); the other three stay plain. */}
           <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-line pt-6 sm:grid-cols-3 lg:grid-cols-none lg:flex lg:flex-wrap">
             {t.hero.stats.map((stat, index) => (
               <div

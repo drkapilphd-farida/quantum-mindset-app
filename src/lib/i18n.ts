@@ -51,11 +51,11 @@ export const translations = {
         "India's First QSR Pioneer (Since 2015)",
         "10,000+ Students Guided",
       ],
-      headline: "Read Faster. Retain More.",
-      headlineEm: "Perform Better in Exams.",
-      sub: "Science-based speed reading and focus training for students, exam aspirants, and lifelong learners — guided by Dr. Kapil Dev Sharma since 2015.",
-      ctaPrimary: "Start 7 Days Free",
-      ctaSecondary: "Explore Your Path",
+      headline: "India's First Science-Backed Quantum Speed Reading",
+      headlineEm: "5x Faster Reading. 100% Retention. EEG-Verified.",
+      sub: "Struggling to finish your syllabus? Reading for hours but remembering nothing? Your child studies for hours but forgets everything? This isn't a reading problem — it's a training problem. No hypnosis, no shortcuts — pure cognitive science.",
+      ctaPrimary: "Join the Free Online Workshop",
+      ctaSecondary: "Take the Free Speed Test",
       portraitName: "Dr. Kapil Dev Sharma",
       portraitTitle: "Founder, Mind Ur Mind",
       stats: [
@@ -148,48 +148,32 @@ export const translations = {
     },
     programSelector: {
       title: "Where Would You Like to Begin?",
-      subtitle: "Most people start here.",
-      // Positioning fix (see the "Fix Homepage & QSR Page Positioning"
-      // task) — this section used to render 4 visually identical cards
-      // (Habit Builder got quiet gold styling, the other 3 including QSR
-      // itself got none), which read as "pick any door" instead of naming
-      // a flagship. QSR now gets its own dedicated, dominant block
-      // (`flagship`, reusing the exact headline/price already used on the
-      // QSR page's own hero for consistency) with the other three paths
-      // demoted underneath it as clearly secondary, grouped under
-      // `otherPathsLabel`.
-      flagship: {
-        eyebrowLabel: "The Flagship Program",
-        title: "Read 5x Faster. Retain 100%.",
-        desc: "The 30-Day Quantum Speed Reading Masterclass — a science-backed, live-guided transformation in how you read, learn and remember, taught live by Dr. Kapil Dev Sharma.",
-        priceLine: "₹9,999 · One-Time Enrollment",
-        cta: "Explore the Masterclass",
-      },
-      otherPathsLabel: "Or explore other paths",
+      subtitle: "Tell us who this is for — we'll point you the right way.",
+      // Audience-first path cards (see the "Homepage & QSR Conversion
+      // Rewrite" task) — replaces the earlier "QSR flagship + 3 other
+      // programs" layout with 3 cards keyed to WHO the visitor is
+      // shopping for, not which product they'd pick. Two of the three
+      // point at QSR itself (self vs. parent framing); the third is the
+      // only homepage path into deeper mind-training work (meditation /
+      // overthinking) since that's not sold as a single product.
       paths: [
         {
-          key: "habit",
-          eyebrowLabel: "Not Ready for the Full Masterclass?",
-          title: "Quantum Mind & Habit Builder",
-          desc: "A low-commitment 21-day streak-based on-ramp to train your mindset, focus and daily habits.",
-          priceLine: "7 Days Free · ₹99 one-time",
-          cta: "Start Free",
+          key: "self",
+          title: "Learning for Myself",
+          desc: "Read faster, retain more, and get through your syllabus or reading list without burning out.",
+          cta: "Explore Quantum Speed Reading",
         },
         {
-          key: "retreats",
-          eyebrowLabel: "Go Deeper Within",
-          title: "Retreats",
-          desc: "Immersive experiences in meditation, awareness, inner exploration and personal transformation.",
-          priceLine: undefined,
-          cta: "Explore Retreats",
+          key: "child",
+          title: "Looking for My Child",
+          desc: "Help your child study less, remember more, and feel less stressed before exams.",
+          cta: "See the Program for Parents",
         },
         {
-          key: "mentoring",
-          eyebrowLabel: "Get Personal Guidance",
-          title: "1-on-1 Mentoring",
-          desc: "Work directly with Dr. Kapil on your individual goals, challenges and transformation.",
-          priceLine: undefined,
-          cta: "Apply for Mentoring",
+          key: "deeper",
+          title: "Deeper Mind Training",
+          desc: "For meditation, inner stillness, and working through overthinking with direct guidance.",
+          cta: "Explore Mentoring",
         },
       ],
     },
@@ -293,9 +277,9 @@ export const translations = {
       cta: "Discover Dr. Kapil's Journey",
     },
     homeFinalCta: {
-      title: "Your Transformation Can Start Small.",
-      desc: "You don't need to change everything today. Just take the first step.",
-      ctaPrimary: "Start Your 7-Day Free Habit Journey",
+      title: "Ready to Read Differently?",
+      desc: "Join a free live session and see the method before you commit to anything.",
+      ctaPrimary: "Join the Free Online Workshop",
       ctaSecondary: "Explore All Programs",
     },
     galleryGlimpse: {
@@ -563,6 +547,7 @@ export const translations = {
           programKey: "qsr",
           quote: "I finished two books in the time it used to take me to finish one chapter.",
           context: "",
+          result: "~2x reading throughput",
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -574,6 +559,7 @@ export const translations = {
           quote:
             "The Quantum Speed Reading workshop completely changed how I process medical journals; I can now scan through extensive research papers in a fraction of the usual time.",
           context: "Mumbai",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -585,6 +571,7 @@ export const translations = {
           quote:
             "As a business owner, processing market reports and financial statements has become remarkably fast after attending this program.",
           context: "Ahmedabad · Business Owner",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -596,6 +583,7 @@ export const translations = {
           quote:
             "Initially skeptical, but the 30-day practice streak genuinely improved my focus and overall reading comprehension beyond expectations.",
           context: "Kolkata",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -607,6 +595,7 @@ export const translations = {
           quote:
             "The combination of live sessions and daily app practice helped me break through a lifelong reading plateau.",
           context: "Bengaluru",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -618,6 +607,7 @@ export const translations = {
           quote:
             "A profound mental reboot — my retention power skyrocketed, and I now finish thick management books in a single sitting.",
           context: "Surat",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -629,6 +619,7 @@ export const translations = {
           quote:
             "The mental clarity and speed I've gained through these 30 days have drastically cut down my study and preparation time.",
           context: "Jaipur",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -639,6 +630,7 @@ export const translations = {
           programKey: "retreat",
           quote: "The Kundalini sessions alone were worth the entire eleven days.",
           context: "",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -649,6 +641,7 @@ export const translations = {
           programKey: "mentoring",
           quote: "Six private sessions did what years of general advice never managed.",
           context: "",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -659,6 +652,7 @@ export const translations = {
           programKey: "course",
           quote: "Twenty-one days, and the loop in my head finally went quiet.",
           context: "",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
       ],
@@ -814,18 +808,84 @@ export const translations = {
     qsrLanding: {
       hero: {
         eyebrow: "Science-Backed Advanced Neuro-Cognitive Transformation Program",
-        headline: "Read 5x Faster. Retain 100%.",
-        headlineEm: "Master any book.",
-        sub: "Not a webinar. A 30-day, science-backed neuro-cognitive rebuild of how your mind processes, absorbs, and retains information — with your progress tracked on real cognitive performance metrics throughout. Guided live by Dr. Kapil Dev Sharma.",
-        ctaPrimary: "Secure Your Batch Spot",
-        ctaPrimaryMeta: "₹9,999 · One-Time Enrollment",
-        ctaSecondary: "Take the Free 2-Min Reading Speed Test",
+        headline: "For Students, Competitive Exam Aspirants & Parents —",
+        headlineEm: "Science-Backed Quantum Speed Reading",
+        sub: "Studying for hours but forgetting by the next day? This isn't about willpower — it's about how your brain reads.",
+        ctaPrimary: "Join the Free Online Workshop",
+        ctaPrimaryMeta: "Free · 45-Minute Live Session",
+        // CTA restructure (see the "Homepage & QSR Conversion Rewrite"
+        // task) — the free live intro session is now the primary,
+        // dominant button; paid enrollment moves to secondary (still
+        // gets its own price meta line + the checkout trust/guarantee
+        // copy, since those are about the paid path specifically). The
+        // 2-minute Speed Test drops from a full button down to a plain
+        // tertiary text link right below — it already gets two full
+        // dedicated sections further down this page, so it doesn't need
+        // hero-level visual weight too.
+        ctaSecondary: "Secure Your Batch Spot",
+        ctaSecondaryMeta: "₹9,999 · One-Time Enrollment",
+        ctaTertiary: "Or take the free 2-minute Speed Test",
         trustLine: "For students, professionals, and lifelong learners of every age group.",
         visualCaption: "Your 30-Day Streak Starts Day 1",
       },
       speedTestCta: {
         afterScience: "Curious how fast you actually read? Try the free 2-minute test.",
         beforePricing: "Not ready to commit yet? Try the free 2-minute Reading Speed Test first — no card required.",
+      },
+      // "Who is this for?" audience strip (see the "Homepage & QSR
+      // Conversion Rewrite" task) — 3 visual-confirmation cards directly
+      // under the hero pain point, before any feature/metric content.
+      // No deep-linked subsections exist yet for each audience, so these
+      // currently just confirm "yes, this page is for you" rather than
+      // jumping anywhere — simplest version to ship first, per the
+      // task's own fallback instruction.
+      whoIsThisFor: {
+        title: "Who Is This For?",
+        cards: [
+          {
+            title: "Competitive Exam Aspirant",
+            desc: "UPSC, JEE, NEET, Banking — too much syllabus, too little time to revise it all.",
+          },
+          {
+            title: "School Student",
+            desc: "Hours of homework and textbook reading that still doesn't stick by test day.",
+          },
+          {
+            title: "Working Professional",
+            desc: "Reports, research, and reading piling up faster than you can get through them.",
+          },
+        ],
+      },
+      // Pain Points section (see the "Homepage & QSR Conversion Rewrite"
+      // task) — two audiences, each in their own plain language, toggled
+      // rather than both dumped on screen at once. Placed before
+      // QsrBrainScience/QsrNeuroCognitiveScience's metrics content, per
+      // the task's explicit ordering.
+      painPoints: {
+        eyebrow: "Sound Familiar?",
+        title: "The Real Problem Isn't Effort",
+        toggleSelf: "I'm learning for myself",
+        toggleParent: "I'm looking into this for my child",
+        self: {
+          title: "For Competitive Exam Aspirants",
+          items: [
+            "Syllabus too large to revise in the time you have left",
+            "Forgetting entire chapters by the time the test actually arrives",
+            "Hours of study time that don't translate into proportional results",
+            "Watching other aspirants seem to move faster than you",
+            "Current affairs and long passages that take too long to get through",
+          ],
+        },
+        parent: {
+          title: "For Parents Evaluating This for Their Child",
+          items: [
+            "Your child studies for hours but retains very little of it",
+            "Homework and school reading drag on, pushing bedtime later and later",
+            "Screen time has visibly shortened their attention span",
+            "Visible stress before exams because revision never finishes in time",
+            "You're wary of \"hypnosis\" or unverified methods — you need to see this is actually evidence-based",
+          ],
+        },
       },
       trustBadge: {
         title: "Personally Confirmed, Not Automated",
@@ -890,16 +950,34 @@ export const translations = {
             desc: "Your daily practice streak — the single strongest real predictor of whether the training actually sticks.",
           },
         ],
-        brainStates: {
-          title: "Trained Toward Two Brain States",
-          alpha: {
-            title: "Alpha State",
-            desc: "A relaxed, alert focus — what the program's breathing and concentration drills are designed to help you access before a reading session.",
+        // "Normal Reading vs. Quantum Speed Reading" comparison (see the
+        // "Homepage & QSR Conversion Rewrite" task) — replaces the
+        // earlier plain "Trained Toward Two Brain States" alpha/theta
+        // block with a fuller side-by-side, folding the same alpha/theta
+        // framing into the "with QSR" column rather than dropping it.
+        comparison: {
+          title: "Normal Reading vs. Quantum Speed Reading",
+          normal: {
+            label: "Normal Reading — What's Happening Now",
+            points: [
+              "Eyes move in constant stop-start jumps (saccades) with frequent regressions — 10–15 stops per line",
+              "Brain stays mostly in high-frequency Beta state — alert but effortful, fatigues quickly",
+              "Left hemisphere does most of the work (language/word processing only) — the right hemisphere (pattern/image processing) stays mostly idle",
+            ],
+            result: "Result: slow speed, shallow retention, quick mental fatigue",
           },
-          theta: {
-            title: "Theta State",
-            desc: "A deeper, meditative state associated with memory consolidation — supported by the visualization and memory-anchoring techniques in Weeks 3–4.",
+          quantum: {
+            label: "With Quantum Speed Reading",
+            points: [
+              "Eyes trained to move across wider visual spans (peripheral vision training) — fewer fixations and regressions",
+              "Breathing and focus drills bring the brain into Alpha state (relaxed-alert); deeper practice produces short Theta bursts linked to memory consolidation",
+              "Left and right hemispheres work together — words processed as language AND as visual/pattern information, improving hemispheric coordination",
+            ],
+            result: "Result: faster speed, deeper retention, less fatigue, and over time, stronger visual/photographic memory",
           },
+          measuredNote: "How this is measured: the same Brain Score, comprehension %, and consistency tracking above — plus, for Vadodara students, real physical EEG brain mapping (see below).",
+          notHypnosisLine: "This is not hypnosis, not blindfold reading, and not any supernatural claim. It's cognitive training — the same way you'd train a muscle at the gym.",
+          researchNote: "Research-aligned: saccadic eye movement and alpha/theta memory consolidation are established neuroscience concepts, named here as design targets — not proprietary claims or linked studies.",
         },
         disclaimer: "Brain-state framing describes the design intent of these drills, not a per-session measured guarantee for online students — see the Vadodara EEG track below for hardware-verified sessions.",
       },
@@ -1222,6 +1300,11 @@ export const translations = {
           {
             question: "What if I have a question this didn't answer?",
             answer: "Message Dr. Kapil's team directly on WhatsApp before you enroll — a real person, not a bot.",
+          },
+          {
+            question: "Is this hypnosis or some unscientific method?",
+            answer:
+              "No. Quantum Speed Reading is cognitive training grounded in neuroscience — peripheral vision training, breathing/focus drills, and memory-anchoring techniques — with your progress measured on real Brain Score, comprehension, and consistency metrics (and, for Vadodara students, actual EEG brain mapping). It is not hypnosis, not blindfold reading, and not any pseudoscientific technique.",
           },
         ],
         ctaLabel: "Ask on WhatsApp",
@@ -2536,11 +2619,11 @@ export const translations = {
         "भारत में QSR के प्रणेता (2015 से)",
         "10,000+ विद्यार्थियों का मार्गदर्शन",
       ],
-      headline: "तेज़ी से पढ़ें। ज़्यादा याद रखें।",
-      headlineEm: "परीक्षा में बेहतर प्रदर्शन करें।",
-      sub: "विद्यार्थियों, परीक्षा उम्मीदवारों और आजीवन सीखने वालों के लिए विज्ञान-आधारित स्पीड रीडिंग और फोकस ट्रेनिंग — डॉ. कपिल देव शर्मा द्वारा 2015 से मार्गदर्शित।",
-      ctaPrimary: "7 दिन मुफ़्त शुरू करें",
-      ctaSecondary: "अपना रास्ता एक्सप्लोर करें",
+      headline: "भारत की पहली विज्ञान-आधारित क्वांटम स्पीड रीडिंग",
+      headlineEm: "5 गुना तेज़ पढ़ें। 100% याद रखें। EEG-सत्यापित।",
+      sub: "सिलेबस पूरा करने में दिक्कत हो रही है? घंटों पढ़ते हैं पर कुछ याद नहीं रहता? आपका बच्चा घंटों पढ़ता है पर सब भूल जाता है? यह पढ़ाई की समस्या नहीं है — यह ट्रेनिंग की समस्या है। कोई सम्मोहन नहीं, कोई शॉर्टकट नहीं — शुद्ध कॉग्निटिव साइंस।",
+      ctaPrimary: "फ्री ऑनलाइन वर्कशॉप जॉइन करें",
+      ctaSecondary: "फ्री स्पीड टेस्ट लें",
       portraitName: "डॉ. कपिल देव शर्मा",
       portraitTitle: "संस्थापक, माइंड उर माइंड",
       stats: [
@@ -2633,39 +2716,25 @@ export const translations = {
     },
     programSelector: {
       title: "आप कहां से शुरू करना चाहेंगे?",
-      subtitle: "ज़्यादातर लोग यहीं से शुरू करते हैं।",
-      flagship: {
-        eyebrowLabel: "हमारा फ्लैगशिप प्रोग्राम",
-        title: "5 गुना तेज़ पढ़ें। 100% याद रखें।",
-        desc: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास — डॉ. कपिल देव शर्मा द्वारा लाइव मार्गदर्शित, आपके पढ़ने, सीखने और याद रखने के तरीके में एक साइंस-बैक्ड परिवर्तन।",
-        priceLine: "₹9,999 · एकमुश्त नामांकन",
-        cta: "मास्टरक्लास एक्सप्लोर करें",
-      },
-      otherPathsLabel: "या अन्य रास्ते एक्सप्लोर करें",
+      subtitle: "बताइए यह किसके लिए है — हम आपको सही रास्ता दिखाएंगे।",
       paths: [
         {
-          key: "habit",
-          eyebrowLabel: "पूरे मास्टरक्लास के लिए तैयार नहीं?",
-          title: "Quantum Mind & Habit Builder",
-          desc: "अपनी सोच, फोकस और रोज़ की आदतों को प्रशिक्षित करने के लिए एक कम-प्रतिबद्धता वाली 21-दिवसीय स्ट्रीक-आधारित शुरुआत।",
-          priceLine: "7 दिन मुफ़्त · ₹99 एकमुश्त",
-          cta: "मुफ़्त शुरू करें",
+          key: "self",
+          title: "अपने लिए सीखना",
+          desc: "तेज़ी से पढ़ें, ज़्यादा याद रखें, और बिना थके अपना सिलेबस या रीडिंग लिस्ट पूरी करें।",
+          cta: "क्वांटम स्पीड रीडिंग एक्सप्लोर करें",
         },
         {
-          key: "retreats",
-          eyebrowLabel: "भीतर और गहराई में जाएं",
-          title: "रिट्रीट्स",
-          desc: "ध्यान, जागरूकता, आंतरिक अन्वेषण और व्यक्तिगत परिवर्तन में इमर्सिव अनुभव।",
-          priceLine: undefined,
-          cta: "रिट्रीट एक्सप्लोर करें",
+          key: "child",
+          title: "अपने बच्चे के लिए ढूंढ रहे हैं",
+          desc: "अपने बच्चे को कम पढ़ाई में ज़्यादा याद रखने और परीक्षा से पहले कम तनाव महसूस करने में मदद करें।",
+          cta: "पेरेंट्स के लिए प्रोग्राम देखें",
         },
         {
-          key: "mentoring",
-          eyebrowLabel: "व्यक्तिगत मार्गदर्शन पाएं",
-          title: "1-ऑन-1 मेंटरिंग",
-          desc: "अपने व्यक्तिगत लक्ष्यों, चुनौतियों और परिवर्तन पर डॉ. कपिल के साथ सीधे काम करें।",
-          priceLine: undefined,
-          cta: "मेंटरिंग के लिए आवेदन करें",
+          key: "deeper",
+          title: "गहरी माइंड ट्रेनिंग",
+          desc: "ध्यान, आंतरिक शांति, और ओवरथिंकिंग से निपटने के लिए सीधे मार्गदर्शन के साथ।",
+          cta: "मेंटरिंग एक्सप्लोर करें",
         },
       ],
     },
@@ -2756,9 +2825,9 @@ export const translations = {
       cta: "डॉ. कपिल की यात्रा जानें",
     },
     homeFinalCta: {
-      title: "आपका बदलाव छोटे से शुरू हो सकता है।",
-      desc: "आपको आज सब कुछ नहीं बदलना है। बस पहला कदम उठाएं।",
-      ctaPrimary: "अपनी 7-दिन की मुफ़्त Habit Journey शुरू करें",
+      title: "क्या आप अलग तरीके से पढ़ने के लिए तैयार हैं?",
+      desc: "एक फ्री लाइव सेशन जॉइन करें और किसी भी प्रतिबद्धता से पहले खुद यह तरीका देखें।",
+      ctaPrimary: "फ्री ऑनलाइन वर्कशॉप जॉइन करें",
       ctaSecondary: "सभी प्रोग्राम्स एक्सप्लोर करें",
     },
     galleryGlimpse: {
@@ -3026,6 +3095,7 @@ export const translations = {
           programKey: "qsr",
           quote: "जितने समय में पहले एक अध्याय पूरा होता था, अब उतने समय में दो किताबें पूरी हो जाती हैं।",
           context: "",
+          result: "~2 गुना तेज़ पढ़ाई",
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3037,6 +3107,7 @@ export const translations = {
           quote:
             "क्वांटम स्पीड रीडिंग वर्कशॉप ने मेडिकल जर्नल्स पढ़ने का मेरा तरीका पूरी तरह बदल दिया; अब मैं विस्तृत शोध पत्रों को पहले से कहीं कम समय में पढ़ लेती हूं।",
           context: "मुंबई",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3048,6 +3119,7 @@ export const translations = {
           quote:
             "एक व्यवसायी के रूप में, इस प्रोग्राम में शामिल होने के बाद मार्केट रिपोर्ट्स और वित्तीय विवरण पढ़ना काफी तेज़ हो गया है।",
           context: "अहमदाबाद · व्यवसायी",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3059,6 +3131,7 @@ export const translations = {
           quote:
             "शुरुआत में मुझे संदेह था, लेकिन 30-दिन की प्रैक्टिस स्ट्रीक ने मेरे फोकस और समग्र पठन-बोध को उम्मीद से कहीं बेहतर बना दिया।",
           context: "कोलकाता",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3070,6 +3143,7 @@ export const translations = {
           quote:
             "लाइव सेशंस और रोज़ाना ऐप प्रैक्टिस के संयोजन ने मुझे जीवनभर की रीडिंग रुकावट से बाहर निकालने में मदद की।",
           context: "बेंगलुरु",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3081,6 +3155,7 @@ export const translations = {
           quote:
             "एक गहरा मानसिक रीबूट — मेरी स्मरण शक्ति काफी बढ़ गई, और अब मैं मोटी मैनेजमेंट किताबें एक ही बैठक में पूरी कर लेता हूं।",
           context: "सूरत",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3092,6 +3167,7 @@ export const translations = {
           quote:
             "इन 30 दिनों में मिली मानसिक स्पष्टता और गति ने मेरे पढ़ाई और तैयारी के समय को काफी कम कर दिया है।",
           context: "जयपुर",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3102,6 +3178,7 @@ export const translations = {
           programKey: "retreat",
           quote: "अकेले कुंडलिनी सत्र ही पूरे ग्यारह दिनों के लायक थे।",
           context: "",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3112,6 +3189,7 @@ export const translations = {
           programKey: "mentoring",
           quote: "छह निजी सत्रों ने वह कर दिखाया जो वर्षों की सामान्य सलाह कभी नहीं कर पाई।",
           context: "",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
@@ -3122,6 +3200,7 @@ export const translations = {
           programKey: "course",
           quote: "इक्कीस दिन, और आखिरकार मेरे सिर का शोर शांत हो गया।",
           context: "",
+          result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
       ],
@@ -3282,18 +3361,63 @@ export const translations = {
     qsrLanding: {
       hero: {
         eyebrow: "साइंस-बैक्ड एडवांस्ड न्यूरो-कॉग्निटिव ट्रांसफॉर्मेशन प्रोग्राम",
-        headline: "5 गुना तेज़ पढ़ें। 100% याद रखें।",
-        headlineEm: "कोई भी किताब मास्टर करें।",
-        sub: "यह कोई वेबिनार नहीं है। यह 30 दिनों में आपके मस्तिष्क के सूचना ग्रहण करने, समझने और याद रखने के तरीके का एक साइंस-बैक्ड न्यूरो-कॉग्निटिव पुनर्निर्माण है — जिसमें आपकी प्रगति असली कॉग्निटिव परफॉर्मेंस मेट्रिक्स पर ट्रैक होती है। डॉ. कपिल देव शर्मा द्वारा लाइव मार्गदर्शित।",
-        ctaPrimary: "अपनी बैच सीट सुरक्षित करें",
-        ctaPrimaryMeta: "₹9,999 · एकमुश्त नामांकन",
-        ctaSecondary: "मुफ़्त 2-मिनट रीडिंग स्पीड टेस्ट लें",
+        headline: "विद्यार्थियों, प्रतियोगी परीक्षा उम्मीदवारों और अभिभावकों के लिए —",
+        headlineEm: "साइंस-बैक्ड क्वांटम स्पीड रीडिंग",
+        sub: "घंटों पढ़ते हैं पर अगले दिन तक भूल जाते हैं? यह इच्छाशक्ति की कमी नहीं है — यह इस बात का मामला है कि आपका दिमाग कैसे पढ़ता है।",
+        ctaPrimary: "फ्री ऑनलाइन वर्कशॉप जॉइन करें",
+        ctaPrimaryMeta: "फ्री · 45-मिनट लाइव सेशन",
+        ctaSecondary: "अपनी बैच सीट सुरक्षित करें",
+        ctaSecondaryMeta: "₹9,999 · एकमुश्त नामांकन",
+        ctaTertiary: "या मुफ़्त 2-मिनट स्पीड टेस्ट लें",
         trustLine: "विद्यार्थियों, पेशेवरों, और हर आयु वर्ग के आजीवन सीखने वालों के लिए।",
         visualCaption: "आपकी 30-दिवसीय स्ट्रीक दिन 1 से शुरू होती है",
       },
       speedTestCta: {
         afterScience: "जानना चाहते हैं कि आप असल में कितनी तेज़ी से पढ़ते हैं? मुफ़्त 2-मिनट टेस्ट लें।",
         beforePricing: "अभी फैसला नहीं कर पा रहे? पहले मुफ़्त 2-मिनट रीडिंग स्पीड टेस्ट आज़माएं — कोई कार्ड ज़रूरी नहीं।",
+      },
+      whoIsThisFor: {
+        title: "यह किसके लिए है?",
+        cards: [
+          {
+            title: "प्रतियोगी परीक्षा उम्मीदवार",
+            desc: "UPSC, JEE, NEET, बैंकिंग — सिलेबस बहुत बड़ा, रिवीज़न के लिए समय बहुत कम।",
+          },
+          {
+            title: "स्कूल का छात्र",
+            desc: "घंटों होमवर्क और किताबें पढ़ना, फिर भी परीक्षा के दिन तक याद नहीं रहता।",
+          },
+          {
+            title: "कामकाजी पेशेवर",
+            desc: "रिपोर्ट्स, रिसर्च और रीडिंग — इतनी तेज़ी से जमा होती है कि पूरी नहीं हो पाती।",
+          },
+        ],
+      },
+      painPoints: {
+        eyebrow: "जाना-पहचाना लगता है?",
+        title: "असली समस्या मेहनत की कमी नहीं है",
+        toggleSelf: "मैं अपने लिए सीख रहा/रही हूं",
+        toggleParent: "मैं अपने बच्चे के लिए देख रहा/रही हूं",
+        self: {
+          title: "प्रतियोगी परीक्षा उम्मीदवारों के लिए",
+          items: [
+            "बचे हुए समय में रिवीज़न के लिए सिलेबस बहुत बड़ा है",
+            "टेस्ट तक आते-आते पूरे चैप्टर भूल जाना",
+            "पढ़ाई के घंटे नतीजों के अनुपात में नहीं मिलना",
+            "दूसरे उम्मीदवारों को खुद से आगे बढ़ता देखना",
+            "करेंट अफेयर्स और लंबे पैसेज पढ़ने में बहुत समय लगना",
+          ],
+        },
+        parent: {
+          title: "अपने बच्चे के लिए विचार कर रहे अभिभावकों के लिए",
+          items: [
+            "आपका बच्चा घंटों पढ़ता है पर बहुत कम याद रख पाता है",
+            "होमवर्क और स्कूल की रीडिंग लंबी खिंचती है, सोने का समय देर होता जाता है",
+            "स्क्रीन टाइम ने ध्यान केंद्रित करने की क्षमता को साफ़ तौर पर कम कर दिया है",
+            "रिवीज़न समय पर पूरा न होने के कारण परीक्षा से पहले साफ़ दिखने वाला तनाव",
+            "आपको \"सम्मोहन\" या असत्यापित तरीकों से सावधानी है — आपको यह देखना है कि यह वाकई विज्ञान-आधारित है",
+          ],
+        },
       },
       trustBadge: {
         title: "व्यक्तिगत रूप से पुष्टि, कोई ऑटोमेशन नहीं",
@@ -3347,16 +3471,29 @@ export const translations = {
             desc: "आपकी दैनिक अभ्यास स्ट्रीक — यह सबसे मज़बूत असली संकेतक है कि ट्रेनिंग वाकई असर करेगी या नहीं।",
           },
         ],
-        brainStates: {
-          title: "दो मस्तिष्क अवस्थाओं की ओर प्रशिक्षित",
-          alpha: {
-            title: "अल्फा अवस्था",
-            desc: "एक शांत, सजग फोकस — जिसे हासिल करने में प्रोग्राम के श्वास और एकाग्रता अभ्यास आपकी मदद करने के लिए बनाए गए हैं, पढ़ने के सेशन से पहले।",
+        comparison: {
+          title: "सामान्य पढ़ाई बनाम क्वांटम स्पीड रीडिंग",
+          normal: {
+            label: "सामान्य पढ़ाई — अभी क्या हो रहा है",
+            points: [
+              "आंखें बार-बार रुक-रुक कर उछलती हैं (सैकेड्स) और बार-बार पीछे जाती हैं — प्रति पंक्ति 10–15 रुकावटें",
+              "दिमाग ज़्यादातर हाई-फ़्रीक्वेंसी बीटा अवस्था में रहता है — सजग लेकिन मेहनत भरा, जल्दी थकान",
+              "बायां गोलार्ध ज़्यादातर काम करता है (सिर्फ़ भाषा/शब्द प्रोसेसिंग) — दायां गोलार्ध (पैटर्न/इमेज प्रोसेसिंग) ज़्यादातर निष्क्रिय रहता है",
+            ],
+            result: "नतीजा: धीमी गति, कम याददाश्त, जल्दी मानसिक थकान",
           },
-          theta: {
-            title: "थीटा अवस्था",
-            desc: "एक गहरी, ध्यानपूर्ण अवस्था जो याददाश्त के सुदृढ़ीकरण से जुड़ी है — जिसे सप्ताह 3–4 की विज़ुअलाइज़ेशन और मेमोरी-एंकरिंग तकनीकों से समर्थन मिलता है।",
+          quantum: {
+            label: "क्वांटम स्पीड रीडिंग के साथ",
+            points: [
+              "आंखें व्यापक विज़ुअल स्पैन में चलने के लिए प्रशिक्षित (पेरिफेरल विज़न ट्रेनिंग) — कम फिक्सेशन और कम पीछे जाना",
+              "श्वास और फोकस अभ्यास दिमाग को अल्फा अवस्था (शांत-सजग) में लाते हैं; गहरे अभ्यास से छोटे थीटा बर्स्ट बनते हैं जो याददाश्त के सुदृढ़ीकरण से जुड़े हैं",
+              "बायां और दायां दोनों गोलार्ध साथ काम करते हैं — शब्द भाषा के रूप में AND विज़ुअल/पैटर्न जानकारी के रूप में प्रोसेस होते हैं, जिससे गोलार्ध समन्वय बेहतर होता है",
+            ],
+            result: "नतीजा: तेज़ गति, गहरी याददाश्त, कम थकान, और समय के साथ मज़बूत विज़ुअल/फोटोग्राफिक मेमोरी",
           },
+          measuredNote: "यह कैसे मापा जाता है: ऊपर बताए गए वही ब्रेन स्कोर, कॉम्प्रिहेंशन % और कंसिस्टेंसी ट्रैकिंग — साथ ही, वडोदरा विद्यार्थियों के लिए असली फिज़िकल EEG ब्रेन मैपिंग (नीचे देखें)।",
+          notHypnosisLine: "यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई अलौकिक दावा नहीं है। यह कॉग्निटिव ट्रेनिंग है — बिल्कुल वैसे ही जैसे जिम में मांसपेशी को प्रशिक्षित किया जाता है।",
+          researchNote: "रिसर्च-अलाइन्ड: सैकेडिक आई मूवमेंट और अल्फा/थीटा मेमोरी कंसोलिडेशन स्थापित न्यूरोसाइंस अवधारणाएं हैं, जिन्हें यहां डिज़ाइन लक्ष्य के रूप में नाम दिया गया है — न कि प्रोप्राइटरी दावे या जुड़े हुए अध्ययन।",
         },
         disclaimer: "ब्रेन-स्टेट फ़्रेमिंग इन अभ्यासों के डिज़ाइन इरादे को बताती है, ऑनलाइन विद्यार्थियों के लिए हर-सेशन मापी गई गारंटी नहीं — हार्डवेयर-सत्यापित सेशन के लिए नीचे वडोदरा EEG ट्रैक देखें।",
       },
@@ -3640,6 +3777,11 @@ export const translations = {
           {
             question: "अगर मेरा सवाल यहां नहीं है तो?",
             answer: "नामांकन से पहले डॉ. कपिल की टीम को सीधे WhatsApp पर संदेश भेजें — असली व्यक्ति से बात होगी, कोई बॉट नहीं।",
+          },
+          {
+            question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
+            answer:
+              "नहीं। क्वांटम स्पीड रीडिंग न्यूरोसाइंस पर आधारित कॉग्निटिव ट्रेनिंग है — पेरिफेरल विज़न ट्रेनिंग, श्वास/फोकस अभ्यास, और मेमोरी-एंकरिंग तकनीकें — जिसमें आपकी प्रगति असली ब्रेन स्कोर, कॉम्प्रिहेंशन और कंसिस्टेंसी मेट्रिक्स पर मापी जाती है (और वडोदरा विद्यार्थियों के लिए, असली EEG ब्रेन मैपिंग पर भी)। यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई भी छद्म-वैज्ञानिक तकनीक नहीं है।",
           },
         ],
         ctaLabel: "WhatsApp पर पूछें",

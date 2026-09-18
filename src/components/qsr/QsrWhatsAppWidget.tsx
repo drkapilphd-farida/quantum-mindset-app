@@ -32,6 +32,15 @@ export default function QsrWhatsAppWidget(): React.JSX.Element {
       bottomClassName="bottom-24 sm:bottom-24"
       analyticsLocation="qsr_widget"
       autoDismissBubbleMs={BUBBLE_AUTO_DISMISS_MS}
+      // Hero-overlap fix (see the "Homepage & QSR Conversion Rewrite"
+      // task) — the hero's new primary+secondary CTA pair (each with its
+      // own meta line) plus the tertiary Speed Test link made the hero
+      // tall enough on mobile that this widget's fixed bottom-24
+      // position landed directly over the secondary CTA button
+      // (confirmed via screenshot). Same fix already used on the
+      // homepage widget (see HomePage's own doc comment): only reveal
+      // once the hero (id="qsr-hero") has fully scrolled out of view.
+      revealAfterElementId="qsr-hero"
     />
   );
 }

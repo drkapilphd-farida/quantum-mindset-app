@@ -3,8 +3,9 @@ import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
 import { buildCourseSchema } from '@/lib/seo/courseSchema'
 import QsrNav from '@/components/qsr/QsrNav'
-import QsrMumbaiWorkshopCard from '@/components/qsr/QsrMumbaiWorkshopCard'
 import QsrHero from '@/components/qsr/QsrHero'
+import QsrWhoIsThisFor from '@/components/qsr/QsrWhoIsThisFor'
+import QsrPainPoints from '@/components/qsr/QsrPainPoints'
 import QsrBrainScience from '@/components/qsr/QsrBrainScience'
 import QsrNeuroCognitiveScience from '@/components/qsr/QsrNeuroCognitiveScience'
 import QsrAgeGroups from '@/components/qsr/QsrAgeGroups'
@@ -108,14 +109,16 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
       <QsrNav />
       <main>
         <QsrHero />
-        {/* Mumbai in-person workshop card (see the "Build the Mumbai
-            Offline Workshop Feature + Fix EEG Copy" task, Part 3) — the
-            one new card added to this otherwise-locked page, right after
-            the hero so a visitor evaluating the online program notices
-            the in-person option early, without interrupting the hero's
-            own CTA flow. Teal-accented (not gold) so it never competes
-            visually with the page's one primary conversion action. */}
-        <QsrMumbaiWorkshopCard />
+        {/* Who Is This For? + Pain Points (see the "Homepage & QSR
+            Conversion Rewrite" task) — audience confirmation and
+            pain-point framing land before any feature/metric content,
+            per that task's explicit ordering. The Mumbai in-person
+            workshop card previously rendered here is removed from this
+            page per that same task (component file and its own page
+            untouched, just not linked from here until the batch is
+            confirmed). */}
+        <QsrWhoIsThisFor />
+        <QsrPainPoints />
         <QsrBrainScience />
         <QsrNeuroCognitiveScience />
         <QsrSpeedTestInlineCta variant="afterScience" />

@@ -80,6 +80,19 @@ export default function Testimonials(): React.JSX.Element {
                 ) : (
                   thumbnail
                 )}
+                {/* Measurable-result line (see the "Homepage & QSR
+                    Conversion Rewrite" task) — only rendered when the
+                    testimonial's own quote actually contains an
+                    extractable number (currently just Ananya R.'s "~2x
+                    reading throughput"); every other quote here is
+                    qualitative only ("remarkably fast," "drastically cut
+                    down") with no number in the source data, so nothing
+                    is fabricated for them. */}
+                {item.result !== undefined && (
+                  <p className="mb-3 inline-flex w-fit items-center rounded-full bg-gold-soft/30 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.04em] text-gold">
+                    {item.result}
+                  </p>
+                )}
                 <p className="mb-5 flex-1 text-[16px] italic leading-relaxed text-ink">
                   &ldquo;{item.quote}&rdquo;
                 </p>

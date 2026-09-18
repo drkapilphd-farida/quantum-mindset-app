@@ -7,7 +7,6 @@ import HomePrefrontalPowerFeature from '@/components/HomePrefrontalPowerFeature'
 import HomeHabitBuilderFeature from '@/components/HomeHabitBuilderFeature'
 import HomeOverviewVideo from '@/components/HomeOverviewVideo'
 import ProgramCardsGrid from '@/components/ProgramCardsGrid'
-import HomeMumbaiWorkshopFeature from '@/components/HomeMumbaiWorkshopFeature'
 import HomeSpeedTestCta from '@/components/HomeSpeedTestCta'
 import HomeWhyMindUrMind from '@/components/HomeWhyMindUrMind'
 import Testimonials from '@/components/Testimonials'
@@ -57,25 +56,26 @@ export const metadata: Metadata = {
   },
 }
 
-// Homepage V2™ — rebuilt around a QSR-first funnel (see the "Fix Homepage
-// & QSR Page Positioning" task): Hero → Where Would You Like to Begin
-// (#begin — QSR renders as a single dominant flagship block, with Habit
-// Builder/Retreats/Mentoring demoted underneath as clearly secondary) →
-// a date-bound live-event banner → a brand overview video → the full
-// 5-program catalog (#explore-programs, QSR still the dark/dominant card
-// there) → a dedicated free Speed Test section → Why Mind Ur Mind
-// (ecosystem framing) → Testimonials → Dr. Kapil → FAQ → Final CTA → a
-// compact Habit Builder on-ramp banner (deliberately last, after every
-// QSR-reinforcing section, framed as a low-commitment fallback rather
-// than a competing first impression) → footer. HomeGalleryGlimpse is no
-// longer rendered here (not part of this architecture — the file itself
-// is untouched, so nothing was deleted, it simply isn't part of the
-// homepage flow anymore). HomeFranchiseTeaser stays, small and low-weight
-// as it already was, right before the footer — a different audience
-// (trainers/edupreneurs) than the primary funnel above, and Navbar's own
-// link list no longer carries it per the new nav spec, so this banner
-// (plus the Footer's own "Become a Partner" link) is what keeps that path
-// discoverable.
+// Homepage V3™ — conversion-focused rewrite (see the "Homepage & QSR
+// Conversion Rewrite" task): Hero (single positioning headline + pain
+// point + one primary CTA into the free live intro session) → exactly 3
+// audience-first path cards (#begin — "Learning for myself" / "Looking
+// for my child" / "Deeper mind training", replacing the old
+// product-first QSR-flagship-plus-3-secondary-paths layout) →
+// Testimonials, moved up to sit directly behind the path cards as
+// immediate social proof → brand overview video → the full program
+// catalog (#explore-programs) → free Speed Test → Why Mind Ur Mind → Dr.
+// Kapil → FAQ → Final CTA → PREfrontal POWER and Habit Builder, both
+// pushed to the very bottom (deliberately last, after every
+// QSR-reinforcing section) since neither should compete with the QSR-led
+// primary fold for first-scroll attention → Franchise teaser → footer.
+// The Mumbai in-person workshop banner (previously rendered here via
+// HomeMumbaiWorkshopFeature) is removed from the homepage entirely per
+// that task — the component file and its own page
+// (/programs/quantum-speed-reading-mumbai) are untouched and still
+// directly reachable, just not linked from here until the batch is
+// confirmed. HomeGalleryGlimpse is still not rendered here (unrelated to
+// this pass — see the prior architecture note this replaces).
 export default function HomePage(): React.JSX.Element {
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
@@ -84,38 +84,15 @@ export default function HomePage(): React.JSX.Element {
       <main>
         <HeroSection />
         <ProgramSelector />
-        {/* PREfrontal POWER (27 Sept 2026, Mumbai) — a date-bound live
-            event, not a sixth evergreen digital program, so it sits
-            between the pathway cards and the featured Habit Builder
-            rather than inside the 01-05 "Explore Our Programs" catalog
-            or immediately after/inside Habit Builder itself (which is
-            the lead conversion offer and shouldn't get a second,
-            unrelated CTA interrupting it). */}
-        <HomePrefrontalPowerFeature />
+        <Testimonials />
         <HomeOverviewVideo />
         <ProgramCardsGrid />
-        {/* Mumbai in-person QSR workshop (see the "Add Mumbai In-Person
-            QSR Workshop" task) — below the QSR flagship catalog card
-            above it, styled no more prominently than any other secondary
-            card on this page, per the same hierarchy rules established
-            in the positioning-fix task. */}
-        <HomeMumbaiWorkshopFeature />
         <HomeSpeedTestCta />
         <HomeWhyMindUrMind />
-        <Testimonials />
         <HomeGuideSection />
         <FAQSection />
         <HomeFinalCta />
-        {/* Positioning fix (see the "Fix Homepage & QSR Page Positioning"
-            task) — HomeHabitBuilderFeature used to render right after the
-            pathway cards, at homepage-hero scale, competing with the QSR
-            flagship offer for the first-scroll attention it should own.
-            Now shrunk to a compact banner and moved here: below every
-            QSR-reinforcing section (catalog, speed test, testimonials,
-            final CTA), above the footer, so it reads as a genuine
-            low-commitment fallback for a visitor who scrolled this far
-            without converting on the Masterclass — never as a competing
-            first impression. */}
+        <HomePrefrontalPowerFeature />
         <HomeHabitBuilderFeature />
         <HomeFranchiseTeaser />
       </main>

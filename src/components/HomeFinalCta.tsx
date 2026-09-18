@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { HABIT_BUILDER_APP_URL } from "@/config/habitBuilderSignupLink";
+import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function HomeFinalCta(): React.JSX.Element {
@@ -16,7 +16,7 @@ export default function HomeFinalCta(): React.JSX.Element {
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <a
-            href={HABIT_BUILDER_APP_URL}
+            href={WHATSAPP_FREE_INTRO_SESSION_LINK}
             onClick={() => trackGaEvent("signup_cta_click", { location: "home_final_cta" })}
             className="group inline-flex items-center gap-2.5 rounded-sm bg-gold px-7 py-[15px] text-[14.5px] font-semibold tracking-tight text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]"
           >

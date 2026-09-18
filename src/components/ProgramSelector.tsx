@@ -1,34 +1,31 @@
 "use client";
 
-import { BookOpen, Gauge, Sparkles, UserRound, type LucideIcon } from "lucide-react";
+import { Brain, GraduationCap, Users, type LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { Eyebrow } from "./ui";
-import { HABIT_BUILDER_APP_URL } from "@/config/habitBuilderSignupLink";
 
 const PATH_ICONS: Record<string, LucideIcon> = {
-  habit: Gauge,
-  retreats: Sparkles,
-  mentoring: UserRound,
+  self: GraduationCap,
+  child: Users,
+  deeper: Brain,
 };
 
+// Two of the three cards point at QSR (self vs. parent framing); the
+// `for=parent` param is a hook for QSR page copy to key off later, not
+// wired to anything there yet. "Deeper mind training" has no single
+// product page yet, so it lands on Personal Class — the closest existing
+// "whatever deeper work you need" page — rather than a dedicated
+// /programs overview that doesn't exist in this codebase.
 const PATH_HREFS: Record<string, string> = {
-  habit: HABIT_BUILDER_APP_URL,
-  retreats: "/retreats/online-11-day",
-  mentoring: "/mentoring/personal-class",
+  self: "/programs/quantum-speed-reading",
+  child: "/programs/quantum-speed-reading?for=parent",
+  deeper: "/mentoring/personal-class",
 };
 
-const QSR_HREF = "/programs/quantum-speed-reading";
-
-// Choice Architecture™ — positioning fix (see the "Fix Homepage & QSR
-// Page Positioning" task). This used to render 4 visually identical
-// cards (Habit Builder got quiet gold styling, the other 3 — including
-// QSR itself — got none), reading as "pick any door" rather than naming
-// a flagship. Now QSR gets its own dominant, gold-accented block first
-// (reusing the QSR page's own hero headline/price for consistency, not
-// new copy), and the remaining three real paths (Habit Builder, Retreats,
-// 1-on-1 Mentoring) render smaller and muted underneath, grouped under
-// an explicit "Or explore other paths" label — still all present, just
-// unambiguously secondary.
+// Audience-first path cards (see the "Homepage & QSR Conversion Rewrite"
+// task) — replaces the earlier "QSR flagship block + 3 secondary
+// programs" layout. That version sorted by product (QSR vs. Habit
+// Builder vs. Retreats vs. Mentoring); this one sorts by who the visitor
+// is shopping for, matching the new hero's own audience-first framing.
 export default function ProgramSelector(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.programSelector;
@@ -41,51 +38,21 @@ export default function ProgramSelector(): React.JSX.Element {
           <p className="mt-3 text-[15px] text-ink-dim">{section.subtitle}</p>
         </div>
 
-        <a
-          href={QSR_HREF}
-          className="group flex flex-col overflow-hidden rounded-sm border border-gold/50 bg-gold-soft/20 p-8 transition-all duration-200 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_rgba(184,134,46,0.2)] sm:p-10 lg:p-12"
-        >
-          <Eyebrow color="text-gold">{section.flagship.eyebrowLabel}</Eyebrow>
-          <h3 className="mt-4 max-w-2xl font-display text-[28px] font-bold leading-tight text-ink sm:text-[36px]">
-            {section.flagship.title}
-          </h3>
-          <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink-dim">{section.flagship.desc}</p>
-          <div className="mt-7 flex flex-wrap items-center gap-5">
-            <span className="inline-flex items-center gap-2.5 rounded-sm bg-gold px-7 py-[15px] text-[14.5px] font-semibold text-[#1B1508] transition-transform duration-200 group-hover:-translate-y-0.5">
-              {section.flagship.cta}
-              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </span>
-            <span className="font-mono text-[12.5px] uppercase tracking-[0.06em] text-gold-dim">
-              {section.flagship.priceLine}
-            </span>
-          </div>
-        </a>
-
-        <p className="mb-6 mt-14 text-center font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">
-          {section.otherPathsLabel}
-        </p>
-
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
           {section.paths.map((path) => {
-            const Icon = PATH_ICONS[path.key] ?? BookOpen;
+            const Icon = PATH_ICONS[path.key] ?? GraduationCap;
             return (
               <a
                 key={path.key}
-                href={PATH_HREFS[path.key] ?? "#"}
-                className="group flex flex-col rounded-sm border border-line bg-panel2 p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-dim"
+                href={PATH_HREFS[path.key] ?? "/programs/quantum-speed-reading"}
+                className="group flex flex-col rounded-sm border border-gold/40 bg-panel2 p-7 transition-all duration-200 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_rgba(184,134,46,0.14)]"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-teal/40 bg-teal-soft">
-                  <Icon className="h-4 w-4 text-teal" aria-hidden="true" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/40 bg-gold-soft/20">
+                  <Icon className="h-4.5 w-4.5 text-gold" aria-hidden="true" />
                 </div>
-                <Eyebrow color="text-ink-faint">{path.eyebrowLabel}</Eyebrow>
-                <h3 className="mt-3 text-[16px] font-bold leading-snug text-ink">{path.title}</h3>
-                <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-ink-dim">{path.desc}</p>
-                {path.priceLine !== undefined && (
-                  <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.05em] text-ink-faint">
-                    {path.priceLine}
-                  </p>
-                )}
-                <span className="mt-4 inline-flex items-center gap-2 text-[13px] font-semibold text-ink">
+                <h3 className="mt-4 text-[18px] font-bold leading-snug text-ink">{path.title}</h3>
+                <p className="mt-2 flex-1 text-[14px] leading-relaxed text-ink-dim">{path.desc}</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-[13.5px] font-semibold text-ink">
                   {path.cta}
                   <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
                 </span>
