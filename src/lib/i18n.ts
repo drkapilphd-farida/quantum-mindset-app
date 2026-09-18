@@ -562,6 +562,15 @@ export const translations = {
       title: "What changes when you read differently",
       desc: "A few of the students, professionals, and exam aspirants who've been through Quantum Speed Reading — in their own words.",
       videoLabel: "Watch Real Stories",
+      // Young-learner/adult sub-labels (see the "Home Page Video
+      // Testimonial Reorder" task) — this section only ever imported
+      // QSR_ADULT_VIDEO_REVIEWS, never QSR_YOUNG_LEARNER_VIDEO_REVIEWS,
+      // so reordering the QSR page's two video blocks had nothing to
+      // touch here. Now mirrors that same QSR page structure: Young
+      // Learners first, Adults second, same two arrays from the same
+      // shared qsrVideoReviews.ts data source.
+      videoYoungLearnersLabel: "Young Learners",
+      videoAdultsLabel: "Adults",
       viewAll: "Watch More Stories",
       items: [
         {
@@ -3144,6 +3153,8 @@ export const translations = {
       title: "जब आप अलग तरीके से पढ़ते हैं, तो क्या बदलता है",
       desc: "क्वांटम स्पीड रीडिंग से गुज़रे कुछ विद्यार्थी, पेशेवर और परीक्षा उम्मीदवार — उन्हीं के शब्दों में।",
       videoLabel: "असली कहानियां देखें",
+      videoYoungLearnersLabel: "युवा शिक्षार्थी",
+      videoAdultsLabel: "वयस्क",
       viewAll: "और कहानियां देखें",
       items: [
         {

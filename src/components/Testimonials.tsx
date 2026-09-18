@@ -4,7 +4,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "./ui";
 import { isRealUrl } from "@/lib/isRealUrl";
 import VideoReviewGrid from "./VideoReviewGrid";
-import { QSR_ADULT_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
+import { QSR_ADULT_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
 
 export default function Testimonials(): React.JSX.Element {
   const { t } = useLanguage();
@@ -51,17 +51,39 @@ export default function Testimonials(): React.JSX.Element {
             program (Quantum Speed Reading), not implied to represent
             every program on this page. The quote cards below have no
             real videoUrls yet (all still placeholders), so this is an
-            addition, not an "upgrade" of those cards. */}
+            addition, not an "upgrade" of those cards.
+
+            Young Learners first, Adults second (see the "Home Page
+            Video Testimonial Reorder" task) — this section previously
+            only ever imported QSR_ADULT_VIDEO_REVIEWS, so there was no
+            young-learner block here at all to reorder; it now mirrors
+            the same two-block, young-learners-first structure already
+            fixed on the QSR page (QsrVideoTestimonials.tsx), pulling
+            from the exact same shared qsrVideoReviews.ts arrays. */}
         <div className="mb-14">
           <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">
             {section.videoLabel}
           </p>
-          <VideoReviewGrid
-            videos={QSR_ADULT_VIDEO_REVIEWS}
-            aspectRatioClassName="aspect-[9/16]"
-            cardLabel="Quantum Speed Reading Program"
-            className="mx-auto max-w-3xl"
-          />
+          <div className="mb-8">
+            <p className="mb-3 text-center font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-gold">
+              {section.videoYoungLearnersLabel}
+            </p>
+            <VideoReviewGrid
+              videos={QSR_YOUNG_LEARNER_VIDEO_REVIEWS}
+              aspectRatioClassName="aspect-[9/16]"
+              className="mx-auto max-w-3xl"
+            />
+          </div>
+          <div>
+            <p className="mb-3 text-center font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-gold">
+              {section.videoAdultsLabel}
+            </p>
+            <VideoReviewGrid
+              videos={QSR_ADULT_VIDEO_REVIEWS}
+              aspectRatioClassName="aspect-[9/16]"
+              className="mx-auto max-w-3xl"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
