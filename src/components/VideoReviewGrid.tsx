@@ -3,10 +3,23 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Play, X } from "lucide-react";
-import type { RetreatVideoReview } from "@/config/retreatVideoReviews";
+
+// Structural, not imported from one specific config file — every real
+// video-review data source (RetreatVideoReview, QsrVideoReview, etc.)
+// already has at least {videoId, thumbnailSrc}; `label` is optional so
+// callers whose data has no per-video label (Retreats, Residential, ...)
+// are unaffected.
+type VideoReviewItem = {
+  videoId: string;
+  thumbnailSrc: string | undefined;
+  // Per-video caption (e.g. "Student", "Working Professional") — takes
+  // priority over the uniform `cardLabel` prop below when present. See
+  // qsrVideoReviews.ts for where this is actually set.
+  label?: string;
+};
 
 type VideoReviewGridProps = {
-  videos: readonly RetreatVideoReview[];
+  videos: readonly VideoReviewItem[];
   className?: string;
   // Grid tile + lightbox aspect ratio. Defaults to 16:9 (existing
   // behavior, unchanged for every current caller). Pass "aspect-[9/16]"
@@ -69,40 +82,43 @@ export default function VideoReviewGrid({
   return (
     <>
       <div className={`${gridClassName} ${className}`}>
-        {videos.map((video) => (
-          <div key={video.videoId}>
-            <button
-              type="button"
-              onClick={() => setOpenVideoId(video.videoId)}
-              aria-label={cardLabel !== undefined ? `Play ${cardLabel}` : "Play video review"}
-              className={`group relative w-full ${aspectRatioClassName} overflow-hidden rounded-sm border border-line-strong bg-panel2`}
-            >
-              {video.thumbnailSrc !== undefined ? (
-                <Image
-                  src={video.thumbnailSrc}
-                  alt={cardLabel ?? "Real student video review"}
-                  fill
-                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              ) : (
-                <div
-                  className="h-full w-full bg-[radial-gradient(circle_at_30%_20%,rgba(184,134,46,0.18),transparent_60%)] bg-panel2"
-                  aria-hidden="true"
-                />
-              )}
-              <div className="absolute inset-0 bg-void/20 transition-colors duration-200 group-hover:bg-void/35" />
-              <span className="absolute inset-0 flex items-center justify-center">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/60 bg-void/40 text-gold backdrop-blur-sm transition-transform duration-200 group-hover:scale-110">
-                  <Play className="ml-0.5 h-5 w-5" aria-hidden="true" />
+        {videos.map((video) => {
+          const caption = video.label ?? cardLabel;
+          return (
+            <div key={video.videoId}>
+              <button
+                type="button"
+                onClick={() => setOpenVideoId(video.videoId)}
+                aria-label={caption !== undefined ? `Play ${caption}` : "Play video review"}
+                className={`group relative w-full ${aspectRatioClassName} overflow-hidden rounded-sm border border-line-strong bg-panel2`}
+              >
+                {video.thumbnailSrc !== undefined ? (
+                  <Image
+                    src={video.thumbnailSrc}
+                    alt={caption ?? "Real student video review"}
+                    fill
+                    sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                ) : (
+                  <div
+                    className="h-full w-full bg-[radial-gradient(circle_at_30%_20%,rgba(184,134,46,0.18),transparent_60%)] bg-panel2"
+                    aria-hidden="true"
+                  />
+                )}
+                <div className="absolute inset-0 bg-void/20 transition-colors duration-200 group-hover:bg-void/35" />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/60 bg-void/40 text-gold backdrop-blur-sm transition-transform duration-200 group-hover:scale-110">
+                    <Play className="ml-0.5 h-5 w-5" aria-hidden="true" />
+                  </span>
                 </span>
-              </span>
-            </button>
-            {cardLabel !== undefined && (
-              <p className="mt-2 text-center font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{cardLabel}</p>
-            )}
-          </div>
-        ))}
+              </button>
+              {caption !== undefined && (
+                <p className="mt-2 text-center font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{caption}</p>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {openVideoId !== null && (

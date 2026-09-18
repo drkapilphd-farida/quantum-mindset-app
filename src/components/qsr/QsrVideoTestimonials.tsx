@@ -44,18 +44,20 @@ export default function QsrVideoTestimonials(): React.JSX.Element {
           <p className="mt-3 text-[15.5px] text-ink-dim">{section.desc}</p>
         </div>
 
-        <div className="mb-10">
-          <p className="mb-4 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-gold">
-            {section.adultsLabel}
-          </p>
-          <VideoReviewGrid videos={QSR_ADULT_VIDEO_REVIEWS} />
-        </div>
-
+        {/* Young Learners first, Adults second (see the "Home & QSR
+            Testimonial/Video Reorder" task) — was the reverse order. */}
         <div className="mb-10">
           <p className="mb-4 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-gold">
             {section.youngLearnersLabel}
           </p>
           <VideoReviewGrid videos={QSR_YOUNG_LEARNER_VIDEO_REVIEWS} />
+        </div>
+
+        <div className="mb-10">
+          <p className="mb-4 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-gold">
+            {section.adultsLabel}
+          </p>
+          <VideoReviewGrid videos={QSR_ADULT_VIDEO_REVIEWS} />
         </div>
 
         <div className="mb-10 flex justify-center">

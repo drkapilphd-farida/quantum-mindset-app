@@ -323,6 +323,7 @@ export const translations = {
       filterQsr: "QSR Sessions",
     },
     homeFranchiseTeaser: {
+      eyebrow: "A Different Path",
       headline: "Are You a Trainer or Edupreneur?",
       line: "Start your own QSR Training Business — with a ready platform, marketing kit, and certification.",
       cta: "See Franchise Details",
@@ -574,6 +575,22 @@ export const translations = {
           result: "~2x reading throughput",
           videoUrl: "[VIDEO URL NEEDED]",
         },
+        // Student/young-learner reviews first, then adult/professional
+        // reviews (see the "Home & QSR Testimonial/Video Reorder" task)
+        // — Karan Mehra moved up from after Amit Patel to sit right
+        // after Ananya R., the only other student-tagged QSR review.
+        {
+          id: "karan-mehra",
+          qsrPageOnly: true,
+          name: "Karan Mehra",
+          program: "Quantum Speed Reading",
+          programKey: "qsr",
+          quote:
+            "The mental clarity and speed I've gained through these 30 days have drastically cut down my study and preparation time.",
+          context: "Jaipur",
+          result: undefined,
+          videoUrl: "[VIDEO URL NEEDED]",
+        },
         {
           id: "dr-preeti",
           qsrPageOnly: true,
@@ -631,18 +648,6 @@ export const translations = {
           quote:
             "A profound mental reboot — my retention power skyrocketed, and I now finish thick management books in a single sitting.",
           context: "Surat",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "karan-mehra",
-          qsrPageOnly: true,
-          name: "Karan Mehra",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote:
-            "The mental clarity and speed I've gained through these 30 days have drastically cut down my study and preparation time.",
-          context: "Jaipur",
           result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },
@@ -2900,6 +2905,7 @@ export const translations = {
       filterQsr: "QSR सेशंस",
     },
     homeFranchiseTeaser: {
+      eyebrow: "एक अलग रास्ता",
       headline: "क्या आप Trainer या Edupreneur हैं?",
       line: "अपना खुद का QSR Training Business शुरू करें — ready platform, marketing kit, और certification के साथ",
       cta: "Franchise Details देखें",
@@ -3152,6 +3158,18 @@ export const translations = {
           videoUrl: "[VIDEO URL NEEDED]",
         },
         {
+          id: "karan-mehra",
+          qsrPageOnly: true,
+          name: "करण मेहरा",
+          program: "क्वांटम स्पीड रीडिंग",
+          programKey: "qsr",
+          quote:
+            "इन 30 दिनों में मिली मानसिक स्पष्टता और गति ने मेरे पढ़ाई और तैयारी के समय को काफी कम कर दिया है।",
+          context: "जयपुर",
+          result: undefined,
+          videoUrl: "[VIDEO URL NEEDED]",
+        },
+        {
           id: "dr-preeti",
           qsrPageOnly: true,
           name: "डॉ. प्रीति",
@@ -3208,18 +3226,6 @@ export const translations = {
           quote:
             "एक गहरा मानसिक रीबूट — मेरी स्मरण शक्ति काफी बढ़ गई, और अब मैं मोटी मैनेजमेंट किताबें एक ही बैठक में पूरी कर लेता हूं।",
           context: "सूरत",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "karan-mehra",
-          qsrPageOnly: true,
-          name: "करण मेहरा",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote:
-            "इन 30 दिनों में मिली मानसिक स्पष्टता और गति ने मेरे पढ़ाई और तैयारी के समय को काफी कम कर दिया है।",
-          context: "जयपुर",
           result: undefined,
           videoUrl: "[VIDEO URL NEEDED]",
         },

@@ -32,8 +32,14 @@ export default function Testimonials(): React.JSX.Element {
             </h2>
             <p className="mt-3 text-[15.5px] text-ink-dim">{section.desc}</p>
           </div>
+          {/* /stories never existed as a real route (confirmed 404 — see
+              the "Home & QSR Testimonial/Video Reorder" task) — points
+              at the real public YouTube playlist of student videos
+              instead. */}
           <a
-            href="/stories"
+            href="https://www.youtube.com/playlist?list=PLTSKeqk3i8io"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex flex-none items-center gap-2 font-mono text-[12.5px] uppercase tracking-[0.08em] text-ink-dim transition-colors hover:text-ink"
           >
             {section.viewAll}
