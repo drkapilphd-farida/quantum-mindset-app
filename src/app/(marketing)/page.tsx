@@ -9,6 +9,7 @@ import HomeOverviewVideo from '@/components/HomeOverviewVideo'
 import ProgramCardsGrid from '@/components/ProgramCardsGrid'
 import HomeSpeedTestCta from '@/components/HomeSpeedTestCta'
 import HomeWhyMindUrMind from '@/components/HomeWhyMindUrMind'
+import OfflineEegWorkshopSection from '@/components/OfflineEegWorkshopSection'
 import Testimonials from '@/components/Testimonials'
 import HomeGuideSection from '@/components/HomeGuideSection'
 import FAQSection from '@/components/FAQSection'
@@ -89,6 +90,11 @@ export default function HomePage(): React.JSX.Element {
         <ProgramCardsGrid />
         <HomeSpeedTestCta />
         <HomeWhyMindUrMind />
+        {/* Offline QSR + EEG Cognitive Testing teaser (see the "Homepage,
+            QSR & Multi-City EEG Rewrite" task) — shorter homepage
+            version, one CTA pointing at the full multi-city section on
+            the QSR page rather than duplicating the city grid here. */}
+        <OfflineEegWorkshopSection variant="teaser" />
         <HomeGuideSection />
         <FAQSection />
         <HomeFinalCta />

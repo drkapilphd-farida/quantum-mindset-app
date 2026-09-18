@@ -8,6 +8,7 @@ import QsrWhoIsThisFor from '@/components/qsr/QsrWhoIsThisFor'
 import QsrPainPoints from '@/components/qsr/QsrPainPoints'
 import QsrBrainScience from '@/components/qsr/QsrBrainScience'
 import QsrNeuroCognitiveScience from '@/components/qsr/QsrNeuroCognitiveScience'
+import OfflineEegWorkshopSection from '@/components/OfflineEegWorkshopSection'
 import QsrAgeGroups from '@/components/qsr/QsrAgeGroups'
 import QsrAppPreview from '@/components/qsr/QsrAppPreview'
 import QsrMechanics from '@/components/qsr/QsrMechanics'
@@ -121,6 +122,13 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
         <QsrPainPoints />
         <QsrBrainScience />
         <QsrNeuroCognitiveScience />
+        {/* Offline QSR + EEG Cognitive Testing, multi-city (see the
+            "Homepage, QSR & Multi-City EEG Rewrite" task) — primary
+            placement, right where the old single-city "EEG available in
+            Vadodara" box used to sit, and exactly what
+            QsrNeuroCognitiveScience's own "how this is measured" note
+            above points to via id="offline-eeg". */}
+        <OfflineEegWorkshopSection variant="full" />
         <QsrSpeedTestInlineCta variant="afterScience" />
         <QsrAgeGroups />
         <QsrAppPreview />

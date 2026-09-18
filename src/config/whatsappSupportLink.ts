@@ -21,13 +21,21 @@ export const WHATSAPP_ENROLLMENT_INQUIRY_LINK =
 export const WHATSAPP_FREE_INTRO_SESSION_LINK =
   'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20join%20the%20free%2045-minute%20live%20intro%20session'
 
-// Same number, Vadodara EEG/neurofeedback-specific message — for the
-// QsrEegSection on the QSR landing page. In-person scheduling for this
-// track is handled the same way batch enrollment is (a real person on
-// Dr. Kapil's team, not an automated booking system), so WhatsApp is the
-// real registration path here too, not a placeholder.
-export const WHATSAPP_VADODARA_EEG_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%27m%20based%20in%20Vadodara%20and%20want%20to%20know%20more%20about%20the%20in-person%20EEG%20brain%20mapping%20and%20neurofeedback%20sessions'
+// Same number, per-city Offline QSR + EEG Workshop message (see the
+// "Homepage, QSR & Multi-City EEG Rewrite" task) — replaces the old
+// Vadodara-only WHATSAPP_VADODARA_EEG_INQUIRY_LINK now that the offline
+// EEG track is offered across 6 cities (see eegWorkshopCities.ts), not
+// just Vadodara. Message text is deliberately honest about a city's real
+// status (waitlist vs. confirmed date) rather than implying every city
+// already has a booked batch — same reasoning as
+// buildResidentialWhatsAppLink below.
+export function buildOfflineEegWorkshopWhatsAppLink(city: string, status: 'waitlist' | 'confirmed'): string {
+  const intent =
+    status === 'confirmed'
+      ? `I want to register for the 2-Day Offline QSR + EEG Workshop in ${city}`
+      : `I want to join the waitlist for the 2-Day Offline QSR + EEG Workshop in ${city}`
+  return `https://wa.me/919540123161?text=${encodeURIComponent(`Hi Dr. Kapil, ${intent}`)}`
+}
 
 // Same number, program-agnostic message — for the homepage's floating
 // widget and FAQ section, where the visitor may be asking about any of

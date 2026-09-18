@@ -54,7 +54,7 @@ export const translations = {
       headline: "India's First Science-Backed Quantum Speed Reading",
       headlineEm: "5x Faster Reading. 100% Retention. EEG-Verified.",
       sub: "Struggling to finish your syllabus? Reading for hours but remembering nothing? Your child studies for hours but forgets everything? This isn't a reading problem — it's a training problem. No hypnosis, no shortcuts — pure cognitive science.",
-      ctaPrimary: "Join the Free Online Workshop",
+      ctaPrimary: "Watch the Free Training Now",
       ctaSecondary: "Take the Free Speed Test",
       portraitName: "Dr. Kapil Dev Sharma",
       portraitTitle: "Founder, Mind Ur Mind",
@@ -181,15 +181,15 @@ export const translations = {
       eyebrow: "The Catalog",
       title: "Explore Our Programs",
       habitBuilder: {
-        number: "01",
-        eyebrowLabel: "21-Day Streak Journey · Easiest Way to Begin",
+        number: "02",
+        eyebrowLabel: "A Lead-In to Quantum Speed Reading",
         title: "Quantum Mind & Habit Builder",
-        desc: "Train your mindset. Build better habits. Practice daily.",
+        desc: "Build your daily focus habit before starting QSR — free 7-day starter.",
         priceLine: "7 Days Free · ₹99 one-time",
         cta: "Start Free",
       },
       featured: {
-        number: "02",
+        number: "01",
         eyebrowLabel: "30-Day Masterclass · Flagship",
         cta: "Explore Program",
       },
@@ -222,9 +222,9 @@ export const translations = {
       // attention. Copy now explicitly frames this as a low-commitment
       // on-ramp for a visitor not ready for the full Masterclass, rather
       // than implying it via layout alone.
-      eyebrow: "Not Ready for the Full Masterclass?",
-      title: "Start With This Free 7-Day Habit Builder",
-      lead: "A low-commitment, 21-day guided on-ramp to build better daily mental and focus habits — no pressure to enroll in anything else.",
+      eyebrow: "Before You Start QSR",
+      title: "Build the Focus Habit First",
+      lead: "Build your daily focus habit before starting QSR — free 7-day starter. A low-commitment, 21-day guided on-ramp, no pressure to enroll in anything else.",
       freeLabel: "7 DAYS FREE",
       priceLabel: "₹99 one-time",
       noSubscriptionLabel: "No monthly subscription.",
@@ -243,6 +243,30 @@ export const translations = {
       desc: "A 2-day in-person extension of the Masterclass — live coaching, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
       meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
       cta: "Explore the Mumbai Workshop",
+    },
+    // Offline QSR + EEG Cognitive Testing — multi-city (see the
+    // "Homepage, QSR & Multi-City EEG Rewrite" task) — replaces the old
+    // single-line "EEG available in Vadodara" mention and the old
+    // Mumbai-only workshop banner. Shared between the QSR page (full
+    // placement, all copy below) and the homepage (teaserDesc + a single
+    // CTA pointing at the full section on the QSR page, not the
+    // full city grid). City list/status lives in eegWorkshopCities.ts,
+    // not here — this block is copy only.
+    offlineEegWorkshop: {
+      eyebrow: "Offline QSR + EEG",
+      title: "Offline QSR + EEG Cognitive Testing — Available in Your City",
+      desc: "Want to see your own brain states on EEG? Our 2-Day Offline QSR Workshop includes live EEG testing so you can track your Alpha/Theta training in person with our trainers. The rest of your 30-day program continues online, at your own pace.",
+      teaserDesc: "Want to see your own brain states on EEG, not just read about them? Our 2-Day Offline QSR Workshop includes live, in-person EEG testing — now open across 6 cities.",
+      howItWorksLabel: "How It Works",
+      steps: [
+        "Register for the 2-day offline workshop in your nearest city (EEG testing included)",
+        "Attend 2 days in person for live brain-state tracking and hands-on coaching",
+        "Continue the remaining sessions of your 30-day program online",
+      ],
+      citiesLabel: "Available Cities",
+      waitlistCta: "Join Waitlist — We'll Confirm Your City's Date",
+      registerCta: "Register Now",
+      teaserCta: "See Cities & Join the Waitlist",
     },
     homeOverviewVideo: {
       eyebrow: "Real People. Real Sessions.",
@@ -278,8 +302,8 @@ export const translations = {
     },
     homeFinalCta: {
       title: "Ready to Read Differently?",
-      desc: "Join a free live session and see the method before you commit to anything.",
-      ctaPrimary: "Join the Free Online Workshop",
+      desc: "Watch the free training and see the method before you commit to anything.",
+      ctaPrimary: "Watch the Free Training Now",
       ctaSecondary: "Explore All Programs",
     },
     galleryGlimpse: {
@@ -661,7 +685,51 @@ export const translations = {
       eyebrow: "Before You Reach Out",
       title: "Questions people ask before starting",
       desc: "Straight answers to the things most people hesitate on. Still unsure? Message us directly below.",
+      // Reordered to lead with Quantum Speed Reading (see the "Homepage,
+      // QSR & Multi-City EEG Rewrite" task) — this used to open with 4
+      // questions about Habit Builder's ₹99 pricing before QSR was
+      // mentioned at all, which undercut the whole site's QSR-first
+      // positioning right at the one section every hesitant visitor
+      // actually reads. Habit Builder's pricing questions (free/₹99/
+      // subscription) move to positions 8–10 — kept here rather than
+      // duplicated onto /programs/habit-builder, which already has its
+      // own dedicated HabitBuilderFaq covering the same ground.
       items: [
+        {
+          question: "Who is Quantum Speed Reading for?",
+          answer:
+            "Students, working professionals, and lifelong learners of every age who want to read, learn, and retain information faster — no prior speed-reading experience needed.",
+        },
+        {
+          question: "I'm completely new to this — will it work for me?",
+          answer:
+            "Yes. Every program starts from zero. Quantum Speed Reading assumes no prior skill — Dr. Sharma has guided 10,000+ students from complete beginners to advanced practitioners since 2014.",
+        },
+        {
+          question: "Is this hypnosis or some unscientific method?",
+          answer:
+            "No. This is cognitive training grounded in neuroscience — eye-movement retraining, breathing-based focus drills, and memory techniques. We track real progress using EEG, not claims. There's no hypnosis, no blindfold reading, no belief system required — it's trained the way you'd train any other cognitive skill.",
+        },
+        {
+          question: "How much does the QSR Masterclass cost, and what's included?",
+          answer:
+            "The 30-Day Quantum Speed Reading Live Masterclass is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Sharma, and app access throughout, backed by our 100% Results Guarantee for online students. We don't offer free access to the program itself, but you can watch the free training video or take our free 2-minute Reading Speed Test first. Graduates who want continued app practice afterward can continue for ₹499/month.",
+        },
+        {
+          question: "How does the offline workshop + EEG testing work, and which cities is it in?",
+          answer:
+            "Our 2-Day Offline QSR Workshop adds live, in-person EEG testing to the same 30-day program: you register for your nearest city, attend 2 days in person for hands-on coaching and real EEG brain-state tracking, then continue the remaining sessions online at your own pace. Currently open in Mumbai, Pune, Vadodara, Surat, Ahmedabad, and Noida — exact batch dates are confirmed city by city, so most cities start on a waitlist until a date is locked, rather than a fixed 'register now' date we can't yet guarantee.",
+        },
+        {
+          question: "What age group are these programs designed for?",
+          answer:
+            "Students, working professionals, and lifelong learners of every age go through these programs — from teenagers preparing for exams to retirees exploring meditation for the first time. Each track is paced to fit where you are.",
+        },
+        {
+          question: "Which program should I start with?",
+          answer:
+            "If you specifically want to read and learn faster, start with Quantum Speed Reading — this site's flagship program. If you want the easiest, lowest-commitment way in first, start with the free 7 days of Quantum Mind & Habit Builder before QSR. If you're looking for deeper inner work, explore the Retreats or apply for 1-on-1 Mentoring.",
+        },
         {
           question: "Is Quantum Mind & Habit Builder really free?",
           answer:
@@ -675,31 +743,6 @@ export const translations = {
         {
           question: "Is ₹99 a subscription?",
           answer: "No. ₹99 is a one-time payment to continue the full journey — there is no recurring charge at any point.",
-        },
-        {
-          question: "Which program should I start with?",
-          answer:
-            "If you want the easiest, lowest-commitment way in, start with the free 7 days of Quantum Mind & Habit Builder. If you specifically want to read and learn faster, start with Quantum Speed Reading. If you're looking for deeper inner work, explore the Retreats or apply for 1-on-1 Mentoring.",
-        },
-        {
-          question: "Who is Quantum Speed Reading for?",
-          answer:
-            "Students, working professionals, and lifelong learners of every age who want to read, learn, and retain information faster — no prior speed-reading experience needed.",
-        },
-        {
-          question: "I'm completely new to speed reading or meditation — is this really for beginners?",
-          answer:
-            "Yes. Every program starts from zero. Quantum Speed Reading assumes no prior skill, and the Meditation & Inner Mastery Retreats build up gradually — Dr. Sharma has guided 10,000+ students from complete beginners to advanced practitioners since 2014.",
-        },
-        {
-          question: "What age group are these programs designed for?",
-          answer:
-            "Students, working professionals, and lifelong learners of every age go through these programs — from teenagers preparing for exams to retirees exploring meditation for the first time. Each track is paced to fit where you are.",
-        },
-        {
-          question: "How much does the Quantum Speed Reading Masterclass cost?",
-          answer:
-            "The 30-Day Quantum Speed Reading Live Masterclass is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Sharma, and app access throughout, backed by our 100% Results Guarantee for online students. We don't offer free access to the program itself, but you can try our free 2-minute Reading Speed Test or join a free live intro session first. Graduates who want continued app practice afterward can continue for ₹499/month. The Retreats and 1-on-1 Mentoring are priced by program; message us on WhatsApp for exact pricing and current batch availability.",
         },
         {
           question: "Are the retreats online or residential?",
@@ -811,17 +854,19 @@ export const translations = {
         headline: "For Students, Competitive Exam Aspirants & Parents —",
         headlineEm: "Science-Backed Quantum Speed Reading",
         sub: "Studying for hours but forgetting by the next day? This isn't about willpower — it's about how your brain reads.",
-        ctaPrimary: "Join the Free Online Workshop",
-        ctaPrimaryMeta: "Free · 45-Minute Live Session",
-        // CTA restructure (see the "Homepage & QSR Conversion Rewrite"
-        // task) — the free live intro session is now the primary,
-        // dominant button; paid enrollment moves to secondary (still
-        // gets its own price meta line + the checkout trust/guarantee
-        // copy, since those are about the paid path specifically). The
-        // 2-minute Speed Test drops from a full button down to a plain
-        // tertiary text link right below — it already gets two full
-        // dedicated sections further down this page, so it doesn't need
-        // hero-level visual weight too.
+        ctaPrimary: "Watch the Free Training Now",
+        ctaPrimaryMeta: "Free · Watch Anytime",
+        // CTA restructure (see the "Homepage, QSR & Multi-City EEG
+        // Rewrite" task) — primary is now the real, honestly-labeled
+        // on-demand video (QsrFounderVideo, id="founder" — a genuine
+        // short intro from Dr. Kapil, not inflated into a claimed
+        // 45-minute walkthrough it isn't). Paid enrollment stays
+        // secondary here (own price meta + checkout trust/guarantee
+        // copy). The live Q&A session moved out of this hero entirely —
+        // it already has its own dedicated section further down
+        // (QsrLiveIntroSession) so it isn't lost, just not fighting for
+        // hero-level space alongside two other CTAs. The 2-minute Speed
+        // Test stays a plain tertiary text link below.
         ctaSecondary: "Secure Your Batch Spot",
         ctaSecondaryMeta: "₹9,999 · One-Time Enrollment",
         ctaTertiary: "Or take the free 2-minute Speed Test",
@@ -975,19 +1020,11 @@ export const translations = {
             ],
             result: "Result: faster speed, deeper retention, less fatigue, and over time, stronger visual/photographic memory",
           },
-          measuredNote: "How this is measured: the same Brain Score, comprehension %, and consistency tracking above — plus, for Vadodara students, real physical EEG brain mapping (see below).",
+          measuredNote: "How this is measured: the same Brain Score, comprehension %, and consistency tracking above — plus, if you join the Offline QSR + EEG Workshop in your city, real physical EEG brain mapping in person (see below).",
           notHypnosisLine: "This is not hypnosis, not blindfold reading, and not any supernatural claim. It's cognitive training — the same way you'd train a muscle at the gym.",
           researchNote: "Research-aligned: saccadic eye movement and alpha/theta memory consolidation are established neuroscience concepts, named here as design targets — not proprietary claims or linked studies.",
         },
         disclaimer: "Brain-state framing describes the design intent of these drills, not a per-session measured guarantee for online students — see the Vadodara EEG track below for hardware-verified sessions.",
-      },
-      eeg: {
-        badge: "Physical EEG Brain Mapping & Neurofeedback Sessions Included",
-        badgeLocation: "Exclusively in Vadodara",
-        title: "Research-Grade EEG Integration, In Person",
-        desc: "Online students train through the app and all 7 live masterclasses. Students based in Vadodara additionally get real, in-person physical EEG brain mapping and neurofeedback sessions at Dr. Kapil's own center — hardware-based, clinical cognitive tracking layered on top of the same 30-day curriculum, not a substitute for it.",
-        pills: ["Research-Grade EEG Integration", "Neural Pathway Expansion", "Clinical Cognitive Tracking"],
-        ctaLabel: "Ask About Vadodara In-Person Sessions",
       },
       appPreview: {
         eyebrow: "Inside the App",
@@ -1073,10 +1110,10 @@ export const translations = {
         videoTitle: "Quantum Speed Reading Introduction",
       },
       liveIntroSession: {
-        eyebrow: "Free · 45 Minutes",
-        title: "Join a Free Live Session with Dr. Kapil",
-        desc: "One real Quantum Speed Reading technique, taught live, plus open Q&A — a genuinely free session, not free access to the 30-day program itself. If it clicks, you'll get a straightforward invite to join a paid batch afterward — no pressure either way.",
-        ctaLabel: "Reserve My Free Seat",
+        eyebrow: "Free · 45 Minutes · Live",
+        title: "Reserve Your Spot — Live Q&A with Dr. Kapil",
+        desc: "One real Quantum Speed Reading technique, taught live, plus open Q&A — a genuinely free session, not free access to the 30-day program itself, and not a recording. If it clicks, you'll get a straightforward invite to join a paid batch afterward — no pressure either way.",
+        ctaLabel: "Reserve Your Spot",
       },
       videoTestimonials: {
         eyebrow: "Watch Real Students",
@@ -2622,7 +2659,7 @@ export const translations = {
       headline: "भारत की पहली विज्ञान-आधारित क्वांटम स्पीड रीडिंग",
       headlineEm: "5 गुना तेज़ पढ़ें। 100% याद रखें। EEG-सत्यापित।",
       sub: "सिलेबस पूरा करने में दिक्कत हो रही है? घंटों पढ़ते हैं पर कुछ याद नहीं रहता? आपका बच्चा घंटों पढ़ता है पर सब भूल जाता है? यह पढ़ाई की समस्या नहीं है — यह ट्रेनिंग की समस्या है। कोई सम्मोहन नहीं, कोई शॉर्टकट नहीं — शुद्ध कॉग्निटिव साइंस।",
-      ctaPrimary: "फ्री ऑनलाइन वर्कशॉप जॉइन करें",
+      ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
       ctaSecondary: "फ्री स्पीड टेस्ट लें",
       portraitName: "डॉ. कपिल देव शर्मा",
       portraitTitle: "संस्थापक, माइंड उर माइंड",
@@ -2742,15 +2779,15 @@ export const translations = {
       eyebrow: "कैटलॉग",
       title: "हमारे प्रोग्राम्स एक्सप्लोर करें",
       habitBuilder: {
-        number: "01",
-        eyebrowLabel: "21-दिवसीय स्ट्रीक यात्रा · शुरू करने का सबसे आसान तरीका",
+        number: "02",
+        eyebrowLabel: "क्वांटम स्पीड रीडिंग की ओर एक शुरुआत",
         title: "Quantum Mind & Habit Builder",
-        desc: "अपनी सोच को प्रशिक्षित करें। बेहतर आदतें बनाएं। रोज़ अभ्यास करें।",
+        desc: "QSR शुरू करने से पहले अपनी दैनिक फोकस आदत बनाएं — फ्री 7-दिन स्टार्टर।",
         priceLine: "7 दिन मुफ़्त · ₹99 एकमुश्त",
         cta: "मुफ़्त शुरू करें",
       },
       featured: {
-        number: "02",
+        number: "01",
         eyebrowLabel: "30-दिवसीय मास्टरक्लास · फ्लैगशिप",
         cta: "प्रोग्राम एक्सप्लोर करें",
       },
@@ -2776,9 +2813,9 @@ export const translations = {
       },
     },
     homeHabitFeature: {
-      eyebrow: "पूरे मास्टरक्लास के लिए तैयार नहीं?",
-      title: "इस मुफ़्त 7-दिवसीय हैबिट बिल्डर से शुरू करें",
-      lead: "बेहतर दैनिक मानसिक और फोकस आदतें बनाने के लिए एक कम-प्रतिबद्धता वाला 21-दिवसीय गाइडेड शुरुआत — किसी और चीज़ में दाखिला लेने का कोई दबाव नहीं।",
+      eyebrow: "QSR शुरू करने से पहले",
+      title: "पहले फोकस की आदत बनाएं",
+      lead: "QSR शुरू करने से पहले अपनी दैनिक फोकस आदत बनाएं — फ्री 7-दिन स्टार्टर। एक कम-प्रतिबद्धता वाला 21-दिवसीय गाइडेड शुरुआत, किसी और चीज़ में दाखिला लेने का कोई दबाव नहीं।",
       freeLabel: "7 दिन मुफ़्त",
       priceLabel: "₹99 एकमुश्त",
       noSubscriptionLabel: "कोई मंथली सब्सक्रिप्शन नहीं।",
@@ -2791,6 +2828,22 @@ export const translations = {
       desc: "मास्टरक्लास का एक 2-दिवसीय व्यक्तिगत विस्तार — लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
       meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
       cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
+    },
+    offlineEegWorkshop: {
+      eyebrow: "ऑफलाइन QSR + EEG",
+      title: "ऑफलाइन QSR + EEG कॉग्निटिव टेस्टिंग — अब आपके शहर में",
+      desc: "क्या आप EEG पर अपनी खुद की ब्रेन स्टेट्स देखना चाहते हैं? हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में लाइव EEG टेस्टिंग शामिल है, ताकि आप अपने Alpha/Theta ट्रेनिंग को हमारे ट्रेनर्स के साथ व्यक्तिगत रूप से ट्रैक कर सकें। आपके 30-दिवसीय प्रोग्राम का बाकी हिस्सा ऑनलाइन, अपनी गति से जारी रहता है।",
+      teaserDesc: "क्या आप सिर्फ पढ़ना नहीं, बल्कि EEG पर अपनी खुद की ब्रेन स्टेट्स देखना चाहते हैं? हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में लाइव, व्यक्तिगत EEG टेस्टिंग शामिल है — अब 6 शहरों में उपलब्ध।",
+      howItWorksLabel: "यह कैसे काम करता है",
+      steps: [
+        "अपने नज़दीकी शहर में 2-दिवसीय ऑफलाइन वर्कशॉप के लिए रजिस्टर करें (EEG टेस्टिंग शामिल)",
+        "लाइव ब्रेन-स्टेट ट्रैकिंग और हैंड्स-ऑन कोचिंग के लिए 2 दिन व्यक्तिगत रूप से शामिल हों",
+        "अपने 30-दिवसीय प्रोग्राम के बाकी सेशन ऑनलाइन जारी रखें",
+      ],
+      citiesLabel: "उपलब्ध शहर",
+      waitlistCta: "वेटलिस्ट जॉइन करें — हम आपके शहर की तारीख कन्फर्म करेंगे",
+      registerCta: "अभी रजिस्टर करें",
+      teaserCta: "शहर देखें और वेटलिस्ट जॉइन करें",
     },
     homeOverviewVideo: {
       eyebrow: "असली लोग। असली सेशन।",
@@ -2826,8 +2879,8 @@ export const translations = {
     },
     homeFinalCta: {
       title: "क्या आप अलग तरीके से पढ़ने के लिए तैयार हैं?",
-      desc: "एक फ्री लाइव सेशन जॉइन करें और किसी भी प्रतिबद्धता से पहले खुद यह तरीका देखें।",
-      ctaPrimary: "फ्री ऑनलाइन वर्कशॉप जॉइन करें",
+      desc: "फ्री ट्रेनिंग देखें और किसी भी प्रतिबद्धता से पहले खुद यह तरीका देखें।",
+      ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
       ctaSecondary: "सभी प्रोग्राम्स एक्सप्लोर करें",
     },
     galleryGlimpse: {
@@ -3211,6 +3264,41 @@ export const translations = {
       desc: "ज़्यादातर लोग जिन बातों पर हिचकिचाते हैं, उनके सीधे जवाब। फिर भी असमंजस में हैं? नीचे सीधे हमसे संपर्क करें।",
       items: [
         {
+          question: "क्वांटम स्पीड रीडिंग किनके लिए है?",
+          answer:
+            "हर उम्र के विद्यार्थी, कामकाजी पेशेवर, और जीवन-पर्यंत सीखने वाले जो जानकारी को तेज़ी से पढ़ना, सीखना और याद रखना चाहते हैं — पहले से किसी स्पीड-रीडिंग अनुभव की ज़रूरत नहीं।",
+        },
+        {
+          question: "मैं इसमें बिल्कुल नया हूं — क्या यह मेरे लिए काम करेगा?",
+          answer:
+            "हां, बिल्कुल। हर कार्यक्रम शून्य से शुरू होता है। क्वांटम स्पीड रीडिंग में किसी पूर्व कौशल की ज़रूरत नहीं — डॉ. शर्मा ने 2014 से अब तक 10,000+ विद्यार्थियों को पूर्ण शुरुआती से उन्नत अभ्यासी तक मार्गदर्शन दिया है।",
+        },
+        {
+          question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
+          answer:
+            "नहीं। यह न्यूरोसाइंस पर आधारित कॉग्निटिव ट्रेनिंग है — आई-मूवमेंट रीट्रेनिंग, श्वास-आधारित फोकस अभ्यास, और मेमोरी तकनीकें। हम असली प्रगति EEG से ट्रैक करते हैं, दावों से नहीं। इसमें कोई सम्मोहन नहीं, कोई ब्लाइंडफोल्ड रीडिंग नहीं, किसी विश्वास प्रणाली की ज़रूरत नहीं — इसे उसी तरह प्रशिक्षित किया जाता है जैसे कोई भी अन्य कॉग्निटिव स्किल।",
+        },
+        {
+          question: "QSR मास्टरक्लास की कीमत कितनी है, और इसमें क्या शामिल है?",
+          answer:
+            "30-दिवसीय क्वांटम स्पीड रीडिंग लाइव मास्टरक्लास की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी के साथ। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले फ्री ट्रेनिंग वीडियो देख सकते हैं या हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं।",
+        },
+        {
+          question: "ऑफलाइन वर्कशॉप + EEG टेस्टिंग कैसे काम करती है, और यह किन शहरों में है?",
+          answer:
+            "हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप उसी 30-दिवसीय प्रोग्राम में लाइव, व्यक्तिगत EEG टेस्टिंग जोड़ती है: आप अपने नज़दीकी शहर के लिए रजिस्टर करते हैं, हैंड्स-ऑन कोचिंग और असली EEG ब्रेन-स्टेट ट्रैकिंग के लिए 2 दिन व्यक्तिगत रूप से शामिल होते हैं, फिर बाकी सेशन अपनी गति से ऑनलाइन जारी रखते हैं। फिलहाल मुंबई, पुणे, वडोदरा, सूरत, अहमदाबाद, और नोएडा में उपलब्ध — सटीक बैच तारीखें शहर-दर-शहर तय होती हैं, इसलिए ज़्यादातर शहर तारीख पक्की होने तक वेटलिस्ट पर रहते हैं, न कि एक तय 'अभी रजिस्टर करें' तारीख पर जिसकी हम अभी गारंटी नहीं दे सकते।",
+        },
+        {
+          question: "ये कार्यक्रम किस आयु वर्ग के लिए बने हैं?",
+          answer:
+            "विद्यार्थी, कामकाजी पेशेवर, और हर उम्र के जीवन-पर्यंत सीखने वाले इन कार्यक्रमों से गुज़रते हैं — परीक्षा की तैयारी करने वाले किशोरों से लेकर पहली बार ध्यान करने वाले रिटायर्ड लोगों तक। हर ट्रैक आपकी स्थिति के अनुसार गति में रहता है।",
+        },
+        {
+          question: "मुझे किस प्रोग्राम से शुरुआत करनी चाहिए?",
+          answer:
+            "अगर आप खासतौर पर तेज़ी से पढ़ना और सीखना चाहते हैं, तो क्वांटम स्पीड रीडिंग से शुरू करें — इस साइट का फ्लैगशिप प्रोग्राम। अगर आप पहले सबसे आसान, सबसे कम कमिटमेंट वाला रास्ता चाहते हैं, तो QSR से पहले Quantum Mind & Habit Builder के मुफ़्त 7 दिनों से शुरू करें। अगर आप गहरे आंतरिक कार्य की तलाश में हैं, तो रिट्रीट्स एक्सप्लोर करें या 1-ऑन-1 मेंटरिंग के लिए आवेदन करें।",
+        },
+        {
           question: "क्या Quantum Mind & Habit Builder वाकई मुफ़्त है?",
           answer:
             "हां — दिन 1 से 7 पूरी तरह मुफ़्त हैं, शुरू करने के लिए कोई कार्ड ज़रूरी नहीं। दिन 8 से आगे जारी रखने के लिए ₹99 की एक-बार की पेमेंट है।",
@@ -3225,39 +3313,14 @@ export const translations = {
           answer: "नहीं। ₹99 पूरी यात्रा जारी रखने के लिए एक-बार की पेमेंट है — किसी भी समय कोई रिकरिंग चार्ज नहीं है।",
         },
         {
-          question: "मुझे किस प्रोग्राम से शुरुआत करनी चाहिए?",
+          question: "क्या रिट्रीट्स ऑनलाइन हैं या रेजिडेंशियल?",
           answer:
-            "अगर आप सबसे आसान, सबसे कम कमिटमेंट वाला रास्ता चाहते हैं, तो Quantum Mind & Habit Builder के मुफ़्त 7 दिनों से शुरू करें। अगर आप खासतौर पर तेज़ी से पढ़ना और सीखना चाहते हैं, तो क्वांटम स्पीड रीडिंग से शुरू करें। अगर आप गहरे आंतरिक कार्य की तलाश में हैं, तो रिट्रीट्स एक्सप्लोर करें या 1-ऑन-1 मेंटरिंग के लिए आवेदन करें।",
-        },
-        {
-          question: "क्वांटम स्पीड रीडिंग किनके लिए है?",
-          answer:
-            "हर उम्र के विद्यार्थी, कामकाजी पेशेवर, और जीवन-पर्यंत सीखने वाले जो जानकारी को तेज़ी से पढ़ना, सीखना और याद रखना चाहते हैं — पहले से किसी स्पीड-रीडिंग अनुभव की ज़रूरत नहीं।",
-        },
-        {
-          question: "मुझे स्पीड रीडिंग या ध्यान का कोई अनुभव नहीं है — क्या यह वाकई शुरुआती लोगों के लिए है?",
-          answer:
-            "हां, बिल्कुल। हर कार्यक्रम शून्य से शुरू होता है। क्वांटम स्पीड रीडिंग में किसी पूर्व कौशल की ज़रूरत नहीं, और ध्यान एंड इनर मास्टरी रिट्रीट धीरे-धीरे आगे बढ़ते हैं — डॉ. शर्मा ने 2014 से अब तक 10,000+ विद्यार्थियों को पूर्ण शुरुआती से उन्नत अभ्यासी तक मार्गदर्शन दिया है।",
-        },
-        {
-          question: "ये कार्यक्रम किस आयु वर्ग के लिए बने हैं?",
-          answer:
-            "विद्यार्थी, कामकाजी पेशेवर, और हर उम्र के जीवन-पर्यंत सीखने वाले इन कार्यक्रमों से गुज़रते हैं — परीक्षा की तैयारी करने वाले किशोरों से लेकर पहली बार ध्यान करने वाले रिटायर्ड लोगों तक। हर ट्रैक आपकी स्थिति के अनुसार गति में रहता है।",
-        },
-        {
-          question: "क्वांटम स्पीड रीडिंग मास्टरक्लास की कीमत कितनी है?",
-          answer:
-            "30-दिवसीय क्वांटम स्पीड रीडिंग लाइव मास्टरक्लास की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी के साथ। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं या एक मुफ़्त लाइव इंट्रो सेशन जॉइन कर सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं। रिट्रीट्स और 1-ऑन-1 मेंटरिंग की कीमत कार्यक्रम अनुसार अलग होती है; सटीक कीमत और मौजूदा बैच उपलब्धता के लिए हमें WhatsApp पर संदेश भेजें।",
+            "दोनों। 11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट हर महीने चलता है, जहां से भी आप हों; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में उन लोगों के लिए होते हैं जो पूरी तरह व्यक्तिगत उपस्थिति वाला प्रारूप चाहते हैं।",
         },
         {
           question: "अगला ऑनलाइन रिट्रीट या रेजिडेंशियल बैच कब है?",
           answer:
             "11-दिवसीय ऑनलाइन रिट्रीट हर महीने चलता है; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में आयोजित होते हैं। अगली पक्की तारीख और बची हुई सीटों के लिए हमसे WhatsApp पर बात करें।",
-        },
-        {
-          question: "क्या रिट्रीट्स ऑनलाइन हैं या रेजिडेंशियल?",
-          answer:
-            "दोनों। 11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट हर महीने चलता है, जहां से भी आप हों; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में उन लोगों के लिए होते हैं जो पूरी तरह व्यक्तिगत उपस्थिति वाला प्रारूप चाहते हैं।",
         },
         {
           question: "1-ऑन-1 मेंटरिंग कैसे काम करती है?",
@@ -3364,8 +3427,8 @@ export const translations = {
         headline: "विद्यार्थियों, प्रतियोगी परीक्षा उम्मीदवारों और अभिभावकों के लिए —",
         headlineEm: "साइंस-बैक्ड क्वांटम स्पीड रीडिंग",
         sub: "घंटों पढ़ते हैं पर अगले दिन तक भूल जाते हैं? यह इच्छाशक्ति की कमी नहीं है — यह इस बात का मामला है कि आपका दिमाग कैसे पढ़ता है।",
-        ctaPrimary: "फ्री ऑनलाइन वर्कशॉप जॉइन करें",
-        ctaPrimaryMeta: "फ्री · 45-मिनट लाइव सेशन",
+        ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
+        ctaPrimaryMeta: "फ्री · कभी भी देखें",
         ctaSecondary: "अपनी बैच सीट सुरक्षित करें",
         ctaSecondaryMeta: "₹9,999 · एकमुश्त नामांकन",
         ctaTertiary: "या मुफ़्त 2-मिनट स्पीड टेस्ट लें",
@@ -3491,19 +3554,11 @@ export const translations = {
             ],
             result: "नतीजा: तेज़ गति, गहरी याददाश्त, कम थकान, और समय के साथ मज़बूत विज़ुअल/फोटोग्राफिक मेमोरी",
           },
-          measuredNote: "यह कैसे मापा जाता है: ऊपर बताए गए वही ब्रेन स्कोर, कॉम्प्रिहेंशन % और कंसिस्टेंसी ट्रैकिंग — साथ ही, वडोदरा विद्यार्थियों के लिए असली फिज़िकल EEG ब्रेन मैपिंग (नीचे देखें)।",
+          measuredNote: "यह कैसे मापा जाता है: ऊपर बताए गए वही ब्रेन स्कोर, कॉम्प्रिहेंशन % और कंसिस्टेंसी ट्रैकिंग — साथ ही, अगर आप अपने शहर में ऑफलाइन QSR + EEG वर्कशॉप जॉइन करते हैं, तो असली फिज़िकल EEG ब्रेन मैपिंग व्यक्तिगत रूप से (नीचे देखें)।",
           notHypnosisLine: "यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई अलौकिक दावा नहीं है। यह कॉग्निटिव ट्रेनिंग है — बिल्कुल वैसे ही जैसे जिम में मांसपेशी को प्रशिक्षित किया जाता है।",
           researchNote: "रिसर्च-अलाइन्ड: सैकेडिक आई मूवमेंट और अल्फा/थीटा मेमोरी कंसोलिडेशन स्थापित न्यूरोसाइंस अवधारणाएं हैं, जिन्हें यहां डिज़ाइन लक्ष्य के रूप में नाम दिया गया है — न कि प्रोप्राइटरी दावे या जुड़े हुए अध्ययन।",
         },
         disclaimer: "ब्रेन-स्टेट फ़्रेमिंग इन अभ्यासों के डिज़ाइन इरादे को बताती है, ऑनलाइन विद्यार्थियों के लिए हर-सेशन मापी गई गारंटी नहीं — हार्डवेयर-सत्यापित सेशन के लिए नीचे वडोदरा EEG ट्रैक देखें।",
-      },
-      eeg: {
-        badge: "फिज़िकल EEG ब्रेन मैपिंग और न्यूरोफीडबैक सेशन शामिल",
-        badgeLocation: "केवल वडोदरा में",
-        title: "रिसर्च-ग्रेड EEG इंटीग्रेशन, व्यक्तिगत रूप से",
-        desc: "ऑनलाइन विद्यार्थी ऐप और सभी 7 लाइव मास्टरक्लास के ज़रिए प्रशिक्षण लेते हैं। वडोदरा-आधारित विद्यार्थियों को डॉ. कपिल के अपने सेंटर पर असली, व्यक्तिगत फिज़िकल EEG ब्रेन मैपिंग और न्यूरोफीडबैक सेशन भी मिलते हैं — हार्डवेयर-आधारित, क्लिनिकल कॉग्निटिव ट्रैकिंग, उसी 30-दिवसीय पाठ्यक्रम के ऊपर, उसकी जगह नहीं।",
-        pills: ["रिसर्च-ग्रेड EEG इंटीग्रेशन", "न्यूरल पाथवे एक्सपैंशन", "क्लिनिकल कॉग्निटिव ट्रैकिंग"],
-        ctaLabel: "वडोदरा इन-पर्सन सेशन के बारे में पूछें",
       },
       appPreview: {
         eyebrow: "ऐप के भीतर",
@@ -3576,10 +3631,10 @@ export const translations = {
         videoTitle: "क्वांटम स्पीड रीडिंग परिचय",
       },
       liveIntroSession: {
-        eyebrow: "मुफ़्त · 45 मिनट",
-        title: "डॉ. कपिल के साथ एक मुफ़्त लाइव सेशन जॉइन करें",
-        desc: "एक असली क्वांटम स्पीड रीडिंग तकनीक, लाइव सिखाई गई, साथ में खुला Q&A — यह वाकई एक मुफ़्त सेशन है, 30-दिवसीय प्रोग्राम का मुफ़्त एक्सेस नहीं। अगर यह आपको पसंद आता है, तो बाद में आपको एक सीधा-सादा पेड बैच जॉइन करने का न्योता मिलेगा — किसी भी तरह कोई दबाव नहीं।",
-        ctaLabel: "मेरी मुफ़्त सीट रिज़र्व करें",
+        eyebrow: "मुफ़्त · 45 मिनट · लाइव",
+        title: "अपनी सीट रिज़र्व करें — डॉ. कपिल के साथ लाइव Q&A",
+        desc: "एक असली क्वांटम स्पीड रीडिंग तकनीक, लाइव सिखाई गई, साथ में खुला Q&A — यह वाकई एक मुफ़्त सेशन है, 30-दिवसीय प्रोग्राम का मुफ़्त एक्सेस नहीं, और कोई रिकॉर्डिंग नहीं। अगर यह आपको पसंद आता है, तो बाद में आपको एक सीधा-सादा पेड बैच जॉइन करने का न्योता मिलेगा — किसी भी तरह कोई दबाव नहीं।",
+        ctaLabel: "अपनी सीट रिज़र्व करें",
       },
       videoTestimonials: {
         eyebrow: "असली विद्यार्थियों को देखें",

@@ -29,18 +29,19 @@ type SecondaryCard = {
 };
 
 // Explore Our Programs™ — five real offers, deliberately unequal in
-// visual weight per explicit instruction: Habit Builder (01) gets a
-// full-width, light, gold-bordered banner — the easiest, free entry
-// point, already featured in its own dedicated section above, so it
-// doesn't need a second dark/dominant treatment here, just a clear,
-// consistent presence at the top of the list. Quantum Speed Reading (02)
-// stays the dark, 2-of-3-column flagship card it already was — this
-// business's real flagship program. Retreats (03), Overthinking Mastery
-// (04), and Mentoring (05) fill the remaining three secondary slots, each
-// keeping its own icon/accent color. The Free Reading Speed Test no
-// longer has a card here — it now has its own dedicated section
-// (HomeSpeedTestCta.tsx) so it never competes with these five paid
-// programs for the same visual priority.
+// visual weight. QSR is this business's flagship and must read as such:
+// Quantum Speed Reading (01) is the dark, 2-of-3-column card, and it
+// renders FIRST — the grid comes before the Habit Builder banner (see
+// the "Homepage, QSR & Multi-City EEG Rewrite" task; this used to be
+// reversed, with Habit Builder's banner rendering above the grid).
+// Habit Builder (02) is a full-width, light, gold-bordered banner right
+// below the grid, recopied as a lead-in to QSR ("build the habit before
+// starting QSR") rather than a competing "easiest way to begin" pitch.
+// Retreats (03), Overthinking Mastery (04), and Mentoring (05) fill the
+// remaining three secondary slots, each keeping its own icon/accent
+// color. The Free Reading Speed Test no longer has a card here — it now
+// has its own dedicated section (HomeSpeedTestCta.tsx) so it never
+// competes with these five paid programs for the same visual priority.
 export default function ProgramCardsGrid(): React.JSX.Element {
   const { t } = useLanguage();
   const home = t.homeProgramCards;
@@ -92,29 +93,8 @@ export default function ProgramCardsGrid(): React.JSX.Element {
           <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[32px]">{home.title}</h2>
         </div>
 
-        {/* 01 — Habit Builder banner, full width, light + gold */}
-        <a
-          href={HABIT_BUILDER_APP_URL}
-          onClick={() => trackGaEvent("signup_cta_click", { location: "explore_programs_habit_banner" })}
-          className="group mb-6 flex flex-col gap-5 rounded-sm border border-gold/50 bg-gold-soft/20 p-7 transition-colors hover:border-gold sm:flex-row sm:items-center sm:justify-between sm:p-8"
-        >
-          <div className="flex items-start gap-4">
-            <span className="font-mono text-[13px] font-bold text-gold">{home.habitBuilder.number}</span>
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-gold">{home.habitBuilder.eyebrowLabel}</p>
-              <h3 className="mt-2 text-[19px] font-bold leading-snug text-ink">{home.habitBuilder.title}</h3>
-              <p className="mt-1.5 max-w-md text-[13.5px] leading-relaxed text-ink-dim">{home.habitBuilder.desc}</p>
-              <p className="mt-2 font-mono text-[11.5px] uppercase tracking-[0.05em] text-gold">{home.habitBuilder.priceLine}</p>
-            </div>
-          </div>
-          <span className="inline-flex flex-none items-center gap-2 rounded-sm bg-gold px-6 py-3 text-[13.5px] font-semibold text-[#1B1508] transition-transform duration-200 group-hover:-translate-y-0.5">
-            {home.habitBuilder.cta}
-            <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-          </span>
-        </a>
-
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {/* 02 — QSR flagship card, dark, spans 2 of 3 columns on desktop */}
+          {/* 01 — QSR flagship card, dark, spans 2 of 3 columns on desktop */}
           <div
             id="tier-1"
             className="flex flex-col justify-between rounded-sm border border-line-strong bg-[#12162a] p-8 sm:p-10 lg:col-span-2"
@@ -178,6 +158,34 @@ export default function ProgramCardsGrid(): React.JSX.Element {
             );
           })}
         </div>
+
+        {/* 02 — Habit Builder banner, full width, light + gold. Moved
+            below the flagship grid (see the "Homepage, QSR & Multi-City
+            EEG Rewrite" task) — QSR must read as this page's first,
+            dominant offer; Habit Builder now reads as a supporting
+            lead-in to QSR rather than a competing first impression. Kept
+            its exact existing visual treatment (still visually smaller/
+            muted than the dark QSR card), just repositioned and
+            recopied. */}
+        <a
+          href={HABIT_BUILDER_APP_URL}
+          onClick={() => trackGaEvent("signup_cta_click", { location: "explore_programs_habit_banner" })}
+          className="group mt-6 flex flex-col gap-5 rounded-sm border border-gold/50 bg-gold-soft/20 p-7 transition-colors hover:border-gold sm:flex-row sm:items-center sm:justify-between sm:p-8"
+        >
+          <div className="flex items-start gap-4">
+            <span className="font-mono text-[13px] font-bold text-gold">{home.habitBuilder.number}</span>
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-gold">{home.habitBuilder.eyebrowLabel}</p>
+              <h3 className="mt-2 text-[19px] font-bold leading-snug text-ink">{home.habitBuilder.title}</h3>
+              <p className="mt-1.5 max-w-md text-[13.5px] leading-relaxed text-ink-dim">{home.habitBuilder.desc}</p>
+              <p className="mt-2 font-mono text-[11.5px] uppercase tracking-[0.05em] text-gold">{home.habitBuilder.priceLine}</p>
+            </div>
+          </div>
+          <span className="inline-flex flex-none items-center gap-2 rounded-sm bg-gold px-6 py-3 text-[13.5px] font-semibold text-[#1B1508] transition-transform duration-200 group-hover:-translate-y-0.5">
+            {home.habitBuilder.cta}
+            <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+          </span>
+        </a>
 
         <div className="mt-6 flex flex-col items-center gap-3 rounded-sm border border-line-strong bg-panel2 px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
           <div className="flex items-center gap-3.5">

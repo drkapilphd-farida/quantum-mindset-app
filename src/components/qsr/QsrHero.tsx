@@ -9,7 +9,6 @@ import QsrGuaranteeBadge from "./QsrGuaranteeBadge";
 import CheckoutTrustLine from "../CheckoutTrustLine";
 import HeroTestimonialBadge from "../HeroTestimonialBadge";
 import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from "@/config/masterclassPaymentLink";
-import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function QsrHero(): React.JSX.Element {
@@ -41,21 +40,21 @@ export default function QsrHero(): React.JSX.Element {
             {qsr.hero.sub}
           </p>
 
-          {/* CTA restructure (see the "Homepage & QSR Conversion Rewrite"
-              task) — the free live intro session is now primary
-              (site-wide standardized copy/target); paid enrollment moves
-              to secondary but keeps its own price meta + checkout
-              trust/guarantee copy, since those are specifically about
-              the paid path. The 2-minute Speed Test drops from a full
-              button to a plain tertiary text link below — it already
-              gets two dedicated sections further down this page. */}
+          {/* CTA restructure (see the "Homepage, QSR & Multi-City EEG
+              Rewrite" task) — primary now points at the real, honestly-
+              labeled on-demand video further down this exact page
+              (QsrFounderVideo, id="founder") rather than the WhatsApp
+              live-session request. The live Q&A session isn't dropped —
+              it has its own dedicated section (QsrLiveIntroSession)
+              further down, so it isn't competing for hero space with two
+              other CTAs. Paid enrollment stays secondary with its own
+              price meta + checkout trust/guarantee copy. The 2-minute
+              Speed Test stays a plain tertiary text link below. */}
           <div className="mt-10 flex flex-wrap items-start gap-4">
             <div>
               <a
-                href={WHATSAPP_FREE_INTRO_SESSION_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackGaEvent("whatsapp_click", { location: "qsr_hero_free_workshop" })}
+                href="#founder"
+                onClick={() => trackGaEvent("watch_training_click", { location: "qsr_hero" })}
                 className="group inline-flex items-center gap-2.5 rounded-sm bg-gold px-7 py-[15px] text-[14.5px] font-semibold tracking-tight text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]"
               >
                 {qsr.hero.ctaPrimary}

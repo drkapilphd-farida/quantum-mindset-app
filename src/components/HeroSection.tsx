@@ -5,7 +5,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow, CtaButton } from "./ui";
 import FrequencyDial from "./FrequencyDial";
 import HeroTestimonialBadge from "./HeroTestimonialBadge";
-import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function HeroSection(): React.JSX.Element {
@@ -56,8 +55,15 @@ export default function HeroSection(): React.JSX.Element {
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
+            {/* Primary CTA points at the real, honestly-labeled on-demand
+                training video (QsrFounderVideo, id="founder" on the QSR
+                page) — not the WhatsApp live-session request flow, which
+                is a genuinely different, live-only thing (see
+                QsrLiveIntroSession). Don't swap this back to a WhatsApp
+                link without also changing the button copy — "Watch the
+                Free Training Now" is only honest if it opens a video. */}
             <CtaButton
-              href={WHATSAPP_FREE_INTRO_SESSION_LINK}
+              href="/programs/quantum-speed-reading#founder"
               variant="primary"
               accent="gold"
               onClick={() => trackGaEvent("signup_cta_click", { location: "home_hero" })}

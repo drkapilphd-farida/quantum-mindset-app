@@ -1,10 +1,8 @@
 "use client";
 
-import { Gauge, Activity, Zap, Waves, Brain, ShieldCheck, MapPin, CircleX } from "lucide-react";
+import { Gauge, Activity, Zap, Waves, Brain, CircleX } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { Eyebrow, Pill } from "../ui";
-import { WHATSAPP_VADODARA_EEG_INQUIRY_LINK } from "@/config/whatsappSupportLink";
-import { trackGaEvent } from "@/lib/analytics/ga4";
+import { Eyebrow } from "../ui";
 
 const METRIC_ICONS = [Gauge, Activity, Zap] as const;
 
@@ -12,14 +10,16 @@ const METRIC_ICONS = [Gauge, Activity, Zap] as const;
 // metrics (Brain Score, comprehension %, streak consistency — see
 // practiceHistory.ts / ThirtyDayCurriculumOverview.tsx) as clean
 // typographic stat cards, no chart/dashboard image standing in for real
-// EEG data that doesn't exist for the online cohort. The EEG/Vadodara
-// block below is the one place on this page an actual hardware claim is
-// made — confirmed as a real, existing offline offering before writing
-// this copy, not assumed.
+// EEG data that doesn't exist for the online cohort. The single-city
+// "EEG available in Vadodara" highlight box that used to sit at the
+// bottom of this section is gone (see the "Homepage, QSR & Multi-City
+// EEG Rewrite" task) — the offline EEG track is now offered across 6
+// cities, not just Vadodara, so it has its own dedicated section
+// (OfflineEegWorkshopSection) further down this page instead of living
+// here as a single-city aside.
 export default function QsrNeuroCognitiveScience(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.qsrLanding.neuroCognitive;
-  const eeg = t.qsrLanding.eeg;
 
   return (
     <section id="neuro-cognitive" className="border-b border-line px-6 py-24 sm:px-8 lg:py-16">
@@ -101,45 +101,6 @@ export default function QsrNeuroCognitiveScience(): React.JSX.Element {
           <p className="mt-4 border-t border-line pt-4 text-[11.5px] leading-relaxed text-ink-dim">
             {section.disclaimer}
           </p>
-        </div>
-
-        {/* Vadodara EEG Highlight™ — the one hardware-backed claim on this
-            page, kept visually distinct (gold-bordered, not the plain
-            panel above) so it reads as a genuine bonus for one specific
-            group, not blended into the general online-program science
-            framing above it. */}
-        <div className="mt-8 rounded-sm border border-gold/50 bg-gold-soft/30 p-7 sm:p-9">
-          <div className="flex flex-wrap items-start gap-3.5">
-            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-full border border-gold/50 bg-gold-soft">
-              <ShieldCheck className="h-5 w-5 text-gold" aria-hidden="true" />
-            </div>
-            <div>
-              <p className="text-[15.5px] font-bold leading-snug text-ink">{eeg.badge}</p>
-              <p className="mt-1 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-gold">
-                <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-                {eeg.badgeLocation}
-              </p>
-            </div>
-          </div>
-
-          <h3 className="mt-6 text-[16.5px] font-bold text-ink">{eeg.title}</h3>
-          <p className="mt-2 max-w-2xl text-[15.5px] leading-relaxed text-ink-dim">{eeg.desc}</p>
-
-          <div className="mt-5 flex flex-wrap gap-2.5">
-            {eeg.pills.map((pill) => (
-              <Pill key={pill}>{pill}</Pill>
-            ))}
-          </div>
-
-          <a
-            href={WHATSAPP_VADODARA_EEG_INQUIRY_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackGaEvent("whatsapp_click", { location: "qsr_eeg_vadodara" })}
-            className="mt-6 inline-flex items-center gap-2 rounded-sm border border-gold/60 px-6 py-3 text-[13.5px] font-semibold text-gold transition-colors hover:bg-gold-soft"
-          >
-            {eeg.ctaLabel}
-          </a>
         </div>
       </div>
     </section>
