@@ -8,6 +8,7 @@ import QsrGuaranteeBadge from "../QsrGuaranteeBadge";
 import { computeLiveWpm } from "@/features/quantum-speed-reading/readingSessionEngine";
 import { splitWordAtOrp } from "@/features/quantum-journey/readingModes/pacingMath";
 import { buildProgressiveChunks, computeRampWpm, RAMP_START_WPM } from "./speedDemoPacing";
+import { computeEffectiveWpm } from "./effectiveWpm";
 import { pickRandomPassagePair } from "./speedTestPassagePool";
 import {
   SPEED_TEST_PERSONAS,
@@ -42,6 +43,33 @@ import {
 // one random pair on the server and a different one on the client, a
 // real hydration mismatch (same reasoning RsvpModePlayer.tsx documents
 // for the same pattern).
+//
+// Retention-gated WPM (see the "Fix Critical WPM/Retention Logic Bug"
+// task) — a raw words/minute number is trivially gameable (click through
+// instantly, answer randomly, still get a high number: observed
+// 1103-1106 WPM with 0/2 correct). Both the baseline ("Comprehend") and
+// RSVP ("Experience") results now run through the shared
+// computeEffectiveWpm() (effectiveWpm.ts), which scales the number down
+// by comprehension accuracy — sharply below 60%, to the point of
+// showing "couldn't be verified" instead of a number when every answer
+// is wrong. Every WPM shown anywhere in this component from here on is
+// the gated (effective) value, never the bare raw one.
+//
+// Sustained-phase RSVP result (same task) — the RSVP demo's final result
+// used to average over the WHOLE ramp, including the slow 220 WPM
+// opening, which pulled the reported number below both the live peak
+// and the (invalid) baseline — defeating the demo's own point. Note
+// computeRampWpm ramps CONTINUOUSLY across the entire chunk sequence —
+// there is no flat/plateau stretch anywhere in the current curve — so
+// excluding only the first ~20% (leaving the middle 80%) still measures
+// mostly mid-ramp speed, not the sustained top pace. The final result is
+// measured from the LAST ~20% of the passage instead (verified live: this
+// lands within a few percent of the actual peak, where the ramp is
+// closest to RAMP_CAP_WPM), via sustainedStartTimeRef below. A dev-only
+// console.warn compares it against the actual peak live WPM reached, so
+// a regression back to full-session averaging — or a future ramp-curve
+// change that breaks this assumption — is easy to spot again in the
+// full-session averaging is easy to spot again in the future.
 
 const STAGE_LABELS = ["Calibrate", "Comprehend", "Experience", "Results"] as const;
 
@@ -73,13 +101,26 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
 
   const demoChunks = useMemo(() => {
     if (demoPassage === null) return [];
-    return buildProgressiveChunks(demoPassage.text.trim().split(/\s+/).filter(Boolean));
+    // chunkMode defaults to "single" — see speedDemoPacing.ts. Explicit
+    // here anyway so this call site can't silently start grouping words
+    // again if that default ever changes.
+    return buildProgressiveChunks(demoPassage.text.trim().split(/\s+/).filter(Boolean), "single");
   }, [demoPassage]);
   const [chunkIndex, setChunkIndex] = useState(-1);
   const [liveWpm, setLiveWpm] = useState(RAMP_START_WPM);
-  const [demoAvgWpm, setDemoAvgWpm] = useState<number | null>(null);
+  const [demoSustainedWpm, setDemoSustainedWpm] = useState<number | null>(null);
   const demoStartRef = useRef<number | null>(null);
   const [demoAnswers, setDemoAnswers] = useState<[number | null, number | null]>([null, null]);
+
+  // Sustained-phase measurement refs (see the doc comment above) — the
+  // first ~20% of chunks are the ramp-up and are excluded from the final
+  // WPM; sustainedStartTimeRef is stamped the moment the demo crosses
+  // that point. peakLiveWpmRef tracks the actual highest live WPM shown,
+  // read synchronously (not via state) so the dev sanity check always
+  // sees the up-to-date value at the moment the demo finishes.
+  const sustainedStartIndexRef = useRef(0);
+  const sustainedStartTimeRef = useRef<number | null>(null);
+  const peakLiveWpmRef = useRef(RAMP_START_WPM);
 
   function reset(): void {
     setStage("intro");
@@ -89,8 +130,10 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
     setCalibAnswers([null, null]);
     setChunkIndex(-1);
     setLiveWpm(RAMP_START_WPM);
-    setDemoAvgWpm(null);
+    setDemoSustainedWpm(null);
     setDemoAnswers([null, null]);
+    sustainedStartTimeRef.current = null;
+    peakLiveWpmRef.current = RAMP_START_WPM;
   }
 
   function startCalibration(): void {
@@ -111,6 +154,15 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
     setStage("speedDemo");
     setChunkIndex(0);
     demoStartRef.current = performance.now();
+    // Sustained/steady-state window = the LAST ~20% of the passage, not
+    // "everything after the first 20%" (see the doc comment above — the
+    // ramp never actually plateaus, so only a window near the very end
+    // is representative of the peak pace). Math.floor(...* 0.8) so a
+    // very short demo passage still leaves at least a few words in the
+    // window rather than rounding it away.
+    sustainedStartIndexRef.current = Math.floor(demoChunks.length * 0.8);
+    sustainedStartTimeRef.current = null;
+    peakLiveWpmRef.current = RAMP_START_WPM;
   }
 
   useEffect(() => {
@@ -119,18 +171,51 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
 
     const speed = computeRampWpm(chunkIndex, demoChunks.length);
     setLiveWpm(speed);
+    peakLiveWpmRef.current = Math.max(peakLiveWpmRef.current, speed);
+
+    // Stamp the sustained-phase start the moment we cross the ramp-up
+    // window — only ever set once per run.
+    if (sustainedStartTimeRef.current === null && chunkIndex >= sustainedStartIndexRef.current) {
+      sustainedStartTimeRef.current = performance.now();
+    }
 
     const chunk = demoChunks[chunkIndex];
     const wordsInChunk = chunk !== undefined ? chunk.split(" ").length : 1;
     const delayMs = (wordsInChunk / speed) * 60_000;
 
     const timer = setTimeout(() => {
-      const startedAt = demoStartRef.current;
       if (chunkIndex + 1 >= demoChunks.length) {
-        if (startedAt !== null && demoPassage !== null) {
-          const elapsedMs = performance.now() - startedAt;
-          const wordCount = demoPassage.text.trim().split(/\s+/).filter(Boolean).length;
-          setDemoAvgWpm(computeLiveWpm(wordCount, elapsedMs));
+        // Sustained-only WPM — words from the ramp-up cutoff to the end,
+        // over the time actually spent on just that portion. Falls back
+        // to the full-session measurement only if the passage was too
+        // short for sustainedStartTimeRef to ever get stamped (defensive;
+        // real demo passages are 90-135 words, this shouldn't trigger).
+        const startedAt = demoStartRef.current;
+        const sustainedStartedAt = sustainedStartTimeRef.current ?? startedAt;
+        if (sustainedStartedAt !== null && demoPassage !== null) {
+          const now = performance.now();
+          const sustainedWordCount =
+            sustainedStartTimeRef.current !== null
+              ? demoChunks.length - sustainedStartIndexRef.current
+              : demoPassage.text.trim().split(/\s+/).filter(Boolean).length;
+          const sustainedElapsedMs = now - sustainedStartedAt;
+          const sustainedWpm = computeLiveWpm(sustainedWordCount, sustainedElapsedMs);
+          setDemoSustainedWpm(sustainedWpm);
+
+          // Dev-only regression guard: if the final sustained result is
+          // meaningfully below the actual peak live WPM the user watched
+          // climb on screen, that's exactly the shape of the original
+          // full-session-averaging bug (peak 468, final 303) — flag it
+          // loudly rather than let it silently reappear later.
+          if (process.env.NODE_ENV !== "production") {
+            const peak = peakLiveWpmRef.current;
+            if (sustainedWpm < peak * 0.9) {
+              // eslint-disable-next-line no-console
+              console.warn(
+                `[QsrSpeedTestExperience] Sustained RSVP result (${sustainedWpm} WPM) is more than 10% below the live peak (${peak} WPM) — check for a full-session-averaging regression.`,
+              );
+            }
+          }
         }
         setStage("speedQuiz");
       } else {
@@ -149,6 +234,13 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
     demoPassage === null
       ? 0
       : demoAnswers.filter((answer, index) => answer === demoPassage.questions[index]?.correctIndex).length;
+
+  // Retention-gated results — see the doc comment near the top of this
+  // file. Every WPM value rendered below comes from one of these two,
+  // never the raw baselineWpm/demoSustainedWpm state directly.
+  const baselineEffective = computeEffectiveWpm(baselineWpm ?? 0, baselineScore, calibrationPassage?.questions.length ?? 0);
+  const demoEffective = computeEffectiveWpm(demoSustainedWpm ?? 0, demoScore, demoPassage?.questions.length ?? 0);
+
   const insightCopy = persona !== null ? PERSONA_INSIGHT_COPY[persona] : PERSONA_INSIGHT_COPY.default;
 
   const currentStageIndex = stageIndex(stage);
@@ -251,7 +343,16 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
 
         {stage === "preDemo" && (
           <>
-            <h1 className="font-display text-[26px] italic text-ink sm:text-[30px]">Your baseline: {baselineWpm} WPM</h1>
+            <h1 className="font-display text-[26px] italic text-ink sm:text-[30px]">
+              {baselineEffective.isValid ? (
+                <>Your baseline: {baselineEffective.effectiveWpm} WPM</>
+              ) : (
+                <>Your baseline speed couldn&rsquo;t be verified</>
+              )}
+            </h1>
+            <p className="mt-1.5 text-[13px] text-ink-faint">
+              Based on {Math.round(baselineEffective.accuracy * 100)}% retention on the quick check.
+            </p>
             <p className="mt-4 text-[15px] leading-relaxed text-ink-dim">
               Now let&rsquo;s show you what a trained pace actually feels like. Words will appear on their own, starting
               slow and speeding up into short phrases. Just let your eyes rest on the center — don&rsquo;t chase the words.
@@ -301,21 +402,43 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
 
             <div className="mt-7 grid grid-cols-2 gap-4">
               <div className="rounded-sm border border-line-strong bg-panel px-5 py-5">
-                <div className="font-display text-[44px] font-bold leading-none text-ink sm:text-[52px]">{baselineWpm}</div>
+                {baselineEffective.isValid ? (
+                  <div className="font-display text-[44px] font-bold leading-none text-ink sm:text-[52px]">
+                    {baselineEffective.effectiveWpm}
+                  </div>
+                ) : (
+                  <div className="font-display text-[17px] font-bold leading-snug text-ink sm:text-[19px]">
+                    Not verified — try reading more carefully
+                  </div>
+                )}
                 <p className="mt-2.5 text-[12.5px] text-ink-faint">
-                  Your baseline WPM · {Math.round((baselineScore / 2) * 100)}% comprehension
+                  Your baseline WPM · {Math.round(baselineEffective.accuracy * 100)}% comprehension
                 </p>
               </div>
               <div className="rounded-sm border border-gold/40 bg-gold-soft/40 px-5 py-5">
-                <div className="font-display text-[44px] font-bold leading-none text-ink sm:text-[52px]">{demoAvgWpm}</div>
+                {demoEffective.isValid ? (
+                  <div className="font-display text-[44px] font-bold leading-none text-ink sm:text-[52px]">
+                    {demoEffective.effectiveWpm}
+                  </div>
+                ) : (
+                  <div className="font-display text-[17px] font-bold leading-snug text-ink sm:text-[19px]">
+                    Not verified — try reading more carefully
+                  </div>
+                )}
                 <p className="mt-2.5 text-[12.5px] text-ink-faint">
-                  Trained-pace preview · {Math.round((demoScore / 2) * 100)}% comprehension at that speed
+                  Trained-pace preview · {Math.round(demoEffective.accuracy * 100)}% comprehension at that speed
                 </p>
               </div>
             </div>
 
             <div className="mt-7 space-y-4">
-              <ComparisonBar label="You, today" value={`${baselineWpm} WPM`} percent={Math.min(((baselineWpm ?? 0) / 600) * 100, 100)} tone="gold" emphasize />
+              <ComparisonBar
+                label="You, today"
+                value={baselineEffective.isValid ? `${baselineEffective.effectiveWpm} WPM` : "Not verified"}
+                percent={Math.min((baselineEffective.effectiveWpm / 600) * 100, 100)}
+                tone="gold"
+                emphasize
+              />
               <ComparisonBar label="Average untrained reader" value="~230 WPM" percent={38} tone="faint" />
               <ComparisonBar label="Trained QSR target" value="550–600 WPM" percent={96} tone="teal" />
             </div>

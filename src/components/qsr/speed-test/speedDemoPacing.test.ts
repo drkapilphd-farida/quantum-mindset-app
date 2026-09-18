@@ -2,26 +2,41 @@ import { describe, expect, it } from "vitest";
 import { buildProgressiveChunks, computeRampWpm, RAMP_START_WPM, RAMP_CAP_WPM } from "./speedDemoPacing";
 
 describe("buildProgressiveChunks", () => {
-  it("never drops or reorders a single word", () => {
+  it("defaults to strictly one word per chunk at every position (RSVP default — see the WPM/retention bug fix)", () => {
     const words = Array.from({ length: 30 }, (_, i) => `word${i}`);
     const chunks = buildProgressiveChunks(words);
-    expect(chunks.join(" ").split(" ")).toEqual(words);
+    expect(chunks).toEqual(words);
+    expect(chunks.every((chunk) => chunk.split(" ").length === 1)).toBe(true);
   });
 
-  it("starts with single-word chunks and grows into phrases later", () => {
+  it("never drops or reorders a single word in single mode", () => {
     const words = Array.from({ length: 30 }, (_, i) => `word${i}`);
-    const chunks = buildProgressiveChunks(words);
-    const chunkSizes = chunks.map((chunk) => chunk.split(" ").length);
-    // The very last chunk can legitimately be a 1-word remainder even in
-    // the 3-word zone (30 doesn't divide evenly) — check the sequence
-    // grows overall, not that every trailing chunk is exactly size 3.
-    expect(chunkSizes[0]).toBe(1);
-    expect(Math.max(...chunkSizes)).toBeGreaterThan(1);
-    expect(Math.max(...chunkSizes.slice(-4))).toBeGreaterThan(1);
+    const chunks = buildProgressiveChunks(words, "single");
+    expect(chunks.join(" ").split(" ")).toEqual(words);
   });
 
   it("handles an empty passage without throwing", () => {
     expect(buildProgressiveChunks([])).toEqual([]);
+  });
+
+  describe('chunkMode: "phrase" (opt-in only, not used by the live demo)', () => {
+    it("never drops or reorders a single word", () => {
+      const words = Array.from({ length: 30 }, (_, i) => `word${i}`);
+      const chunks = buildProgressiveChunks(words, "phrase");
+      expect(chunks.join(" ").split(" ")).toEqual(words);
+    });
+
+    it("starts with single-word chunks and grows into phrases later", () => {
+      const words = Array.from({ length: 30 }, (_, i) => `word${i}`);
+      const chunks = buildProgressiveChunks(words, "phrase");
+      const chunkSizes = chunks.map((chunk) => chunk.split(" ").length);
+      // The very last chunk can legitimately be a 1-word remainder even in
+      // the 3-word zone (30 doesn't divide evenly) — check the sequence
+      // grows overall, not that every trailing chunk is exactly size 3.
+      expect(chunkSizes[0]).toBe(1);
+      expect(Math.max(...chunkSizes)).toBeGreaterThan(1);
+      expect(Math.max(...chunkSizes.slice(-4))).toBeGreaterThan(1);
+    });
   });
 });
 
