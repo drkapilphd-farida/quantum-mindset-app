@@ -129,8 +129,26 @@ function saveCurriculumProgress(progress: CurriculumProgress): void {
 // complete" structure is kept underneath that gate, for a paying
 // learner — this isn't a change to the program's pacing design, only to
 // who can enter it at all.
+//
+// Permanent access fix (see the "Fix 30-Day Curriculum Pricing +
+// Permanent Day Access" task) — this used to re-derive "unlocked" from
+// "isPro && (day 1 || previous day complete)" on every check, with no
+// path that short-circuited for a day already completed. That meant
+// access to an already-finished day silently depended on isPro staying
+// true forever after — if a Pro check ever returned false for any
+// reason (subscription lapsed, a stale/failed re-fetch, isDevUnlockEnabled
+// toggling off between sessions, etc.), EVERY day re-locked at once,
+// including Day 1 and every other already-completed day, because the
+// `!isPro` check ran before the sequential logic ever got a chance to
+// matter. Access is now a one-way, permanent flag per day: once a day is
+// in completedDays, it returns true unconditionally, before isPro is
+// even consulted — re-practicing a completed day never depends on
+// current subscription status or where the learner is in the sequence
+// today. Only entering a NEW day for the first time still requires real
+// Pro access and the previous day's completion.
 export function isCurriculumDayUnlocked(day: number, progress: CurriculumProgress, isPro: boolean): boolean {
   if (isDevUnlockEnabled()) return true
+  if (progress.completedDays.includes(day)) return true
   if (!isPro) return false
   if (day === 1) return true
   return progress.completedDays.includes(day - 1)

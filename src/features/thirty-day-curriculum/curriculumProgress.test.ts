@@ -84,9 +84,9 @@ describe('markCurriculumDayComplete', () => {
 })
 
 describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
-  it('30-Day Masterclass Paywall: every day, including day 1, is locked for a non-Pro user', () => {
-    const progress: CurriculumProgress = { completedDays: [1, 2], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-    expect(isCurriculumDayUnlocked(1, { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }, false)).toBe(false)
+  it('30-Day Masterclass Paywall: a NEW (not-yet-completed) day is locked for a non-Pro user, including day 1', () => {
+    const progress: CurriculumProgress = { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
+    expect(isCurriculumDayUnlocked(1, progress, false)).toBe(false)
     expect(isCurriculumDayUnlocked(2, progress, false)).toBe(false)
   })
 
@@ -98,6 +98,41 @@ describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
     const progress: CurriculumProgress = { completedDays: [1], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
     expect(isCurriculumDayUnlocked(2, progress, true)).toBe(true)
     expect(isCurriculumDayUnlocked(3, progress, true)).toBe(false)
+  })
+
+  // Permanent access regression tests (see the "Fix 30-Day Curriculum
+  // Pricing + Permanent Day Access" task) — the reported bug: a user
+  // completes Day 1-20, then Day 1 (and any other already-completed day)
+  // shows as locked again. Root cause was `!isPro` being checked BEFORE
+  // completion, so any lapse/glitch in the Pro check re-locked every
+  // already-earned day, including Day 1. These assert the fix: a
+  // completed day is permanently accessible, full stop.
+  describe('permanent access to already-completed days', () => {
+    it('a completed day stays unlocked even if isPro is now false (lapsed subscription, stale check, etc.)', () => {
+      const progress: CurriculumProgress = { completedDays: [1, 2], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
+      expect(isCurriculumDayUnlocked(1, progress, false)).toBe(true)
+      expect(isCurriculumDayUnlocked(2, progress, false)).toBe(true)
+      // Day 3 was never completed — still correctly gated by isPro.
+      expect(isCurriculumDayUnlocked(3, progress, false)).toBe(false)
+    })
+
+    it('regression check: after completing days 1-20, Day 1 and Day 10 (any earlier completed day) both remain open for a Pro user', () => {
+      const completedDays = Array.from({ length: 20 }, (_, i) => i + 1) // [1..20]
+      const progress: CurriculumProgress = { completedDays, checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
+      expect(isCurriculumDayUnlocked(1, progress, true)).toBe(true)
+      expect(isCurriculumDayUnlocked(10, progress, true)).toBe(true)
+      expect(isCurriculumDayUnlocked(20, progress, true)).toBe(true)
+      // Day 21 (the next NEW day) still correctly requires day 20 complete — it is, so it's open too.
+      expect(isCurriculumDayUnlocked(21, progress, true)).toBe(true)
+      // Day 22 has not been earned yet — still correctly locked.
+      expect(isCurriculumDayUnlocked(22, progress, true)).toBe(false)
+    })
+
+    it('a completed day out of order (non-contiguous completedDays) is still permanently accessible', () => {
+      const progress: CurriculumProgress = { completedDays: [1, 5], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
+      expect(isCurriculumDayUnlocked(5, progress, true)).toBe(true)
+      expect(isCurriculumDayUnlocked(5, progress, false)).toBe(true)
+    })
   })
 
   it('getHighestUnlockedDay walks the unbroken completion streak from day 1', () => {
