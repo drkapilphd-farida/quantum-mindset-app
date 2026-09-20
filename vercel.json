@@ -4,6 +4,10 @@
     {
       "path": "/api/processing/advance-all",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/unclaimed-payments",
+      "schedule": "*/30 * * * *"
     }
   ]
 }

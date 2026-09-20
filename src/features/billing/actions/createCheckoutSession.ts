@@ -3,6 +3,7 @@
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { stripe } from '@/lib/stripe/client'
+import { logger } from '@/lib/logger'
 
 const CheckoutSchema = z.object({
   courseId: z.string().uuid(),
@@ -56,34 +57,55 @@ export async function createCheckoutSession(
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
-  const session = await stripe.checkout.sessions.create(
-    {
-      payment_method_types: ['card'],
-      mode: 'payment',
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: course.title,
-              ...(course.description !== null
-                ? { description: course.description }
-                : {}),
+  // Error-visibility fix (see the "Pre-Launch Audit Fix Pass" task, Phase
+  // 1) — this call was previously unguarded: any Stripe API error
+  // (network blip, transient outage, misconfigured key) rejected this
+  // Server Action's promise instead of returning the typed
+  // { success: false, error } shape every other failure path here
+  // already uses. BuyButton.tsx's toast-on-failure logic only ever
+  // fires for that typed shape, so an unguarded throw here reached the
+  // user as nothing at all. Wrapped and logged (logger.error also
+  // reports to Sentry as of this same phase) so a real checkout failure
+  // is both visible to the user and to whoever's watching Sentry.
+  let session: Awaited<ReturnType<typeof stripe.checkout.sessions.create>>
+  try {
+    session = await stripe.checkout.sessions.create(
+      {
+        payment_method_types: ['card'],
+        mode: 'payment',
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: course.title,
+                ...(course.description !== null
+                  ? { description: course.description }
+                  : {}),
+              },
+              unit_amount: course.price_cents,
             },
-            unit_amount: course.price_cents,
+            quantity: 1,
           },
-          quantity: 1,
-        },
-      ],
-      metadata: { user_id: user.id, course_id: courseId },
-      ...(user.email != null ? { customer_email: user.email } : {}),
-      success_url: `${appUrl}/courses/${course.slug}?payment=success`,
-      cancel_url: `${appUrl}/courses/${course.slug}`,
-    },
-    { idempotencyKey: `checkout-${user.id}-${courseId}` },
-  )
+        ],
+        metadata: { user_id: user.id, course_id: courseId },
+        ...(user.email != null ? { customer_email: user.email } : {}),
+        success_url: `${appUrl}/courses/${course.slug}?payment=success`,
+        cancel_url: `${appUrl}/courses/${course.slug}`,
+      },
+      { idempotencyKey: `checkout-${user.id}-${courseId}` },
+    )
+  } catch (error) {
+    logger.error('[createCheckoutSession] Stripe checkout session creation failed', {
+      userId: user.id,
+      courseId,
+      error: error instanceof Error ? error.message : String(error),
+    })
+    return { success: false, error: 'Something went wrong starting checkout. Please try again in a moment.' }
+  }
 
   if (!session.url) {
+    logger.error('[createCheckoutSession] Stripe returned a session with no url', { userId: user.id, courseId, stripeSessionId: session.id })
     return { success: false, error: 'Failed to create checkout session.' }
   }
 

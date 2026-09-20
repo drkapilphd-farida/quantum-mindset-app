@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { withSentryConfig } from '@sentry/nextjs/config'
 
 // The Supabase project origin is read from the same env var the client
 // SDK itself uses, so the CSP always matches whichever project a given
@@ -67,7 +68,21 @@ function buildContentSecurityPolicy(): string {
     'style-src': ["'self'", "'unsafe-inline'"],
     'img-src': ["'self'", 'data:', 'blob:', ...(supabase ? [supabase] : [])],
     'font-src': ["'self'", 'data:'],
-    'connect-src': ["'self'", ...(supabase ? [supabase, supabase.replace('https://', 'wss://')] : []), 'https://api.razorpay.com', 'https://lumberjack.razorpay.com', 'https://www.google-analytics.com', 'https://analytics.google.com'],
+    // Sentry ingest — both regional endpoints allowed proactively (same
+    // "allow before it's wired up" posture as the Razorpay/GA entries
+    // above); harmless when NEXT_PUBLIC_SENTRY_DSN is unset since no
+    // request to either domain is ever made without it.
+    'connect-src': [
+      "'self'",
+      ...(supabase ? [supabase, supabase.replace('https://', 'wss://')] : []),
+      'https://api.razorpay.com',
+      'https://lumberjack.razorpay.com',
+      'https://www.google-analytics.com',
+      'https://analytics.google.com',
+      'https://*.ingest.sentry.io',
+      'https://*.ingest.us.sentry.io',
+      'https://*.ingest.de.sentry.io',
+    ],
     'frame-src': ["'self'", 'https://api.razorpay.com', 'https://checkout.razorpay.com', 'https://www.youtube-nocookie.com'],
     'worker-src': ["'self'"],
     'object-src': ["'none'"],
@@ -167,4 +182,21 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+// withSentryConfig wraps the build (source map upload, request-tracing
+// instrumentation) — safe to apply unconditionally even with no
+// SENTRY_AUTH_TOKEN/org/project configured yet: the wizard-managed
+// pieces that need those (source map upload) just skip themselves with
+// a console notice at build time, per Sentry's own documented behavior;
+// nothing here fails the build. Wrapped in the module's own try/catch-
+// free "config as function" form (options object as the 2nd arg) is the
+// standard, minimal manual-setup shape — no need for the interactive
+// wizard's extra generated boilerplate (tunnelRoute, widenClientFileUpload,
+// etc.) for a lightweight first pass.
+export default withSentryConfig(nextConfig, {
+  // Silences the wizard-style "please log in" build banner when these
+  // aren't set — expected until a real Sentry org/project exists.
+  silent: true,
+  webpack: {
+    treeshake: { removeDebugLogging: true },
+  },
+})
