@@ -6,6 +6,7 @@ import ProgramSelector from '@/components/ProgramSelector'
 import HomePrefrontalPowerFeature from '@/components/HomePrefrontalPowerFeature'
 import HomeHabitBuilderFeature from '@/components/HomeHabitBuilderFeature'
 import HomeOverviewVideo from '@/components/HomeOverviewVideo'
+import HomePodcastFeature from '@/components/HomePodcastFeature'
 import ProgramCardsGrid from '@/components/ProgramCardsGrid'
 import HomeSpeedTestCta from '@/components/HomeSpeedTestCta'
 import HomeWhyMindUrMind from '@/components/HomeWhyMindUrMind'
@@ -62,9 +63,13 @@ export const metadata: Metadata = {
 // point + one primary CTA into the free live intro session) → exactly 3
 // audience-first path cards (#begin — "Learning for myself" / "Looking
 // for my child" / "Deeper mind training", replacing the old
-// product-first QSR-flagship-plus-3-secondary-paths layout) →
-// Testimonials, moved up to sit directly behind the path cards as
-// immediate social proof → brand overview video → the full program
+// product-first QSR-flagship-plus-3-secondary-paths layout) → Founder
+// Podcast Feature (Dr. Kapil's appearance on Solomon Daniel's podcast —
+// broad brand/founder-authority content, not QSR-specific, so it sits
+// here rather than inside the QSR-only Testimonials carousel; "hear from
+// the founder himself" before student/parent results) → Testimonials,
+// moved up to sit directly behind the path cards as immediate social
+// proof → brand overview video → the full program
 // catalog (#explore-programs) → free Speed Test → Why Mind Ur Mind → Dr.
 // Kapil → FAQ → Final CTA → PREfrontal POWER and Habit Builder, both
 // pushed to the very bottom (deliberately last, after every
@@ -85,6 +90,7 @@ export default function HomePage(): React.JSX.Element {
       <main>
         <HeroSection />
         <ProgramSelector />
+        <HomePodcastFeature />
         <Testimonials />
         <HomeOverviewVideo />
         <ProgramCardsGrid />

@@ -276,6 +276,14 @@ export const translations = {
       cta: "Explore Your Path",
       videoTitle: "The Mind Ur Mind Experience",
     },
+    homePodcastFeature: {
+      eyebrow: "Featured Podcast",
+      title: "Dr. Kapil Dev Sharma on Solomon Daniel's Podcast",
+      caption: "Dr. Kapil Dev Sharma explores what's really possible when you unlock your brain's true potential.",
+      videoTitle: "What if Your BRAIN is Hiding 99% of its POWER? | Dr. Kapil Dev Sharma — Solomon Daniel's Podcast",
+      playAriaLabel: "Play video: Dr. Kapil Dev Sharma on Solomon Daniel's Podcast",
+      channelCredit: "Featured on Solomon Daniel's Podcast",
+    },
     homeSpeedTest: {
       eyebrow: "Always Free",
       title: "How Fast Do You Really Read?",
@@ -2884,6 +2892,14 @@ export const translations = {
       closingMessage: "वह रास्ता खोजें जो आपके लिए सही है।",
       cta: "अपना रास्ता एक्सप्लोर करें",
       videoTitle: "माइंड उर माइंड एक्सपीरियंस",
+    },
+    homePodcastFeature: {
+      eyebrow: "फीचर्ड पॉडकास्ट",
+      title: "डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर",
+      caption: "डॉ. कपिल देव शर्मा बताते हैं कि जब आप अपने दिमाग की असली क्षमता को अनलॉक करते हैं, तो वाकई क्या मुमकिन है।",
+      videoTitle: "What if Your BRAIN is Hiding 99% of its POWER? | डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर",
+      playAriaLabel: "वीडियो चलाएं: डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर",
+      channelCredit: "Solomon Daniel के पॉडकास्ट पर फीचर्ड",
     },
     homeSpeedTest: {
       eyebrow: "हमेशा मुफ़्त",
