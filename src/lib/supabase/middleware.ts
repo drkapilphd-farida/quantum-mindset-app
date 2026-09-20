@@ -1,11 +1,15 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import type { Database } from './types'
-import type { User } from '@supabase/supabase-js'
+import type { SupabaseClient, User } from '@supabase/supabase-js'
 
 type SessionResult = {
   response: NextResponse
   user: User | null
+  // Threaded out so the single-device session gate (activeSessionGate.ts)
+  // can read/write `active_sessions` without standing up a second,
+  // redundant Supabase client in the same middleware pass.
+  supabase: SupabaseClient<Database>
 }
 
 export async function updateSession(request: NextRequest): Promise<SessionResult> {
@@ -39,5 +43,5 @@ export async function updateSession(request: NextRequest): Promise<SessionResult
     data: { user },
   } = await supabase.auth.getUser()
 
-  return { response, user }
+  return { response, user, supabase }
 }

@@ -39,6 +39,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      active_sessions: {
+        Row: {
+          created_at: string
+          device_label: string | null
+          last_active_at: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_label?: string | null
+          last_active_at?: string
+          session_id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_label?: string | null
+          last_active_at?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       ai_cost_log: {
         Row: {
           chunk_id: string | null

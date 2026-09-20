@@ -22,6 +22,11 @@ export default async function LoginPage({
           Check your email to confirm your account, then sign in.
         </p>
       )}
+      {params.message === 'device-logout' && (
+        <p className="bg-muted rounded-md px-4 py-3 text-center text-sm">
+          You&apos;ve been logged out because your account was accessed from another device.
+        </p>
+      )}
       {params.error === 'invalid-link' && (
         <p className="bg-destructive/10 text-destructive rounded-md px-4 py-3 text-center text-sm">
           Your link is invalid or has expired.{' '}

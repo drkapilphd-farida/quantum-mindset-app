@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 import { APP_DOMAIN_HEADER, resolveAppDomain, isAppSubdomain, type AppDomain } from '@/lib/domains/appDomain'
+import { ACTIVE_SESSION_COOKIE, ACTIVE_SESSION_COOKIE_MAX_AGE_SECONDS, resolveActiveSession } from '@/lib/activeSessions/activeSessionGate'
 
 const PROTECTED_PATHS = ['/dashboard', '/labs', '/practice', '/progress', '/settings', '/admin', '/preview', '/parent-dashboard', '/school-admin', '/partner-admin']
 const AUTH_PATHS = ['/login', '/signup']
@@ -61,7 +62,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host')
   const appDomain = resolveAppDomain(host)
 
-  const { response: sessionResponse, user } = await updateSession(request)
+  const { response: sessionResponse, user, supabase } = await updateSession(request)
 
   const isPortalLoginPage = PORTAL_LOGIN_PATHS.includes(pathname)
   const isProtected = !isPortalLoginPage && PROTECTED_PATHS.some((path) => pathname.startsWith(path))
@@ -71,6 +72,50 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     const loginUrl = new URL(loginPathFor(pathname), request.url)
     loginUrl.searchParams.set('next', pathname)
     return NextResponse.redirect(loginUrl)
+  }
+
+  // Single-Device Login Enforcement™ (see the "Pre-Launch Audit Fix
+  // Pass" task, Phase 7) — scoped to protected paths only (real app
+  // usage), not marketing pages or webhook routes, to keep this extra
+  // per-request database round-trip where it actually matters. See
+  // activeSessionGate.ts for the full allow/claim/confirm/force-logout
+  // decision this drives.
+  if (isProtected && user) {
+    const cookieSessionId = request.cookies.get(ACTIVE_SESSION_COOKIE)?.value ?? null
+    const { action, newSessionId } = await resolveActiveSession({
+      supabase,
+      userId: user.id,
+      cookieSessionId,
+      userAgent: request.headers.get('user-agent'),
+    })
+
+    if (action === 'force_logout') {
+      await supabase.auth.signOut()
+      const loginUrl = new URL('/login', request.url)
+      loginUrl.searchParams.set('message', 'device-logout')
+      const logoutResponse = NextResponse.redirect(loginUrl)
+      sessionResponse.cookies.getAll().forEach((cookie) => logoutResponse.cookies.set(cookie))
+      logoutResponse.cookies.delete(ACTIVE_SESSION_COOKIE)
+      return logoutResponse
+    }
+
+    if (action === 'confirm_required') {
+      const conflictUrl = new URL('/device-conflict', request.url)
+      conflictUrl.searchParams.set('next', pathname)
+      const conflictResponse = NextResponse.redirect(conflictUrl)
+      sessionResponse.cookies.getAll().forEach((cookie) => conflictResponse.cookies.set(cookie))
+      return conflictResponse
+    }
+
+    if (action === 'claim' && newSessionId) {
+      sessionResponse.cookies.set(ACTIVE_SESSION_COOKIE, newSessionId, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge: ACTIVE_SESSION_COOKIE_MAX_AGE_SECONDS,
+      })
+    }
   }
 
   if (isAuthPage && user) {
