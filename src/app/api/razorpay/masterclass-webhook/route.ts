@@ -4,6 +4,7 @@ import { verifyRazorpayWebhookSignature } from '@/lib/razorpay/verifyWebhookSign
 import { createServiceClient } from '@/lib/supabase/service'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
+import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 
 // Automated Masterclass Access™ — sibling to /api/razorpay/webhook, not an
 // extension of it: that route handles tenant/school Subscription
@@ -18,10 +19,20 @@ import { logger } from '@/lib/logger'
 // register a second webhook endpoint in the Razorpay Dashboard subscribed
 // to "payment.captured" only, so a bug here can't affect the tenant
 // billing webhook or vice versa.
+//
+// Refund revocation (see the "Pre-Launch Audit Fix Pass" task, Phase 2)
+// — "refund.processed" now revokes the matching user's masterclass
+// subscription via the same revokeMasterclassAccessForPayment() an admin
+// can also call manually (see revokeMasterclassAccess.ts). This webhook
+// endpoint must ALSO be subscribed to "refund.processed" in the Razorpay
+// Dashboard (Settings > Webhooks > this endpoint > Active Events) — it
+// is not automatically included just because "payment.captured" already
+// is; both need to be checked explicitly for refunds to actually revoke
+// access.
 const WEBHOOK_RATE_LIMIT = { max: 60, windowMs: 60_000 }
 
 const RazorpayPaymentCapturedPayloadSchema = z.object({
-  event: z.string(),
+  event: z.literal('payment.captured'),
   payload: z.object({
     payment: z.object({
       entity: z.object({
@@ -38,6 +49,25 @@ const RazorpayPaymentCapturedPayloadSchema = z.object({
     }),
   }),
 })
+
+// Razorpay's documented refund.processed shape — the refund entity
+// carries `payment_id`, the original payment this refund belongs to,
+// which is exactly what masterclass_payments.razorpay_payment_id is
+// keyed on.
+const RazorpayRefundProcessedPayloadSchema = z.object({
+  event: z.literal('refund.processed'),
+  payload: z.object({
+    refund: z.object({
+      entity: z.object({
+        id: z.string(),
+        payment_id: z.string(),
+        amount: z.number(),
+      }),
+    }),
+  }),
+})
+
+const EventEnvelopeSchema = z.object({ event: z.string() })
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const clientIp = await getClientIp()
@@ -87,23 +117,71 @@ async function handleMasterclassWebhook(request: NextRequest): Promise<NextRespo
     return NextResponse.json({ error: 'Invalid JSON.' }, { status: 400 })
   }
 
-  const parsed = RazorpayPaymentCapturedPayloadSchema.safeParse(json)
-  if (!parsed.success) {
+  const envelope = EventEnvelopeSchema.safeParse(json)
+  if (!envelope.success) {
     logger.warn('[razorpay-masterclass-webhook] payload failed validation')
     return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
   }
 
-  const { event, payload } = parsed.data
+  if (envelope.data.event === 'refund.processed') {
+    return handleRefundProcessed(json)
+  }
 
-  // Only ever subscribed to payment.captured in the Razorpay Dashboard,
-  // but ack (200) anything else defensively rather than 400 — same
-  // "don't make Razorpay retry a webhook we simply don't act on" posture
-  // as the tenant billing webhook.
-  if (event !== 'payment.captured') {
+  if (envelope.data.event === 'payment.captured') {
+    return handlePaymentCaptured(json)
+  }
+
+  // Only ever subscribed to payment.captured + refund.processed in the
+  // Razorpay Dashboard, but ack (200) anything else defensively rather
+  // than 400 — same "don't make Razorpay retry a webhook we simply
+  // don't act on" posture as the tenant billing webhook.
+  return NextResponse.json({ received: true })
+}
+
+async function handleRefundProcessed(json: unknown): Promise<NextResponse> {
+  const parsed = RazorpayRefundProcessedPayloadSchema.safeParse(json)
+  if (!parsed.success) {
+    logger.warn('[razorpay-masterclass-webhook] refund.processed payload failed validation')
+    return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
+  }
+
+  const { payment_id: razorpayPaymentId, id: razorpayRefundId } = parsed.data.payload.refund.entity
+  const result = await revokeMasterclassAccessForPayment(razorpayPaymentId)
+
+  if (!result.ok) {
+    logger.error('[razorpay-masterclass-webhook] failed to revoke access after refund', {
+      razorpayPaymentId,
+      razorpayRefundId,
+      reason: result.reason,
+    })
+    // Still ack 200 for "no matching payment/subscription found" — that's
+    // a real, non-retryable state (e.g. a refund for a payment this app
+    // never actually granted access for), not a transient failure worth
+    // Razorpay retrying. A genuine DB error inside revokeMasterclassAccessForPayment
+    // is surfaced as reason: 'db_error' and DOES return a 500 below so
+    // Razorpay retries it.
+    if (result.reason === 'db_error') {
+      return NextResponse.json({ error: 'Failed to revoke access.' }, { status: 500 })
+    }
     return NextResponse.json({ received: true })
   }
 
-  const { id: razorpayPaymentId, amount, currency, email, contact } = payload.payment.entity
+  logger.warn('[razorpay-masterclass-webhook] access revoked after refund', {
+    razorpayPaymentId,
+    razorpayRefundId,
+    userId: result.userId,
+  })
+  return NextResponse.json({ received: true })
+}
+
+async function handlePaymentCaptured(json: unknown): Promise<NextResponse> {
+  const parsed = RazorpayPaymentCapturedPayloadSchema.safeParse(json)
+  if (!parsed.success) {
+    logger.warn('[razorpay-masterclass-webhook] payment.captured payload failed validation')
+    return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
+  }
+
+  const { id: razorpayPaymentId, amount, currency, email, contact } = parsed.data.payload.payment.entity
   const supabase = createServiceClient()
 
   // Idempotent on razorpay_payment_id — Razorpay's documented
