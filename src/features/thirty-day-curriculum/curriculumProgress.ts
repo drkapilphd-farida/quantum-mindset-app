@@ -146,12 +146,28 @@ function saveCurriculumProgress(progress: CurriculumProgress): void {
 // current subscription status or where the learner is in the sequence
 // today. Only entering a NEW day for the first time still requires real
 // Pro access and the previous day's completion.
-export function isCurriculumDayUnlocked(day: number, progress: CurriculumProgress, isPro: boolean): boolean {
+//
+// Server-authoritative gate (see the "Pre-Launch Audit Fix Pass" task,
+// Phase 4) — `serverCompletedDays` MUST come from
+// getServerCurriculumCompletedDays() (a real, RLS-scoped read of the
+// `curriculum_day_completions` table), never from
+// curriculumProgress.ts's own localStorage. localStorage's
+// `completedDays` used to be this function's only input, which meant
+// opening DevTools and editing `qsr-thirty-day-curriculum-progress`
+// directly could unlock any day, including Day 30, with zero server
+// involvement. completeCurriculumDay() (the one real write path into
+// that table) independently re-validates the same Pro+sequential rules
+// server-side before it will ever persist a completion — so even a
+// forged direct call to that action can't poison this list either.
+// localStorage is still written on every completion (markCurriculumDayComplete/
+// recordCurriculumCheckpoint) purely as an optimistic UI cache/analytics
+// source (streaks, checkpoint deltas, brain score) — never consulted here.
+export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readonly number[], isPro: boolean): boolean {
   if (isDevUnlockEnabled()) return true
-  if (progress.completedDays.includes(day)) return true
+  if (serverCompletedDays.includes(day)) return true
   if (!isPro) return false
   if (day === 1) return true
-  return progress.completedDays.includes(day - 1)
+  return serverCompletedDays.includes(day - 1)
 }
 
 // The highest day the learner has progressed to by real completion —

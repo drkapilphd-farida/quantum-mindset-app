@@ -8,7 +8,7 @@ type CurriculumProgressCardProps = {
 }
 
 // Two-Pillar Simplification™ — real 30-Day Masterclass progress, sourced
-// from curriculum_day_completions (see syncCurriculumDayCompletion.ts),
+// from curriculum_day_completions (see completeCurriculumDay.ts),
 // not the student's own localStorage — the only way this can be visible
 // server-side to a parent checking from a different device.
 export function CurriculumProgressCard({ completions }: CurriculumProgressCardProps): React.JSX.Element {

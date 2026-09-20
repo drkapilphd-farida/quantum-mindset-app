@@ -12,7 +12,7 @@ export type CurriculumDayCompletionRecord = {
 
 // Two-Pillar Simplification™ — real, server-side completions for the
 // signed-in account's own 30-Day Masterclass, written by
-// syncCurriculumDayCompletion.ts. Powers the Parents Dashboard's "Daily
+// completeCurriculumDay.ts. Powers the Parents Dashboard's "Daily
 // Curriculum Progress" and "Session History" — ordered most-recent-first,
 // matching every other session-history list in this app.
 export async function getCurriculumDayCompletions(): Promise<readonly CurriculumDayCompletionRecord[]> {

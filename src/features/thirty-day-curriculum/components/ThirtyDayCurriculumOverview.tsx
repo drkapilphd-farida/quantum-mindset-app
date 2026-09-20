@@ -21,6 +21,13 @@ type ThirtyDayCurriculumOverviewProps = {
   onSelectDay: (day: number) => void
   onLockedDayClick: (day: number) => void
   isPro: boolean
+  // Server-authoritative completion gate (see the "Pre-Launch Audit Fix
+  // Pass" task, Phase 4) — passed straight through from
+  // ThirtyDayCurriculumExperience's own prop of the same name. Drives
+  // every lock/unlock/checkmark decision in the day grid below; the
+  // richer local `progress` (brain score, phase counts, streaks) stays
+  // untouched since none of it is a security gate.
+  serverCompletedDays: readonly number[]
   refreshKey: number
 }
 
@@ -28,7 +35,13 @@ function metricLabel(value: number | null, suffix: string): string {
   return value === null ? '—' : `${value}${suffix}`
 }
 
-export function ThirtyDayCurriculumOverview({ onSelectDay, onLockedDayClick, isPro, refreshKey }: ThirtyDayCurriculumOverviewProps): React.JSX.Element {
+export function ThirtyDayCurriculumOverview({
+  onSelectDay,
+  onLockedDayClick,
+  isPro,
+  serverCompletedDays,
+  refreshKey,
+}: ThirtyDayCurriculumOverviewProps): React.JSX.Element {
   // Client-only load — same SSR-hydration-mismatch reasoning every other
   // localStorage-backed exercise in this project already follows.
   const [progress, setProgress] = useState<CurriculumProgress | null>(null)
@@ -81,7 +94,14 @@ export function ThirtyDayCurriculumOverview({ onSelectDay, onLockedDayClick, isP
         </p>
         <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-6 md:grid-cols-10">
           {Array.from({ length: TOTAL_CURRICULUM_DAYS }, (_, index) => index + 1).map((day) => (
-            <DayCell key={day} day={day} progress={progress} isPro={isPro} onSelectDay={onSelectDay} onLockedDayClick={onLockedDayClick} />
+            <DayCell
+              key={day}
+              day={day}
+              serverCompletedDays={serverCompletedDays}
+              isPro={isPro}
+              onSelectDay={onSelectDay}
+              onLockedDayClick={onLockedDayClick}
+            />
           ))}
         </div>
       </div>
@@ -124,19 +144,19 @@ function PhaseCard({ phaseId, progress }: { phaseId: CurriculumPhaseId; progress
 
 function DayCell({
   day,
-  progress,
+  serverCompletedDays,
   isPro,
   onSelectDay,
   onLockedDayClick,
 }: {
   day: number
-  progress: CurriculumProgress
+  serverCompletedDays: readonly number[]
   isPro: boolean
   onSelectDay: (day: number) => void
   onLockedDayClick: (day: number) => void
 }): React.JSX.Element {
-  const unlocked = isCurriculumDayUnlocked(day, progress, isPro)
-  const completed = progress.completedDays.includes(day)
+  const unlocked = isCurriculumDayUnlocked(day, serverCompletedDays, isPro)
+  const completed = serverCompletedDays.includes(day)
   const isCheckpoint = CHECKPOINT_DAYS.includes(day)
   const theme = getCurriculumDayTheme(day)
 

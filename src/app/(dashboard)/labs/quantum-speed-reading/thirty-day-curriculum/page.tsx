@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ThirtyDayCurriculumExperience } from '@/features/thirty-day-curriculum/components/ThirtyDayCurriculumExperience'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
+import { getCurriculumDayCompletions } from '@/features/thirty-day-curriculum/actions/getCurriculumDayCompletions'
 
 export const metadata: Metadata = {
   title: '30-Day Quantum Speed Reading Mastery Curriculum — Quantum Speed Reading Lab™',
@@ -15,7 +16,16 @@ export const metadata: Metadata = {
 // once per page load, via the same hasQuantumSpeedReadingProAccess() every
 // other Pro-gated lab route in this app already uses. isPro is then
 // threaded down as a prop — never re-derived client-side.
+//
+// Server-authoritative completion gate (see the "Pre-Launch Audit Fix
+// Pass" task, Phase 4) — completedDays is likewise resolved here,
+// server-side, from the real `curriculum_day_completions` table
+// (getCurriculumDayCompletions), and threaded down alongside isPro.
+// isCurriculumDayUnlocked never reads localStorage for this decision
+// anymore — see curriculumProgress.ts's own doc comment on that
+// function for why.
 export default async function ThirtyDayCurriculumPage(): Promise<React.JSX.Element> {
-  const isPro = await hasQuantumSpeedReadingProAccess()
-  return <ThirtyDayCurriculumExperience isPro={isPro} />
+  const [isPro, completions] = await Promise.all([hasQuantumSpeedReadingProAccess(), getCurriculumDayCompletions()])
+  const initialServerCompletedDays = completions.map((completion) => completion.day)
+  return <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} />
 }

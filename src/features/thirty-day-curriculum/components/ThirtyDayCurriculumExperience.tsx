@@ -8,7 +8,8 @@ import { ThirtyDayCurriculumDayDetail } from './ThirtyDayCurriculumDayDetail'
 import { ThirtyDayCurriculumOverview } from './ThirtyDayCurriculumOverview'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
 import { isCurriculumDayUnlocked, loadCurriculumProgress, recordCurriculumCheckpoint, type CurriculumCheckpointResult } from '../curriculumProgress'
-import { syncCurriculumDayCompletion } from '../actions/syncCurriculumDayCompletion'
+import { completeCurriculumDay } from '../actions/completeCurriculumDay'
+import { getCurriculumDayCompletions } from '../actions/getCurriculumDayCompletions'
 
 type CurriculumView = 'overview' | 'day-detail' | 'assessment'
 
@@ -51,13 +52,22 @@ type ThirtyDayCurriculumExperienceProps = {
   // as the one real source of truth every gate in this component tree
   // reads from. Never re-derived client-side.
   isPro: boolean
+  // Server-authoritative completion gate (see the "Pre-Launch Audit Fix
+  // Pass" task, Phase 4) — a real, RLS-scoped read of
+  // `curriculum_day_completions` done once in this route's own page.tsx
+  // (getCurriculumDayCompletions), same posture as isPro above: resolved
+  // server-side, threaded down, never re-derived from the browser's own
+  // localStorage. This — not curriculumProgress.ts's `completedDays` —
+  // is what isCurriculumDayUnlocked checks everywhere in this tree.
+  initialServerCompletedDays: readonly number[]
 }
 
-export function ThirtyDayCurriculumExperience({ isPro }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
+export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
   const initialDay = searchParams.get('view') === 'day' ? parseValidDay(searchParams.get('day')) : null
 
   const [progress, setProgress] = useState(() => loadCurriculumProgress())
+  const [serverCompletedDays, setServerCompletedDays] = useState<readonly number[]>(initialServerCompletedDays)
   // Defense in depth — `?view=day&day=N` is a real, legitimate URL this
   // app itself generates (curriculumReturnRouting.ts, returning from a
   // gated exercise mid-day), but it's also just a URL anyone could type
@@ -66,7 +76,7 @@ export function ThirtyDayCurriculumExperience({ isPro }: ThirtyDayCurriculumExpe
   // landing here with an actually-locked day can never skip straight to
   // real content — it resolves to the overview with the paywall already
   // open instead.
-  const initialDayIsUnlocked = initialDay !== null && isCurriculumDayUnlocked(initialDay, progress, isPro)
+  const initialDayIsUnlocked = initialDay !== null && isCurriculumDayUnlocked(initialDay, serverCompletedDays, isPro)
 
   const [view, setView] = useState<CurriculumView>(initialDayIsUnlocked ? 'day-detail' : 'overview')
   const [selectedDay, setSelectedDay] = useState<number | null>(initialDayIsUnlocked ? initialDay : null)
@@ -74,9 +84,17 @@ export function ThirtyDayCurriculumExperience({ isPro }: ThirtyDayCurriculumExpe
   const [paywallDay, setPaywallDay] = useState<number | null>(initialDay !== null && !initialDayIsUnlocked ? initialDay : null)
   const [refreshKey, setRefreshKey] = useState(0)
 
-  function refreshProgress(): void {
+  // Re-reads both the local optimistic cache (streaks/checkpoints/brain
+  // score) AND the server-authoritative completion list — called after
+  // returning from a day (DayMasterPlayer's own completeCurriculumDay
+  // call has had the full round-trip of that view transition to land by
+  // now) so the Overview's day grid reflects reality, not a stale prop
+  // from this component's very first mount.
+  async function refreshProgress(): Promise<void> {
     setProgress(loadCurriculumProgress())
     setRefreshKey((key) => key + 1)
+    const records = await getCurriculumDayCompletions()
+    setServerCompletedDays(records.map((record) => record.day))
   }
 
   function openPaywall(day: number): void {
@@ -89,7 +107,7 @@ export function ThirtyDayCurriculumExperience({ isPro }: ThirtyDayCurriculumExpe
   // the same "never trust the client-side hint alone" discipline this
   // gate itself was built to enforce.
   function handleSelectDay(day: number): void {
-    if (!isCurriculumDayUnlocked(day, progress, isPro)) {
+    if (!isCurriculumDayUnlocked(day, serverCompletedDays, isPro)) {
       openPaywall(day)
       return
     }
@@ -99,7 +117,7 @@ export function ThirtyDayCurriculumExperience({ isPro }: ThirtyDayCurriculumExpe
   }
 
   function handleBackToOverview(): void {
-    refreshProgress()
+    void refreshProgress()
     setView('overview')
     setSelectedDay(null)
     setJustCompletedDay(false)
@@ -110,15 +128,25 @@ export function ThirtyDayCurriculumExperience({ isPro }: ThirtyDayCurriculumExpe
     setView('assessment')
   }
 
-  function handleAssessmentComplete(result: CurriculumCheckpointResult): void {
+  // Checkpoint completion is the one write this component tree can
+  // await directly (unlike DayMasterPlayer's fire-and-forget
+  // completeCurriculumDay call, which a real page navigation follows
+  // shortly after) — so the server's own freshly-validated
+  // `completedDays` becomes this component's gate state immediately,
+  // with no round-trip gap before the learner can move on.
+  async function handleAssessmentComplete(result: CurriculumCheckpointResult): Promise<void> {
     recordCurriculumCheckpoint(result)
-    void syncCurriculumDayCompletion({
+    const outcome = await completeCurriculumDay({
       day: result.day,
       rawWpm: result.rawWpm,
       trueWpm: result.trueWpm,
       comprehensionAccuracyPercent: result.comprehensionAccuracyPercent,
     })
-    refreshProgress()
+    if (outcome.ok) {
+      setServerCompletedDays(outcome.completedDays)
+    }
+    setProgress(loadCurriculumProgress())
+    setRefreshKey((key) => key + 1)
     setView('day-detail')
   }
 
@@ -153,7 +181,13 @@ export function ThirtyDayCurriculumExperience({ isPro }: ThirtyDayCurriculumExpe
   // regardless, so there's no conflict during play either.
   return (
     <>
-      <ThirtyDayCurriculumOverview onSelectDay={handleSelectDay} onLockedDayClick={openPaywall} isPro={isPro} refreshKey={refreshKey} />
+      <ThirtyDayCurriculumOverview
+        onSelectDay={handleSelectDay}
+        onLockedDayClick={openPaywall}
+        isPro={isPro}
+        serverCompletedDays={serverCompletedDays}
+        refreshKey={refreshKey}
+      />
       <MasterclassPaywallModal open={paywallDay !== null} onOpenChange={(open) => { if (!open) setPaywallDay(null) }} day={paywallDay} />
     </>
   )

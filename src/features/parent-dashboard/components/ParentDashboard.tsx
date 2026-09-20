@@ -66,7 +66,7 @@ export async function ParentDashboard({ userId }: ParentDashboardProps): Promise
             it). Two-Pillar Simplification™ adds Daily Curriculum Progress
             and Session History right after Consistency — the 30-Day
             Masterclass's own real, cross-device progress (see
-            curriculum_day_completions / syncCurriculumDayCompletion.ts),
+            curriculum_day_completions / completeCurriculumDay.ts),
             grouped before the separate Document Mastery Studio section. */}
         <TodaysStatusCard practicedToday={todaysProgress.exercisesCompletedToday > 0} minutesSpentMs={todaysProgress.totalDurationMsToday} />
 

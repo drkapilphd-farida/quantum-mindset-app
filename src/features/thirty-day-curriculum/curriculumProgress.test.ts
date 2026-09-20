@@ -85,19 +85,17 @@ describe('markCurriculumDayComplete', () => {
 
 describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
   it('30-Day Masterclass Paywall: a NEW (not-yet-completed) day is locked for a non-Pro user, including day 1', () => {
-    const progress: CurriculumProgress = { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-    expect(isCurriculumDayUnlocked(1, progress, false)).toBe(false)
-    expect(isCurriculumDayUnlocked(2, progress, false)).toBe(false)
+    expect(isCurriculumDayUnlocked(1, [], false)).toBe(false)
+    expect(isCurriculumDayUnlocked(2, [], false)).toBe(false)
   })
 
   it('day 1 is unlocked for a Pro user', () => {
-    expect(isCurriculumDayUnlocked(1, { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }, true)).toBe(true)
+    expect(isCurriculumDayUnlocked(1, [], true)).toBe(true)
   })
 
   it('for a Pro user, day N unlocks only once day N-1 is complete', () => {
-    const progress: CurriculumProgress = { completedDays: [1], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-    expect(isCurriculumDayUnlocked(2, progress, true)).toBe(true)
-    expect(isCurriculumDayUnlocked(3, progress, true)).toBe(false)
+    expect(isCurriculumDayUnlocked(2, [1], true)).toBe(true)
+    expect(isCurriculumDayUnlocked(3, [1], true)).toBe(false)
   })
 
   // Permanent access regression tests (see the "Fix 30-Day Curriculum
@@ -109,30 +107,48 @@ describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
   // completed day is permanently accessible, full stop.
   describe('permanent access to already-completed days', () => {
     it('a completed day stays unlocked even if isPro is now false (lapsed subscription, stale check, etc.)', () => {
-      const progress: CurriculumProgress = { completedDays: [1, 2], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-      expect(isCurriculumDayUnlocked(1, progress, false)).toBe(true)
-      expect(isCurriculumDayUnlocked(2, progress, false)).toBe(true)
+      expect(isCurriculumDayUnlocked(1, [1, 2], false)).toBe(true)
+      expect(isCurriculumDayUnlocked(2, [1, 2], false)).toBe(true)
       // Day 3 was never completed — still correctly gated by isPro.
-      expect(isCurriculumDayUnlocked(3, progress, false)).toBe(false)
+      expect(isCurriculumDayUnlocked(3, [1, 2], false)).toBe(false)
     })
 
     it('regression check: after completing days 1-20, Day 1 and Day 10 (any earlier completed day) both remain open for a Pro user', () => {
       const completedDays = Array.from({ length: 20 }, (_, i) => i + 1) // [1..20]
-      const progress: CurriculumProgress = { completedDays, checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-      expect(isCurriculumDayUnlocked(1, progress, true)).toBe(true)
-      expect(isCurriculumDayUnlocked(10, progress, true)).toBe(true)
-      expect(isCurriculumDayUnlocked(20, progress, true)).toBe(true)
+      expect(isCurriculumDayUnlocked(1, completedDays, true)).toBe(true)
+      expect(isCurriculumDayUnlocked(10, completedDays, true)).toBe(true)
+      expect(isCurriculumDayUnlocked(20, completedDays, true)).toBe(true)
       // Day 21 (the next NEW day) still correctly requires day 20 complete — it is, so it's open too.
-      expect(isCurriculumDayUnlocked(21, progress, true)).toBe(true)
+      expect(isCurriculumDayUnlocked(21, completedDays, true)).toBe(true)
       // Day 22 has not been earned yet — still correctly locked.
-      expect(isCurriculumDayUnlocked(22, progress, true)).toBe(false)
+      expect(isCurriculumDayUnlocked(22, completedDays, true)).toBe(false)
     })
 
     it('a completed day out of order (non-contiguous completedDays) is still permanently accessible', () => {
-      const progress: CurriculumProgress = { completedDays: [1, 5], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-      expect(isCurriculumDayUnlocked(5, progress, true)).toBe(true)
-      expect(isCurriculumDayUnlocked(5, progress, false)).toBe(true)
+      expect(isCurriculumDayUnlocked(5, [1, 5], true)).toBe(true)
+      expect(isCurriculumDayUnlocked(5, [1, 5], false)).toBe(true)
     })
+  })
+
+  // Paywall bypass regression tests (see the "Pre-Launch Audit Fix Pass"
+  // task, Phase 4) — isCurriculumDayUnlocked no longer takes a
+  // browser-owned CurriculumProgress at all; it only ever sees
+  // `serverCompletedDays`, an argument standing in for a real,
+  // RLS-scoped read of curriculum_day_completions. These assert the two
+  // exploits that motivated the change: completing only Day 1 (server-
+  // side) must never unlock Day 30, and there is structurally no
+  // "localStorage" input left to tamper with for this function's
+  // decision — a caller that passed a client-forged list would be
+  // passing something other than the real server response, not
+  // something this function itself can be tricked into trusting.
+  it('paywall bypass: completing only day 1 server-side does not unlock day 30', () => {
+    expect(isCurriculumDayUnlocked(30, [1], true)).toBe(false)
+  })
+
+  it('paywall bypass: an empty server-verified list locks every day except day 1 for a Pro user, no matter what day is requested', () => {
+    for (const day of [2, 5, 15, 29, 30]) {
+      expect(isCurriculumDayUnlocked(day, [], true)).toBe(false)
+    }
   })
 
   it('getHighestUnlockedDay walks the unbroken completion streak from day 1', () => {
@@ -148,22 +164,20 @@ describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
 
     it('unlocks every day, regardless of Pro status or completion, when the platform-wide dev/test bypass is on', () => {
       vi.stubEnv('NEXT_PUBLIC_DEV_UNLOCK', 'true')
-      const emptyProgress: CurriculumProgress = { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-      expect(isCurriculumDayUnlocked(1, emptyProgress, false)).toBe(true)
-      expect(isCurriculumDayUnlocked(15, emptyProgress, false)).toBe(true)
-      expect(isCurriculumDayUnlocked(30, emptyProgress, false)).toBe(true)
+      expect(isCurriculumDayUnlocked(1, [], false)).toBe(true)
+      expect(isCurriculumDayUnlocked(15, [], false)).toBe(true)
+      expect(isCurriculumDayUnlocked(30, [], false)).toBe(true)
       // getHighestUnlockedDay is a pure content-sequencing display helper,
       // deliberately decoupled from isPro/dev-unlock — it always reflects
       // real completion progress only, so it stays 1 here regardless.
-      expect(getHighestUnlockedDay(emptyProgress)).toBe(1)
+      expect(getHighestUnlockedDay({ completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] })).toBe(1)
     })
 
     it('leaves the real Pro + sequential gate untouched when the bypass is off', () => {
       vi.stubEnv('NEXT_PUBLIC_DEV_UNLOCK', 'false')
-      const emptyProgress: CurriculumProgress = { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
-      expect(isCurriculumDayUnlocked(15, emptyProgress, true)).toBe(false)
-      expect(isCurriculumDayUnlocked(1, emptyProgress, false)).toBe(false)
-      expect(getHighestUnlockedDay(emptyProgress)).toBe(1)
+      expect(isCurriculumDayUnlocked(15, [], true)).toBe(false)
+      expect(isCurriculumDayUnlocked(1, [], false)).toBe(false)
+      expect(getHighestUnlockedDay({ completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] })).toBe(1)
     })
   })
 })

@@ -39,7 +39,7 @@ type ThirtyDayCurriculumDayDetailProps = {
 // keeping front and center), but `isReplaying` lets a learner re-open
 // DayMasterPlayer on demand via "Practice Day Again," any number of
 // times. DayMasterPlayer's own finishDay() already calls
-// markCurriculumDayComplete/syncCurriculumDayCompletion idempotently, so
+// markCurriculumDayComplete/completeCurriculumDay idempotently, so
 // re-finishing a replay is safe — it's a no-op against
 // completedDays/checkpoints, not a second "completion."
 export function ThirtyDayCurriculumDayDetail({
