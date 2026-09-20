@@ -822,6 +822,11 @@ export const translations = {
           ],
         },
       },
+      legalLinks: [
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/terms" },
+        { label: "Refund & Cancellation Policy", href: "/refund-policy" },
+      ],
       copyright: "© Mind Ur Mind. mindurmind.org.in",
       location: "Vadodara, Gujarat, India",
     },
@@ -1537,7 +1542,7 @@ export const translations = {
           },
           {
             question: "What's the refund policy for the in-person workshop?",
-            answer: "[Refund & cancellation terms for the in-person format are pending confirmation before this page goes live — the online program's refund policy is WPM-improvement-based and may not translate directly to a 2-day in-person event.]",
+            answer: "The same Refund & Cancellation Policy that covers the online Masterclass applies here — see our full Refund & Cancellation Policy page for eligibility windows and how to request one. Because this workshop includes the live in-person days, our results guarantee is assessed the same way: complete the full 30-day protocol as instructed (both in-person days plus the app-based days that follow), and if your reading speed and comprehension haven't measurably improved, you're covered.",
           },
         ],
         ctaLabel: "Ask on WhatsApp",
@@ -3411,6 +3416,11 @@ export const translations = {
           ],
         },
       },
+      legalLinks: [
+        { label: "गोपनीयता नीति", href: "/privacy" },
+        { label: "सेवा की शर्तें", href: "/terms" },
+        { label: "रिफ़ंड एवं रद्दीकरण नीति", href: "/refund-policy" },
+      ],
       copyright: "© माइंड उर माइंड। mindurmind.org.in",
       location: "वडोदरा, गुजरात, भारत",
     },
@@ -4018,7 +4028,7 @@ export const translations = {
           },
           {
             question: "Refund policy in-person workshop के लिए क्या है?",
-            answer: "[व्यक्तिगत फॉर्मेट के लिए रिफ़ंड व कैंसिलेशन शर्तें इस पेज के लाइव होने से पहले पुष्टि होना बाकी हैं — ऑनलाइन प्रोग्राम की रिफ़ंड पॉलिसी WPM-सुधार पर आधारित है और यह 2-दिवसीय व्यक्तिगत इवेंट पर सीधे लागू न हो सकती हो।]",
+            answer: "वही रिफ़ंड व कैंसिलेशन नीति जो ऑनलाइन मास्टरक्लास को कवर करती है, यहां भी लागू होती है — पात्रता अवधि और रिफ़ंड का अनुरोध कैसे करें, इसके लिए हमारा पूरा रिफ़ंड व कैंसिलेशन नीति पेज देखें। चूंकि इस वर्कशॉप में लाइव व्यक्तिगत दिन शामिल हैं, हमारी परिणाम गारंटी उसी तरह आंकी जाती है: पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें (दोनों व्यक्तिगत दिन और उसके बाद के ऐप-आधारित दिन), और अगर आपकी रीडिंग स्पीड और समझ में मापने योग्य सुधार नहीं होता, तो आप कवर हैं।",
           },
         ],
         ctaLabel: "WhatsApp पर पूछें",

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
 import QsrMumbaiNav from '@/components/qsr-mumbai/QsrMumbaiNav'
@@ -42,7 +43,23 @@ export const metadata: Metadata = {
 // runs (TestimonialsPlaceholder) -> objection handling including the
 // EEG/medical question and the refund-policy placeholder (Faq) ->
 // footer, sticky bar, WhatsApp widget.
+// Temporarily unpublished (see the "Pre-Launch Audit Fix Pass" task,
+// Phase 3) — the FAQ's refund-policy answer is now real, but venue,
+// exact dates, timings, the EEG add-on price, and the partial-attendance
+// policy are still unconfirmed bracketed placeholders (QsrMumbaiVenue,
+// QsrMumbaiEegDemo, and the FAQ's partial-attendance item). This page
+// already isn't linked from anywhere live (see the homepage's own doc
+// comment above HomePage), but it was still directly reachable at its
+// URL with that placeholder text visible — per the task's explicit
+// instruction, hide the page itself (not just skip linking it) until
+// those 5 real values are filled in in i18n.ts, then delete this guard.
+const MUMBAI_WORKSHOP_PUBLISHED = false
+
 export default function QuantumSpeedReadingMumbaiPage(): React.JSX.Element {
+  if (!MUMBAI_WORKSHOP_PUBLISHED) {
+    notFound()
+  }
+
   const faqSchema = buildFaqPageSchema(translations.en.qsrMumbaiLanding.faq.items)
 
   return (

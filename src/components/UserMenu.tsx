@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronsUpDown, CreditCard, LifeBuoy, LogOut, Settings } from 'lucide-react'
+import { ChevronsUpDown, CreditCard, FileText, LifeBuoy, LogOut, Settings, ShieldCheck, Undo2 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -106,6 +106,28 @@ export function UserMenu({
         <DropdownMenuItem onClick={() => router.push('/preview/support')}>
           <LifeBuoy className="size-4" />
           Support
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
+        {/* Legal links (see the "Pre-Launch Audit Fix Pass" task, Phase 3)
+            — this dropdown is shared by both the desktop sidebar-bottom
+            row and the mobile Topbar trigger, so putting them here covers
+            the whole logged-in dashboard in one place rather than
+            needing a separate dashboard footer. */}
+        <DropdownMenuItem onClick={() => router.push('/privacy')}>
+          <ShieldCheck className="size-4" />
+          Privacy Policy
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => router.push('/terms')}>
+          <FileText className="size-4" />
+          Terms of Service
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => router.push('/refund-policy')}>
+          <Undo2 className="size-4" />
+          Refund & Cancellation Policy
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

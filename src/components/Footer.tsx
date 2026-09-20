@@ -53,7 +53,19 @@ export default function Footer(): React.JSX.Element {
           ))}
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-line pt-6 font-mono text-[12px] uppercase tracking-[0.05em] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
+        {/* Legal links (see the "Pre-Launch Audit Fix Pass" task, Phase
+            3) — Privacy/Terms/Refund Policy weren't reachable from the
+            main site footer at all before this; only via the signup
+            page's own checkboxes. */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-6 text-[12px] text-ink-faint">
+          {f.legalLinks.map((link) => (
+            <a key={link.href} href={link.href} className="transition-colors hover:text-ink">
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="mt-4 flex flex-col gap-3 font-mono text-[12px] uppercase tracking-[0.05em] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
           <span>{f.copyright}</span>
           <span>{f.location}</span>
         </div>

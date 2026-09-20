@@ -9,9 +9,10 @@ type CheckoutTrustLineProps = {
 
 // Shared across every primary Razorpay CTA on both the QSR and Retreat
 // pages (see i18n.ts's top-level checkoutTrust for why this isn't
-// duplicated per-page copy). Links to the real refund clause already
-// live in the Terms of Service (§2, "Subscriptions and billing") rather
-// than a fabricated dedicated refund-policy page that doesn't exist.
+// duplicated per-page copy). Links to the real, dedicated
+// /refund-policy page (see the "Pre-Launch Audit Fix Pass" task, Phase
+// 3) — previously pointed at /terms#billing, which had no real refund
+// terms, just a one-line "non-refundable" clause.
 export default function CheckoutTrustLine({ className = "" }: CheckoutTrustLineProps): React.JSX.Element {
   const { t } = useLanguage();
 
@@ -19,7 +20,7 @@ export default function CheckoutTrustLine({ className = "" }: CheckoutTrustLineP
     <p className={`text-[11.5px] leading-relaxed text-ink-faint ${className}`}>
       {t.checkoutTrust.line}{" "}
       <Link
-        href="/terms#billing"
+        href="/refund-policy"
         className="underline decoration-ink-faint/50 underline-offset-2 transition-colors hover:text-ink-dim"
       >
         {t.checkoutTrust.refundLabel}

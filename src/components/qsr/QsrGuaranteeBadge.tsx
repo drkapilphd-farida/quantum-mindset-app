@@ -14,10 +14,12 @@ type QsrGuaranteeBadgeProps = {
 // replaced with a broader but still specific and measurable condition —
 // the full 30-day protocol, reading speed AND comprehension — never
 // softened into vague "satisfaction guaranteed" language. Links to the
-// existing Refund & Cancellation Policy (Section 2 of /terms, already
-// anchored at #billing — see CheckoutTrustLine.tsx) rather than
-// duplicating its legal text here. Shown near the primary CTA in both
-// the hero and the final batch-notice section.
+// real, dedicated /refund-policy page (see the "Pre-Launch Audit Fix
+// Pass" task, Phase 3 — previously pointed at /terms#billing, which
+// carried a one-line "non-refundable" clause that directly contradicted
+// this exact guarantee) rather than duplicating its legal text here.
+// Shown near the primary CTA in both the hero and the final batch-notice
+// section.
 export default function QsrGuaranteeBadge({ className = "" }: QsrGuaranteeBadgeProps): React.JSX.Element {
   const { t } = useLanguage();
   const g = t.qsrLanding.guarantee;
@@ -29,7 +31,7 @@ export default function QsrGuaranteeBadge({ className = "" }: QsrGuaranteeBadgeP
         <div className="text-[13.5px] font-bold text-ink">{g.title}</div>
         <p className="mt-1 text-[12.5px] leading-relaxed text-ink-dim">
           {g.desc}{" "}
-          <Link href="/terms#billing" className="underline decoration-ink-faint/50 underline-offset-2 hover:text-ink">
+          <Link href="/refund-policy" className="underline decoration-ink-faint/50 underline-offset-2 hover:text-ink">
             {g.policyLabel}
           </Link>
         </p>

@@ -6,12 +6,14 @@ type LegalPageShellProps = {
   title: string
   lastUpdated: string
   children: React.ReactNode
-  // Overrides for reuse by the new Mind Ur Mind draft legal pages
-  // (/legal-drafts/*) — the live /privacy and /terms are legacy content
-  // from before the pivot (still branded "Quantum Mind Learning Lab™",
-  // a different entity/email than the current site) and are left as-is
-  // here; these props let a second, differently-branded set of legal
-  // pages reuse this same chrome without forking it.
+  // Overrides so /privacy, /terms, and /refund-policy can all render as
+  // "Mind Ur Mind" (see the "Pre-Launch Audit Fix Pass" task, Phase 3) —
+  // this component's own DEFAULT_BRAND_NAME below is intentionally left
+  // as the old "Quantum Mind Learning Lab™" branding rather than
+  // updated, so a future legal page that forgets to pass brandName fails
+  // loudly (wrong-but-obviously-wrong brand name) instead of silently
+  // inheriting a default that happens to be correct today. Always pass
+  // brandName="Mind Ur Mind" explicitly on every real, live legal page.
   brandName?: string
   footerLinks?: readonly { label: string; href: string }[]
 }
