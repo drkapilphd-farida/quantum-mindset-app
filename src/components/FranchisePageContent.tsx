@@ -55,9 +55,9 @@ const INTRO_VIDEO_ID: Record<Lang, string> = {
 // screenshot itself is the proof; name/city come from t.franchisePage
 // .trainerTestimonials.items (translated), matched here by stable id.
 const TRAINER_TESTIMONIAL_IMAGES: Record<string, string> = {
-  "dev-prakash": "/trainer_testimonial_dev_prakash_whatsapp.jpg.jpeg",
-  "saloni-shah": "/trainer_testimonial_saloni_shah_whatsapp.jpg.jpeg",
-  "sandeep-gupta": "/trainer_testimonial_sandeep_gupta_whatsapp.jpg.jpeg",
+  "dev-prakash": "/trainer_testimonial_dev_prakash_whatsapp.jpg",
+  "saloni-shah": "/trainer_testimonial_saloni_shah_whatsapp.jpg",
+  "sandeep-gupta": "/trainer_testimonial_sandeep_gupta_whatsapp.jpg",
 };
 
 // Real student testimonial YouTube Shorts — the same 6 verified video IDs

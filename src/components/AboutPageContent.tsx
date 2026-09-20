@@ -45,9 +45,9 @@ export default function AboutPageContent(): React.JSX.Element {
           </div>
         </section>
 
-        {/* Approved founder asset: dr-kapil-founder.png.png (About /
+        {/* Approved founder asset: dr-kapil-founder.png (About /
             Founder purpose). */}
-        <GuideProfileCard {...a.guide} accent="gold" imageSrc="/dr-kapil-founder.png.png" />
+        <GuideProfileCard {...a.guide} accent="gold" imageSrc="/dr-kapil-founder.png" />
       </main>
       <Footer />
       <WhatsAppWidget />

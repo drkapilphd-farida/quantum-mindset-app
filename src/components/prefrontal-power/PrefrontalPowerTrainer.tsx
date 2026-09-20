@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Eyebrow } from "../ui";
 
-// Approved asset: dr-kapil-learning.png.png (black shirt, explaining with
+// Approved asset: dr-kapil-learning.png (black shirt, explaining with
 // both hands) — chosen specifically for this section per explicit
 // direction: the teaching/explaining posture fits "Meet Your Trainer"
 // better than the founder/mentor photos, which already do different jobs
@@ -18,7 +18,7 @@ export default function PrefrontalPowerTrainer(): React.JSX.Element {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[220px_1fr] lg:items-start">
           <div className="relative mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-sm border border-gold/40">
             <Image
-              src="/dr-kapil-learning.png.png"
+              src="/dr-kapil-learning.png"
               alt="Dr. Kapil Sharma, Mind Trainer & Life Coach"
               fill
               sizes="220px"

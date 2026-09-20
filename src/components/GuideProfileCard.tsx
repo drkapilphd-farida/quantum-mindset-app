@@ -18,7 +18,7 @@ type GuideProfileCardProps = {
   // Which approved founder photo to show — defaults to the original
   // /founder-warm.jpg so every existing caller's exact current behavior
   // is unchanged unless it explicitly opts into one of the newer
-  // per-purpose approved assets (dr-kapil-*.png.png).
+  // per-purpose approved assets (dr-kapil-*.png).
   imageSrc?: string;
 };
 

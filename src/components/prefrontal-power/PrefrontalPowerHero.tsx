@@ -9,10 +9,10 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 // founder portrait right) replaces V2's centered typographic/FrequencyDial
 // treatment, per explicit instruction that the plain version "has no
 // founder/experience visual." Portrait is a real, approved Dr. Kapil
-// Sharma photo (dr-kapil-about.png.png), cropped to an elegant bust
+// Sharma photo (dr-kapil-about.png), cropped to an elegant bust
 // portrait excluding the source's baked-in wall text and signature —
 // not a full-screen background, not AI-generated. A different photo
-// from dr-kapil-learning.png.png (used in the Trainer section further
+// from dr-kapil-learning.png (used in the Trainer section further
 // down this same page) so the two don't repeat.
 export default function PrefrontalPowerHero(): React.JSX.Element {
   return (
@@ -84,7 +84,7 @@ export default function PrefrontalPowerHero(): React.JSX.Element {
             <div className="p-4 sm:p-5">
               {/* aspect-[800/1020] matches dr-kapil-prefrontal-hero-portrait
                   .png's exact crop dimensions — the real supplied
-                  dr-kapil-about.png.png, cropped to frame his full head,
+                  dr-kapil-about.png, cropped to frame his full head,
                   glasses and gesturing hand. object-contain (not
                   object-cover) means the browser only ever shrinks the
                   photo to fit — it can't crop it — and the p-4/p-5

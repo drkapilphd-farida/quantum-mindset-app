@@ -24,7 +24,7 @@ export default function HomeGuideSection(): React.JSX.Element {
       accent="gold"
       ctaLabel={section.cta}
       ctaHref="/about"
-      imageSrc="/dr-kapil-founder.png.png"
+      imageSrc="/dr-kapil-founder.png"
     />
   );
 }

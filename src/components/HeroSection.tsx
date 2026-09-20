@@ -129,7 +129,7 @@ export default function HeroSection(): React.JSX.Element {
               <div className="relative aspect-[1374/1145] w-full">
                 {/* Approved Founder Asset™ — dr-kapil-founder-hero.png
                     (public/images/), a copy of the real supplied file
-                    dr-kapil-founder.png.png (brown/tan blazer, both hands
+                    dr-kapil-founder.png (brown/tan blazer, both hands
                     pointing forward) — untouched, full original frame,
                     no crop, because the photographer's own framing
                     already leaves real margin on every side: clear
