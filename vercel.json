@@ -7,7 +7,7 @@
     },
     {
       "path": "/api/cron/unclaimed-payments",
-      "schedule": "*/30 * * * *"
+      "schedule": "30 0 * * *"
     }
   ]
 }
