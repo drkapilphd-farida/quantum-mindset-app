@@ -8,14 +8,14 @@
 // trigger, phone patched in explicitly since the trigger only populates
 // email) → upsert into public.subscriptions.
 //
-// IMPORTANT — expiry is NOT enforced automatically anywhere in this
-// codebase. getIsPaidUser() only checks `status IN ('active','trialing')`
-// — it never reads current_period_end, and no cron/scheduled job exists
-// that flips a subscription to 'expired' once that date passes. Setting
-// --expires records the date for reference only; you (or a future
-// scheduled job) must manually change the row's status on/after that
-// date for access to actually stop. This is a known, confirmed gap in
-// the app, not an oversight in this script.
+// --expires IS auto-enforced, but only for a plan whose billing_interval
+// is 'month' (see the "Pre-Launch Audit Fix Pass" task, Phase 5A —
+// getIsPaidUser() checks current_period_end against `now` for those
+// plans specifically). For a 'lifetime' plan (qsr-masterclass), that
+// same function is deliberately exempt — current_period_end is ignored
+// entirely, so --expires on a lifetime grant records a date for
+// reference only and access never actually stops on its own. Pass
+// --expires only when you mean it to really expire.
 //
 // Usage:
 //   node scripts/admin/provisionUser.mjs \
@@ -140,7 +140,11 @@ async function main() {
 
   console.log(`Granted "${plan}" access to ${email}, status=active${expiresIso ? `, current_period_end=${expiresIso}` : ''}.`)
   if (expiresIso) {
-    console.log('Reminder: this date is NOT auto-enforced — flip this row\'s status to "expired" manually on/after that date, or build a scheduled job to do it (see this file\'s own header comment).')
+    console.log(
+      planRow.billing_interval === 'month'
+        ? 'This will auto-expire on that date (getIsPaidUser checks current_period_end for month-interval plans) — no manual cleanup needed.'
+        : `Reminder: "${plan}" is billing_interval='${planRow.billing_interval}', which getIsPaidUser() never checks current_period_end for — this date will NOT auto-enforce; access stays active until you manually change this row's status.`,
+    )
   }
 }
 
