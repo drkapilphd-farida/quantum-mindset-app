@@ -3,8 +3,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Layers } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
-import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
-import { getQuantumDocumentCount } from '@/features/quantum-document-transformer/getQuantumDocumentCount'
+import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { getQuantumDocumentHistory } from '@/features/quantum-document-transformer/actions/getQuantumDocumentHistory'
 import { AIDocumentTransformerWidget } from '@/components/dashboard/AIDocumentTransformerWidget'
 import { Button } from '@/components/ui/button'
@@ -33,11 +32,7 @@ export default async function DocumentStudioPage(): Promise<React.JSX.Element> {
 
   if (!user) redirect('/login?next=/document-studio')
 
-  const [isPaidUser, quantumDocumentCount, recentQuantumDocuments] = await Promise.all([
-    getIsPaidUser(user.id),
-    getQuantumDocumentCount(user.id),
-    getQuantumDocumentHistory(),
-  ])
+  const [isPaidUser, recentQuantumDocuments] = await Promise.all([hasQuantumSpeedReadingProAccess(), getQuantumDocumentHistory()])
 
   return (
     <div className="space-y-6">
@@ -56,7 +51,7 @@ export default async function DocumentStudioPage(): Promise<React.JSX.Element> {
         </TabsList>
 
         <TabsContent value="upload" className="pt-4">
-          <AIDocumentTransformerWidget isPro={isPaidUser} initialDocumentCount={quantumDocumentCount} recentDocuments={recentQuantumDocuments.slice(0, 5)} />
+          <AIDocumentTransformerWidget isPro={isPaidUser} recentDocuments={recentQuantumDocuments.slice(0, 5)} />
         </TabsContent>
 
         <TabsContent value="projects" className="pt-4">

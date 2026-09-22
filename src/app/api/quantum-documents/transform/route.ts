@@ -3,11 +3,9 @@ import { createClient } from '@/lib/supabase/server'
 import { universalUploadParser } from '@/core/universal-learning-engine/upload'
 import { extractUniversalLearningDocument } from '@/core/universal-learning-engine/extraction'
 import { generateQuantumDocumentIntelligence } from '@/features/quantum-document-transformer/generateQuantumDocumentIntelligence'
-import { getQuantumDocumentCount } from '@/features/quantum-document-transformer/getQuantumDocumentCount'
-import { FREE_TIER_DOCUMENT_LIMIT } from '@/features/quantum-document-transformer/freeTierLimit'
 import { MAX_SYNCHRONOUS_UPLOAD_BYTES } from '@/features/quantum-document-transformer/maxSynchronousUploadSize'
 import { formatFileSize } from '@/lib/formatFileSize'
-import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
+import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { checkTransformRateLimit } from '@/features/quantum-document-transformer/transformRateLimiter'
 import { logSchoolAiUsage } from '@/features/school-dashboard/logSchoolAiUsage'
 import { DEFAULT_LANGUAGE, isSupportedLanguage } from '@/features/quantum-document-transformer/supportedLanguages'
@@ -56,7 +54,7 @@ export async function POST(request: Request): Promise<Response> {
   // confirmed via the browser Network tab. Every failure this handler
   // anticipated already returned clean JSON (see the many
   // NextResponse.json(...) calls below), but auth/paywall setup
-  // (createClient, auth.getUser, getIsPaidUser, getQuantumDocumentCount)
+  // (createClient, auth.getUser, hasQuantumSpeedReadingProAccess)
   // and universalUploadParser.parse had no try/catch of their own — an
   // uncaught throw from any of those escapes straight past this whole
   // function and becomes Next.js's own generic HTML error page, which is
@@ -82,25 +80,25 @@ export async function POST(request: Request): Promise<Response> {
       )
     }
 
-    // Pro Paywall — the real enforcement boundary. The dashboard's own
-    // proactive UI check (same FREE_TIER_DOCUMENT_LIMIT, same
-    // getQuantumDocumentCount) exists purely so a free user never wastes
-    // an upload attempt on a request that would be rejected anyway — this
-    // check here is what actually decides, since a client-side check
-    // alone can always be bypassed.
-    const isPro = await getIsPaidUser(user.id)
+    // 30-Day Masterclass Paywall™ (see the "Upload & Learn / QSR Bundling"
+    // task) — Document Mastery Studio is bundled into the 30-Day QSR
+    // Masterclass now, not its own separate product; this is the exact
+    // same real, server-side check every QSR curriculum day already
+    // gates on (hasQuantumSpeedReadingProAccess), no free tier at all.
+    // The dashboard's own proactive UI check exists purely so a non-pro
+    // user never wastes an upload attempt on a request that would be
+    // rejected anyway — this check here is what actually decides, since
+    // a client-side check alone can always be bypassed.
+    const isPro = await hasQuantumSpeedReadingProAccess()
     if (!isPro) {
-      const documentCount = await getQuantumDocumentCount(user.id)
-      if (documentCount >= FREE_TIER_DOCUMENT_LIMIT) {
-        return NextResponse.json(
-          {
-            success: false,
-            code: 'free_limit_reached',
-            error: `You've reached your free limit of ${FREE_TIER_DOCUMENT_LIMIT} documents. Upgrade to Pro for unlimited AI document transformations, Neural Map Notes, and Quantum sessions.`,
-          },
-          { status: 402 },
-        )
-      }
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'upgrade_required',
+          error: 'Document Mastery Studio is included with the 30-Day Quantum Speed Reading Masterclass — enroll to unlock it.',
+        },
+        { status: 402 },
+      )
     }
 
     let formData: FormData
@@ -255,7 +253,7 @@ export async function POST(request: Request): Promise<Response> {
   } catch (error) {
     // The catch that was missing. Whatever this turns out to be next
     // time — a Supabase client/auth failure, an RLS-driven query error
-    // inside getIsPaidUser/getQuantumDocumentCount, something inside
+    // inside hasQuantumSpeedReadingProAccess, something inside
     // universalUploadParser.parse — this is now the one place in the
     // whole request that nothing can get past silently.
     logger.error('[QuantumDocumentTransformer] Unhandled exception', {

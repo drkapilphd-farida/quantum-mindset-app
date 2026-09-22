@@ -5,9 +5,7 @@ import Link from 'next/link'
 import { Check, ExternalLink, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { FREE_TIER_DOCUMENT_LIMIT } from '@/features/quantum-document-transformer/freeTierLimit'
 import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
-import { RAZORPAY_UPLOAD_AND_LEARN_PAYMENT_LINK } from '@/config/uploadAndLearnPaymentLink'
 import { RAZORPAY_SUBSCRIPTION_LINKS, type BillingPeriod } from '../razorpaySubscriptionLinks'
 
 // Real, confirmed prices for both billing periods — Razorpay's own
@@ -137,13 +135,17 @@ export function PricingPlansGrid(): React.JSX.Element {
         <PlanCard
           name="The Foundation"
           subtitle="Start for free"
-          description="Your free trial of the AI Document Transformer — upgrade anytime."
+          description="Explore Quantum Speed Reading for free — enroll in the Masterclass to unlock Document Mastery Studio."
           priceAmount="₹0"
           priceUnit="forever"
           features={[
-            `${FREE_TIER_DOCUMENT_LIMIT} free AI document transformations to try it out`,
-            'Neural Map Notes & AI summaries on those documents',
             'Quantum Speed Reading & Active Recall sessions',
+            // QSR-Bundled Access™ (see the "Upload & Learn / QSR Bundling"
+            // task) — Document Mastery Studio no longer has its own free
+            // tier (FREE_TIER_DOCUMENT_LIMIT); it's bundled entirely into
+            // the ₹9,999 Masterclass banner below, so this card is honest
+            // about that instead of still advertising free transformations.
+            'Document Mastery Studio (Upload & Learn) — included with the 30-Day Masterclass',
           ]}
           cta={
             <Button asChild variant="outline" size="lg" className="w-full rounded-full">
@@ -212,41 +214,23 @@ export function PricingPlansGrid(): React.JSX.Element {
           toggle above (which only makes sense for subscriptions). Same
           real, honest posture as every SubscribeButton above: a real
           Razorpay Payment Link, no promise of automatic access — the
-          batch schedule follows by email after payment. */}
+          batch schedule follows by email after payment.
+          QSR-Bundled Access™ (see the "Upload & Learn / QSR Bundling"
+          task) — Document Mastery Studio (Upload & Learn) is no longer
+          its own separate ₹499/mo product; it's included here, so this
+          description says so instead of a second, now-removed banner
+          below repeating what used to be a contradictory separate price. */}
       <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-3xl border border-primary/30 bg-primary/[0.03] p-8 sm:flex-row">
         <div>
           <p className="text-lg font-semibold text-foreground">30-Day Quantum Speed Reading Mastery + Live Cohort</p>
           <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
-            The self-paced 30-day curriculum, paired with 7 live mentorship sessions from Dr. Kapil Dev Sharma. One-time enrollment — ₹9,999.
+            The self-paced 30-day curriculum, paired with 7 live mentorship sessions from Dr. Kapil Dev Sharma — plus full access to Document Mastery
+            Studio (Upload & Learn). One-time enrollment — ₹9,999.
           </p>
         </div>
         <Button asChild size="lg" className="w-full shrink-0 rounded-full sm:w-auto">
           <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
             Enroll Now for ₹9,999
-            <ExternalLink className="size-4" aria-hidden="true" />
-          </a>
-        </Button>
-      </div>
-
-      {/* AI Document Supercharger™ (Upload & Learn) — Finalized Pricing™:
-          a real, standalone document-processing subscription, distinct
-          from the Individual Growth/Genius Family Lab platform plans
-          above (those cover general AI transformation quota; this one is
-          specifically the document-upload pipeline). Same "own banner,
-          not a fifth grid card" reasoning as the Masterclass banner —
-          it's a single flat monthly price, not something the
-          Monthly/Yearly toggle above should apply to. */}
-      <div className="mt-6 flex flex-col items-center justify-between gap-4 rounded-3xl border border-border/60 bg-card p-8 sm:flex-row">
-        <div>
-          <p className="text-lg font-semibold text-foreground">📄 Document Mastery Studio™</p>
-          <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
-            Standalone document processing — drop in any PDF, textbook, or research paper and get Quantum Speed Reading drills, Mind Maps, and Neural
-            Map Notes back. ₹499/month.
-          </p>
-        </div>
-        <Button asChild size="lg" variant="outline" className="w-full shrink-0 rounded-full sm:w-auto">
-          <a href={RAZORPAY_UPLOAD_AND_LEARN_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-            Subscribe for ₹499/month
             <ExternalLink className="size-4" aria-hidden="true" />
           </a>
         </Button>

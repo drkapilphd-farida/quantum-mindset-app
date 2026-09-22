@@ -2,12 +2,10 @@
 
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
-import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
+import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { logSchoolAiUsage } from '@/features/school-dashboard/logSchoolAiUsage'
 import type { Json } from '@/lib/supabase/types'
 import { logger } from '@/lib/logger'
-import { getQuantumDocumentCount } from '../getQuantumDocumentCount'
-import { FREE_TIER_DOCUMENT_LIMIT } from '../freeTierLimit'
 import { checkTransformRateLimit } from '../transformRateLimiter'
 import { generateQuantumDocumentIntelligence } from '../generateQuantumDocumentIntelligence'
 import { DEFAULT_LANGUAGE, isSupportedLanguage, type SupportedLanguage } from '../supportedLanguages'
@@ -21,7 +19,7 @@ const ImportUrlInputSchema = z.object({
 
 export type ImportQuantumDocumentFromUrlResult =
   | { success: true; documentId: string }
-  | { success: false; error: string; code?: 'free_limit_reached' }
+  | { success: false; error: string; code?: 'upgrade_required' }
 
 // Paste URL / YouTube™ — the URL-input sibling of the file-upload Route
 // Handler (/api/quantum-documents/transform): same auth/rate-limit/
@@ -51,17 +49,16 @@ export async function importQuantumDocumentFromUrl(input: unknown): Promise<Impo
     return { success: false, error: "You're transforming links faster than we can process them — please wait a moment and try again." }
   }
 
-  // Pro Paywall — the real enforcement boundary, mirroring the file-
-  // upload Route Handler's identical check.
-  const isPro = await getIsPaidUser(user.id)
+  // 30-Day Masterclass Paywall™ — the real enforcement boundary, mirroring
+  // the file-upload Route Handler's identical check (see that file's own
+  // doc comment for why this is now bundled into the QSR Masterclass
+  // rather than its own separate product/free tier).
+  const isPro = await hasQuantumSpeedReadingProAccess()
   if (!isPro) {
-    const documentCount = await getQuantumDocumentCount(user.id)
-    if (documentCount >= FREE_TIER_DOCUMENT_LIMIT) {
-      return {
-        success: false,
-        code: 'free_limit_reached',
-        error: `You've reached your free limit of ${FREE_TIER_DOCUMENT_LIMIT} documents. Upgrade to Pro for unlimited AI document transformations, Neural Map Notes, and Quantum sessions.`,
-      }
+    return {
+      success: false,
+      code: 'upgrade_required',
+      error: 'Document Mastery Studio is included with the 30-Day Quantum Speed Reading Masterclass — enroll to unlock it.',
     }
   }
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { FileText, Link2, RotateCcw, Sparkles, UploadCloud, X } from 'lucide-react'
+import { FileText, Link2, Lock, RotateCcw, Sparkles, UploadCloud, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -19,11 +19,10 @@ import type { QuantumDocument } from '@/features/quantum-document-transformer/ty
 import { getLanguageName } from '@/features/quantum-document-transformer/supportedLanguages'
 import { type QuantumDocumentHistoryItem } from '@/features/quantum-document-transformer/actions/getQuantumDocumentHistory'
 import { importQuantumDocumentFromUrl } from '@/features/quantum-document-transformer/actions/importQuantumDocumentFromUrl'
-import { UpgradeToProBanner } from '@/features/quantum-document-transformer/components/UpgradeToProBanner'
-import { FREE_TIER_DOCUMENT_LIMIT } from '@/features/quantum-document-transformer/freeTierLimit'
 import { MAX_SYNCHRONOUS_UPLOAD_BYTES } from '@/features/quantum-document-transformer/maxSynchronousUploadSize'
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, type SupportedLanguage } from '@/features/quantum-document-transformer/supportedLanguages'
 import { DocumentHistorySidebar } from '@/features/quantum-document-transformer/components/DocumentHistorySidebar'
+import { MasterclassPaywallModal } from '@/features/thirty-day-curriculum/components/MasterclassPaywallModal'
 import { logger } from '@/lib/logger'
 
 // A UI-only, best-effort check (just for choosing which processing-step
@@ -438,22 +437,22 @@ function RecentDocuments({ documents }: { documents: readonly QuantumDocumentHis
 // render the heavy output inline.
 type AIDocumentTransformerWidgetProps = {
   isPro: boolean
-  initialDocumentCount: number
   recentDocuments: readonly QuantumDocumentHistoryItem[]
 }
 
-export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recentDocuments }: AIDocumentTransformerWidgetProps): React.JSX.Element {
+export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocumentTransformerWidgetProps): React.JSX.Element {
   const router = useRouter()
   const [zoneError, setZoneError] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [upload, setUpload] = useState<UploadState | null>(null)
-  // Pro Paywall — starts from the real count the dashboard fetched at page
-  // load, then tracked locally so a free user hits the real limit within
-  // the same session without needing a full page reload. The Route
-  // Handler is still the real enforcement boundary (see
-  // /api/quantum-documents/transform) — this local count only drives the
-  // proactive UI block, never the actual decision.
-  const [documentCount, setDocumentCount] = useState(initialDocumentCount)
+  // 30-Day Masterclass Paywall™ (see the "Upload & Learn / QSR Bundling"
+  // task) — Document Mastery Studio is no longer its own, separate
+  // ₹499/mo product; it's bundled entirely into the 30-Day QSR Masterclass,
+  // the exact same `isPro` (hasQuantumSpeedReadingProAccess) every QSR
+  // curriculum day already gates on. No free tier, no document count —
+  // a non-pro user sees the same MasterclassPaywallModal a locked
+  // curriculum day would show, full stop.
+  const [paywallOpen, setPaywallOpen] = useState(false)
   const [targetLanguage, setTargetLanguage] = useState<SupportedLanguage>(DEFAULT_LANGUAGE)
   const [historyOpen, setHistoryOpen] = useState(false)
   const progressTimer = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -481,8 +480,6 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
   useEffect(() => {
     if (searchParams.get('library') === 'open') setHistoryOpen(true)
   }, [searchParams])
-
-  const isBlocked = !isPro && documentCount >= FREE_TIER_DOCUMENT_LIMIT
 
   function stopProgressTimer(): void {
     if (progressTimer.current) {
@@ -513,14 +510,15 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
       if (!json.success) {
         logger.error('[QuantumDocumentTransformer] Transform request failed', { error: json.error, code: json.code })
 
-        // Pro Paywall — a race with another tab/device, or a stale prop,
-        // can mean the client thought there was room when the real,
-        // server-side count says otherwise. Fall through to the same
-        // proactive banner rather than a generic retry-able error.
-        if (json.code === 'free_limit_reached') {
-          setDocumentCount(FREE_TIER_DOCUMENT_LIMIT)
+        // 30-Day Masterclass Paywall™ — a race with another tab/device, or
+        // a stale prop, can mean the client thought this device was Pro
+        // when the real, server-side check says otherwise. Fall through
+        // to the same paywall modal a locked curriculum day would show,
+        // rather than a generic retry-able error.
+        if (json.code === 'upgrade_required') {
           setUpload(null)
           setSelectedFile(null)
+          setPaywallOpen(true)
           return
         }
 
@@ -533,7 +531,6 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
       setUpload((current) => (current ? { ...current, status: 'processing', progress: 100 } : current))
       await new Promise((resolve) => setTimeout(resolve, 650))
 
-      setDocumentCount((current) => current + 1)
       // Isolated Document View™ — the fresh result now lives on its own
       // page instead of rendering inline here.
       router.push(`/library/${json.document.id}`)
@@ -596,12 +593,12 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
       if (!result.success) {
         logger.error('[QuantumDocumentTransformer] URL transform failed', { error: result.error, code: result.code })
 
-        // Pro Paywall — same fallback as the file-upload path: fall
-        // through to the proactive banner rather than a generic,
-        // retry-able error.
-        if (result.code === 'free_limit_reached') {
-          setDocumentCount(FREE_TIER_DOCUMENT_LIMIT)
+        // 30-Day Masterclass Paywall™ — same fallback as the file-upload
+        // path: open the same paywall modal a locked curriculum day would
+        // show, rather than a generic, retry-able error.
+        if (result.code === 'upgrade_required') {
           setUrlTransform(null)
+          setPaywallOpen(true)
           return
         }
 
@@ -614,7 +611,6 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
       setUrlTransform((current) => (current ? { ...current, progress: 100 } : current))
       await new Promise((resolve) => setTimeout(resolve, 650))
 
-      setDocumentCount((current) => current + 1)
       setUrlInput('')
       router.push(`/library/${result.documentId}`)
     } catch (error) {
@@ -650,8 +646,6 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
     setZoneError(null)
   }
 
-  const remainingFreeDocuments = FREE_TIER_DOCUMENT_LIMIT - documentCount
-
   return (
     <div className="glass-premium-card glass-premium-lift glass-tier-utility p-5 sm:p-6">
       <div className="flex items-center justify-between gap-3">
@@ -659,20 +653,36 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
           <Sparkles className="size-3.5" aria-hidden="true" />
           Document Mastery Studio
         </span>
-        {!isPro && !isBlocked && (
-          <p className="text-xs text-slate-700 dark:text-slate-300">
-            {remainingFreeDocuments} free document{remainingFreeDocuments !== 1 ? 's' : ''} remaining
-          </p>
+        {!isPro && (
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400">
+            <Lock className="size-3" aria-hidden="true" />
+            Included with the Masterclass
+          </span>
         )}
       </div>
 
       <div className="mt-4">
-        {!isBlocked && (
+        {isPro && (
           <LanguageSelector value={targetLanguage} onChange={setTargetLanguage} disabled={upload !== null || urlTransform !== null} />
         )}
 
-        {isBlocked ? (
-          <UpgradeToProBanner documentLimit={FREE_TIER_DOCUMENT_LIMIT} />
+        {!isPro ? (
+          <button
+            type="button"
+            onClick={() => setPaywallOpen(true)}
+            className="flex w-full flex-col items-center gap-3 rounded-xl border border-dashed border-slate-200/80 px-4 py-10 text-center transition-colors hover:border-primary/50 hover:bg-accent/20 dark:border-slate-800/80"
+          >
+            <div aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <Lock className="size-5" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">Unlock Document Mastery Studio</p>
+              <p className="mt-1 max-w-xs text-xs text-muted-foreground">
+                Included with the 30-Day Quantum Speed Reading Masterclass — turn any PDF, textbook, or article into speed-reading drills, mind maps, and
+                smart summaries.
+              </p>
+            </div>
+          </button>
         ) : (
           <>
             <InputMethodTabs activeTab={activeTab} onChange={setActiveTab} disabled={upload !== null || selectedFile !== null || urlTransform !== null} />
@@ -745,6 +755,7 @@ export function AIDocumentTransformerWidget({ isPro, initialDocumentCount, recen
       </div>
 
       <DocumentHistorySidebar open={historyOpen} onOpenChange={setHistoryOpen} />
+      <MasterclassPaywallModal open={paywallOpen} onOpenChange={setPaywallOpen} day={null} />
     </div>
   )
 }
