@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
+import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
 import { MasterclassPaywallModal } from './MasterclassPaywallModal'
 import { ThirtyDayCurriculumDayDetail } from './ThirtyDayCurriculumDayDetail'
 import { ThirtyDayCurriculumOverview } from './ThirtyDayCurriculumOverview'
@@ -60,9 +61,15 @@ type ThirtyDayCurriculumExperienceProps = {
   // localStorage. This — not curriculumProgress.ts's `completedDays` —
   // is what isCurriculumDayUnlocked checks everywhere in this tree.
   initialServerCompletedDays: readonly number[]
+  // Anti-Leak Watermark™ — resolved server-side in page.tsx
+  // (getCurriculumWatermarkText), same posture as isPro/completedDays
+  // above. null means don't render one at all (the excluded owner
+  // account) — every other signed-in viewer gets their own email/phone
+  // tiled across whichever of the three views below is on screen.
+  watermarkText: string | null
 }
 
-export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
+export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
   const initialDay = searchParams.get('view') === 'day' ? parseValidDay(searchParams.get('day')) : null
 
@@ -152,21 +159,27 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
 
   if (view === 'assessment' && selectedDay !== null) {
     return (
-      <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
-        <CurriculumAssessmentCanvas day={selectedDay} mostRecentTrueWpm={getMostRecentTrueWpm(selectedDay)} onComplete={handleAssessmentComplete} />
-      </div>
+      <>
+        <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
+          <CurriculumAssessmentCanvas day={selectedDay} mostRecentTrueWpm={getMostRecentTrueWpm(selectedDay)} onComplete={handleAssessmentComplete} />
+        </div>
+        {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
+      </>
     )
   }
 
   if (view === 'day-detail' && selectedDay !== null) {
     return (
-      <ThirtyDayCurriculumDayDetail
-        day={selectedDay}
-        progress={progress}
-        justCompletedDay={justCompletedDay}
-        onBack={handleBackToOverview}
-        onLaunchAssessment={handleLaunchAssessment}
-      />
+      <>
+        <ThirtyDayCurriculumDayDetail
+          day={selectedDay}
+          progress={progress}
+          justCompletedDay={justCompletedDay}
+          onBack={handleBackToOverview}
+          onLaunchAssessment={handleLaunchAssessment}
+        />
+        {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
+      </>
     )
   }
 
@@ -189,6 +202,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
         refreshKey={refreshKey}
       />
       <MasterclassPaywallModal open={paywallDay !== null} onOpenChange={(open) => { if (!open) setPaywallDay(null) }} day={paywallDay} />
+      {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
     </>
   )
 }
