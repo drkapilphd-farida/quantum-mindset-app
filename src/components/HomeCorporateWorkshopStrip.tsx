@@ -7,15 +7,22 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 // lower-page strip pointing corporate/HR visitors at the Executive
 // workshop's own #corporate section, distinct from
 // HomeExecutiveWorkshopFeature's own individual-seat framing above.
+// Heading matches ExecutiveWorkshopCorporate.tsx's own headline verbatim
+// (not paraphrased) so the two pages read as one consistent message.
 export function HomeCorporateWorkshopStrip(): React.JSX.Element {
   return (
-    <section className="border-b border-line bg-panel2 px-6 py-10 sm:px-8">
-      <div className="mx-auto flex max-w-content flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <p className="max-w-xl text-[14.5px] leading-relaxed text-ink-dim">
-          <span className="font-semibold text-ink">For Corporate Teams — </span>
-          In-house brain performance programmes for leadership teams — stress regulation, focus and decision clarity, with measurable before/after
-          results.
-        </p>
+    <section className="border-b border-line bg-panel2 px-6 py-12 sm:px-8">
+      <div className="mx-auto flex max-w-content flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
+        <div className="max-w-xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-teal">For Corporate Teams</p>
+          <h2 className="mt-2 text-[20px] font-bold leading-tight text-ink sm:text-[24px]">
+            Bring the Executive Brain Performance Workshop to your team.
+          </h2>
+          <p className="mt-2 text-[14px] leading-relaxed text-ink-dim">
+            In-house brain performance programmes for leadership teams — stress regulation, focus and decision clarity, with measurable before/after
+            results.
+          </p>
+        </div>
         <a
           href="/executive-brain-workshop#corporate"
           onClick={() => trackGaEvent("signup_cta_click", { location: "home_corporate_strip" })}
