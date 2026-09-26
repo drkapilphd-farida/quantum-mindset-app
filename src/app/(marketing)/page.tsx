@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
 import HeroSection from '@/components/HeroSection'
+import { HomeExecutiveWorkshopFeature } from '@/components/HomeExecutiveWorkshopFeature'
+import { HomeCorporateWorkshopStrip } from '@/components/HomeCorporateWorkshopStrip'
 import ProgramSelector from '@/components/ProgramSelector'
 import HomePrefrontalPowerFeature from '@/components/HomePrefrontalPowerFeature'
 import HomeHabitBuilderFeature from '@/components/HomeHabitBuilderFeature'
@@ -60,7 +62,11 @@ export const metadata: Metadata = {
 
 // Homepage V3™ — conversion-focused rewrite (see the "Homepage & QSR
 // Conversion Rewrite" task): Hero (single positioning headline + pain
-// point + one primary CTA into the free live intro session) → exactly 3
+// point + one primary CTA into the free live intro session) →
+// Executive Brain Performance Workshop feature (see the "Executive
+// Brain Performance Workshop: page fixes + homepage positioning" task,
+// section 2.3 — directly below the hero since this homepage's hero is a
+// single static block, not a slider) → exactly 3
 // audience-first path cards (#begin — "Learning for myself" / "Looking
 // for my child" / "Deeper mind training", replacing the old
 // product-first QSR-flagship-plus-3-secondary-paths layout) → Founder
@@ -70,7 +76,9 @@ export const metadata: Metadata = {
 // the founder himself" before student/parent results) → Testimonials,
 // moved up to sit directly behind the path cards as immediate social
 // proof → brand overview video → the full program
-// catalog (#explore-programs) → free Speed Test → Why Mind Ur Mind → Dr.
+// catalog (#explore-programs) → a short "For Corporate Teams" strip
+// pointing HR/L&D visitors at the Executive Workshop's own #corporate
+// section → free Speed Test → Why Mind Ur Mind → Dr.
 // Kapil → FAQ → Final CTA → PREfrontal POWER and Habit Builder, both
 // pushed to the very bottom (deliberately last, after every
 // QSR-reinforcing section) since neither should compete with the QSR-led
@@ -89,11 +97,13 @@ export default function HomePage(): React.JSX.Element {
       <Navbar />
       <main>
         <HeroSection />
+        <HomeExecutiveWorkshopFeature />
         <ProgramSelector />
         <HomePodcastFeature />
         <Testimonials />
         <HomeOverviewVideo />
         <ProgramCardsGrid />
+        <HomeCorporateWorkshopStrip />
         <HomeSpeedTestCta />
         <HomeWhyMindUrMind />
         {/* Offline QSR + EEG Cognitive Testing teaser (see the "Homepage,

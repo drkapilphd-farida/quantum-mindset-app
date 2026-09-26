@@ -7,7 +7,9 @@ type ExecutiveWorkshopCountdownProps = {
 }
 
 function getRemaining(deadlineIso: string): { days: number; hours: number; minutes: number } | null {
-  const diffMs = new Date(`${deadlineIso}T23:59:59`).getTime() - Date.now()
+  // Explicit +05:30 — the deadline is always 11:59 PM IST regardless of
+  // the visitor's own timezone, not their browser's local midnight.
+  const diffMs = new Date(`${deadlineIso}T23:59:59+05:30`).getTime() - Date.now()
   if (diffMs <= 0) return null
   return {
     days: Math.floor(diffMs / (1000 * 60 * 60 * 24)),
