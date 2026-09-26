@@ -64,9 +64,16 @@ function buildContentSecurityPolicy(): string {
     'default-src': ["'self'"],
     // 'unsafe-eval' only in dev — Next.js's dev-mode HMR/source-map
     // pipeline needs it; the production bundle does not.
-    'script-src': ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : []), 'https://checkout.razorpay.com', 'https://www.googletagmanager.com'],
+    'script-src': [
+      "'self'",
+      "'unsafe-inline'",
+      ...(isDev ? ["'unsafe-eval'"] : []),
+      'https://checkout.razorpay.com',
+      'https://www.googletagmanager.com',
+      'https://connect.facebook.net',
+    ],
     'style-src': ["'self'", "'unsafe-inline'"],
-    'img-src': ["'self'", 'data:', 'blob:', ...(supabase ? [supabase] : [])],
+    'img-src': ["'self'", 'data:', 'blob:', 'https://www.facebook.com', ...(supabase ? [supabase] : [])],
     'font-src': ["'self'", 'data:'],
     // Sentry ingest — both regional endpoints allowed proactively (same
     // "allow before it's wired up" posture as the Razorpay/GA entries
@@ -82,8 +89,23 @@ function buildContentSecurityPolicy(): string {
       'https://*.ingest.sentry.io',
       'https://*.ingest.us.sentry.io',
       'https://*.ingest.de.sentry.io',
+      // Executive Brain Performance Workshop — Meta Pixel's own event
+      // endpoint, plus the two most likely providers for the corporate
+      // enquiry form's configurable endpoint (executiveBrainWorkshopConfig.ts's
+      // corporateFormEndpoint). A different provider's domain needs adding
+      // here too if one is used instead.
+      'https://www.facebook.com',
+      'https://formspree.io',
+      'https://script.google.com',
     ],
-    'frame-src': ["'self'", 'https://api.razorpay.com', 'https://checkout.razorpay.com', 'https://www.youtube-nocookie.com'],
+    'frame-src': [
+      "'self'",
+      'https://api.razorpay.com',
+      'https://checkout.razorpay.com',
+      'https://www.youtube-nocookie.com',
+      // Executive Brain Performance Workshop — the venue Google Maps embed.
+      'https://www.google.com',
+    ],
     'worker-src': ["'self'"],
     'object-src': ["'none'"],
     'base-uri': ["'self'"],

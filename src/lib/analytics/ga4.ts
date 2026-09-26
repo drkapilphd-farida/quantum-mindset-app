@@ -30,6 +30,7 @@ export type GaEventName =
   | 'classplus_click'
   | 'signup_cta_click'
   | 'watch_training_click'
+  | 'corporate_enquiry_submit'
 
 // No-ops when GA isn't configured (NEXT_PUBLIC_GA_MEASUREMENT_ID unset)
 // or gtag.js hasn't loaded yet — never throws, since a tracking call

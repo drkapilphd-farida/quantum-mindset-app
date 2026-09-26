@@ -133,6 +133,56 @@
 }
 
 /*
+ * Ambient Brainwave Motif™ (Executive Brain Performance Workshop,
+ * /executive-brain-workshop) — a slow, looping crossfade between a
+ * jagged ("stressed") and a smooth ("calm") waveform path, shared by
+ * EegWaveform.tsx for both the hero background and the signature "see
+ * your brain change live" section. Two static <path> elements
+ * crossfading opacity, not one path animating its own `d` attribute
+ * (unreliable for CSS animation across browsers).
+ *
+ * Default (no animation applied) shows the smooth/calm path at rest —
+ * the calmer, on-brand still state — and only crossfades when the
+ * visitor's OS has no reduced-motion preference set.
+ */
+.eeg-waveform-jagged {
+  opacity: 0;
+}
+
+.eeg-waveform-smooth {
+  opacity: 1;
+}
+
+@keyframes eeg-crossfade-jagged {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes eeg-crossfade-smooth {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .eeg-waveform-animate.eeg-waveform-jagged {
+    animation: eeg-crossfade-jagged 9s ease-in-out infinite;
+  }
+  .eeg-waveform-animate.eeg-waveform-smooth {
+    animation: eeg-crossfade-smooth 9s ease-in-out infinite;
+  }
+}
+
+/*
  * Warm Luxury Mentorship™ — the shared scoped surface + font override for
  * every "Mind Ur Mind" marketing page (the homepage at (marketing)/page.tsx
  * and the QSR landing page at programs/quantum-speed-reading/page.tsx),
