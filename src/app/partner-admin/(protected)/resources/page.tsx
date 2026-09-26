@@ -2,7 +2,10 @@ import type { Metadata } from 'next'
 import { getPartnerResources } from '@/features/school-dashboard/queries/getPartnerResources'
 import { PartnerResourcesGrid } from '@/features/school-dashboard/components/PartnerResourcesGrid'
 
-export const metadata: Metadata = { title: 'Partner Resources' }
+export const metadata: Metadata = {
+  title: 'Partner Resources',
+  robots: { index: false, follow: false },
+}
 
 export default async function PartnerResourcesPage(): Promise<React.JSX.Element> {
   const resources = await getPartnerResources()

@@ -9,6 +9,7 @@ import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIn
 export const metadata: Metadata = {
   title: 'Progressive Chunk Reading™ — Quantum Speed Reading Lab™',
   description: 'Word groups appear automatically, in flow — read naturally, then answer two quick recognition questions per block.',
+  robots: { index: false, follow: false },
 }
 
 const FLASH_INTELLIGENCE_EXERCISE_IDS = FLASH_INTELLIGENCE_MODULE.map((exercise) => exercise.exerciseId)

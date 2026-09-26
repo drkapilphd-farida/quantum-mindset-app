@@ -3,6 +3,7 @@ import { VerticalChunkSlidingExperience } from '@/features/vertical-chunk-slidin
 
 export const metadata: Metadata = {
   title: 'Vertical Chunk Sliding — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Vertical Chunk Sliding™ — the vertical companion to Dynamic Chunk

@@ -9,6 +9,7 @@ import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFound
 export const metadata: Metadata = {
   title: 'Regression Control — Quantum Speed Reading Lab™',
   description: "Let's practice moving steadily forward, without looking back.",
+  robots: { index: false, follow: false },
 }
 
 export default async function RegressionControlPage(): Promise<React.JSX.Element> {

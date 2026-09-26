@@ -3,6 +3,7 @@ import { NumberFlashGridExperience } from '@/features/number-flash-grid/componen
 
 export const metadata: Metadata = {
   title: 'Number Flash Grid — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Number Flash Grid™ — the second Right Brain Activation exercise,

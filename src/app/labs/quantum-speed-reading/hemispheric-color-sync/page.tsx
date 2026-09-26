@@ -3,6 +3,7 @@ import { HemisphericColorSyncExperience } from '@/features/hemispheric-color-syn
 
 export const metadata: Metadata = {
   title: 'Hemispheric Color-Word Sync Grid — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Hemispheric Color-Word Sync Grid™ — the third Right Brain Activation

@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Subscription',
+  robots: { index: false, follow: false },
 }
 
 // Real Subscription Status™ — replaces the Sprint 0 ModulePlaceholder

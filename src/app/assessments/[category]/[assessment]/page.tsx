@@ -1,8 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
 import { notFound } from 'next/navigation'
 import type { Assessment } from '@/features/assessments/types'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 const mockAssessments: Record<string, Assessment> = {
   'complete-10': { id: 'complete-10', title: 'Complete Mind Assessment™', durationMinutes: 10, questionsCount: 50, description: 'A complete evaluation of your current mental performance.' },

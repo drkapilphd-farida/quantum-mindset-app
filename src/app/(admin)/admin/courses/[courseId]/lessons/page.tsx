@@ -13,7 +13,10 @@ type CourseLessonsPageProps = {
   params: Promise<{ courseId: string }>
 }
 
-export const metadata: Metadata = { title: 'Lessons — Admin' }
+export const metadata: Metadata = {
+  title: 'Lessons — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default async function CourseLessonsPage({
   params,

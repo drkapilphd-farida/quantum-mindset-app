@@ -3,6 +3,7 @@ import { EspZenerTelepathyExperience } from '@/features/esp-zener-telepathy/comp
 
 export const metadata: Metadata = {
   title: 'ESP Zener Card Telepathy Sprint — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // ESP Zener Card Telepathy Sprint™ — the first Intuition Development

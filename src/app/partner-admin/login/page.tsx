@@ -3,7 +3,10 @@ import { AuthCard } from '@/features/auth/components/AuthCard'
 import { TenantSignInForm } from '@/features/school-dashboard/components/TenantSignInForm'
 import { PortalAuthShell } from '@/features/school-dashboard/components/PortalAuthShell'
 
-export const metadata: Metadata = { title: 'Partner Sign In' }
+export const metadata: Metadata = {
+  title: 'Partner Sign In',
+  robots: { index: false, follow: false },
+}
 
 type PartnerAdminLoginPageProps = {
   searchParams: Promise<{ next?: string }>

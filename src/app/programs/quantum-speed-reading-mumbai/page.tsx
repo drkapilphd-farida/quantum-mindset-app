@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 import QsrMumbaiNav from '@/components/qsr-mumbai/QsrMumbaiNav'
 import QsrMumbaiHero from '@/components/qsr-mumbai/QsrMumbaiHero'
 import QsrMumbaiWhatsDifferent from '@/components/qsr-mumbai/QsrMumbaiWhatsDifferent'
@@ -15,14 +16,13 @@ import Footer from '@/components/Footer'
 import QsrMumbaiStickyBar from '@/components/qsr-mumbai/QsrMumbaiStickyBar'
 import QsrMumbaiWhatsAppWidget from '@/components/qsr-mumbai/QsrMumbaiWhatsAppWidget'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Quantum Speed Reading — Live 2-Day Workshop in Mumbai | Mind Ur Mind' },
+export const metadata: Metadata = buildPageMetadata({
+  path: '/programs/quantum-speed-reading-mumbai',
+  ownOgImage: true,
+  title: 'Quantum Speed Reading — Live 2-Day Workshop in Mumbai | Mind Ur Mind',
   description:
     'A 2-day, in-person pilot workshop in Mumbai — live coaching from Dr. Kapil Dev Sharma, a Cognitive & Focus Engagement Demo, and reading speed measured across an overnight gap. Same 30-day curriculum, same ₹9,999 price as the online Masterclass.',
-  alternates: {
-    canonical: '/programs/quantum-speed-reading-mumbai',
-  },
-}
+})
 
 // Mumbai In-Person QSR Workshop™ — a hybrid, in-person extension of the
 // QSR 30-Day Masterclass (see the "Add Mumbai In-Person QSR Workshop"

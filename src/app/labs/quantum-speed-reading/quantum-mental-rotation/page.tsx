@@ -3,6 +3,7 @@ import { QuantumMentalRotationExperience } from '@/features/quantum-mental-rotat
 
 export const metadata: Metadata = {
   title: 'Quantum Mental Object Rotation — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Quantum Mental Object Rotation™ — the first Visualization Development

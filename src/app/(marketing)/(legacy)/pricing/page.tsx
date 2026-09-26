@@ -1,10 +1,16 @@
 import type { Metadata } from 'next'
 import { PricingPlansGrid } from '@/features/pricing/components/PricingPlansGrid'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 
-export const metadata: Metadata = {
-  title: 'Pricing — Quantum Mind Learning Lab™',
-  description: 'The Foundation, Individual Growth, Genius Family Lab, and Institutional plans for Quantum Mind Learning Lab™.',
-}
+export const metadata: Metadata = buildPageMetadata({
+  path: '/pricing',
+  title: 'Pricing — Mind Ur Mind',
+  description: 'The Foundation, Individual Growth, Genius Family Lab, and Institutional subscription plans for the Quantum Mind app.',
+  // Parked (site-rebuild Phase 1): noindex, out of the sitemap and the
+  // legacy header nav until the business decides the future of these
+  // subscription plans. In-app upgrade links still point here on purpose.
+  index: false,
+})
 
 // Live Razorpay Subscription Links™ — Starter and Family/Pro now
 // checkout for real via Razorpay's hosted subscription links (see

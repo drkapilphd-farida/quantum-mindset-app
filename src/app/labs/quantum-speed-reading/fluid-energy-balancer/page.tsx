@@ -3,6 +3,7 @@ import { FluidEnergyBalancerExperience } from '@/features/fluid-energy-balancer/
 
 export const metadata: Metadata = {
   title: 'Fluid Energy Balancer — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Fluid Energy Balancer™ — a Visualization Hub exercise: a real-time,

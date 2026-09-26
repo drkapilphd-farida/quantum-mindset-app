@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 import MentoringNav from '@/components/mentoring/MentoringNav'
 import MentoringHero from '@/components/mentoring/MentoringHero'
 import MentoringFit from '@/components/mentoring/MentoringFit'
@@ -15,11 +16,13 @@ import Footer from '@/components/Footer'
 import MentoringStickyBar from '@/components/mentoring/MentoringStickyBar'
 import MentoringWhatsAppWidget from '@/components/mentoring/MentoringWhatsAppWidget'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
+  path: '/mentoring/personal-class',
+  ownOgImage: true,
   title: 'Personal Class — 1-on-1 Intensive Mentoring — Dr. Kapil Dev Sharma',
   description:
     'Private, one-on-one mentoring for overthinking, focus, and personal growth, shaped around your own situation — guided by Dr. Kapil Dev Sharma, 26 years of experience as a professor, researcher, and life coach.',
-}
+})
 
 // Personal Class Landing Page™ — same single-goal direct-response
 // pattern as the QSR and Retreat pages: minimal nav (no links away from

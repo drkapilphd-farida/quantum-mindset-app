@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import { buildOrganizationSchema } from '@/lib/seo/organizationSchema'
+import { buildPersonSchema } from '@/lib/seo/personSchema'
 import Navbar from '@/components/Navbar'
 import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
 import HeroSection from '@/components/HeroSection'
@@ -21,43 +24,30 @@ import HomeFranchiseTeaser from '@/components/HomeFranchiseTeaser'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 
-// Final, length-tested strings (53-char title, 145-char description) —
-// short enough to render in full everywhere (browser tab, Google SERP,
-// OG/Twitter link previews), so one pair is now used for all of them
-// instead of a full-length tag title + a separately-trimmed OG/Twitter
-// variant.
-const homeTitle = 'Quantum Speed Reading for Exam Success | Mind Ur Mind'
+// Site-rebuild Phase 1 — homepage now leads with the founder/brand
+// identity (per explicit brief) rather than the QSR-flagship-only
+// framing the previous title/description used; the QSR program itself
+// is still the first product featured on the page and keeps its own
+// title/description on its own /programs/quantum-speed-reading route.
+const homeTitle = 'Dr. Kapil Dev Sharma — Brain, Mind & Meditation Coach | Mind Ur Mind'
 const homeDescription =
-  'Read faster, retain more, and prepare smarter for exams. Trusted speed reading masterclass by Dr. Kapil Dev Sharma — 10,000+ students since 2015.'
+  'Dr. Kapil Dev Sharma — brain, mind and meditation coach with 26 years in education and mind training. Quantum Speed Reading, overthinking reset, meditation retreats, 1-on-1 coaching and corporate brain performance workshops.'
 
 export const metadata: Metadata = {
-  // { absolute: homeTitle }, not a plain string — the root layout defines
-  // title.template ('%s | Quantum Mind'), and a plain string here would
-  // get that template applied on top (rendering as "...Sharma | Quantum
-  // Mind" in the actual <title> tag, confirmed via a real page load).
-  // `absolute` is Next's documented escape hatch to bypass an inherited
-  // template for exactly this page.
-  title: { absolute: homeTitle },
-  description: homeDescription,
+  ...buildPageMetadata({
+    path: '/',
+    title: homeTitle,
+    description: homeDescription,
+  }),
   keywords: [
     'speed reading for students',
     'exam preparation reading speed',
     'competitive exam study techniques',
     'reading speed test India',
     'quantum speed reading Vadodara',
+    'Dr. Kapil Dev Sharma',
+    'brain and mind coach Vadodara',
   ],
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: homeTitle,
-    description: homeDescription,
-    url: '/',
-  },
-  twitter: {
-    title: homeTitle,
-    description: homeDescription,
-  },
 }
 
 // Homepage V3™ — conversion-focused rewrite (see the "Homepage & QSR
@@ -91,8 +81,13 @@ export const metadata: Metadata = {
 // confirmed. HomeGalleryGlimpse is still not rendered here (unrelated to
 // this pass — see the prior architecture note this replaces).
 export default function HomePage(): React.JSX.Element {
+  const organizationSchema = buildOrganizationSchema()
+  const personSchema = buildPersonSchema()
+
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationSchema }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personSchema }} />
       <HomeAnnouncementStrip />
       <Navbar />
       <main>

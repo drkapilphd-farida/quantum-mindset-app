@@ -6,6 +6,7 @@ import { UpdatePasswordForm } from '@/features/user/components/UpdatePasswordFor
 
 export const metadata: Metadata = {
   title: 'Set New Password',
+  robots: { index: false, follow: false },
 }
 
 export default async function UpdatePasswordPage(): Promise<React.JSX.Element> {

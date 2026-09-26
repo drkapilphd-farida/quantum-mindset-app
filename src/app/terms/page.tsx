@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 
 // Replaces stale legacy content (see the "Pre-Launch Audit Fix Pass"
 // task, Phase 3) — this page previously described a different business
@@ -15,7 +16,11 @@ import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPa
 // Same "not yet lawyer-reviewed" flag as privacy/page.tsx — genuinely
 // complete and internally consistent, worth a real legal pass soon,
 // not held back from launch on that basis alone.
-export const metadata: Metadata = { title: 'Terms of Service' }
+export const metadata: Metadata = buildPageMetadata({
+  path: '/terms',
+  title: 'Terms of Service — Mind Ur Mind',
+  description: 'The terms governing your use of Mind Ur Mind\'s courses, retreats, mentoring, franchise program, and the Quantum Mind app.',
+})
 
 const LAST_UPDATED = 'September 2026'
 

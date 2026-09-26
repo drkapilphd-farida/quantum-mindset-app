@@ -11,6 +11,7 @@ import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Choose Your Study Mode',
+  robots: { index: false, follow: false },
 }
 
 type PageProps = {

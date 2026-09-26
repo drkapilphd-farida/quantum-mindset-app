@@ -1109,11 +1109,16 @@ export const translations = {
         // specific, checkable statistic. Please confirm it's accurate
         // before it stays live; if not verified, it should be replaced
         // or softened per the site's existing "no fabricated statistics"
-        // standard. Also note a real internal inconsistency sitting in
-        // this exact card list: "India's First QSR Pioneer (Since 2015)"
-        // right next to "Conducting live teaching workshops since 2014"
-        // below — two different start years for what reads like the
-        // same claim. Please confirm which year is correct.
+        // standard.
+        //
+        // RESOLVED (site-rebuild Phase 1): the 2014-vs-2015 conflict this
+        // TODO used to flag is not actually one claim — it's two real,
+        // different facts that just read like the same one. Confirmed
+        // founding line: "Mind Ur Mind founded 2014 · Quantum Speed
+        // Reading since 2015" — 2014 is when Mind Ur Mind (and Dr.
+        // Sharma's general teaching workshops) started; 2015 is
+        // specifically when the QSR method was developed/introduced. The
+        // "500+ Workshops Delivered" card below is worded accordingly.
         eyebrow: "Direct From The Source",
         title: "Learn From The Person Who Brought QSR To India",
         desc: "Not a licensed instructor teaching someone else's system — the person who introduced it.",
@@ -1132,7 +1137,7 @@ export const translations = {
           },
           {
             title: "500+ Workshops Delivered",
-            desc: "Conducting live teaching workshops since 2014, across schools, colleges, and corporate audiences.",
+            desc: "Mind Ur Mind founded 2014 · conducting live teaching workshops since then, across schools, colleges, and corporate audiences.",
           },
         ],
       },
@@ -3677,7 +3682,7 @@ export const translations = {
           },
           {
             title: "500+ वर्कशॉप्स आयोजित",
-            desc: "2014 से स्कूलों, कॉलेजों, और कॉर्पोरेट दर्शकों के लिए लाइव शिक्षण वर्कशॉप्स आयोजित कर रहे हैं।",
+            desc: "Mind Ur Mind की स्थापना 2014 में हुई · तब से स्कूलों, कॉलेजों, और कॉर्पोरेट दर्शकों के लिए लाइव शिक्षण वर्कशॉप्स आयोजित कर रहे हैं।",
           },
         ],
       },

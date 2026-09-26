@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { executiveBrainWorkshopConfig } from '@/config/executiveBrainWorkshopConfig'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import { absoluteUrl } from '@/lib/seo/siteUrl'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
 import { buildEventSchema } from '@/features/executive-brain-workshop/buildEventSchema'
 import { getResolvedExecutiveWorkshopFaqItems } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopFaq'
@@ -29,24 +31,15 @@ const PAGE_TITLE = 'Executive Brain Performance Workshop Mumbai | Calm, Focus & 
 const PAGE_DESCRIPTION =
   'A one-day, science-based live workshop in Mumbai by Dr. Kapil Dev Sharma — a live EEG brain-state demo, personal before/after measurement, and 21 days of guided daily practice on WhatsApp.'
 
-export const metadata: Metadata = {
-  title: { absolute: PAGE_TITLE },
+// No `images` override here — this route has its own opengraph-image.tsx
+// (1200x630, generated from the master photo), which Next's file
+// convention attaches automatically via buildPageMetadata.
+export const metadata: Metadata = buildPageMetadata({
+  path: '/executive-brain-workshop',
+  ownOgImage: true,
+  title: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: '/executive-brain-workshop',
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: '/executive-brain-workshop',
-    images: ['/founder-warm.jpg'],
-  },
-  twitter: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ['/founder-warm.jpg'],
-  },
-}
+})
 
 // Executive Brain Performance Workshop™ — a standalone, config-driven
 // campaign landing page (see executiveBrainWorkshopConfig.ts for every
@@ -63,7 +56,9 @@ export const metadata: Metadata = {
 // Footer.
 export default function ExecutiveBrainWorkshopPage(): React.JSX.Element {
   const config = executiveBrainWorkshopConfig
-  const pageUrl = 'https://app.mindurmind.org.in/executive-brain-workshop'
+  // Was hardcoded to the wrong (app.*) subdomain — the Event JSON-LD's
+  // offer URLs must point at this page's own canonical www. domain.
+  const pageUrl = absoluteUrl('/executive-brain-workshop')
 
   const eventSchema = buildEventSchema({
     venueName: config.venueName,

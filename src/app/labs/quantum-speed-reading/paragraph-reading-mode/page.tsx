@@ -3,6 +3,7 @@ import { ParagraphReadingModeExperience } from '@/features/paragraph-reading-mod
 
 export const metadata: Metadata = {
   title: 'Paragraph Reading Mode — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Sprint 3.4 — Paragraph Reading Mode™, the Master Reading Engine's fourth

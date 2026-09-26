@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Support',
+  robots: { index: false, follow: false },
 }
 
 const SUPPORT_EMAIL = 'info@mindurmind.org.in'

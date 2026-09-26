@@ -9,6 +9,7 @@ import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readi
 export const metadata: Metadata = {
   title: 'Paragraph Reading — Quantum Speed Reading Lab™',
   description: 'A complete paragraph appears at once — recognise it as one meaning block, not a string of sentences. Trains whole-paragraph comprehension.',
+  robots: { index: false, follow: false },
 }
 
 export default async function ParagraphReadingPage(): Promise<React.JSX.Element> {

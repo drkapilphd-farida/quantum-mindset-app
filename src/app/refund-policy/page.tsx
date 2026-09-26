@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 
 // New, dedicated Refund & Cancellation Policy (see the "Pre-Launch Audit
 // Fix Pass" task, Phase 3) — this page didn't exist before. The only
@@ -19,7 +20,11 @@ import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPa
 // 5-10 business days to process) are reasonable defaults I've authored
 // since no such timeframe existed anywhere in the codebase — flagged in
 // the task summary as adjustable, not presented as a pre-existing fact.
-export const metadata: Metadata = { title: 'Refund & Cancellation Policy' }
+export const metadata: Metadata = buildPageMetadata({
+  path: '/refund-policy',
+  title: 'Refund & Cancellation Policy — Mind Ur Mind',
+  description: 'Refund and cancellation terms for the 30-Day Quantum Speed Reading Masterclass, Quantum Mindset & Habit Builder, retreats, and other Mind Ur Mind programs.',
+})
 
 const LAST_UPDATED = 'September 2026'
 

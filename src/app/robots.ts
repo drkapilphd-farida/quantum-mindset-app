@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/seo/siteUrl'
 
 export default function robots(): MetadataRoute.Robots {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-
   return {
     rules: {
       userAgent: '*',
@@ -14,8 +13,24 @@ export default function robots(): MetadataRoute.Robots {
         '/progress/',
         '/practice/',
         '/api/',
+        '/preview/',
+        '/labs/',
+        '/welcome/',
+        '/discover-learning-potential/',
+        '/discover-welcome-preview/',
+        '/unified-quantum-session-preview/',
+        '/assessments/',
+        '/partner-admin/',
+        '/school-admin/',
+        '/parent-dashboard/',
+        '/masterclasses/',
+        '/document-studio/',
+        '/library/',
+        '/courses/',
+        '/reviews/',
+        '/certificates/',
       ],
     },
-    sitemap: `${appUrl}/sitemap.xml`,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   }
 }

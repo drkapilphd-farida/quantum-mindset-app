@@ -7,7 +7,10 @@ import { PublishToggle } from '@/features/admin/components/PublishToggle'
 import { DeleteButton } from '@/features/admin/components/DeleteButton'
 import { toggleCoursePublished, deleteCourse } from '@/features/admin/actions/courseActions'
 
-export const metadata: Metadata = { title: 'Courses — Admin' }
+export const metadata: Metadata = {
+  title: 'Courses — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default async function AdminCoursesPage(): Promise<React.JSX.Element> {
   const supabase = await createClient()

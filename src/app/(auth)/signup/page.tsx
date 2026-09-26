@@ -4,6 +4,7 @@ import { SignUpForm } from '@/features/auth/components/SignUpForm'
 
 export const metadata: Metadata = {
   title: 'Create Account',
+  robots: { index: false, follow: false },
 }
 
 type SignUpPageProps = {

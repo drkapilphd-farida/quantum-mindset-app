@@ -10,6 +10,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Choose Learning Method',
+  robots: { index: false, follow: false },
 }
 
 // Sprint LW-1C — Choose Learning Method™. Replaces the previous

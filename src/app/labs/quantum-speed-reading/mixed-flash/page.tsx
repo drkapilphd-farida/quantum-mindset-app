@@ -7,6 +7,7 @@ import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIn
 export const metadata: Metadata = {
   title: 'Mixed Flash™ — Quantum Speed Reading Lab™',
   description: 'Words, numbers, and symbols — the brain never knows which is coming next. The Boss Mission of the Flash Intelligence Pack™.',
+  robots: { index: false, follow: false },
 }
 
 export default async function MixedFlashPage(): Promise<React.JSX.Element> {

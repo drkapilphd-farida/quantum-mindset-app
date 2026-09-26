@@ -5,7 +5,10 @@ import { getBillingHistoryForSchool } from '@/features/school-dashboard/queries/
 import { BillingSummaryCard } from '@/features/school-dashboard/components/BillingSummaryCard'
 import { BillingHistoryTable } from '@/features/school-dashboard/components/BillingHistoryTable'
 
-export const metadata: Metadata = { title: 'Billing' }
+export const metadata: Metadata = {
+  title: 'Billing',
+  robots: { index: false, follow: false },
+}
 
 export default async function PartnerBillingPage(): Promise<React.JSX.Element> {
   const membership = await getSchoolForUser()

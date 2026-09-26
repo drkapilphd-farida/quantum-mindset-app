@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Document Mastery Studio',
+  robots: { index: false, follow: false },
 }
 
 // Pillar 3 — Document Mastery Studio™ (3-Pillar Command Center, Phase 4).

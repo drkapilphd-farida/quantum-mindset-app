@@ -24,6 +24,7 @@ const FREE_JOURNEY_DAYS = 7
 export const metadata: Metadata = {
   title: 'Quantum Mindset & Habit Builder™',
   description: 'An adaptive, week-by-week guided daily session across Reading, Intuition, Right Brain, and Visualisation.',
+  robots: { index: false, follow: false },
 }
 
 type QuantumJourneyDayPageProps = { params: Promise<{ day: string }> }

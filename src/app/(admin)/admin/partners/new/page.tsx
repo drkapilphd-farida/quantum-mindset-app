@@ -3,7 +3,10 @@ import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { CreateTenantForm } from '@/features/school-dashboard/components/CreateTenantForm'
 
-export const metadata: Metadata = { title: 'New Partner — Admin' }
+export const metadata: Metadata = {
+  title: 'New Partner — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default function NewPartnerPage(): React.JSX.Element {
   return (

@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
 import { buildCourseSchema } from '@/lib/seo/courseSchema'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import { absoluteUrl } from '@/lib/seo/siteUrl'
 import RetreatNav from '@/components/retreat/RetreatNav'
 import RetreatHero from '@/components/retreat/RetreatHero'
 import RetreatCoreProblem from '@/components/retreat/RetreatCoreProblem'
@@ -19,15 +21,13 @@ import Footer from '@/components/Footer'
 import RetreatStickyBar from '@/components/retreat/RetreatStickyBar'
 import RetreatWhatsAppWidget from '@/components/retreat/RetreatWhatsAppWidget'
 
-export const metadata: Metadata = {
-  // { absolute } bypasses the root layout's title.template ('%s |
-  // Quantum Mind') — confirmed via a real page load that without it,
-  // every marketing-site page's <title> silently got that in-app-product
-  // name appended, e.g. "...Dr. Kapil Dev Sharma | Quantum Mind".
-  title: { absolute: '11-Day Online Meditation & Inner Mastery Retreat — Dr. Kapil Dev Sharma' },
+export const metadata: Metadata = buildPageMetadata({
+  path: '/retreats/online-11-day',
+  ownOgImage: true,
+  title: '11-Day Online Meditation & Inner Mastery Retreat — Dr. Kapil Dev Sharma',
   description:
     'Authentic Kriya Yoga, Prana, and cosmic energy — an intensive, live, 11-day journey through telepathy, aura reading, Samadhi meditation, chakra activation, Kundalini meditation, and astral projection. Guided nightly by Dr. Kapil Dev Sharma, teaching since 2014. Monthly batch, 10th–20th, 7:30–10:30 PM.',
-}
+})
 
 // Flagship Retreat Landing Page™ — the real destination TierRetreats'
 // homepage "online" card CTA already points to
@@ -60,7 +60,7 @@ export default function OnlineElevenDayRetreatPage(): React.JSX.Element {
     name: '11-Day Online Meditation & Inner Mastery Retreat',
     description:
       'An intensive, live, 11-day meditation and inner-mastery retreat guided nightly by Dr. Kapil Dev Sharma. Monthly batch, 10th–20th, 7:30–10:30 PM.',
-    url: '/retreats/online-11-day',
+    url: absoluteUrl('/retreats/online-11-day'),
     audienceType: 'Adults seeking guided meditation and inner-work practice',
   })
 

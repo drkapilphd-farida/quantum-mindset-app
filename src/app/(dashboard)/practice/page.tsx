@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Practice',
+  robots: { index: false, follow: false },
 }
 
 export default function PracticePage(): React.JSX.Element {

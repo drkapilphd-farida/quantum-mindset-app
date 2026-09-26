@@ -1,4 +1,5 @@
 import type { ExecutiveWorkshopPricingPlan } from '@/config/executiveBrainWorkshopConfig'
+import { SITE_URL } from '@/lib/seo/siteUrl'
 
 type BuildEventSchemaInput = {
   venueName: string
@@ -38,7 +39,7 @@ export function buildEventSchema(input: BuildEventSchemaInput): string {
     organizer: {
       '@type': 'Organization',
       name: 'Mind Ur Mind',
-      url: 'https://mindurmind.org.in',
+      url: SITE_URL,
     },
     performer: {
       '@type': 'Person',

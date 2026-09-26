@@ -9,6 +9,7 @@ import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFound
 export const metadata: Metadata = {
   title: 'Eye Warm-up — Quantum Speed Reading Lab™',
   description: "Let's loosen up your eyes before we begin.",
+  robots: { index: false, follow: false },
 }
 
 export default async function EyeWarmupPage(): Promise<React.JSX.Element> {

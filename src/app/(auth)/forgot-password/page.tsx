@@ -4,6 +4,7 @@ import { ForgotPasswordForm } from '@/features/auth/components/ForgotPasswordFor
 
 export const metadata: Metadata = {
   title: 'Reset Password',
+  robots: { index: false, follow: false },
 }
 
 export default function ForgotPasswordPage(): React.JSX.Element {

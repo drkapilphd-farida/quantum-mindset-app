@@ -20,7 +20,10 @@ type TenantDetailPageProps = {
 export async function generateMetadata({ params }: TenantDetailPageProps): Promise<Metadata> {
   const { tenantId } = await params
   const detail = await getTenantDetail(tenantId)
-  return { title: detail ? `${detail.school.name} — Admin` : 'Tenant Not Found' }
+  return {
+    title: detail ? `${detail.school.name} — Admin` : 'Tenant Not Found',
+    robots: { index: false, follow: false },
+  }
 }
 
 // One canonical detail route for either tenant type (reads the row's

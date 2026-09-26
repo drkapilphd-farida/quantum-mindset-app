@@ -16,7 +16,10 @@ import { LeaderboardTable } from '@/features/school-dashboard/components/Leaderb
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export const metadata: Metadata = { title: 'Leaderboard — Admin' }
+export const metadata: Metadata = {
+  title: 'Leaderboard — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default async function AdminLeaderboardPage(): Promise<React.JSX.Element> {
   const [schoolRows, partnerRows] = await Promise.all([getLeaderboardRows('school'), getLeaderboardRows('franchise_partner')])

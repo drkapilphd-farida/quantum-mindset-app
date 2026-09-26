@@ -7,6 +7,7 @@ import { buildMentorSessionHistory } from '@/features/ai-mentor-runtime/context/
 
 export const metadata: Metadata = {
   title: 'Dr. Kapil',
+  robots: { index: false, follow: false },
 }
 
 // AI Mentor™ Sprint-1 — Foundation. Routing. A flat, learner-scoped

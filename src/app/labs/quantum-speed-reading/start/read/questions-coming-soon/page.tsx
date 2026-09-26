@@ -5,6 +5,7 @@ import { getPassageById } from '@/features/quantum-speed-reading/passageLibrary'
 
 export const metadata: Metadata = {
   title: 'Questions Coming Soon — Quantum Speed Reading™',
+  robots: { index: false, follow: false },
 }
 
 type QuestionsComingSoonPageProps = {

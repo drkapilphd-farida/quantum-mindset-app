@@ -3,6 +3,7 @@ import { WordFlashGridExperience } from '@/features/word-flash-grid/components/W
 
 export const metadata: Metadata = {
   title: 'Word Flash Grid — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Word Flash Grid™ — the third Right Brain Activation exercise, distinct

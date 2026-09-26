@@ -11,6 +11,7 @@ import { computeConsistencyPercent, computeAverageAccuracyPercent, computeHabitC
 export const metadata: Metadata = {
   title: 'Analytics Dashboard™ — Quantum Mindset & Habit Builder™',
   description: 'Your habit completion rate, streak, consistency, and Mind Score breakdown.',
+  robots: { index: false, follow: false },
 }
 
 // Analytics Dashboard™ — a dedicated page rather than more cards bolted

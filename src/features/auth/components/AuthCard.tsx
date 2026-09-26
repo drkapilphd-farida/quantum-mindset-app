@@ -20,7 +20,9 @@ export function AuthCard({
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">{title}</CardTitle>
+        <CardTitle className="text-2xl">
+          <h1>{title}</h1>
+        </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>{children}</CardContent>

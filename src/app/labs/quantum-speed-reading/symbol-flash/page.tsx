@@ -7,6 +7,7 @@ import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIn
 export const metadata: Metadata = {
   title: 'Symbol Flash™ — Quantum Speed Reading Lab™',
   description: 'Train ultra-fast visual recognition using symbols instead of words. Mission 3 of the Flash Intelligence Pack™.',
+  robots: { index: false, follow: false },
 }
 
 export default async function SymbolFlashPage(): Promise<React.JSX.Element> {

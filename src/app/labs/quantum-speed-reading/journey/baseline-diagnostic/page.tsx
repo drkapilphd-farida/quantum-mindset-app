@@ -6,6 +6,7 @@ import { getBaselineDiagnostic } from '@/features/quantum-journey/baselineDiagno
 export const metadata: Metadata = {
   title: 'Baseline Reading Speed Diagnostic™ — Quantum Mindset & Habit Builder™',
   description: 'A mandatory, one-time reading speed and comprehension check before Day 1.',
+  robots: { index: false, follow: false },
 }
 
 // Baseline Reading Speed Diagnostic™ — exactly one real attempt per user,

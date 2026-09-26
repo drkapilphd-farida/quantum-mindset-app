@@ -15,6 +15,7 @@ import type { ModeWorkspaceInitialState } from '@/features/learning-mode-runtime
 
 export const metadata: Metadata = {
   title: 'Memory Mode',
+  robots: { index: false, follow: false },
 }
 
 type PageProps = {

@@ -5,6 +5,7 @@ import { SprintStepIndicator } from '@/features/quantum-speed-reading/components
 
 export const metadata: Metadata = {
   title: 'Choose Your Reading Mode — Quantum Speed Reading™',
+  robots: { index: false, follow: false },
 }
 
 type ModeSelectPageProps = {

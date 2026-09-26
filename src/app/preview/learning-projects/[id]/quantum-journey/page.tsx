@@ -16,6 +16,7 @@ import { selectAssessmentPassages } from '@/features/quantum-speed-reading-runti
 
 export const metadata: Metadata = {
   title: 'Quantum Reading Journey',
+  robots: { index: false, follow: false },
 }
 
 type PageProps = {

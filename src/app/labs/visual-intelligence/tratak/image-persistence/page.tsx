@@ -16,6 +16,7 @@ import { ImagePersistenceChallengeExperience } from '@/features/tratak-intellige
 export const metadata: Metadata = {
   title: 'Image Persistence Challenge™ — Tratak Intelligence Journey™',
   description: 'A daily 5-image adaptive challenge across mandalas, sacred geometry, flowers, animals, objects and faces.',
+  robots: { index: false, follow: false },
 }
 
 export default async function ImagePersistenceChallengePage(): Promise<React.JSX.Element> {

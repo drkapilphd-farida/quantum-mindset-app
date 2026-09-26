@@ -9,6 +9,7 @@ import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFound
 export const metadata: Metadata = {
   title: 'Eye Stretch — Quantum Speed Reading Lab™',
   description: "Let's gently extend how far your eyes can comfortably move.",
+  robots: { index: false, follow: false },
 }
 
 export default async function EyeStretchPage(): Promise<React.JSX.Element> {

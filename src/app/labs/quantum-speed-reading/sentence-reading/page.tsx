@@ -9,6 +9,7 @@ import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readi
 export const metadata: Metadata = {
   title: 'Sentence Reading — Quantum Speed Reading Lab™',
   description: 'A complete sentence appears — recognise its central idea instantly, without reading word by word. Trains idea recognition.',
+  robots: { index: false, follow: false },
 }
 
 export default async function SentenceReadingPage(): Promise<React.JSX.Element> {

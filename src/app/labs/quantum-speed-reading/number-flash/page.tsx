@@ -7,6 +7,7 @@ import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIn
 export const metadata: Metadata = {
   title: 'Number Flash™ — Quantum Speed Reading Lab™',
   description: 'Train your brain to recognize numbers instantly. Mission 2 of the Flash Intelligence Pack™.',
+  robots: { index: false, follow: false },
 }
 
 export default async function NumberFlashPage(): Promise<React.JSX.Element> {

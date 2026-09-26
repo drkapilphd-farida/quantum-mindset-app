@@ -9,6 +9,7 @@ import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readi
 export const metadata: Metadata = {
   title: 'Multi-Line Reading — Quantum Speed Reading Lab™',
   description: 'A real paragraph appears all at once — no highlighting. Recall exactly which line contained what. Trains spatial reading and eye navigation.',
+  robots: { index: false, follow: false },
 }
 
 export default async function MultiLineReadingPage(): Promise<React.JSX.Element> {

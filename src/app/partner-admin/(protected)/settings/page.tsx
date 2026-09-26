@@ -3,7 +3,10 @@ import { redirect } from 'next/navigation'
 import { getSchoolForUser } from '@/features/school-dashboard/queries/getSchoolForUser'
 import { BrandingForm } from '@/features/school-dashboard/components/BrandingForm'
 
-export const metadata: Metadata = { title: 'Branding — Partner Dashboard' }
+export const metadata: Metadata = {
+  title: 'Branding — Partner Dashboard',
+  robots: { index: false, follow: false },
+}
 
 export default async function PartnerAdminSettingsPage(): Promise<React.JSX.Element> {
   const membership = await getSchoolForUser()

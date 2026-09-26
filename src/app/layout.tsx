@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import { LanguageProvider } from '@/context/LanguageContext'
+import { SITE_URL, SITE_NAME } from '@/lib/seo/siteUrl'
 import './globals.css'
 
 const geistSans = Geist({
@@ -55,20 +56,29 @@ const homepageMono = IBM_Plex_Mono({
   display: 'swap',
 })
 
-const appUrl = process.env['NEXT_PUBLIC_APP_URL'] ?? 'http://localhost:3000'
-
 // Strict App Naming™ — every surface that shows "the app name" (browser
 // tab, PWA install prompt, iOS home screen label, social share cards)
-// says exactly "Quantum Mind," nothing appended. Only the `description`
+// says exactly "Mind Ur Mind," nothing appended. Only the `description`
 // fields (not name fields) still use full prose — naming a product and
 // describing it are different things.
+//
+// `metadataBase` is the hardcoded SITE_URL, not an environment variable
+// — see src/lib/seo/siteUrl.ts's own comment for why. This is also what
+// makes every relative `openGraph`/`twitter` image path (including the
+// `opengraph-image.tsx` file-convention images) resolve to an absolute
+// URL automatically.
+//
+// This root default description/OG only apply to a page that sets
+// none of its own — every real page should go through
+// src/lib/seo/metadata.ts's `buildPageMetadata()` instead, which always
+// sets a page-specific description.
 export const metadata: Metadata = {
   title: {
-    default: 'Quantum Mind',
-    template: '%s | Quantum Mind',
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: 'AI-powered adaptive learning platform. Master in-demand skills with personalized courses and intelligent tutoring.',
-  metadataBase: new URL(appUrl),
+  description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma, Vadodara.',
+  metadataBase: new URL(SITE_URL),
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -80,7 +90,7 @@ export const metadata: Metadata = {
     // already threaded through every exercise layout) is what keeps
     // real content clear of the status bar/notch area under this mode.
     statusBarStyle: 'black-translucent',
-    title: 'Quantum Mind',
+    title: SITE_NAME,
   },
   // Next.js's appleWebApp.capable only renders the newer, non-prefixed
   // <meta name="mobile-web-app-capable"> tag (verified directly in
@@ -96,15 +106,15 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    siteName: 'Quantum Mind',
-    title: 'Quantum Mind',
-    description: 'AI-powered adaptive learning platform. Master in-demand skills with personalized courses and intelligent tutoring.',
-    url: appUrl,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma, Vadodara.',
+    url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Quantum Mind',
-    description: 'AI-powered adaptive learning platform. Master in-demand skills with personalized courses and intelligent tutoring.',
+    title: SITE_NAME,
+    description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma, Vadodara.',
   },
 }
 

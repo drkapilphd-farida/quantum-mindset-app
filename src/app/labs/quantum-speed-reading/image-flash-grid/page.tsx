@@ -3,6 +3,7 @@ import { ImageFlashGridExperience } from '@/features/image-flash-grid/components
 
 export const metadata: Metadata = {
   title: 'Image Flash Grid — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Image Flash Grid™ — the fourth and final Right Brain Activation

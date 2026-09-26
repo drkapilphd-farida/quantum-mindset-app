@@ -6,6 +6,7 @@ import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSp
 export const metadata: Metadata = {
   title: 'Reading Preparation™ — Quantum Speed Reading Lab™',
   description: 'Prepare your eyes and brain before beginning high-speed reading.',
+  robots: { index: false, follow: false },
 }
 
 export default async function ReadingPreparationPage(): Promise<React.JSX.Element> {

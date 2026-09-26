@@ -4,12 +4,14 @@ import Footer from '@/components/Footer'
 import QsrWhatsAppWidget from '@/components/qsr/QsrWhatsAppWidget'
 import QsrSpeedTestExperience from '@/components/qsr/speed-test/QsrSpeedTestExperience'
 import QsrSpeedTestLiveExperience from '@/components/qsr/speed-test/QsrSpeedTestLiveExperience'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
+  path: '/programs/quantum-speed-reading/speed-test',
   title: 'Free Reading Speed Test — Quantum Speed Reading',
   description:
     'Measure your real reading speed and comprehension in 2 minutes, then feel what a trained pace is like — free, no payment required.',
-}
+})
 
 type QsrSpeedTestPageProps = {
   searchParams: Promise<{ mode?: string | undefined }>

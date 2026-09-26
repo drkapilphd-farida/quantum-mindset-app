@@ -19,6 +19,7 @@ import { TratakJourneyLanding, type TratakLandingMissionViewModel } from '@/feat
 export const metadata: Metadata = {
   title: 'Tratak Intelligence Journey™ — Visual Intelligence Lab™',
   description: 'Develop stable visual attention, strengthen eye fixation and improve visual persistence through progressive guided practice.',
+  robots: { index: false, follow: false },
 }
 
 export default async function TratakIntelligenceJourneyPage(): Promise<React.JSX.Element> {

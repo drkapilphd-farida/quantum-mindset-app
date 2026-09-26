@@ -9,6 +9,7 @@ import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFound
 export const metadata: Metadata = {
   title: 'Rapid Recognition Drill™ — Quantum Speed Reading Lab™',
   description: 'A word flashes briefly — identify it before it disappears. The entry game of the Flash Intelligence Pack™, training instant word recognition.',
+  robots: { index: false, follow: false },
 }
 
 const READING_PREPARATION_EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((exercise) => exercise.exerciseId)

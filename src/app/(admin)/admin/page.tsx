@@ -17,7 +17,10 @@ import { QuickActionsToolbar } from '@/features/school-dashboard/components/Quic
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export const metadata: Metadata = { title: 'Admin Overview' }
+export const metadata: Metadata = {
+  title: 'Admin Overview',
+  robots: { index: false, follow: false },
+}
 
 // The B2B platform's own overview — schools, partners, seats, AI usage,
 // subscription health. Course/lesson/enrollment/certificate stats

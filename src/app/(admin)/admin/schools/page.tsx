@@ -14,7 +14,10 @@ import { TenantsTable } from '@/features/school-dashboard/components/TenantsTabl
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export const metadata: Metadata = { title: 'Schools — Admin' }
+export const metadata: Metadata = {
+  title: 'Schools — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default function AdminSchoolsPage(): React.JSX.Element {
   return <TenantsTable type="school" newHref="/admin/schools/new" />

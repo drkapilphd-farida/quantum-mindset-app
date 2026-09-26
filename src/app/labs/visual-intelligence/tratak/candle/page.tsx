@@ -13,6 +13,7 @@ import { CandleTratakExperience } from '@/features/tratak-intelligence/component
 export const metadata: Metadata = {
   title: 'Candle Tratak™ — Tratak Intelligence Journey™',
   description: 'Train steady gaze using a realistic candle flame.',
+  robots: { index: false, follow: false },
 }
 
 export default async function CandleTratakPage(): Promise<React.JSX.Element> {

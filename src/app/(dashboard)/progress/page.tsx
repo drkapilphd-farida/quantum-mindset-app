@@ -42,6 +42,7 @@ import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 
 export const metadata: Metadata = {
   title: 'Mind Score™',
+  robots: { index: false, follow: false },
 }
 
 const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((ex) => ex.exerciseId)

@@ -6,6 +6,7 @@ import { getCurriculumWatermarkText } from '@/features/thirty-day-curriculum/act
 
 export const metadata: Metadata = {
   title: '30-Day Quantum Speed Reading Mastery Curriculum — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // 30-Day Quantum Speed Reading Mastery Curriculum™ — a single route,

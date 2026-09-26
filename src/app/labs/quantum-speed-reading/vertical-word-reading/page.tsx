@@ -3,6 +3,7 @@ import { VerticalWordReadingExperience } from '@/features/vertical-word-reading/
 
 export const metadata: Metadata = {
   title: 'Vertical Word Reading — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Vertical Word Reading Engine™ — now backed by its own feature folder

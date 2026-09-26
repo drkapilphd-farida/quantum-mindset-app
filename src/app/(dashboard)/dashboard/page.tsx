@@ -14,6 +14,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Transformation Dashboard',
+  robots: { index: false, follow: false },
 }
 
 type TransformationDashboardProps = {

@@ -4,14 +4,13 @@ import MindResetNav from '@/components/mind-reset/MindResetNav'
 import Footer from '@/components/Footer'
 import MindResetWhatsAppWidget from '@/components/mind-reset/MindResetWhatsAppWidget'
 import OverthinkingTestExperience from '@/components/mind-reset/OverthinkingTestExperience'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 
-export const metadata: Metadata = {
-  title: { absolute: `${translations.en.overthinkingTestLanding.meta.title} | Mind Ur Mind` },
+export const metadata: Metadata = buildPageMetadata({
+  path: '/mind-assessment',
+  title: `${translations.en.overthinkingTestLanding.meta.title} | Mind Ur Mind`,
   description: translations.en.overthinkingTestLanding.meta.description,
-  alternates: {
-    canonical: '/mind-assessment',
-  },
-}
+})
 
 // The Overthinking Test™ — the real, working assessment (see the "Build
 // the Overthinking Test Free Assessment" task), replacing the earlier

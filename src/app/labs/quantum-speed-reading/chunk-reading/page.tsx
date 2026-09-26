@@ -4,6 +4,7 @@ import { ChunkReadingExperience } from '@/features/chunk-reading/components/Chun
 export const metadata: Metadata = {
   title: 'Chunk Reading Intelligence™ — Quantum Speed Reading Lab™',
   description: 'Train your eyes to perceive multiple words in a single fixation. Chunk size and speed adapt automatically to your performance.',
+  robots: { index: false, follow: false },
 }
 
 export default function ChunkReadingPage(): React.JSX.Element {

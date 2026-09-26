@@ -12,6 +12,7 @@ import { createClient } from '@/lib/supabase/server'
 export const metadata: Metadata = {
   title: 'Your Completion Certificate™ — Quantum Mindset & Habit Builder™',
   description: 'Your official Quantum Mindset & Habit Builder™ completion certificate.',
+  robots: { index: false, follow: false },
 }
 
 function formatCompletionDate(isoTimestamp: string): string {

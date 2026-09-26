@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Welcome',
+  robots: { index: false, follow: false },
 }
 
 // One-Click Entry™ — every "Get Started" link across the app and

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 import ResidentialNav from '@/components/residential/ResidentialNav'
 import ResidentialHero from '@/components/residential/ResidentialHero'
 import ResidentialRoadmap from '@/components/residential/ResidentialRoadmap'
@@ -19,13 +20,13 @@ import Footer from '@/components/Footer'
 import ResidentialStickyBar from '@/components/residential/ResidentialStickyBar'
 import ResidentialWhatsAppWidget from '@/components/residential/ResidentialWhatsAppWidget'
 
-export const metadata: Metadata = {
-  // { absolute } bypasses the root layout's title.template — see the
-  // matching note in retreats/online-11-day/page.tsx.
-  title: { absolute: 'Residential Retreats — Lonavala & Rishikesh — Dr. Kapil Dev Sharma' },
+export const metadata: Metadata = buildPageMetadata({
+  path: '/retreats/residential',
+  ownOgImage: true,
+  title: 'Residential Retreats — Lonavala & Rishikesh — Dr. Kapil Dev Sharma',
   description:
     'Small-group, fully immersive residential retreats guided in person by Dr. Kapil Dev Sharma since 2014. Lonavala and Rishikesh, 2026–2027. Kriya Yoga, Prana, and cosmic energy work — ₹35,000 sharing, ₹45,000 private.',
-}
+})
 
 // Residential Retreats Landing Page™ — the real destination TierRetreats'
 // homepage "Residential" card CTA already points to

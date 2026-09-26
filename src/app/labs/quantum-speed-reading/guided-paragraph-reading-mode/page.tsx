@@ -3,6 +3,7 @@ import { GuidedParagraphReadingModeExperience } from '@/features/guided-paragrap
 
 export const metadata: Metadata = {
   title: 'Guided Paragraph Reading Mode — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Guided Paragraph Reading Mode™ — the Master Reading Engine's fifth and

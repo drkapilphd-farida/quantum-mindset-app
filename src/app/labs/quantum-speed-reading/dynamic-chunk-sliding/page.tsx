@@ -3,6 +3,7 @@ import { DynamicChunkSlidingExperience } from '@/features/dynamic-chunk-sliding/
 
 export const metadata: Metadata = {
   title: 'Dynamic Chunk Sliding — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Dynamic Chunk Sliding™ — the third advanced training exercise, alongside

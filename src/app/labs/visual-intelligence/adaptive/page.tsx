@@ -8,6 +8,7 @@ import { runAdaptiveEngine } from '@/features/visual-intelligence/adaptive/adapt
 
 export const metadata: Metadata = {
   title: 'Visual Adaptation Engine™ — Visual Intelligence Lab™',
+  robots: { index: false, follow: false },
 }
 
 export default async function AdaptiveVisualIntelligencePage(): Promise<React.JSX.Element> {

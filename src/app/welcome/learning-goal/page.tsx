@@ -5,6 +5,7 @@ import { LearningGoalSelector } from '@/components/welcome/LearningGoalSelector'
 
 export const metadata: Metadata = {
   title: 'Learning Goal',
+  robots: { index: false, follow: false },
 }
 
 // Sprint LW-1A — Learning Goal™ (Screen 2 of the arrival flow). `/welcome/*`

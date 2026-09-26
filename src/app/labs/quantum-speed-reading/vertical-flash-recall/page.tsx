@@ -3,6 +3,7 @@ import { VerticalFlashRecallExperience } from '@/features/vertical-flash-recall/
 
 export const metadata: Metadata = {
   title: 'Vertical Flash Recall & Retention Sprint — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Vertical Flash Recall & Retention Sprint™ — the vertical-column RSVP

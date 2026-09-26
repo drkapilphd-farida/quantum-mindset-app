@@ -3,12 +3,14 @@ import Link from 'next/link'
 import { BookOpen, Brain, Clock, Compass, Eye, Repeat, Sparkles } from 'lucide-react'
 import { PrivacyCard } from '@/components/assessment/PrivacyCard'
 import { Button } from '@/components/ui/button'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 
-export const metadata: Metadata = {
-  title: 'Mind Assessment Center™',
+export const metadata: Metadata = buildPageMetadata({
+  path: '/assessments',
+  title: 'Mind Assessment Center™ — Mind Ur Mind',
   description:
-    'Discover how your mind learns today so your learning journey can be personalized for you.',
-}
+    'Free assessments covering reading, memory, focus and more — discover how your mind learns today so your learning journey can be personalized for you.',
+})
 
 const journeySteps = [
   { icon: BookOpen, label: 'Reading' },

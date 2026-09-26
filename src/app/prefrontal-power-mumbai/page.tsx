@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 import PrefrontalPowerNav from '@/components/prefrontal-power/PrefrontalPowerNav'
 import PrefrontalPowerHero from '@/components/prefrontal-power/PrefrontalPowerHero'
 import PrefrontalPowerProblem from '@/components/prefrontal-power/PrefrontalPowerProblem'
@@ -17,20 +18,17 @@ import PrefrontalPowerFinalCta from '@/components/prefrontal-power/PrefrontalPow
 import PrefrontalPowerStickyBar from '@/components/prefrontal-power/PrefrontalPowerStickyBar'
 import Footer from '@/components/Footer'
 
-export const metadata: Metadata = {
+// Title and og:title/description previously diverged (browser tab said
+// one thing, WhatsApp/social preview said another) — unified to a single
+// title/description pair via buildPageMetadata so every surface reads
+// the same claim.
+export const metadata: Metadata = buildPageMetadata({
+  path: '/prefrontal-power-mumbai',
+  ownOgImage: true,
   title: 'PREfrontal POWER Mumbai | One-Day Brain Training Workshop',
   description:
-    'Join PREfrontal POWER in Mumbai on 27 September 2026 — a one-day, science-informed brain training workshop for focus, emotional regulation, clarity and better decision-making.',
-  alternates: {
-    canonical: '/prefrontal-power-mumbai',
-  },
-  openGraph: {
-    title: 'PREfrontal POWER — Train Your Brain. Think Better. Live Better.',
-    description:
-      'A one-day experiential brain training workshop in Mumbai. Science-informed. Practical. Limited to 40 seats.',
-    url: '/prefrontal-power-mumbai',
-  },
-}
+    'Join PREfrontal POWER in Mumbai — a one-day, science-informed brain training workshop for focus, emotional regulation, clarity and better decision-making. Limited to 40 seats.',
+})
 
 // PREfrontal POWER V3™ — social proof moved ahead of the curriculum
 // (Testimonials now sits right after Promise, before Modules/Movers/Plan)

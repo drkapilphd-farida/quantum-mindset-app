@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { stripe } from '@/lib/stripe/client'
 import { logger } from '@/lib/logger'
+import { SITE_URL } from '@/lib/seo/siteUrl'
 
 const CheckoutSchema = z.object({
   courseId: z.string().uuid(),
@@ -55,8 +56,6 @@ export async function createCheckoutSession(
     return { success: false, error: 'You are already enrolled in this course.' }
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-
   // Error-visibility fix (see the "Pre-Launch Audit Fix Pass" task, Phase
   // 1) — this call was previously unguarded: any Stripe API error
   // (network blip, transient outage, misconfigured key) rejected this
@@ -90,8 +89,8 @@ export async function createCheckoutSession(
         ],
         metadata: { user_id: user.id, course_id: courseId },
         ...(user.email != null ? { customer_email: user.email } : {}),
-        success_url: `${appUrl}/courses/${course.slug}?payment=success`,
-        cancel_url: `${appUrl}/courses/${course.slug}`,
+        success_url: `${SITE_URL}/courses/${course.slug}?payment=success`,
+        cancel_url: `${SITE_URL}/courses/${course.slug}`,
       },
       { idempotencyKey: `checkout-${user.id}-${courseId}` },
     )

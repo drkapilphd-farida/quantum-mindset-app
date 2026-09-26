@@ -17,6 +17,7 @@ import { isWorkspaceAccessible } from '@/types/documents'
 
 export const metadata: Metadata = {
   title: 'Mind Map',
+  robots: { index: false, follow: false },
 }
 
 type PageProps = {

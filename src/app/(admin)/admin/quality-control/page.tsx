@@ -14,7 +14,10 @@ import { QualityControlTable } from '@/features/school-dashboard/components/Qual
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export const metadata: Metadata = { title: 'Quality Control — Admin' }
+export const metadata: Metadata = {
+  title: 'Quality Control — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default async function AdminQualityControlPage(): Promise<React.JSX.Element> {
   const rows = await getQualityControlStats()

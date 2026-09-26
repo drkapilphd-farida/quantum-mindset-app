@@ -4,6 +4,7 @@ import { VisualActivationSuiteExperience } from '@/components/qsr/visual-activat
 export const metadata: Metadata = {
   title: 'Brain Gym™ — Quantum Speed Reading Lab™',
   description: 'A guided warm-up suite that activates your visual system and nervous system before high-speed reading.',
+  robots: { index: false, follow: false },
 }
 
 // Brain Gym™ — the 7-Exercise Visual Activation Suite (see

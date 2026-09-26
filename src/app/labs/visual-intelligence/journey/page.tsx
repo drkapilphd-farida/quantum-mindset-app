@@ -5,6 +5,7 @@ import { selectImageForSession, getCycleIndex } from '@/features/visual-intellig
 
 export const metadata: Metadata = {
   title: 'Foundation Journey™ — Visual Intelligence Lab™',
+  robots: { index: false, follow: false },
 }
 
 // One route, one mounted client component managing all 5 stage phases plus

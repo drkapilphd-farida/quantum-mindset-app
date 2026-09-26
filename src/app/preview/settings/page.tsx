@@ -1,5 +1,10 @@
+import type { Metadata } from 'next'
 import { Settings } from 'lucide-react'
 import { ModulePlaceholder } from '@/components/shell/ModulePlaceholder'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default function PreviewSettingsPage(): React.JSX.Element {
   return (

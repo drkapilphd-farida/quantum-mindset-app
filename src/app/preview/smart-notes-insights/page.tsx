@@ -3,6 +3,7 @@ import { SmartNotesProgressDashboard } from '@/features/smart-notes-runtime/dash
 
 export const metadata: Metadata = {
   title: 'Smart Notes Progress',
+  robots: { index: false, follow: false },
 }
 
 // Smart Notes™ Sprint-4 — Analytics & Insights™. A flat, learner-scoped

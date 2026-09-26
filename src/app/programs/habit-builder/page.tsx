@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 import HabitBuilderNav from '@/components/habit-builder/HabitBuilderNav'
 import HabitBuilderHero from '@/components/habit-builder/HabitBuilderHero'
 import HabitBuilderBenefits from '@/components/habit-builder/HabitBuilderBenefits'
@@ -11,11 +12,13 @@ import Footer from '@/components/Footer'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import { WHATSAPP_HABIT_BUILDER_INQUIRY_LINK } from '@/config/whatsappSupportLink'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
+  path: '/programs/habit-builder',
+  ownOgImage: true,
   title: 'Quantum Mindset & Habit Builder™ — 21-Day Program | Mind Ur Mind',
   description:
     'A 21-day guided program pairing daily reading practice with focus and memory exercises. Free for Days 1–7, then a one-time ₹99 payment to continue — never a subscription.',
-}
+})
 
 // Quantum Mindset & Habit Builder™ public landing page — the real
 // standalone marketing page the earlier audit confirmed did not exist:

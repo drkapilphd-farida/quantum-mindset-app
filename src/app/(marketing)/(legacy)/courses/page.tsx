@@ -10,6 +10,7 @@ import type { Course } from '@/features/courses/types'
 export const metadata: Metadata = {
   title: 'Course Catalog',
   description: 'Browse AI-powered learning courses.',
+  robots: { index: false, follow: false },
 }
 
 type FilterValue = 'all' | 'free' | 'paid'

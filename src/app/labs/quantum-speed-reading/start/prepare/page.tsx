@@ -14,6 +14,7 @@ import { SprintStepIndicator } from '@/features/quantum-speed-reading/components
 
 export const metadata: Metadata = {
   title: 'Prepare to Read — Quantum Speed Reading™',
+  robots: { index: false, follow: false },
 }
 
 type PreReadingPreparePageProps = {

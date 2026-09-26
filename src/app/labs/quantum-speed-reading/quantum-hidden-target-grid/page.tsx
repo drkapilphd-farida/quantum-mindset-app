@@ -3,6 +3,7 @@ import { QuantumHiddenTargetGridExperience } from '@/features/quantum-hidden-tar
 
 export const metadata: Metadata = {
   title: 'Quantum Hidden Target Grid — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Quantum Hidden Target Grid™ — the second Intuition Development exercise,

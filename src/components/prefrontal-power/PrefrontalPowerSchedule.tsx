@@ -36,6 +36,12 @@ const FULL_SCHEDULE = [
 // unless a real launch offer is confirmed — that confirmation hasn't
 // happened, so LAUNCH_OFFER_ACTIVE stays false. Flip it (and fill in the
 // seat count) only once the business confirms a real, live offer.
+//
+// TODO(cleanup, do not action before 27 Sep 2026): this workshop's event
+// date is 27 September 2026. Once that date has passed, this dead
+// LAUNCH_OFFER_ACTIVE branch (and the unused ₹2,999/"Founding Mumbai
+// Edition" JSX below) can be deleted outright — noted here per explicit
+// instruction, not removed yet.
 const LAUNCH_OFFER_ACTIVE = false;
 
 export default function PrefrontalPowerSchedule(): React.JSX.Element {

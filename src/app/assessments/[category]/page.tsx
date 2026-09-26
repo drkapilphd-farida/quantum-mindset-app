@@ -1,8 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { AssessmentCard } from '@/components/assessment/AssessmentCard'
 import { notFound } from 'next/navigation'
 import type { Category } from '@/features/assessments/types'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 const mockData: Record<string, Category> = {
   'mental-wellness': {

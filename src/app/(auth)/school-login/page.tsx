@@ -4,6 +4,7 @@ import { StudentSignInForm } from '@/features/school-dashboard/components/Studen
 
 export const metadata: Metadata = {
   title: 'Student Sign In',
+  robots: { index: false, follow: false },
 }
 
 export default function SchoolLoginPage(): React.JSX.Element {

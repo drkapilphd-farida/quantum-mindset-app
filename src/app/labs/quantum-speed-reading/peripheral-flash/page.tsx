@@ -7,6 +7,7 @@ import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIn
 export const metadata: Metadata = {
   title: 'Peripheral Flash™ — Quantum Speed Reading Lab™',
   description: 'Visual Span Training. Keep your eyes on the center — recognize what appears around it, without moving your eyes.',
+  robots: { index: false, follow: false },
 }
 
 export default async function PeripheralFlashPage(): Promise<React.JSX.Element> {

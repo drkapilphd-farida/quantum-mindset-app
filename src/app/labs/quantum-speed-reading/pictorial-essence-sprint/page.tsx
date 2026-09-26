@@ -3,6 +3,7 @@ import { PictorialEssenceSprintExperience } from '@/features/pictorial-essence-s
 
 export const metadata: Metadata = {
   title: 'High-Speed Pictorial Essence Sprint — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // High-Speed Pictorial Essence Sprint™ — the second Right Brain

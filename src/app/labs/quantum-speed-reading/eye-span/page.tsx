@@ -9,6 +9,7 @@ import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFound
 export const metadata: Metadata = {
   title: 'Eye Span — Quantum Speed Reading Lab™',
   description: "Let's see how much your eyes can take in at once, without moving them.",
+  robots: { index: false, follow: false },
 }
 
 export default async function EyeSpanPage(): Promise<React.JSX.Element> {

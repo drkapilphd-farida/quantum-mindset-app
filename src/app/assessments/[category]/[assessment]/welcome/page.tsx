@@ -1,6 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 type Props = { params: Promise<{ category: string; assessment: string }> }
 

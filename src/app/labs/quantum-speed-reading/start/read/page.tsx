@@ -5,6 +5,7 @@ import { ReadingExperience } from '@/features/quantum-speed-reading/components/r
 
 export const metadata: Metadata = {
   title: 'Reading — Quantum Speed Reading™',
+  robots: { index: false, follow: false },
 }
 
 type ReadingScreenPageProps = {

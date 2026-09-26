@@ -3,6 +3,7 @@ import { MultiDotExperience } from '@/features/visual-intelligence/components/fi
 
 export const metadata: Metadata = {
   title: 'Multi Dot Attention™ — Visual Fixation Engine™',
+  robots: { index: false, follow: false },
 }
 
 export default function MultiDotPage(): React.JSX.Element {

@@ -5,6 +5,7 @@ import { DeviceConflictPrompt } from '@/features/auth/components/DeviceConflictP
 
 export const metadata: Metadata = {
   title: 'Continue Here?',
+  robots: { index: false, follow: false },
 }
 
 type DeviceConflictPageProps = {

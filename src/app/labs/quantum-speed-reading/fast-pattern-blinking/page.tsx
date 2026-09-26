@@ -4,6 +4,7 @@ import { FastPatternBlinkingExperience } from '@/features/brain-gym/components/F
 export const metadata: Metadata = {
   title: 'Fast Pattern Blinking™ — Quantum Speed Reading Lab™',
   description: 'A symbol blinks for a split second, then vanishes. Catch it before it’s gone.',
+  robots: { index: false, follow: false },
 }
 
 export default function FastPatternBlinkingPage(): React.JSX.Element {

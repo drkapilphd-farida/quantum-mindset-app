@@ -9,7 +9,10 @@ import { FranchiseLeadsTable } from '@/features/franchise-leads/components/Franc
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export const metadata: Metadata = { title: 'Franchise Leads — Admin' }
+export const metadata: Metadata = {
+  title: 'Franchise Leads — Admin',
+  robots: { index: false, follow: false },
+}
 
 // Review queue only — separate from /admin/partners/new, which is the
 // only place a lead actually becomes a tenant/partner row. Approving a

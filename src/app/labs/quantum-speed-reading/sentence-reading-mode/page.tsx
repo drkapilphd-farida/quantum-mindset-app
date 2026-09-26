@@ -3,6 +3,7 @@ import { SentenceReadingModeExperience } from '@/features/sentence-reading-mode/
 
 export const metadata: Metadata = {
   title: 'Sentence Reading Mode — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Sprint 3.3 — Sentence Reading Mode™, the Master Reading Engine's third

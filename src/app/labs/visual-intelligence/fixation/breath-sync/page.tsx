@@ -3,6 +3,7 @@ import { BreathSyncExperience } from '@/features/visual-intelligence/components/
 
 export const metadata: Metadata = {
   title: 'Breath Sync™ — Visual Fixation Engine™',
+  robots: { index: false, follow: false },
 }
 
 export default function BreathSyncPage(): React.JSX.Element {

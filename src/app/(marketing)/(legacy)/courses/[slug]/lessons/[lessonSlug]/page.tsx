@@ -27,7 +27,12 @@ export async function generateMetadata({
     .eq('is_published', true)
     .single()
 
-  if (!course) return { title: 'Lesson' }
+  if (!course) {
+    return {
+      title: 'Lesson',
+      robots: { index: false, follow: false },
+    }
+  }
 
   const { data: lesson } = await supabase
     .from('lessons')
@@ -36,7 +41,10 @@ export async function generateMetadata({
     .eq('slug', lessonSlug)
     .single()
 
-  return { title: lesson?.title ?? 'Lesson' }
+  return {
+    title: lesson?.title ?? 'Lesson',
+    robots: { index: false, follow: false },
+  }
 }
 
 export default async function LessonPage({

@@ -19,7 +19,10 @@ import type { PartnerResource } from '@/features/school-dashboard/types'
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export const metadata: Metadata = { title: 'Partner Resources — Admin' }
+export const metadata: Metadata = {
+  title: 'Partner Resources — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default async function AdminPartnerResourcesPage(): Promise<React.JSX.Element> {
   const supabase = createServiceClient()

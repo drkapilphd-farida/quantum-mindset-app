@@ -5,6 +5,7 @@ import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDa
 
 export const metadata: Metadata = {
   title: 'Parents Dashboard',
+  robots: { index: false, follow: false },
 }
 
 // Parents Dashboard™ — wired to the signed-in account's own real

@@ -3,6 +3,7 @@ import { PhotographicMemoryExperience } from '@/features/photographic-memory/com
 
 export const metadata: Metadata = {
   title: 'Deep Visualisation Recall — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Photographic Memory™ — the first Right Brain Activation exercise,

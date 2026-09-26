@@ -11,7 +11,10 @@ type EditCoursePageProps = {
   params: Promise<{ courseId: string }>
 }
 
-export const metadata: Metadata = { title: 'Edit Course — Admin' }
+export const metadata: Metadata = {
+  title: 'Edit Course — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default async function EditCoursePage({
   params,

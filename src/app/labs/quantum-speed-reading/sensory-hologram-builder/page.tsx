@@ -3,6 +3,7 @@ import { SensoryHologramBuilderExperience } from '@/features/sensory-hologram-bu
 
 export const metadata: Metadata = {
   title: 'Sensory Hologram Builder — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Sensory Hologram Builder™ — a Visualization Hub exercise: a guided,

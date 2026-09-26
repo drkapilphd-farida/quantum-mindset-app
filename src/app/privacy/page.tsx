@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 
 // Replaces stale legacy content (see the "Pre-Launch Audit Fix Pass"
 // task, Phase 3) — this page previously described a different business
@@ -21,7 +22,11 @@ import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPa
 // legal review soon after launch, not as a launch blocker on its own —
 // this is a genuine, substantively complete policy, just not yet
 // attorney-reviewed.
-export const metadata: Metadata = { title: 'Privacy Policy' }
+export const metadata: Metadata = buildPageMetadata({
+  path: '/privacy',
+  title: 'Privacy Policy — Mind Ur Mind',
+  description: 'How Mind Ur Mind collects, uses, and protects your personal data across our courses, retreats, mentoring, and the Quantum Mind app.',
+})
 
 const LAST_UPDATED = 'September 2026'
 

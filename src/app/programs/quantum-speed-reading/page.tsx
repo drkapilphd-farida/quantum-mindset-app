@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { translations } from '@/lib/i18n'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
 import { buildCourseSchema } from '@/lib/seo/courseSchema'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import { absoluteUrl } from '@/lib/seo/siteUrl'
 import QsrNav from '@/components/qsr/QsrNav'
 import QsrHero from '@/components/qsr/QsrHero'
 import QsrWhoIsThisFor from '@/components/qsr/QsrWhoIsThisFor'
@@ -32,13 +34,13 @@ import QsrStickyBar from '@/components/qsr/QsrStickyBar'
 import QsrWhatsAppWidget from '@/components/qsr/QsrWhatsAppWidget'
 import { WORKSHOP_CITIES } from '@/config/workshopCities'
 
-export const metadata: Metadata = {
-  // { absolute } bypasses the root layout's title.template — see the
-  // matching note in retreats/online-11-day/page.tsx.
-  title: { absolute: 'Quantum Speed Reading — Science-Backed Neuro-Cognitive Masterclass | Dr. Kapil Dev Sharma' },
+export const metadata: Metadata = buildPageMetadata({
+  path: '/programs/quantum-speed-reading',
+  ownOgImage: true,
+  title: 'Quantum Speed Reading — Science-Backed Neuro-Cognitive Masterclass | Dr. Kapil Dev Sharma',
   description:
     'Read 5x faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked cognitive metrics, ₹9,999 one-time enrollment.',
-}
+})
 
 // Flagship Program Landing Page™ — the real destination TierFlagship's
 // homepage CTA already points to (/programs/quantum-speed-reading), and
@@ -100,7 +102,7 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
     name: 'Quantum Speed Reading — 30-Day Masterclass',
     description:
       'Read faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked drills, guided by Dr. Kapil Dev Sharma.',
-    url: '/programs/quantum-speed-reading',
+    url: absoluteUrl('/programs/quantum-speed-reading'),
     audienceType: 'Students, exam aspirants, and lifelong learners',
   })
 

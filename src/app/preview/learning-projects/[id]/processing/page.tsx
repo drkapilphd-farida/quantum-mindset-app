@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Your AI Learning Mentor Is Thinking',
+  robots: { index: false, follow: false },
 }
 
 // ALS-15 Instant Learning Engine™ — a defensive ceiling for

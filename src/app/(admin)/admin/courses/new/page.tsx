@@ -4,7 +4,10 @@ import { ChevronLeft } from 'lucide-react'
 import { createCourse } from '@/features/admin/actions/courseActions'
 import { CourseForm } from '@/features/admin/components/CourseForm'
 
-export const metadata: Metadata = { title: 'New Course — Admin' }
+export const metadata: Metadata = {
+  title: 'New Course — Admin',
+  robots: { index: false, follow: false },
+}
 
 export default function NewCoursePage(): React.JSX.Element {
   return (

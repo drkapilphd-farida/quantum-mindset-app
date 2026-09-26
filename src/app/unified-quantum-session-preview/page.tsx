@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { getModuleProgress } from '@/lib/exercises/queries/getModuleProgress'
@@ -6,6 +7,10 @@ import { computeDailyStreak } from '@/lib/exercises/practiceHistory'
 import { computeReadingScore, computeMindScore } from '@/lib/exercises/mindScore'
 import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFoundationModule'
 import { UnifiedQuantumSessionPreviewClient } from './components/UnifiedQuantumSessionPreviewClient'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((exercise) => exercise.exerciseId)
 

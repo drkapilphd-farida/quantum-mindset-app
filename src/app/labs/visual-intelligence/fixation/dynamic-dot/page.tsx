@@ -3,6 +3,7 @@ import { DynamicDotExperience } from '@/features/visual-intelligence/components/
 
 export const metadata: Metadata = {
   title: 'Dynamic Dot™ — Visual Fixation Engine™',
+  robots: { index: false, follow: false },
 }
 
 export default function DynamicDotPage(): React.JSX.Element {

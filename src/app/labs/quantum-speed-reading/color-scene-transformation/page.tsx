@@ -3,6 +3,7 @@ import { ColorSceneTransformationExperience } from '@/features/color-scene-trans
 
 export const metadata: Metadata = {
   title: 'Color & Scene Transformation Journey — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Color & Scene Transformation Journey™ — the second Visualization

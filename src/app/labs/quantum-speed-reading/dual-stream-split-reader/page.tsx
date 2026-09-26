@@ -3,6 +3,7 @@ import { DualStreamSplitReaderExperience } from '@/features/dual-stream-split-re
 
 export const metadata: Metadata = {
   title: 'Dual-Stream Split Reader — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Dual-Stream Split Reader™ — a flagship Reading Intelligence Hub

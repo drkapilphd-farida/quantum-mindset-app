@@ -10,6 +10,7 @@ import { QuantumDocumentDetailView } from '@/features/quantum-document-transform
 
 export const metadata: Metadata = {
   title: 'Document',
+  robots: { index: false, follow: false },
 }
 
 type PageProps = {

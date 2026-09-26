@@ -11,8 +11,9 @@ import { getDomainTagline } from '@/lib/domains/domainTagline'
 // app-consistent header — the new homepage brings its own full Navbar/
 // Footer instead (see Navbar.tsx/Footer.tsx), so it deliberately isn't
 // nested under this layout.
+// /pricing removed from this nav in site-rebuild Phase 1 (page parked,
+// noindex) — the page itself still exists.
 const NAV_LINKS = [
-  { href: '/pricing', label: 'Pricing' },
   { href: '/reviews', label: 'Success Stories' },
 ] as const
 

@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'AI Learning Studio',
+  robots: { index: false, follow: false },
 }
 
 // AI Learning Studio™ Sprint ALS-1 — Foundation. Replaces Sprint 0's

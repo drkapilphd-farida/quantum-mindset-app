@@ -26,6 +26,7 @@ import { DashboardExperience } from '@/features/visual-intelligence/components/d
 
 export const metadata: Metadata = {
   title: 'Visual Intelligence Dashboard™ — Visual Intelligence Lab™',
+  robots: { index: false, follow: false },
 }
 
 export default async function VisualIntelligenceDashboardPage(): Promise<React.JSX.Element> {

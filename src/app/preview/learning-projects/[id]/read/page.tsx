@@ -21,6 +21,7 @@ import type { UniversalLearningObject } from '@/core/universal-learning-engine/u
 
 export const metadata: Metadata = {
   title: 'Quantum Speed Reading',
+  robots: { index: false, follow: false },
 }
 
 type PageProps = {

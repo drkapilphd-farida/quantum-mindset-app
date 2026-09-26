@@ -3,6 +3,7 @@ import { PhotographicReadingExperience } from '@/features/photographic-reading/c
 
 export const metadata: Metadata = {
   title: 'Photographic Reading — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Photographic Reading™ — a flagship Reading Intelligence Hub exercise:

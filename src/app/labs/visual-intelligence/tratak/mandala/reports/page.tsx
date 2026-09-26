@@ -12,6 +12,7 @@ import { ReportHistoryScreen } from '@/features/tratak-intelligence/components/m
 export const metadata: Metadata = {
   title: 'Report History — Mandala Tratak™',
   description: 'Your Visual Intelligence Report™ history across every completed Mandala Tratak™ session.',
+  robots: { index: false, follow: false },
 }
 
 export default async function MandalaReportHistoryPage(): Promise<React.JSX.Element> {

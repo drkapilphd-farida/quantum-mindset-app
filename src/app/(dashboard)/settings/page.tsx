@@ -9,6 +9,7 @@ import { RetakeAssessmentButton } from '@/features/quantum-speed-reading-runtime
 
 export const metadata: Metadata = {
   title: 'Settings',
+  robots: { index: false, follow: false },
 }
 
 export default async function SettingsPage(): Promise<React.JSX.Element> {

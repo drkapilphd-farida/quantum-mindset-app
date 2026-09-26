@@ -7,6 +7,7 @@ import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readi
 export const metadata: Metadata = {
   title: 'Fixation Reduction — Quantum Speed Reading Lab™',
   description: "Let's train your eyes to cover the same line in fewer stops.",
+  robots: { index: false, follow: false },
 }
 
 export default async function FixationReductionPage(): Promise<React.JSX.Element> {

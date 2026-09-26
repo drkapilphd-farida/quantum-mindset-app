@@ -9,6 +9,7 @@ import { SUCCESS_STORIES_PLAYLIST_EMBED_URL, SUCCESS_STORIES_PLAYLIST_WATCH_URL 
 export const metadata: Metadata = {
   title: 'Success Stories',
   description: '200+ real student video reviews of the 30-Day Quantum Speed Reading Mastery + Live Cohort.',
+  robots: { index: false, follow: false },
 }
 
 // Success Stories™ — houses the real, live YouTube playlist of 200+

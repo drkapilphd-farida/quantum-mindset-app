@@ -118,6 +118,26 @@ function buildContentSecurityPolicy(): string {
     .join('; ')
 }
 
+// Production URL guard — canonical/og:url/og:image/sitemap/robots/JSON-LD
+// and the Stripe success/cancel URLs all read the hardcoded SITE_URL
+// constant (src/lib/seo/siteUrl.ts) now, so nothing falls back to
+// localhost any more. This check exists so the misconfiguration that
+// caused the original bug (Vercel's NEXT_PUBLIC_APP_URL set to
+// "http://localhost:3000") fails the production build loudly instead of
+// sitting there unnoticed. Scoped to VERCEL_ENV === 'production' so local
+// `next build` and preview deploys are unaffected.
+function assertProductionAppUrl(): void {
+  if (process.env.VERCEL_ENV !== 'production') return
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL
+  if (appUrl === undefined || appUrl === '' || appUrl.includes('localhost') || appUrl.includes('127.0.0.1')) {
+    throw new Error(
+      `NEXT_PUBLIC_APP_URL is "${appUrl ?? '(unset)'}" in a production build — set it to https://www.mindurmind.org.in in Vercel → Project → Settings → Environment Variables (Production).`,
+    )
+  }
+}
+
+assertProductionAppUrl()
+
 const securityHeaders = [
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },

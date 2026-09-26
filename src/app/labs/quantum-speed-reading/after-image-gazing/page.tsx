@@ -3,6 +3,7 @@ import { AfterImageGazingExperience } from '@/features/after-image-gazing/compon
 
 export const metadata: Metadata = {
   title: 'After-Image / Complementary Color Gazing — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // After-Image / Complementary Color Gazing™ — the fourth Right Brain

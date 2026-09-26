@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Live Masterclasses & Mentorship',
+  robots: { index: false, follow: false },
 }
 
 // Pillar 1 — Live Member Training Hub™. Member-Exclusive Simplification™:

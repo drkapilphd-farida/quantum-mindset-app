@@ -5,7 +5,10 @@ import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readi
 import { DevProgressionPanel } from '@/components/admin/DevProgressionPanel'
 import { DevLegacyRecoveryPanel } from '@/components/admin/DevLegacyRecoveryPanel'
 
-export const metadata: Metadata = { title: 'Dev Tools — Reading Progression' }
+export const metadata: Metadata = {
+  title: 'Dev Tools — Reading Progression',
+  robots: { index: false, follow: false },
+}
 
 // Dev/Test Mode™ — never reachable in production, even by URL: this page
 // 404s outright when NODE_ENV is production, on top of every action in

@@ -1,6 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 // AI Learning Studio™ Sprint ALS-21 — Complete Functional Completion. A
 // production audit found this screen's own "Finish" button had no real

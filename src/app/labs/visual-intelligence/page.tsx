@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 export const metadata: Metadata = {
   title: 'Visual Intelligence Lab™',
   description: 'Visual fixation training and Tratak intelligence missions.',
+  robots: { index: false, follow: false },
 }
 
 // Visual Activation™ (rebuilt as "Brain Gym") moved to its own pillar at

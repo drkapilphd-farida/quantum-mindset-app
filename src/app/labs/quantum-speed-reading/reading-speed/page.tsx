@@ -9,6 +9,7 @@ import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFound
 export const metadata: Metadata = {
   title: 'Reading Speed — Quantum Speed Reading Lab™',
   description: "Let's build a smooth, comfortable reading rhythm.",
+  robots: { index: false, follow: false },
 }
 
 export default async function ReadingSpeedPage(): Promise<React.JSX.Element> {

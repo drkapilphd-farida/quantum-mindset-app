@@ -1,42 +1,51 @@
 import type { MetadataRoute } from 'next'
-import { createServiceClient } from '@/lib/supabase/service'
+import { SITE_URL } from '@/lib/seo/siteUrl'
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+// Every real, indexable, public marketing/program page — everything
+// auth-gated (dashboard/admin/preview/portals), mid-funnel/utility
+// (welcome/*, discover-learning-potential's own sub-steps,
+// assessments/*), or orphaned/legacy (the old Stripe `/courses`
+// marketplace, `/reviews`, `/certificates/[token]`) is intentionally
+// excluded here and carries its own `noindex` meta tag instead — see
+// docs/site-inventory.md for the full page-by-page inventory this list
+// was built from.
+const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']; priority: number }[] = [
+  { path: '/', changeFrequency: 'daily', priority: 1 },
+  { path: '/about', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/contact', changeFrequency: 'yearly', priority: 0.4 },
+  { path: '/gallery', changeFrequency: 'monthly', priority: 0.4 },
+  { path: '/privacy', changeFrequency: 'yearly', priority: 0.2 },
+  { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
+  { path: '/refund-policy', changeFrequency: 'yearly', priority: 0.2 },
+  { path: '/franchise-individual', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/executive-brain-workshop', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/prefrontal-power-mumbai', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/mind-assessment', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/programs/quantum-speed-reading', changeFrequency: 'weekly', priority: 1 },
+  { path: '/programs/quantum-speed-reading/speed-test', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/programs/habit-builder', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/retreats/residential', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/retreats/online-11-day', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/mentoring/overthinking-course', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/mentoring/personal-class', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/assessments', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/discover-learning-potential', changeFrequency: 'monthly', priority: 0.6 },
+]
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let courseUrls: MetadataRoute.Sitemap = []
+export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date()
 
-  try {
-    const supabase = createServiceClient()
-    const { data: courses } = await supabase
-      .from('courses')
-      .select('slug, updated_at')
-      .eq('is_published', true)
-      .order('updated_at', { ascending: false })
+  const staticUrls: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
+    url: `${SITE_URL}${route.path}`,
+    lastModified,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+  }))
 
-    courseUrls = (courses ?? []).map((c) => ({
-      url: `${appUrl}/courses/${c.slug}`,
-      lastModified: new Date(c.updated_at),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }))
-  } catch {
-    // DB unavailable — return static URLs only
-  }
-
-  return [
-    {
-      url: appUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${appUrl}/courses`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    ...courseUrls,
-  ]
+  // The legacy course marketplace (/courses/*) and the unpublished
+  // /programs/quantum-speed-reading-mumbai (notFound() until its venue/
+  // date placeholders are filled) are deliberately NOT listed: both are
+  // noindex/404 and /courses/ is disallowed in robots.ts, so listing them
+  // only produced "submitted URL marked noindex" errors in Search Console.
+  return staticUrls
 }

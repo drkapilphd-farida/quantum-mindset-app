@@ -11,6 +11,7 @@ import { isWorkspaceAccessible } from '@/types/documents'
 
 export const metadata: Metadata = {
   title: 'Learning Workspace',
+  robots: { index: false, follow: false },
 }
 
 type PageProps = {

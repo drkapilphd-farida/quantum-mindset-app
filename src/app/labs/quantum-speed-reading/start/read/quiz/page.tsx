@@ -6,6 +6,7 @@ import { ComprehensionQuizExperience } from '@/features/quantum-speed-reading/co
 
 export const metadata: Metadata = {
   title: 'Brain Challenge — Quantum Speed Reading™',
+  robots: { index: false, follow: false },
 }
 
 type ComprehensionQuizPageProps = {

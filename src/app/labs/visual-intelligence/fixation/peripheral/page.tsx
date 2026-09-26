@@ -3,6 +3,7 @@ import { PeripheralExperience } from '@/features/visual-intelligence/components/
 
 export const metadata: Metadata = {
   title: 'Peripheral Activation™ — Visual Fixation Engine™',
+  robots: { index: false, follow: false },
 }
 
 export default function PeripheralPage(): React.JSX.Element {

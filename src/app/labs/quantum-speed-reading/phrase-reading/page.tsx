@@ -9,6 +9,7 @@ import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readi
 export const metadata: Metadata = {
   title: 'Phrase Reading™ — Quantum Speed Reading Lab™',
   description: 'Recognise the exact meaning of a phrase — not just its topic — among near-identical wording. Pass each level to unlock the next.',
+  robots: { index: false, follow: false },
 }
 
 export default async function PhraseReadingPage(): Promise<React.JSX.Element> {

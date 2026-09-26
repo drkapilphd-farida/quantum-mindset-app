@@ -3,6 +3,7 @@ import { MemoryProgressDashboard } from '@/features/memory-mode-runtime/dashboar
 
 export const metadata: Metadata = {
   title: 'Memory Progress',
+  robots: { index: false, follow: false },
 }
 
 // Memory Mode™ Sprint-4 — Memory Analytics & Insights™. The real Memory

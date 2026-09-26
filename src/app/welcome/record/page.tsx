@@ -5,6 +5,7 @@ import { RecordAndLearnExperience } from '@/components/welcome/RecordAndLearnExp
 
 export const metadata: Metadata = {
   title: 'Record & Learn',
+  robots: { index: false, follow: false },
 }
 
 // Sprint LW-1C — Record & Learn™. Same in-page auth-check pattern as every

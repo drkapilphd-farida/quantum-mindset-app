@@ -15,6 +15,7 @@ import { MandalaTratakExperience } from '@/features/tratak-intelligence/componen
 export const metadata: Metadata = {
   title: 'Mandala Tratak™ — Tratak Intelligence Journey™',
   description: 'Train your visual fixation using beautiful symmetrical mandalas.',
+  robots: { index: false, follow: false },
 }
 
 export default async function MandalaTratakPage(): Promise<React.JSX.Element> {

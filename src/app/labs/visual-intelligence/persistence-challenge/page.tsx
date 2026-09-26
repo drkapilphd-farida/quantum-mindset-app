@@ -5,6 +5,7 @@ import { selectChallengeForSession } from '@/features/visual-intelligence/persis
 
 export const metadata: Metadata = {
   title: 'Image Persistence Challenge™ — Visual Intelligence Lab™',
+  robots: { index: false, follow: false },
 }
 
 export default async function PersistenceChallengePage(): Promise<React.JSX.Element> {

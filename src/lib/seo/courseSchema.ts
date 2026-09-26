@@ -5,6 +5,8 @@
 // plain, non-spiritual/psychic wording in the schema text specifically —
 // the page's own body content is unaffected, this only controls what a
 // crawler reads as the program's name/description.
+import { SITE_URL } from './siteUrl'
+
 type CourseSchemaInput = {
   name: string
   description: string
@@ -22,7 +24,7 @@ export function buildCourseSchema({ name, description, url, audienceType }: Cour
     provider: {
       "@type": "Organization",
       name: "Mind Ur Mind",
-      sameAs: "https://mindurmind.org.in",
+      sameAs: SITE_URL,
     },
     audience: {
       "@type": "Audience",

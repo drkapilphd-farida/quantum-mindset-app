@@ -19,6 +19,7 @@ import { NextSessionRecommendationCard } from '@/features/quantum-speed-reading/
 
 export const metadata: Metadata = {
   title: 'AI Reading Coach™ — Quantum Speed Reading™',
+  robots: { index: false, follow: false },
 }
 
 // Sprint-5 — the real AI Reading Coach™ report that Sprint-3's "Continue"

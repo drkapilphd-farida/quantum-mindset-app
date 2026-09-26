@@ -11,6 +11,7 @@ import { QuantumReadingLanding } from '@/features/quantum-speed-reading/componen
 export const metadata: Metadata = {
   title: 'Quantum Speed Reading™',
   description: 'Train your mind to read faster, understand deeper, and remember longer.',
+  robots: { index: false, follow: false },
 }
 
 // Screen 1 — Sprint 1 of the Quantum Speed Reading™ session setup flow.

@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { CopyCertLinkButton } from '@/features/certificates/components/CopyCertLinkButton'
+import { SITE_URL } from '@/lib/seo/siteUrl'
 
 type CertificatePageProps = {
   params: Promise<{ token: string }>
@@ -26,9 +27,17 @@ export async function generateMetadata({
 
   const { data: cert } = await supabase.rpc('verify_certificate', { p_token: token }).maybeSingle()
 
-  if (!cert) return { title: 'Certificate Not Found' }
+  if (!cert) {
+    return {
+      title: 'Certificate Not Found',
+      robots: { index: false, follow: false },
+    }
+  }
 
-  return { title: `Certificate — ${cert.course_title}` }
+  return {
+    title: `Certificate — ${cert.course_title}`,
+    robots: { index: false, follow: false },
+  }
 }
 
 export default async function CertificatePage({
@@ -48,8 +57,7 @@ export default async function CertificatePage({
     year: 'numeric',
   }).format(new Date(cert.issued_at))
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-  const certUrl = `${appUrl}/certificates/${token}`
+  const certUrl = `${SITE_URL}/certificates/${token}`
 
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-6 py-16">

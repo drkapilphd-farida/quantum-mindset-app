@@ -3,6 +3,7 @@ import { FlashRecallSprintExperience } from '@/features/flash-recall-sprint/comp
 
 export const metadata: Metadata = {
   title: 'Flash Recall & Retention Sprint — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Flash Recall & Retention Sprint™ — the fourth and final advanced

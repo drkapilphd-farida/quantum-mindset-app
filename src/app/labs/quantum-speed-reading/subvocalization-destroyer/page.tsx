@@ -3,6 +3,7 @@ import { SubvocalizationDestroyerExperience } from '@/features/subvocalization-d
 
 export const metadata: Metadata = {
   title: 'Subvocalization Destroyer — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Subvocalization Destroyer™ — a flagship Reading Intelligence Hub

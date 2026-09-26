@@ -3,6 +3,7 @@ import { PhraseReadingModeExperience } from '@/features/phrase-reading-mode/comp
 
 export const metadata: Metadata = {
   title: 'Phrase Reading Mode — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Sprint 3.2 — Phrase Reading Mode™, the Master Reading Engine's second

@@ -6,7 +6,10 @@ import { getSchoolMembers } from '@/features/school-dashboard/queries/getSchoolM
 import { getTenantRank } from '@/features/school-dashboard/queries/getTenantRank'
 import { TenantHomeContent } from '@/features/school-dashboard/components/TenantHomeContent'
 
-export const metadata: Metadata = { title: 'Partner Dashboard' }
+export const metadata: Metadata = {
+  title: 'Partner Dashboard',
+  robots: { index: false, follow: false },
+}
 
 export default async function PartnerAdminHomePage(): Promise<React.JSX.Element> {
   const membership = await getSchoolForUser()

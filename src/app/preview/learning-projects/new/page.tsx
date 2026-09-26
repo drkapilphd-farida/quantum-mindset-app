@@ -9,6 +9,7 @@ import { UpgradeToProBanner } from '@/features/quantum-document-transformer/comp
 
 export const metadata: Metadata = {
   title: 'New Learning Project',
+  robots: { index: false, follow: false },
 }
 
 // Sprint 1, Chunk 2 — New Learning Project™. Auth check matches the

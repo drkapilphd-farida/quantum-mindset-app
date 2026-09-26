@@ -1,13 +1,25 @@
 import type { Metadata } from 'next'
 import AboutPageContent from '@/components/AboutPageContent'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import { buildOrganizationSchema } from '@/lib/seo/organizationSchema'
+import { buildPersonSchema } from '@/lib/seo/personSchema'
 
-export const metadata: Metadata = {
-  // { absolute } bypasses the root layout's title.template — see the
-  // matching note in retreats/online-11-day/page.tsx.
-  title: { absolute: 'About Us — Mind Ur Mind' },
-  description: 'Mind Ur Mind was founded in 2014 by Dr. Kapil Dev Sharma, combining academic research and hands-on coaching into programs for how people read, think, and manage their own minds.',
-}
+export const metadata: Metadata = buildPageMetadata({
+  path: '/about',
+  title: 'About Us — Mind Ur Mind',
+  description:
+    'The story of Dr. Kapil Dev Sharma and Mind Ur Mind (founded 2014) — 26 years in education and mind training, Quantum Speed Reading trainer since 2015, based in Vadodara.',
+})
 
 export default function AboutPage(): React.JSX.Element {
-  return <AboutPageContent />
+  const organizationSchema = buildOrganizationSchema()
+  const personSchema = buildPersonSchema()
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationSchema }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personSchema }} />
+      <AboutPageContent />
+    </>
+  )
 }

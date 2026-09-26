@@ -5,6 +5,7 @@ import { getFixationStats } from '@/features/visual-intelligence/fixation/querie
 
 export const metadata: Metadata = {
   title: 'Visual Fixation Engine™ — Visual Intelligence Lab™',
+  robots: { index: false, follow: false },
 }
 
 export default async function FixationHubPage(): Promise<React.JSX.Element> {

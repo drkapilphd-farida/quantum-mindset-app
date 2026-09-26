@@ -3,6 +3,7 @@ import { DotMemoryGridExperience } from '@/features/dot-memory-grid/components/D
 
 export const metadata: Metadata = {
   title: 'Dot Memory Grid — Quantum Speed Reading Lab™',
+  robots: { index: false, follow: false },
 }
 
 // Dot Memory Grid™ — a Right Brain Activation exercise, distinct from
