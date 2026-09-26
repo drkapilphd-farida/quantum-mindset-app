@@ -23,7 +23,7 @@ export const JOURNEY_READING_CATEGORY_LABELS: Record<JourneyReadingCategory, str
   'indian-civics': 'Indian Civics & Governance',
   geography: 'Geography',
   'social-media': 'Social Media',
-  'quantum-mind-programs': 'Quantum Mind Programs',
+  'quantum-mind-programs': 'Mind Ur Mind App Programs',
   'cricket-and-celebrities': 'Cricketers & Celebrities',
   sports: 'Sports',
 }

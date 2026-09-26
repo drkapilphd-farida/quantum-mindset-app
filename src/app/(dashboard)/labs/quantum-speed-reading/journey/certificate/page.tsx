@@ -8,10 +8,11 @@ import { getBaselineDiagnostic } from '@/features/quantum-journey/baselineDiagno
 import { getDailyQuantumSessionHistory } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { createClient } from '@/lib/supabase/server'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Your Completion Certificate™ — Quantum Mindset & Habit Builder™',
-  description: 'Your official Quantum Mindset & Habit Builder™ completion certificate.',
+  title: `Your Completion Certificate™ — ${programs.focusStarter.appName}`,
+  description: `Your official ${programs.focusStarter.appName} completion certificate.`,
   robots: { index: false, follow: false },
 }
 
@@ -58,7 +59,7 @@ export default async function JourneyCertificatePage(): Promise<React.JSX.Elemen
     <div>
       <div className="mx-auto max-w-3xl px-6 py-10">
         <LabPageHeader
-          eyebrow="Quantum Mindset & Habit Builder™"
+          eyebrow={programs.focusStarter.appName}
           title="Your Completion Certificate™"
           subtitle="A real, printable record of your Day 1 to Day 21 growth."
         />

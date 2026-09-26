@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { DiscoveryUploadBridgeScreen } from './components/DiscoveryUploadBridgeScreen'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Your Learning Profile Is Ready — Quantum Mind Learning Lab™',
+  title: `Your Learning Profile Is Ready — ${brand.name}`,
   description: 'The bridge from your Discovery results to your first real learning document.',
 }
 

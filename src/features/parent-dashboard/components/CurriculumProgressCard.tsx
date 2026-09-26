@@ -1,5 +1,6 @@
 import { GraduationCap } from 'lucide-react'
 import type { CurriculumDayCompletionRecord } from '@/features/thirty-day-curriculum/actions/getCurriculumDayCompletions'
+import { programs } from '@/config/site.config'
 
 const TOTAL_CURRICULUM_DAYS = 30
 
@@ -22,7 +23,7 @@ export function CurriculumProgressCard({ completions }: CurriculumProgressCardPr
       <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Daily Curriculum Progress</p>
 
       {daysCompleted === 0 ? (
-        <p className="mt-4 text-sm text-muted-foreground">No 30-Day Masterclass days completed yet.</p>
+        <p className="mt-4 text-sm text-muted-foreground">No {programs.qsr.shortName} days completed yet.</p>
       ) : (
         <>
           <div className="mt-4 flex items-center gap-4">

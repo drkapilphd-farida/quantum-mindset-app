@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { WhoIsLearningScreen } from './components/WhoIsLearningScreen'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Who Are You Learning With Today? — Quantum Mind Learning Lab™',
+  title: `Who Are You Learning With Today? — ${brand.name}`,
   description: 'One quick question before we begin discovering how you naturally learn.',
 }
 

@@ -1,3 +1,4 @@
+import { brand, programs, trainer } from "@/config/site.config";
 export type Lang = "en" | "hi";
 
 export const translations = {
@@ -40,41 +41,37 @@ export const translations = {
     // Reading Speed Test, the live intro session) lives in its own
     // sections, never framed as "free access to the program."
     accessModel: {
-      masterclassLabel: "Live Masterclass — ₹9,999",
-      masterclassDesc: "The full 30-day curriculum, 7 live sessions with Dr. Sharma, and app access throughout — one-time.",
+      masterclassLabel: `${programs.qsr.shortName} — ₹9,999`,
+      masterclassDesc: "The full 30-day curriculum, 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout — one-time.",
       continueLabel: "Continue — ₹499/mo",
       continueDesc: "For graduates who've completed the program and want continued app practice afterward.",
     },
     hero: {
       eyebrow: "Dr. Kapil Dev Sharma — Mind Ur Mind",
-      credentials: [
-        "English Professor (15+ Years Experience)",
-        "India's First QSR Pioneer (Since 2015)",
-        "10,000+ Students Guided",
-      ],
-      headline: "India's First Science-Backed Quantum Speed Reading",
+      credentials: trainer.en.shortBio.split(" · "),
+      headline: "Science-Backed Quantum Speed Reading",
       headlineEm: "5x Faster Reading. 100% Retention. EEG-Verified.",
       sub: "Struggling to finish your syllabus? Reading for hours but remembering nothing? Your child studies for hours but forgets everything? This isn't a reading problem — it's a training problem. No hypnosis, no shortcuts — pure cognitive science.",
       ctaPrimary: "Watch the Free Training Now",
       ctaSecondary: "Take the Free Speed Test",
       portraitName: "Dr. Kapil Dev Sharma",
-      portraitTitle: "Founder, Mind Ur Mind",
+      portraitTitle: trainer.en.title,
       stats: [
         { value: "30-Day Streak", label: "Quantum Speed Reading" },
-        { value: "11 Days, Monthly", label: "Online Meditation & Inner Mastery Retreat" },
+        { value: "11 Days, Monthly", label: programs.onlineRetreat.name },
         { value: "3–4× / Year", label: "Residential · Rishikesh & Lonavala" },
-        { value: "1-on-1", label: "Personal Class" },
+        { value: "1-on-1", label: programs.oneOnOneCoaching.name },
       ],
     },
     tier1: {
       eyebrow: "Tier 01 · Prime Flagship",
       audienceTag: "For Students & Professionals",
       title: "Quantum Speed Reading",
-      titleEm: "30-Day Masterclass",
+      titleEm: programs.qsr.shortName,
       desc: "Not a webinar. A 30-day rebuild of how your mind processes information — for students, professionals, and lifelong learners of every age.",
       features: [
         "30-day progressive app streak with daily drills",
-        "7 live masterclass sessions with Dr. Sharma",
+        "7 live masterclass sessions with Dr. Kapil Dev Sharma",
         "WPM & comprehension tracking, not just raw speed",
         "Designed for every age group and reading level",
       ],
@@ -82,7 +79,7 @@ export const translations = {
         quote: "I finished two books in the time it used to take me to finish one chapter.",
         name: "Ananya R.",
       },
-      cta: "Unlock 30-Day Masterclass",
+      cta: `Unlock the ${programs.qsr.shortName}`,
       visualCaption: "Day 22 of 30 · Streak Active",
     },
     tier2: {
@@ -94,8 +91,8 @@ export const translations = {
         tag: "Online · Monthly Batch",
         audienceTag: "For Deep Seekers",
         urgency: "Small Cohort · Limited Enrollment",
-        title: "11-Day Online Meditation & Inner Mastery Retreat",
-        desc: "An intensive, live, 11-day journey through meditation and inner mastery disciplines — guided daily by Dr. Sharma.",
+        title: programs.onlineRetreat.name,
+        desc: "An intensive, live, 11-day journey through meditation and inner mastery disciplines — guided daily by Dr. Kapil Dev Sharma.",
         pills: [
           "Telepathy Send/Receive",
           "Aura Scanning & Reading",
@@ -115,7 +112,7 @@ export const translations = {
         tag: "In-Person · 3–4× a Year",
         audienceTag: "For Deep Seekers",
         urgency: "Small Group · Limited Seats",
-        title: "Residential Retreats",
+        title: programs.residentialRetreat.name,
         desc: "Small-group, fully immersive retreats held in Rishikesh and Lonavala — the deepest format Mind Ur Mind offers.",
         pills: ["Rishikesh", "Lonavala", "Small Group, Exclusive", "Full Immersion"],
         cta: "Secure Your Retreat Seat",
@@ -129,19 +126,19 @@ export const translations = {
       mentoring: {
         tag: "Private · Custom Intensity",
         audienceTag: "Customized 1-on-1",
-        title: "Personal Class — 1-on-1 Intensive Mentoring",
-        desc: "Direct, private mentoring with Dr. Sharma, fully customized — for life stress and spiritual breakthroughs, not a replacement for therapy.",
+        title: programs.oneOnOneCoaching.name,
+        desc: "Direct, private mentoring with Dr. Kapil Dev Sharma, fully customized — for life stress and spiritual breakthroughs, not a replacement for therapy.",
         pills: ["Spiritual Breakthroughs", "Fully Customized"],
         trustQuote: {
           quote: "Six private sessions did what years of general advice never managed.",
           name: "Priya M.",
         },
-        cta: "Apply for 1-on-1 Mentoring",
+        cta: "Apply for 1-on-1 Mind Coaching",
       },
       course: {
         tag: "21-Day Program",
         audienceTag: "For Overthinkers",
-        title: "Overthinking Mastery Course",
+        title: programs.overthinkingReset.name,
         desc: "A focused, 21-day course built to interrupt the overthinking loop — practical, daily, specific.",
         pills: ["Daily Practice", "21 Days", "Mental Clarity Focus"],
         cta: "Begin Your 21-Day Reset",
@@ -184,14 +181,14 @@ export const translations = {
       habitBuilder: {
         number: "02",
         eyebrowLabel: "A Lead-In to Quantum Speed Reading",
-        title: "Quantum Mind & Habit Builder",
+        title: programs.focusStarter.name,
         desc: "Build your daily focus habit before starting QSR — free 7-day starter.",
         priceLine: "7 Days Free · ₹99 one-time",
         cta: "Start Free",
       },
       featured: {
         number: "01",
-        eyebrowLabel: "30-Day Masterclass · Flagship",
+        eyebrowLabel: `${programs.qsr.shortName} · Flagship`,
         cta: "Explore Program",
       },
       retreat: {
@@ -230,7 +227,7 @@ export const translations = {
       priceLabel: "₹99 one-time",
       noSubscriptionLabel: "No monthly subscription.",
       cta: "Start 7 Days Free",
-      mainScreenshotAlt: "The Quantum Mindset & Habit Builder dashboard — a real streak and daily continue screen",
+      mainScreenshotAlt: `The ${programs.focusStarter.appName} dashboard — a real streak and daily continue screen`,
     },
     // Mumbai in-person QSR workshop — a bright, distinct homepage card
     // (see the "Build the Mumbai Offline Workshop Feature + Fix EEG
@@ -241,7 +238,7 @@ export const translations = {
     homeMumbaiWorkshop: {
       badge: "New · Pilot Batch",
       title: "QSR, Now Live In-Person in Mumbai",
-      desc: "A 2-day in-person extension of the Masterclass — live coaching, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
+      desc: "A 2-day in-person extension of the 30-Day Live Program — live coaching, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
       meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
       cta: "Explore the Mumbai Workshop",
     },
@@ -299,14 +296,14 @@ export const translations = {
       lead: "We don't believe everyone should learn the same way.",
       concepts: [
         { title: "Learn", desc: "Knowledge and learning systems", programLabel: "Quantum Speed Reading" },
-        { title: "Practice", desc: "Daily exercises and structured challenges", programLabel: "Quantum Mind & Habit Builder" },
+        { title: "Practice", desc: "Daily exercises and structured challenges", programLabel: programs.focusStarter.name },
         { title: "Experience", desc: "Retreats and immersive learning", programLabel: "Retreats" },
-        { title: "Personalise", desc: "Individual mentoring and guidance", programLabel: "1-on-1 Mentoring" },
+        { title: "Personalise", desc: "Individual mentoring and guidance", programLabel: programs.oneOnOneCoaching.name },
       ],
     },
     homeGuide: {
       eyebrow: "The Teacher Behind the Method",
-      title: "Meet Dr. Kapil Sharma",
+      title: `Meet ${trainer.name}`,
       cta: "Discover Dr. Kapil's Journey",
     },
     homeFinalCta: {
@@ -477,12 +474,8 @@ export const translations = {
       about: {
         eyebrow: "About",
         headline: "Who You're Partnering With",
-        bio: "Dr. Kapil Dev Sharma has 26 years of experience as a mind trainer and coach. He developed the Quantum Speed Reading methodology in 2015, and has continued to evolve it into a structured, cognitive-science-based program since — the same curriculum and training method this partner program is built on.",
-        credentials: [
-          "26 years as a mind trainer and coach",
-          "Developer of the Quantum Speed Reading methodology, since 2015",
-          "10,000+ students guided directly",
-        ],
+        bio: trainer.en.longBio,
+        credentials: trainer.en.shortBio.split(" · "),
         videoTitle: "Quantum Speed Reading Introduction",
       },
       whoFor: {
@@ -541,7 +534,7 @@ export const translations = {
           },
           {
             question: "What is the revenue share?",
-            answer: "15–20% of each student enrollment goes to Mind Ur Mind Academy — this scales with what you actually earn, not a fixed fee.",
+            answer: "15–20% of each student enrollment goes to Mind Ur Mind — this scales with what you actually earn, not a fixed fee.",
           },
           {
             question: "Is there a renewal fee, and what happens after one year?",
@@ -684,7 +677,7 @@ export const translations = {
           id: "priya-m",
           qsrPageOnly: false,
           name: "Priya M.",
-          program: "Personal Class",
+          program: programs.oneOnOneCoaching.name,
           programKey: "mentoring",
           quote: "Six private sessions did what years of general advice never managed.",
           context: "",
@@ -695,7 +688,7 @@ export const translations = {
           id: "rohan-k",
           qsrPageOnly: false,
           name: "Rohan K.",
-          program: "Overthinking Mastery",
+          program: programs.overthinkingReset.name,
           programKey: "course",
           quote: "Twenty-one days, and the loop in my head finally went quiet.",
           context: "",
@@ -726,7 +719,7 @@ export const translations = {
         {
           question: "I'm completely new to this — will it work for me?",
           answer:
-            "Yes. Every program starts from zero. Quantum Speed Reading assumes no prior skill — Dr. Sharma has guided 10,000+ students from complete beginners to advanced practitioners since 2014.",
+            "Yes. Every program starts from zero. Quantum Speed Reading assumes no prior skill — Dr. Kapil Dev Sharma has taught it since 2015, and most learners start as complete beginners.",
         },
         {
           question: "Is this hypnosis or some unscientific method?",
@@ -734,9 +727,9 @@ export const translations = {
             "No. This is cognitive training grounded in neuroscience — eye-movement retraining, breathing-based focus drills, and memory techniques. We track real progress using EEG, not claims. There's no hypnosis, no blindfold reading, no belief system required — it's trained the way you'd train any other cognitive skill.",
         },
         {
-          question: "How much does the QSR Masterclass cost, and what's included?",
+          question: `How much does the ${programs.qsr.name} cost, and what's included?`,
           answer:
-            "The 30-Day Quantum Speed Reading Live Masterclass is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Sharma, and app access throughout, backed by our 100% Results Guarantee for online students. We don't offer free access to the program itself, but you can watch the free training video or take our free 2-minute Reading Speed Test first. Graduates who want continued app practice afterward can continue for ₹499/month.",
+            `The ${programs.qsr.name} is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout, backed by our 100% Results Guarantee for online students. We don't offer free access to the program itself, but you can watch the free training video or take our free 2-minute Reading Speed Test first. Graduates who want continued app practice afterward can continue for ₹499/month.`,
         },
         {
           question: "How does the offline workshop + EEG testing work, and which cities is it in?",
@@ -751,10 +744,10 @@ export const translations = {
         {
           question: "Which program should I start with?",
           answer:
-            "If you specifically want to read and learn faster, start with Quantum Speed Reading — this site's flagship program. If you want the easiest, lowest-commitment way in first, start with the free 7 days of Quantum Mind & Habit Builder before QSR. If you're looking for deeper inner work, explore the Retreats or apply for 1-on-1 Mentoring.",
+            `If you specifically want to read and learn faster, start with Quantum Speed Reading — this site's flagship program. If you want the easiest, lowest-commitment way in first, start with the ${programs.focusStarter.name} before QSR. If you're looking for deeper inner work, explore the Retreats or apply for ${programs.oneOnOneCoaching.name}.`,
         },
         {
-          question: "Is Quantum Mind & Habit Builder really free?",
+          question: `Is the ${programs.focusStarter.name} really free?`,
           answer:
             "Yes — Days 1–7 are completely free, no card required to start. Day 8 onward is a single one-time payment of ₹99 to continue through Day 21.",
         },
@@ -770,12 +763,12 @@ export const translations = {
         {
           question: "Are the retreats online or residential?",
           answer:
-            "Both. The 11-Day Online Meditation & Inner Mastery Retreat runs monthly from wherever you are; Residential Retreats in Rishikesh and Lonavala run 3–4 times a year in small groups for those who want the fully in-person format.",
+            `Both. The ${programs.onlineRetreat.name} runs monthly from wherever you are; the ${programs.residentialRetreat.name} run 3–4 times a year in small groups for those who want the fully in-person format.`,
         },
         {
-          question: "How does 1-on-1 mentoring work?",
+          question: `How does ${programs.oneOnOneCoaching.name} work?`,
           answer:
-            "Personal Class is private, custom-paced mentoring directly with Dr. Sharma — sessions are built entirely around your own goals and challenges, not a fixed curriculum. Apply to discuss fit and scheduling.",
+            `${programs.oneOnOneCoaching.name} is private, custom-paced coaching — sessions are built entirely around your own goals and challenges, not a fixed curriculum. Apply to discuss fit and scheduling.`,
         },
         {
           question: "Do I need to believe in anything specific — is this religious?",
@@ -801,26 +794,26 @@ export const translations = {
           heading: "Programs",
           links: [
             { label: "Quantum Speed Reading", href: "/programs/quantum-speed-reading" },
-            { label: "Quantum Mindset & Habit Builder", href: "/programs/habit-builder" },
+            { label: programs.focusStarter.name, href: programs.focusStarter.url },
           ],
         },
         retreats: {
           heading: "Retreats",
           links: [
             { label: "Online 11-Day Retreat", href: "/retreats/online-11-day" },
-            { label: "Residential Retreats", href: "/retreats/residential" },
+            { label: programs.residentialRetreat.name, href: programs.residentialRetreat.url },
           ],
         },
         mentoring: {
           heading: "Mentoring",
           links: [
-            { label: "Personal Class (1-on-1)", href: "/mentoring/personal-class" },
-            { label: "Overthinking Mastery", href: "/mentoring/overthinking-course" },
+            { label: programs.oneOnOneCoaching.name, href: programs.oneOnOneCoaching.url },
+            { label: programs.overthinkingReset.name, href: programs.overthinkingReset.url },
           ],
         },
         habitApp: {
-          heading: "Quantum Mind App",
-          links: [{ label: "Habit Builder — 7 Days Free, ₹99 One-Time", href: "/programs/habit-builder" }],
+          heading: brand.appName,
+          links: [{ label: `${programs.focusStarter.name} · ₹99 for Days 8–21`, href: programs.focusStarter.url }],
         },
         philosophy: {
           heading: "Dr. Kapil's Philosophy",
@@ -854,24 +847,11 @@ export const translations = {
       headline: "About Mind Ur Mind",
       body: [
         "Mind Ur Mind was founded in 2014 by Dr. Kapil Dev Sharma, bringing together academic research and hands-on coaching into a single practice focused on how people read, think, and manage their own minds.",
-        "What began as in-person workshops has grown into a full range of programs — Quantum Speed Reading, spiritual retreats, one-on-one mentoring, and the Quantum Mind app — while staying rooted in the same principle: real cognitive and personal change comes from structured, sustained practice, not quick fixes.",
+        `What began as in-person workshops has grown into a full range of programs — Quantum Speed Reading, spiritual retreats, one-on-one mentoring, and the ${brand.appName} — while staying rooted in the same principle: real cognitive and personal change comes from structured, sustained practice, not quick fixes.`,
         "Mind Ur Mind is a proprietorship led by Dr. Kapil Dev Sharma, based in Vadodara, Gujarat, and works with students, professionals, and lifelong learners across India.",
-      ],
-      stats: [
-        { value: "10,000+", label: "Students Guided" },
-        { value: "500+", label: "Workshops Delivered" },
-        { value: "2014", label: "Founded" },
       ],
       guide: {
         eyebrow: "The Founder",
-        title: "Dr. Kapil Dev Sharma",
-        credential: "Professor · Researcher · Life Coach · 26 Years Experience",
-        bio: "Dr. Kapil Dev Sharma brings 26 years of experience — 15 years as a professor and researcher in formal education, and 11 years as a life coach and mind trainer. That combination of academic rigour and direct coaching practice is what shapes how sessions are built.",
-        stats: [
-          { value: "26", label: "Years Total" },
-          { value: "15", label: "Years Professor" },
-          { value: "11", label: "Years Coaching" },
-        ],
         quote:
           "Most people already know what they need to change. The harder work is understanding why they haven't — and building the conditions where that becomes possible.",
       },
@@ -963,7 +943,7 @@ export const translations = {
       trustBadge: {
         title: "Personally Confirmed, Not Automated",
         desc: "Every enrollment is confirmed by Dr. Kapil's own team within 24 hours of checkout — a real person, not a bot.",
-        secondaryLine: "Secure checkout via Razorpay · 10,000+ students since 2014",
+        secondaryLine: `Secure checkout via Razorpay · ${trainer.learners} learners · QSR trainer since ${trainer.qsrSinceYear}`,
       },
       guarantee: {
         title: "100% Results Guaranteed for Online Students",
@@ -1082,7 +1062,7 @@ export const translations = {
       },
       ageGroups: {
         eyebrow: "Built For Every Age",
-        title: "One Masterclass, Tailored for Every Age Group",
+        title: "One Program, Tailored for Every Age Group",
         desc: "The same core training, expressed through two real, verified pathways — because a child and a working professional don't learn the same way, and this program doesn't ask them to.",
         pathways: [
           {
@@ -1120,26 +1100,7 @@ export const translations = {
         // specifically when the QSR method was developed/introduced. The
         // "500+ Workshops Delivered" card below is worded accordingly.
         eyebrow: "Direct From The Source",
-        title: "Learn From The Person Who Brought QSR To India",
-        desc: "Not a licensed instructor teaching someone else's system — the person who introduced it.",
-        cards: [
-          {
-            title: "English Professor (15+ Years Experience)",
-            desc: "15+ years of academic teaching experience in English.",
-          },
-          {
-            title: "India's First QSR Pioneer (Since 2015)",
-            desc: "Introduced Quantum Speed Reading to India — the origin point for the method taught in this Masterclass.",
-          },
-          {
-            title: "10,000+ Students Guided",
-            desc: "Personally guided thousands of students from complete beginners to advanced practitioners.",
-          },
-          {
-            title: "500+ Workshops Delivered",
-            desc: "Mind Ur Mind founded 2014 · conducting live teaching workshops since then, across schools, colleges, and corporate audiences.",
-          },
-        ],
+        title: `Learn Directly From ${trainer.name}`,
       },
       credibilityStrip: {
         label: "Trusted By Learners From",
@@ -1150,7 +1111,7 @@ export const translations = {
       founderVideo: {
         eyebrow: "From Dr. Kapil, Directly",
         title: "Why Quantum Speed Reading is different",
-        desc: "A short introduction from Dr. Kapil Dev Sharma — an English Professor with 15+ years of teaching experience, and India's first QSR pioneer, who introduced Quantum Speed Reading to the country in 2015. You're learning directly from the originator of the method, not a licensed instructor teaching someone else's system.",
+        desc: `A short introduction from ${trainer.name} — ${trainer.years.total} years in education and mind training, and a Quantum Speed Reading trainer since ${trainer.qsrSinceYear}. Hear how his 30-day method works before you decide.`,
         placeholderLabel: "Video coming soon",
         ctaLabel: "Ask a Question Instead",
         videoTitle: "Quantum Speed Reading Introduction",
@@ -1179,7 +1140,7 @@ export const translations = {
         app: {
           tag: "Daily · In the App",
           title: "The 30-Day App Streak",
-          desc: "Progressive cognitive drills you do at your own pace, every day, right inside the Quantum Mind app.",
+          desc: `Progressive cognitive drills you do at your own pace, every day, right inside the ${brand.appName}.`,
           bullets: [
             "WPM (words-per-minute) tracked every session, not just once",
             "Comprehension scored alongside speed — never one without the other",
@@ -1189,9 +1150,9 @@ export const translations = {
           ],
         },
         live: {
-          tag: "Weekly · Live with Dr. Sharma",
+          tag: "Weekly · Live with Dr. Kapil Dev Sharma",
           title: "The 7 Live Masterclasses",
-          desc: "Interactive sessions across the 30 days where Dr. Sharma personally walks you through the technique in real time.",
+          desc: "Interactive sessions across the 30 days where Dr. Kapil Dev Sharma personally walks you through the technique in real time.",
           bullets: [
             "Right-brain visual reading, taught live, not pre-recorded",
             "Direct Q&A — ask about your own specific sticking point",
@@ -1247,7 +1208,7 @@ export const translations = {
         // Document Studio access.
         eyebrow: "Also In The App",
         title: "The AI Document Studio",
-        desc: "The same AI-powered Document Studio available inside the Quantum Mind app — upload any PDF, textbook, or research paper and get speed-reading drills, mind maps, and revision notes built from it.",
+        desc: `The same AI-powered Document Studio available inside the ${brand.appName} — upload any PDF, textbook, or research paper and get speed-reading drills, mind maps, and revision notes built from it.`,
         items: [
           {
             title: "Upload & Learn",
@@ -1348,27 +1309,27 @@ export const translations = {
           {
             question: "Is this hard for a complete beginner?",
             answer:
-              "No. The 30-day structure assumes zero prior skill and starts from your true baseline — Dr. Sharma has guided 10,000+ students through it since 2014, most of them starting as complete beginners.",
+              "No. The 30-day structure assumes zero prior skill and starts from your true baseline — Dr. Kapil Dev Sharma has taught Quantum Speed Reading since 2015, and most learners start as complete beginners.",
           },
           {
             question: "What's the time commitment per day?",
             answer:
-              "About 10 minutes a day inside the app, plus one live masterclass session a week with Dr. Sharma. It's designed to fit around a full-time job or study schedule, not compete with it.",
+              "About 10 minutes a day inside the app, plus one live masterclass session a week with Dr. Kapil Dev Sharma. It's designed to fit around a full-time job or study schedule, not compete with it.",
           },
           {
             question: "Does this work for every age group?",
             answer:
-              "Yes — students preparing for exams, working professionals, and lifelong learners of every age have all completed this Masterclass. The pace adapts to where you're starting from.",
+              "Yes — students preparing for exams, working professionals, and lifelong learners of every age have all completed this program. The pace adapts to where you're starting from.",
           },
           {
             question: "Is any of this actually free?",
             answer:
-              "The Masterclass itself is a fully paid, result-oriented program — ₹9,999 one-time for the full 30-day curriculum, all 7 live sessions with Dr. Sharma, and app access throughout. We don't offer free access to the program, because neither the app alone nor the live sessions alone deliver the result — they're built to work together. What is free: our 2-minute Reading Speed Test, and our free 45-minute live intro session with Dr. Sharma — see below.",
+              `The ${programs.qsr.name} itself is a fully paid, result-oriented program — ₹9,999 one-time for the full 30-day curriculum, all 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout. We don't offer free access to the program, because neither the app alone nor the live sessions alone deliver the result — they're built to work together. What is free: our 2-minute Reading Speed Test, and our free 45-minute live intro session with Dr. Kapil Dev Sharma — see below.`,
           },
           {
             question: "What exactly do I get for ₹9,999?",
             answer:
-              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
+              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Kapil Dev Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
           },
           {
             question: "What if it doesn't work for me?",
@@ -1403,14 +1364,14 @@ export const translations = {
         structureLine: "7 live classes across your 30 days · daily practice through the app",
       },
       stickyBar: {
-        text: "30-Day Quantum Speed Reading Masterclass",
+        text: programs.qsr.name,
         price: "₹9,999 · One-Time",
         cta: "Secure Your Batch Spot",
       },
       whatsapp: {
         bubble: "Have questions about the QSR batch? Chat with Dr. Kapil's team instantly.",
         button: "Chat on WhatsApp",
-        ariaLabel: "Chat with Dr. Kapil's team on WhatsApp about the Quantum Speed Reading Masterclass",
+        ariaLabel: `Chat with Dr. Kapil's team on WhatsApp about the ${programs.qsr.name}`,
       },
       // Bright, distinct card promoting the Mumbai in-person workshop
       // (see the "Build the Mumbai Offline Workshop Feature + Fix EEG
@@ -1420,7 +1381,7 @@ export const translations = {
       mumbaiWorkshopCard: {
         badge: "New · Pilot Batch",
         title: "Also Available: Live, In-Person in Mumbai",
-        desc: "A 2-day in-person extension of this Masterclass — live coaching from Dr. Kapil Dev Sharma, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
+        desc: "A 2-day in-person extension of this program — live coaching from Dr. Kapil Dev Sharma, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
         meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
         cta: "Explore the Mumbai Workshop",
       },
@@ -1449,9 +1410,9 @@ export const translations = {
         eyebrow: "Live, In-Person · Mumbai · Pilot Batch",
         headline: "Read 5x Faster.",
         headlineEm: "Live, In Person, in Mumbai.",
-        sub: "A 2-day, in-person extension of the 30-Day Quantum Speed Reading Masterclass — live coaching from Dr. Kapil Dev Sharma, a real-time cognitive & focus engagement demo, and your reading speed measured on Day 1 and again on Day 2, after an overnight gap. The remaining 28 days then continue through the same app as our online track.",
+        sub: `A 2-day, in-person extension of the ${programs.qsr.name} — live coaching from Dr. Kapil Dev Sharma, a real-time cognitive & focus engagement demo, and your reading speed measured on Day 1 and again on Day 2, after an overnight gap. The remaining 28 days then continue through the same app as our online track.`,
         ctaPrimary: "Reserve a Pilot Batch Seat",
-        ctaPrimaryMeta: "₹9,999 · Same Price as the Online Masterclass",
+        ctaPrimaryMeta: "₹9,999 · Same Price as the Online Program",
         ctaSecondary: "See the 2-Day Schedule",
         badge: "2-Day Live Event",
       },
@@ -1526,7 +1487,7 @@ export const translations = {
       },
       pricing: {
         title: "₹9,999",
-        priceNote: "One-time — same price as the online Masterclass. Includes both days in Mumbai plus the full 30-day app curriculum that follows.",
+        priceNote: "One-time — same price as the online program. Includes both days in Mumbai plus the full 30-day app curriculum that follows.",
         addOnNote: "The personal engagement report above is a separate, optional add-on.",
         cta: "Reserve a Pilot Batch Seat",
       },
@@ -1556,7 +1517,7 @@ export const translations = {
           },
           {
             question: "What's the refund policy for the in-person workshop?",
-            answer: "The same Refund & Cancellation Policy that covers the online Masterclass applies here — see our full Refund & Cancellation Policy page for eligibility windows and how to request one. Because this workshop includes the live in-person days, our results guarantee is assessed the same way: complete the full 30-day protocol as instructed (both in-person days plus the app-based days that follow), and if your reading speed and comprehension haven't measurably improved, you're covered.",
+            answer: "The same Refund & Cancellation Policy that covers the online program applies here — see our full Refund & Cancellation Policy page for eligibility windows and how to request one. Because this workshop includes the live in-person days, our results guarantee is assessed the same way: complete the full 30-day protocol as instructed (both in-person days plus the app-based days that follow), and if your reading speed and comprehension haven't measurably improved, you're covered.",
           },
         ],
         ctaLabel: "Ask on WhatsApp",
@@ -1686,7 +1647,7 @@ export const translations = {
       hero: {
         eyebrow: "Online · Since 2014 · Small Cohort",
         headline: "Awaken Your Higher Mind",
-        headlineEm: "The 11-Day Online Meditation & Inner Mastery Retreat",
+        headlineEm: `The ${programs.onlineRetreat.name}`,
         sub: "Not another meditation app that leaves you exactly where you started. An intensive, live, 11-day journey into authentic Kriya Yoga, Prana, and cosmic energy — guided nightly by Dr. Kapil Dev Sharma, personally teaching this path since 2014.",
         ctaPrimary: "Secure Your Retreat Spot",
         ctaPrimaryMeta: "Secure Checkout via Razorpay",
@@ -1729,7 +1690,7 @@ export const translations = {
       disciplines: {
         eyebrow: "What You Will Master",
         title: "Six disciplines, one 11-day journey",
-        desc: "Each night builds on the last, guided live by Dr. Sharma — never a theory you read about, always a practice you feel.",
+        desc: "Each night builds on the last, guided live by Dr. Kapil Dev Sharma — never a theory you read about, always a practice you feel.",
         items: [
           {
             title: "Telepathy Send & Receive",
@@ -1764,7 +1725,7 @@ export const translations = {
         cards: [
           {
             title: "Teaching Since 2014",
-            desc: "12+ years personally guiding students through this exact path — not a recently-launched program chasing a trend.",
+            desc: "Personally guiding students through this exact path since 2014 — not a recently-launched program chasing a trend.",
           },
           {
             title: "150+ Real Student Reviews",
@@ -1772,22 +1733,22 @@ export const translations = {
           },
           {
             title: "Small Cohort, Every Batch",
-            desc: "Every batch is kept deliberately small so Dr. Sharma can actually guide you, not lecture at a crowd.",
+            desc: "Every batch is kept deliberately small so Dr. Kapil Dev Sharma can actually guide you, not lecture at a crowd.",
           },
           {
             title: "Personally Led, Every Night",
-            desc: "Not pre-recorded, not delegated to an assistant instructor — Dr. Sharma, live, all 11 nights.",
+            desc: "Not pre-recorded, not delegated to an assistant instructor — Dr. Kapil Dev Sharma, live, all 11 nights.",
           },
         ],
       },
       liveStructure: {
         eyebrow: "How The 11 Nights Work",
         title: "Live guidance, not a pre-recorded course",
-        desc: "Every one of the 11 nights, 7:30 PM to 10:30 PM, you're live with Dr. Sharma — not a video library you work through whenever it's convenient.",
+        desc: "Every one of the 11 nights, 7:30 PM to 10:30 PM, you're live with Dr. Kapil Dev Sharma — not a video library you work through whenever it's convenient.",
         points: [
           {
             title: "Nightly Live Session",
-            desc: "A live guided session with Dr. Sharma every night of the retreat, 7:30 PM – 10:30 PM — real-time, not pre-recorded.",
+            desc: "A live guided session with Dr. Kapil Dev Sharma every night of the retreat, 7:30 PM – 10:30 PM — real-time, not pre-recorded.",
           },
           {
             title: "Interactive Practice",
@@ -1795,7 +1756,7 @@ export const translations = {
           },
           {
             title: "Direct Mentorship",
-            desc: "Questions answered directly by Dr. Sharma during the retreat, not routed through a support ticket.",
+            desc: "Questions answered directly by Dr. Kapil Dev Sharma during the retreat, not routed through a support ticket.",
           },
         ],
       },
@@ -1827,7 +1788,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "Watch Real Students",
-        title: "150+ real reviews, from 12+ years of real retreats",
+        title: "150+ real reviews from real retreats since 2014",
         desc: "Six real students, filmed after finishing the retreat — unscripted. Tap any video to watch.",
         ctaLabel: "More Video Reviews",
       },
@@ -1838,12 +1799,12 @@ export const translations = {
           {
             question: "Do I need any prior experience with meditation or energy work?",
             answer:
-              "No particular belief system or prior experience is required. Kriya Yoga builds up gradually across the 11 nights — you bring your own openness, Dr. Sharma guides the method, step by step.",
+              "No particular belief system or prior experience is required. Kriya Yoga builds up gradually across the 11 nights — you bring your own openness, Dr. Kapil Dev Sharma guides the method, step by step.",
           },
           {
             question: "Is the energy work — Kundalini, Samadhi — actually safe?",
             answer:
-              "Every technique is taught step by step, live, with Dr. Sharma guiding the pace each night. That said, these are intensive practices — for a small number of people, deep meditative or energy-focused work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so pacing can be adjusted accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
+              "Every technique is taught step by step, live, with Dr. Kapil Dev Sharma guiding the pace each night. That said, these are intensive practices — for a small number of people, deep meditative or energy-focused work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so pacing can be adjusted accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
           },
           {
             question: "What is Kriya Yoga, exactly?",
@@ -1853,7 +1814,7 @@ export const translations = {
           {
             question: "What's the daily time commitment?",
             answer:
-              "Each day includes a live session with Dr. Sharma from 7:30 PM to 10:30 PM, plus guided practice — the same window every day of the 11-day batch.",
+              "Each day includes a live session with Dr. Kapil Dev Sharma from 7:30 PM to 10:30 PM, plus guided practice — the same window every day of the 11-day batch.",
           },
           {
             question: "What time are the live sessions held?",
@@ -1881,11 +1842,11 @@ export const translations = {
       finalCta: {
         eyebrow: "Ready When You Are",
         title: "Your Awakening Starts With One Decision",
-        desc: "Enrollment is confirmed personally by Dr. Kapil's own team — not an automated system. Twelve years, 150+ real students, one small cohort at a time. Book your spot in the next batch.",
+        desc: "Enrollment is confirmed personally by Dr. Kapil's own team — not an automated system. Since 2014, 150+ real students, one small cohort at a time. Book your spot in the next batch.",
         cta: "Secure Your Retreat Spot",
       },
       stickyBar: {
-        text: "11-Day Online Meditation & Inner Mastery Retreat",
+        text: programs.onlineRetreat.name,
         price: "Small Cohort · Limited Enrollment",
         cta: "Secure Your Retreat Spot",
       },
@@ -1897,9 +1858,9 @@ export const translations = {
     },
     residentialLanding: {
       hero: {
-        eyebrow: "Residential Retreats · Since 2014 · Small Cohorts",
+        eyebrow: "Residential Meditation Retreats · Since 2014 · Small Cohorts",
         headline: "Step Away. Fully.",
-        headlineEm: "Residential Retreats in Lonavala & Rishikesh",
+        headlineEm: programs.residentialRetreat.name,
         sub: "You've meditated in bed, in traffic, with an app telling you to just breathe. It didn't work — not because you failed at it, but because a 10-minute recording was never built to reach where the exhaustion actually lives. This is Dr. Kapil Dev Sharma, in the room with you, for days — Kriya Yoga, Prana, and cosmic energy work, guided directly, since 2014.",
         ctaPrimary: "Secure Your Residential Seat",
         ctaPrimaryMeta: "Personally confirmed by Dr. Kapil's team",
@@ -2087,7 +2048,7 @@ export const translations = {
           {
             question: "Is the energy work — Kundalini, Samadhi — actually safe?",
             answer:
-              "Every technique is taught step by step, under direct in-person supervision. That said, these are intensive practices — for a small number of people, deep meditative or energy-focused work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so Dr. Sharma can adjust pacing accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
+              "Every technique is taught step by step, under direct in-person supervision. That said, these are intensive practices — for a small number of people, deep meditative or energy-focused work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so Dr. Kapil Dev Sharma can adjust pacing accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
           },
           {
             question: "How is this different from your 11-Day Online Retreat?",
@@ -2115,24 +2076,22 @@ export const translations = {
         cta: "Secure Your Residential Seat",
       },
       stickyBar: {
-        text: "Residential Retreats — Lonavala & Rishikesh",
+        text: programs.residentialRetreat.name,
         price: "From ₹35,000 per person",
         cta: "Secure Your Seat",
       },
       whatsapp: {
         bubble: "Have questions about a Residential Retreat? Chat with Dr. Kapil's team instantly.",
         button: "Chat on WhatsApp",
-        ariaLabel: "Chat with Dr. Kapil's team on WhatsApp about the Residential Retreats",
+        ariaLabel: `Chat with Dr. Kapil's team on WhatsApp about the ${programs.residentialRetreat.name}`,
       },
     },
     mentoringLanding: {
       hero: {
         eyebrowBadges: ["Private", "Structured", "Limited Availability"],
-        headline: "Focused work, on your situation, with someone who's done this for 26 years.",
+        headline: `Focused work, on your situation, with someone who's done this for ${trainer.years.total} years.`,
         sub: "One-on-one mentoring for overthinking, focus, and personal growth — shaped around what you're actually dealing with, not a fixed curriculum.",
         guideLabel: "Your Guide",
-        guideName: "Dr. Kapil Dev Sharma",
-        guideCredential: "Professor · Researcher · Life Coach · 26 Years",
         ctaPrimary: "Apply Now",
       },
       fit: {
@@ -2223,14 +2182,6 @@ export const translations = {
       },
       guide: {
         eyebrow: "The Guide",
-        title: "Dr. Kapil Dev Sharma",
-        credential: "Professor · Researcher · Life Coach · 26 Years Experience",
-        bio: "Dr. Kapil Dev Sharma brings 26 years of experience — 15 years as a professor and researcher in formal education, and 11 years as a life coach and mind trainer. That combination of academic rigour and direct coaching practice is what shapes how sessions are built.",
-        stats: [
-          { value: "26", label: "Years Total" },
-          { value: "15", label: "Years Professor" },
-          { value: "11", label: "Years Coaching" },
-        ],
         quote:
           "Most people already know what they need to change. The harder work is understanding why they haven't — and building the conditions where that becomes possible.",
       },
@@ -2262,12 +2213,12 @@ export const translations = {
           {
             question: "How is this different from the group programs?",
             answer:
-              "Group programs (like the 30-Day Masterclass or the 11-Day Retreat) run on a fixed schedule with standardised content for everyone in the batch. This is private, one-on-one, and shaped entirely around your own situation — the pace, focus areas, and format adjust to you, not the other way around.",
+              `Group programs (like the ${programs.qsr.name} or the ${programs.onlineRetreat.name}) run on a fixed schedule with standardised content for everyone in the batch. This is private, one-on-one, and shaped entirely around your own situation — the pace, focus areas, and format adjust to you, not the other way around.`,
           },
           {
             question: "What if I'm not sure what I need help with?",
             answer:
-              "That's exactly what the short conversation step is for. You don't need a clear diagnosis before applying — just a sense of what's not working. Dr. Sharma helps identify the actual focus area during that first exchange, before any plan is proposed.",
+              "That's exactly what the short conversation step is for. You don't need a clear diagnosis before applying — just a sense of what's not working. Dr. Kapil Dev Sharma helps identify the actual focus area during that first exchange, before any plan is proposed.",
           },
           {
             question: "Is this therapy?",
@@ -2282,12 +2233,12 @@ export const translations = {
         ],
       },
       whatsapp: {
-        bubble: "Have questions about 1-on-1 Mentoring? Chat with Dr. Kapil's team instantly.",
+        bubble: `Have questions about ${programs.oneOnOneCoaching.name}? Chat with Dr. Kapil's team instantly.`,
         button: "Chat on WhatsApp",
-        ariaLabel: "Chat with Dr. Kapil's team about 1-on-1 Mentoring on WhatsApp",
+        ariaLabel: `Chat with Dr. Kapil's team about ${programs.oneOnOneCoaching.name} on WhatsApp`,
       },
       stickyBar: {
-        text: "Personal Class — 1-on-1 Intensive Mentoring",
+        text: programs.oneOnOneCoaching.name,
         price: "Private · Fully Customised",
         cta: "Apply Now",
       },
@@ -2303,11 +2254,11 @@ export const translations = {
     mindResetLanding: {
       hero: {
         eyebrow: "Overthinking & Mental Clarity",
-        productName: "The 21-Day Mind Reset System™",
+        productName: programs.overthinkingReset.name,
         headline: "Stop Getting Lost in Your Thoughts. Start Understanding Your Mind.",
         tagline: "Understand Your Mind • Build Mental Clarity",
         sub: "21 days of daily training, meditation, and guided activity. Live sessions with Dr. Kapil included with 6-month access.",
-        ctaPrimary: "Start Your Mind Reset — ₹499",
+        ctaPrimary: "Start Your Overthinking Reset — ₹499",
         ctaSecondary: "Take the Free Overthinking Test",
         trustLine: "Hindi Online Program • 21 Days • Guided Learning • Meditation",
       },
@@ -2440,23 +2391,15 @@ export const translations = {
       },
       guide: {
         eyebrow: "Your Guide",
-        title: "Dr. Kapil Dev Sharma",
-        credential: "Professor · Researcher · Life Coach · 26 Years Experience",
-        bio: "Dr. Kapil Dev Sharma brings 26 years of experience — 15 years as a professor and researcher in formal education, and 11 years as a life coach and mind trainer. That combination of academic rigour and direct coaching practice is what shapes how this course is built.",
-        stats: [
-          { value: "26", label: "Years Total" },
-          { value: "15", label: "Years Professor" },
-          { value: "11", label: "Years Coaching" },
-        ],
         quote:
           "Most people already know what they need to change. The harder work is understanding why they haven't — and building the conditions where that becomes possible.",
       },
       pricing: {
         eyebrow: "Pricing",
-        title: "Start Your Mind Reset Journey Today",
+        title: "Start Your Overthinking Reset Today",
         classplusNote: "Your plan is selected at checkout on Classplus.",
         card1: {
-          name: "Mind Reset Starter",
+          name: "Overthinking Reset — 1 Month",
           price: "₹499",
           period: "1 Month Access",
           desc: "A complete 21-day Hindi learning experience with training, meditation, activities, and PDFs — fully self-paced.",
@@ -2471,7 +2414,7 @@ export const translations = {
           cta: "Join for ₹499",
         },
         card2: {
-          name: "Mind Reset Extended",
+          name: "Overthinking Reset — 6 Months",
           price: "₹999",
           period: "6 Months Access",
           desc: "Prefer live guidance from Dr. Kapil and more time to practise? Includes everything in the ₹499 plan, plus live sessions with Dr. Kapil.",
@@ -2505,7 +2448,7 @@ export const translations = {
         ctaLabel: "Ask on WhatsApp",
         items: [
           {
-            question: "What is the 21-Day Mind Reset System™?",
+            question: `What is the ${programs.overthinkingReset.name}?`,
             answer:
               "A 21-day guided Hindi online program to understand overthinking, develop mental clarity, and build better mind habits — through daily training videos, meditation, and activities.",
           },
@@ -2559,16 +2502,16 @@ export const translations = {
         eyebrow: "Ready When You Are",
         headline: "Your Mind Deserves Your Attention.",
         desc: "Start with one small step. Learn, reflect, practise, and build a better relationship with your thoughts.",
-        ctaPrimary: "Start Your Mind Reset — ₹499",
+        ctaPrimary: "Start Your Overthinking Reset — ₹499",
         ctaSecondary: "Take the Free Overthinking Test",
       },
       whatsapp: {
-        bubble: "Have questions about the 21-Day Mind Reset System? Chat with Dr. Kapil's team instantly.",
+        bubble: `Have questions about the ${programs.overthinkingReset.name}? Chat with Dr. Kapil's team instantly.`,
         button: "Chat on WhatsApp",
-        ariaLabel: "Chat with Dr. Kapil's team about the 21-Day Mind Reset System on WhatsApp",
+        ariaLabel: `Chat with Dr. Kapil's team about the ${programs.overthinkingReset.name} on WhatsApp`,
       },
       stickyBar: {
-        text: "The 21-Day Mind Reset System",
+        text: programs.overthinkingReset.name,
         price: "₹499 · 1 Month Access",
         cta: "Start for ₹499",
       },
@@ -2663,8 +2606,8 @@ export const translations = {
         title: "Your Full Report",
         overallLabel: "Overall",
         courseTitle: "Not sure what to do next?",
-        courseDesc: "The 21-Day Mind Reset System is a structured, daily Hindi program to build exactly this kind of awareness.",
-        courseCta: "Explore the 21-Day Mind Reset System",
+        courseDesc: `The ${programs.overthinkingReset.name} is a structured, daily Hindi program to build exactly this kind of awareness.`,
+        courseCta: `Explore the ${programs.overthinkingReset.name}`,
       },
       disclaimer: "This is a self-awareness tool, not a clinical diagnosis.",
       restartLabel: "Retake the Test",
@@ -2691,41 +2634,37 @@ export const translations = {
       line: "यह एक आध्यात्मिक और व्यक्तिगत-विकास अभ्यास है, लाइसेंस-प्राप्त चिकित्सा या मानसिक स्वास्थ्य उपचार का विकल्प नहीं। यदि आप संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर या स्थानीय आपातकालीन सेवाओं से संपर्क करें।",
     },
     accessModel: {
-      masterclassLabel: "लाइव मास्टरक्लास — ₹9,999",
-      masterclassDesc: "पूरा 30-दिवसीय पाठ्यक्रम, डॉ. शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस — एकमुश्त।",
+      masterclassLabel: `${programs.qsr.shortNameHi} — ₹9,999`,
+      masterclassDesc: "पूरा 30-दिवसीय पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस — एकमुश्त।",
       continueLabel: "जारी रखें — ₹499/माह",
       continueDesc: "उन ग्रेजुएट्स के लिए जिन्होंने प्रोग्राम पूरा कर लिया है और बाद में भी ऐप अभ्यास जारी रखना चाहते हैं।",
     },
     hero: {
       eyebrow: "डॉ. कपिल देव शर्मा — माइंड उर माइंड",
-      credentials: [
-        "इंग्लिश प्रोफेसर (15+ वर्षों का अनुभव)",
-        "भारत में QSR के प्रणेता (2015 से)",
-        "10,000+ विद्यार्थियों का मार्गदर्शन",
-      ],
-      headline: "भारत की पहली विज्ञान-आधारित क्वांटम स्पीड रीडिंग",
+      credentials: trainer.hi.shortBio.split(" · "),
+      headline: "विज्ञान-आधारित क्वांटम स्पीड रीडिंग",
       headlineEm: "5 गुना तेज़ पढ़ें। 100% याद रखें। EEG-सत्यापित।",
       sub: "सिलेबस पूरा करने में दिक्कत हो रही है? घंटों पढ़ते हैं पर कुछ याद नहीं रहता? आपका बच्चा घंटों पढ़ता है पर सब भूल जाता है? यह पढ़ाई की समस्या नहीं है — यह ट्रेनिंग की समस्या है। कोई सम्मोहन नहीं, कोई शॉर्टकट नहीं — शुद्ध कॉग्निटिव साइंस।",
       ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
       ctaSecondary: "फ्री स्पीड टेस्ट लें",
       portraitName: "डॉ. कपिल देव शर्मा",
-      portraitTitle: "संस्थापक, माइंड उर माइंड",
+      portraitTitle: trainer.hi.title,
       stats: [
         { value: "30-दिन की स्ट्रीक", label: "क्वांटम स्पीड रीडिंग" },
-        { value: "11 दिन, मासिक", label: "ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट" },
+        { value: "11 दिन, मासिक", label: programs.onlineRetreat.nameHi },
         { value: "वर्ष में 3–4 बार", label: "रेजिडेंशियल · ऋषिकेश और लोनावला" },
-        { value: "1-ऑन-1", label: "पर्सनल क्लास" },
+        { value: "1-ऑन-1", label: programs.oneOnOneCoaching.nameHi },
       ],
     },
     tier1: {
       eyebrow: "टियर 01 · प्रमुख फ्लैगशिप",
       audienceTag: "विद्यार्थियों और पेशेवरों के लिए",
       title: "क्वांटम स्पीड रीडिंग",
-      titleEm: "30-दिवसीय मास्टरक्लास",
+      titleEm: programs.qsr.shortNameHi,
       desc: "यह कोई वेबिनार नहीं है। यह हर आयु वर्ग के विद्यार्थियों, पेशेवरों और आजीवन सीखने वालों के लिए, आपके मस्तिष्क की सूचना प्रोसेस करने की क्षमता का 30-दिवसीय पुनर्निर्माण है।",
       features: [
         "दैनिक अभ्यास के साथ 30-दिवसीय प्रगतिशील ऐप स्ट्रीक",
-        "डॉ. शर्मा के साथ 7 लाइव मास्टरक्लास सत्र",
+        "डॉ. कपिल देव शर्मा के साथ 7 लाइव मास्टरक्लास सत्र",
         "केवल गति नहीं, बल्कि WPM और समझ (comprehension) की ट्रैकिंग",
         "हर आयु वर्ग और पठन-स्तर के लिए उपयुक्त",
       ],
@@ -2733,7 +2672,7 @@ export const translations = {
         quote: "जितने समय में पहले एक अध्याय पूरा होता था, अब उतने समय में दो किताबें पूरी हो जाती हैं।",
         name: "अनन्या आर.",
       },
-      cta: "30-दिवसीय मास्टरक्लास अनलॉक करें",
+      cta: `${programs.qsr.shortNameHi} अनलॉक करें`,
       visualCaption: "30 में से दिन 22 · स्ट्रीक सक्रिय",
     },
     tier2: {
@@ -2745,8 +2684,8 @@ export const translations = {
         tag: "ऑनलाइन · मासिक बैच",
         audienceTag: "गहरी खोज करने वालों के लिए",
         urgency: "छोटा समूह · सीमित नामांकन",
-        title: "11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट",
-        desc: "ध्यान और आंतरिक मास्टरी के मुख्य अनुशासनों के माध्यम से एक गहन, लाइव, 11-दिवसीय यात्रा — प्रतिदिन डॉ. शर्मा द्वारा मार्गदर्शित।",
+        title: programs.onlineRetreat.nameHi,
+        desc: "ध्यान और आंतरिक मास्टरी के मुख्य अनुशासनों के माध्यम से एक गहन, लाइव, 11-दिवसीय यात्रा — प्रतिदिन डॉ. कपिल देव शर्मा द्वारा मार्गदर्शित।",
         pills: [
           "मानसिक तरंग संचार (टेलीपैथी)",
           "आभा स्कैनिंग और रीडिंग",
@@ -2766,7 +2705,7 @@ export const translations = {
         tag: "व्यक्तिगत उपस्थिति · वर्ष में 3–4 बार",
         audienceTag: "गहरी खोज करने वालों के लिए",
         urgency: "छोटा समूह · सीमित सीटें",
-        title: "रेजिडेंशियल रिट्रीट",
+        title: programs.residentialRetreat.nameHi,
         desc: "ऋषिकेश और लोनावला में आयोजित छोटे-समूह, पूर्ण-विसर्जन रिट्रीट — माइंड उर माइंड का सबसे गहन प्रारूप।",
         pills: ["ऋषिकेश", "लोनावला", "छोटा समूह, एक्सक्लूसिव", "पूर्ण विसर्जन"],
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
@@ -2780,19 +2719,19 @@ export const translations = {
       mentoring: {
         tag: "निजी · कस्टम इंटेंसिटी",
         audienceTag: "पूरी तरह कस्टमाइज़्ड 1-ऑन-1",
-        title: "पर्सनल क्लास — 1-ऑन-1 इंटेंसिव मेंटरिंग",
-        desc: "डॉ. शर्मा के साथ सीधा, निजी मार्गदर्शन, पूरी तरह कस्टमाइज़्ड — जीवन के तनाव और आध्यात्मिक सफलताओं के लिए, थेरेपी का विकल्प नहीं।",
+        title: programs.oneOnOneCoaching.nameHi,
+        desc: "डॉ. कपिल देव शर्मा के साथ सीधा, निजी मार्गदर्शन, पूरी तरह कस्टमाइज़्ड — जीवन के तनाव और आध्यात्मिक सफलताओं के लिए, थेरेपी का विकल्प नहीं।",
         pills: ["आध्यात्मिक सफलताएं", "पूरी तरह कस्टमाइज़्ड"],
         trustQuote: {
           quote: "छह निजी सत्रों ने वह कर दिखाया जो वर्षों की सामान्य सलाह कभी नहीं कर पाई।",
           name: "प्रिया एम.",
         },
-        cta: "1-ऑन-1 मेंटरिंग के लिए आवेदन करें",
+        cta: "1-on-1 माइंड कोचिंग के लिए आवेदन करें",
       },
       course: {
         tag: "21-दिवसीय कार्यक्रम",
         audienceTag: "अति-चिंतन करने वालों के लिए",
-        title: "ओवरथिंकिंग मास्टरी कोर्स",
+        title: programs.overthinkingReset.nameHi,
         desc: "ओवरथिंकिंग के चक्र को तोड़ने के लिए बनाया गया एक केंद्रित, 21-दिवसीय कोर्स — व्यावहारिक, दैनिक, विशिष्ट।",
         pills: ["दैनिक अभ्यास", "21 दिन", "मानसिक स्पष्टता पर केंद्रित"],
         cta: "अपना 21-दिवसीय रीसेट शुरू करें",
@@ -2828,14 +2767,14 @@ export const translations = {
       habitBuilder: {
         number: "02",
         eyebrowLabel: "क्वांटम स्पीड रीडिंग की ओर एक शुरुआत",
-        title: "Quantum Mind & Habit Builder",
+        title: programs.focusStarter.nameHi,
         desc: "QSR शुरू करने से पहले अपनी दैनिक फोकस आदत बनाएं — फ्री 7-दिन स्टार्टर।",
         priceLine: "7 दिन मुफ़्त · ₹99 एकमुश्त",
         cta: "मुफ़्त शुरू करें",
       },
       featured: {
         number: "01",
-        eyebrowLabel: "30-दिवसीय मास्टरक्लास · फ्लैगशिप",
+        eyebrowLabel: `${programs.qsr.shortNameHi} · फ्लैगशिप`,
         cta: "प्रोग्राम एक्सप्लोर करें",
       },
       retreat: {
@@ -2867,12 +2806,12 @@ export const translations = {
       priceLabel: "₹99 एकमुश्त",
       noSubscriptionLabel: "कोई मंथली सब्सक्रिप्शन नहीं।",
       cta: "7 दिन मुफ़्त शुरू करें",
-      mainScreenshotAlt: "Quantum Mindset & Habit Builder डैशबोर्ड — असली स्ट्रीक और डेली continue स्क्रीन",
+      mainScreenshotAlt: `${programs.focusStarter.appNameHi} डैशबोर्ड — असली स्ट्रीक और डेली continue स्क्रीन`,
     },
     homeMumbaiWorkshop: {
       badge: "नया · पायलट बैच",
       title: "QSR, अब मुंबई में लाइव व्यक्तिगत रूप से",
-      desc: "मास्टरक्लास का एक 2-दिवसीय व्यक्तिगत विस्तार — लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
+      desc: "30-दिवसीय लाइव प्रोग्राम का एक 2-दिवसीय व्यक्तिगत विस्तार — लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
       meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
       cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
     },
@@ -2922,14 +2861,14 @@ export const translations = {
       lead: "हम यह नहीं मानते कि सभी को एक ही तरीके से सीखना चाहिए।",
       concepts: [
         { title: "सीखें", desc: "ज्ञान और सीखने के सिस्टम", programLabel: "क्वांटम स्पीड रीडिंग" },
-        { title: "अभ्यास करें", desc: "रोज़ की एक्सरसाइज़ और संरचित चैलेंजेस", programLabel: "Quantum Mind & Habit Builder" },
+        { title: "अभ्यास करें", desc: "रोज़ की एक्सरसाइज़ और संरचित चैलेंजेस", programLabel: programs.focusStarter.nameHi },
         { title: "अनुभव करें", desc: "रिट्रीट्स और इमर्सिव लर्निंग", programLabel: "रिट्रीट्स" },
-        { title: "व्यक्तिगत बनाएं", desc: "व्यक्तिगत मेंटरिंग और मार्गदर्शन", programLabel: "1-ऑन-1 मेंटरिंग" },
+        { title: "व्यक्तिगत बनाएं", desc: "व्यक्तिगत मेंटरिंग और मार्गदर्शन", programLabel: programs.oneOnOneCoaching.nameHi },
       ],
     },
     homeGuide: {
       eyebrow: "मेथड के पीछे के शिक्षक",
-      title: "डॉ. कपिल शर्मा से मिलें",
+      title: `${trainer.nameHi} से मिलें`,
       cta: "डॉ. कपिल की यात्रा जानें",
     },
     homeFinalCta: {
@@ -3100,12 +3039,8 @@ export const translations = {
       about: {
         eyebrow: "परिचय",
         headline: "आप किनके साथ पार्टनर बन रहे हैं",
-        bio: "डॉ. कपिल देव शर्मा को एक mind trainer और coach के रूप में 26 साल का अनुभव है। उन्होंने 2015 में Quantum Speed Reading मेथडोलॉजी बनाई, और तब से इसे लगातार एक structured, cognitive-science-based प्रोग्राम में विकसित किया है — यही कर्रिकुलम और ट्रेनिंग मेथड इस पार्टनर प्रोग्राम का आधार है।",
-        credentials: [
-          "mind trainer और coach के रूप में 26 साल",
-          "Quantum Speed Reading मेथडोलॉजी के निर्माता, 2015 से",
-          "10,000+ विद्यार्थियों को सीधे गाइड किया",
-        ],
+        bio: trainer.hi.longBio,
+        credentials: trainer.hi.shortBio.split(" · "),
         videoTitle: "क्वांटम स्पीड रीडिंग परिचय",
       },
       whoFor: {
@@ -3296,7 +3231,7 @@ export const translations = {
           id: "priya-m",
           qsrPageOnly: false,
           name: "प्रिया एम.",
-          program: "पर्सनल क्लास",
+          program: programs.oneOnOneCoaching.nameHi,
           programKey: "mentoring",
           quote: "छह निजी सत्रों ने वह कर दिखाया जो वर्षों की सामान्य सलाह कभी नहीं कर पाई।",
           context: "",
@@ -3307,7 +3242,7 @@ export const translations = {
           id: "rohan-k",
           qsrPageOnly: false,
           name: "रोहन के.",
-          program: "ओवरथिंकिंग मास्टरी",
+          program: programs.overthinkingReset.nameHi,
           programKey: "course",
           quote: "इक्कीस दिन, और आखिरकार मेरे सिर का शोर शांत हो गया।",
           context: "",
@@ -3329,7 +3264,7 @@ export const translations = {
         {
           question: "मैं इसमें बिल्कुल नया हूं — क्या यह मेरे लिए काम करेगा?",
           answer:
-            "हां, बिल्कुल। हर कार्यक्रम शून्य से शुरू होता है। क्वांटम स्पीड रीडिंग में किसी पूर्व कौशल की ज़रूरत नहीं — डॉ. शर्मा ने 2014 से अब तक 10,000+ विद्यार्थियों को पूर्ण शुरुआती से उन्नत अभ्यासी तक मार्गदर्शन दिया है।",
+            "हां, बिल्कुल। हर कार्यक्रम शून्य से शुरू होता है। क्वांटम स्पीड रीडिंग में किसी पूर्व कौशल की ज़रूरत नहीं — डॉ. कपिल देव शर्मा 2015 से इसे सिखा रहे हैं, और अधिकांश विद्यार्थी पूर्ण शुरुआती के रूप में शुरू करते हैं।",
         },
         {
           question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
@@ -3337,9 +3272,9 @@ export const translations = {
             "नहीं। यह न्यूरोसाइंस पर आधारित कॉग्निटिव ट्रेनिंग है — आई-मूवमेंट रीट्रेनिंग, श्वास-आधारित फोकस अभ्यास, और मेमोरी तकनीकें। हम असली प्रगति EEG से ट्रैक करते हैं, दावों से नहीं। इसमें कोई सम्मोहन नहीं, कोई ब्लाइंडफोल्ड रीडिंग नहीं, किसी विश्वास प्रणाली की ज़रूरत नहीं — इसे उसी तरह प्रशिक्षित किया जाता है जैसे कोई भी अन्य कॉग्निटिव स्किल।",
         },
         {
-          question: "QSR मास्टरक्लास की कीमत कितनी है, और इसमें क्या शामिल है?",
+          question: `${programs.qsr.nameHi} की कीमत कितनी है, और इसमें क्या शामिल है?`,
           answer:
-            "30-दिवसीय क्वांटम स्पीड रीडिंग लाइव मास्टरक्लास की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी के साथ। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले फ्री ट्रेनिंग वीडियो देख सकते हैं या हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं।",
+            `${programs.qsr.nameHi} की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी के साथ। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले फ्री ट्रेनिंग वीडियो देख सकते हैं या हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं।`,
         },
         {
           question: "ऑफलाइन वर्कशॉप + EEG टेस्टिंग कैसे काम करती है, और यह किन शहरों में है?",
@@ -3354,10 +3289,10 @@ export const translations = {
         {
           question: "मुझे किस प्रोग्राम से शुरुआत करनी चाहिए?",
           answer:
-            "अगर आप खासतौर पर तेज़ी से पढ़ना और सीखना चाहते हैं, तो क्वांटम स्पीड रीडिंग से शुरू करें — इस साइट का फ्लैगशिप प्रोग्राम। अगर आप पहले सबसे आसान, सबसे कम कमिटमेंट वाला रास्ता चाहते हैं, तो QSR से पहले Quantum Mind & Habit Builder के मुफ़्त 7 दिनों से शुरू करें। अगर आप गहरे आंतरिक कार्य की तलाश में हैं, तो रिट्रीट्स एक्सप्लोर करें या 1-ऑन-1 मेंटरिंग के लिए आवेदन करें।",
+            `अगर आप खासतौर पर तेज़ी से पढ़ना और सीखना चाहते हैं, तो क्वांटम स्पीड रीडिंग से शुरू करें — इस साइट का फ्लैगशिप प्रोग्राम। अगर आप पहले सबसे आसान, सबसे कम कमिटमेंट वाला रास्ता चाहते हैं, तो QSR से पहले ${programs.focusStarter.nameHi} से शुरू करें। अगर आप गहरे आंतरिक कार्य की तलाश में हैं, तो रिट्रीट्स एक्सप्लोर करें या ${programs.oneOnOneCoaching.nameHi} के लिए आवेदन करें।`,
         },
         {
-          question: "क्या Quantum Mind & Habit Builder वाकई मुफ़्त है?",
+          question: `क्या ${programs.focusStarter.nameHi} वाकई मुफ़्त है?`,
           answer:
             "हां — दिन 1 से 7 पूरी तरह मुफ़्त हैं, शुरू करने के लिए कोई कार्ड ज़रूरी नहीं। दिन 8 से आगे जारी रखने के लिए ₹99 की एक-बार की पेमेंट है।",
         },
@@ -3373,7 +3308,7 @@ export const translations = {
         {
           question: "क्या रिट्रीट्स ऑनलाइन हैं या रेजिडेंशियल?",
           answer:
-            "दोनों। 11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट हर महीने चलता है, जहां से भी आप हों; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में उन लोगों के लिए होते हैं जो पूरी तरह व्यक्तिगत उपस्थिति वाला प्रारूप चाहते हैं।",
+            `दोनों। ${programs.onlineRetreat.nameHi} हर महीने चलता है, जहां से भी आप हों; ${programs.residentialRetreat.nameHi} वर्ष में 3–4 बार छोटे समूहों में उन लोगों के लिए होते हैं जो पूरी तरह व्यक्तिगत उपस्थिति वाला प्रारूप चाहते हैं।`,
         },
         {
           question: "अगला ऑनलाइन रिट्रीट या रेजिडेंशियल बैच कब है?",
@@ -3381,9 +3316,9 @@ export const translations = {
             "11-दिवसीय ऑनलाइन रिट्रीट हर महीने चलता है; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में आयोजित होते हैं। अगली पक्की तारीख और बची हुई सीटों के लिए हमसे WhatsApp पर बात करें।",
         },
         {
-          question: "1-ऑन-1 मेंटरिंग कैसे काम करती है?",
+          question: `${programs.oneOnOneCoaching.nameHi} कैसे काम करती है?`,
           answer:
-            "पर्सनल क्लास डॉ. शर्मा के साथ सीधे, निजी, कस्टम-पेस्ड मेंटरिंग है — सेशन पूरी तरह आपके अपने लक्ष्यों और चुनौतियों के आसपास बनाए जाते हैं, किसी फिक्स्ड कर्रिकुलम पर नहीं। फिट और शेड्यूलिंग पर चर्चा के लिए आवेदन करें।",
+            `${programs.oneOnOneCoaching.nameHi} निजी, कस्टम-पेस्ड कोचिंग है — सेशन पूरी तरह आपके अपने लक्ष्यों और चुनौतियों के आसपास बनाए जाते हैं, किसी फिक्स्ड कर्रिकुलम पर नहीं। फिट और शेड्यूलिंग पर चर्चा के लिए आवेदन करें।`,
         },
         {
           question: "क्या मुझे किसी विशेष चीज़ में विश्वास रखना ज़रूरी है — क्या यह धार्मिक है?",
@@ -3398,7 +3333,7 @@ export const translations = {
       ctaLabel: "WhatsApp पर पूछें",
     },
     whatsapp: {
-      bubble: "रिट्रीट्स या मास्टरक्लास के बारे में सवाल हैं? डॉ. कपिल की टीम से सीधे बात करें।",
+      bubble: "रिट्रीट्स या 30-दिवसीय लाइव प्रोग्राम के बारे में सवाल हैं? डॉ. कपिल की टीम से सीधे बात करें।",
       button: "WhatsApp पर चैट करें",
       ariaLabel: "डॉ. कपिल की टीम से WhatsApp पर चैट करें",
     },
@@ -3409,26 +3344,26 @@ export const translations = {
           heading: "प्रोग्राम्स",
           links: [
             { label: "क्वांटम स्पीड रीडिंग", href: "/programs/quantum-speed-reading" },
-            { label: "क्वांटम माइंडसेट एंड हैबिट बिल्डर", href: "/programs/habit-builder" },
+            { label: programs.focusStarter.nameHi, href: programs.focusStarter.url },
           ],
         },
         retreats: {
           heading: "रिट्रीट्स",
           links: [
             { label: "ऑनलाइन 11-दिवसीय रिट्रीट", href: "/retreats/online-11-day" },
-            { label: "रेजिडेंशियल रिट्रीट", href: "/retreats/residential" },
+            { label: programs.residentialRetreat.nameHi, href: programs.residentialRetreat.url },
           ],
         },
         mentoring: {
           heading: "मेंटरिंग",
           links: [
-            { label: "पर्सनल क्लास (1-ऑन-1)", href: "/mentoring/personal-class" },
-            { label: "ओवरथिंकिंग मास्टरी", href: "/mentoring/overthinking-course" },
+            { label: programs.oneOnOneCoaching.nameHi, href: programs.oneOnOneCoaching.url },
+            { label: programs.overthinkingReset.nameHi, href: programs.overthinkingReset.url },
           ],
         },
         habitApp: {
-          heading: "क्वांटम माइंड ऐप",
-          links: [{ label: "Habit Builder — 7 दिन मुफ़्त, ₹99 एकमुश्त", href: "/programs/habit-builder" }],
+          heading: brand.appName,
+          links: [{ label: `${programs.focusStarter.nameHi} · दिन 8–21 के लिए ₹99`, href: programs.focusStarter.url }],
         },
         philosophy: {
           heading: "डॉ. कपिल का दर्शन",
@@ -3462,24 +3397,11 @@ export const translations = {
       headline: "माइंड उर माइंड के बारे में",
       body: [
         "माइंड उर माइंड की स्थापना 2014 में डॉ. कपिल देव शर्मा ने की थी, जिन्होंने शैक्षणिक शोध और प्रत्यक्ष कोचिंग को एक ही प्रैक्टिस में जोड़ा — इस पर केंद्रित कि लोग कैसे पढ़ते हैं, सोचते हैं, और अपने मन को कैसे संभालते हैं।",
-        "जो व्यक्तिगत वर्कशॉप्स के रूप में शुरू हुआ, वह अब प्रोग्राम्स की एक पूरी रेंज बन चुका है — क्वांटम स्पीड रीडिंग, आध्यात्मिक रिट्रीट्स, वन-ऑन-वन मेंटरिंग, और क्वांटम माइंड ऐप — फिर भी एक ही सिद्धांत में जड़ें जमाए हुए: असली संज्ञानात्मक और व्यक्तिगत बदलाव संरचित, निरंतर अभ्यास से आता है, त्वरित उपायों से नहीं।",
+        `जो व्यक्तिगत वर्कशॉप्स के रूप में शुरू हुआ, वह अब प्रोग्राम्स की एक पूरी रेंज बन चुका है — क्वांटम स्पीड रीडिंग, आध्यात्मिक रिट्रीट्स, वन-ऑन-वन मेंटरिंग, और ${brand.appName} — फिर भी एक ही सिद्धांत में जड़ें जमाए हुए: असली संज्ञानात्मक और व्यक्तिगत बदलाव संरचित, निरंतर अभ्यास से आता है, त्वरित उपायों से नहीं।`,
         "माइंड उर माइंड डॉ. कपिल देव शर्मा के नेतृत्व में एक प्रोप्राइटरशिप है, जो वडोदरा, गुजरात में स्थित है, और पूरे भारत में विद्यार्थियों, पेशेवरों, और आजीवन सीखने वालों के साथ काम करती है।",
-      ],
-      stats: [
-        { value: "10,000+", label: "विद्यार्थियों का मार्गदर्शन" },
-        { value: "500+", label: "वर्कशॉप्स आयोजित" },
-        { value: "2014", label: "स्थापना वर्ष" },
       ],
       guide: {
         eyebrow: "संस्थापक",
-        title: "डॉ. कपिल देव शर्मा",
-        credential: "प्रोफेसर · शोधकर्ता · लाइफ कोच · 26 वर्षों का अनुभव",
-        bio: "डॉ. कपिल देव शर्मा 26 वर्षों का अनुभव लाते हैं — औपचारिक शिक्षा में 15 वर्ष प्रोफेसर और शोधकर्ता के रूप में, और 11 वर्ष लाइफ कोच और माइंड ट्रेनर के रूप में। यही शैक्षणिक कठोरता और प्रत्यक्ष कोचिंग अभ्यास का मेल तय करता है कि सेशंस कैसे बनाए जाते हैं।",
-        stats: [
-          { value: "26", label: "कुल वर्ष" },
-          { value: "15", label: "वर्ष प्रोफेसर" },
-          { value: "11", label: "वर्ष कोचिंग" },
-        ],
         quote:
           "ज़्यादातर लोग पहले से जानते हैं कि उन्हें क्या बदलना है। मुश्किल काम यह समझना है कि उन्होंने अब तक ऐसा क्यों नहीं किया — और वे स्थितियां बनाना जिनमें यह संभव हो सके।",
       },
@@ -3548,7 +3470,7 @@ export const translations = {
       trustBadge: {
         title: "व्यक्तिगत रूप से पुष्टि, कोई ऑटोमेशन नहीं",
         desc: "हर नामांकन की पुष्टि चेकआउट के 24 घंटों के भीतर डॉ. कपिल की अपनी टीम करती है — एक असली व्यक्ति, कोई बॉट नहीं।",
-        secondaryLine: "Razorpay के ज़रिए सुरक्षित चेकआउट · 2014 से 10,000+ विद्यार्थी",
+        secondaryLine: `Razorpay के ज़रिए सुरक्षित चेकआउट · ${trainer.learners} विद्यार्थी · ${trainer.qsrSinceYear} से QSR ट्रेनर`,
       },
       guarantee: {
         title: "ऑनलाइन विद्यार्थियों के लिए 100% रिज़ल्ट गारंटी",
@@ -3645,7 +3567,7 @@ export const translations = {
       },
       ageGroups: {
         eyebrow: "हर उम्र के लिए बनाया गया",
-        title: "एक मास्टरक्लास, हर आयु वर्ग के लिए अनुकूलित",
+        title: "एक प्रोग्राम, हर आयु वर्ग के लिए अनुकूलित",
         desc: "एक ही मूल प्रशिक्षण, दो असली और सत्यापित तरीकों में — क्योंकि एक बच्चा और एक कामकाजी पेशेवर एक जैसे नहीं सीखते, और यह कार्यक्रम उनसे ऐसा करने को नहीं कहता।",
         pathways: [
           {
@@ -3665,26 +3587,7 @@ export const translations = {
       },
       authority: {
         eyebrow: "सीधे मूल स्रोत से",
-        title: "भारत में QSR लाने वाले व्यक्ति से सीखें",
-        desc: "किसी लाइसेंस-प्राप्त प्रशिक्षक से नहीं जो किसी और की प्रणाली सिखा रहा हो — बल्कि उस व्यक्ति से जिसने इसे शुरू किया।",
-        cards: [
-          {
-            title: "इंग्लिश प्रोफेसर (15+ वर्षों का अनुभव)",
-            desc: "इंग्लिश विषय में 15+ वर्षों का शैक्षणिक शिक्षण अनुभव।",
-          },
-          {
-            title: "भारत में QSR के प्रणेता (2015 से)",
-            desc: "भारत में क्वांटम स्पीड रीडिंग की शुरुआत की — इस मास्टरक्लास में पढ़ाई जाने वाली विधि का मूल स्रोत।",
-          },
-          {
-            title: "10,000+ विद्यार्थियों का मार्गदर्शन",
-            desc: "हज़ारों विद्यार्थियों को पूर्ण शुरुआती से उन्नत अभ्यासी तक व्यक्तिगत रूप से मार्गदर्शन दिया।",
-          },
-          {
-            title: "500+ वर्कशॉप्स आयोजित",
-            desc: "Mind Ur Mind की स्थापना 2014 में हुई · तब से स्कूलों, कॉलेजों, और कॉर्पोरेट दर्शकों के लिए लाइव शिक्षण वर्कशॉप्स आयोजित कर रहे हैं।",
-          },
-        ],
+        title: `${trainer.nameHi} से सीधे सीखें`,
       },
       credibilityStrip: {
         label: "इनके विद्यार्थी हम पर भरोसा करते हैं",
@@ -3695,7 +3598,7 @@ export const translations = {
       founderVideo: {
         eyebrow: "डॉ. कपिल की ओर से, सीधे",
         title: "क्वांटम स्पीड रीडिंग अलग क्यों है",
-        desc: "डॉ. कपिल देव शर्मा की ओर से एक संक्षिप्त परिचय — एक इंग्लिश प्रोफेसर, जिनके पास 15+ वर्षों का शिक्षण अनुभव है, और भारत में QSR के प्रणेता, जिन्होंने 2015 में देश में क्वांटम स्पीड रीडिंग की शुरुआत की। आप सीधे इस विधि के प्रणेता से सीख रहे हैं, किसी और की प्रणाली सिखाने वाले लाइसेंस-प्राप्त प्रशिक्षक से नहीं।",
+        desc: `${trainer.nameHi} की ओर से एक संक्षिप्त परिचय — शिक्षा और माइंड ट्रेनिंग में ${trainer.years.total} वर्ष, और ${trainer.qsrSinceYear} से क्वांटम स्पीड रीडिंग ट्रेनर। फैसला करने से पहले सुनें कि उनकी 30-दिवसीय विधि कैसे काम करती है।`,
         placeholderLabel: "वीडियो जल्द आ रहा है",
         ctaLabel: "इसके बजाय सवाल पूछें",
         videoTitle: "क्वांटम स्पीड रीडिंग परिचय",
@@ -3724,7 +3627,7 @@ export const translations = {
         app: {
           tag: "प्रतिदिन · ऐप में",
           title: "30-दिवसीय ऐप स्ट्रीक",
-          desc: "आपकी अपनी गति से, हर दिन, क्वांटम माइंड ऐप के भीतर ही प्रगतिशील संज्ञानात्मक अभ्यास।",
+          desc: `आपकी अपनी गति से, हर दिन, ${brand.appName} के भीतर ही प्रगतिशील संज्ञानात्मक अभ्यास।`,
           bullets: [
             "हर सत्र में WPM (शब्द प्रति मिनट) ट्रैक होता है, केवल एक बार नहीं",
             "गति के साथ-साथ समझ का भी स्कोर — कभी एक के बिना दूसरा नहीं",
@@ -3734,9 +3637,9 @@ export const translations = {
           ],
         },
         live: {
-          tag: "साप्ताहिक · डॉ. शर्मा के साथ लाइव",
+          tag: "साप्ताहिक · डॉ. कपिल देव शर्मा के साथ लाइव",
           title: "7 लाइव मास्टरक्लास सत्र",
-          desc: "30 दिनों में फैले इंटरैक्टिव सत्र, जहां डॉ. शर्मा व्यक्तिगत रूप से रीयल-टाइम में आपको तकनीक सिखाते हैं।",
+          desc: "30 दिनों में फैले इंटरैक्टिव सत्र, जहां डॉ. कपिल देव शर्मा व्यक्तिगत रूप से रीयल-टाइम में आपको तकनीक सिखाते हैं।",
           bullets: [
             "राइट-ब्रेन विज़ुअल रीडिंग — लाइव सिखाई जाती है, पहले से रिकॉर्ड नहीं",
             "सीधा प्रश्नोत्तर — अपनी खास अटकी हुई समस्या के बारे में पूछें",
@@ -3781,7 +3684,7 @@ export const translations = {
       documentMastery: {
         eyebrow: "ऐप में यह भी है",
         title: "AI Document Studio",
-        desc: "Quantum Mind app के अंदर मौजूद वही AI-पावर्ड Document Studio — कोई भी PDF, टेक्स्टबुक या रिसर्च पेपर अपलोड करें और उससे स्पीड-रीडिंग ड्रिल्स, माइंड मैप्स, और रिवीज़न नोट्स पाएं।",
+        desc: `${brand.appName} के अंदर मौजूद वही AI-पावर्ड Document Studio — कोई भी PDF, टेक्स्टबुक या रिसर्च पेपर अपलोड करें और उससे स्पीड-रीडिंग ड्रिल्स, माइंड मैप्स, और रिवीज़न नोट्स पाएं।`,
         items: [
           {
             title: "अपलोड करें और सीखें",
@@ -3867,27 +3770,27 @@ export const translations = {
           {
             question: "क्या यह पूर्ण शुरुआती के लिए मुश्किल है?",
             answer:
-              "नहीं। 30-दिवसीय संरचना यह मानकर चलती है कि आपको कोई पूर्व कौशल नहीं है और आपकी असली शुरुआत से आरंभ होती है — डॉ. शर्मा ने 2014 से अब तक 10,000+ विद्यार्थियों को इसमें मार्गदर्शन दिया है, जिनमें अधिकांश पूर्ण शुरुआती थे।",
+              "नहीं। 30-दिवसीय संरचना यह मानकर चलती है कि आपको कोई पूर्व कौशल नहीं है और आपकी असली शुरुआत से आरंभ होती है — डॉ. कपिल देव शर्मा 2015 से क्वांटम स्पीड रीडिंग सिखा रहे हैं, और अधिकांश विद्यार्थी पूर्ण शुरुआती के रूप में शुरू करते हैं।",
           },
           {
             question: "प्रतिदिन कितना समय देना होगा?",
             answer:
-              "ऐप में लगभग 10 मिनट प्रतिदिन, साथ ही डॉ. शर्मा के साथ सप्ताह में एक लाइव मास्टरक्लास सत्र। यह पूर्णकालिक नौकरी या पढ़ाई के शेड्यूल के साथ फिट होने के लिए बनाया गया है, उससे टकराने के लिए नहीं।",
+              "ऐप में लगभग 10 मिनट प्रतिदिन, साथ ही डॉ. कपिल देव शर्मा के साथ सप्ताह में एक लाइव मास्टरक्लास सत्र। यह पूर्णकालिक नौकरी या पढ़ाई के शेड्यूल के साथ फिट होने के लिए बनाया गया है, उससे टकराने के लिए नहीं।",
           },
           {
             question: "क्या यह हर आयु वर्ग के लिए काम करता है?",
             answer:
-              "हां — परीक्षा की तैयारी करने वाले विद्यार्थियों, कामकाजी पेशेवरों, और हर उम्र के आजीवन सीखने वालों ने यह मास्टरक्लास पूरा किया है। गति आपकी शुरुआती स्थिति के अनुसार ढल जाती है।",
+              "हां — परीक्षा की तैयारी करने वाले विद्यार्थियों, कामकाजी पेशेवरों, और हर उम्र के आजीवन सीखने वालों ने यह प्रोग्राम पूरा किया है। गति आपकी शुरुआती स्थिति के अनुसार ढल जाती है।",
           },
           {
             question: "क्या इसमें से कुछ वास्तव में मुफ़्त है?",
             answer:
-              "मास्टरक्लास खुद एक पूरी तरह से भुगतान वाला, परिणाम-उन्मुख प्रोग्राम है — ₹9,999 एकमुश्त में पूरा 30-दिवसीय पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव सेशन, और पूरे समय ऐप एक्सेस मिलता है। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, क्योंकि न तो अकेले ऐप और न ही अकेले लाइव सेशन पूरा परिणाम देते हैं — दोनों एक साथ काम करने के लिए बनाए गए हैं। जो मुफ़्त है: हमारा 2-मिनट रीडिंग स्पीड टेस्ट, और डॉ. शर्मा के साथ हमारा मुफ़्त 45-मिनट लाइव इंट्रो सेशन — नीचे देखें।",
+              `${programs.qsr.nameHi} खुद एक पूरी तरह से भुगतान वाला, परिणाम-उन्मुख प्रोग्राम है — ₹9,999 एकमुश्त में पूरा 30-दिवसीय पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव सेशन, और पूरे समय ऐप एक्सेस मिलता है। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, क्योंकि न तो अकेले ऐप और न ही अकेले लाइव सेशन पूरा परिणाम देते हैं — दोनों एक साथ काम करने के लिए बनाए गए हैं। जो मुफ़्त है: हमारा 2-मिनट रीडिंग स्पीड टेस्ट, और डॉ. कपिल देव शर्मा के साथ हमारा मुफ़्त 45-मिनट लाइव इंट्रो सेशन — नीचे देखें।`,
           },
           {
             question: "₹9,999 में मुझे वास्तव में क्या मिलता है?",
             answer:
-              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
+              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
           },
           {
             question: "अगर यह मेरे लिए काम नहीं करता तो?",
@@ -3922,19 +3825,19 @@ export const translations = {
         structureLine: "आपके 30 दिनों में 7 लाइव क्लासेज़ · दैनिक अभ्यास ऐप के ज़रिए",
       },
       stickyBar: {
-        text: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास",
+        text: programs.qsr.nameHi,
         price: "₹9,999 · एकमुश्त",
         cta: "अपनी बैच सीट सुरक्षित करें",
       },
       whatsapp: {
         bubble: "QSR बैच के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
         button: "WhatsApp पर चैट करें",
-        ariaLabel: "क्वांटम स्पीड रीडिंग मास्टरक्लास के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+        ariaLabel: `${programs.qsr.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
       },
       mumbaiWorkshopCard: {
         badge: "नया · पायलट बैच",
         title: "यह भी उपलब्ध: मुंबई में लाइव, व्यक्तिगत रूप से",
-        desc: "इस मास्टरक्लास का एक 2-दिवसीय व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
+        desc: "इस प्रोग्राम का एक 2-दिवसीय व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
         meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
         cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
       },
@@ -3944,9 +3847,9 @@ export const translations = {
         eyebrow: "लाइव, व्यक्तिगत रूप से · मुंबई · पायलट बैच",
         headline: "5 गुना तेज़ पढ़ें।",
         headlineEm: "मुंबई में लाइव, व्यक्तिगत रूप से।",
-        sub: "30-दिवसीय क्वांटम स्पीड रीडिंग मास्टरक्लास का एक 2-दिवसीय, व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक रियल-टाइम कॉग्निटिव व फोकस एंगेजमेंट डेमो, और आपकी रीडिंग स्पीड दिन 1 और फिर एक रात के अंतराल के बाद दिन 2 पर मापी जाती है। इसके बाद बाकी 28 दिन उसी ऐप के ज़रिए जारी रहते हैं जो हमारे ऑनलाइन ट्रैक में इस्तेमाल होता है।",
+        sub: `${programs.qsr.nameHi} का एक 2-दिवसीय, व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक रियल-टाइम कॉग्निटिव व फोकस एंगेजमेंट डेमो, और आपकी रीडिंग स्पीड दिन 1 और फिर एक रात के अंतराल के बाद दिन 2 पर मापी जाती है। इसके बाद बाकी 28 दिन उसी ऐप के ज़रिए जारी रहते हैं जो हमारे ऑनलाइन ट्रैक में इस्तेमाल होता है।`,
         ctaPrimary: "पायलट बैच सीट सुरक्षित करें",
-        ctaPrimaryMeta: "₹9,999 · ऑनलाइन मास्टरक्लास जैसी ही कीमत",
+        ctaPrimaryMeta: "₹9,999 · ऑनलाइन प्रोग्राम जैसी ही कीमत",
         ctaSecondary: "2-दिवसीय शेड्यूल देखें",
         badge: "2-दिवसीय लाइव इवेंट",
       },
@@ -4021,7 +3924,7 @@ export const translations = {
       },
       pricing: {
         title: "₹9,999",
-        priceNote: "एकमुश्त — ऑनलाइन मास्टरक्लास जैसी ही कीमत। इसमें मुंबई के दोनों दिन और उसके बाद आने वाला पूरा 30-दिवसीय ऐप पाठ्यक्रम शामिल है।",
+        priceNote: "एकमुश्त — ऑनलाइन प्रोग्राम जैसी ही कीमत। इसमें मुंबई के दोनों दिन और उसके बाद आने वाला पूरा 30-दिवसीय ऐप पाठ्यक्रम शामिल है।",
         addOnNote: "ऊपर बताई गई व्यक्तिगत एंगेजमेंट रिपोर्ट एक अलग, वैकल्पिक ऐड-ऑन है।",
         cta: "पायलट बैच सीट सुरक्षित करें",
       },
@@ -4051,7 +3954,7 @@ export const translations = {
           },
           {
             question: "Refund policy in-person workshop के लिए क्या है?",
-            answer: "वही रिफ़ंड व कैंसिलेशन नीति जो ऑनलाइन मास्टरक्लास को कवर करती है, यहां भी लागू होती है — पात्रता अवधि और रिफ़ंड का अनुरोध कैसे करें, इसके लिए हमारा पूरा रिफ़ंड व कैंसिलेशन नीति पेज देखें। चूंकि इस वर्कशॉप में लाइव व्यक्तिगत दिन शामिल हैं, हमारी परिणाम गारंटी उसी तरह आंकी जाती है: पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें (दोनों व्यक्तिगत दिन और उसके बाद के ऐप-आधारित दिन), और अगर आपकी रीडिंग स्पीड और समझ में मापने योग्य सुधार नहीं होता, तो आप कवर हैं।",
+            answer: "वही रिफ़ंड व कैंसिलेशन नीति जो ऑनलाइन प्रोग्राम को कवर करती है, यहां भी लागू होती है — पात्रता अवधि और रिफ़ंड का अनुरोध कैसे करें, इसके लिए हमारा पूरा रिफ़ंड व कैंसिलेशन नीति पेज देखें। चूंकि इस वर्कशॉप में लाइव व्यक्तिगत दिन शामिल हैं, हमारी परिणाम गारंटी उसी तरह आंकी जाती है: पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें (दोनों व्यक्तिगत दिन और उसके बाद के ऐप-आधारित दिन), और अगर आपकी रीडिंग स्पीड और समझ में मापने योग्य सुधार नहीं होता, तो आप कवर हैं।",
           },
         ],
         ctaLabel: "WhatsApp पर पूछें",
@@ -4181,7 +4084,7 @@ export const translations = {
       hero: {
         eyebrow: "ऑनलाइन · 2014 से · छोटा समूह",
         headline: "अपने उच्च मन को जगाएं",
-        headlineEm: "11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट",
+        headlineEm: programs.onlineRetreat.nameHi,
         sub: "कोई और मेडिटेशन ऐप नहीं, जो आपको वहीं छोड़ दे जहां से आपने शुरुआत की थी। यह असली क्रिया योग, प्राण, और ब्रह्मांडीय ऊर्जा में एक गहन, लाइव, 11-दिवसीय यात्रा है — प्रतिरात डॉ. कपिल देव शर्मा द्वारा मार्गदर्शित, जो 2014 से व्यक्तिगत रूप से यह मार्ग सिखा रहे हैं।",
         ctaPrimary: "अपनी रिट्रीट सीट सुरक्षित करें",
         ctaPrimaryMeta: "Razorpay के ज़रिए सुरक्षित चेकआउट",
@@ -4224,7 +4127,7 @@ export const translations = {
       disciplines: {
         eyebrow: "आप क्या सीखेंगे",
         title: "छह अनुशासन, एक 11-दिवसीय यात्रा",
-        desc: "हर रात पिछली रात पर आधारित होती है, डॉ. शर्मा द्वारा लाइव मार्गदर्शित — कभी कोई सिद्धांत नहीं जिसे आप सिर्फ पढ़ें, हमेशा एक अभ्यास जिसे आप महसूस करें।",
+        desc: "हर रात पिछली रात पर आधारित होती है, डॉ. कपिल देव शर्मा द्वारा लाइव मार्गदर्शित — कभी कोई सिद्धांत नहीं जिसे आप सिर्फ पढ़ें, हमेशा एक अभ्यास जिसे आप महसूस करें।",
         items: [
           {
             title: "मानसिक तरंग संचार (टेलीपैथी)",
@@ -4259,7 +4162,7 @@ export const translations = {
         cards: [
           {
             title: "2014 से पढ़ा रहे हैं",
-            desc: "इसी मार्ग पर विद्यार्थियों का व्यक्तिगत रूप से 12+ वर्षों से मार्गदर्शन — कोई हाल ही में शुरू हुआ ट्रेंड-आधारित कार्यक्रम नहीं।",
+            desc: "इसी मार्ग पर 2014 से विद्यार्थियों का व्यक्तिगत रूप से मार्गदर्शन — कोई हाल ही में शुरू हुआ ट्रेंड-आधारित कार्यक्रम नहीं।",
           },
           {
             title: "150+ असली विद्यार्थी समीक्षाएं",
@@ -4267,22 +4170,22 @@ export const translations = {
           },
           {
             title: "हर बैच में छोटा समूह",
-            desc: "हर बैच जानबूझकर छोटा रखा जाता है ताकि डॉ. शर्मा वास्तव में आपका मार्गदर्शन कर सकें, किसी भीड़ को भाषण न दे रहे हों।",
+            desc: "हर बैच जानबूझकर छोटा रखा जाता है ताकि डॉ. कपिल देव शर्मा वास्तव में आपका मार्गदर्शन कर सकें, किसी भीड़ को भाषण न दे रहे हों।",
           },
           {
             title: "हर रात व्यक्तिगत रूप से मार्गदर्शित",
-            desc: "कोई पहले से रिकॉर्ड नहीं, किसी सहायक प्रशिक्षक को नहीं सौंपा गया — डॉ. शर्मा, लाइव, सभी 11 रातें।",
+            desc: "कोई पहले से रिकॉर्ड नहीं, किसी सहायक प्रशिक्षक को नहीं सौंपा गया — डॉ. कपिल देव शर्मा, लाइव, सभी 11 रातें।",
           },
         ],
       },
       liveStructure: {
         eyebrow: "11 रातें कैसे काम करती हैं",
         title: "लाइव मार्गदर्शन, कोई पहले से रिकॉर्डेड कोर्स नहीं",
-        desc: "11 में से हर रात, शाम 7:30 से रात 10:30 तक, आप डॉ. शर्मा के साथ लाइव होते हैं — कोई वीडियो लाइब्रेरी नहीं जिसे आप जब सुविधाजनक हो तब पूरा करें।",
+        desc: "11 में से हर रात, शाम 7:30 से रात 10:30 तक, आप डॉ. कपिल देव शर्मा के साथ लाइव होते हैं — कोई वीडियो लाइब्रेरी नहीं जिसे आप जब सुविधाजनक हो तब पूरा करें।",
         points: [
           {
             title: "प्रतिरात लाइव सत्र",
-            desc: "रिट्रीट की हर रात डॉ. शर्मा के साथ एक लाइव मार्गदर्शित सत्र, शाम 7:30 – रात 10:30 — रीयल-टाइम में, पहले से रिकॉर्ड नहीं।",
+            desc: "रिट्रीट की हर रात डॉ. कपिल देव शर्मा के साथ एक लाइव मार्गदर्शित सत्र, शाम 7:30 – रात 10:30 — रीयल-टाइम में, पहले से रिकॉर्ड नहीं।",
           },
           {
             title: "इंटरैक्टिव अभ्यास",
@@ -4290,7 +4193,7 @@ export const translations = {
           },
           {
             title: "सीधा मार्गदर्शन",
-            desc: "रिट्रीट के दौरान सवालों के जवाब सीधे डॉ. शर्मा देते हैं, किसी सपोर्ट टिकट के ज़रिए नहीं।",
+            desc: "रिट्रीट के दौरान सवालों के जवाब सीधे डॉ. कपिल देव शर्मा देते हैं, किसी सपोर्ट टिकट के ज़रिए नहीं।",
           },
         ],
       },
@@ -4322,7 +4225,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "असली विद्यार्थियों को देखें",
-        title: "12+ वर्षों के असली रिट्रीट्स से, 150+ असली समीक्षाएं",
+        title: "2014 से असली रिट्रीट्स की 150+ असली समीक्षाएं",
         desc: "छह असली विद्यार्थी, रिट्रीट पूरा करने के बाद फिल्माए गए — बिना किसी स्क्रिप्ट के। देखने के लिए किसी भी वीडियो पर टैप करें।",
         ctaLabel: "और वीडियो समीक्षाएं",
       },
@@ -4333,12 +4236,12 @@ export const translations = {
           {
             question: "क्या मुझे ध्यान या ऊर्जा-कार्य का कोई पूर्व अनुभव चाहिए?",
             answer:
-              "किसी विशेष विश्वास प्रणाली या पूर्व अनुभव की ज़रूरत नहीं है। क्रिया योग 11 रातों में धीरे-धीरे आगे बढ़ता है — आप अपना खुलापन लाएं, डॉ. शर्मा हर कदम पर विधि बताएंगे।",
+              "किसी विशेष विश्वास प्रणाली या पूर्व अनुभव की ज़रूरत नहीं है। क्रिया योग 11 रातों में धीरे-धीरे आगे बढ़ता है — आप अपना खुलापन लाएं, डॉ. कपिल देव शर्मा हर कदम पर विधि बताएंगे।",
           },
           {
             question: "क्या ऊर्जा कार्य — कुंडलिनी, समाधि — वाकई सुरक्षित है?",
             answer:
-              "हर तकनीक चरण-दर-चरण, लाइव सिखाई जाती है, और हर रात डॉ. शर्मा गति का मार्गदर्शन करते हैं। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान या ऊर्जा-केंद्रित कार्य तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि गति उसके अनुसार समायोजित की जा सके। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
+              "हर तकनीक चरण-दर-चरण, लाइव सिखाई जाती है, और हर रात डॉ. कपिल देव शर्मा गति का मार्गदर्शन करते हैं। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान या ऊर्जा-केंद्रित कार्य तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि गति उसके अनुसार समायोजित की जा सके। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
           },
           {
             question: "क्रिया योग वास्तव में क्या है?",
@@ -4348,7 +4251,7 @@ export const translations = {
           {
             question: "प्रतिदिन कितना समय देना होगा?",
             answer:
-              "हर दिन में डॉ. शर्मा के साथ शाम 7:30 से रात 10:30 तक एक लाइव सत्र और मार्गदर्शित अभ्यास शामिल है — 11-दिवसीय बैच के हर दिन यही समय।",
+              "हर दिन में डॉ. कपिल देव शर्मा के साथ शाम 7:30 से रात 10:30 तक एक लाइव सत्र और मार्गदर्शित अभ्यास शामिल है — 11-दिवसीय बैच के हर दिन यही समय।",
           },
           {
             question: "लाइव सत्र किस समय होते हैं?",
@@ -4376,11 +4279,11 @@ export const translations = {
       finalCta: {
         eyebrow: "जब आप तैयार हों",
         title: "आपका जागरण एक फैसले से शुरू होता है",
-        desc: "नामांकन की पुष्टि डॉ. कपिल की अपनी टीम व्यक्तिगत रूप से करती है — कोई ऑटोमेटेड सिस्टम नहीं। बारह साल, 150+ असली विद्यार्थी, एक समय में एक छोटा समूह। अगले बैच में अपनी सीट बुक करें।",
+        desc: "नामांकन की पुष्टि डॉ. कपिल की अपनी टीम व्यक्तिगत रूप से करती है — कोई ऑटोमेटेड सिस्टम नहीं। 2014 से, 150+ असली विद्यार्थी, एक समय में एक छोटा समूह। अगले बैच में अपनी सीट बुक करें।",
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
       },
       stickyBar: {
-        text: "11-दिवसीय ऑनलाइन ध्यान एंड इनर मास्टरी रिट्रीट",
+        text: programs.onlineRetreat.nameHi,
         price: "छोटा समूह · सीमित नामांकन",
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
       },
@@ -4392,9 +4295,9 @@ export const translations = {
     },
     residentialLanding: {
       hero: {
-        eyebrow: "रेजिडेंशियल रिट्रीट्स · 2014 से · छोटे समूह",
+        eyebrow: "रेजिडेंशियल मेडिटेशन रिट्रीट्स · 2014 से · छोटे समूह",
         headline: "पूरी तरह दूर हट जाएं।",
-        headlineEm: "लोनावला और ऋषिकेश में रेजिडेंशियल रिट्रीट्स",
+        headlineEm: programs.residentialRetreat.nameHi,
         sub: "आपने बिस्तर पर मेडिटेशन किया, ट्रैफिक में किया, एक ऐप के साथ किया जो कहता रहा बस सांस लें। यह काम नहीं आया — इसलिए नहीं कि आप असफल हुए, बल्कि इसलिए कि एक 10-मिनट की रिकॉर्डिंग वहां तक कभी नहीं पहुंच सकती जहां थकान असल में रहती है। यह डॉ. कपिल देव शर्मा हैं, आपके साथ उसी कमरे में, कई दिनों तक — क्रिया योग, प्राण, और ब्रह्मांडीय ऊर्जा का काम, सीधे मार्गदर्शन में, 2014 से।",
         ctaPrimary: "अपनी रेजिडेंशियल सीट सुरक्षित करें",
         ctaPrimaryMeta: "डॉ. कपिल की टीम द्वारा व्यक्तिगत रूप से पुष्टि",
@@ -4582,7 +4485,7 @@ export const translations = {
           {
             question: "क्या ऊर्जा कार्य — कुंडलिनी, समाधि — वाकई सुरक्षित है?",
             answer:
-              "हर तकनीक चरण-दर-चरण सिखाई जाती है, सीधी व्यक्तिगत निगरानी में। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान या ऊर्जा-केंद्रित कार्य तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि डॉ. शर्मा उसके अनुसार गति समायोजित कर सकें। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
+              "हर तकनीक चरण-दर-चरण सिखाई जाती है, सीधी व्यक्तिगत निगरानी में। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान या ऊर्जा-केंद्रित कार्य तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि डॉ. कपिल देव शर्मा उसके अनुसार गति समायोजित कर सकें। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
           },
           {
             question: "यह आपके 11-दिवसीय ऑनलाइन रिट्रीट से कैसे अलग है?",
@@ -4610,24 +4513,22 @@ export const translations = {
         cta: "अपनी रेजिडेंशियल सीट सुरक्षित करें",
       },
       stickyBar: {
-        text: "रेजिडेंशियल रिट्रीट्स — लोनावला और ऋषिकेश",
+        text: programs.residentialRetreat.nameHi,
         price: "₹35,000 प्रति व्यक्ति से शुरू",
         cta: "अपनी सीट सुरक्षित करें",
       },
       whatsapp: {
-        bubble: "रेजिडेंशियल रिट्रीट के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
+        bubble: `${programs.residentialRetreat.nameHi} के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।`,
         button: "WhatsApp पर चैट करें",
-        ariaLabel: "रेजिडेंशियल रिट्रीट्स के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+        ariaLabel: `${programs.residentialRetreat.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
       },
     },
     mentoringLanding: {
       hero: {
         eyebrowBadges: ["निजी", "संरचित", "सीमित उपलब्धता"],
-        headline: "आपकी स्थिति पर केंद्रित काम, किसी ऐसे व्यक्ति के साथ जो 26 वर्षों से यह कर रहा है।",
+        headline: `आपकी स्थिति पर केंद्रित काम, किसी ऐसे व्यक्ति के साथ जो ${trainer.years.total} वर्षों से यह कर रहा है।`,
         sub: "ओवरथिंकिंग, फोकस, और व्यक्तिगत विकास के लिए वन-ऑन-वन मेंटरिंग — आप वास्तव में जिससे जूझ रहे हैं उसके अनुसार ढाला गया, किसी तय पाठ्यक्रम के अनुसार नहीं।",
         guideLabel: "आपके गुरु",
-        guideName: "डॉ. कपिल देव शर्मा",
-        guideCredential: "प्रोफेसर · शोधकर्ता · लाइफ कोच · 26 वर्ष",
         ctaPrimary: "अभी आवेदन करें",
       },
       fit: {
@@ -4718,14 +4619,6 @@ export const translations = {
       },
       guide: {
         eyebrow: "गुरु",
-        title: "डॉ. कपिल देव शर्मा",
-        credential: "प्रोफेसर · शोधकर्ता · लाइफ कोच · 26 वर्षों का अनुभव",
-        bio: "डॉ. कपिल देव शर्मा 26 वर्षों का अनुभव लाते हैं — औपचारिक शिक्षा में 15 वर्ष प्रोफेसर और शोधकर्ता के रूप में, और 11 वर्ष लाइफ कोच और माइंड ट्रेनर के रूप में। यही शैक्षणिक कठोरता और प्रत्यक्ष कोचिंग अभ्यास का मेल तय करता है कि सेशंस कैसे बनाए जाते हैं।",
-        stats: [
-          { value: "26", label: "कुल वर्ष" },
-          { value: "15", label: "वर्ष प्रोफेसर" },
-          { value: "11", label: "वर्ष कोचिंग" },
-        ],
         quote:
           "ज़्यादातर लोग पहले से जानते हैं कि उन्हें क्या बदलना है। मुश्किल काम यह समझना है कि उन्होंने अब तक ऐसा क्यों नहीं किया — और वे स्थितियां बनाना जिनमें यह संभव हो सके।",
       },
@@ -4757,12 +4650,12 @@ export const translations = {
           {
             question: "यह ग्रुप प्रोग्राम्स से कैसे अलग है?",
             answer:
-              "ग्रुप प्रोग्राम्स (जैसे 30-दिवसीय मास्टरक्लास या 11-दिवसीय रिट्रीट) एक तय शेड्यूल पर चलते हैं, पूरे बैच के लिए मानकीकृत सामग्री के साथ। यह निजी, वन-ऑन-वन है, और पूरी तरह आपकी अपनी स्थिति के अनुसार ढाला गया है — गति, फोकस क्षेत्र, और प्रारूप आपके अनुसार समायोजित होते हैं, इसके उलट नहीं।",
+              `ग्रुप प्रोग्राम्स (जैसे ${programs.qsr.nameHi} या ${programs.onlineRetreat.nameHi}) एक तय शेड्यूल पर चलते हैं, पूरे बैच के लिए मानकीकृत सामग्री के साथ। यह निजी, वन-ऑन-वन है, और पूरी तरह आपकी अपनी स्थिति के अनुसार ढाला गया है — गति, फोकस क्षेत्र, और प्रारूप आपके अनुसार समायोजित होते हैं, इसके उलट नहीं।`,
           },
           {
             question: "अगर मुझे यकीन नहीं है कि मुझे किस चीज़ में मदद चाहिए?",
             answer:
-              "यही वजह है कि संक्षिप्त बातचीत का चरण मौजूद है। आवेदन करने से पहले आपको स्पष्ट निदान की ज़रूरत नहीं — बस इतना अंदाज़ा काफी है कि क्या ठीक से काम नहीं कर रहा। डॉ. शर्मा उस पहली बातचीत में ही असली फोकस क्षेत्र पहचानने में मदद करते हैं, किसी भी योजना के प्रस्तावित होने से पहले।",
+              "यही वजह है कि संक्षिप्त बातचीत का चरण मौजूद है। आवेदन करने से पहले आपको स्पष्ट निदान की ज़रूरत नहीं — बस इतना अंदाज़ा काफी है कि क्या ठीक से काम नहीं कर रहा। डॉ. कपिल देव शर्मा उस पहली बातचीत में ही असली फोकस क्षेत्र पहचानने में मदद करते हैं, किसी भी योजना के प्रस्तावित होने से पहले।",
           },
           {
             question: "क्या यह थेरेपी है?",
@@ -4777,12 +4670,12 @@ export const translations = {
         ],
       },
       whatsapp: {
-        bubble: "1-on-1 मेंटरिंग के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
+        bubble: `${programs.oneOnOneCoaching.nameHi} के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।`,
         button: "WhatsApp पर चैट करें",
-        ariaLabel: "1-on-1 मेंटरिंग के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+        ariaLabel: `${programs.oneOnOneCoaching.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
       },
       stickyBar: {
-        text: "पर्सनल क्लास — 1-on-1 इंटेंसिव मेंटरिंग",
+        text: programs.oneOnOneCoaching.nameHi,
         price: "निजी · पूरी तरह कस्टमाइज़्ड",
         cta: "अभी आवेदन करें",
       },
@@ -4790,11 +4683,11 @@ export const translations = {
     mindResetLanding: {
       hero: {
         eyebrow: "ओवरथिंकिंग और मानसिक स्पष्टता",
-        productName: "द 21-डे माइंड रीसेट सिस्टम™",
+        productName: programs.overthinkingReset.nameHi,
         headline: "अपने विचारों में उलझना बंद करें। अपने मन को समझना शुरू करें।",
         tagline: "अपने मन को समझें • मानसिक स्पष्टता बनाएं",
         sub: "रोज़ाना ट्रेनिंग, मेडिटेशन, और गाइडेड एक्टिविटी के 21 दिन। 6-महीने के एक्सेस के साथ डॉ. कपिल के लाइव सेशंस शामिल हैं।",
-        ctaPrimary: "अपना माइंड रीसेट शुरू करें — ₹499",
+        ctaPrimary: "अपना ओवरथिंकिंग रीसेट शुरू करें — ₹499",
         ctaSecondary: "मुफ़्त ओवरथिंकिंग टेस्ट लें",
         trustLine: "हिंदी ऑनलाइन प्रोग्राम • 21 दिन • गाइडेड लर्निंग • मेडिटेशन",
       },
@@ -4927,23 +4820,15 @@ export const translations = {
       },
       guide: {
         eyebrow: "आपके गुरु",
-        title: "डॉ. कपिल देव शर्मा",
-        credential: "प्रोफेसर · शोधकर्ता · लाइफ कोच · 26 वर्षों का अनुभव",
-        bio: "डॉ. कपिल देव शर्मा 26 वर्षों का अनुभव लाते हैं — औपचारिक शिक्षा में 15 वर्ष प्रोफेसर और शोधकर्ता के रूप में, और 11 वर्ष लाइफ कोच और माइंड ट्रेनर के रूप में। यही शैक्षणिक कठोरता और प्रत्यक्ष कोचिंग अभ्यास का मेल तय करता है कि यह कोर्स कैसे बनाया गया है।",
-        stats: [
-          { value: "26", label: "कुल वर्ष" },
-          { value: "15", label: "वर्ष प्रोफेसर" },
-          { value: "11", label: "वर्ष कोचिंग" },
-        ],
         quote:
           "ज़्यादातर लोग पहले से जानते हैं कि उन्हें क्या बदलना है। मुश्किल काम यह समझना है कि उन्होंने अब तक ऐसा क्यों नहीं किया — और वे स्थितियां बनाना जिनमें यह संभव हो सके।",
       },
       pricing: {
         eyebrow: "प्राइसिंग",
-        title: "आज ही अपनी माइंड रीसेट यात्रा शुरू करें",
+        title: "आज ही अपना ओवरथिंकिंग रीसेट शुरू करें",
         classplusNote: "आपका प्लान Classplus पर चेकआउट के समय चुना जाता है।",
         card1: {
-          name: "माइंड रीसेट स्टार्टर",
+          name: "ओवरथिंकिंग रीसेट — 1 महीना",
           price: "₹499",
           period: "1 महीने का एक्सेस",
           desc: "ट्रेनिंग, मेडिटेशन, गतिविधियों, और PDFs के साथ एक पूरा 21-दिवसीय हिंदी लर्निंग अनुभव — पूरी तरह सेल्फ-पेस्ड।",
@@ -4958,7 +4843,7 @@ export const translations = {
           cta: "₹499 में जुड़ें",
         },
         card2: {
-          name: "माइंड रीसेट एक्सटेंडेड",
+          name: "ओवरथिंकिंग रीसेट — 6 महीने",
           price: "₹999",
           period: "6 महीने का एक्सेस",
           desc: "डॉ. कपिल से लाइव मार्गदर्शन और अभ्यास के लिए ज़्यादा समय चाहिए? इसमें ₹499 प्लान का सब कुछ शामिल है, साथ ही डॉ. कपिल के साथ लाइव सेशंस।",
@@ -4992,7 +4877,7 @@ export const translations = {
         ctaLabel: "WhatsApp पर पूछें",
         items: [
           {
-            question: "द 21-डे माइंड रीसेट सिस्टम™ क्या है?",
+            question: `${programs.overthinkingReset.nameHi} क्या है?`,
             answer:
               "ओवरथिंकिंग को समझने, मानसिक स्पष्टता विकसित करने, और बेहतर मन की आदतें बनाने के लिए एक 21-दिवसीय गाइडेड हिंदी ऑनलाइन प्रोग्राम — दैनिक ट्रेनिंग वीडियो, मेडिटेशन, और गतिविधियों के ज़रिए।",
           },
@@ -5046,16 +4931,16 @@ export const translations = {
         eyebrow: "जब आप तैयार हों",
         headline: "आपके मन को आपके ध्यान की ज़रूरत है।",
         desc: "एक छोटे कदम से शुरू करें। सीखें, चिंतन करें, अभ्यास करें, और अपने विचारों के साथ एक बेहतर रिश्ता बनाएं।",
-        ctaPrimary: "अपना माइंड रीसेट शुरू करें — ₹499",
+        ctaPrimary: "अपना ओवरथिंकिंग रीसेट शुरू करें — ₹499",
         ctaSecondary: "मुफ़्त ओवरथिंकिंग टेस्ट लें",
       },
       whatsapp: {
-        bubble: "द 21-डे माइंड रीसेट सिस्टम के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
+        bubble: `${programs.overthinkingReset.nameHi} के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।`,
         button: "WhatsApp पर चैट करें",
-        ariaLabel: "द 21-डे माइंड रीसेट सिस्टम के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+        ariaLabel: `${programs.overthinkingReset.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
       },
       stickyBar: {
-        text: "द 21-डे माइंड रीसेट सिस्टम",
+        text: programs.overthinkingReset.nameHi,
         price: "₹499 · 1-महीना एक्सेस",
         cta: "₹499 में शुरू करें",
       },
@@ -5137,8 +5022,8 @@ export const translations = {
         title: "आपकी पूरी रिपोर्ट",
         overallLabel: "ओवरऑल",
         courseTitle: "आगे क्या करें, समझ नहीं आ रहा?",
-        courseDesc: "द 21-डे माइंड रीसेट सिस्टम एक संरचित, दैनिक हिंदी प्रोग्राम है जो ठीक इसी तरह की जागरूकता बनाने के लिए बनाया गया है।",
-        courseCta: "द 21-डे माइंड रीसेट सिस्टम एक्सप्लोर करें",
+        courseDesc: `${programs.overthinkingReset.nameHi} एक संरचित, दैनिक हिंदी प्रोग्राम है जो ठीक इसी तरह की जागरूकता बनाने के लिए बनाया गया है।`,
+        courseCta: `${programs.overthinkingReset.nameHi} एक्सप्लोर करें`,
       },
       disclaimer: "यह एक self-awareness tool है, कोई clinical diagnosis नहीं।",
       restartLabel: "टेस्ट दोबारा लें",

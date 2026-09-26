@@ -1,4 +1,5 @@
 import { SITE_URL } from './siteUrl'
+import { brand, trainer } from '@/config/site.config'
 
 // schema.org Organization JSON-LD — same server-side, escape-then-inject
 // pattern as faqSchema.ts/courseSchema.ts. Rendered on the homepage and
@@ -10,13 +11,13 @@ export function buildOrganizationSchema(): string {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Mind Ur Mind',
+    name: brand.name,
     url: SITE_URL,
-    logo: `${SITE_URL}/founder-warm.jpg`,
-    foundingDate: '2014',
+    logo: `${SITE_URL}${trainer.photo.src}`,
+    foundingDate: String(brand.foundedYear),
     founder: {
       '@type': 'Person',
-      name: 'Dr. Kapil Dev Sharma',
+      name: trainer.name,
     },
     address: {
       '@type': 'PostalAddress',

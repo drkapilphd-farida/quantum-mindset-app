@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
 import { buildPageMetadata } from '@/lib/seo/metadata'
+import { programs } from '@/config/site.config'
 
 // New, dedicated Refund & Cancellation Policy (see the "Pre-Launch Audit
 // Fix Pass" task, Phase 3) — this page didn't exist before. The only
@@ -23,7 +24,7 @@ import { buildPageMetadata } from '@/lib/seo/metadata'
 export const metadata: Metadata = buildPageMetadata({
   path: '/refund-policy',
   title: 'Refund & Cancellation Policy — Mind Ur Mind',
-  description: 'Refund and cancellation terms for the 30-Day Quantum Speed Reading Masterclass, Quantum Mindset & Habit Builder, retreats, and other Mind Ur Mind programs.',
+  description: `Refund and cancellation terms for the ${programs.qsr.name}, ${programs.focusStarter.name}, retreats, and other Mind Ur Mind programs.`,
 })
 
 const LAST_UPDATED = 'September 2026'
@@ -33,12 +34,12 @@ export default function RefundPolicyPage(): React.JSX.Element {
     <LegalPageShell title="Refund & Cancellation Policy" lastUpdated={LAST_UPDATED} brandName="Mind Ur Mind">
       <p className="text-muted-foreground leading-relaxed">
         This policy explains how refunds and cancellations work across Mind Ur Mind&rsquo;s programs. It&rsquo;s
-        organized by program, since our 30-Day Quantum Speed Reading Masterclass carries a specific results
+        organized by program, since our {programs.qsr.name} carries a specific results
         guarantee that our other programs don&rsquo;t.
       </p>
 
       <section>
-        <h2 className={legalStyles.h2}>30-Day Quantum Speed Reading Masterclass — 100% Results Guarantee</h2>
+        <h2 className={legalStyles.h2}>{programs.qsr.name} — 100% Results Guarantee</h2>
         <p className={legalStyles.p}>
           If you complete the full 30-day protocol as instructed — every daily app session, and all 7 live
           masterclass sessions with Dr. Kapil Dev Sharma — and your reading speed (WPM) and comprehension haven&rsquo;t
@@ -78,9 +79,9 @@ export default function RefundPolicyPage(): React.JSX.Element {
       </section>
 
       <section>
-        <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Mentoring, Habit Builder, Courses)</h2>
+        <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Coaching, Focus & Reading Starter, Courses)</h2>
         <p className={legalStyles.p}>
-          These programs don&rsquo;t carry the Masterclass&rsquo;s results guarantee, since they&rsquo;re not
+          These programs don&rsquo;t carry the 30-Day Live Program&rsquo;s results guarantee, since they&rsquo;re not
           structured around a measurable WPM/comprehension checkpoint the way Quantum Speed Reading is.
         </p>
         <ul className={legalStyles.list}>
@@ -90,17 +91,17 @@ export default function RefundPolicyPage(): React.JSX.Element {
             we&rsquo;ll offer to move your seat to a future batch where one is available.
           </li>
           <li>
-            <strong>1-on-1 Mentoring:</strong> refundable in full if canceled before your first session. Once your
+            <strong>{programs.oneOnOneCoaching.name}:</strong> refundable in full if canceled before your first session. Once your
             first session has taken place, remaining unused sessions in a package may be refunded on a pro-rated
             basis at our discretion — message us to discuss your specific situation.
           </li>
           <li>
-            <strong>Quantum Mind &amp; Habit Builder:</strong> Days 1-7 are free — nothing is charged, so there&rsquo;s
+            <strong>{programs.focusStarter.name}:</strong> Days 1-7 are free — nothing is charged, so there&rsquo;s
             nothing to refund. The ₹99 one-time payment to continue past Day 7 is non-refundable once paid, since it
             unlocks the remaining content immediately.
           </li>
           <li>
-            <strong>Self-paced courses (e.g. the Overthinking Mastery Course):</strong> refundable within 7 days of
+            <strong>Self-paced courses (e.g. the {programs.overthinkingReset.name}):</strong> refundable within 7 days of
             purchase if you haven&rsquo;t completed more than 20% of the course content.
           </li>
         </ul>

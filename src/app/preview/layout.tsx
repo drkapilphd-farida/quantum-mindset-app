@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { AppShell } from '@/components/shell/AppShell'
 import { PREVIEW_NAV_ITEMS } from './navConfig'
+import { brand } from '@/config/site.config'
 
 // AI Learning Studio™'s shell — same protected-layout pattern as
 // `(dashboard)/layout.tsx` (auth check → redirect → fetch profile →
@@ -27,7 +28,7 @@ export default async function PreviewLayout({
 
   return (
     <AppShell
-      brandLabel="Quantum Mind Learning Lab™"
+      brandLabel={brand.appName}
       brandHref="/preview/dashboard"
       navItems={PREVIEW_NAV_ITEMS}
       fullName={profile?.fullName ?? null}

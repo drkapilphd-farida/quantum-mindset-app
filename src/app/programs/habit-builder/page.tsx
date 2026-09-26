@@ -11,11 +11,12 @@ import HabitBuilderFaq from '@/components/habit-builder/HabitBuilderFaq'
 import Footer from '@/components/Footer'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import { WHATSAPP_HABIT_BUILDER_INQUIRY_LINK } from '@/config/whatsappSupportLink'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/programs/habit-builder',
   ownOgImage: true,
-  title: 'Quantum Mindset & Habit Builder™ — 21-Day Program | Mind Ur Mind',
+  title: `${programs.focusStarter.name} | Mind Ur Mind`,
   description:
     'A 21-day guided program pairing daily reading practice with focus and memory exercises. Free for Days 1–7, then a one-time ₹99 payment to continue — never a subscription.',
 })

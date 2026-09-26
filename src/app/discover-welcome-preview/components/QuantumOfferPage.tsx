@@ -5,6 +5,7 @@ import { motion, type Variants } from 'framer-motion'
 import { ArrowRight, Brain, Check, Compass, Eye, Sparkles, Target, X, Zap } from 'lucide-react'
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
 import { cn } from '@/lib/utils'
+import { brand } from '@/config/site.config'
 
 type QuantumOfferPageProps = {
   fullName: string
@@ -134,7 +135,7 @@ export function QuantumOfferPage({ fullName, readingWpm, onClaimAccess }: Quantu
           className="flex items-center justify-center gap-2.5"
         >
           <LivingBrainLogo size={28} animated={false} />
-          <span className="font-heading text-sm font-semibold tracking-tight text-foreground">Quantum Mind</span>
+          <span className="font-heading text-sm font-semibold tracking-tight text-foreground">{brand.appName}</span>
         </motion.div>
 
         {/* Section 1 — Personalized Assessment Hook */}
@@ -213,7 +214,7 @@ export function QuantumOfferPage({ fullName, readingWpm, onClaimAccess }: Quantu
         >
           <div className="text-center">
             <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              The 5 Pillars of Quantum Mind
+              The 5 Pillars of the {brand.appName}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">Five compounding abilities. The first four unlock the fifth.</p>
           </div>
@@ -287,10 +288,10 @@ export function QuantumOfferPage({ fullName, readingWpm, onClaimAccess }: Quantu
           className="mt-16 flex flex-col items-center gap-6 text-center"
         >
           <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Your Quantum Mind Is Waiting to Be Unlocked.
+            Your Mind Is Waiting to Be Unlocked.
           </h2>
           <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-            This is where conscious effort ends and Quantum Mind begins.
+            This is where conscious effort ends and real change begins.
           </p>
 
           <motion.button
@@ -307,7 +308,7 @@ export function QuantumOfferPage({ fullName, readingWpm, onClaimAccess }: Quantu
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
             )}
           >
-            🔥 Claim My Full Quantum Mind Program Access
+            🔥 Claim My Full {brand.appName} Access
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
           </motion.button>
         </motion.section>

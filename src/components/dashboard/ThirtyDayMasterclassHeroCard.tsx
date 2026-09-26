@@ -11,6 +11,7 @@ import {
   getHighestUnlockedDay,
   loadCurriculumProgress,
 } from '@/features/thirty-day-curriculum/curriculumProgress'
+import { programs } from '@/config/site.config'
 
 const CURRICULUM_ROUTE = '/labs/quantum-speed-reading/thirty-day-curriculum'
 
@@ -53,7 +54,7 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex w-fit items-center rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold tracking-wider text-emerald-700 uppercase dark:text-emerald-400">
-                30-Day Masterclass
+                {programs.qsr.name}
               </span>
               {currentStreak > 0 && (
                 <span

@@ -1,5 +1,6 @@
 // Server-only. Never import this from client components.
 import Anthropic from '@anthropic-ai/sdk'
+import { brand } from '@/config/site.config'
 
 export type AdaptiveCoachInput = {
   studentName: string
@@ -57,7 +58,7 @@ export async function generateAdaptiveCoachMessage(input: AdaptiveCoachInput): P
     const { studentName, difficultyLevelName, completedSessionCount, currentStreak, visualReadiness, observationJournalUsageRate, recommendedGoal, recommendedChallenge } = input
     const first = studentName.split(' ')[0]
 
-    const prompt = `You are the Adaptive Coach for the Visual Adaptation Engine™, part of Quantum Mind Learning Lab's Visual Intelligence Lab™. This is a deterministic coaching engine, not machine learning — you only comment on real numbers already computed.
+    const prompt = `You are the Adaptive Coach for the Visual Adaptation Engine™, part of the ${brand.appName}'s Visual Intelligence Lab™. This is a deterministic coaching engine, not machine learning — you only comment on real numbers already computed.
 
 Student: ${first}
 Difficulty level: ${difficultyLevelName}

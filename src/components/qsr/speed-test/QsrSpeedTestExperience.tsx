@@ -16,6 +16,7 @@ import {
   type SpeedTestPassage,
   type SpeedTestPersonaId,
 } from "./speedTestContent";
+import { programs } from '@/config/site.config'
 
 // Reading Speed Test™ — a free lead-magnet tool, NOT the paid program.
 // Every stage's copy is written to keep that distinction explicit (see
@@ -464,7 +465,7 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
                 href="/programs/quantum-speed-reading#pricing"
                 className="flex w-full items-center justify-center gap-2 rounded-sm bg-gold px-7 py-4 text-[15px] font-semibold text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]"
               >
-                See the 30-Day Masterclass <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                See the {programs.qsr.shortName} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <QsrGuaranteeBadge className="mt-4" />
             </div>

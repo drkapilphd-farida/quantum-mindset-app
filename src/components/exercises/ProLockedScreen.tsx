@@ -3,6 +3,7 @@ import { Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { EXERCISE_BODY_CLASSNAME, EXERCISE_SCREEN_CLASSNAME, EXERCISE_TITLE_CLASSNAME } from './exerciseStyles'
+import { brand } from '@/config/site.config'
 
 type ProLockedScreenProps = {
   title: string
@@ -24,7 +25,7 @@ export function ProLockedScreen({ title }: ProLockedScreenProps): React.JSX.Elem
         </div>
         <h1 className={EXERCISE_TITLE_CLASSNAME}>{title} is a Pro feature</h1>
         <p className={cn('mt-4', EXERCISE_BODY_CLASSNAME)}>
-          Visual Activation™ is free for everyone. Upgrade to Quantum Mind Pro to unlock {title} and the rest of your Brain Transformation Experience™.
+          Visual Activation™ is free for everyone. Upgrade to {brand.name} Pro to unlock {title} and the rest of your Brain Transformation Experience™.
         </p>
         <Button asChild size="lg" className="mt-10 min-w-[200px] rounded-full shadow-sm">
           <Link href="/pricing#family-pro">Upgrade to Pro</Link>

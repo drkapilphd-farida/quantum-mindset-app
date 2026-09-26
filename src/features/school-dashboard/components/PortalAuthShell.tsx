@@ -1,5 +1,6 @@
 import { Playfair_Display, Inter } from 'next/font/google'
 import Link from 'next/link'
+import { brand } from '@/config/site.config'
 
 // Same School Corporate™ theme/font scoping as the protected portal
 // layouts (see (protected)/layout.tsx in each of school-admin/
@@ -16,7 +17,7 @@ export function PortalAuthShell({ children }: { children: React.ReactNode }): Re
     <div className={`school-corporate ${playfairDisplay.variable} ${interCorporate.variable} bg-muted/40 flex min-h-screen flex-col`}>
       <header className="bg-background flex h-14 items-center border-b px-6">
         <Link href="/" className="font-heading text-sm font-semibold tracking-tight">
-          Quantum Mind
+          {brand.appName}
         </Link>
       </header>
       <main className="flex flex-1 items-center justify-center p-6">

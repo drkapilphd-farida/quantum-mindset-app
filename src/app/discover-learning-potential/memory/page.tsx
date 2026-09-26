@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { MemoryDiscoveryExperience } from './components/MemoryDiscoveryExperience'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Memory Discovery™ — Quantum Mind Learning Lab™',
+  title: `Memory Discovery™ — ${brand.name}`,
   description: "Let's discover how your memory naturally works. There are no right or wrong answers — trust your first impression.",
 }
 

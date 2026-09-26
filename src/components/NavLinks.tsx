@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { BarChart3, BookOpen, LayoutDashboard, Radio, Settings, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { AppDomain } from '@/lib/domains/appDomain'
+import { programs } from '@/config/site.config'
 
 type NavItem = { href: string; label: string; icon: LucideIcon }
 
@@ -41,7 +42,7 @@ const HABIT_NAV_ITEMS = [
 // a separate browsable catalog. Parents Dashboard stays reachable as a
 // tab inside Pillar 1 (/masterclasses), not a separate top-level item.
 const QSR_NAV_ITEMS = [
-  { href: '/masterclasses', label: '30-Day Masterclass', icon: Radio },
+  { href: '/masterclasses', label: programs.qsr.shortName, icon: Radio },
   { href: '/document-studio', label: 'Document Studio', icon: BookOpen },
 ] as const
 

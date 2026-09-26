@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Lock, TrendingUp, Brain, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { brand } from '@/config/site.config'
 
 const LOCKED_INSIGHTS = [
   { icon: Brain, label: 'Deep behavioral pattern analysis' },
@@ -32,7 +33,7 @@ export function PremiumUpsellCard({ href }: { href: string }): React.JSX.Element
         </div>
         <div>
           <h3 className="text-sm font-semibold text-foreground">Unlock Deep Behavioral Insights</h3>
-          <p className="text-xs text-muted-foreground">Available on Quantum Mind Pro</p>
+          <p className="text-xs text-muted-foreground">Available on {brand.name} Pro</p>
         </div>
       </div>
 
@@ -49,7 +50,7 @@ export function PremiumUpsellCard({ href }: { href: string }): React.JSX.Element
       </ul>
 
       <Button asChild className="mt-6 w-full rounded-xl">
-        <Link href={href}>Upgrade to Quantum Mind Pro</Link>
+        <Link href={href}>Upgrade to {brand.name} Pro</Link>
       </Button>
     </div>
   )

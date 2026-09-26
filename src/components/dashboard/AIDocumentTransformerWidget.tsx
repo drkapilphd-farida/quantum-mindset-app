@@ -24,6 +24,7 @@ import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, type SupportedLanguage } from '@
 import { DocumentHistorySidebar } from '@/features/quantum-document-transformer/components/DocumentHistorySidebar'
 import { MasterclassPaywallModal } from '@/features/thirty-day-curriculum/components/MasterclassPaywallModal'
 import { logger } from '@/lib/logger'
+import { programs } from '@/config/site.config'
 
 // A UI-only, best-effort check (just for choosing which processing-step
 // copy to show, e.g. "Fetching transcript…" vs "Fetching article
@@ -656,7 +657,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
         {!isPro && (
           <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400">
             <Lock className="size-3" aria-hidden="true" />
-            Included with the Masterclass
+            Included with the {programs.qsr.shortName}
           </span>
         )}
       </div>
@@ -678,7 +679,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
             <div>
               <p className="text-sm font-semibold text-foreground">Unlock Document Mastery Studio</p>
               <p className="mt-1 max-w-xs text-xs text-muted-foreground">
-                Included with the 30-Day Quantum Speed Reading Masterclass — turn any PDF, textbook, or article into speed-reading drills, mind maps, and
+                Included with the {programs.qsr.name} — turn any PDF, textbook, or article into speed-reading drills, mind maps, and
                 smart summaries.
               </p>
             </div>

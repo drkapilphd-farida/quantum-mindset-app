@@ -6,6 +6,7 @@ import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
 import { Button } from '@/components/ui/button'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
 import { cn } from '@/lib/utils'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Subscription',
@@ -49,7 +50,7 @@ export default async function SubscriptionPage(): Promise<React.JSX.Element> {
         <p className="mt-4 text-sm text-muted-foreground">
           {isPaidUser
             ? 'Your account has an active subscription. Manage billing, seats, or your plan directly through Razorpay’s checkout confirmation email.'
-            : 'You’re on the free plan. Upgrade any time to unlock unlimited AI document transformations, the 30-Day Masterclass, and more.'}
+            : `You’re on the free plan. Upgrade any time to unlock unlimited AI document transformations, the ${programs.qsr.name}, and more.`}
         </p>
 
         <Button asChild className="mt-5 w-full rounded-full sm:w-auto">

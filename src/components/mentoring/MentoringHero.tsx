@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import TrainerBio from "../TrainerBio";
 import { WHATSAPP_MENTORING_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
@@ -44,18 +44,7 @@ export default function MentoringHero(): React.JSX.Element {
           </a>
         </div>
 
-        <div className="rounded-sm border border-line-strong bg-panel2 p-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{mentoring.hero.guideLabel}</p>
-          <div className="mt-4 flex items-center gap-3.5">
-            <div className="relative h-14 w-14 flex-none overflow-hidden rounded-full border-2 border-rose/50">
-              <Image src="/founder-warm.jpg" alt={mentoring.hero.guideName} fill sizes="56px" className="object-cover object-top" />
-            </div>
-            <div>
-              <div className="text-[15px] font-bold text-ink">{mentoring.hero.guideName}</div>
-              <div className="mt-0.5 text-[12px] leading-snug text-ink-dim">{mentoring.hero.guideCredential}</div>
-            </div>
-          </div>
-        </div>
+        <TrainerBio variant="short" accent="rose" eyebrow={mentoring.hero.guideLabel} />
       </div>
     </section>
   );

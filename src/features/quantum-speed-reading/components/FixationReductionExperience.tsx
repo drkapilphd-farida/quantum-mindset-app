@@ -3,6 +3,7 @@
 import { ExerciseRunner } from '@/components/exercises/ExerciseRunner'
 import type { ExerciseDefinition } from '@/lib/exercises/types'
 import { FixationReductionCanvas } from './FixationReductionCanvas'
+import { programs } from '@/config/site.config'
 
 const FIXATION_REDUCTION_DEFINITION: ExerciseDefinition = {
   labId: 'quantum-speed-reading',
@@ -23,7 +24,7 @@ const FIXATION_REDUCTION_DEFINITION: ExerciseDefinition = {
 // Journey's last exercise; its completion screen now continues into the
 // 30-Day Masterclass (the app's one structured training path) instead of
 // the retired Reading Intelligence hub.
-const NEXT_STAGE_LINK = { title: '30-Day Masterclass', href: '/labs/quantum-speed-reading/thirty-day-curriculum' }
+const NEXT_STAGE_LINK = { title: programs.qsr.shortName, href: '/labs/quantum-speed-reading/thirty-day-curriculum' }
 
 export function FixationReductionExperience(): React.JSX.Element {
   return (

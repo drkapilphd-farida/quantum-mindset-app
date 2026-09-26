@@ -21,6 +21,7 @@ import { getFixationSessions } from '@/features/visual-intelligence/fixation/que
 import { getFixationStats } from '@/features/visual-intelligence/fixation/queries/getFixationStats'
 import { ParentFeedbackPrompt } from '@/features/school-dashboard/components/ParentFeedbackPrompt'
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
+import { programs } from '@/config/site.config'
 
 const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((ex) => ex.exerciseId)
 
@@ -166,7 +167,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
         <DashboardSectionHeader
           id="programs-heading"
           eyebrow="Tier 3 · Flagship Program"
-          title="Masterclass"
+          title={programs.qsr.name}
           description="A flagship, structured 30-day mastery path with live mentorship."
         />
         <ThirtyDayMasterclassHeroCard />

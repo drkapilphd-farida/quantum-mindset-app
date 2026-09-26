@@ -5,6 +5,7 @@ import { Camera } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
 import { cn } from '@/lib/utils'
+import { brand } from '@/config/site.config'
 
 type CameraState = 'idle' | 'requesting' | 'live' | 'captured' | 'permission-denied' | 'unsupported'
 
@@ -157,7 +158,7 @@ export function CameraCaptureExperience({ onCapture }: CameraCaptureExperiencePr
       {state === 'permission-denied' && (
         <>
           <p className={cn(TYPOGRAPHY.body, 'max-w-xs text-muted-foreground')}>
-            Quantum Mind needs camera access to scan a page. Check your browser&rsquo;s permission settings and try again.
+            The {brand.appName} needs camera access to scan a page. Check your browser&rsquo;s permission settings and try again.
           </p>
           <Button size="lg" className="rounded-full px-8" onClick={() => void handleStart()}>
             Try Again

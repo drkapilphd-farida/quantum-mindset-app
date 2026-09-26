@@ -16,7 +16,7 @@ export function ExecutiveWorkshopTestimonials(): React.JSX.Element | null {
   return (
     <section className="border-b border-slate-200 bg-white px-6 py-16 sm:px-8 sm:py-20">
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-[26px] font-bold tracking-tight text-slate-900 sm:text-[32px]">What participants say about Dr. Sharma&apos;s training</h2>
+        <h2 className="text-[26px] font-bold tracking-tight text-slate-900 sm:text-[32px]">What participants say about Dr. Kapil Dev Sharma&apos;s training</h2>
         <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {testimonials.map((testimonial) => (
             <div key={`${testimonial.name}-${testimonial.programme}`} className="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-6">

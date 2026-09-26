@@ -1,4 +1,5 @@
 import type { AppDomain } from './appDomain'
+import { programs } from '@/config/site.config'
 
 // Deliberately its own module, separate from appDomain.ts — that file has
 // a module-scope `import { headers } from 'next/headers'`, which Next.js
@@ -12,5 +13,5 @@ import type { AppDomain } from './appDomain'
 // Mind" wordmark across dashboard chrome, auth pages, and the legacy
 // marketing chrome — never invented separately per call site.
 export function getDomainTagline(appDomain: AppDomain): string {
-  return appDomain === 'habit' ? 'Quantum Mindset & Habit Builder™' : 'AI Reading & Document Intelligence™'
+  return appDomain === 'habit' ? programs.focusStarter.appName : 'AI Reading & Document Intelligence™'
 }

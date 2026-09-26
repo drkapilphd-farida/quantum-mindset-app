@@ -6,11 +6,12 @@ import { buildWhatsAppLink } from '../utmTracking'
 import { trackGaEvent } from '@/lib/analytics/ga4'
 import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
 import { EegWaveform } from './EegWaveform'
+import { trainer } from '@/config/site.config'
 
 // Photo choice: /founder-warm.jpg — the same high-resolution (5280x3588)
-// professional portrait already used as this site's own default founder
-// photo (see GuideProfileCard.tsx's own doc comment on why it's the
-// fallback everywhere else). next/image handles the responsive
+// professional portrait used in the other program heroes (the trainer's
+// bio/profile photo everywhere is the master photo in site.config).
+// next/image handles the responsive
 // sizes/WebP conversion automatically (this app's existing convention —
 // no manually pre-generated image variants anywhere else in the repo),
 // so no separate optimized copies were created by hand.
@@ -98,8 +99,10 @@ export function ExecutiveWorkshopHero(): React.JSX.Element {
               />
             </div>
             <div className="absolute -bottom-5 left-1/2 w-[88%] -translate-x-1/2 rounded-2xl border border-line-strong bg-panel-2/95 px-5 py-4 text-center shadow-lg backdrop-blur-sm">
-              <p className="text-[14.5px] font-semibold text-ink">Dr. Kapil Dev Sharma</p>
-              <p className="mt-0.5 text-[12px] text-ink-faint">Mind Trainer &amp; Life Coach · 20+ years</p>
+              <p className="text-[14.5px] font-semibold text-ink">{trainer.name}</p>
+              <p className="mt-0.5 text-[12px] text-ink-faint">
+                {trainer.en.title} · {trainer.years.total} years
+              </p>
             </div>
           </div>
         </div>

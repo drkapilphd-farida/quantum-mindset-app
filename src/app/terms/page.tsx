@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
 import { buildPageMetadata } from '@/lib/seo/metadata'
+import { brand, programs } from '@/config/site.config'
 
 // Replaces stale legacy content (see the "Pre-Launch Audit Fix Pass"
 // task, Phase 3) — this page previously described a different business
@@ -19,7 +20,7 @@ import { buildPageMetadata } from '@/lib/seo/metadata'
 export const metadata: Metadata = buildPageMetadata({
   path: '/terms',
   title: 'Terms of Service — Mind Ur Mind',
-  description: 'The terms governing your use of Mind Ur Mind\'s courses, retreats, mentoring, franchise program, and the Quantum Mind app.',
+  description: `The terms governing your use of Mind Ur Mind's courses, retreats, mentoring, franchise program, and the ${brand.appName}.`,
 })
 
 const LAST_UPDATED = 'September 2026'
@@ -30,7 +31,7 @@ export default function TermsOfServicePage(): React.JSX.Element {
       <p className="text-muted-foreground leading-relaxed">
         These Terms of Service (&ldquo;Terms&rdquo;) govern your use of mindurmind.org.in and enrollment in any Mind
         Ur Mind program — Quantum Speed Reading, meditation and inner-mastery retreats, 1-on-1 mentoring, the
-        Quantum Mind &amp; Habit Builder app, and our self-paced courses (together, the &ldquo;Service&rdquo;). By
+        {brand.appName}, and our self-paced courses (together, the &ldquo;Service&rdquo;). By
         creating an account or enrolling in a program, you agree to these Terms.
       </p>
 
@@ -64,10 +65,10 @@ export default function TermsOfServicePage(): React.JSX.Element {
           <li>
             Most Mind Ur Mind programs are one-time payments, not recurring subscriptions, except where a specific
             program page states otherwise (for example, the optional ₹499/month continued-practice plan after
-            completing the 30-Day Masterclass).
+            completing the {programs.qsr.name}).
           </li>
           <li>
-            Refunds and cancellations — including the 30-Day Quantum Speed Reading Masterclass&rsquo;s 100% Results
+            Refunds and cancellations — including the {programs.qsr.name}&rsquo;s 100% Results
             Guarantee — are governed by our{' '}
             <a href="/refund-policy" className="text-foreground underline underline-offset-2">
               Refund &amp; Cancellation Policy

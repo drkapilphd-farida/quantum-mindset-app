@@ -1,3 +1,4 @@
+import { programs } from './site.config'
 // Executive Brain Performance Workshop™ — single source of truth for
 // every operational value on /executive-brain-workshop (date, time,
 // prices, seats, links, tracking IDs). Edit this file only — no other
@@ -110,7 +111,7 @@ export const executiveBrainWorkshopConfig = {
       features: [
         'Everything above',
         'Personal EEG brain-state measurement',
-        '4 private one-to-one sessions with Dr. Sharma over 21 days',
+        '4 private one-to-one sessions with Dr. Kapil Dev Sharma over 21 days',
         'Personalised protocol',
         'Direct WhatsApp access',
       ],
@@ -160,26 +161,26 @@ export const executiveBrainWorkshopConfig = {
       name: 'Shailesh',
       roleOrCity: 'Ahmedabad · Business Owner',
       quote: 'As a business owner, processing market reports and financial statements has become remarkably fast after attending this program.',
-      programme: 'Quantum Speed Reading',
+      programme: programs.qsr.name,
     },
     {
       name: 'Dr. Preeti',
       roleOrCity: 'Mumbai',
       quote:
         'The Quantum Speed Reading workshop completely changed how I process medical journals; I can now scan through extensive research papers in a fraction of the usual time.',
-      programme: 'Quantum Speed Reading',
+      programme: programs.qsr.name,
     },
     {
       name: 'Amit Patel',
       roleOrCity: 'Surat',
       quote: 'A profound mental reboot — my retention power skyrocketed, and I now finish thick management books in a single sitting.',
-      programme: 'Quantum Speed Reading',
+      programme: programs.qsr.name,
     },
     {
       name: 'Priya M.',
       roleOrCity: '',
       quote: 'Six private sessions did what years of general advice never managed.',
-      programme: 'Personal Class (Mentoring)',
+      programme: programs.oneOnOneCoaching.name,
     },
   ] as readonly ExecutiveWorkshopTestimonial[],
 } as const

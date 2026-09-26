@@ -20,11 +20,12 @@ import RetreatFinalCta from '@/components/retreat/RetreatFinalCta'
 import Footer from '@/components/Footer'
 import RetreatStickyBar from '@/components/retreat/RetreatStickyBar'
 import RetreatWhatsAppWidget from '@/components/retreat/RetreatWhatsAppWidget'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/retreats/online-11-day',
   ownOgImage: true,
-  title: '11-Day Online Meditation & Inner Mastery Retreat — Dr. Kapil Dev Sharma',
+  title: `${programs.onlineRetreat.name} — Dr. Kapil Dev Sharma`,
   description:
     'Authentic Kriya Yoga, Prana, and cosmic energy — an intensive, live, 11-day journey through telepathy, aura reading, Samadhi meditation, chakra activation, Kundalini meditation, and astral projection. Guided nightly by Dr. Kapil Dev Sharma, teaching since 2014. Monthly batch, 10th–20th, 7:30–10:30 PM.',
 })
@@ -57,7 +58,7 @@ export default function OnlineElevenDayRetreatPage(): React.JSX.Element {
   // the schema text specifically; the page's own body content still
   // fully describes the real curriculum for visitors who click through.
   const courseSchema = buildCourseSchema({
-    name: '11-Day Online Meditation & Inner Mastery Retreat',
+    name: programs.onlineRetreat.name,
     description:
       'An intensive, live, 11-day meditation and inner-mastery retreat guided nightly by Dr. Kapil Dev Sharma. Monthly batch, 10th–20th, 7:30–10:30 PM.',
     url: absoluteUrl('/retreats/online-11-day'),

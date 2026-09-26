@@ -1,7 +1,7 @@
 {
-  "name": "Quantum Mind",
-  "short_name": "Quantum Mind",
-  "description": "AI-powered adaptive learning platform. Master in-demand skills with personalized courses and intelligent tutoring.",
+  "name": "Mind Ur Mind App",
+  "short_name": "Mind Ur Mind",
+  "description": "Mind Ur Mind — Brain, Mind & Meditation Coach. Sharp Brain. Calm Mind. Better Life.",
   "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#ffffff",

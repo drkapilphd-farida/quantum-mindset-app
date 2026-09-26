@@ -1,4 +1,5 @@
 import { SITE_URL } from './siteUrl'
+import { brand, trainer } from '@/config/site.config'
 
 // schema.org Person JSON-LD — same server-side, escape-then-inject
 // pattern as faqSchema.ts/courseSchema.ts. Rendered on the homepage and
@@ -10,15 +11,14 @@ export function buildPersonSchema(): string {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Dr. Kapil Dev Sharma',
-    jobTitle: 'Brain, Mind & Meditation Coach',
-    description:
-      'Brain, mind and meditation coach with 26 years in education and mind training. Founder of Mind Ur Mind (2014) and Quantum Speed Reading trainer since 2015.',
+    name: trainer.name,
+    jobTitle: trainer.en.title,
+    description: trainer.en.shortBio,
     url: SITE_URL,
-    image: `${SITE_URL}/founder-warm.jpg`,
+    image: `${SITE_URL}${trainer.photo.src}`,
     worksFor: {
       '@type': 'Organization',
-      name: 'Mind Ur Mind',
+      name: brand.name,
       url: SITE_URL,
     },
     address: {

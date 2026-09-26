@@ -1,5 +1,6 @@
 import { ProgressRing } from '@/components/exercises/ProgressRing'
 import type { NeuralEvolutionIndexResult } from '@/features/neural-evolution/neuralEvolutionIndex'
+import { brand } from '@/config/site.config'
 
 const FUTURE_MODULES = ['Reading', 'Memory', 'Focus', 'Meditation'] as const
 
@@ -16,7 +17,7 @@ export function NeuralEvolutionCenterpiece({ result }: NeuralEvolutionCenterpiec
     <div className="rounded-3xl border bg-gradient-to-br from-primary/[0.06] via-card to-card p-7 shadow-sm">
       <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">🧬 Neural Evolution Index™</p>
       <p className="mt-1 text-[11px] text-muted-foreground">
-        The global architecture for Quantum Mind Learning Lab™. {result.activeDimensionCount} of {result.dimensions.length} dimensions active.
+        The global architecture for {brand.appName}. {result.activeDimensionCount} of {result.dimensions.length} dimensions active.
       </p>
 
       <div className="mt-6 flex justify-center">

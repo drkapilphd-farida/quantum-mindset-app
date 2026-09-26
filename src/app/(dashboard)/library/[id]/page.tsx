@@ -7,6 +7,7 @@ import { getQuantumDocumentById } from '@/features/quantum-document-transformer/
 import { getQuantumDocumentOutcomeProfile } from '@/features/quantum-document-transformer/actions/getQuantumDocumentOutcomeProfile'
 import { getLanguageName } from '@/features/quantum-document-transformer/supportedLanguages'
 import { QuantumDocumentDetailView } from '@/features/quantum-document-transformer/components/QuantumDocumentDetailView'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Document',
@@ -32,7 +33,7 @@ function DocumentDetailHeader(): React.JSX.Element {
 
       <div className="flex items-center gap-2">
         <LivingBrainLogo size={22} decorative={false} animated={false} />
-        <span className="brand-gradient-text text-sm font-bold tracking-tight">Quantum Mind</span>
+        <span className="brand-gradient-text text-sm font-bold tracking-tight">{brand.appName}</span>
       </div>
     </div>
   )

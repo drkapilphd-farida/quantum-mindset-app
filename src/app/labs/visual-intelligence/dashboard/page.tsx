@@ -23,6 +23,7 @@ import { computeExerciseAnalytics } from '@/features/visual-intelligence/dashboa
 import { computeRecentActivity } from '@/features/visual-intelligence/dashboard/recentActivityEngine'
 import { computeDashboardStats } from '@/features/visual-intelligence/dashboard/dashboardStatsEngine'
 import { DashboardExperience } from '@/features/visual-intelligence/components/dashboard/DashboardExperience'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Visual Intelligence Dashboard™ — Visual Intelligence Lab™',
@@ -95,7 +96,7 @@ export default async function VisualIntelligenceDashboardPage(): Promise<React.J
   })
 
   const achievementCountFallback = dnaAchievements.filter((a) => a.unlocked).length
-  const shareSummaryText = `My Visual Intelligence Score is ${context.scoreProgress.currentScore}/1000 at ${dnaLevelName} level, with a ${context.unifiedStats.currentStreak}-day streak. — Quantum Mind Learning Lab™`
+  const shareSummaryText = `My Visual Intelligence Score is ${context.scoreProgress.currentScore}/1000 at ${dnaLevelName} level, with a ${context.unifiedStats.currentStreak}-day streak. — ${brand.appName}`
 
   return (
     <DashboardExperience

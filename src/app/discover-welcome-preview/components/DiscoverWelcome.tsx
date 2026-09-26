@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Zap, Brain, Target, ArrowRight } from 'lucide-react'
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
 import { cn } from '@/lib/utils'
+import { brand } from '@/config/site.config'
 
 type DiscoverWelcomeProps = {
   onStart: () => void
@@ -54,7 +55,7 @@ export function DiscoverWelcome({ onStart }: DiscoverWelcomeProps): React.JSX.El
         className="flex items-center gap-2.5"
       >
         <LivingBrainLogo size={32} animated={false} />
-        <span className="font-heading text-base font-semibold tracking-tight text-foreground">Quantum Mind</span>
+        <span className="font-heading text-base font-semibold tracking-tight text-foreground">{brand.appName}</span>
       </motion.header>
 
       <div className="flex w-full max-w-lg flex-1 flex-col items-center justify-center text-center">

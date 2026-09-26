@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { trainer } from "@/config/site.config";
 import { Eyebrow, CtaButton } from "./ui";
 import FrequencyDial from "./FrequencyDial";
 import HeroTestimonialBadge from "./HeroTestimonialBadge";
@@ -127,26 +128,13 @@ export default function HeroSection(): React.JSX.Element {
                 tightly the source photo itself was cropped. */}
             <div className="p-5 sm:p-6">
               <div className="relative aspect-[1374/1145] w-full">
-                {/* Approved Founder Asset™ — dr-kapil-founder-hero.png
-                    (public/images/), a copy of the real supplied file
-                    dr-kapil-founder.png (brown/tan blazer, both hands
-                    pointing forward) — untouched, full original frame,
-                    no crop, because the photographer's own framing
-                    already leaves real margin on every side: clear
-                    headroom above his hair, and both elbows well inside
-                    the left/right edges (verified directly against the
-                    source — a tighter crop tried first cut into that
-                    existing margin and clipped an elbow, so the fix was
-                    to use the full frame, not a narrower one). This is a
-                    noticeably wider stance than the previous portrait, so
-                    aspect-[1374/1145] (this file's exact dimensions,
-                    landscape-ish rather than tall) and the wider max-w
-                    above replace the old narrow portrait proportions —
-                    object-contain plus the p-5/p-6 padding on the card
-                    means his hands/fingers/elbows always have visible
-                    clearance and are never clipped by the rounded frame. */}
+                {/* Master trainer photo from site.config (the same image
+                    as the old images/dr-kapil-founder-hero.png, now the
+                    optimized JPEG) — full original frame, no crop:
+                    object-contain plus the p-5/p-6 padding keeps his
+                    hands/elbows clear of the rounded frame. */}
                 <Image
-                  src="/images/dr-kapil-founder-hero.png"
+                  src={trainer.photo.src}
                   alt={t.hero.portraitName}
                   fill
                   sizes="(min-width: 1024px) 400px, 82vw"

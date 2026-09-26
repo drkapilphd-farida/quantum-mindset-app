@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
 import { buildPageMetadata } from '@/lib/seo/metadata'
+import { brand, programs } from '@/config/site.config'
 
 // Replaces stale legacy content (see the "Pre-Launch Audit Fix Pass"
 // task, Phase 3) — this page previously described a different business
@@ -25,7 +26,7 @@ import { buildPageMetadata } from '@/lib/seo/metadata'
 export const metadata: Metadata = buildPageMetadata({
   path: '/privacy',
   title: 'Privacy Policy — Mind Ur Mind',
-  description: 'How Mind Ur Mind collects, uses, and protects your personal data across our courses, retreats, mentoring, and the Quantum Mind app.',
+  description: `How Mind Ur Mind collects, uses, and protects your personal data across our courses, retreats, mentoring, and the ${brand.appName}.`,
 })
 
 const LAST_UPDATED = 'September 2026'
@@ -35,7 +36,7 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
     <LegalPageShell title="Privacy Policy" lastUpdated={LAST_UPDATED} brandName="Mind Ur Mind">
       <p className="text-muted-foreground leading-relaxed">
         Mind Ur Mind (&ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;our&rdquo;) operates mindurmind.org.in and the
-        Quantum Mind app, offering Quantum Speed Reading, meditation and inner-mastery retreats, 1-on-1 mentoring,
+        {brand.appName}, offering Quantum Speed Reading, meditation and inner-mastery retreats, 1-on-1 mentoring,
         and related cognitive-training programs. This policy explains what personal data we collect, why, and how
         it&rsquo;s handled.
       </p>
@@ -52,8 +53,8 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
             you&rsquo;re seeking help with.
           </li>
           <li>
-            Usage data from the Quantum Mind app — reading speed (WPM), comprehension scores, and daily practice
-            activity across the 30-Day Quantum Speed Reading Masterclass Curriculum and other exercises.
+            Usage data from the {brand.appName} — reading speed (WPM), comprehension scores, and daily practice
+            activity across the {programs.qsr.name} curriculum and other exercises.
           </li>
         </ul>
       </section>
@@ -63,7 +64,7 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
         <ul className={legalStyles.list}>
           <li>To respond to inquiries and process enrollments and payments.</li>
           <li>To personalize coaching, mentoring, and program recommendations.</li>
-          <li>To operate the Quantum Mind app&rsquo;s progress-tracking and curriculum-unlock features.</li>
+          <li>To operate the {brand.appName}&rsquo;s progress-tracking and curriculum-unlock features.</li>
           <li>To send program-related communication, including WhatsApp messages you&rsquo;ve opted into.</li>
         </ul>
       </section>

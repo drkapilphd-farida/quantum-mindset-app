@@ -1,16 +1,17 @@
+import { primaryCheckoutHref, programs, waLink } from './site.config'
 // Direct WhatsApp click-to-chat link for Dr. Kapil Dev Sharma — lets
 // prospective 30-Day Masterclass students ask about batch timing and
 // enrollment before paying. Single source of truth so the dashboard hero
 // and any future placement never risk drifting to two different numbers
 // or pre-filled messages.
 export const WHATSAPP_MASTERCLASS_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20know%20more%20about%20the%2030-Day%20Quantum%20Speed%20Reading%20Masterclass'
+  waLink(`Hi Dr. Kapil, I want to know more about the ${programs.qsr.name}`)
 
 // Same number, enrollment-intent message — for placements (like the
 // /reviews success-stories page) where the visitor has already seen the
 // proof and is ready to join, not just asking to learn more.
 export const WHATSAPP_ENROLLMENT_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20enroll%20in%20the%20Masterclass'
+  waLink(`Hi Dr. Kapil, I want to enroll in the ${programs.qsr.name}`)
 
 // Same number, Free Live Intro Session-specific message — for the
 // QsrLiveIntroSession section on the QSR landing page. There's no
@@ -51,7 +52,7 @@ export const WHATSAPP_GENERAL_INQUIRY_LINK =
 // so this is the real primary conversion path for that page, not a
 // placeholder standing in for a missing checkout.
 export const WHATSAPP_RETREAT_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20secure%20my%20spot%20in%20the%2011-Day%20Online%20Meditation%20%26%20Inner%20Mastery%20Retreat'
+  waLink(`Hi Dr. Kapil, I want to secure my spot in the ${programs.onlineRetreat.name}`)
 
 // Same number, Residential Retreat-specific message — for the dedicated
 // /retreats/residential landing page. Like the online retreat, there's no
@@ -61,7 +62,7 @@ export const WHATSAPP_RETREAT_INQUIRY_LINK =
 // logistics), so WhatsApp is the real primary booking path, not a
 // placeholder standing in for a missing checkout.
 export const WHATSAPP_RESIDENTIAL_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20secure%20my%20seat%20in%20a%20Residential%20Retreat'
+  primaryCheckoutHref('residentialRetreat')
 
 // Same number, 1-on-1 Personal Class-specific message — for the
 // dedicated /mentoring/personal-class landing page. No hosted checkout
@@ -70,7 +71,7 @@ export const WHATSAPP_RESIDENTIAL_INQUIRY_LINK =
 // step) — WhatsApp is the real primary application path, same pattern
 // as every other offer on this site without a dedicated backend yet.
 export const WHATSAPP_MENTORING_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20apply%20for%201-on-1%20Personal%20Class%20Mentoring'
+  primaryCheckoutHref('oneOnOneCoaching')
 
 // Same number, Quantum Mindset & Habit Builder-specific message — for
 // the dedicated /programs/habit-builder landing page. The real
@@ -79,7 +80,7 @@ export const WHATSAPP_MENTORING_INQUIRY_LINK =
 // one-time payment), same "inquiry, not primary checkout" role every
 // other WHATSAPP_*_INQUIRY_LINK on this page plays for its own program.
 export const WHATSAPP_HABIT_BUILDER_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20have%20a%20question%20about%20the%20Quantum%20Mindset%20%26%20Habit%20Builder'
+  waLink(`Hi Dr. Kapil, I have a question about the ${programs.focusStarter.name}`)
 
 // Same number, pre-application "Talk to Our Team" message — for a visitor
 // on /franchise-individual who wants to ask a question first, not a
@@ -136,7 +137,7 @@ export function buildMentoringApplicationWhatsAppLink(details: {
   situation: string
 }): string {
   const lines = [
-    'Hi Dr. Kapil, I want to apply for 1-on-1 Personal Class Mentoring.',
+    `Hi Dr. Kapil, I want to apply for ${programs.oneOnOneCoaching.name}.`,
     `Name: ${details.name}`,
     `Phone: ${details.phone}`,
     `City: ${details.city}`,
@@ -154,7 +155,7 @@ export function buildMentoringApplicationWhatsAppLink(details: {
 // link is only for pre-purchase questions, not the primary conversion
 // path (the Classplus link is).
 export const WHATSAPP_COURSE_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20have%20a%20question%20about%20the%20Overthinking%20Mastery%20Course'
+  waLink(`Hi Dr. Kapil, I have a question about the ${programs.overthinkingReset.name}`)
 
 // Same number, Overthinking Test (/mind-assessment) result hand-off —
 // see the "Build the Overthinking Test Free Assessment" task. Uses the
@@ -179,7 +180,7 @@ export function buildOverthinkingTestWhatsAppLink(details: {
     `Overthinking Score: ${details.overthinkingBand}`,
     `Worry Score: ${details.worryBand}`,
     `Stress Score: ${details.stressBand}`,
-    'कृपया मुझे 21-Day Mind Reset System के बारे में जानकारी भेजें।',
+    `कृपया मुझे ${programs.overthinkingReset.name} के बारे में जानकारी भेजें।`,
   ]
   return `https://wa.me/919540123161?text=${encodeURIComponent(lines.join('\n'))}`
 }

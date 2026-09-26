@@ -5,6 +5,7 @@ import { UserMenu } from '@/components/UserMenu'
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
+import { brand } from '@/config/site.config'
 
 type AppSidebarProps = {
   // School Dashboard white-labeling — set only for a student who belongs
@@ -44,7 +45,7 @@ export function AppSidebar({ brandName = null, brandLogoUrl = null, appDomain, f
             // status. Do not reintroduce that coupling here.
             <LivingBrainLogo size={24} decorative={false} animated={false} />
           )}
-          <span className="brand-gradient-text">{brandName ?? 'Quantum Mind'}</span>
+          <span className="brand-gradient-text">{brandName ?? brand.appName}</span>
         </Link>
       </div>
       {/* Consistent Branding™ — the one place a habit-domain visitor sees

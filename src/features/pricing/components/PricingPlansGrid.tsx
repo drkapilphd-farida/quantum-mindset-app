@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
 import { RAZORPAY_SUBSCRIPTION_LINKS, type BillingPeriod } from '../razorpaySubscriptionLinks'
+import { programs } from '@/config/site.config'
 
 // Real, confirmed prices for both billing periods — Razorpay's own
 // checkout page always shows the real, authoritative amount regardless
@@ -135,7 +136,7 @@ export function PricingPlansGrid(): React.JSX.Element {
         <PlanCard
           name="The Foundation"
           subtitle="Start for free"
-          description="Explore Quantum Speed Reading for free — enroll in the Masterclass to unlock Document Mastery Studio."
+          description={`Explore Quantum Speed Reading for free — enroll in the ${programs.qsr.name} to unlock Document Mastery Studio.`}
           priceAmount="₹0"
           priceUnit="forever"
           features={[
@@ -145,7 +146,7 @@ export function PricingPlansGrid(): React.JSX.Element {
             // tier (FREE_TIER_DOCUMENT_LIMIT); it's bundled entirely into
             // the ₹9,999 Masterclass banner below, so this card is honest
             // about that instead of still advertising free transformations.
-            'Document Mastery Studio (Upload & Learn) — included with the 30-Day Masterclass',
+            `Document Mastery Studio (Upload & Learn) — included with the ${programs.qsr.name}`,
           ]}
           cta={
             <Button asChild variant="outline" size="lg" className="w-full rounded-full">

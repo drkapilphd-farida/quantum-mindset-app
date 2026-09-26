@@ -7,6 +7,7 @@ import { isDevUnlockEnabled } from '@/lib/dev/isDevUnlockEnabled'
 import { getDailyQuantumSessionHistory } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
 import { computeDailyQuantumStreak } from '@/app/unified-quantum-session-preview/components/dailyQuantumSessionTracking'
 import { getNextJourneyDay } from '@/features/quantum-journey/streakMotivation'
+import { programs } from '@/config/site.config'
 
 // Domain Split™ — habit.mindurmind.org.in's entire dashboard: the 21-Day
 // Quantum Habit Builder journey and its own real streak tracker, nothing
@@ -53,7 +54,7 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
 
       <div className="glass-premium-card glass-premium-lift p-6 sm:p-8">
         <GreetingHeading studentName={studentFirstName} />
-        <p className="mt-1 text-sm text-muted-foreground">Day {nextJourneyDay} of your 21-Day Quantum Habit Builder.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Day {nextJourneyDay} of your {programs.focusStarter.appName}.</p>
       </div>
 
       <TwentyOneDayJourneyCard isPaidUser={isPaidUser} isDevUnlocked={isDevUnlockEnabled()} currentDay={nextJourneyDay} currentStreak={journeyStreak} />

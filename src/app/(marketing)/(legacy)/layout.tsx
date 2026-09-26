@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
+import { brand } from '@/config/site.config'
 
 // New Homepage™ — the real homepage now renders directly at '/' (see
 // (marketing)/page.tsx), so this shell (with its own distinct header/
@@ -35,7 +36,7 @@ export default async function LegacyMarketingLayout({
         <Link href="/" className="mr-8 flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground">
           <LivingBrainLogo size={26} decorative={false} animated={false} />
           <span className="flex flex-col leading-tight">
-            Quantum Mind Learning Lab™
+            {brand.appName}
             <span className="hidden text-[11px] font-normal text-muted-foreground sm:inline">{getDomainTagline(appDomain)}</span>
           </span>
         </Link>
@@ -67,7 +68,7 @@ export default async function LegacyMarketingLayout({
 
       <footer className="border-t border-border/60 py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center">
-          <p className="text-sm font-medium text-foreground">Quantum Mind Learning Lab™</p>
+          <p className="text-sm font-medium text-foreground">{brand.appName}</p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <Link href="/privacy" className="transition-colors hover:text-foreground">
               Privacy Policy
@@ -78,7 +79,7 @@ export default async function LegacyMarketingLayout({
             </Link>
           </div>
           <p className="text-sm text-muted-foreground">
-            © 2026 Quantum Mind Learning Lab™. All rights reserved.
+            © 2026 {brand.name}. All rights reserved.
           </p>
         </div>
       </footer>

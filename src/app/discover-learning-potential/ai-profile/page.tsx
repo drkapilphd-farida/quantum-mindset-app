@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { buildAiLearningProfile } from '@/features/discover-learning-potential/profile/buildAiLearningProfile'
 import { AiProfileScreen } from './components/AiProfileScreen'
+import { brand } from '@/config/site.config'
 
 // Explicit, not load-bearing here — this route already renders dynamically
 // on its own (supabase.auth.getUser() below reads cookies via next/headers,
@@ -15,7 +16,7 @@ import { AiProfileScreen } from './components/AiProfileScreen'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Your AI Learning Profile — Quantum Mind Learning Lab™',
+  title: `Your AI Learning Profile — ${brand.name}`,
   description: 'Here is what we discovered about how you learn.',
 }
 

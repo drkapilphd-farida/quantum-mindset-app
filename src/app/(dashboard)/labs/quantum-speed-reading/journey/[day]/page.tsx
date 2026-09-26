@@ -13,6 +13,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { hasHabitBuilderAccess } from '@/lib/subscription/hasHabitBuilderAccess'
 import { RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK } from '@/config/quantumMindsetHabitBuilderPaymentLink'
+import { programs } from '@/config/site.config'
 
 // 21-Day Journey Paywall™ — Days 1 through 7 (the full first week) are
 // free for every user (the real "try it for real, not a demo" window);
@@ -22,7 +23,7 @@ import { RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK } from '@/config/qu
 const FREE_JOURNEY_DAYS = 7
 
 export const metadata: Metadata = {
-  title: 'Quantum Mindset & Habit Builder™',
+  title: programs.focusStarter.appName,
   description: 'An adaptive, week-by-week guided daily session across Reading, Intuition, Right Brain, and Visualisation.',
   robots: { index: false, follow: false },
 }

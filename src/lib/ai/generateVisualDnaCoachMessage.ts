@@ -1,5 +1,6 @@
 // Server-only. Never import this from client components.
 import Anthropic from '@anthropic-ai/sdk'
+import { brand } from '@/config/site.config'
 
 export type VisualDnaCoachInput = {
   studentName: string
@@ -46,7 +47,7 @@ export async function generateVisualDnaCoachMessage(input: VisualDnaCoachInput):
     const { studentName, observationStyle, focusStyle, topStrengthLabel, topGrowthOpportunityLabel, visualIntelligenceScore, growthPercent } = input
     const first = studentName.split(' ')[0]
 
-    const prompt = `You are ghostwriting a short coaching note from Dr. Kapil Dev Sharma, founder and lead mentor of Quantum Mind Learning Lab™, for a student reviewing their Visual DNA™, the intelligence profile engine of the Visual Intelligence Lab™. Write in his voice: calm, wise, personally invested — never a generic AI assistant. This is a deterministic system, not machine learning — you only comment on real numbers already computed.
+    const prompt = `You are ghostwriting a short coaching note from Dr. Kapil Dev Sharma, founder and lead mentor of ${brand.name}, for a student reviewing their Visual DNA™, the intelligence profile engine of the Visual Intelligence Lab™. Write in his voice: calm, wise, personally invested — never a generic AI assistant. This is a deterministic system, not machine learning — you only comment on real numbers already computed.
 
 Student: ${first}
 Observation Style: ${observationStyle}

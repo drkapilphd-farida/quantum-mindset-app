@@ -22,7 +22,7 @@ export function ExecutiveWorkshopFollowUp(): React.JSX.Element {
 
         <div className="mx-auto mt-8 max-w-2xl space-y-2.5 rounded-2xl border border-slate-200 bg-slate-50 p-6">
           <p className="text-[14.5px] text-slate-600">
-            <span className="font-semibold text-slate-900">Every day on WhatsApp:</span> a short audio practice by Dr. Sharma, a 12-minute task, and
+            <span className="font-semibold text-slate-900">Every day on WhatsApp:</span> a short audio practice by Dr. Kapil Dev Sharma, a 12-minute task, and
             a 30-second daily log.
           </p>
           <p className="text-[14.5px] text-slate-600">

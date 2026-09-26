@@ -1,12 +1,13 @@
 import { buildOgImageResponse, OG_IMAGE_SIZE } from '@/lib/seo/ogImage'
+import { programs } from '@/config/site.config'
 
-export const alt = 'Quantum Speed Reading'
+export const alt = programs.qsr.name
 export const size = OG_IMAGE_SIZE
 export const contentType = 'image/png'
 
 export default async function Image(): Promise<ReturnType<typeof buildOgImageResponse>> {
   return buildOgImageResponse({
     eyebrow: 'Mind Ur Mind',
-    heading: 'Quantum Speed Reading',
+    heading: programs.qsr.name,
   })
 }

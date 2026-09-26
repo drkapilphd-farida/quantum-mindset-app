@@ -10,6 +10,7 @@ import { saveBaselineDiagnostic } from '../actions/saveBaselineDiagnostic'
 import { RsvpModePlayer, type RsvpModeResult } from '../../readingModes/components/RsvpModePlayer'
 import { computeDefaultTargetWpm } from '../../readingModes/pacingMath'
 import type { JourneyReadingSet } from '../../readingContent'
+import { programs } from '@/config/site.config'
 
 type Phase = 'reading' | 'saving' | 'result'
 
@@ -101,7 +102,7 @@ export function BaselineDiagnosticExperience(): React.JSX.Element {
             <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Baseline Locked In™</p>
             <h1 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground">Your Starting Point</h1>
             <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-              Every day of your Quantum Mindset & Habit Builder™ journey now measures real growth against this.
+              Every day of your {programs.focusStarter.appName} journey now measures real growth against this.
             </p>
           </div>
 

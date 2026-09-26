@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { QuantumSpeedReadingIntroExperience } from './components/QuantumSpeedReadingIntroExperience'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Quantum Speed Reading™ — Quantum Mind Learning Lab™',
+  title: `Quantum Speed Reading™ — ${brand.name}`,
   description: 'A motivational bridge from Reading Discovery into your Quantum Speed Reading™ journey.',
 }
 

@@ -4,14 +4,14 @@ import { useLanguage } from "@/context/LanguageContext";
 import SimplePageNav from "./SimplePageNav";
 import Footer from "./Footer";
 import WhatsAppWidget from "./WhatsAppWidget";
-import GuideProfileCard from "./GuideProfileCard";
+import TrainerBio from "./TrainerBio";
 
 // About Us™ — company-level page. The footer's old "About Dr. Sharma"
 // link pointed at this same /about route while implying a
 // founder-bio-only page; there's no separate dedicated founder bio page
 // in this codebase to link out to instead, so rather than inventing one
 // (or a link to a page that doesn't exist), the real founder bio content
-// is embedded directly on this page via the same shared GuideProfileCard
+// is embedded directly on this page via the shared TrainerBio component
 // the Personal Class and Course pages already use — real, existing
 // content, not new copy.
 export default function AboutPageContent(): React.JSX.Element {
@@ -33,21 +33,10 @@ export default function AboutPageContent(): React.JSX.Element {
                 </p>
               ))}
             </div>
-
-            <div className="mx-auto mt-10 grid max-w-md grid-cols-3 gap-4">
-              {a.stats.map((stat) => (
-                <div key={stat.label} className="rounded-sm border border-line-strong bg-panel2 px-3 py-4 text-center">
-                  <div className="font-display text-[22px] font-bold text-ink sm:text-[26px]">{stat.value}</div>
-                  <div className="mt-1 text-[11px] leading-snug text-ink-faint">{stat.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
-        {/* Approved founder asset: dr-kapil-founder.png (About /
-            Founder purpose). */}
-        <GuideProfileCard {...a.guide} accent="gold" imageSrc="/dr-kapil-founder.png" />
+        <TrainerBio variant="long" accent="gold" eyebrow={a.guide.eyebrow} quote={a.guide.quote} />
       </main>
       <Footer />
       <WhatsAppWidget />

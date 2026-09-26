@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
+import { brand } from '@/config/site.config'
 
 // Consistent Branding™ — /login, /signup, /forgot-password, etc. all live
 // under this route group, outside (dashboard)/layout.tsx, so they never
@@ -20,7 +21,7 @@ export default async function AuthLayout({
     <div className="bg-muted/40 flex min-h-screen flex-col">
       <header className="bg-background flex h-14 items-center justify-between border-b px-6">
         <Link href="/" className="font-semibold tracking-tight">
-          Quantum Mind Learning Lab™
+          {brand.appName}
         </Link>
         <span className="hidden text-xs font-medium text-muted-foreground sm:inline">{getDomainTagline(appDomain)}</span>
       </header>

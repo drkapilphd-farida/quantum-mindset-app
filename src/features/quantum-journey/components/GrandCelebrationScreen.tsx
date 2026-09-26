@@ -11,6 +11,7 @@ import { playCertificateFanfare } from '@/app/unified-quantum-session-preview/co
 import { ConfettiBurst } from './ConfettiBurst'
 import { AppTwoFinaleUpsellCta } from './AppTwoFinaleUpsellCta'
 import { generateJourneyCompletionSummary } from '../actions/generateJourneyCompletionSummary'
+import { programs } from '@/config/site.config'
 
 const CERTIFICATE_HREF = '/labs/quantum-speed-reading/journey/certificate'
 
@@ -80,7 +81,7 @@ export function GrandCelebrationScreen({
       <div>
         <p className="flex items-center justify-center gap-1.5 text-xs font-medium tracking-widest text-amber-600 uppercase dark:text-amber-400">
           <Award className="size-3.5" aria-hidden="true" />
-          Quantum Mindset & Habit Builder™ Complete
+          {programs.focusStarter.appName} Complete
         </p>
         <h1 className="mt-1 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Congratulations, {studentFirstName}!

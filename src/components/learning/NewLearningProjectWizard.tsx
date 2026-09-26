@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils'
 import { ArrivalBackground } from '@/components/welcome/ArrivalBackground'
 import { AIPresenceLogo } from '@/components/welcome/AIPresenceLogo'
 import { OnboardingJourneyIndicator } from '@/components/welcome/OnboardingJourneyIndicator'
+import { brand } from '@/config/site.config'
 
 type AcceptedMimeType = (typeof ACCEPTED_DOCUMENT_MIME_TYPES)[number]
 
@@ -545,7 +546,7 @@ export function NewLearningProjectWizard(): React.JSX.Element {
       <div className="relative mx-auto max-w-2xl">
         <div className="flex flex-col items-center gap-3 text-center">
           <AIPresenceLogo size={56} />
-          <p className={TYPOGRAPHY.label}>Quantum Mind™</p>
+          <p className={TYPOGRAPHY.label}>{brand.appName}</p>
           <OnboardingJourneyIndicator currentStepId="method" className="mt-2 w-full max-w-sm" />
         </div>
 

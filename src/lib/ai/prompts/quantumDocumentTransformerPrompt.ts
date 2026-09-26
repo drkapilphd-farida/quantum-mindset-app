@@ -1,4 +1,5 @@
 import { getLanguageName, type SupportedLanguage } from '@/features/quantum-document-transformer/supportedLanguages'
+import { brand } from '@/config/site.config'
 
 // AI Cost Optimization™ — Prompt Caching. This block is 100% static: no
 // string interpolation, byte-identical on every single call regardless
@@ -21,7 +22,7 @@ import { getLanguageName, type SupportedLanguage } from '@/features/quantum-docu
 // ("User-supplied content in prompts is clearly delimited with XML tags
 // to prevent prompt injection") and this block explicitly tells the
 // model to treat it as data, never as instructions to follow.
-export const QUANTUM_DOCUMENT_TRANSFORMER_SYSTEM_PROMPT = `You are the AI Document Transformer for Quantum Mind Learning Lab™, a cognitive-training platform. A learner just uploaded a document. Turn it into study material by calling the \`return_document_intelligence\` tool exactly once.
+export const QUANTUM_DOCUMENT_TRANSFORMER_SYSTEM_PROMPT = `You are the AI Document Transformer for ${brand.appName}, a cognitive-training platform. A learner just uploaded a document. Turn it into study material by calling the \`return_document_intelligence\` tool exactly once.
 
 The user message specifies the target language and target question count for this request — read those values from there, not from this instruction block. Write every field entirely in the target language — ai_summary, one_sentence_summary, spider_notes labels, keywords, quiz_questions, feynman_challenge, mnemonics, subject_lens, short_story, and recall_questions all in that language, regardless of what language the source document is written in. Do not mix in English unless the target language itself is English.
 

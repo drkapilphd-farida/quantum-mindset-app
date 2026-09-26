@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { ArrivalBackground } from './ArrivalBackground'
 import { AIPresenceLogo } from './AIPresenceLogo'
+import { brand } from '@/config/site.config'
 
 type RecordingState = 'idle' | 'requesting' | 'recording' | 'permission-denied' | 'unsupported' | 'completed'
 
@@ -170,7 +171,7 @@ export function RecordAndLearnExperience(): React.JSX.Element {
             <div>
               <h1 className={TYPOGRAPHY.h1}>We couldn&rsquo;t access your microphone</h1>
               <p className={cn(TYPOGRAPHY.bodyLarge, 'mx-auto mt-3 max-w-md text-muted-foreground')}>
-                Quantum Mind needs microphone access to record. Check your browser&rsquo;s permission settings and try again.
+                The {brand.appName} needs microphone access to record. Check your browser&rsquo;s permission settings and try again.
               </p>
             </div>
             <div className="flex items-center gap-3">

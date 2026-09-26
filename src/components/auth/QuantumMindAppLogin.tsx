@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { sendAppLoginEmailOtp } from "@/features/auth/actions/sendAppLoginEmailOtp";
 import { verifyAppLoginEmailOtp } from "@/features/auth/actions/verifyAppLoginEmailOtp";
 import { checkAppAccess } from "@/features/masterclass-app/actions/checkAppAccess";
+import { programs } from '@/config/site.config'
 
 type Step = "email" | "otp";
 
@@ -52,7 +53,7 @@ export default function QuantumMindAppLogin(): React.JSX.Element {
     setPending(false);
 
     if (accessResult.status === "unpaid") {
-      setError("Your free practice window has ended. Purchase the ₹499 plan or join the 30-Day Quantum Speed Reading Live Masterclass to continue.");
+      setError(`Your free practice window has ended. Purchase the ₹499 plan or join the ${programs.qsr.name} to continue.`);
       return;
     }
 

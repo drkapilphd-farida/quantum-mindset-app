@@ -11,6 +11,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { UserMenu } from '@/components/UserMenu'
 import { ShellNavLinks } from './ShellNavLinks'
 import type { ShellNavItem } from './types'
+import { brand } from '@/config/site.config'
 
 // Immersive Onboarding Polish™ (Sprint LW-1C.3) — a fixed allow-list of the
 // onboarding routes that live under /preview but must render chrome-free
@@ -162,7 +163,7 @@ export function AppShell({
         </div>
 
         <footer className="shrink-0 border-t px-6 py-3 text-center text-xs text-muted-foreground">
-          Quantum Mind Learning Lab™
+          {brand.appName}
         </footer>
       </div>
     </div>

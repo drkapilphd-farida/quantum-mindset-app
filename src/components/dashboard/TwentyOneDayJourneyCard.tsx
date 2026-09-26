@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Check, Flame, FlaskConical, Lock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK } from '@/config/quantumMindsetHabitBuilderPaymentLink'
+import { programs } from '@/config/site.config'
 
 type TwentyOneDayJourneyCardProps = {
   isPaidUser: boolean
@@ -63,7 +64,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
             Tier 2 · Structured Program
           </span>
           <h2 className="mt-2 font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl">
-            Quantum Mindset &amp; Habit Builder™
+            {programs.focusStarter.appName}
           </h2>
         </div>
         <div className="flex flex-wrap items-center gap-2">

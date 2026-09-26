@@ -20,6 +20,7 @@ import { ThemeToggle } from '@/components/ThemeToggle'
 import { InstallButton } from '@/components/InstallButton'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
+import { brand } from '@/config/site.config'
 
 type TopbarProps = {
   fullName: string | null
@@ -69,7 +70,7 @@ export function Topbar({
               <LivingBrainLogo size={22} decorative={false} animated={false} />
             )}
             <SheetTitle className="text-sm font-semibold tracking-tight">
-              {brandName ?? 'Quantum Mind'}
+              {brandName ?? brand.appName}
             </SheetTitle>
           </SheetHeader>
           {/* Consistent Branding™ — see AppSidebar.tsx's identical row. */}
@@ -101,7 +102,7 @@ export function Topbar({
             item in this header; below 360px (older/smaller phones like an
             iPhone SE 1st-gen at 320px) it's the difference between fitting
             and overflowing, so it drops first, leaving just the logo. */}
-        <span className="brand-gradient-text hidden min-[360px]:inline text-base font-bold tracking-tight">{brandName ?? 'Quantum Mind'}</span>
+        <span className="brand-gradient-text hidden min-[360px]:inline text-base font-bold tracking-tight">{brandName ?? brand.appName}</span>
       </Link>
 
       <div className="flex-1" />

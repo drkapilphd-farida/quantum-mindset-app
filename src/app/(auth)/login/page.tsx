@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { AuthCard } from '@/features/auth/components/AuthCard'
 import { LoginForm } from '@/features/auth/components/LoginForm'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Sign In',
@@ -38,7 +39,7 @@ export default async function LoginPage({
       )}
       <AuthCard
         title="Welcome back"
-        description="Sign in to your Quantum Mind account"
+        description={`Sign in to your ${brand.appName} account`}
       >
         <LoginForm next={params.next} />
       </AuthCard>

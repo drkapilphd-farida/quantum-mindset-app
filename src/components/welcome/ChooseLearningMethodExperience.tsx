@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { AIPresenceLogo } from './AIPresenceLogo'
 import { GatewayAuthModal } from './GatewayAuthModal'
+import { brand, programs } from '@/config/site.config'
 
 // Domain Split™ — this is the universal front door for BOTH
 // habit.mindurmind.org.in and app.mindurmind.org.in (never gated by
@@ -123,12 +124,12 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain }: C
       <div className={cn('mx-auto flex w-full max-w-3xl flex-col items-center gap-10 text-center transition-opacity duration-[250ms]', isExiting && 'opacity-0')}>
         <div className="flex flex-col items-center gap-3">
           <AIPresenceLogo size={84} />
-          <p className="brand-gradient-text text-xl font-bold tracking-tight">Quantum Mind</p>
+          <p className="brand-gradient-text text-xl font-bold tracking-tight">{brand.appName}</p>
         </div>
 
         {appDomain === 'habit' ? (
           <div>
-            <h1 className={TYPOGRAPHY.display}>Quantum Mindset &amp; Habit Builder</h1>
+            <h1 className={TYPOGRAPHY.display}>{programs.focusStarter.appName}</h1>
             <p className="mt-6 flex flex-col gap-1 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl md:text-4xl">
               <span>Rewire your brain.</span>
               <span>Build unbreakable habits.</span>

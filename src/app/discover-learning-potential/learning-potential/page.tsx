@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { LearningPotentialRevealExperience } from './components/LearningPotentialRevealExperience'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Your Learning Potential — Quantum Mind Learning Lab™',
+  title: `Your Learning Potential — ${brand.name}`,
   description: 'The path from your Discovery results to your personalized AI Learning Studio journey.',
 }
 

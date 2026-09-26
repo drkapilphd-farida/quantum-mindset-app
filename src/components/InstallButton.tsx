@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Download, Share } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { brand } from '@/config/site.config'
 
 // The beforeinstallprompt event isn't in TypeScript's built-in DOM lib
 // (it's a Chromium-only extension, never standardized) — this is the
@@ -105,11 +106,11 @@ export function InstallButton(): React.JSX.Element | null {
       <Dialog open={showGuide} onOpenChange={setShowGuide}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Install Quantum Mind</DialogTitle>
+            <DialogTitle>Install {brand.appName}</DialogTitle>
             <DialogDescription>
               {isIOS
-                ? 'Add Quantum Mind to your Home Screen for the full app experience.'
-                : 'Add Quantum Mind to your device for quick, one-tap access.'}
+                ? `Add ${brand.appName} to your Home Screen for the full app experience.`
+                : `Add ${brand.appName} to your device for quick, one-tap access.`}
             </DialogDescription>
           </DialogHeader>
 
@@ -130,7 +131,7 @@ export function InstallButton(): React.JSX.Element | null {
             </ol>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Open your browser menu and choose &ldquo;Install app&rdquo; or &ldquo;Add to Home screen.&rdquo; If you don&rsquo;t see that option yet, keep using Quantum Mind for a bit — most browsers unlock it after a couple of visits.
+              Open your browser menu and choose &ldquo;Install app&rdquo; or &ldquo;Add to Home screen.&rdquo; If you don&rsquo;t see that option yet, keep using {brand.appName} for a bit — most browsers unlock it after a couple of visits.
             </p>
           )}
         </DialogContent>

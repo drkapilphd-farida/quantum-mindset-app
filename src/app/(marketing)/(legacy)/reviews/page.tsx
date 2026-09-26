@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
 import { WHATSAPP_ENROLLMENT_INQUIRY_LINK, WHATSAPP_MASTERCLASS_INQUIRY_LINK } from '@/config/whatsappSupportLink'
 import { SUCCESS_STORIES_PLAYLIST_EMBED_URL, SUCCESS_STORIES_PLAYLIST_WATCH_URL } from '@/config/reviewsPlaylist'
+import { brand, programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Success Stories',
@@ -87,7 +88,7 @@ export default function ReviewsPage(): React.JSX.Element {
           <div className="glass-premium-card rounded-2xl p-5">
             <PlayCircle className="size-6 text-primary" aria-hidden="true" />
             <p className="mt-3 text-sm font-semibold text-foreground">200+ Video Reviews</p>
-            <p className="mt-1 text-sm text-muted-foreground">Real testimonials from real students, across every batch of the 30-Day Masterclass.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Real testimonials from real students, across every batch of the {programs.qsr.name}.</p>
           </div>
           <a
             href={WHATSAPP_MASTERCLASS_INQUIRY_LINK}
@@ -117,7 +118,7 @@ export default function ReviewsPage(): React.JSX.Element {
           <div className="aspect-video w-full overflow-hidden rounded-xl bg-black">
             <iframe
               src={SUCCESS_STORIES_PLAYLIST_EMBED_URL}
-              title="Quantum Mind Learning Lab™ — Success Stories playlist"
+              title={`${brand.name} — Success Stories playlist`}
               className="size-full"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen

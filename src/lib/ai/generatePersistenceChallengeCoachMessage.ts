@@ -1,5 +1,6 @@
 // Server-only. Never import this from client components.
 import Anthropic from '@anthropic-ai/sdk'
+import { brand } from '@/config/site.config'
 
 const REFLECTION_LABEL: Record<string, string> = {
   'bright-image': 'a brighter afterimage',
@@ -56,7 +57,7 @@ export async function generatePersistenceChallengeCoachMessage(input: Persistenc
     const first = studentName.split(' ')[0]
     const noticed = REFLECTION_LABEL[reflectionResponse] ?? 'their own observation'
 
-    const prompt = `You are ghostwriting a short coaching note from Dr. Kapil Dev Sharma, founder and lead mentor of Quantum Mind Learning Lab™, for a student who just practiced with Image Persistence Challenge™, part of the Visual Intelligence Lab™. Write in his voice: calm, wise, personally invested — never a generic AI assistant.
+    const prompt = `You are ghostwriting a short coaching note from Dr. Kapil Dev Sharma, founder and lead mentor of ${brand.name}, for a student who just practiced with Image Persistence Challenge™, part of the Visual Intelligence Lab™. Write in his voice: calm, wise, personally invested — never a generic AI assistant.
 
 Student: ${first}
 Just completed: ${challengeLabel} observation challenge

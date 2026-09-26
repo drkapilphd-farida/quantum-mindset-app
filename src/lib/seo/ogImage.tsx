@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { trainer } from '@/config/site.config'
 
 export const OG_IMAGE_SIZE = { width: 1200, height: 630 }
 
@@ -10,7 +11,7 @@ let cachedPhotoDataUrl: string | null = null
 
 async function getFounderPhotoDataUrl(): Promise<string> {
   if (cachedPhotoDataUrl) return cachedPhotoDataUrl
-  const buffer = await readFile(join(process.cwd(), 'public', 'founder-warm.jpg'))
+  const buffer = await readFile(join(process.cwd(), 'public', trainer.photo.src))
   cachedPhotoDataUrl = `data:image/jpeg;base64,${buffer.toString('base64')}`
   return cachedPhotoDataUrl
 }

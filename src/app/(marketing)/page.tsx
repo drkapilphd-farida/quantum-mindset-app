@@ -23,6 +23,7 @@ import HomeFinalCta from '@/components/HomeFinalCta'
 import HomeFranchiseTeaser from '@/components/HomeFranchiseTeaser'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
+import { trainer } from '@/config/site.config'
 
 // Site-rebuild Phase 1 — homepage now leads with the founder/brand
 // identity (per explicit brief) rather than the QSR-flagship-only
@@ -31,7 +32,7 @@ import Footer from '@/components/Footer'
 // title/description on its own /programs/quantum-speed-reading route.
 const homeTitle = 'Dr. Kapil Dev Sharma — Brain, Mind & Meditation Coach | Mind Ur Mind'
 const homeDescription =
-  'Dr. Kapil Dev Sharma — brain, mind and meditation coach with 26 years in education and mind training. Quantum Speed Reading, overthinking reset, meditation retreats, 1-on-1 coaching and corporate brain performance workshops.'
+  `${trainer.name} — brain, mind and meditation coach with ${trainer.years.total} years in education and mind training. Quantum Speed Reading, overthinking reset, meditation retreats, 1-on-1 coaching and corporate brain performance workshops.`
 
 export const metadata: Metadata = {
   ...buildPageMetadata({

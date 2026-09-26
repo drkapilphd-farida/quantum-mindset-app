@@ -1,5 +1,6 @@
 import { ProgressRing } from '@/components/exercises/ProgressRing'
 import type { NeuralEvolutionIndexResult } from '@/features/neural-evolution/neuralEvolutionIndex'
+import { brand } from '@/config/site.config'
 
 type NeuralEvolutionIndexPanelProps = {
   result: NeuralEvolutionIndexResult
@@ -15,7 +16,7 @@ export function NeuralEvolutionIndexPanel({ result }: NeuralEvolutionIndexPanelP
     <div className="rounded-3xl border bg-card p-6 shadow-sm">
       <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">🧬 Neural Evolution Index™</p>
       <p className="mt-1 text-[11px] text-muted-foreground">
-        The global architecture for Quantum Mind Learning Lab™. {result.activeDimensionCount} of {result.dimensions.length} dimensions active.
+        The global architecture for {brand.appName}. {result.activeDimensionCount} of {result.dimensions.length} dimensions active.
       </p>
 
       <div className="mt-5 flex items-center justify-center">

@@ -19,11 +19,12 @@ import ResidentialFinalCta from '@/components/residential/ResidentialFinalCta'
 import Footer from '@/components/Footer'
 import ResidentialStickyBar from '@/components/residential/ResidentialStickyBar'
 import ResidentialWhatsAppWidget from '@/components/residential/ResidentialWhatsAppWidget'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/retreats/residential',
   ownOgImage: true,
-  title: 'Residential Retreats — Lonavala & Rishikesh — Dr. Kapil Dev Sharma',
+  title: `${programs.residentialRetreat.name} | Dr. Kapil Dev Sharma`,
   description:
     'Small-group, fully immersive residential retreats guided in person by Dr. Kapil Dev Sharma since 2014. Lonavala and Rishikesh, 2026–2027. Kriya Yoga, Prana, and cosmic energy work — ₹35,000 sharing, ₹45,000 private.',
 })

@@ -30,6 +30,7 @@ export function LanguageProvider({ children }: { children: ReactNode }): React.J
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "en" || stored === "hi") {
       setLangState(stored);
+      document.documentElement.lang = stored;
     }
   }, []);
 

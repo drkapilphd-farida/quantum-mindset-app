@@ -11,6 +11,6 @@ export const ONLINE_RETREAT_GALLERY_PHOTOS: readonly GalleryPhotoEntry[] = [
   { id: "online-retreat-02", src: undefined, alt: "Group meditation over video call", category: "retreats" },
   { id: "online-retreat-03", src: undefined, alt: "Live Q&A moment", category: "retreats" },
   { id: "online-retreat-04", src: undefined, alt: "Batch participants, night session", category: "retreats" },
-  { id: "online-retreat-05", src: undefined, alt: "Dr. Sharma guiding a live practice", category: "retreats" },
+  { id: "online-retreat-05", src: undefined, alt: "Dr. Kapil Dev Sharma guiding a live practice", category: "retreats" },
   { id: "online-retreat-06", src: undefined, alt: "Closing session of an 11-day batch", category: "retreats" },
 ]

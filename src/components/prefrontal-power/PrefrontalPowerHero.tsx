@@ -93,7 +93,7 @@ export default function PrefrontalPowerHero(): React.JSX.Element {
               <div className="relative aspect-[800/1020] w-full">
                 <Image
                   src="/dr-kapil-prefrontal-hero-portrait.png"
-                  alt="Dr. Kapil Sharma, trainer of PREfrontal POWER"
+                  alt="Dr. Kapil Dev Sharma, trainer of PREfrontal POWER"
                   fill
                   priority
                   sizes="(min-width: 1024px) 310px, (min-width: 640px) 275px, 72vw"

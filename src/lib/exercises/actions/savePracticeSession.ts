@@ -7,6 +7,7 @@ import { verifyExerciseIsUnlocked } from '../queries/getExerciseAccess'
 import { isProGatedQuantumSpeedReadingExercise } from '@/lib/subscription/proGatedQuantumSpeedReadingExercises'
 import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
 import { isDevUnlockEnabled } from '@/lib/dev/isDevUnlockEnabled'
+import { brand } from '@/config/site.config'
 
 // Persists current exercise status (in_progress / completed) for the signed-in
 // user. These routes are reachable without signing in, so "no user" is a
@@ -56,7 +57,7 @@ export async function savePracticeSession(input: unknown): Promise<PracticeSessi
     const isPaidUser = await getIsPaidUser(user.id)
     if (!isPaidUser) {
       logger.warn('rejected practice session write for a Pro-gated exercise', { userId: user.id, labId, exerciseId })
-      return { success: false, error: 'This exercise requires Quantum Mind Pro.' }
+      return { success: false, error: `This exercise requires ${brand.name} Pro.` }
     }
   }
 

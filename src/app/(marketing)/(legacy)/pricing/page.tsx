@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { PricingPlansGrid } from '@/features/pricing/components/PricingPlansGrid'
 import { buildPageMetadata } from '@/lib/seo/metadata'
+import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/pricing',
   title: 'Pricing — Mind Ur Mind',
-  description: 'The Foundation, Individual Growth, Genius Family Lab, and Institutional subscription plans for the Quantum Mind app.',
+  description: `The Foundation, Individual Growth, Genius Family Lab, and Institutional subscription plans for the ${brand.appName}.`,
   // Parked (site-rebuild Phase 1): noindex, out of the sitemap and the
   // legacy header nav until the business decides the future of these
   // subscription plans. In-app upgrade links still point here on purpose.

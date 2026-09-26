@@ -2,9 +2,10 @@ import { redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import { BaselineDiagnosticExperience } from '@/features/quantum-journey/baselineDiagnostic/components/BaselineDiagnosticExperience'
 import { getBaselineDiagnostic } from '@/features/quantum-journey/baselineDiagnostic/queries/getBaselineDiagnostic'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Baseline Reading Speed Diagnostic™ — Quantum Mindset & Habit Builder™',
+  title: `Baseline Reading Speed Diagnostic™ — ${programs.focusStarter.appName}`,
   description: 'A mandatory, one-time reading speed and comprehension check before Day 1.',
   robots: { index: false, follow: false },
 }

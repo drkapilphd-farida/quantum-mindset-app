@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
+import { brand } from '@/config/site.config'
 
 type LegalPageShellProps = {
   title: string
@@ -18,7 +19,7 @@ type LegalPageShellProps = {
   footerLinks?: readonly { label: string; href: string }[]
 }
 
-const DEFAULT_BRAND_NAME = 'Quantum Mind Learning Lab™'
+const DEFAULT_BRAND_NAME = brand.name
 const DEFAULT_FOOTER_LINKS = [
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms of Service', href: '/terms' },

@@ -21,11 +21,12 @@ import MindResetFinalCta from '@/components/mind-reset/MindResetFinalCta'
 import Footer from '@/components/Footer'
 import MindResetStickyBar from '@/components/mind-reset/MindResetStickyBar'
 import MindResetWhatsAppWidget from '@/components/mind-reset/MindResetWhatsAppWidget'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/mentoring/overthinking-course',
   ownOgImage: true,
-  title: 'The 21-Day Mind Reset System — Overthinking & Mental Clarity | Dr. Kapil Dev Sharma',
+  title: `${programs.overthinkingReset.name} — Build Mental Clarity | Dr. Kapil Dev Sharma`,
   description:
     '21 days of daily Hindi training, meditation, and guided activity to understand overthinking and build mental clarity. ₹499 for 1-month self-paced access, or ₹999 for 6 months plus 2 live sessions with Dr. Kapil.',
 })
@@ -75,7 +76,7 @@ export const metadata: Metadata = buildPageMetadata({
 export default function OverthinkingMasteryCoursePage(): React.JSX.Element {
   const faqSchema = buildFaqPageSchema(translations.en.mindResetLanding.faq.items)
   const courseSchema = buildCourseSchema({
-    name: 'The 21-Day Mind Reset System',
+    name: programs.overthinkingReset.name,
     description:
       '21 days of daily Hindi training, meditation, and guided activity to understand overthinking and build mental clarity.',
     url: absoluteUrl('/mentoring/overthinking-course'),

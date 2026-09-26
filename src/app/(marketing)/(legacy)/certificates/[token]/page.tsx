@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { CopyCertLinkButton } from '@/features/certificates/components/CopyCertLinkButton'
 import { SITE_URL } from '@/lib/seo/siteUrl'
+import { brand } from '@/config/site.config'
 
 type CertificatePageProps = {
   params: Promise<{ token: string }>
@@ -69,7 +70,7 @@ export default async function CertificatePage({
               <Award className="size-12" />
             </div>
             <p className="text-xs font-semibold tracking-widest uppercase opacity-80">
-              Quantum Mind Learning Lab™
+              {brand.appName}
             </p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight">
               Certificate of Completion

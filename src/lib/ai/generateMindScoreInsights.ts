@@ -1,6 +1,7 @@
 // Server-only. Never import this from client components.
 import Anthropic from '@anthropic-ai/sdk'
 import type { JourneyStatus } from '@/lib/exercises/mindScore'
+import { brand } from '@/config/site.config'
 
 export type MindScoreInsightsInput = {
   studentName: string
@@ -74,7 +75,7 @@ export async function generateMindScoreInsights(input: MindScoreInsightsInput): 
     const { studentName, mindScore, readingScore, weeklyTrend, currentStreak, completedCount, totalCount, journeyStatus } = input
     const first = studentName.split(' ').at(0) ?? studentName
 
-    const prompt = `You are the AI Intelligence Analyst for Quantum Mind Learning Lab™ — a premium brain transformation platform.
+    const prompt = `You are the AI Intelligence Analyst for ${brand.appName} — a premium brain transformation platform.
 
 Generate exactly 3 concise, specific intelligence insights for ${first}.
 

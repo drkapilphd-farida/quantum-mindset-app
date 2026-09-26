@@ -12,6 +12,7 @@ import { DEFAULT_LANGUAGE, isSupportedLanguage } from '@/features/quantum-docume
 import type { QuantumDocument } from '@/features/quantum-document-transformer/types'
 import type { Json } from '@/lib/supabase/types'
 import { logger } from '@/lib/logger'
+import { programs } from '@/config/site.config'
 
 // AI Document Transformer™ — a file-upload endpoint, per
 // ENGINEERING_CONSTITUTION.md §5 ("Route Handlers... Use API route handlers
@@ -95,7 +96,7 @@ export async function POST(request: Request): Promise<Response> {
         {
           success: false,
           code: 'upgrade_required',
-          error: 'Document Mastery Studio is included with the 30-Day Quantum Speed Reading Masterclass — enroll to unlock it.',
+          error: `Document Mastery Studio is included with the ${programs.qsr.name} — enroll to unlock it.`,
         },
         { status: 402 },
       )

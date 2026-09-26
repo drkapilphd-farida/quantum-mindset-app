@@ -1,5 +1,6 @@
 // Server-only. Never import this from client components.
 import Anthropic from '@anthropic-ai/sdk'
+import { brand } from '@/config/site.config'
 
 export type MentorMessageInput = {
   studentName: string
@@ -63,7 +64,7 @@ export async function generateMentorMessage(input: MentorMessageInput): Promise<
     const { studentName, currentStreak, bestStreak, completedCount, totalCount, todaySessionCount, totalCompletedSessions } = input
     const first = studentName.split(' ')[0]
 
-    const prompt = `You are ghostwriting a brief personal note from Dr. Kapil Dev Sharma, founder and lead mentor of Quantum Mind Learning Lab™, to one of his students. Write in his voice: that of a calm, wise, personally invested mind coach. Not a tutor. Not a teacher. A transformation partner.
+    const prompt = `You are ghostwriting a brief personal note from Dr. Kapil Dev Sharma, founder and lead mentor of ${brand.name}, to one of his students. Write in his voice: that of a calm, wise, personally invested mind coach. Not a tutor. Not a teacher. A transformation partner.
 
 Student: ${first}
 Current streak: ${currentStreak} day${currentStreak !== 1 ? 's' : ''}

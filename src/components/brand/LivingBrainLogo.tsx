@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { brand } from '@/config/site.config'
 
 // Living Brain™ Logo — official mark. Structure kept deliberately
 // granular (separate brain-fill group, gyri-line group, node-network
@@ -114,7 +115,7 @@ export function LivingBrainLogo({
 
   const accessibilityProps = decorative
     ? { 'aria-hidden': true as const }
-    : { role: 'img' as const, 'aria-label': 'Quantum Mind Living Brain Logo' }
+    : { role: 'img' as const, 'aria-label': `${brand.name} logo` }
 
   const sizeStyle = size !== undefined ? { width: size, height: size } : {}
 

@@ -1,5 +1,6 @@
 // Server-only. Never import this from client components.
 import Anthropic from '@anthropic-ai/sdk'
+import { brand } from '@/config/site.config'
 
 export type FixationCoachInput = {
   studentName: string
@@ -49,7 +50,7 @@ export async function generateFixationCoachMessage(input: FixationCoachInput): P
     const { studentName, completedSessionCount, currentStreak, focusScore, mostPracticedExerciseLabel, lastSessionExerciseLabel } = input
     const first = studentName.split(' ')[0]
 
-    const prompt = `You are ghostwriting a short coaching note from Dr. Kapil Dev Sharma, founder and lead mentor of Quantum Mind Learning Lab™, for a student who just practiced with Visual Fixation Engine™, part of the Visual Intelligence Lab™. Write in his voice: calm, wise, personally invested — never a generic AI assistant.
+    const prompt = `You are ghostwriting a short coaching note from Dr. Kapil Dev Sharma, founder and lead mentor of ${brand.name}, for a student who just practiced with Visual Fixation Engine™, part of the Visual Intelligence Lab™. Write in his voice: calm, wise, personally invested — never a generic AI assistant.
 
 Student: ${first}
 Completed fixation sessions: ${completedSessionCount}

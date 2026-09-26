@@ -1,4 +1,5 @@
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
+import { brand, programs } from '@/config/site.config'
 
 type CompletionCertificateProps = {
   studentName: string
@@ -41,15 +42,15 @@ export function CompletionCertificate({
         <div>
           <p className="text-xs font-medium tracking-[0.3em] text-muted-foreground uppercase">Certificate of Completion</p>
           <h1 className="mt-3 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Quantum Mindset
-            <br />& Habit Builder™
+            21-Day Focus
+            <br />& Reading Program
           </h1>
         </div>
 
         <p className="text-sm text-muted-foreground">This certifies that</p>
         <p className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{studentName}</p>
         <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-          has successfully completed all 21 real days of the Quantum Mindset & Habit Builder™ program, demonstrating measurable, real growth in reading speed
+          has successfully completed all 21 real days of the {programs.focusStarter.appName}, demonstrating measurable, real growth in reading speed
           and comprehension.
         </p>
 
@@ -100,7 +101,7 @@ export function CompletionCertificate({
           </div>
         </div>
 
-        <p className="text-[10px] tracking-wide text-muted-foreground/70 uppercase">Quantum Mind Learning Lab™</p>
+        <p className="text-[10px] tracking-wide text-muted-foreground/70 uppercase">{brand.appName}</p>
       </div>
     </div>
   )

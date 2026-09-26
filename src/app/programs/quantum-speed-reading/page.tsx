@@ -33,11 +33,12 @@ import Footer from '@/components/Footer'
 import QsrStickyBar from '@/components/qsr/QsrStickyBar'
 import QsrWhatsAppWidget from '@/components/qsr/QsrWhatsAppWidget'
 import { WORKSHOP_CITIES } from '@/config/workshopCities'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/programs/quantum-speed-reading',
   ownOgImage: true,
-  title: 'Quantum Speed Reading — Science-Backed Neuro-Cognitive Masterclass | Dr. Kapil Dev Sharma',
+  title: `${programs.qsr.name} | Dr. Kapil Dev Sharma`,
   description:
     'Read 5x faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked cognitive metrics, ₹9,999 one-time enrollment.',
 })
@@ -99,7 +100,7 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
   // front-facing brand identity (see Positioning SEO Fix), targeted at
   // students, exam aspirants, and lifelong learners.
   const courseSchema = buildCourseSchema({
-    name: 'Quantum Speed Reading — 30-Day Masterclass',
+    name: programs.qsr.name,
     description:
       'Read faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked drills, guided by Dr. Kapil Dev Sharma.',
     url: absoluteUrl('/programs/quantum-speed-reading'),

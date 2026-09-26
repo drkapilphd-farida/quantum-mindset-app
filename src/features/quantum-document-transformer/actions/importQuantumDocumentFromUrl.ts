@@ -11,6 +11,7 @@ import { generateQuantumDocumentIntelligence } from '../generateQuantumDocumentI
 import { DEFAULT_LANGUAGE, isSupportedLanguage, type SupportedLanguage } from '../supportedLanguages'
 import { extractYouTubeVideoId, extractYouTubeContent } from '../urlImport/extractYouTubeTranscript'
 import { extractWebsiteContent } from '../urlImport/extractWebsiteContent'
+import { programs } from '@/config/site.config'
 
 const ImportUrlInputSchema = z.object({
   url: z.string().trim().min(1).max(2000),
@@ -58,7 +59,7 @@ export async function importQuantumDocumentFromUrl(input: unknown): Promise<Impo
     return {
       success: false,
       code: 'upgrade_required',
-      error: 'Document Mastery Studio is included with the 30-Day Quantum Speed Reading Masterclass — enroll to unlock it.',
+      error: `Document Mastery Studio is included with the ${programs.qsr.name} — enroll to unlock it.`,
     }
   }
 

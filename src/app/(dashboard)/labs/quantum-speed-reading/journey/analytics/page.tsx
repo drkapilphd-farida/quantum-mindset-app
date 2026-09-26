@@ -7,9 +7,10 @@ import { getDomainPerformanceSummary } from '@/features/quantum-journey/analytic
 import { computeDailyQuantumStreak } from '@/app/unified-quantum-session-preview/components/dailyQuantumSessionTracking'
 import { computeMindScore } from '@/lib/exercises/mindScore'
 import { computeConsistencyPercent, computeAverageAccuracyPercent, computeHabitCompletionPercent } from '@/features/quantum-journey/analytics/analyticsMath'
+import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Analytics Dashboard™ — Quantum Mindset & Habit Builder™',
+  title: `Analytics Dashboard™ — ${programs.focusStarter.appName}`,
   description: 'Your habit completion rate, streak, consistency, and Mind Score breakdown.',
   robots: { index: false, follow: false },
 }
@@ -50,7 +51,7 @@ export default async function JourneyAnalyticsPage(): Promise<React.JSX.Element>
     <div>
       <div className="mx-auto max-w-3xl px-6 py-10">
         <LabPageHeader
-          eyebrow="Quantum Mindset & Habit Builder™"
+          eyebrow={programs.focusStarter.appName}
           title="Analytics Dashboard™"
           subtitle="Your real growth story — Day 1 Baseline through today."
         />

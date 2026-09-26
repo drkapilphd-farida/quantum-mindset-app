@@ -15,13 +15,14 @@ import MentoringFaq from '@/components/mentoring/MentoringFaq'
 import Footer from '@/components/Footer'
 import MentoringStickyBar from '@/components/mentoring/MentoringStickyBar'
 import MentoringWhatsAppWidget from '@/components/mentoring/MentoringWhatsAppWidget'
+import { programs, trainer } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/mentoring/personal-class',
   ownOgImage: true,
-  title: 'Personal Class — 1-on-1 Intensive Mentoring — Dr. Kapil Dev Sharma',
+  title: `${programs.oneOnOneCoaching.name} | Mind Ur Mind`,
   description:
-    'Private, one-on-one mentoring for overthinking, focus, and personal growth, shaped around your own situation — guided by Dr. Kapil Dev Sharma, 26 years of experience as a professor, researcher, and life coach.',
+    `Private, one-on-one mentoring for overthinking, focus, and personal growth, shaped around your own situation — guided by ${trainer.name}, ${trainer.years.total} years of experience as a professor, researcher, and life coach.`,
 })
 
 // Personal Class Landing Page™ — same single-goal direct-response
