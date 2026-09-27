@@ -2,28 +2,23 @@ import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import { buildOrganizationSchema } from '@/lib/seo/organizationSchema'
 import { buildPersonSchema } from '@/lib/seo/personSchema'
-import Navbar from '@/components/Navbar'
+import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { homeCopy } from '@/lib/homeCopy'
+import SiteNav from '@/components/site/SiteNav'
 import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
-import HeroSection from '@/components/HeroSection'
-import { HomeExecutiveWorkshopFeature } from '@/components/HomeExecutiveWorkshopFeature'
-import { HomeCorporateWorkshopStrip } from '@/components/HomeCorporateWorkshopStrip'
-import ProgramSelector from '@/components/ProgramSelector'
-import HomePrefrontalPowerFeature from '@/components/HomePrefrontalPowerFeature'
-import HomeHabitBuilderFeature from '@/components/HomeHabitBuilderFeature'
-import HomeOverviewVideo from '@/components/HomeOverviewVideo'
+import HomeHero from '@/components/home/HomeHero'
+import HomeProblems from '@/components/home/HomeProblems'
+import HomeStartFree from '@/components/home/HomeStartFree'
+import HomeProof from '@/components/home/HomeProof'
+import HomeHowWeWork from '@/components/home/HomeHowWeWork'
+import HomeAbout from '@/components/home/HomeAbout'
 import HomePodcastFeature from '@/components/HomePodcastFeature'
-import ProgramCardsGrid from '@/components/ProgramCardsGrid'
-import HomeSpeedTestCta from '@/components/HomeSpeedTestCta'
-import HomeWhyMindUrMind from '@/components/HomeWhyMindUrMind'
-import OfflineEegWorkshopSection from '@/components/OfflineEegWorkshopSection'
-import Testimonials from '@/components/Testimonials'
-import HomeGuideSection from '@/components/HomeGuideSection'
-import FAQSection from '@/components/FAQSection'
-import HomeFinalCta from '@/components/HomeFinalCta'
-import HomeFranchiseTeaser from '@/components/HomeFranchiseTeaser'
+import HomeUpcoming from '@/components/home/HomeUpcoming'
+import HomeOrganisations from '@/components/home/HomeOrganisations'
+import HomeFaq from '@/components/home/HomeFaq'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
-import { trainer } from '@/config/site.config'
+import { trainer, upcomingEvents } from '@/config/site.config'
 
 // Site-rebuild Phase 1 — homepage now leads with the founder/brand
 // identity (per explicit brief) rather than the QSR-flagship-only
@@ -81,63 +76,40 @@ export const metadata: Metadata = {
 // directly reachable, just not linked from here until the batch is
 // confirmed. HomeGalleryGlimpse is still not rendered here (unrelated to
 // this pass — see the prior architecture note this replaces).
+// Re-render at least hourly so the upcoming-events list (and anything
+// else date-bound) never goes stale for long; HomeUpcoming also re-filters
+// in the browser.
+export const revalidate = 3600
+
+// Problem-first homepage (site-rebuild Phase 4): who Dr. Kapil Dev Sharma
+// is, which problem he solves for the visitor, and the first step — in
+// that order. All names, stats, prices and links come from site.config.ts.
 export default function HomePage(): React.JSX.Element {
   const organizationSchema = buildOrganizationSchema()
   const personSchema = buildPersonSchema()
+  const faqSchema = buildFaqPageSchema(homeCopy.en.faq.items)
+  const events = upcomingEvents().slice(0, 2)
 
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationSchema }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personSchema }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
       <HomeAnnouncementStrip />
-      <Navbar />
+      <SiteNav />
       <main>
-        <HeroSection />
-        <HomeExecutiveWorkshopFeature />
-        <ProgramSelector />
-        <Testimonials />
-        <HomeOverviewVideo />
-        <ProgramCardsGrid />
-        <HomeCorporateWorkshopStrip />
-        <HomeSpeedTestCta />
-        <HomeWhyMindUrMind />
-        {/* Offline QSR + EEG Cognitive Testing teaser (see the "Homepage,
-            QSR & Multi-City EEG Rewrite" task) — shorter homepage
-            version, one CTA pointing at the full multi-city section on
-            the QSR page rather than duplicating the city grid here. */}
-        <OfflineEegWorkshopSection variant="teaser" />
-        <HomeGuideSection />
+        <HomeHero />
+        <HomeProblems />
+        <HomeStartFree />
+        <HomeProof />
+        <HomeHowWeWork />
+        <HomeAbout />
         <HomePodcastFeature />
-        <FAQSection />
-        <HomeFinalCta />
-        <HomePrefrontalPowerFeature />
-        <HomeHabitBuilderFeature />
-        <HomeFranchiseTeaser />
+        <HomeUpcoming initial={events} />
+        <HomeOrganisations />
+        <HomeFaq />
       </main>
       <Footer />
-      {/* Mobile QA™ — the new hero has one more line (the credentials
-          trust strip below the CTA row) than before, which pushed its CTA
-          row low enough on short mobile viewports to collide with this
-          widget's own pre-tuned bottom-16 default (see WhatsAppWidget.tsx's
-          own doc comment on why that default exists). A little more
-          bottom clearance on mobile only, same technique already used on
-          the QSR/Franchise pages. autoDismissBubbleMs closes the large
-          explanatory bubble after 6s (it was previously left open
-          indefinitely on this page only, unlike every other page using
-          this widget) — confirmed via user report to be the main source
-          of it persistently covering hero/testimonial content while
-          scrolling; the compact button alone remains available. Footer's
-          own bottom padding (see Footer.tsx) is what keeps the button
-          clear of the footer's copyright/link row at max scroll.
-          revealAfterElementId="top": measured via Playwright that at
-          1024x768 this widget's fixed bottom-right position overlaps the
-          hero founder portrait's bottom-right corner (the hand) by ~13px
-          — confirmed real, not a false positive. A fixed pixel threshold
-          cleared that breakpoint but still overlapped on mobile (much
-          taller stacked hero) — measuring the actual hero section
-          (id="top") and revealing only once it's fully scrolled out of
-          view removes the overlap at every breakpoint, not just the one
-          it was tuned against. */}
       <WhatsAppWidget bottomClassName="bottom-24 sm:bottom-7" autoDismissBubbleMs={6000} revealAfterElementId="top" />
     </div>
   )

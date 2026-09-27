@@ -151,6 +151,14 @@ export type Program = {
   url: string
   status: ProgramStatus
   pillar: ProgramPillar
+  /** Dated live events only. Hidden everywhere once `endISO` has passed. */
+  event?: {
+    endISO: string
+    dateDisplay: string
+    dateDisplayHi: string
+    city: string
+    cityHi: string
+  }
 }
 
 const programsData = {
@@ -266,6 +274,14 @@ const programsData = {
     checkout: [{ label: 'Razorpay', href: 'https://razorpay.me/@mindurmindacademy' }],
     url: '/executive-brain-workshop',
     status: 'upcoming',
+    // Mirrors executiveBrainWorkshopConfig.ts (the page's own config).
+    event: {
+      endISO: '2026-10-18T17:30:00+05:30',
+      dateDisplay: 'Sun, 18 Oct 2026',
+      dateDisplayHi: 'रवि, 18 अक्टूबर 2026',
+      city: 'Mumbai',
+      cityHi: 'मुंबई',
+    },
     pillar: 'business',
   },
   prefrontalPower: {
@@ -284,6 +300,13 @@ const programsData = {
     ],
     url: '/prefrontal-power-mumbai',
     status: 'upcoming',
+    event: {
+      endISO: '2026-09-27T23:59:59+05:30',
+      dateDisplay: 'Sun, 27 Sep 2026',
+      dateDisplayHi: 'रवि, 27 सितंबर 2026',
+      city: 'Mumbai',
+      cityHi: 'मुंबई',
+    },
     pillar: 'brain',
   },
   qsrMumbai: {
@@ -382,3 +405,22 @@ const qsrGuaranteeData = {
 } as const
 
 export const qsrGuarantee: Widen<typeof qsrGuaranteeData> = qsrGuaranteeData
+
+export type UpcomingEvent = {
+  id: string
+  name: string
+  nameHi: string
+  url: string
+  prices: readonly { label: string; amountInr: number }[]
+  event: NonNullable<Program['event']>
+}
+
+/** Upcoming dated events that haven't ended yet (at `now`), soonest first. */
+export function upcomingEvents(now: Date = new Date()): UpcomingEvent[] {
+  const all = Object.values(programs) as readonly (Omit<UpcomingEvent, 'event'> & { status: string; event?: Program['event'] })[]
+  return all
+    .filter((p): p is typeof p & { event: NonNullable<Program['event']> } => p.status === 'upcoming' && p.event !== undefined)
+    .filter((p) => new Date(p.event.endISO).getTime() > now.getTime())
+    .sort((a, b) => new Date(a.event.endISO).getTime() - new Date(b.event.endISO).getTime())
+    .map((p) => ({ id: p.id, name: p.name, nameHi: p.nameHi, url: p.url, prices: p.prices, event: p.event }))
+}
