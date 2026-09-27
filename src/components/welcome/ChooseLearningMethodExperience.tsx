@@ -138,7 +138,7 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain }: C
           </div>
         ) : (
           <div>
-            <h1 className={TYPOGRAPHY.display}>Read 5x Faster. Retain 100%.</h1>
+            <h1 className={TYPOGRAPHY.display}>Read Faster. Remember More.</h1>
             <p className="mt-6 flex flex-col gap-1 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl md:text-4xl">
               <span>Master Any Book — Guided Live by Dr. Kapil Dev Sharma.</span>
               <span>7 Live Masterclasses. One Mentor.</span>

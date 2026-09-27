@@ -9,7 +9,7 @@ import { brand, programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Success Stories',
-  description: '200+ real student video reviews of the 30-Day Quantum Speed Reading Mastery + Live Cohort.',
+  description: 'Real student video reviews of the Quantum Speed Reading — 30-Day Live Program on YouTube.',
   robots: { index: false, follow: false },
 }
 
@@ -46,7 +46,7 @@ export default function ReviewsPage(): React.JSX.Element {
             data-review-count-badge="true"
           >
             <PlayCircle className="size-3.5" aria-hidden="true" />
-            200+ Real Student Video Reviews
+            60+ Real Student Video Reviews
           </span>
           <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Success Stories: See How Thousands of Students Mastered Quantum Speed Reading
@@ -87,7 +87,7 @@ export default function ReviewsPage(): React.JSX.Element {
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="glass-premium-card rounded-2xl p-5">
             <PlayCircle className="size-6 text-primary" aria-hidden="true" />
-            <p className="mt-3 text-sm font-semibold text-foreground">200+ Video Reviews</p>
+            <p className="mt-3 text-sm font-semibold text-foreground">60+ Video Reviews</p>
             <p className="mt-1 text-sm text-muted-foreground">Real testimonials from real students, across every batch of the {programs.qsr.name}.</p>
           </div>
           <a
@@ -125,7 +125,7 @@ export default function ReviewsPage(): React.JSX.Element {
             />
           </div>
           <div className="flex flex-col items-center justify-between gap-2 px-2 pt-4 pb-1 text-center sm:flex-row sm:text-left">
-            <p className="text-xs text-muted-foreground">Browse all 200+ stories using the list inside the player above.</p>
+            <p className="text-xs text-muted-foreground">Browse all the stories using the list inside the player above.</p>
             <Link
               href={SUCCESS_STORIES_PLAYLIST_WATCH_URL}
               target="_blank"

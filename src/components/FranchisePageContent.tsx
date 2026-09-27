@@ -23,6 +23,7 @@ import {
   User,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { Eyebrow } from "./ui";
 import SimplePageNav from "./SimplePageNav";
 import Footer from "./Footer";
@@ -48,16 +49,6 @@ const WHO_FOR_ICONS = [GraduationCap, Building2, Presentation] as const;
 const INTRO_VIDEO_ID: Record<Lang, string> = {
   en: "Zsz0eUQ3t0o",
   hi: "64UmqM5_mEM",
-};
-
-// Real trainer WhatsApp-testimonial screenshots — genuine messages, used
-// with permission. Photos aren't available for these trainers, so the
-// screenshot itself is the proof; name/city come from t.franchisePage
-// .trainerTestimonials.items (translated), matched here by stable id.
-const TRAINER_TESTIMONIAL_IMAGES: Record<string, string> = {
-  "dev-prakash": "/trainer_testimonial_dev_prakash_whatsapp.jpg",
-  "saloni-shah": "/trainer_testimonial_saloni_shah_whatsapp.jpg",
-  "sandeep-gupta": "/trainer_testimonial_sandeep_gupta_whatsapp.jpg",
 };
 
 // Real student testimonial YouTube Shorts — the same 6 verified video IDs
@@ -119,6 +110,9 @@ function SectionCta({ label }: { label: string }): React.JSX.Element {
 // /admin/franchise-leads still reads whatever rows already exist there.
 export default function FranchisePageContent(): React.JSX.Element {
   const { t, lang } = useLanguage();
+  // Trainer-partner WhatsApp screenshots — from src/config/testimonials.ts,
+  // verified entries only (the section hides itself when none are verified).
+  const trainerTestimonials = useProgramTestimonials("franchise");
   const page = t.franchisePage;
   const introVideoId = INTRO_VIDEO_ID[lang];
 
@@ -267,6 +261,7 @@ export default function FranchisePageContent(): React.JSX.Element {
             exist for these trainers, so the screenshot itself is the
             proof; shown close to its original crop (name/timestamp bar
             intact), not treated as a marketing graphic. */}
+        {trainerTestimonials.length > 0 && (
         <section id="trainer-testimonials" className="border-b border-line px-6 py-16 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-content">
             <div className="mb-10 max-w-xl sm:mb-12">
@@ -275,15 +270,15 @@ export default function FranchisePageContent(): React.JSX.Element {
               <p className="mt-3 text-[14.5px] leading-relaxed text-ink-dim">{page.trainerTestimonials.desc}</p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {page.trainerTestimonials.items.map((trainer) => (
+              {trainerTestimonials.map((trainer) => (
                 <div
                   key={trainer.id}
                   className="mx-auto w-full max-w-[300px] overflow-hidden rounded-sm border border-line-strong bg-panel2 shadow-[0_10px_30px_rgba(34,31,29,0.08)] transition-transform duration-200 hover:-translate-y-1"
                 >
                   <div className="relative aspect-[591/1280] w-full">
                     <Image
-                      src={TRAINER_TESTIMONIAL_IMAGES[trainer.id] ?? ""}
-                      alt={`WhatsApp testimonial from ${trainer.name}, ${trainer.city}`}
+                      src={trainer.photo ?? ""}
+                      alt={`WhatsApp testimonial from ${trainer.name}`}
                       fill
                       sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 90vw"
                       className="object-cover object-top"
@@ -291,7 +286,7 @@ export default function FranchisePageContent(): React.JSX.Element {
                   </div>
                   <div className="border-t border-line-strong px-4 py-3 text-center">
                     <div className="text-[13.5px] font-bold text-ink">{trainer.name}</div>
-                    <div className="mt-0.5 font-mono text-[10.5px] uppercase tracking-[0.06em] text-ink-faint">{trainer.city}</div>
+                    <div className="mt-0.5 font-mono text-[10.5px] uppercase tracking-[0.06em] text-ink-faint">{trainer.context}</div>
                     <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-teal/30 bg-teal-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.04em] text-teal">
                       <CheckCircle2 className="h-3 w-3" aria-hidden="true" />
                       {page.trainerTestimonials.verifiedLabel}
@@ -302,6 +297,7 @@ export default function FranchisePageContent(): React.JSX.Element {
             </div>
           </div>
         </section>
+        )}
 
         {/* 6. What Students Say — 6 real YouTube Shorts, lazy-loaded via
             VideoReviewGrid's existing thumbnail-then-iframe-on-click

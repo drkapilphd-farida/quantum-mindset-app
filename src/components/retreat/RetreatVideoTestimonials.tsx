@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
+import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { Eyebrow } from "../ui";
 import VideoReviewGrid from "../VideoReviewGrid";
 import { RETREAT_VIDEO_REVIEWS, RETREAT_VIDEO_REVIEWS_PLAYLIST_WATCH_URL } from "@/config/retreatVideoReviews";
@@ -13,13 +14,12 @@ import { RETREAT_VIDEO_REVIEWS, RETREAT_VIDEO_REVIEWS_PLAYLIST_WATCH_URL } from 
 // gallery+lightbox used on /retreats/residential — real extracted
 // thumbnails, no inline YouTube embed on the page itself.
 //
-// Vikram S.'s quote (programKey: 'retreat') is the one genuinely
-// on-topic entry in the shared testimonials pool, so it stays as the
-// featured text quote above the video grid.
+// The featured quote is the first verified online-retreat testimonial in
+// src/config/testimonials.ts; hidden when none is verified.
 export default function RetreatVideoTestimonials(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.retreatLanding.videoTestimonials;
-  const featured = t.testimonials.items.find((item) => item.programKey === "retreat");
+  const featured = useProgramTestimonials("onlineRetreat").find((item) => item.quote !== null);
 
   return (
     <section id="testimonials" className="border-b border-line px-6 py-24 sm:px-8">
@@ -37,7 +37,7 @@ export default function RetreatVideoTestimonials(): React.JSX.Element {
             </p>
             <div className="text-[14px] font-semibold text-ink">{featured.name}</div>
             <div className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em] text-gold">
-              {featured.context || featured.program}
+              {featured.context || featured.programLabel}
             </div>
           </div>
         )}

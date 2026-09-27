@@ -41,7 +41,7 @@ export function ExecutiveWorkshopHero(): React.JSX.Element {
               Stay Calm Under Pressure. <span className="text-teal-light">Focus Deeper.</span> Decide Clearer.
             </h1>
             <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-ink-dim sm:text-[17.5px]">
-              A one-day, science-based live workshop in Mumbai — see your brain state change live on EEG, measure your own before-and-after, then 21
+              A one-day, science-informed live workshop in Mumbai — a live EEG brain-state demo, your own before-and-after measurement, then 21
               days of guided daily practice on WhatsApp.
             </p>
 

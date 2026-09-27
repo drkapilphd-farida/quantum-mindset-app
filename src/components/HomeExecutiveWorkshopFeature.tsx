@@ -6,7 +6,7 @@ import { EegWaveform } from "@/features/executive-brain-workshop/components/EegW
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 const POINTS = [
-  { icon: Activity, text: "See your brain state change live on EEG" },
+  { icon: Activity, text: "Live EEG brain-state demo (not a medical test)" },
   { icon: Gauge, text: "Measure your own before-and-after" },
   { icon: MessageCircle, text: "21 days of guided practice on WhatsApp" },
 ] as const;

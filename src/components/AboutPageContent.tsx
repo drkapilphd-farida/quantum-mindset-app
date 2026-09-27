@@ -5,6 +5,7 @@ import SimplePageNav from "./SimplePageNav";
 import Footer from "./Footer";
 import WhatsAppWidget from "./WhatsAppWidget";
 import TrainerBio from "./TrainerBio";
+import AboutTestimonials from "./AboutTestimonials";
 
 // About Us™ — company-level page. The footer's old "About Dr. Sharma"
 // link pointed at this same /about route while implying a
@@ -37,6 +38,7 @@ export default function AboutPageContent(): React.JSX.Element {
         </section>
 
         <TrainerBio variant="long" accent="gold" eyebrow={a.guide.eyebrow} quote={a.guide.quote} />
+        <AboutTestimonials />
       </main>
       <Footer />
       <WhatsAppWidget />

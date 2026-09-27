@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
 import { buildPageMetadata } from '@/lib/seo/metadata'
-import { programs } from '@/config/site.config'
+import { programs, qsrGuarantee } from '@/config/site.config'
 
 // New, dedicated Refund & Cancellation Policy (see the "Pre-Launch Audit
 // Fix Pass" task, Phase 3) — this page didn't exist before. The only
@@ -40,12 +40,7 @@ export default function RefundPolicyPage(): React.JSX.Element {
 
       <section>
         <h2 className={legalStyles.h2}>{programs.qsr.name} — 100% Results Guarantee</h2>
-        <p className={legalStyles.p}>
-          If you complete the full 30-day protocol as instructed — every daily app session, and all 7 live
-          masterclass sessions with Dr. Kapil Dev Sharma — and your reading speed (WPM) and comprehension haven&rsquo;t
-          measurably improved between your Day 1 baseline and your Day 30 checkpoint, we&rsquo;ll issue a full
-          refund of your ₹9,999 enrollment fee.
-        </p>
+        <p className={legalStyles.p}>{qsrGuarantee.en.statement}</p>
         <ul className={legalStyles.list}>
           <li>
             <strong>Eligibility:</strong> you must have completed all 30 days and all 7 live sessions. Partial

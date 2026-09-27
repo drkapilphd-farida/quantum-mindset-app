@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { Eyebrow } from "../ui";
 import VideoReviewGrid from "../VideoReviewGrid";
 import {
@@ -21,16 +22,13 @@ import { isRealUrl } from "@/lib/isRealUrl";
 // The old external 200+ video playlist CTA has been removed in favor of
 // this in-page showcase.
 //
-// Testimonial Pool Separation™ (unchanged from earlier phases) — still
-// filters t.testimonials.items by the stable, untranslated `programKey`
-// field. None of the 13 newly supplied video URLs could be confidently
-// mapped to a specific named quote below (no name/quote-to-video
-// correspondence was supplied), so the `[VIDEO URL NEEDED]` placeholders
-// on those quotes are left untouched rather than guessed at.
+// Named quotes come from src/config/testimonials.ts — verified QSR
+// entries only. None of the anonymous videos above can be matched to a
+// named quote with certainty, so no quote links to a video yet.
 export default function QsrVideoTestimonials(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.qsrLanding.videoTestimonials;
-  const [featured, ...others] = t.testimonials.items.filter((item) => item.programKey === "qsr");
+  const [featured, ...others] = useProgramTestimonials("qsr").filter((item) => item.quote !== null);
   const [showMoreVideos, setShowMoreVideos] = useState(false);
 
   // Visual Rhythm™ — lg:py-20 trims desktop-only vertical padding (base
@@ -86,9 +84,9 @@ export default function QsrVideoTestimonials(): React.JSX.Element {
             </p>
             <div className="text-[14px] font-semibold text-ink">{featured.name}</div>
             <div className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em] text-gold">
-              {featured.context || featured.program}
+              {featured.context || featured.programLabel}
             </div>
-            {isRealUrl(featured.videoUrl) && (
+            {featured.videoUrl !== null && isRealUrl(featured.videoUrl) && (
               <a
                 href={featured.videoUrl}
                 target="_blank"
@@ -113,9 +111,9 @@ export default function QsrVideoTestimonials(): React.JSX.Element {
                   <div>
                     <div className="text-[13.5px] font-semibold text-ink">{item.name}</div>
                     <div className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
-                      {item.context || item.program}
+                      {item.context || item.programLabel}
                     </div>
-                    {isRealUrl(item.videoUrl) && (
+                    {item.videoUrl !== null && isRealUrl(item.videoUrl) && (
                       <a
                         href={item.videoUrl}
                         target="_blank"

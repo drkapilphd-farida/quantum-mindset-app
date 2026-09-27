@@ -2,6 +2,7 @@
 
 import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { Eyebrow } from "../ui";
 
 // Positioning fix — this used to open with a 3-column "Three kinds of
@@ -21,7 +22,7 @@ export default function QsrAudience(): React.JSX.Element {
   // don't repeat each other. Karan Mehra's quote ties directly to this
   // section's exam/study-time framing. Falls back to the first QSR entry
   // if that id is ever removed.
-  const qsrTestimonials = t.testimonials.items.filter((item) => item.programKey === "qsr");
+  const qsrTestimonials = useProgramTestimonials("qsr").filter((item) => item.quote !== null);
   const trustQuote = qsrTestimonials.find((item) => item.id === "karan-mehra") ?? qsrTestimonials[0];
 
   // Visual Rhythm™ — lg:py-16 trims desktop-only vertical padding (base

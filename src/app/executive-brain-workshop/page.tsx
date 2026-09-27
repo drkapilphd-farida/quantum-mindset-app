@@ -29,7 +29,7 @@ import { MetaPixel } from '@/features/executive-brain-workshop/components/MetaPi
 
 const PAGE_TITLE = 'Executive Brain Performance Workshop Mumbai | Calm, Focus & Decision Clarity'
 const PAGE_DESCRIPTION =
-  'A one-day, science-based live workshop in Mumbai by Dr. Kapil Dev Sharma — a live EEG brain-state demo, personal before/after measurement, and 21 days of guided daily practice on WhatsApp.'
+  'A one-day, science-informed live workshop in Mumbai by Dr. Kapil Dev Sharma — a live EEG brain-state demo, personal before/after measurement, and 21 days of guided daily practice on WhatsApp.'
 
 // No `images` override here — this route has its own opengraph-image.tsx
 // (1200x630, generated from the master photo), which Next's file

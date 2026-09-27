@@ -1,4 +1,4 @@
-import { brand, programs, trainer } from "@/config/site.config";
+import { brand, programs, qsrGuarantee, trainer } from "@/config/site.config";
 export type Lang = "en" | "hi";
 
 export const translations = {
@@ -49,9 +49,10 @@ export const translations = {
     hero: {
       eyebrow: "Dr. Kapil Dev Sharma — Mind Ur Mind",
       credentials: trainer.en.shortBio.split(" · "),
-      headline: "Science-Backed Quantum Speed Reading",
-      headlineEm: "5x Faster Reading. 100% Retention. EEG-Verified.",
-      sub: "Struggling to finish your syllabus? Reading for hours but remembering nothing? Your child studies for hours but forgets everything? This isn't a reading problem — it's a training problem. No hypnosis, no shortcuts — pure cognitive science.",
+      headline: "Science-Informed Quantum Speed Reading",
+      headlineEm: "Read Faster. Remember More. Study Smarter.",
+      headlineNote: "Measured from your own Day 1 baseline.",
+      sub: "Struggling to finish your syllabus? Reading for hours but remembering nothing? Your child studies for hours but forgets everything? This isn't a reading problem — it's a training problem. No hypnosis, no shortcuts — structured, measurable skills training.",
       ctaPrimary: "Watch the Free Training Now",
       ctaSecondary: "Take the Free Speed Test",
       portraitName: "Dr. Kapil Dev Sharma",
@@ -251,14 +252,14 @@ export const translations = {
     // full city grid). City list/status lives in eegWorkshopCities.ts,
     // not here — this block is copy only.
     offlineEegWorkshop: {
-      eyebrow: "Offline QSR + EEG",
-      title: "Offline QSR + EEG Cognitive Testing — Available in Your City",
-      desc: "Want to see your own brain states on EEG? Our 2-Day Offline QSR Workshop includes live EEG testing so you can track your Alpha/Theta training in person with our trainers. The rest of your 30-day program continues online, at your own pace.",
-      teaserDesc: "Want to see your own brain states on EEG, not just read about them? Our 2-Day Offline QSR Workshop includes live, in-person EEG testing — now open across 6 cities.",
+      eyebrow: "Offline QSR Workshop",
+      title: "Offline QSR Workshops with a Live EEG Brain-State Demo",
+      desc: "Prefer learning in person? Our 2-Day Offline QSR Workshop adds hands-on coaching and a live EEG brain-state demo. The rest of your 30-day program continues online, at your own pace. EEG demos are for learning and engagement, not medical tests.",
+      teaserDesc: "Our 2-Day Offline QSR Workshop adds in-person coaching and a live EEG brain-state demo — now open across 6 cities. EEG demos are for learning and engagement, not medical tests.",
       howItWorksLabel: "How It Works",
       steps: [
-        "Register for the 2-day offline workshop in your nearest city (EEG testing included)",
-        "Attend 2 days in person for live brain-state tracking and hands-on coaching",
+        "Register for the 2-day offline workshop in your nearest city (live EEG brain-state demo included)",
+        "Attend 2 days in person for hands-on coaching and a live EEG brain-state demo",
         "Continue the remaining sessions of your 30-day program online",
       ],
       citiesLabel: "Available Cities",
@@ -277,8 +278,8 @@ export const translations = {
     homePodcastFeature: {
       eyebrow: "Featured Podcast",
       title: "Dr. Kapil Dev Sharma on Solomon Daniel's Podcast",
-      caption: "Dr. Kapil Dev Sharma explores what's really possible when you unlock your brain's true potential.",
-      videoTitle: "What if Your BRAIN is Hiding 99% of its POWER? | Dr. Kapil Dev Sharma — Solomon Daniel's Podcast",
+      caption: "A long-form conversation with Dr. Kapil Dev Sharma about reading, focus and training the mind.",
+      videoTitle: "Dr. Kapil Dev Sharma on Solomon Daniel's Podcast",
       playAriaLabel: "Play video: Dr. Kapil Dev Sharma on Solomon Daniel's Podcast",
       channelCredit: "Featured on Solomon Daniel's Podcast",
     },
@@ -396,11 +397,6 @@ export const translations = {
         title: "Real Trainers. Real Experiences.",
         desc: "See what trainers have experienced while learning and preparing to deliver the methodology.",
         verifiedLabel: "Verified via WhatsApp",
-        items: [
-          { id: "dev-prakash", name: "Dev Prakash", city: "Mumbai" },
-          { id: "saloni-shah", name: "Saloni Shah", city: "Delhi" },
-          { id: "sandeep-gupta", name: "Sandeep Gupta", city: "Kolkata" },
-        ],
       },
       studentTestimonials: {
         eyebrow: "What Students Say",
@@ -574,128 +570,6 @@ export const translations = {
       videoYoungLearnersLabel: "Young Learners",
       videoAdultsLabel: "Adults",
       viewAll: "Watch More Stories",
-      items: [
-        {
-          id: "ananya-r",
-          qsrPageOnly: false,
-          name: "Ananya R.",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote: "I finished two books in the time it used to take me to finish one chapter.",
-          context: "",
-          result: "~2x reading throughput",
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        // Student/young-learner reviews first, then adult/professional
-        // reviews (see the "Home & QSR Testimonial/Video Reorder" task)
-        // — Karan Mehra moved up from after Amit Patel to sit right
-        // after Ananya R., the only other student-tagged QSR review.
-        {
-          id: "karan-mehra",
-          qsrPageOnly: true,
-          name: "Karan Mehra",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote:
-            "The mental clarity and speed I've gained through these 30 days have drastically cut down my study and preparation time.",
-          context: "Jaipur",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "dr-preeti",
-          qsrPageOnly: true,
-          name: "Dr. Preeti",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote:
-            "The Quantum Speed Reading workshop completely changed how I process medical journals; I can now scan through extensive research papers in a fraction of the usual time.",
-          context: "Mumbai",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "shailesh",
-          qsrPageOnly: true,
-          name: "Shailesh",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote:
-            "As a business owner, processing market reports and financial statements has become remarkably fast after attending this program.",
-          context: "Ahmedabad · Business Owner",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "sudha",
-          qsrPageOnly: true,
-          name: "Sudha",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote:
-            "Initially skeptical, but the 30-day practice streak genuinely improved my focus and overall reading comprehension beyond expectations.",
-          context: "Kolkata",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "vikram-malhotra",
-          qsrPageOnly: true,
-          name: "Vikram Malhotra",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote:
-            "The combination of live sessions and daily app practice helped me break through a lifelong reading plateau.",
-          context: "Bengaluru",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "amit-patel",
-          qsrPageOnly: true,
-          name: "Amit Patel",
-          program: "Quantum Speed Reading",
-          programKey: "qsr",
-          quote:
-            "A profound mental reboot — my retention power skyrocketed, and I now finish thick management books in a single sitting.",
-          context: "Surat",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "vikram-s",
-          qsrPageOnly: false,
-          name: "Vikram S.",
-          program: "11-Day Online Retreat",
-          programKey: "retreat",
-          quote: "The Kundalini sessions alone were worth the entire eleven days.",
-          context: "",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "priya-m",
-          qsrPageOnly: false,
-          name: "Priya M.",
-          program: programs.oneOnOneCoaching.name,
-          programKey: "mentoring",
-          quote: "Six private sessions did what years of general advice never managed.",
-          context: "",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "rohan-k",
-          qsrPageOnly: false,
-          name: "Rohan K.",
-          program: programs.overthinkingReset.name,
-          programKey: "course",
-          quote: "Twenty-one days, and the loop in my head finally went quiet.",
-          context: "",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-      ],
     },
     faq: {
       eyebrow: "Before You Reach Out",
@@ -724,17 +598,17 @@ export const translations = {
         {
           question: "Is this hypnosis or some unscientific method?",
           answer:
-            "No. This is cognitive training grounded in neuroscience — eye-movement retraining, breathing-based focus drills, and memory techniques. We track real progress using EEG, not claims. There's no hypnosis, no blindfold reading, no belief system required — it's trained the way you'd train any other cognitive skill.",
+            "No. It's skills training informed by reading and attention research — eye-movement practice, breathing-based focus drills, and memory techniques. Progress is measured in the app from your own Day 1 baseline, not claimed. There's no hypnosis, no blindfold reading, no belief system required — it's trained the way you'd train any other cognitive skill.",
         },
         {
           question: `How much does the ${programs.qsr.name} cost, and what's included?`,
           answer:
-            `The ${programs.qsr.name} is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout, backed by our 100% Results Guarantee for online students. We don't offer free access to the program itself, but you can watch the free training video or take our free 2-minute Reading Speed Test first. Graduates who want continued app practice afterward can continue for ₹499/month.`,
+            `The ${programs.qsr.name} is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout, backed by our 100% Results Guarantee (exact conditions on our Refund & Cancellation Policy page). We don't offer free access to the program itself, but you can watch the free training video or take our free 2-minute Reading Speed Test first. Graduates who want continued app practice afterward can continue for ₹499/month.`,
         },
         {
-          question: "How does the offline workshop + EEG testing work, and which cities is it in?",
+          question: "How does the offline workshop work, and which cities is it in?",
           answer:
-            "Our 2-Day Offline QSR Workshop adds live, in-person EEG testing to the same 30-day program: you register for your nearest city, attend 2 days in person for hands-on coaching and real EEG brain-state tracking, then continue the remaining sessions online at your own pace. Currently open in Mumbai, Pune, Vadodara, Surat, Ahmedabad, and Noida — exact batch dates are confirmed city by city, so most cities start on a waitlist until a date is locked, rather than a fixed 'register now' date we can't yet guarantee.",
+            "Our 2-Day Offline QSR Workshop adds in-person coaching and a live EEG brain-state demo to the same 30-day program (EEG demos are for learning and engagement, not medical tests): you register for your nearest city, attend 2 days in person, then continue the remaining sessions online at your own pace. Currently open in Mumbai, Pune, Vadodara, Surat, Ahmedabad, and Noida — exact batch dates are confirmed city by city, so most cities start on a waitlist until a date is locked, rather than a fixed 'register now' date we can't yet guarantee.",
         },
         {
           question: "What age group are these programs designed for?",
@@ -858,9 +732,10 @@ export const translations = {
     },
     qsrLanding: {
       hero: {
-        eyebrow: "Science-Backed Advanced Neuro-Cognitive Transformation Program",
-        headline: "For Students, Competitive Exam Aspirants & Parents —",
-        headlineEm: "Science-Backed Quantum Speed Reading",
+        eyebrow: "Science-Informed Reading & Memory Training",
+        headline: "Quantum Speed Reading for Students, Exam Aspirants & Parents",
+        headlineEm: "Read Faster. Remember More. Study Smarter.",
+        headlineNote: "Measured from your own Day 1 baseline.",
         sub: "Studying for hours but forgetting by the next day? This isn't about willpower — it's about how your brain reads.",
         ctaPrimary: "Watch the Free Training Now",
         ctaPrimaryMeta: "Free · Watch Anytime",
@@ -946,23 +821,23 @@ export const translations = {
         secondaryLine: `Secure checkout via Razorpay · ${trainer.learners} learners · QSR trainer since ${trainer.qsrSinceYear}`,
       },
       guarantee: {
-        title: "100% Results Guaranteed for Online Students",
-        desc: "Complete the full 30-day protocol as instructed — every app session, all 7 live masterclasses. If you do, and your reading speed and comprehension haven't measurably improved, tell us and we'll issue a full refund.",
+        title: qsrGuarantee.en.title,
+        desc: `${qsrGuarantee.en.statement} ${qsrGuarantee.en.requestWindow}`,
         policyLabel: "See our Refund & Cancellation Policy",
-        heroLine: "100% Results Guaranteed — complete the full 30-day protocol, or get a full refund.",
+        heroLine: qsrGuarantee.en.short,
       },
       brainScience: {
         eyebrow: "The Science Behind It",
         title: "Why this works when other methods don't",
-        desc: "Quantum Speed Reading isn't a trick — it retrains four specific cognitive systems most reading habits never touch.",
+        desc: "Quantum Speed Reading isn't a trick — it trains four skills most reading habits never practise: visual processing, attention and memory.",
         cards: [
           {
-            title: "Right-Brain Capabilities",
-            desc: "Traditional reading leans almost entirely on the brain's language-processing side. This training brings the right hemisphere's parallel processing and pattern recognition into the process — so you absorb in parallel, not word by word.",
+            title: "Visual Processing",
+            desc: "Traditional reading processes text one word at a time. Training visual processing helps your eyes and brain take in word groups and familiar patterns, so you read in meaningful chunks rather than word by word.",
           },
           {
-            title: "Visualization & Intuition",
-            desc: "Once the right brain is engaged, information anchors as vivid mental imagery instead of abstract text. That's what makes it stick — and what most people mean when they say they finally \"see\" what they read.",
+            title: "Visualization & Memory",
+            desc: "Turning what you read into mental images is a well-established memory technique. The program trains you to do it deliberately, so key ideas are easier to recall later.",
           },
           {
             title: "Peripheral Vision",
@@ -980,13 +855,6 @@ export const translations = {
       // "why this works" section and before the metrics/EEG section, so
       // it reads as the visual payoff of the cards above rather than a
       // bolted-on addition.
-      brainwaveScience: {
-        eyebrow: "See The Science",
-        title: "The Brainwave Shift, Visualized",
-        desc: "Normal reading keeps your brain in high-alert Beta waves. Quantum Speed Reading trains it into a calmer, more absorptive Alpha/Gamma state — here's what changes.",
-        imageAlt:
-          "Comparison of normal saccadic reading (Beta brainwaves) versus Quantum Speed Reading flow state (Alpha/Gamma brainwaves) and their effects on retention and focus",
-      },
       // Science-Backed Neuro-Cognitive Positioning™ — the program's own
       // real, already-computed metrics (Brain Score, comprehension %,
       // daily-streak consistency — see practiceHistory.ts /
@@ -999,9 +867,9 @@ export const translations = {
       // since only the Vadodara in-person track has physical EEG
       // hardware to actually verify brain state (see eeg below).
       neuroCognitive: {
-        eyebrow: "Advanced Neuro-Cognitive Training",
-        title: "A Science-Backed Neuro-Cognitive Transformation Program",
-        desc: "This isn't just faster reading — it's structured training toward the brain states linked to deep focus and durable memory, with your own progress tracked on real cognitive metrics from Day 1.",
+        eyebrow: "How Progress Is Measured",
+        title: "Science-Informed Reading, Attention and Memory Training",
+        desc: "Read faster with better recall — trained daily and tracked on real metrics from your own Day 1 baseline.",
         metrics: [
           {
             label: "Brain Score",
@@ -1027,8 +895,8 @@ export const translations = {
             label: "Normal Reading — What's Happening Now",
             points: [
               "Eyes move in constant stop-start jumps (saccades) with frequent regressions — 10–15 stops per line",
-              "Brain stays mostly in high-frequency Beta state — alert but effortful, fatigues quickly",
-              "Left hemisphere does most of the work (language/word processing only) — the right hemisphere (pattern/image processing) stays mostly idle",
+              "Attention drifts easily, and re-reading and silent inner narration slow you down and tire you out",
+              "Words are processed one at a time with little visualization, which makes content harder to remember",
             ],
             result: "Result: slow speed, shallow retention, quick mental fatigue",
           },
@@ -1036,16 +904,16 @@ export const translations = {
             label: "With Quantum Speed Reading",
             points: [
               "Eyes trained to move across wider visual spans (peripheral vision training) — fewer fixations and regressions",
-              "Breathing and focus drills bring the brain into Alpha state (relaxed-alert); deeper practice produces short Theta bursts linked to memory consolidation",
-              "Left and right hemispheres work together — words processed as language AND as visual/pattern information, improving hemispheric coordination",
+              "Breathing and focus drills train sustained attention before and during reading",
+              "Visual processing, attention and memory training — you practise grouping words and turning key ideas into mental images",
             ],
-            result: "Result: faster speed, deeper retention, less fatigue, and over time, stronger visual/photographic memory",
+            result: "Result: read faster with better recall — measured from your own Day 1 baseline",
           },
-          measuredNote: "How this is measured: the same Brain Score, comprehension %, and consistency tracking above — plus, if you join the Offline QSR + EEG Workshop in your city, real physical EEG brain mapping in person (see below).",
+          measuredNote: "How this is measured: the Brain Score, comprehension % and consistency tracking above, from your own Day 1 baseline. Offline workshops add a live EEG brain-state demo — EEG demos are for learning and engagement, not medical tests.",
           notHypnosisLine: "This is not hypnosis, not blindfold reading, and not any supernatural claim. It's cognitive training — the same way you'd train a muscle at the gym.",
-          researchNote: "Research-aligned: saccadic eye movement and alpha/theta memory consolidation are established neuroscience concepts, named here as design targets — not proprietary claims or linked studies.",
+          researchNote: "Informed by established reading research — eye fixations and regressions, attention training, and visualization-based memory techniques. No proprietary brain claims.",
         },
-        disclaimer: "Brain-state framing describes the design intent of these drills, not a per-session measured guarantee for online students — see the Vadodara EEG track below for hardware-verified sessions.",
+        disclaimer: "The program trains skills — reading speed, comprehension, attention and recall — measured in the app. It makes no claims about changing brainwaves.",
       },
       appPreview: {
         eyebrow: "Inside the App",
@@ -1067,17 +935,17 @@ export const translations = {
         pathways: [
           {
             title: "For Children",
-            tag: "High Neuroplasticity",
-            desc: "Younger minds have exceptional neuroplasticity — the raw capacity to build new visual and cognitive pathways quickly. With guided training, many children develop rapid peripheral vision and pattern-recognition skills well beyond their starting point — you can see these sessions in our student video reviews.",
+            tag: "Learns Quickly",
+            desc: "Children often pick up new visual and reading skills quickly. With guided training, many develop faster word recognition and reading fluency from their own starting point — you can see these sessions in our student video reviews.",
           },
           {
             title: "For Adults & Professionals",
-            tag: "Rapid Open-Eye Reading",
-            desc: "Working professionals bring sharpened focus and reading discipline built up over years — a real foundation the training builds on directly. With guided practice, most adults develop rapid, open-eye peripheral reading, taking in full lines and pages at high speed, so a full book is finished in a fraction of the usual time.",
+            tag: "Faster Reading at Work",
+            desc: "Working professionals bring focus and reading discipline built up over years — a real foundation the training builds on. With guided practice, most adults read noticeably faster while keeping comprehension, measured against their own Day 1 baseline.",
           },
         ],
         unifyingLine:
-          "Different expression, same underlying training: peripheral vision, deep concentration, and right-brain engagement — every skill covered in \"The Science Behind It\" above. Whichever path a student takes, that's what they're building.",
+          "Different expression, same underlying training: peripheral vision, deep concentration, and visual processing, attention and memory training — every skill covered in \"The Science Behind It\" above. Whichever path a student takes, that's what they're building.",
         ctaLabel: "Watch Real Student Videos",
       },
       authority: {
@@ -1124,7 +992,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "Watch Real Students",
-        title: "200+ video reviews, not paid actors",
+        title: "60+ video reviews on YouTube — real students, not paid actors",
         desc: "Every video in this playlist is a real student, filmed after finishing the program — unscripted.",
         moreLabel: "More Real Quantum Speed Reading Students",
         watchLabel: "Watch Video",
@@ -1154,7 +1022,7 @@ export const translations = {
           title: "The 7 Live Masterclasses",
           desc: "Interactive sessions across the 30 days where Dr. Kapil Dev Sharma personally walks you through the technique in real time.",
           bullets: [
-            "Right-brain visual reading, taught live, not pre-recorded",
+            "Visual reading and memory techniques, taught live, not pre-recorded",
             "Direct Q&A — ask about your own specific sticking point",
             "Group accountability with your live batch cohort",
             "Recordings available if you miss a session",
@@ -1249,8 +1117,8 @@ export const translations = {
           },
           {
             range: "Days 15–21",
-            title: "Photographic Memory Anchoring",
-            desc: "Layer in visual and multi-sensory memory techniques so what you read fast, you also retain — full-page and multi-layer data intake.",
+            title: "Visual Memory Techniques",
+            desc: "Layer in visual and multi-sensory memory techniques so what you read fast, you also remember.",
           },
           {
             range: "Days 22–30",
@@ -1334,7 +1202,7 @@ export const translations = {
           {
             question: "What if it doesn't work for me?",
             answer:
-              "You're backed by our 100% Results Guarantee for online students: complete the full 30-day protocol as instructed — every app session, all 7 live masterclasses — and if your reading speed and comprehension haven't measurably improved, tell us and we'll issue a full refund. See our Refund & Cancellation Policy for the full terms.",
+              `${qsrGuarantee.en.statement} ${qsrGuarantee.en.requestWindow} See our Refund & Cancellation Policy for the full terms.`,
           },
           {
             question: "What happens right after I pay?",
@@ -1348,7 +1216,7 @@ export const translations = {
           {
             question: "Is this hypnosis or some unscientific method?",
             answer:
-              "No. Quantum Speed Reading is cognitive training grounded in neuroscience — peripheral vision training, breathing/focus drills, and memory-anchoring techniques — with your progress measured on real Brain Score, comprehension, and consistency metrics (and, for Vadodara students, actual EEG brain mapping). It is not hypnosis, not blindfold reading, and not any pseudoscientific technique.",
+              "No. Quantum Speed Reading is skills training informed by reading and attention research — peripheral vision practice, breathing/focus drills, and visual memory techniques — with your progress measured on real Brain Score, comprehension, and consistency metrics. In-person students in Vadodara can also join live EEG brain-state sessions, which are for learning and engagement, not medical tests. It is not hypnosis, not blindfold reading, and not any pseudoscientific technique.",
           },
         ],
         ctaLabel: "Ask on WhatsApp",
@@ -1408,7 +1276,7 @@ export const translations = {
     qsrMumbaiLanding: {
       hero: {
         eyebrow: "Live, In-Person · Mumbai · Pilot Batch",
-        headline: "Read 5x Faster.",
+        headline: "Read Faster. Remember More.",
         headlineEm: "Live, In Person, in Mumbai.",
         sub: `A 2-day, in-person extension of the ${programs.qsr.name} — live coaching from Dr. Kapil Dev Sharma, a real-time cognitive & focus engagement demo, and your reading speed measured on Day 1 and again on Day 2, after an overnight gap. The remaining 28 days then continue through the same app as our online track.`,
         ctaPrimary: "Reserve a Pilot Batch Seat",
@@ -1422,7 +1290,7 @@ export const translations = {
         items: [
           {
             title: "A Live Cognitive & Focus Engagement Demo",
-            desc: "A short, in-person cognitive & focus engagement demo using a Muse 2 headband on Day 1 — see below for exactly what this is, and isn't.",
+            desc: "A short, in-person live EEG brain-state demo on Day 1 — see below for exactly what this is, and isn't.",
           },
           {
             title: "In-Person Coaching From Dr. Kapil Dev Sharma",
@@ -1445,7 +1313,7 @@ export const translations = {
           label: "Day 1 · Saturday",
           title: "Baseline & Technique",
           items: [
-            "Cognitive & focus engagement demo (Muse 2 headband)",
+            "Live EEG brain-state demo (for learning and engagement, not a medical test)",
             "Core Quantum Speed Reading technique, taught live",
             "First guided practice session",
             "Initial reading speed (WPM) measurement",
@@ -1477,7 +1345,7 @@ export const translations = {
       eegDemo: {
         eyebrow: "Day 1",
         title: "Cognitive & Focus Engagement Demo",
-        desc: "On Day 1, we use a Muse 2 headband to give you a live, real-time demo of your cognitive focus and engagement while you practice — a way to see the training happening, not just take our word for it.",
+        desc: "On Day 1, a live EEG brain-state demo shows your focus and engagement in real time while you practise — a way to see the training happening, not just take our word for it.",
         disclaimer: "This is a live engagement demo tool, not a diagnostic or medical device. It does not produce a clinical brain report, and it isn't a substitute for any medical or neurological assessment.",
         addOn: {
           title: "Optional: A Detailed Personal Engagement Report",
@@ -1500,8 +1368,8 @@ export const translations = {
             answer: "The curriculum is the same 30-day program. This adds a live, in-person 2-day kickoff in Mumbai — a face-to-face session with Dr. Kapil Dev Sharma, a live cognitive & focus engagement demo, and reading speed measured on both days with an overnight gap in between. After Day 2, you continue on the same app the online track uses.",
           },
           {
-            question: "What does the EEG device do — is it a medical test?",
-            answer: "No. It's a live cognitive & focus engagement demo using a Muse 2 headband, meant to show your focus during practice in real time. It is not a diagnostic or medical device, and it does not produce a clinical or medical brain report.",
+            question: "What does the EEG demo do — is it a medical test?",
+            answer: "No. It's a live EEG brain-state demo, meant to show your focus during practice in real time. It is not a diagnostic or medical device, and it does not produce a clinical or medical brain report.",
           },
           {
             question: "What if my child can only attend one day, not both?",
@@ -1728,8 +1596,8 @@ export const translations = {
             desc: "Personally guiding students through this exact path since 2014 — not a recently-launched program chasing a trend.",
           },
           {
-            title: "150+ Real Student Reviews",
-            desc: "Written and video reviews from real participants, not stock footage or paid actors.",
+            title: "70+ Video Reviews on YouTube",
+            desc: "Video reviews from real participants, not stock footage or paid actors.",
           },
           {
             title: "Small Cohort, Every Batch",
@@ -1788,7 +1656,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "Watch Real Students",
-        title: "150+ real reviews from real retreats since 2014",
+        title: "70+ video reviews on YouTube, from real retreats since 2014",
         desc: "Six real students, filmed after finishing the retreat — unscripted. Tap any video to watch.",
         ctaLabel: "More Video Reviews",
       },
@@ -1957,8 +1825,8 @@ export const translations = {
             desc: "Over a decade personally guiding residential retreats — not a recently-launched retreat business chasing a trend.",
           },
           {
-            title: "150+ Real Student Reviews",
-            desc: "Written and video reviews from real participants, not stock footage or paid actors.",
+            title: "70+ Video Reviews on YouTube",
+            desc: "Video reviews from real participants, not stock footage or paid actors.",
           },
           {
             title: "Small Cohort, Every Retreat",
@@ -2021,7 +1889,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "Watch Real Students",
-        title: "150+ real reviews, from over a decade of real retreats",
+        title: "70+ video reviews on YouTube, from over a decade of real retreats",
         desc: "Six real students, filmed after finishing a retreat — unscripted. Tap any video to watch.",
         ctaLabel: "More Video Reviews",
       },
@@ -2642,9 +2510,10 @@ export const translations = {
     hero: {
       eyebrow: "डॉ. कपिल देव शर्मा — माइंड उर माइंड",
       credentials: trainer.hi.shortBio.split(" · "),
-      headline: "विज्ञान-आधारित क्वांटम स्पीड रीडिंग",
-      headlineEm: "5 गुना तेज़ पढ़ें। 100% याद रखें। EEG-सत्यापित।",
-      sub: "सिलेबस पूरा करने में दिक्कत हो रही है? घंटों पढ़ते हैं पर कुछ याद नहीं रहता? आपका बच्चा घंटों पढ़ता है पर सब भूल जाता है? यह पढ़ाई की समस्या नहीं है — यह ट्रेनिंग की समस्या है। कोई सम्मोहन नहीं, कोई शॉर्टकट नहीं — शुद्ध कॉग्निटिव साइंस।",
+      headline: "विज्ञान-सूचित क्वांटम स्पीड रीडिंग",
+      headlineEm: "तेज़ पढ़ें। ज़्यादा याद रखें। स्मार्ट तरीके से पढ़ाई करें।",
+      headlineNote: "आपके अपने दिन 1 के बेसलाइन से मापा गया।",
+      sub: "सिलेबस पूरा करने में दिक्कत हो रही है? घंटों पढ़ते हैं पर कुछ याद नहीं रहता? आपका बच्चा घंटों पढ़ता है पर सब भूल जाता है? यह पढ़ाई की समस्या नहीं है — यह ट्रेनिंग की समस्या है। कोई सम्मोहन नहीं, कोई शॉर्टकट नहीं — संरचित, मापने योग्य स्किल ट्रेनिंग।",
       ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
       ctaSecondary: "फ्री स्पीड टेस्ट लें",
       portraitName: "डॉ. कपिल देव शर्मा",
@@ -2816,13 +2685,13 @@ export const translations = {
       cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
     },
     offlineEegWorkshop: {
-      eyebrow: "ऑफलाइन QSR + EEG",
-      title: "ऑफलाइन QSR + EEG कॉग्निटिव टेस्टिंग — अब आपके शहर में",
-      desc: "क्या आप EEG पर अपनी खुद की ब्रेन स्टेट्स देखना चाहते हैं? हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में लाइव EEG टेस्टिंग शामिल है, ताकि आप अपने Alpha/Theta ट्रेनिंग को हमारे ट्रेनर्स के साथ व्यक्तिगत रूप से ट्रैक कर सकें। आपके 30-दिवसीय प्रोग्राम का बाकी हिस्सा ऑनलाइन, अपनी गति से जारी रहता है।",
-      teaserDesc: "क्या आप सिर्फ पढ़ना नहीं, बल्कि EEG पर अपनी खुद की ब्रेन स्टेट्स देखना चाहते हैं? हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में लाइव, व्यक्तिगत EEG टेस्टिंग शामिल है — अब 6 शहरों में उपलब्ध।",
+      eyebrow: "ऑफलाइन QSR वर्कशॉप",
+      title: "लाइव EEG ब्रेन-स्टेट डेमो के साथ ऑफलाइन QSR वर्कशॉप",
+      desc: "व्यक्तिगत रूप से सीखना पसंद है? हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में हैंड्स-ऑन कोचिंग और एक लाइव EEG ब्रेन-स्टेट डेमो शामिल है। आपके 30-दिवसीय प्रोग्राम का बाकी हिस्सा ऑनलाइन, आपकी अपनी गति से जारी रहता है। EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं।",
+      teaserDesc: "हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में व्यक्तिगत कोचिंग और एक लाइव EEG ब्रेन-स्टेट डेमो शामिल है — अब 6 शहरों में उपलब्ध। EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं।",
       howItWorksLabel: "यह कैसे काम करता है",
       steps: [
-        "अपने नज़दीकी शहर में 2-दिवसीय ऑफलाइन वर्कशॉप के लिए रजिस्टर करें (EEG टेस्टिंग शामिल)",
+        "अपने नज़दीकी शहर में 2-दिवसीय ऑफलाइन वर्कशॉप के लिए रजिस्टर करें (लाइव EEG ब्रेन-स्टेट डेमो शामिल)",
         "लाइव ब्रेन-स्टेट ट्रैकिंग और हैंड्स-ऑन कोचिंग के लिए 2 दिन व्यक्तिगत रूप से शामिल हों",
         "अपने 30-दिवसीय प्रोग्राम के बाकी सेशन ऑनलाइन जारी रखें",
       ],
@@ -2843,7 +2712,7 @@ export const translations = {
       eyebrow: "फीचर्ड पॉडकास्ट",
       title: "डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर",
       caption: "डॉ. कपिल देव शर्मा बताते हैं कि जब आप अपने दिमाग की असली क्षमता को अनलॉक करते हैं, तो वाकई क्या मुमकिन है।",
-      videoTitle: "What if Your BRAIN is Hiding 99% of its POWER? | डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर",
+      videoTitle: "Solomon Daniel के पॉडकास्ट पर डॉ. कपिल देव शर्मा",
       playAriaLabel: "वीडियो चलाएं: डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर",
       channelCredit: "Solomon Daniel के पॉडकास्ट पर फीचर्ड",
     },
@@ -2961,11 +2830,6 @@ export const translations = {
         title: "असली ट्रेनर्स। असली अनुभव।",
         desc: "देखें कि मेथडोलॉजी सीखने और उसे पढ़ाने की तैयारी के दौरान ट्रेनर्स ने क्या अनुभव किया।",
         verifiedLabel: "WhatsApp के ज़रिए सत्यापित",
-        items: [
-          { id: "dev-prakash", name: "देव प्रकाश", city: "मुंबई" },
-          { id: "saloni-shah", name: "सलोनी शाह", city: "दिल्ली" },
-          { id: "sandeep-gupta", name: "संदीप गुप्ता", city: "कोलकाता" },
-        ],
       },
       studentTestimonials: {
         eyebrow: "विद्यार्थी क्या कहते हैं",
@@ -3132,124 +2996,6 @@ export const translations = {
       videoYoungLearnersLabel: "युवा शिक्षार्थी",
       videoAdultsLabel: "वयस्क",
       viewAll: "और कहानियां देखें",
-      items: [
-        {
-          id: "ananya-r",
-          qsrPageOnly: false,
-          name: "अनन्या आर.",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote: "जितने समय में पहले एक अध्याय पूरा होता था, अब उतने समय में दो किताबें पूरी हो जाती हैं।",
-          context: "",
-          result: "~2 गुना तेज़ पढ़ाई",
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "karan-mehra",
-          qsrPageOnly: true,
-          name: "करण मेहरा",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote:
-            "इन 30 दिनों में मिली मानसिक स्पष्टता और गति ने मेरे पढ़ाई और तैयारी के समय को काफी कम कर दिया है।",
-          context: "जयपुर",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "dr-preeti",
-          qsrPageOnly: true,
-          name: "डॉ. प्रीति",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote:
-            "क्वांटम स्पीड रीडिंग वर्कशॉप ने मेडिकल जर्नल्स पढ़ने का मेरा तरीका पूरी तरह बदल दिया; अब मैं विस्तृत शोध पत्रों को पहले से कहीं कम समय में पढ़ लेती हूं।",
-          context: "मुंबई",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "shailesh",
-          qsrPageOnly: true,
-          name: "शैलेश",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote:
-            "एक व्यवसायी के रूप में, इस प्रोग्राम में शामिल होने के बाद मार्केट रिपोर्ट्स और वित्तीय विवरण पढ़ना काफी तेज़ हो गया है।",
-          context: "अहमदाबाद · व्यवसायी",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "sudha",
-          qsrPageOnly: true,
-          name: "सुधा",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote:
-            "शुरुआत में मुझे संदेह था, लेकिन 30-दिन की प्रैक्टिस स्ट्रीक ने मेरे फोकस और समग्र पठन-बोध को उम्मीद से कहीं बेहतर बना दिया।",
-          context: "कोलकाता",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "vikram-malhotra",
-          qsrPageOnly: true,
-          name: "विक्रम मल्होत्रा",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote:
-            "लाइव सेशंस और रोज़ाना ऐप प्रैक्टिस के संयोजन ने मुझे जीवनभर की रीडिंग रुकावट से बाहर निकालने में मदद की।",
-          context: "बेंगलुरु",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "amit-patel",
-          qsrPageOnly: true,
-          name: "अमित पटेल",
-          program: "क्वांटम स्पीड रीडिंग",
-          programKey: "qsr",
-          quote:
-            "एक गहरा मानसिक रीबूट — मेरी स्मरण शक्ति काफी बढ़ गई, और अब मैं मोटी मैनेजमेंट किताबें एक ही बैठक में पूरी कर लेता हूं।",
-          context: "सूरत",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "vikram-s",
-          qsrPageOnly: false,
-          name: "विक्रम एस.",
-          program: "11-दिवसीय ऑनलाइन रिट्रीट",
-          programKey: "retreat",
-          quote: "अकेले कुंडलिनी सत्र ही पूरे ग्यारह दिनों के लायक थे।",
-          context: "",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "priya-m",
-          qsrPageOnly: false,
-          name: "प्रिया एम.",
-          program: programs.oneOnOneCoaching.nameHi,
-          programKey: "mentoring",
-          quote: "छह निजी सत्रों ने वह कर दिखाया जो वर्षों की सामान्य सलाह कभी नहीं कर पाई।",
-          context: "",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-        {
-          id: "rohan-k",
-          qsrPageOnly: false,
-          name: "रोहन के.",
-          program: programs.overthinkingReset.nameHi,
-          programKey: "course",
-          quote: "इक्कीस दिन, और आखिरकार मेरे सिर का शोर शांत हो गया।",
-          context: "",
-          result: undefined,
-          videoUrl: "[VIDEO URL NEEDED]",
-        },
-      ],
     },
     faq: {
       eyebrow: "संपर्क करने से पहले",
@@ -3269,17 +3015,17 @@ export const translations = {
         {
           question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
           answer:
-            "नहीं। यह न्यूरोसाइंस पर आधारित कॉग्निटिव ट्रेनिंग है — आई-मूवमेंट रीट्रेनिंग, श्वास-आधारित फोकस अभ्यास, और मेमोरी तकनीकें। हम असली प्रगति EEG से ट्रैक करते हैं, दावों से नहीं। इसमें कोई सम्मोहन नहीं, कोई ब्लाइंडफोल्ड रीडिंग नहीं, किसी विश्वास प्रणाली की ज़रूरत नहीं — इसे उसी तरह प्रशिक्षित किया जाता है जैसे कोई भी अन्य कॉग्निटिव स्किल।",
+            "नहीं। यह रीडिंग और अटेंशन रिसर्च से सूचित स्किल ट्रेनिंग है — आई-मूवमेंट अभ्यास, श्वास-आधारित फोकस अभ्यास, और मेमोरी तकनीकें। प्रगति ऐप में आपके अपने दिन 1 के बेसलाइन से मापी जाती है, दावों से नहीं। इसमें कोई सम्मोहन नहीं, कोई ब्लाइंडफोल्ड रीडिंग नहीं, किसी विश्वास प्रणाली की ज़रूरत नहीं — इसे किसी भी अन्य कॉग्निटिव कौशल की तरह प्रशिक्षित किया जाता है।",
         },
         {
           question: `${programs.qsr.nameHi} की कीमत कितनी है, और इसमें क्या शामिल है?`,
           answer:
-            `${programs.qsr.nameHi} की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी के साथ। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले फ्री ट्रेनिंग वीडियो देख सकते हैं या हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं।`,
+            `${programs.qsr.nameHi} की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, हमारी 100% रिज़ल्ट गारंटी के साथ (सटीक शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर)। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले फ्री ट्रेनिंग वीडियो देख सकते हैं या हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं।`,
         },
         {
-          question: "ऑफलाइन वर्कशॉप + EEG टेस्टिंग कैसे काम करती है, और यह किन शहरों में है?",
+          question: "ऑफलाइन वर्कशॉप कैसे काम करती है, और यह किन शहरों में है?",
           answer:
-            "हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप उसी 30-दिवसीय प्रोग्राम में लाइव, व्यक्तिगत EEG टेस्टिंग जोड़ती है: आप अपने नज़दीकी शहर के लिए रजिस्टर करते हैं, हैंड्स-ऑन कोचिंग और असली EEG ब्रेन-स्टेट ट्रैकिंग के लिए 2 दिन व्यक्तिगत रूप से शामिल होते हैं, फिर बाकी सेशन अपनी गति से ऑनलाइन जारी रखते हैं। फिलहाल मुंबई, पुणे, वडोदरा, सूरत, अहमदाबाद, और नोएडा में उपलब्ध — सटीक बैच तारीखें शहर-दर-शहर तय होती हैं, इसलिए ज़्यादातर शहर तारीख पक्की होने तक वेटलिस्ट पर रहते हैं, न कि एक तय 'अभी रजिस्टर करें' तारीख पर जिसकी हम अभी गारंटी नहीं दे सकते।",
+            "हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप उसी 30-दिवसीय प्रोग्राम में व्यक्तिगत कोचिंग और एक लाइव EEG ब्रेन-स्टेट डेमो जोड़ती है (EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं): आप अपने नज़दीकी शहर के लिए रजिस्टर करते हैं, 2 दिन व्यक्तिगत रूप से शामिल होते हैं, फिर बाकी सेशन अपनी गति से ऑनलाइन जारी रखते हैं। फिलहाल मुंबई, पुणे, वडोदरा, सूरत, अहमदाबाद, और नोएडा में उपलब्ध — सटीक बैच तारीखें शहर-दर-शहर तय होती हैं, इसलिए ज़्यादातर शहर तारीख पक्की होने तक वेटलिस्ट पर रहते हैं, न कि एक तय 'अभी रजिस्टर करें' तारीख पर जिसकी हम अभी गारंटी नहीं दे सकते।",
         },
         {
           question: "ये कार्यक्रम किस आयु वर्ग के लिए बने हैं?",
@@ -3408,9 +3154,10 @@ export const translations = {
     },
     qsrLanding: {
       hero: {
-        eyebrow: "साइंस-बैक्ड एडवांस्ड न्यूरो-कॉग्निटिव ट्रांसफॉर्मेशन प्रोग्राम",
-        headline: "विद्यार्थियों, प्रतियोगी परीक्षा उम्मीदवारों और अभिभावकों के लिए —",
-        headlineEm: "साइंस-बैक्ड क्वांटम स्पीड रीडिंग",
+        eyebrow: "विज्ञान-सूचित रीडिंग व मेमोरी ट्रेनिंग",
+        headline: "विद्यार्थियों, परीक्षा उम्मीदवारों और अभिभावकों के लिए क्वांटम स्पीड रीडिंग",
+        headlineEm: "तेज़ पढ़ें। ज़्यादा याद रखें। स्मार्ट तरीके से पढ़ाई करें।",
+        headlineNote: "आपके अपने दिन 1 के बेसलाइन से मापा गया।",
         sub: "घंटों पढ़ते हैं पर अगले दिन तक भूल जाते हैं? यह इच्छाशक्ति की कमी नहीं है — यह इस बात का मामला है कि आपका दिमाग कैसे पढ़ता है।",
         ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
         ctaPrimaryMeta: "फ्री · कभी भी देखें",
@@ -3473,23 +3220,23 @@ export const translations = {
         secondaryLine: `Razorpay के ज़रिए सुरक्षित चेकआउट · ${trainer.learners} विद्यार्थी · ${trainer.qsrSinceYear} से QSR ट्रेनर`,
       },
       guarantee: {
-        title: "ऑनलाइन विद्यार्थियों के लिए 100% रिज़ल्ट गारंटी",
-        desc: "पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें — हर ऐप सेशन, सभी 7 लाइव मास्टरक्लास। अगर आपने ऐसा किया और आपकी रीडिंग स्पीड व समझ मापने योग्य रूप से नहीं सुधरी, तो हमें बताएं और हम पूरा रिफंड जारी करेंगे।",
+        title: qsrGuarantee.hi.title,
+        desc: `${qsrGuarantee.hi.statement} ${qsrGuarantee.hi.requestWindow}`,
         policyLabel: "हमारी रिफंड और कैंसिलेशन नीति देखें",
-        heroLine: "100% रिज़ल्ट गारंटी — पूरा 30-दिवसीय प्रोटोकॉल पूरा करें, या पूरा रिफंड पाएं।",
+        heroLine: qsrGuarantee.hi.short,
       },
       brainScience: {
         eyebrow: "इसके पीछे का विज्ञान",
         title: "यह तरीका क्यों काम करता है, जब बाकी तरीके नहीं करते",
-        desc: "क्वांटम स्पीड रीडिंग कोई तिकड़म नहीं है — यह चार खास संज्ञानात्मक प्रणालियों को फिर से प्रशिक्षित करती है, जिन्हें ज़्यादातर पढ़ने की आदतें कभी छूती ही नहीं।",
+        desc: "क्वांटम स्पीड रीडिंग कोई तिकड़म नहीं है — यह चार ऐसे कौशल प्रशिक्षित करती है जिनका ज़्यादातर पढ़ने की आदतें कभी अभ्यास नहीं करातीं: विज़ुअल प्रोसेसिंग, ध्यान और याददाश्त।",
         cards: [
           {
-            title: "राइट-ब्रेन क्षमताएं",
-            desc: "पारंपरिक पढ़ाई लगभग पूरी तरह मस्तिष्क के भाषा-प्रोसेसिंग वाले हिस्से पर निर्भर करती है। यह प्रशिक्षण दायें गोलार्ध की समानांतर प्रोसेसिंग और पैटर्न पहचान को भी इसमें शामिल करता है — ताकि आप एक-एक शब्द नहीं, बल्कि समानांतर रूप में ग्रहण करें।",
+            title: "विज़ुअल प्रोसेसिंग",
+            desc: "पारंपरिक पढ़ाई टेक्स्ट को एक-एक शब्द करके प्रोसेस करती है। विज़ुअल प्रोसेसिंग का प्रशिक्षण आपकी आंखों और दिमाग को शब्द-समूह और परिचित पैटर्न एक साथ ग्रहण करने में मदद करता है, ताकि आप एक-एक शब्द नहीं, बल्कि अर्थपूर्ण हिस्सों में पढ़ें।",
           },
           {
-            title: "विज़ुअलाइज़ेशन और अंतर्ज्ञान",
-            desc: "जब राइट-ब्रेन सक्रिय होता है, तो जानकारी सार अक्षरों की बजाय जीवंत मानसिक चित्रों के रूप में जुड़ जाती है। यही इसे याद रखने लायक बनाता है — और यही वह अनुभव है जब ज़्यादातर लोग कहते हैं कि वे आखिरकार जो पढ़ रहे हैं उसे \"देख\" पा रहे हैं।",
+            title: "विज़ुअलाइज़ेशन और याददाश्त",
+            desc: "जो आप पढ़ते हैं उसे मानसिक चित्रों में बदलना याददाश्त की एक स्थापित तकनीक है। यह प्रोग्राम आपको इसे सोच-समझकर करना सिखाता है, ताकि मुख्य बातें बाद में आसानी से याद आएं।",
           },
           {
             title: "पेरिफेरल विज़न",
@@ -3501,17 +3248,10 @@ export const translations = {
           },
         ],
       },
-      brainwaveScience: {
-        eyebrow: "विज्ञान देखें",
-        title: "ब्रेनवेव शिफ्ट, विज़ुअलाइज़्ड",
-        desc: "सामान्य पढ़ाई आपके दिमाग को हाई-अलर्ट बीटा तरंगों में रखती है। क्वांटम स्पीड रीडिंग इसे एक शांत, ज़्यादा ग्रहणशील अल्फा/गामा अवस्था में प्रशिक्षित करती है — यहां देखें क्या बदलता है।",
-        imageAlt:
-          "सामान्य सैकेडिक पढ़ाई (बीटा ब्रेनवेव) बनाम क्वांटम स्पीड रीडिंग फ्लो अवस्था (अल्फा/गामा ब्रेनवेव) की तुलना और याददाश्त व फोकस पर उनके प्रभाव",
-      },
       neuroCognitive: {
-        eyebrow: "एडवांस्ड न्यूरो-कॉग्निटिव ट्रेनिंग",
-        title: "एक साइंस-बैक्ड न्यूरो-कॉग्निटिव ट्रांसफॉर्मेशन प्रोग्राम",
-        desc: "यह सिर्फ़ तेज़ पढ़ना नहीं है — यह गहन फोकस और स्थायी याददाश्त से जुड़ी मस्तिष्क अवस्थाओं की ओर संरचित प्रशिक्षण है, जिसमें आपकी अपनी प्रगति Day 1 से ही असली कॉग्निटिव मेट्रिक्स पर ट्रैक होती है।",
+        eyebrow: "प्रगति कैसे मापी जाती है",
+        title: "विज्ञान-सूचित रीडिंग, ध्यान और याददाश्त प्रशिक्षण",
+        desc: "बेहतर याददाश्त के साथ तेज़ पढ़ें — रोज़ प्रशिक्षित, और आपके अपने दिन 1 के बेसलाइन से असली मेट्रिक्स पर ट्रैक किया गया।",
         metrics: [
           {
             label: "ब्रेन स्कोर",
@@ -3532,8 +3272,8 @@ export const translations = {
             label: "सामान्य पढ़ाई — अभी क्या हो रहा है",
             points: [
               "आंखें बार-बार रुक-रुक कर उछलती हैं (सैकेड्स) और बार-बार पीछे जाती हैं — प्रति पंक्ति 10–15 रुकावटें",
-              "दिमाग ज़्यादातर हाई-फ़्रीक्वेंसी बीटा अवस्था में रहता है — सजग लेकिन मेहनत भरा, जल्दी थकान",
-              "बायां गोलार्ध ज़्यादातर काम करता है (सिर्फ़ भाषा/शब्द प्रोसेसिंग) — दायां गोलार्ध (पैटर्न/इमेज प्रोसेसिंग) ज़्यादातर निष्क्रिय रहता है",
+              "ध्यान आसानी से भटकता है, और दोबारा पढ़ना व मन में शब्द बोलना आपको धीमा और थका देता है",
+              "शब्द एक-एक करके, बहुत कम विज़ुअलाइज़ेशन के साथ प्रोसेस होते हैं, जिससे सामग्री याद रखना कठिन हो जाता है",
             ],
             result: "नतीजा: धीमी गति, कम याददाश्त, जल्दी मानसिक थकान",
           },
@@ -3541,16 +3281,16 @@ export const translations = {
             label: "क्वांटम स्पीड रीडिंग के साथ",
             points: [
               "आंखें व्यापक विज़ुअल स्पैन में चलने के लिए प्रशिक्षित (पेरिफेरल विज़न ट्रेनिंग) — कम फिक्सेशन और कम पीछे जाना",
-              "श्वास और फोकस अभ्यास दिमाग को अल्फा अवस्था (शांत-सजग) में लाते हैं; गहरे अभ्यास से छोटे थीटा बर्स्ट बनते हैं जो याददाश्त के सुदृढ़ीकरण से जुड़े हैं",
-              "बायां और दायां दोनों गोलार्ध साथ काम करते हैं — शब्द भाषा के रूप में AND विज़ुअल/पैटर्न जानकारी के रूप में प्रोसेस होते हैं, जिससे गोलार्ध समन्वय बेहतर होता है",
+              "श्वास और फोकस अभ्यास पढ़ने से पहले और पढ़ते समय लगातार ध्यान बनाए रखने का प्रशिक्षण देते हैं",
+              "विज़ुअल प्रोसेसिंग, ध्यान और याददाश्त का प्रशिक्षण — आप शब्दों को समूह में पढ़ने और मुख्य बातों को मानसिक चित्रों में बदलने का अभ्यास करते हैं",
             ],
-            result: "नतीजा: तेज़ गति, गहरी याददाश्त, कम थकान, और समय के साथ मज़बूत विज़ुअल/फोटोग्राफिक मेमोरी",
+            result: "नतीजा: बेहतर याददाश्त के साथ तेज़ पढ़ाई — आपके अपने दिन 1 के बेसलाइन से मापी गई",
           },
-          measuredNote: "यह कैसे मापा जाता है: ऊपर बताए गए वही ब्रेन स्कोर, कॉम्प्रिहेंशन % और कंसिस्टेंसी ट्रैकिंग — साथ ही, अगर आप अपने शहर में ऑफलाइन QSR + EEG वर्कशॉप जॉइन करते हैं, तो असली फिज़िकल EEG ब्रेन मैपिंग व्यक्तिगत रूप से (नीचे देखें)।",
+          measuredNote: "यह कैसे मापा जाता है: ऊपर बताए गए ब्रेन स्कोर, कॉम्प्रिहेंशन % और कंसिस्टेंसी ट्रैकिंग, आपके अपने दिन 1 के बेसलाइन से। ऑफलाइन वर्कशॉप में एक लाइव EEG ब्रेन-स्टेट डेमो भी होता है — EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं।",
           notHypnosisLine: "यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई अलौकिक दावा नहीं है। यह कॉग्निटिव ट्रेनिंग है — बिल्कुल वैसे ही जैसे जिम में मांसपेशी को प्रशिक्षित किया जाता है।",
-          researchNote: "रिसर्च-अलाइन्ड: सैकेडिक आई मूवमेंट और अल्फा/थीटा मेमोरी कंसोलिडेशन स्थापित न्यूरोसाइंस अवधारणाएं हैं, जिन्हें यहां डिज़ाइन लक्ष्य के रूप में नाम दिया गया है — न कि प्रोप्राइटरी दावे या जुड़े हुए अध्ययन।",
+          researchNote: "स्थापित रीडिंग रिसर्च से सूचित — आंखों के फिक्सेशन और रिग्रेशन, ध्यान प्रशिक्षण, और विज़ुअलाइज़ेशन-आधारित मेमोरी तकनीकें। कोई प्रोप्राइटरी ब्रेन दावे नहीं।",
         },
-        disclaimer: "ब्रेन-स्टेट फ़्रेमिंग इन अभ्यासों के डिज़ाइन इरादे को बताती है, ऑनलाइन विद्यार्थियों के लिए हर-सेशन मापी गई गारंटी नहीं — हार्डवेयर-सत्यापित सेशन के लिए नीचे वडोदरा EEG ट्रैक देखें।",
+        disclaimer: "यह प्रोग्राम कौशल प्रशिक्षित करता है — रीडिंग स्पीड, समझ, ध्यान और याद रखना — जो ऐप में मापे जाते हैं। यह ब्रेनवेव बदलने का कोई दावा नहीं करता।",
       },
       appPreview: {
         eyebrow: "ऐप के भीतर",
@@ -3572,17 +3312,17 @@ export const translations = {
         pathways: [
           {
             title: "बच्चों के लिए",
-            tag: "उच्च न्यूरोप्लास्टिसिटी",
-            desc: "युवा मस्तिष्क में असाधारण न्यूरोप्लास्टिसिटी होती है — नए विज़ुअल और कॉग्निटिव मार्ग तेज़ी से बनाने की मूल क्षमता। सही मार्गदर्शन के साथ, कई बच्चे अपनी शुरुआती क्षमता से कहीं आगे तेज़ पेरिफेरल विज़न और पैटर्न-पहचान कौशल विकसित करते हैं — आप ये सत्र हमारे विद्यार्थियों के वीडियो रिव्यूज़ में देख सकते हैं।",
+            tag: "जल्दी सीखते हैं",
+            desc: "बच्चे अक्सर नए विज़ुअल और रीडिंग कौशल जल्दी सीखते हैं। सही मार्गदर्शन के साथ, कई बच्चे अपनी शुरुआती स्थिति से तेज़ शब्द-पहचान और पढ़ने में सहजता विकसित करते हैं — आप ये सेशन हमारे विद्यार्थी वीडियो रिव्यूज़ में देख सकते हैं।",
           },
           {
             title: "वयस्कों और पेशेवरों के लिए",
-            tag: "तेज़ ओपन-आई रीडिंग",
-            desc: "कामकाजी पेशेवर वर्षों से बनाया गया गहन फोकस और पढ़ने का अनुशासन साथ लाते हैं — एक असली बुनियाद जिस पर यह प्रशिक्षण सीधे निर्माण करता है। सही अभ्यास के साथ, ज़्यादातर वयस्क तेज़, खुली आंखों से पेरिफेरल रीडिंग विकसित करते हैं, पूरी पंक्तियां और पन्ने तेज़ गति से ग्रहण करते हुए — ताकि एक पूरी किताब सामान्य समय के एक अंश में पूरी हो जाए।",
+            tag: "काम के लिए तेज़ पढ़ाई",
+            desc: "कामकाजी पेशेवर वर्षों से बनाया गया फोकस और पढ़ने का अनुशासन साथ लाते हैं — एक असली बुनियाद जिस पर यह प्रशिक्षण आगे बढ़ता है। सही अभ्यास के साथ, ज़्यादातर वयस्क समझ बनाए रखते हुए काफ़ी तेज़ पढ़ने लगते हैं, जो उनके अपने दिन 1 के बेसलाइन से मापा जाता है।",
           },
         ],
         unifyingLine:
-          "अलग अभिव्यक्ति, लेकिन एक ही अंतर्निहित प्रशिक्षण: पेरिफेरल विज़न, गहन एकाग्रता, और राइट-ब्रेन एंगेजमेंट — वही कौशल जो ऊपर \"इसके पीछे का विज्ञान\" में बताए गए हैं। विद्यार्थी चाहे कोई भी रास्ता चुनें, वही बुनियाद बन रही होती है।",
+          "अलग अभिव्यक्ति, लेकिन एक ही अंतर्निहित प्रशिक्षण: पेरिफेरल विज़न, गहन एकाग्रता, और विज़ुअल प्रोसेसिंग, ध्यान व याददाश्त प्रशिक्षण — वही कौशल जो ऊपर \"इसके पीछे का विज्ञान\" में बताए गए हैं। विद्यार्थी चाहे कोई भी रास्ता चुनें, वही बुनियाद बन रही होती है।",
         ctaLabel: "असली विद्यार्थियों के वीडियो देखें",
       },
       authority: {
@@ -3611,7 +3351,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "असली विद्यार्थियों को देखें",
-        title: "200+ वीडियो रिव्यूज़, कोई पेड एक्टर नहीं",
+        title: "YouTube पर 60+ वीडियो रिव्यूज़ — असली विद्यार्थी, कोई पेड एक्टर नहीं",
         desc: "इस प्लेलिस्ट का हर वीडियो एक असली विद्यार्थी का है, जो प्रोग्राम पूरा करने के बाद फिल्माया गया — बिना किसी स्क्रिप्ट के।",
         moreLabel: "क्वांटम स्पीड रीडिंग के और असली विद्यार्थी",
         watchLabel: "वीडियो देखें",
@@ -3641,7 +3381,7 @@ export const translations = {
           title: "7 लाइव मास्टरक्लास सत्र",
           desc: "30 दिनों में फैले इंटरैक्टिव सत्र, जहां डॉ. कपिल देव शर्मा व्यक्तिगत रूप से रीयल-टाइम में आपको तकनीक सिखाते हैं।",
           bullets: [
-            "राइट-ब्रेन विज़ुअल रीडिंग — लाइव सिखाई जाती है, पहले से रिकॉर्ड नहीं",
+            "विज़ुअल रीडिंग और मेमोरी तकनीकें — लाइव सिखाई जाती हैं, पहले से रिकॉर्ड नहीं",
             "सीधा प्रश्नोत्तर — अपनी खास अटकी हुई समस्या के बारे में पूछें",
             "अपने लाइव बैच समूह के साथ ग्रुप एकाउंटेबिलिटी",
             "सत्र छूट जाने पर रिकॉर्डिंग उपलब्ध",
@@ -3725,8 +3465,8 @@ export const translations = {
           },
           {
             range: "दिन 15–21",
-            title: "फोटोग्राफिक मेमोरी एंकरिंग",
-            desc: "विज़ुअल और मल्टी-सेंसरी मेमोरी तकनीकों की परतें जोड़ें, ताकि जो आप तेज़ी से पढ़ें, वह याद भी रहे — पूरे पन्ने और बहु-स्तरीय जानकारी का ग्रहण।",
+            title: "विज़ुअल मेमोरी तकनीकें",
+            desc: "विज़ुअल और बहु-संवेदी मेमोरी तकनीकें जोड़ें, ताकि जो आप तेज़ी से पढ़ें, वह याद भी रहे।",
           },
           {
             range: "दिन 22–30",
@@ -3795,7 +3535,7 @@ export const translations = {
           {
             question: "अगर यह मेरे लिए काम नहीं करता तो?",
             answer:
-              "आप ऑनलाइन विद्यार्थियों के लिए हमारी 100% रिज़ल्ट गारंटी से सुरक्षित हैं: पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें — हर ऐप सेशन, सभी 7 लाइव मास्टरक्लास — और अगर आपकी रीडिंग स्पीड व समझ मापने योग्य रूप से नहीं सुधरी, तो हमें बताएं और हम पूरा रिफंड जारी करेंगे। पूरी शर्तों के लिए हमारी रिफंड और कैंसिलेशन नीति देखें।",
+              `${qsrGuarantee.hi.statement} ${qsrGuarantee.hi.requestWindow} पूरी शर्तों के लिए हमारी रिफंड और कैंसिलेशन नीति देखें।`,
           },
           {
             question: "भुगतान के तुरंत बाद क्या होता है?",
@@ -3809,7 +3549,7 @@ export const translations = {
           {
             question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
             answer:
-              "नहीं। क्वांटम स्पीड रीडिंग न्यूरोसाइंस पर आधारित कॉग्निटिव ट्रेनिंग है — पेरिफेरल विज़न ट्रेनिंग, श्वास/फोकस अभ्यास, और मेमोरी-एंकरिंग तकनीकें — जिसमें आपकी प्रगति असली ब्रेन स्कोर, कॉम्प्रिहेंशन और कंसिस्टेंसी मेट्रिक्स पर मापी जाती है (और वडोदरा विद्यार्थियों के लिए, असली EEG ब्रेन मैपिंग पर भी)। यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई भी छद्म-वैज्ञानिक तकनीक नहीं है।",
+              "नहीं। क्वांटम स्पीड रीडिंग रीडिंग और अटेंशन रिसर्च से सूचित स्किल ट्रेनिंग है — पेरिफेरल विज़न अभ्यास, श्वास/फोकस अभ्यास, और विज़ुअल मेमोरी तकनीकें — जिसमें आपकी प्रगति असली ब्रेन स्कोर, कॉम्प्रिहेंशन और कंसिस्टेंसी मेट्रिक्स पर मापी जाती है। वडोदरा में व्यक्तिगत रूप से आने वाले विद्यार्थी लाइव EEG ब्रेन-स्टेट सेशन में भी शामिल हो सकते हैं, जो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं। यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई छद्म-वैज्ञानिक तकनीक नहीं है।",
           },
         ],
         ctaLabel: "WhatsApp पर पूछें",
@@ -3845,7 +3585,7 @@ export const translations = {
     qsrMumbaiLanding: {
       hero: {
         eyebrow: "लाइव, व्यक्तिगत रूप से · मुंबई · पायलट बैच",
-        headline: "5 गुना तेज़ पढ़ें।",
+        headline: "तेज़ पढ़ें। ज़्यादा याद रखें।",
         headlineEm: "मुंबई में लाइव, व्यक्तिगत रूप से।",
         sub: `${programs.qsr.nameHi} का एक 2-दिवसीय, व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक रियल-टाइम कॉग्निटिव व फोकस एंगेजमेंट डेमो, और आपकी रीडिंग स्पीड दिन 1 और फिर एक रात के अंतराल के बाद दिन 2 पर मापी जाती है। इसके बाद बाकी 28 दिन उसी ऐप के ज़रिए जारी रहते हैं जो हमारे ऑनलाइन ट्रैक में इस्तेमाल होता है।`,
         ctaPrimary: "पायलट बैच सीट सुरक्षित करें",
@@ -3859,7 +3599,7 @@ export const translations = {
         items: [
           {
             title: "एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो",
-            desc: "दिन 1 पर Muse 2 हेडबैंड का उपयोग करते हुए एक संक्षिप्त, व्यक्तिगत कॉग्निटिव व फोकस एंगेजमेंट डेमो — यह वास्तव में क्या है (और क्या नहीं) यह नीचे देखें।",
+            desc: "दिन 1 पर एक संक्षिप्त, व्यक्तिगत लाइव EEG ब्रेन-स्टेट डेमो — यह वास्तव में क्या है (और क्या नहीं) यह नीचे देखें।",
           },
           {
             title: "डॉ. कपिल देव शर्मा से व्यक्तिगत कोचिंग",
@@ -3882,7 +3622,7 @@ export const translations = {
           label: "दिन 1 · शनिवार",
           title: "बेसलाइन और तकनीक",
           items: [
-            "कॉग्निटिव व फोकस एंगेजमेंट डेमो (Muse 2 हेडबैंड)",
+            "लाइव EEG ब्रेन-स्टेट डेमो (सीखने और एंगेजमेंट के लिए, मेडिकल टेस्ट नहीं)",
             "मुख्य Quantum Speed Reading तकनीक, लाइव सिखाई जाएगी",
             "पहला गाइडेड प्रैक्टिस सेशन",
             "शुरुआती रीडिंग स्पीड (WPM) मापन",
@@ -3914,7 +3654,7 @@ export const translations = {
       eegDemo: {
         eyebrow: "दिन 1",
         title: "कॉग्निटिव व फोकस एंगेजमेंट डेमो",
-        desc: "दिन 1 पर, हम Muse 2 हेडबैंड का उपयोग करके अभ्यास के दौरान आपके कॉग्निटिव फोकस और एंगेजमेंट का एक लाइव, रियल-टाइम डेमो देते हैं — ट्रेनिंग को होते हुए देखने का एक तरीका, सिर्फ़ हमारी बात मान लेने के बजाय।",
+        desc: "दिन 1 पर, एक लाइव EEG ब्रेन-स्टेट डेमो अभ्यास के दौरान आपका फोकस और एंगेजमेंट रियल-टाइम में दिखाता है — ट्रेनिंग को होते हुए देखने का एक तरीका, सिर्फ़ हमारी बात मान लेने के बजाय।",
         disclaimer: "यह एक लाइव एंगेजमेंट डेमो टूल है, कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं। यह कोई क्लिनिकल ब्रेन रिपोर्ट नहीं बनाता, और यह किसी भी मेडिकल या न्यूरोलॉजिकल असेसमेंट का विकल्प नहीं है।",
         addOn: {
           title: "वैकल्पिक: एक विस्तृत व्यक्तिगत एंगेजमेंट रिपोर्ट",
@@ -3937,8 +3677,8 @@ export const translations = {
             answer: "पाठ्यक्रम वही 30-दिवसीय प्रोग्राम है। इसमें मुंबई में एक लाइव, व्यक्तिगत 2-दिवसीय शुरुआत जुड़ती है — डॉ. कपिल देव शर्मा के साथ आमने-सामने सेशन, एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो, और दोनों दिनों में एक रात के अंतराल के साथ मापी गई रीडिंग स्पीड। दिन 2 के बाद, आप उसी ऐप पर जारी रखते हैं जो ऑनलाइन ट्रैक इस्तेमाल करता है।",
           },
           {
-            question: "EEG डिवाइस क्या करता है — क्या यह एक मेडिकल टेस्ट है?",
-            answer: "नहीं। यह Muse 2 हेडबैंड का उपयोग करते हुए एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो है, जिसका मकसद अभ्यास के दौरान आपका फोकस रियल-टाइम में दिखाना है। यह कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं है, और यह कोई क्लिनिकल या मेडिकल ब्रेन रिपोर्ट नहीं बनाता।",
+            question: "EEG डेमो क्या करता है — क्या यह एक मेडिकल टेस्ट है?",
+            answer: "नहीं। यह एक लाइव EEG ब्रेन-स्टेट डेमो है, जिसका मकसद अभ्यास के दौरान आपका फोकस रियल-टाइम में दिखाना है। यह कोई डायग्नोस्टिक या मेडिकल टेस्ट नहीं है, और यह कोई क्लिनिकल या मेडिकल ब्रेन रिपोर्ट नहीं बनाता।",
           },
           {
             question: "अगर मेरा बच्चा एक दिन ही आ सकता है, दोनों दिन नहीं — तो क्या होगा?",
@@ -4165,8 +3905,8 @@ export const translations = {
             desc: "इसी मार्ग पर 2014 से विद्यार्थियों का व्यक्तिगत रूप से मार्गदर्शन — कोई हाल ही में शुरू हुआ ट्रेंड-आधारित कार्यक्रम नहीं।",
           },
           {
-            title: "150+ असली विद्यार्थी समीक्षाएं",
-            desc: "असली प्रतिभागियों की लिखित और वीडियो समीक्षाएं — कोई स्टॉक फुटेज या पेड एक्टर नहीं।",
+            title: "YouTube पर 70+ वीडियो रिव्यूज़",
+            desc: "असली प्रतिभागियों के वीडियो रिव्यूज़ — कोई स्टॉक फुटेज या पेड एक्टर नहीं।",
           },
           {
             title: "हर बैच में छोटा समूह",
@@ -4225,7 +3965,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "असली विद्यार्थियों को देखें",
-        title: "2014 से असली रिट्रीट्स की 150+ असली समीक्षाएं",
+        title: "2014 से असली रिट्रीट्स के YouTube पर 70+ वीडियो रिव्यूज़",
         desc: "छह असली विद्यार्थी, रिट्रीट पूरा करने के बाद फिल्माए गए — बिना किसी स्क्रिप्ट के। देखने के लिए किसी भी वीडियो पर टैप करें।",
         ctaLabel: "और वीडियो समीक्षाएं",
       },
@@ -4394,8 +4134,8 @@ export const translations = {
             desc: "एक दशक से अधिक समय से व्यक्तिगत रूप से रेजिडेंशियल रिट्रीट्स का मार्गदर्शन — कोई हाल में शुरू हुआ रिट्रीट व्यवसाय ट्रेंड के पीछे नहीं भाग रहा।",
           },
           {
-            title: "150+ असली विद्यार्थी समीक्षाएं",
-            desc: "असली प्रतिभागियों की लिखित और वीडियो समीक्षाएं, कोई स्टॉक फुटेज या पेड एक्टर नहीं।",
+            title: "YouTube पर 70+ वीडियो रिव्यूज़",
+            desc: "असली प्रतिभागियों के वीडियो रिव्यूज़, कोई स्टॉक फुटेज या पेड एक्टर नहीं।",
           },
           {
             title: "हर रिट्रीट में छोटा समूह",
@@ -4458,7 +4198,7 @@ export const translations = {
       },
       videoTestimonials: {
         eyebrow: "असली विद्यार्थियों को देखें",
-        title: "एक दशक से अधिक के असली रिट्रीट्स से, 150+ असली समीक्षाएं",
+        title: "एक दशक से अधिक के असली रिट्रीट्स से, YouTube पर 70+ वीडियो रिव्यूज़",
         desc: "छह असली विद्यार्थी, रिट्रीट पूरा करने के बाद फिल्माए गए — बिना किसी स्क्रिप्ट के। देखने के लिए किसी भी वीडियो पर टैप करें।",
         ctaLabel: "और वीडियो समीक्षाएं",
       },

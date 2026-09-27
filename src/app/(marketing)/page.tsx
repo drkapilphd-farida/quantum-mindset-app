@@ -95,7 +95,6 @@ export default function HomePage(): React.JSX.Element {
         <HeroSection />
         <HomeExecutiveWorkshopFeature />
         <ProgramSelector />
-        <HomePodcastFeature />
         <Testimonials />
         <HomeOverviewVideo />
         <ProgramCardsGrid />
@@ -108,6 +107,7 @@ export default function HomePage(): React.JSX.Element {
             the QSR page rather than duplicating the city grid here. */}
         <OfflineEegWorkshopSection variant="teaser" />
         <HomeGuideSection />
+        <HomePodcastFeature />
         <FAQSection />
         <HomeFinalCta />
         <HomePrefrontalPowerFeature />

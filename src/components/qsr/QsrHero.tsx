@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { Eyebrow } from "../ui";
 import QsrTrustBadge from "./QsrTrustBadge";
 import QsrGuaranteeBadge from "./QsrGuaranteeBadge";
@@ -13,10 +14,11 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function QsrHero(): React.JSX.Element {
   const { t } = useLanguage();
+  const qsrTestimonials = useProgramTestimonials("qsr");
   const qsr = t.qsrLanding;
   // Dr. Preeti's real, correctly-scoped QSR testimonial (qsrPageOnly) —
   // appropriate here since this is the QSR page itself.
-  const featuredTestimonial = t.testimonials.items.find((item) => item.id === "dr-preeti");
+  const featuredTestimonial = qsrTestimonials.find((item) => item.quote !== null);
 
   return (
     <section id="qsr-hero" className="relative overflow-hidden border-b border-line px-6 pb-16 pt-14 sm:px-8 sm:pt-20 lg:pb-24">
@@ -35,6 +37,7 @@ export default function QsrHero(): React.JSX.Element {
               {qsr.hero.headlineEm}
             </span>
           </h1>
+          <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.06em] text-ink-faint">{qsr.hero.headlineNote}</p>
 
           <p className="mt-6 max-w-md text-[17px] leading-relaxed text-ink-dim sm:text-[18px]">
             {qsr.hero.sub}
@@ -97,9 +100,9 @@ export default function QsrHero(): React.JSX.Element {
           {featuredTestimonial !== undefined && (
             <HeroTestimonialBadge
               className="mt-5"
-              quote={featuredTestimonial.quote}
+              quote={featuredTestimonial.quote ?? ""}
               name={featuredTestimonial.name}
-              context={featuredTestimonial.context || featuredTestimonial.program}
+              context={featuredTestimonial.context || featuredTestimonial.programLabel}
             />
           )}
 

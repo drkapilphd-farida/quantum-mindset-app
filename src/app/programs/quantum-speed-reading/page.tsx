@@ -9,7 +9,6 @@ import QsrHero from '@/components/qsr/QsrHero'
 import QsrWhoIsThisFor from '@/components/qsr/QsrWhoIsThisFor'
 import QsrPainPoints from '@/components/qsr/QsrPainPoints'
 import QsrBrainScience from '@/components/qsr/QsrBrainScience'
-import QsrBrainwaveScience from '@/components/qsr/QsrBrainwaveScience'
 import QsrNeuroCognitiveScience from '@/components/qsr/QsrNeuroCognitiveScience'
 import OfflineEegWorkshopSection from '@/components/OfflineEegWorkshopSection'
 import QsrAgeGroups from '@/components/qsr/QsrAgeGroups'
@@ -40,7 +39,7 @@ export const metadata: Metadata = buildPageMetadata({
   ownOgImage: true,
   title: `${programs.qsr.name} | Dr. Kapil Dev Sharma`,
   description:
-    'Read 5x faster, retain more, and rebuild how your mind processes information in 30 days. 7 live masterclasses, daily app-tracked cognitive metrics, ₹9,999 one-time enrollment.',
+    'Read faster with better recall — measured from your own Day 1 baseline. 30 days, 7 live masterclasses, daily app-tracked practice, ₹9,999 one-time enrollment.',
 })
 
 // Flagship Program Landing Page™ — the real destination TierFlagship's
@@ -125,12 +124,6 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
         <QsrWhoIsThisFor />
         <QsrPainPoints />
         <QsrBrainScience />
-        {/* Brainwave Science Infographic (see the "Add Brainwave Science
-            Infographic to QSR Page" task) — sits right after the 4-card
-            "why this works" section (QsrBrainScience) and before the
-            metrics/EEG section (QsrNeuroCognitiveScience), as the visual
-            payoff of the cards above. */}
-        <QsrBrainwaveScience />
         <QsrNeuroCognitiveScience />
         {/* Offline QSR + EEG Cognitive Testing, multi-city (see the
             "Homepage, QSR & Multi-City EEG Rewrite" task) — primary

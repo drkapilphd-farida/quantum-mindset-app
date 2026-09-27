@@ -5,16 +5,10 @@ import { useLanguage } from "@/context/LanguageContext";
 import { trainer } from "@/config/site.config";
 import { Eyebrow, CtaButton } from "./ui";
 import FrequencyDial from "./FrequencyDial";
-import HeroTestimonialBadge from "./HeroTestimonialBadge";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function HeroSection(): React.JSX.Element {
   const { t } = useLanguage();
-  // Ananya R.'s quote (programKey: "qsr") — QSR is the primary,
-  // front-facing brand identity, so the hero badge features a QSR
-  // testimonial rather than a cross-program one.
-  const featuredTestimonial = t.testimonials.items.find((item) => item.id === "ananya-r");
-
   return (
     <section id="top" className="relative overflow-hidden border-b border-line px-6 pb-20 pt-16 sm:px-8 sm:pt-24 lg:pb-28">
       {/* signature visual, positioned behind content */}
@@ -50,6 +44,7 @@ export default function HeroSection(): React.JSX.Element {
               {t.hero.headlineEm}
             </span>
           </h1>
+          <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.06em] text-ink-faint">{t.hero.headlineNote}</p>
 
           <p className="mt-6 max-w-md text-[17px] leading-relaxed text-ink-dim sm:text-[18px]">
             {t.hero.sub}
@@ -76,14 +71,6 @@ export default function HeroSection(): React.JSX.Element {
             </CtaButton>
           </div>
 
-          {featuredTestimonial !== undefined && (
-            <HeroTestimonialBadge
-              className="mt-5"
-              quote={featuredTestimonial.quote}
-              name={featuredTestimonial.name}
-              context={featuredTestimonial.context || featuredTestimonial.program}
-            />
-          )}
 
           {/* Positioning fix (see the "QSR Page Cleanup & Credibility
               Fixes" task, Fix 6) — these four stats used to render with

@@ -21,7 +21,7 @@ export function buildEventSchema(input: BuildEventSchemaInput): string {
     '@type': 'Event',
     name: 'Executive Brain Performance Workshop',
     description:
-      'A one-day, science-based live workshop in Mumbai by Dr. Kapil Dev Sharma — a live EEG brain-state demo, personal before/after measurement, and 21 days of guided daily practice on WhatsApp.',
+      'A one-day, science-informed live workshop in Mumbai by Dr. Kapil Dev Sharma — a live EEG brain-state demo, personal before/after measurement, and 21 days of guided daily practice on WhatsApp.',
     startDate: input.startDateIso,
     endDate: input.endDateIso,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',

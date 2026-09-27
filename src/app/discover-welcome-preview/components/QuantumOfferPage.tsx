@@ -48,8 +48,8 @@ const SUPPORTING_PILLARS: readonly Pillar[] = [
   },
   {
     icon: Brain,
-    title: 'Photographic Memory',
-    description: 'Retaining 100% of what you read, without rehearsal or repetition.',
+    title: 'Visual Memory Techniques',
+    description: 'Turning what you read into mental images so key ideas are easier to recall.',
   },
 ]
 
@@ -179,12 +179,11 @@ export function QuantumOfferPage({ fullName, readingWpm, onClaimAccess }: Quantu
               Neuroplasticity at Any Age
             </div>
             <h2 className="mt-3 text-center font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              The Science of Neuroplasticity at Any Age
+              Trainable at Any Age
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
-              Your brain&rsquo;s neural pathways aren&rsquo;t fixed once childhood ends. They can be optimized and
-              expanded at 8, at 18, at 35, or at 60 — neuroplasticity, the same underlying mechanism, stays active for
-              life. Focus, intuition, and Quantum Reading Speed were never a young person&rsquo;s advantage. They&rsquo;re
+              Reading speed, focus and memory are skills, and skills keep improving with practice — at 8, at 18, at
+              35, or at 60. Focus and reading speed were never only a young person&rsquo;s advantage. They&rsquo;re
               a trainable capacity, at any age, for as long as you&rsquo;re willing to practice.
             </p>
 

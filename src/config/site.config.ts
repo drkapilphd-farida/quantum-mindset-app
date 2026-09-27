@@ -253,7 +253,7 @@ const programsData = {
     id: 'executiveWorkshop',
     name: 'Executive Brain Performance Workshop',
     nameHi: 'Executive Brain Performance Workshop',
-    outcome: 'Calm, focus and decision clarity for leaders — with a live EEG demo and 21 days of guided practice.',
+    outcome: 'Calm, focus and decision clarity for leaders — with a live EEG brain-state demo and 21 days of guided practice.',
     audience: 'Executives, founders and senior professionals',
     format: 'In person · Mumbai · one day (18 October 2026) + 21-day WhatsApp practice',
     // Prices/links are owned by executiveBrainWorkshopConfig.ts (the page's
@@ -346,3 +346,39 @@ export function primaryCheckoutHref(id: ProgramId): string {
   if (first === undefined) throw new Error(`site.config: program "${id}" has no checkout link`)
   return first.href
 }
+
+/**
+ * Testimonials shown on the site — exact names as they appear in
+ * src/config/testimonials.ts. Only names listed here render anywhere;
+ * every other testimonial stays in the data file, hidden.
+ * TODO(content): waiting for the confirmed list of verified names.
+ */
+export const verifiedTestimonialNames: readonly string[] = []
+
+/**
+ * QSR results guarantee — the single wording used on the QSR page, FAQs
+ * and the Refund & Cancellation Policy page, so the conditions can never
+ * differ between them. `statement` is the binding sentence; `short` is
+ * the one-line summary for tight spots (it must not add or drop a
+ * condition).
+ */
+const qsrGuaranteeData = {
+  en: {
+    title: '100% Results Guarantee',
+    statement:
+      "If you complete the full 30-day protocol as instructed — every daily app session, and all 7 live masterclass sessions with Dr. Kapil Dev Sharma — and your reading speed (WPM) and comprehension haven't measurably improved between your Day 1 baseline and your Day 30 checkpoint, we'll issue a full refund of your ₹9,999 enrollment fee.",
+    short:
+      "100% Results Guarantee — a full refund if your WPM and comprehension haven't measurably improved after the complete 30-day protocol.",
+    requestWindow: 'Request it within 7 days of completing Day 30.',
+  },
+  hi: {
+    title: '100% रिज़ल्ट गारंटी',
+    statement:
+      'अगर आप पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करते हैं — हर दैनिक ऐप सेशन, और डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव मास्टरक्लास सेशन — और आपके दिन 1 के बेसलाइन और दिन 30 के चेकपॉइंट के बीच आपकी रीडिंग स्पीड (WPM) और समझ में मापने योग्य सुधार नहीं होता, तो हम आपकी ₹9,999 की नामांकन फीस का पूरा रिफंड देंगे।',
+    short:
+      '100% रिज़ल्ट गारंटी — पूरा 30-दिवसीय प्रोटोकॉल पूरा करने के बाद भी अगर आपकी WPM और समझ में मापने योग्य सुधार नहीं होता, तो पूरा रिफंड।',
+    requestWindow: 'दिन 30 पूरा करने के 7 दिनों के भीतर अनुरोध करें।',
+  },
+} as const
+
+export const qsrGuarantee: Widen<typeof qsrGuaranteeData> = qsrGuaranteeData

@@ -2,25 +2,16 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "./ui";
-import { isRealUrl } from "@/lib/isRealUrl";
 import VideoReviewGrid from "./VideoReviewGrid";
 import { QSR_ADULT_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
+import { SUCCESS_STORIES_PLAYLIST_WATCH_URL } from "@/config/reviewsPlaylist";
 
 export default function Testimonials(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.testimonials;
-  // QSR-Only Social Proof™ — Quantum Speed Reading is the primary,
-  // front-facing brand identity, so this shared homepage carousel now
-  // shows only QSR testimonials (every item with programKey "qsr",
-  // regardless of the `qsrPageOnly` flag — that flag only ever meant
-  // "too QSR-specific for a general cross-program section," which no
-  // longer applies now that this section IS the QSR section). Retreat,
-  // Personal Class, and Overthinking Mastery testimonials moved out of
-  // here and live only within their own program sections/pages now
-  // (RetreatVideoTestimonials.tsx, MentoringTestimonials.tsx,
-  // CourseTestimonials.tsx) — no cross-program mixing on the homepage.
-  const items = section.items.filter((item) => item.programKey === "qsr");
-
+  // Homepage: anonymous Quantum Speed Reading video reviews only. Named
+  // text testimonials appear only on their own program's page (see
+  // src/config/testimonials.ts), so none are shown here.
   return (
     <section id="proof" className="border-b border-line px-6 py-24 sm:px-8 lg:py-20">
       <div className="mx-auto max-w-content">
@@ -37,7 +28,7 @@ export default function Testimonials(): React.JSX.Element {
               at the real public YouTube playlist of student videos
               instead. */}
           <a
-            href="https://www.youtube.com/playlist?list=PLTSKeqk3i8io"
+            href={SUCCESS_STORIES_PLAYLIST_WATCH_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex flex-none items-center gap-2 font-mono text-[12.5px] uppercase tracking-[0.08em] text-ink-dim transition-colors hover:text-ink"
@@ -60,7 +51,7 @@ export default function Testimonials(): React.JSX.Element {
             the same two-block, young-learners-first structure already
             fixed on the QSR page (QsrVideoTestimonials.tsx), pulling
             from the exact same shared qsrVideoReviews.ts arrays. */}
-        <div className="mb-14">
+        <div>
           <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">
             {section.videoLabel}
           </p>
@@ -86,54 +77,6 @@ export default function Testimonials(): React.JSX.Element {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((item) => {
-            const hasVideo = isRealUrl(item.videoUrl);
-            const thumbnail = (
-              <div className="relative mb-5 flex aspect-video items-center justify-center rounded-sm bg-panel2">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/60 text-gold">
-                  ▶
-                </span>
-              </div>
-            );
-            return (
-              <div
-                key={item.id}
-                className="flex flex-col rounded-sm border border-line bg-panel p-6"
-              >
-                {hasVideo ? (
-                  <a href={item.videoUrl} target="_blank" rel="noopener noreferrer">
-                    {thumbnail}
-                  </a>
-                ) : (
-                  thumbnail
-                )}
-                {/* Measurable-result line (see the "Homepage & QSR
-                    Conversion Rewrite" task) — only rendered when the
-                    testimonial's own quote actually contains an
-                    extractable number (currently just Ananya R.'s "~2x
-                    reading throughput"); every other quote here is
-                    qualitative only ("remarkably fast," "drastically cut
-                    down") with no number in the source data, so nothing
-                    is fabricated for them. */}
-                {item.result !== undefined && (
-                  <p className="mb-3 inline-flex w-fit items-center rounded-full bg-gold-soft/30 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.04em] text-gold">
-                    {item.result}
-                  </p>
-                )}
-                <p className="mb-5 flex-1 text-[16px] italic leading-relaxed text-ink">
-                  &ldquo;{item.quote}&rdquo;
-                </p>
-                <div>
-                  <div className="text-[13.5px] font-semibold text-ink">{item.name}</div>
-                  <div className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
-                    {item.context || item.program}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </section>
   );

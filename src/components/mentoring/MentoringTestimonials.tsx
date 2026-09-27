@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
+import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { Eyebrow } from "../ui";
 
 // Real Mentoring Testimonials™ — the current live page reused the retreat
@@ -8,15 +9,15 @@ import { Eyebrow } from "../ui";
 // Retreat Review" — retreat content, not mentoring), which this rebuild
 // fixes by not reusing any of it. There is exactly one real,
 // correctly-scoped testimonial for this offer — Priya M.'s quote
-// (programKey: 'mentoring' in the shared testimonials pool, also used on
-// the homepage's Personal Class card) — and zero real mentoring-specific
+// (src/config/testimonials.ts, program oneOnOneCoaching — shown only
+// once verified) — and zero real mentoring-specific
 // videos yet. Per "show fewer cards rather than reusing mismatched
 // ones," this renders just that one real quote and an honest note,
 // rather than a video grid with nothing real to put in it.
 export default function MentoringTestimonials(): React.JSX.Element {
   const { t } = useLanguage();
   const section = t.mentoringLanding.testimonials;
-  const featured = t.testimonials.items.find((item) => item.programKey === "mentoring");
+  const featured = useProgramTestimonials("oneOnOneCoaching").find((item) => item.quote !== null);
 
   return (
     <section className="border-b border-line px-6 py-24 sm:px-8">
@@ -33,7 +34,7 @@ export default function MentoringTestimonials(): React.JSX.Element {
             </p>
             <div className="text-[14px] font-semibold text-ink">{featured.name}</div>
             <div className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em] text-rose">
-              {featured.context || featured.program}
+              {featured.context || featured.programLabel}
             </div>
           </div>
         )}
