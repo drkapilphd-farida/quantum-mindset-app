@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { programs } from "@/config/site.config";
 import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
+import RetreatPaymentNote, { formatInr, retreatFee } from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 const BATCH_START_DAY = 10;
@@ -39,9 +39,7 @@ function buildCalendarCells(monthDate: Date): (number | null)[] {
 
 export default function RetreatSchedule(): React.JSX.Element {
   const { t, lang } = useLanguage();
-  // Shown only once the retreat fee is published in site.config.
-  const fees = programs.onlineRetreat.prices.map((p) => p.amountInr).filter((a) => a > 0);
-  const retreatFee = fees.length > 0 ? Math.min(...fees) : null;
+  const fee = retreatFee();
   const retreat = t.retreatLanding;
   const [batch, setBatch] = useState<BatchRange | null>(null);
 
@@ -137,9 +135,9 @@ export default function RetreatSchedule(): React.JSX.Element {
               </div>
             </div>
 
-            {retreatFee !== null && (
+            {fee !== null && (
               <p className="mt-5 font-mono text-[14px] font-semibold text-ink">
-                {lang === "hi" ? `शुल्क: ₹${retreatFee.toLocaleString("en-IN")}` : `Fee: ₹${retreatFee.toLocaleString("en-IN")}`}
+                {lang === "hi" ? `शुल्क: ${formatInr(fee)} प्रति व्यक्ति` : `Fee: ${formatInr(fee)} per person`}
               </p>
             )}
 
@@ -166,6 +164,7 @@ export default function RetreatSchedule(): React.JSX.Element {
               <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
                 {retreat.schedule.ctaMeta}
               </p>
+              <RetreatPaymentNote className="mt-1.5 max-w-[300px]" />
               <CheckoutTrustLine className="mt-1.5 max-w-[260px]" />
             </div>
           </div>

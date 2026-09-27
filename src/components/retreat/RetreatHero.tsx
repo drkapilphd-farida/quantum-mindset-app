@@ -5,6 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
+import RetreatPaymentNote, { formatInr, retreatFee } from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 type RetreatHeroProps = {
@@ -17,7 +18,7 @@ type RetreatHeroProps = {
 };
 
 export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const retreat = t.retreatLanding;
 
   return (
@@ -60,7 +61,16 @@ export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React
             {retreat.hero.sub}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          {retreatFee() !== null && (
+            <p className="mt-6 text-center text-[22px] font-extrabold text-ink">
+              {formatInr(retreatFee() ?? 0)}{" "}
+              <span className="text-[13px] font-semibold uppercase tracking-[0.04em] text-ink-faint">
+                {lang === "hi" ? "प्रति व्यक्ति" : "per person"}
+              </span>
+            </p>
+          )}
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <div>
               <a
                 href={RAZORPAY_RETREAT_PAYMENT_LINK}
@@ -75,6 +85,7 @@ export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React
               <p className="mt-2 text-center font-mono text-[11.5px] uppercase tracking-[0.06em] text-ink-faint">
                 {retreat.hero.ctaPrimaryMeta}
               </p>
+              <RetreatPaymentNote className="mx-auto mt-1.5 max-w-[240px] text-center" />
               <CheckoutTrustLine className="mt-1.5 max-w-[220px] text-center" />
             </div>
             <a

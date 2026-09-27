@@ -2084,7 +2084,13 @@ export const translations = {
             tag: "Recommended",
             desc: "Two weeks for interlinked issues. Space to adjust the approach as sessions progress.",
           },
+          {
+            duration: "21 Days",
+            tag: "In-Depth",
+            desc: "Three weeks for deeper or longer-standing patterns, with time to build and test new habits between sessions.",
+          },
         ],
+        feeNote: "Fee depends on the package you choose — number of days and session timing. Apply and we'll share your personalised plan and fee.",
       },
       guide: {
         eyebrow: "The Guide",
@@ -2303,7 +2309,7 @@ export const translations = {
       pricing: {
         eyebrow: "Pricing",
         title: "Start Your Overthinking Reset Today",
-        classplusNote: "Your plan is selected at checkout on Classplus.",
+        classplusNote: "Choose your plan (₹499 or ₹999) on the checkout page.",
         card1: {
           name: "Overthinking Reset — 1 Month",
           price: "₹499",
@@ -4418,7 +4424,13 @@ export const translations = {
             tag: "अनुशंसित",
             desc: "आपस में जुड़े मुद्दों के लिए दो सप्ताह। सेशंस आगे बढ़ने के साथ तरीके को समायोजित करने की गुंजाइश।",
           },
+          {
+            duration: "21 दिन",
+            tag: "गहन",
+            desc: "गहरे या लंबे समय से चले आ रहे पैटर्न के लिए तीन सप्ताह, सेशंस के बीच नई आदतें बनाने और परखने का समय।",
+          },
         ],
+        feeNote: "फीस आपके चुने गए पैकेज पर निर्भर करती है — दिनों की संख्या और सेशन का समय। आवेदन करें, हम आपकी व्यक्तिगत योजना और फीस साझा करेंगे।",
       },
       guide: {
         eyebrow: "गुरु",
@@ -4629,7 +4641,7 @@ export const translations = {
       pricing: {
         eyebrow: "प्राइसिंग",
         title: "आज ही अपना ओवरथिंकिंग रीसेट शुरू करें",
-        classplusNote: "आपका प्लान Classplus पर चेकआउट के समय चुना जाता है।",
+        classplusNote: "चेकआउट पेज पर अपना प्लान (₹499 या ₹999) चुनें।",
         card1: {
           name: "ओवरथिंकिंग रीसेट — 1 महीना",
           price: "₹499",

@@ -15,6 +15,7 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 // means without back-and-forth.
 export default function ResidentialRoadmap(): React.JSX.Element {
   const { t, lang } = useLanguage();
+  const days = programs.residentialRetreat.durationDays;
   const residential = t.residentialLanding;
 
   return (
@@ -24,13 +25,6 @@ export default function ResidentialRoadmap(): React.JSX.Element {
           <Eyebrow color="text-gold">{residential.roadmap.eyebrow}</Eyebrow>
           <h2 className="mt-4 text-[28px] font-extrabold leading-tight sm:text-[34px]">{residential.roadmap.title}</h2>
           <p className="mt-3 text-[15.5px] text-ink-dim">{residential.roadmap.desc}</p>
-          {programs.residentialRetreat.durationDays !== null && (
-            <p className="mt-2 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-gold">
-              {lang === "hi"
-                ? `हर रिट्रीट ${programs.residentialRetreat.durationDays} दिन की`
-                : `${programs.residentialRetreat.durationDays} days per retreat`}
-            </p>
-          )}
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -39,7 +33,10 @@ export default function ResidentialRoadmap(): React.JSX.Element {
               <div className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/40 bg-gold-soft">
                 <MapPin className="h-5 w-5 text-gold" aria-hidden="true" />
               </div>
-              <div className="mt-4 font-mono text-[11px] uppercase tracking-[0.08em] text-gold">{item.when}</div>
+              <div className="mt-4 font-mono text-[11px] uppercase tracking-[0.08em] text-gold">
+                {item.when}
+                {days !== null && <span className="text-ink-faint">{lang === "hi" ? ` · ${days} दिन` : ` · ${days} days`}</span>}
+              </div>
               <h3 className="mt-1.5 text-[17px] font-bold leading-snug text-ink">{item.where}</h3>
               <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-ink-dim">{item.theme}</p>
               <a

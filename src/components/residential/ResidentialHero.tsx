@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { programs } from "@/config/site.config";
 import { Eyebrow } from "../ui";
 import { WHATSAPP_RESIDENTIAL_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
@@ -9,7 +10,8 @@ import { RESIDENTIAL_PHOTOS } from "@/config/residentialGalleryPhotos";
 import PhotoPlaceholder from "./PhotoPlaceholder";
 
 export default function ResidentialHero(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const days = programs.residentialRetreat.durationDays;
   const residential = t.residentialLanding;
 
   return (
@@ -62,6 +64,11 @@ export default function ResidentialHero(): React.JSX.Element {
               {residential.hero.headlineEm}
             </span>
           </h1>
+          {days !== null && (
+            <p className="mt-4 font-mono text-[13px] font-semibold uppercase tracking-[0.08em] text-gold">
+              {lang === "hi" ? `${days}-दिवसीय रेजिडेंशियल रिट्रीट` : `${days}-day residential retreat`}
+            </p>
+          )}
 
           <p className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-ink-dim sm:text-[18px]">
             {residential.hero.sub}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { programs } from "@/config/site.config";
 import { Eyebrow } from "../ui";
 
 export default function MentoringProcess(): React.JSX.Element {
@@ -32,9 +31,7 @@ export default function MentoringProcess(): React.JSX.Element {
           </div>
 
           <div className="space-y-4">
-            {section.formats.map((format, index) => {
-              const amount = programs.oneOnOneCoaching.packages[index]?.amountInr ?? null;
-              return (
+            {section.formats.map((format) => (
               <div key={format.duration} className="rounded-sm border border-line-strong bg-panel2 p-6">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-[19px] font-bold text-ink">{format.duration}</span>
@@ -43,12 +40,9 @@ export default function MentoringProcess(): React.JSX.Element {
                   </span>
                 </div>
                 <p className="mt-3 text-[13.5px] leading-relaxed text-ink-dim">{format.desc}</p>
-                {amount !== null && (
-                  <p className="mt-3 font-mono text-[14px] font-semibold text-ink">₹{amount.toLocaleString("en-IN")}</p>
-                )}
               </div>
-              );
-            })}
+            ))}
+            <p className="text-[13.5px] leading-relaxed text-ink-dim">{section.feeNote}</p>
           </div>
         </div>
       </div>

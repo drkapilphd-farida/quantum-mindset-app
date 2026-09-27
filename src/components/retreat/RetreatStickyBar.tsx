@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
+import { formatInr, retreatFee } from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 // Same scroll-reveal pattern as QsrStickyBar.tsx — stays off-screen until
@@ -11,7 +12,7 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 const SCROLL_REVEAL_THRESHOLD_PX = 560;
 
 export default function RetreatStickyBar(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const retreat = t.retreatLanding;
   const [visible, setVisible] = useState(false);
 
@@ -33,7 +34,11 @@ export default function RetreatStickyBar(): React.JSX.Element {
       <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-6 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))] sm:px-8">
         <div className="min-w-0">
           <p className="truncate text-[13.5px] font-semibold text-ink">{retreat.stickyBar.text}</p>
-          <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{retreat.stickyBar.price}</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
+            {retreatFee() !== null
+              ? `${formatInr(retreatFee() ?? 0)} ${lang === "hi" ? "प्रति व्यक्ति" : "per person"} · ${retreat.stickyBar.price}`
+              : retreat.stickyBar.price}
+          </p>
         </div>
         <a
           href={RAZORPAY_RETREAT_PAYMENT_LINK}

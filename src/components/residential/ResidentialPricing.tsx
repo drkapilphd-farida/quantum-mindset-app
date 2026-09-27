@@ -2,6 +2,7 @@
 
 import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { programs } from "@/config/site.config";
 import { Eyebrow } from "../ui";
 import { buildResidentialWhatsAppLink } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
@@ -13,7 +14,8 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 // flow (seats confirmed personally by the team) rather than a fabricated
 // instant-checkout button.
 export default function ResidentialPricing(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const days = programs.residentialRetreat.durationDays;
   const section = t.residentialLanding.pricing;
 
   return (
@@ -33,6 +35,11 @@ export default function ResidentialPricing(): React.JSX.Element {
                 <span className="text-[32px] font-extrabold text-ink">{tier.price}</span>
                 <span className="text-[13px] text-ink-faint">{tier.priceNote}</span>
               </div>
+              {days !== null && (
+                <p className="mt-2 text-[13.5px] font-semibold text-ink-dim">
+                  {lang === "hi" ? `${days} दिन · ठहरना और सात्विक भोजन शामिल` : `${days} days · stay and satvik meals included`}
+                </p>
+              )}
 
               <div className="mt-6 flex-1 space-y-3 border-t border-line-strong pt-6">
                 {tier.features.map((feature) => (

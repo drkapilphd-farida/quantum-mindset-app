@@ -5,6 +5,7 @@ import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
 import PracticeDisclaimer from "../PracticeDisclaimer";
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
+import RetreatPaymentNote from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function RetreatFinalCta(): React.JSX.Element {
@@ -31,7 +32,8 @@ export default function RetreatFinalCta(): React.JSX.Element {
             <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
           </a>
         </div>
-        <CheckoutTrustLine className="mx-auto mt-3 max-w-xs text-center" />
+        <RetreatPaymentNote className="mx-auto mt-3 max-w-sm text-center" />
+        <CheckoutTrustLine className="mx-auto mt-2 max-w-xs text-center" />
         <PracticeDisclaimer className="mx-auto mt-6 max-w-md text-left" />
       </div>
     </section>

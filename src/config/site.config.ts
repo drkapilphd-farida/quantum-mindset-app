@@ -153,8 +153,8 @@ export type Program = {
   pillar: ProgramPillar
   /** Length of each session/retreat in days, when fixed. `null` = not published yet — hidden on the page. */
   durationDays?: number | null
-  /** Fixed-length packages (e.g. 1-on-1 coaching). `amountInr: null` = price not published yet — hidden on the page. */
-  packages?: readonly { id: string; days: number; amountInr: number | null }[]
+  /** Fixed-length packages (e.g. 1-on-1 coaching). No prices — the fee is set per person after applying. */
+  packages?: readonly { id: string; days: number }[]
   /** Dated live events only. Hidden everywhere once `endISO` has passed. */
   event?: {
     endISO: string
@@ -229,11 +229,12 @@ const programsData = {
     checkout: [{ label: 'Apply on WhatsApp', href: waLink('Hi Dr. Kapil, I want to apply for 1-on-1 Mind Coaching with Dr. Kapil.') }],
     url: '/mentoring/personal-class',
     status: 'active',
-    // TODO(content): confirm the 7-day and 14-day package prices; the page
-    // shows "Starting from ₹…" and each package price once these are set.
+    // Customised program — no fixed prices. The fee depends on the package
+    // (7, 14 or 21 days) and session timing, shared after the application.
     packages: [
-      { id: '7-day', days: 7, amountInr: null as number | null },
-      { id: '14-day', days: 14, amountInr: null as number | null },
+      { id: '7-day', days: 7 },
+      { id: '14-day', days: 14 },
+      { id: '21-day', days: 21 },
     ],
     pillar: 'mind',
   },
@@ -244,9 +245,7 @@ const programsData = {
     outcome: 'An intensive, live, nightly meditation journey in authentic Kriya Yoga and Prana practice.',
     audience: 'Adults ready for a deep, guided meditation practice',
     format: 'Online · 11 nights, monthly (10th–20th) · 7:30–10:30 PM IST',
-    // TODO(content): no retreat fee is published on the site yet — add it
-    // here once confirmed; the page shows it automatically.
-    prices: [] as ProgramPrice[],
+    prices: [{ label: 'Per person', amountInr: 6999 }] as ProgramPrice[],
     checkout: [{ label: 'Razorpay', href: RAZORPAY_RETREAT_PAYMENT_LINK }],
     url: '/retreats/online-11-day',
     status: 'active',
@@ -266,8 +265,7 @@ const programsData = {
     checkout: [{ label: 'Reserve on WhatsApp', href: waLink('Hi Dr. Kapil, I want to secure my seat in the Residential Meditation Retreats — Lonavala & Rishikesh') }],
     url: '/retreats/residential',
     status: 'active',
-    // TODO(content): confirm how many days each residential retreat runs.
-    durationDays: null as number | null,
+    durationDays: 7 as number | null,
     pillar: 'meditation',
   },
   executiveWorkshop: {
