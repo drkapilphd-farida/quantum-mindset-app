@@ -151,6 +151,10 @@ export type Program = {
   url: string
   status: ProgramStatus
   pillar: ProgramPillar
+  /** Length of each session/retreat in days, when fixed. `null` = not published yet — hidden on the page. */
+  durationDays?: number | null
+  /** Fixed-length packages (e.g. 1-on-1 coaching). `amountInr: null` = price not published yet — hidden on the page. */
+  packages?: readonly { id: string; days: number; amountInr: number | null }[]
   /** Dated live events only. Hidden everywhere once `endISO` has passed. */
   event?: {
     endISO: string
@@ -225,6 +229,12 @@ const programsData = {
     checkout: [{ label: 'Apply on WhatsApp', href: waLink('Hi Dr. Kapil, I want to apply for 1-on-1 Mind Coaching with Dr. Kapil.') }],
     url: '/mentoring/personal-class',
     status: 'active',
+    // TODO(content): confirm the 7-day and 14-day package prices; the page
+    // shows "Starting from ₹…" and each package price once these are set.
+    packages: [
+      { id: '7-day', days: 7, amountInr: null as number | null },
+      { id: '14-day', days: 14, amountInr: null as number | null },
+    ],
     pillar: 'mind',
   },
   onlineRetreat: {
@@ -234,8 +244,9 @@ const programsData = {
     outcome: 'An intensive, live, nightly meditation journey in authentic Kriya Yoga and Prana practice.',
     audience: 'Adults ready for a deep, guided meditation practice',
     format: 'Online · 11 nights, monthly (10th–20th) · 7:30–10:30 PM IST',
-    // TODO(content): no retreat fee is published on the site yet — add it here once confirmed.
-    prices: [],
+    // TODO(content): no retreat fee is published on the site yet — add it
+    // here once confirmed; the page shows it automatically.
+    prices: [] as ProgramPrice[],
     checkout: [{ label: 'Razorpay', href: RAZORPAY_RETREAT_PAYMENT_LINK }],
     url: '/retreats/online-11-day',
     status: 'active',
@@ -255,6 +266,8 @@ const programsData = {
     checkout: [{ label: 'Reserve on WhatsApp', href: waLink('Hi Dr. Kapil, I want to secure my seat in the Residential Meditation Retreats — Lonavala & Rishikesh') }],
     url: '/retreats/residential',
     status: 'active',
+    // TODO(content): confirm how many days each residential retreat runs.
+    durationDays: null as number | null,
     pillar: 'meditation',
   },
   executiveWorkshop: {

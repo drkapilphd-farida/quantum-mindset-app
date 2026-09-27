@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import { retiredPageRedirect } from '@/config/retiredPages'
 import { updateSession } from '@/lib/supabase/middleware'
 import { APP_DOMAIN_HEADER, resolveAppDomain, isAppSubdomain, type AppDomain } from '@/lib/domains/appDomain'
 import { ACTIVE_SESSION_COOKIE, ACTIVE_SESSION_COOKIE_MAX_AGE_SECONDS, resolveActiveSession } from '@/lib/activeSessions/activeSessionGate'
@@ -53,6 +54,11 @@ function portalHomeFor(pathname: string): string {
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl
+  // Date-retired pages (src/config/retiredPages.ts) — permanent redirect once past their date.
+  const retiredTo = retiredPageRedirect(pathname)
+  if (retiredTo !== null) {
+    return NextResponse.redirect(new URL(retiredTo, request.url), 301)
+  }
   // Behind Vercel's edge network (or any reverse proxy), the `Host`
   // header on the request the middleware actually sees can be the
   // proxy's own internal routing host, not what the visitor typed —

@@ -9,7 +9,14 @@ const JOURNEY_DAY_ONE_PATH = '/labs/quantum-speed-reading/journey/1'
 // /signup/page.tsx reads `next` and passes it through SignUpForm →
 // signUp.ts, which already honors it end-to-end (including the
 // email-confirmation redirect) — see that action's own doc comment.
-export const HABIT_BUILDER_SIGNUP_HREF = `/signup?next=${encodeURIComponent(JOURNEY_DAY_ONE_PATH)}`
+// The one signup link for the 7-Day Free Focus & Reading Starter
+// (site-rebuild Phase 5). It must be on the habit subdomain: the journey
+// (/labs/quantum-speed-reading/journey/*) is habit-only in middleware.ts,
+// so signing up on www and then opening Day 1 bounces the user to the
+// www dashboard instead of Day 1.
+export const HABIT_BUILDER_APP_ORIGIN = 'https://habit.mindurmind.org.in'
+
+export const HABIT_BUILDER_SIGNUP_HREF = `${HABIT_BUILDER_APP_ORIGIN}/signup?next=${encodeURIComponent(JOURNEY_DAY_ONE_PATH)}`
 
 // The live Habit Builder subdomain itself (Domain Split™ — see
 // src/lib/domains/appDomain.ts) — the homepage's own "Start 7 Days Free"
@@ -17,4 +24,3 @@ export const HABIT_BUILDER_SIGNUP_HREF = `/signup?next=${encodeURIComponent(JOUR
 // all point here directly per explicit instruction, rather than through
 // this same site's /signup?next=... redirect above. Single source of
 // truth so every homepage placement stays in sync if this ever changes.
-export const HABIT_BUILDER_APP_URL = 'https://habit.mindurmind.org.in/'

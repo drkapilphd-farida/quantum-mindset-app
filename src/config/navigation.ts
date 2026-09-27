@@ -98,7 +98,7 @@ export function footerGroups(lang: Lang): NavGroup[] {
     },
     {
       heading: hi ? 'ट्रेनर्स के लिए' : 'For Trainers',
-      links: [{ label: n('franchise', lang), href: programs.franchise.url }],
+      links: [{ label: hi ? 'ट्रेनर पार्टनर बनें' : 'Become a Trainer Partner', href: programs.franchise.url }],
     },
   ]
 }

@@ -1,12 +1,18 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
+import { programs } from "@/config/site.config";
 import TrainerBio from "../TrainerBio";
 import { WHATSAPP_MENTORING_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
 export default function MentoringHero(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  // "Starting from ₹…" appears only once a package price is set in site.config.
+  const packagePrices = programs.oneOnOneCoaching.packages
+    .map((p) => p.amountInr)
+    .filter((a): a is number => a !== null);
+  const startingFrom = packagePrices.length > 0 ? Math.min(...packagePrices) : null;
   const mentoring = t.mentoringLanding;
 
   return (
@@ -42,6 +48,11 @@ export default function MentoringHero(): React.JSX.Element {
             {mentoring.hero.ctaPrimary}
             <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
           </a>
+          {startingFrom !== null && (
+            <p className="mt-3 font-mono text-[13px] text-ink-dim">
+              {lang === "hi" ? `₹${startingFrom.toLocaleString("en-IN")} से शुरू` : `Starting from ₹${startingFrom.toLocaleString("en-IN")}`}
+            </p>
+          )}
         </div>
 
         <TrainerBio variant="short" accent="rose" eyebrow={mentoring.hero.guideLabel} />

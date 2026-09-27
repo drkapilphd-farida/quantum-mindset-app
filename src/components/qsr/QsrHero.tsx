@@ -97,6 +97,25 @@ export default function QsrHero(): React.JSX.Element {
             {qsr.hero.ctaTertiary}
           </Link>
 
+          <nav aria-label={qsr.paths.heroLabel} className="mt-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{qsr.paths.heroLabel}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {[
+                { href: "#students", label: qsr.paths.students.label },
+                { href: "#professionals", label: qsr.paths.professionals.label },
+                { href: "#every-age", label: qsr.paths.parents.label },
+              ].map((path) => (
+                <a
+                  key={path.href}
+                  href={path.href}
+                  className="rounded-full border border-line-strong px-3.5 py-1.5 text-[13px] font-semibold text-ink-dim transition-colors hover:border-gold hover:text-ink"
+                >
+                  {path.label}
+                </a>
+              ))}
+            </div>
+          </nav>
+
           {featuredTestimonial !== undefined && (
             <HeroTestimonialBadge
               className="mt-5"
@@ -123,25 +142,6 @@ export default function QsrHero(): React.JSX.Element {
             ))}
           </div>
 
-          {/* App Proof Visual™ — additive only, per explicit product
-              decision: the founder photo in the portrait card stays
-              exactly as-is (Founder Trust™ below still matters most on
-              this page) — this is a supporting glimpse of the real
-              30-day app streak itself, for a visitor who wants concrete
-              proof before scrolling further. `object-contain` inside an
-              exact-aspect-ratio container guarantees the full app UI is
-              never cropped. */}
-          <div className="mt-8 w-full max-w-md overflow-hidden rounded-sm border border-line-strong bg-panel2 shadow-[0_12px_30px_rgba(34,31,29,0.1)] lg:max-w-xl">
-            <div className="relative aspect-[2442/1317] w-full">
-              <Image
-                src="/images/quantum-mind/17-30-day-quantum-speed-reading-mastery.png"
-                alt="Inside the 30-Day Quantum Speed Reading app streak"
-                fill
-                sizes="(min-width: 1024px) 576px, (min-width: 448px) 448px, 90vw"
-                className="object-contain"
-              />
-            </div>
-          </div>
         </div>
 
         {/* Founder Trust™ — same treatment as the homepage hero

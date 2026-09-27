@@ -1,5 +1,9 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/seo/siteUrl'
+import { retiredPageRedirect } from '@/config/retiredPages'
+
+// Regenerated hourly so date-retired pages drop out soon after their date.
+export const revalidate = 3600
 
 // Every real, indexable, public marketing/program page — everything
 // auth-gated (dashboard/admin/preview/portals), mid-funnel/utility
@@ -35,7 +39,7 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()
 
-  const staticUrls: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
+  const staticUrls: MetadataRoute.Sitemap = STATIC_ROUTES.filter((route) => retiredPageRedirect(route.path) === null).map((route) => ({
     url: `${SITE_URL}${route.path}`,
     lastModified,
     changeFrequency: route.changeFrequency,

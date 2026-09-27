@@ -12,7 +12,7 @@ import { RESIDENTIAL_PHOTOS } from "@/config/residentialGalleryPhotos";
 // shared PhotoGallery component (lightbox with prev/next navigation)
 // instead of static PhotoPlaceholder tiles, matching the interactive
 // gallery pattern built for /gallery and the other retreat pages.
-export default function ResidentialGallery(): React.JSX.Element {
+export default function ResidentialGallery(): React.JSX.Element | null {
   const { t } = useLanguage();
   const section = t.residentialLanding.gallery;
 
@@ -21,6 +21,9 @@ export default function ResidentialGallery(): React.JSX.Element {
     src,
     alt: `Residential retreat environment photo ${index + 1}`,
   }));
+
+  // Hidden until at least one real photo exists.
+  if (photos.every((photo) => photo.src === undefined)) return null;
 
   return (
     <section className="border-b border-line px-6 py-24 sm:px-8">

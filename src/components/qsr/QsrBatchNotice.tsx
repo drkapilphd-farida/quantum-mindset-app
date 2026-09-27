@@ -87,7 +87,18 @@ export default function QsrBatchNotice(): React.JSX.Element {
           </div>
         </div>
 
-        <QsrGuaranteeBadge className="mx-auto mt-8 max-w-md text-left" />
+        <div className="mx-auto mt-8 max-w-md rounded-sm border border-line-strong bg-void p-5 text-left">
+          <p className="font-mono text-[11.5px] uppercase tracking-[0.08em] text-gold">{qsr.included.title}</p>
+          <ul className="mt-3 space-y-2">
+            {qsr.included.items.map((item) => (
+              <li key={item} className="flex items-start gap-2 text-[14px] leading-relaxed text-ink-dim">
+                <span className="mt-0.5 text-gold" aria-hidden="true">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <QsrGuaranteeBadge className="mx-auto mt-6 max-w-md text-left" />
       </div>
     </section>
   );

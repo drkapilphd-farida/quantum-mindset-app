@@ -10,9 +10,12 @@ import { ONLINE_RETREAT_GALLERY_PHOTOS } from "@/config/onlineRetreatGalleryPhot
 // not the homepage's general gallery subset or Residential's own venue
 // photos — same per-page photo scoping the video reviews already went
 // through.
-export default function RetreatGalleryGlimpse(): React.JSX.Element {
+export default function RetreatGalleryGlimpse(): React.JSX.Element | null {
   const { t } = useLanguage();
   const section = t.retreatLanding.gallery;
+
+  // Hidden until at least one real photo exists.
+  if (ONLINE_RETREAT_GALLERY_PHOTOS.every((photo) => photo.src === undefined)) return null;
 
   return (
     <section className="border-b border-line px-6 py-24 sm:px-8">

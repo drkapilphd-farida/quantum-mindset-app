@@ -77,7 +77,8 @@ export default function FreeMeditationPlayer(): React.JSX.Element {
         </div>
 
         <div className="mt-3 space-y-3">
-          {FREE_MEDITATION_AUDIO_TRACKS.map((track) => {
+          {/* Only tracks with a real audio file — no "coming soon" rows. */}
+          {FREE_MEDITATION_AUDIO_TRACKS.filter((track) => isRealUrl(track.audioUrl)).map((track) => {
             const playable = isRealUrl(track.audioUrl);
             const isPlaying = playingId === track.id;
             return (

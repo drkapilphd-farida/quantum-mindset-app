@@ -8,9 +8,8 @@ import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
 import { EegWaveform } from './EegWaveform'
 import { trainer } from '@/config/site.config'
 
-// Photo choice: /founder-warm.jpg — the same high-resolution (5280x3588)
-// professional portrait used in the other program heroes (the trainer's
-// bio/profile photo everywhere is the master photo in site.config).
+// Photo: the master trainer photo from site.config (site-rebuild Phase 5 —
+// the master photo is used everywhere on this page).
 // next/image handles the responsive
 // sizes/WebP conversion automatically (this app's existing convention —
 // no manually pre-generated image variants anywhere else in the repo),
@@ -90,8 +89,8 @@ export function ExecutiveWorkshopHero(): React.JSX.Element {
           <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-line-strong bg-panel shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
               <Image
-                src="/founder-warm.jpg"
-                alt="Dr. Kapil Dev Sharma"
+                src={trainer.photo.src}
+                alt={trainer.photo.alt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 420px, (min-width: 640px) 380px, 90vw"

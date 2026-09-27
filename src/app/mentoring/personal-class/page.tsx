@@ -8,10 +8,10 @@ import MentoringFit from '@/components/mentoring/MentoringFit'
 import MentoringAreas from '@/components/mentoring/MentoringAreas'
 import MentoringComparison from '@/components/mentoring/MentoringComparison'
 import MentoringProcess from '@/components/mentoring/MentoringProcess'
-import MentoringGuide from '@/components/mentoring/MentoringGuide'
 import MentoringTestimonials from '@/components/mentoring/MentoringTestimonials'
 import MentoringApply from '@/components/mentoring/MentoringApply'
 import MentoringFaq from '@/components/mentoring/MentoringFaq'
+import ProgramNextStep from '@/components/ProgramNextStep'
 import Footer from '@/components/Footer'
 import MentoringStickyBar from '@/components/mentoring/MentoringStickyBar'
 import MentoringWhatsAppWidget from '@/components/mentoring/MentoringWhatsAppWidget'
@@ -55,10 +55,14 @@ export default function PersonalClassMentoringLandingPage(): React.JSX.Element {
         <MentoringAreas />
         <MentoringComparison />
         <MentoringProcess />
-        <MentoringGuide />
         <MentoringTestimonials />
         <MentoringApply />
         <MentoringFaq />
+        <ProgramNextStep
+          program="overthinkingReset"
+          en={{ title: "Prefer a self-paced start?", desc: "The 21-day course is a structured, lower-cost way to begin working on overthinking at your own pace." }}
+          hi={{ title: "अपनी गति से शुरुआत करना चाहते हैं?", desc: "21-दिवसीय कोर्स ओवरथिंकिंग पर अपनी गति से काम शुरू करने का एक संरचित, कम खर्च वाला तरीका है।" }}
+        />
       </main>
       <Footer />
       <MentoringStickyBar />

@@ -8,6 +8,7 @@ import HabitBuilderBenefits from '@/components/habit-builder/HabitBuilderBenefit
 import HabitBuilderHowItWorks from '@/components/habit-builder/HabitBuilderHowItWorks'
 import HabitBuilderPricing from '@/components/habit-builder/HabitBuilderPricing'
 import HabitBuilderFaq from '@/components/habit-builder/HabitBuilderFaq'
+import HabitBuilderNextStep from '@/components/habit-builder/HabitBuilderNextStep'
 import Footer from '@/components/Footer'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import { WHATSAPP_HABIT_BUILDER_INQUIRY_LINK } from '@/config/whatsappSupportLink'
@@ -18,7 +19,7 @@ export const metadata: Metadata = buildPageMetadata({
   ownOgImage: true,
   title: `${programs.focusStarter.name} | Mind Ur Mind`,
   description:
-    'A 21-day guided program pairing daily reading practice with focus and memory exercises. Free for Days 1–7, then a one-time ₹99 payment to continue — never a subscription.',
+    'The free first step before Quantum Speed Reading: about 10 minutes a day of focus, memory and reading drills. Days 1–7 are free; continue to Day 21 for a one-time ₹99 — never a subscription.',
 })
 
 // Quantum Mindset & Habit Builder™ public landing page — the real
@@ -52,6 +53,7 @@ export default function HabitBuilderLandingPage(): React.JSX.Element {
         <HabitBuilderHowItWorks />
         <HabitBuilderPricing />
         <HabitBuilderFaq />
+        <HabitBuilderNextStep />
       </main>
       <Footer />
       <WhatsAppWidget href={WHATSAPP_HABIT_BUILDER_INQUIRY_LINK} analyticsLocation="habit_builder_widget" />

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { programs } from "@/config/site.config";
 import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
@@ -38,6 +39,9 @@ function buildCalendarCells(monthDate: Date): (number | null)[] {
 
 export default function RetreatSchedule(): React.JSX.Element {
   const { t, lang } = useLanguage();
+  // Shown only once the retreat fee is published in site.config.
+  const fees = programs.onlineRetreat.prices.map((p) => p.amountInr).filter((a) => a > 0);
+  const retreatFee = fees.length > 0 ? Math.min(...fees) : null;
   const retreat = t.retreatLanding;
   const [batch, setBatch] = useState<BatchRange | null>(null);
 
@@ -132,6 +136,12 @@ export default function RetreatSchedule(): React.JSX.Element {
                 <div className="mt-1.5 text-[14.5px] font-bold text-ink">{retreat.schedule.timingValue}</div>
               </div>
             </div>
+
+            {retreatFee !== null && (
+              <p className="mt-5 font-mono text-[14px] font-semibold text-ink">
+                {lang === "hi" ? `शुल्क: ₹${retreatFee.toLocaleString("en-IN")}` : `Fee: ₹${retreatFee.toLocaleString("en-IN")}`}
+              </p>
+            )}
 
             <div className="mt-7 grid grid-cols-1 gap-4 border-t border-line-strong pt-6 sm:grid-cols-3">
               {retreat.schedule.badges.map((badge) => (

@@ -46,6 +46,10 @@ export const executiveBrainWorkshopConfig = {
   // changes what visitors see.
   totalSeats: 30,
   seatsRemaining: 30,
+  // The "X of Y seats remaining" line is shown only once at least this
+  // share of seats has been sold (0.3 = 30%), so an almost-empty room is
+  // never advertised. Set to 0 to always show it.
+  showSeatsCounterFromSoldFraction: 0.3,
 
   // ── Pricing (section 3.11) ─────────────────────────────────────────
   gstApplicable: true, // shows "+ GST as applicable" next to every price when true

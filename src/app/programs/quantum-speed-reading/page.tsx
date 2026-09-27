@@ -6,24 +6,19 @@ import { buildPageMetadata } from '@/lib/seo/metadata'
 import { absoluteUrl } from '@/lib/seo/siteUrl'
 import QsrNav from '@/components/qsr/QsrNav'
 import QsrHero from '@/components/qsr/QsrHero'
-import QsrWhoIsThisFor from '@/components/qsr/QsrWhoIsThisFor'
 import QsrPainPoints from '@/components/qsr/QsrPainPoints'
+import QsrPaths from '@/components/qsr/QsrPaths'
+import QsrOutcomes from '@/components/qsr/QsrOutcomes'
+import QsrFinalCta from '@/components/qsr/QsrFinalCta'
+import QsrMumbaiWorkshopCard from '@/components/qsr/QsrMumbaiWorkshopCard'
+import { programs } from '@/config/site.config'
 import QsrBrainScience from '@/components/qsr/QsrBrainScience'
-import QsrNeuroCognitiveScience from '@/components/qsr/QsrNeuroCognitiveScience'
-import OfflineEegWorkshopSection from '@/components/OfflineEegWorkshopSection'
-import QsrAgeGroups from '@/components/qsr/QsrAgeGroups'
-import QsrAppPreview from '@/components/qsr/QsrAppPreview'
 import QsrMechanics from '@/components/qsr/QsrMechanics'
-import QsrMoreThanSpeed from '@/components/qsr/QsrMoreThanSpeed'
-import QsrFocusScreenTime from '@/components/qsr/QsrFocusScreenTime'
-import QsrDocumentMastery from '@/components/qsr/QsrDocumentMastery'
 import QsrCurriculum from '@/components/qsr/QsrCurriculum'
-import QsrExamBenefits from '@/components/qsr/QsrExamBenefits'
 import QsrAuthority from '@/components/qsr/QsrAuthority'
 import QsrCredibilityStrip from '@/components/qsr/QsrCredibilityStrip'
 import QsrFounderVideo from '@/components/qsr/QsrFounderVideo'
 import QsrLiveIntroSession from '@/components/qsr/QsrLiveIntroSession'
-import QsrAudience from '@/components/qsr/QsrAudience'
 import QsrVideoTestimonials from '@/components/qsr/QsrVideoTestimonials'
 import QsrFaq from '@/components/qsr/QsrFaq'
 import QsrBatchNotice from '@/components/qsr/QsrBatchNotice'
@@ -32,7 +27,6 @@ import Footer from '@/components/Footer'
 import QsrStickyBar from '@/components/qsr/QsrStickyBar'
 import QsrWhatsAppWidget from '@/components/qsr/QsrWhatsAppWidget'
 import { WORKSHOP_CITIES } from '@/config/workshopCities'
-import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/programs/quantum-speed-reading',
@@ -93,6 +87,11 @@ export const metadata: Metadata = buildPageMetadata({
 // without a dedicated multi-persona pitch. Three total speed-test CTAs
 // on this page (Hero + these two) — deliberately no
 // fourth or sticky/floating version, to avoid feeling spammy.
+// The Mumbai 2-day workshop card shows only while the registry lists it as
+// "upcoming" with a real event date (it is "closed" until venue/dates are set).
+const showMumbaiWorkshop =
+  (programs.qsrMumbai.status as string) === 'upcoming' && 'event' in programs.qsrMumbai
+
 export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
   const faqSchema = buildFaqPageSchema(translations.en.qsrLanding.faq.items)
   // Primary Course entity — Quantum Speed Reading is this site's primary,
@@ -112,44 +111,26 @@ export default function QuantumSpeedReadingLandingPage(): React.JSX.Element {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: courseSchema }} />
       <QsrNav />
       <main>
+        {/* Structure (site-rebuild Phase 5): Problem → Who it's for →
+            What changes → How it works → What's included → free steps →
+            Price & checkout → Proof → Trainer → FAQ → Final CTA + next step. */}
         <QsrHero />
-        {/* Who Is This For? + Pain Points (see the "Homepage & QSR
-            Conversion Rewrite" task) — audience confirmation and
-            pain-point framing land before any feature/metric content,
-            per that task's explicit ordering. The Mumbai in-person
-            workshop card previously rendered here is removed from this
-            page per that same task (component file and its own page
-            untouched, just not linked from here until the batch is
-            confirmed). */}
-        <QsrWhoIsThisFor />
         <QsrPainPoints />
-        <QsrBrainScience />
-        <QsrNeuroCognitiveScience />
-        {/* Offline QSR + EEG Cognitive Testing, multi-city (see the
-            "Homepage, QSR & Multi-City EEG Rewrite" task) — primary
-            placement, right where the old single-city "EEG available in
-            Vadodara" box used to sit, and exactly what
-            QsrNeuroCognitiveScience's own "how this is measured" note
-            above points to via id="offline-eeg". */}
-        <OfflineEegWorkshopSection variant="full" />
-        <QsrSpeedTestInlineCta variant="afterScience" />
-        <QsrAgeGroups />
-        <QsrAppPreview />
+        <QsrPaths />
+        <QsrOutcomes />
         <QsrMechanics />
-        <QsrMoreThanSpeed />
-        <QsrFocusScreenTime />
-        <QsrDocumentMastery />
+        <QsrBrainScience />
         <QsrCurriculum />
-        <QsrExamBenefits />
-        <QsrAuthority />
-        <QsrCredibilityStrip cities={WORKSHOP_CITIES} />
         <QsrFounderVideo />
         <QsrLiveIntroSession />
-        <QsrAudience />
         <QsrSpeedTestInlineCta variant="beforePricing" />
-        <QsrVideoTestimonials />
-        <QsrFaq />
         <QsrBatchNotice />
+        {showMumbaiWorkshop && <QsrMumbaiWorkshopCard />}
+        <QsrVideoTestimonials />
+        <QsrCredibilityStrip cities={WORKSHOP_CITIES} />
+        <QsrAuthority />
+        <QsrFaq />
+        <QsrFinalCta />
       </main>
       <Footer />
       <QsrStickyBar />

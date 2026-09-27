@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Play } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
@@ -104,9 +103,9 @@ export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React
           </a>
         </div>
 
-        {/* video/banner placeholder */}
-        <div className="mx-auto mt-14 w-full max-w-4xl">
-          {youtubeVideoId !== undefined ? (
+        {/* Intro video — shown only once a real video exists (no "coming soon" placeholder). */}
+        {youtubeVideoId !== undefined && (
+          <div className="mx-auto mt-14 w-full max-w-4xl">
             <div className="aspect-video overflow-hidden rounded-sm border border-line-strong">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${youtubeVideoId}`}
@@ -116,19 +115,8 @@ export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React
                 allowFullScreen
               />
             </div>
-          ) : (
-            <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-sm border border-line-strong bg-panel2 bg-[radial-gradient(circle_at_50%_45%,rgba(184,134,46,0.12),transparent_65%)]">
-              <div className="flex flex-col items-center gap-4 text-center">
-                <span className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/50 bg-panel shadow-[0_4px_16px_rgba(34,31,29,0.08)]">
-                  <Play className="ml-1 h-6 w-6 text-gold" aria-hidden="true" />
-                </span>
-                <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">
-                  {retreat.hero.visualPlaceholderLabel}
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

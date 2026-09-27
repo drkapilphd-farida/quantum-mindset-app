@@ -95,12 +95,12 @@ export const translations = {
         title: programs.onlineRetreat.name,
         desc: "An intensive, live, 11-day journey through meditation and inner mastery disciplines — guided daily by Dr. Kapil Dev Sharma.",
         pills: [
-          "Telepathy Send/Receive",
-          "Aura Scanning & Reading",
+          "Kriya Yoga Foundations",
+          "Pranayama & Breathwork",
           "Samadhi Meditation",
-          "Chakra Activation & Enlightenment",
-          "Kundalini Meditation",
-          "Astral Projection",
+          "Chakra Meditation",
+          "Emotional Steadiness",
+          "Sleep & Stillness",
         ],
         trustQuote: {
           quote: "The Kundalini sessions alone were worth the entire eleven days.",
@@ -789,6 +789,43 @@ export const translations = {
       // rather than both dumped on screen at once. Placed before
       // QsrBrainScience/QsrNeuroCognitiveScience's metrics content, per
       // the task's explicit ordering.
+      paths: {
+        eyebrow: "Who It's For",
+        title: "Three ways people use this program",
+        heroLabel: "Choose your path:",
+        students: { label: "For Students & Exam Aspirants", title: "For Students & Exam Aspirants", desc: "Cover your syllabus with less re-reading, and remember more of it on exam day." },
+        professionals: { label: "For Working Professionals", title: "For Working Professionals", desc: "Get through reports, research and books faster, without losing what they say." },
+        parents: { label: "For Parents", title: "For Parents (Children's Path)", desc: "A guided path for younger learners, with practical screen-time habits built in.", tipsLabel: "Screen time & focus, built in" },
+      },
+      outcomes: {
+        eyebrow: "What Changes",
+        title: "What you can expect after 30 days",
+        items: [
+          "Read noticeably faster — measured against your own Day 1 baseline",
+          "Remember more of what you read, using visual memory techniques",
+          "Hold your focus longer, thanks to short daily attention drills",
+          "Finish study material and reports with less re-reading",
+        ],
+        note: "Results vary from person to person; your own before-and-after numbers are tracked in the app.",
+      },
+      included: {
+        title: "What's included",
+        items: [
+          "The full 30-day progressive app curriculum",
+          `7 live sessions with ${trainer.name}`,
+          "WPM and comprehension tracking from your Day 1 baseline",
+          "Day 1 goal-setting and practical memory techniques",
+          "Also in the app: the AI Document Studio — upload a PDF or textbook and get speed-reading drills and revision notes",
+        ],
+      },
+      eegLine: "In-person students in Vadodara can also join live EEG brain-state sessions — for learning and engagement, not a medical test.",
+      nextStep: {
+        ctaTitle: "Ready to start your 30 days?",
+        title: "Not ready to enrol yet?",
+        desc: "Take the free step first — no payment needed.",
+        speedTest: "Take the free Reading Speed Test",
+        starter: `Try the ${programs.focusStarter.name}`,
+      },
       painPoints: {
         eyebrow: "Sound Familiar?",
         title: "The Real Problem Isn't Effort",
@@ -1210,10 +1247,6 @@ export const translations = {
               "Enrollment is confirmed personally by Dr. Kapil's team, not an automated system — you'll hear from us with your batch schedule shortly after checkout.",
           },
           {
-            question: "What if I have a question this didn't answer?",
-            answer: "Message Dr. Kapil's team directly on WhatsApp before you enroll — a real person, not a bot.",
-          },
-          {
             question: "Is this hypnosis or some unscientific method?",
             answer:
               "No. Quantum Speed Reading is skills training informed by reading and attention research — peripheral vision practice, breathing/focus drills, and visual memory techniques — with your progress measured on real Brain Score, comprehension, and consistency metrics. In-person students in Vadodara can also join live EEG brain-state sessions, which are for learning and engagement, not medical tests. It is not hypnosis, not blindfold reading, and not any pseudoscientific technique.",
@@ -1408,10 +1441,10 @@ export const translations = {
     },
     habitBuilderLanding: {
       hero: {
-        eyebrow: "21-Day Guided Program",
-        headline: "Build a Real Reading Habit in 21 Days",
-        headlineEm: "A short daily practice — not a personality overhaul, not a subscription trap.",
-        sub: "A guided, day-by-day program that pairs your Quantum Speed Reading practice with focus and memory exercises — one short session a day, for 21 real days.",
+        eyebrow: "Free first step · before Quantum Speed Reading",
+        headline: programs.focusStarter.name,
+        headlineEm: "Try the method for a week, free — then decide.",
+        sub: `About 10 minutes a day of focus, memory and reading drills — the same foundations used in the ${programs.qsr.name}. Days 1–7 are free. If it works for you, continue to Day 21 for a one-time ₹99, or move on to the full 30-day program.`,
         ctaPrimary: "Start Free — 7 Days, No Payment Required",
         navCta: "Start Free",
         ctaPrimaryMeta: "No card required to start",
@@ -1467,6 +1500,11 @@ export const translations = {
           "A quick retention check",
         ],
       },
+      nextStep: {
+        title: "Ready for the full program?",
+        desc: `The ${programs.qsr.name} adds 7 live sessions with ${trainer.name} and a full 30-day curriculum.`,
+        cta: "See the 30-day program",
+      },
       pricing: {
         eyebrow: "Pricing",
         title: "Simple, honest pricing",
@@ -1514,14 +1552,14 @@ export const translations = {
     retreatLanding: {
       hero: {
         eyebrow: "Online · Since 2014 · Small Cohort",
-        headline: "Awaken Your Higher Mind",
+        headline: "Deep Meditation, Guided Live",
         headlineEm: `The ${programs.onlineRetreat.name}`,
-        sub: "Not another meditation app that leaves you exactly where you started. An intensive, live, 11-day journey into authentic Kriya Yoga, Prana, and cosmic energy — guided nightly by Dr. Kapil Dev Sharma, personally teaching this path since 2014.",
+        sub: "Not another meditation app that leaves you exactly where you started. Eleven nights of live, guided practice in traditional Kriya Yoga, pranayama (breathwork) and deep meditation — for a calmer mind, steadier emotions and better sleep. Guided nightly by Dr. Kapil Dev Sharma, teaching this path since 2014.",
         ctaPrimary: "Secure Your Retreat Spot",
         ctaPrimaryMeta: "Secure Checkout via Razorpay",
         ctaSecondary: "See the 11-Day Curriculum",
         ctaTertiary: "Not ready to book? Watch real student stories first",
-        trustLine: "For burnt-out professionals, chronic overthinkers, and real spiritual seekers — tired of theory, ready for a tangible inner experience.",
+        trustLine: "For busy professionals, chronic overthinkers and sincere seekers who want a real, guided practice — not another app.",
         visualPlaceholderLabel: "Retreat Introduction — Coming Soon",
       },
       coreProblem: {
@@ -1530,11 +1568,11 @@ export const translations = {
         desc: "You've tried the apps. The breathing exercises. The ten-minute guided sessions with rain sounds. The loop in your head is still there five minutes later.",
         painPoints: [
           "A ten-minute recording can help in the moment. This is eleven nights of sustained, live practice — real depth, not a loop you replay.",
-          "You don't need another relaxation technique. You need contact with something real — your own life force, not a distraction from its absence.",
+          "You don't need another relaxation technique. You need a steady daily practice, taught properly, that you can keep after the retreat ends.",
           "Every app promises calm. Almost none explain what's actually happening inside you, or give you a real method to change it.",
         ],
         solution:
-          "This retreat isn't built on modern wellness trends. It's rooted in Kriya Yoga — a real, centuries-old discipline for working directly with Prana, your own life force, through cosmic energy and cosmic fusion, not just your attention span. What you practice for 11 nights produces a felt, physical shift, not five quieter minutes.",
+          "This retreat isn't built on modern wellness trends. It's rooted in Kriya Yoga — a traditional discipline of breath, awareness and meditation. Over 11 nights you learn pranayama, deep stillness and simple daily routines that help calm the mind and settle the body.",
       },
       schedule: {
         eyebrow: "Batch Schedule",
@@ -1556,33 +1594,33 @@ export const translations = {
         ],
       },
       disciplines: {
-        eyebrow: "What You Will Master",
-        title: "Six disciplines, one 11-day journey",
+        eyebrow: "What You Will Practise",
+        title: "Six practices, one 11-day journey",
         desc: "Each night builds on the last, guided live by Dr. Kapil Dev Sharma — never a theory you read about, always a practice you feel.",
         items: [
           {
-            title: "Telepathy Send & Receive",
-            desc: "Experience silent, direct mind-to-mind resonance — a depth of connection words were never built to carry.",
+            title: "Kriya Yoga Foundations",
+            desc: "The traditional sequence of breath, posture and awareness this retreat is built on, taught step by step.",
           },
           {
-            title: "Aura Scanning & Reading",
-            desc: "Learn to perceive the energy fields around you, protect your own, and read what people's words don't say.",
+            title: "Pranayama & Breathwork",
+            desc: "Breathing practices to slow a racing mind and settle the body before meditation.",
           },
           {
             title: "Samadhi Meditation",
-            desc: "Quiet the mental loops that won't switch off, and touch a stillness underneath them that's been there the whole time.",
+            desc: "Quiet the mental loops that won't switch off, and rest in the stillness underneath them.",
           },
           {
-            title: "Chakra Activation & Enlightenment",
-            desc: "Clear energetic blockages you've carried for years, and let real vitality — not caffeine, not willpower — move through your body again.",
+            title: "Chakra Meditation",
+            desc: "A traditional focused-awareness practice that moves attention through the body's centres, for calm and grounding.",
           },
           {
-            title: "Kundalini Meditation",
-            desc: "Safely awaken the dormant energy at the base of your spine, and let it move you, not shake you.",
+            title: "Emotional Steadiness",
+            desc: "Practices for noticing and settling strong emotions, so pressure knocks you off balance less often.",
           },
           {
-            title: "Astral Projection",
-            desc: "Step beyond the edges of the physical plane — and come back changed by what you find there.",
+            title: "Sleep & Stillness",
+            desc: "Wind-down practices that help many participants sleep better and wake calmer.",
           },
         ],
       },
@@ -1632,10 +1670,10 @@ export const translations = {
         eyebrow: "After The 11 Nights",
         title: "What changes when the retreat ends",
         items: [
-          "The mental loops finally go quiet — not suppressed, resolved",
-          "A felt sense of your own energy, not just an idea of it",
-          "Real emotional steadiness under the pressure that used to flatten you",
-          "A lasting shift in how you experience your own mind — not an 11-day high that fades by day 12",
+          "A way to quieten the mental loops when they start",
+          "Steadier emotions under pressure",
+          "Better sleep and calmer mornings, for many participants",
+          "A daily meditation routine you can keep after Day 11",
         ],
       },
       gallery: {
@@ -1665,19 +1703,19 @@ export const translations = {
         title: "Questions people ask before Day 1",
         items: [
           {
-            question: "Do I need any prior experience with meditation or energy work?",
+            question: "Do I need any prior experience with meditation?",
             answer:
               "No particular belief system or prior experience is required. Kriya Yoga builds up gradually across the 11 nights — you bring your own openness, Dr. Kapil Dev Sharma guides the method, step by step.",
           },
           {
-            question: "Is the energy work — Kundalini, Samadhi — actually safe?",
+            question: "Is deep meditation safe? What if strong emotions come up?",
             answer:
-              "Every technique is taught step by step, live, with Dr. Kapil Dev Sharma guiding the pace each night. That said, these are intensive practices — for a small number of people, deep meditative or energy-focused work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so pacing can be adjusted accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
+              "Every technique is taught step by step, live, with Dr. Kapil Dev Sharma guiding the pace each night. That said, these are intensive practices — for a small number of people, deep meditative work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so pacing can be adjusted accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
           },
           {
             question: "What is Kriya Yoga, exactly?",
             answer:
-              "Kriya Yoga is a real, centuries-old discipline for working directly with Prana — your own life force — through breath and specific inner techniques, not a philosophy you only read about. It's the foundation this entire 11-day retreat is built on.",
+              "Kriya Yoga is a traditional, centuries-old discipline of breathwork (pranayama), awareness and meditation techniques — practised, not just read about. It's the foundation this entire 11-day retreat is built on.",
           },
           {
             question: "What's the daily time commitment?",
@@ -1709,7 +1747,7 @@ export const translations = {
       },
       finalCta: {
         eyebrow: "Ready When You Are",
-        title: "Your Awakening Starts With One Decision",
+        title: "A Calmer Mind Starts With One Decision",
         desc: "Enrollment is confirmed personally by Dr. Kapil's own team — not an automated system. Since 2014, 150+ real students, one small cohort at a time. Book your spot in the next batch.",
         cta: "Secure Your Retreat Spot",
       },
@@ -1729,11 +1767,11 @@ export const translations = {
         eyebrow: "Residential Meditation Retreats · Since 2014 · Small Cohorts",
         headline: "Step Away. Fully.",
         headlineEm: programs.residentialRetreat.name,
-        sub: "You've meditated in bed, in traffic, with an app telling you to just breathe. It didn't work — not because you failed at it, but because a 10-minute recording was never built to reach where the exhaustion actually lives. This is Dr. Kapil Dev Sharma, in the room with you, for days — Kriya Yoga, Prana, and cosmic energy work, guided directly, since 2014.",
+        sub: "You've meditated in bed, in traffic, with an app telling you to just breathe. It didn't work — not because you failed at it, but because a 10-minute recording was never built for real depth. This is Dr. Kapil Dev Sharma, in the room with you, for days — traditional Kriya Yoga, pranayama and deep meditation, guided directly, since 2014.",
         ctaPrimary: "Secure Your Residential Seat",
         ctaPrimaryMeta: "Personally confirmed by Dr. Kapil's team",
         ctaSecondary: "See the 2026–27 Roadmap",
-        trustLine: "For burnt-out professionals, chronic overthinkers, and real spiritual seekers — ready to leave, not just log off.",
+        trustLine: "For busy professionals, chronic overthinkers and sincere seekers — ready to step away properly, not just log off.",
       },
       roadmap: {
         eyebrow: "The Official Schedule",
@@ -1754,10 +1792,10 @@ export const translations = {
         painPoints: [
           "An app competes with a nervous system that's been in low-grade alarm for years — and loses, every time, because it's still running in the same noisy environment that created the exhaustion.",
           "Even a live online retreat still has your phone on the desk beside you. Real disconnect doesn't happen through a screen, no matter how good the guidance is.",
-          "Deep energy work — Kundalini, Samadhi, direct Pranic activation — is safest and strongest with a teacher physically present to see exactly where you are, not guessing from a video call.",
+          "Deep meditation and breathwork are safest with a teacher physically present to see exactly where you are, not guessing from a video call.",
         ],
         solution:
-          "This is why the residential format exists. Real Kriya Yoga, worked directly with Prana — your own life force — through cosmic energy and cosmic fusion, in a room with no notifications, no inbox, and a living teacher who can actually see you. What happens over these days produces a felt, physical shift, not a temporary calm that fades on the drive home.",
+          "This is why the residential format exists. Traditional Kriya Yoga, pranayama and meditation, in a room with no notifications, no inbox, and a teacher who can actually see you — days of practice that leave you calmer, steadier and better rested.",
       },
       advantage: {
         eyebrow: "The Part No App Can Replicate",
@@ -1769,8 +1807,8 @@ export const translations = {
             desc: "No notifications, no inbox, no \"just checking one thing.\" Your nervous system gets to fully stand down — often for the first time in years.",
           },
           {
-            title: "Direct Energy Transmission",
-            desc: "There's a real, felt difference between a recording of a teacher and sitting in the same room as one. This cannot be digitized.",
+            title: "In-Person Guidance",
+            desc: "There's a real difference between a recording of a teacher and sitting in the same room as one — your posture, breath and pace corrected as you practise.",
           },
           {
             title: "Small, Exclusive Cohorts",
@@ -1785,23 +1823,23 @@ export const translations = {
       journey: {
         eyebrow: "The Work Itself",
         title: "A Structured, Multi-Day Immersion",
-        desc: "Each residential retreat unfolds as a deliberate arc — grounding first, then energy activation, then deep stillness, then integration — so the shift has time to actually settle.",
+        desc: "Each residential retreat unfolds as a deliberate arc — grounding first, then breathwork and Kriya Yoga, then deep stillness, then integration — so the change has time to settle.",
         items: [
           {
             title: "Grounding & Arrival",
             desc: "Breath realignment and nervous system down-regulation — arriving fully before the deeper work begins.",
           },
           {
-            title: "Kriya Yoga & Pranic Activation",
+            title: "Kriya Yoga & Pranayama",
             desc: "The core technique, taught in structured, safe progression, corrected in person.",
           },
           {
-            title: "Energy & Chakra Work",
+            title: "Chakra Meditation & Breathwork",
             desc: "Direct, guided practice — not theory read off a slide.",
           },
           {
             title: "Deep Stillness & Samadhi Practice",
-            desc: "The state everything else in the retreat has been quietly building toward.",
+            desc: "Longer silent sittings that everything else in the retreat has been building toward.",
           },
           {
             title: "Integration & Closing",
@@ -1900,7 +1938,7 @@ export const translations = {
           "You're a high-performer who's quietly burnt out — successful on paper, exhausted underneath it",
           "You're a chronic overthinker — the loop doesn't stop just because your circumstances are fine",
           "You've tried the apps, the books, the podcasts — and gotten temporary relief, never real change",
-          "You're a genuine spiritual seeker — ready for real practice, not more content to consume",
+          "You're a sincere seeker — ready for real practice, not more content to consume",
           "You can commit fully for the retreat's duration — this only works if you actually leave",
         ],
         disclaimer: "If you're looking for a relaxing holiday with some yoga on the side, this isn't it. If you're ready for real, structured inner work with a teacher watching closely, you're in the right place.",
@@ -1911,16 +1949,16 @@ export const translations = {
         items: [
           {
             question: "Is this suitable for complete beginners?",
-            answer: "Yes. No prior experience with Kriya Yoga, meditation, or energy work is required. Every practice is taught from the ground up, in safe, structured progression.",
+            answer: "Yes. No prior experience with Kriya Yoga or meditation is required. Every practice is taught from the ground up, in safe, structured progression.",
           },
           {
-            question: "Is the energy work — Kundalini, Samadhi — actually safe?",
+            question: "Is deep meditation safe? What if strong emotions come up?",
             answer:
-              "Every technique is taught step by step, under direct in-person supervision. That said, these are intensive practices — for a small number of people, deep meditative or energy-focused work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so Dr. Kapil Dev Sharma can adjust pacing accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
+              "Every technique is taught step by step, under direct in-person supervision. That said, these are intensive practices — for a small number of people, deep meditative work can surface strong emotional experiences. We ask participants to share any relevant mental health history before the retreat, so Dr. Kapil Dev Sharma can adjust pacing accordingly. This retreat is a personal and spiritual practice, not a substitute for licensed therapy or psychiatric care — if you're currently in treatment for a mental health condition, please consult your provider before joining.",
           },
           {
             question: "How is this different from your 11-Day Online Retreat?",
-            answer: "The online retreat is a live, guided journey you join from home. The Residential Retreat requires you to physically travel and stay on-site — full disconnect, direct in-person energy transmission, and a small in-person cohort the online format can't replicate.",
+            answer: "The online retreat is a live, guided journey you join from home. The Residential Retreat requires you to physically travel and stay on-site — full disconnect, in-person guidance, and a small in-person cohort the online format can't replicate.",
           },
           {
             question: "What's included in the price?",
@@ -2330,11 +2368,6 @@ export const translations = {
               "Every day includes a training video, an educational video, guided meditation, a daily activity, and PDF workbook material. The ₹999 plan additionally includes 2 live sessions with Dr. Kapil.",
           },
           {
-            question: "Are live sessions included in both plans?",
-            answer:
-              "No. Live sessions are included only with the ₹999 / 6-month plan. The ₹499 / 1-month plan is fully self-paced, with no live sessions.",
-          },
-          {
             question: "What is the difference between ₹499 and ₹999?",
             answer:
               "Two things: access validity (1 month with ₹499 vs. 6 months with ₹999), and live sessions — the ₹999 plan includes 2 live sessions with Dr. Kapil, which the ₹499 plan does not.",
@@ -2355,14 +2388,6 @@ export const translations = {
             question: "Is this course a treatment for anxiety or depression?",
             answer:
               "No. This is an educational, self-awareness-focused course. It is not a substitute for licensed therapy or psychiatric care. If you're currently in treatment for a mental health condition, or in crisis, please consult a licensed professional or local emergency services.",
-          },
-          {
-            question: "Can I take the Overthinking Test before purchasing?",
-            answer: "Yes — the Overthinking Test is free and available to anyone, whether or not you enroll in the course.",
-          },
-          {
-            question: "What happens after I purchase?",
-            answer: "[Access-delivery details to be confirmed — you'll receive instructions for the Classplus platform where the course lives.]",
           },
         ],
       },
@@ -2556,12 +2581,12 @@ export const translations = {
         title: programs.onlineRetreat.nameHi,
         desc: "ध्यान और आंतरिक मास्टरी के मुख्य अनुशासनों के माध्यम से एक गहन, लाइव, 11-दिवसीय यात्रा — प्रतिदिन डॉ. कपिल देव शर्मा द्वारा मार्गदर्शित।",
         pills: [
-          "मानसिक तरंग संचार (टेलीपैथी)",
-          "आभा स्कैनिंग और रीडिंग",
+          "क्रिया योग की बुनियाद",
+          "प्राणायाम और श्वास-अभ्यास",
           "समाधि ध्यान",
-          "चक्र सक्रियण और ज्ञानोदय",
-          "कुंडलिनी ध्यान",
-          "सूक्ष्म शरीर यात्रा",
+          "चक्र ध्यान",
+          "भावनात्मक स्थिरता",
+          "नींद और स्थिरता",
         ],
         trustQuote: {
           quote: "अकेले कुंडलिनी सत्र ही पूरे ग्यारह दिनों के लायक थे।",
@@ -3188,6 +3213,43 @@ export const translations = {
           },
         ],
       },
+      paths: {
+        eyebrow: "यह किसके लिए है",
+        title: "लोग इस प्रोग्राम का उपयोग तीन तरह से करते हैं",
+        heroLabel: "अपना रास्ता चुनें:",
+        students: { label: "विद्यार्थियों व परीक्षा उम्मीदवारों के लिए", title: "विद्यार्थियों व परीक्षा उम्मीदवारों के लिए", desc: "कम दोहराव के साथ सिलेबस पूरा करें, और परीक्षा के दिन उसमें से ज़्यादा याद रखें।" },
+        professionals: { label: "कामकाजी पेशेवरों के लिए", title: "कामकाजी पेशेवरों के लिए", desc: "रिपोर्ट्स, रिसर्च और किताबें तेज़ी से पढ़ें, बिना यह खोए कि उनमें क्या लिखा है।" },
+        parents: { label: "अभिभावकों के लिए", title: "अभिभावकों के लिए (बच्चों का रास्ता)", desc: "छोटे विद्यार्थियों के लिए एक मार्गदर्शित रास्ता, जिसमें स्क्रीन-टाइम की व्यावहारिक आदतें शामिल हैं।", tipsLabel: "स्क्रीन टाइम और फोकस, शामिल" },
+      },
+      outcomes: {
+        eyebrow: "क्या बदलता है",
+        title: "30 दिनों के बाद आप क्या उम्मीद कर सकते हैं",
+        items: [
+          "काफ़ी तेज़ पढ़ना — आपके अपने दिन 1 के बेसलाइन से मापा गया",
+          "विज़ुअल मेमोरी तकनीकों से जो पढ़ें उसका ज़्यादा याद रखना",
+          "छोटे दैनिक ध्यान अभ्यासों से लंबे समय तक फोकस बनाए रखना",
+          "कम दोहराव के साथ पढ़ाई की सामग्री और रिपोर्ट्स पूरी करना",
+        ],
+        note: "नतीजे हर व्यक्ति के लिए अलग होते हैं; आपके अपने पहले-और-बाद के आंकड़े ऐप में ट्रैक होते हैं।",
+      },
+      included: {
+        title: "इसमें क्या शामिल है",
+        items: [
+          "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम",
+          `${trainer.nameHi} के साथ 7 लाइव सेशन`,
+          "दिन 1 के बेसलाइन से WPM और समझ की ट्रैकिंग",
+          "दिन 1 पर लक्ष्य-निर्धारण और व्यावहारिक मेमोरी तकनीकें",
+          "ऐप में यह भी: AI डॉक्यूमेंट स्टूडियो — कोई PDF या किताब अपलोड करें और स्पीड-रीडिंग ड्रिल्स व रिवीज़न नोट्स पाएं",
+        ],
+      },
+      eegLine: "वडोदरा में व्यक्तिगत रूप से आने वाले विद्यार्थी लाइव EEG ब्रेन-स्टेट सेशन में भी शामिल हो सकते हैं — सीखने और एंगेजमेंट के लिए, मेडिकल टेस्ट नहीं।",
+      nextStep: {
+        ctaTitle: "अपने 30 दिन शुरू करने के लिए तैयार?",
+        title: "अभी नामांकन के लिए तैयार नहीं?",
+        desc: "पहले मुफ़्त कदम उठाएं — कोई भुगतान नहीं।",
+        speedTest: "मुफ़्त रीडिंग स्पीड टेस्ट दें",
+        starter: `${programs.focusStarter.nameHi} आज़माएं`,
+      },
       painPoints: {
         eyebrow: "जाना-पहचाना लगता है?",
         title: "असली समस्या मेहनत की कमी नहीं है",
@@ -3543,10 +3605,6 @@ export const translations = {
               "नामांकन की पुष्टि डॉ. कपिल की टीम व्यक्तिगत रूप से करती है, कोई ऑटोमेटेड सिस्टम नहीं — चेकआउट के तुरंत बाद हम आपसे आपके बैच शेड्यूल के साथ संपर्क करेंगे।",
           },
           {
-            question: "अगर मेरा सवाल यहां नहीं है तो?",
-            answer: "नामांकन से पहले डॉ. कपिल की टीम को सीधे WhatsApp पर संदेश भेजें — असली व्यक्ति से बात होगी, कोई बॉट नहीं।",
-          },
-          {
             question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
             answer:
               "नहीं। क्वांटम स्पीड रीडिंग रीडिंग और अटेंशन रिसर्च से सूचित स्किल ट्रेनिंग है — पेरिफेरल विज़न अभ्यास, श्वास/फोकस अभ्यास, और विज़ुअल मेमोरी तकनीकें — जिसमें आपकी प्रगति असली ब्रेन स्कोर, कॉम्प्रिहेंशन और कंसिस्टेंसी मेट्रिक्स पर मापी जाती है। वडोदरा में व्यक्तिगत रूप से आने वाले विद्यार्थी लाइव EEG ब्रेन-स्टेट सेशन में भी शामिल हो सकते हैं, जो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं। यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई छद्म-वैज्ञानिक तकनीक नहीं है।",
@@ -3717,10 +3775,10 @@ export const translations = {
     },
     habitBuilderLanding: {
       hero: {
-        eyebrow: "21-दिवसीय गाइडेड प्रोग्राम",
-        headline: "21 दिनों में एक असली रीडिंग हैबिट बनाएं",
-        headlineEm: "एक छोटा दैनिक अभ्यास — कोई personality overhaul नहीं, कोई subscription trap नहीं।",
-        sub: "एक गाइडेड, दिन-दर-दिन प्रोग्राम, जो आपकी Quantum Speed Reading प्रैक्टिस को फोकस और मेमोरी अभ्यासों से जोड़ता है — एक दिन में एक छोटा सेशन, 21 असली दिनों तक।",
+        eyebrow: "पहला मुफ़्त कदम · क्वांटम स्पीड रीडिंग से पहले",
+        headline: programs.focusStarter.nameHi,
+        headlineEm: "एक हफ़्ते तक तरीका मुफ़्त आज़माएं — फिर फ़ैसला करें।",
+        sub: `रोज़ लगभग 10 मिनट के फोकस, मेमोरी और रीडिंग अभ्यास — वही बुनियाद जो ${programs.qsr.nameHi} में इस्तेमाल होती है। दिन 1–7 मुफ़्त हैं। अगर यह आपके लिए काम करे, तो ₹99 के एकमुश्त भुगतान से दिन 21 तक जारी रखें, या पूरे 30-दिवसीय प्रोग्राम पर जाएं।`,
         ctaPrimary: "मुफ़्त शुरू करें — 7 दिन, कोई भुगतान नहीं",
         navCta: "मुफ़्त शुरू करें",
         ctaPrimaryMeta: "शुरू करने के लिए कार्ड की ज़रूरत नहीं",
@@ -3776,6 +3834,11 @@ export const translations = {
           "एक क्विक रिटेंशन चेक",
         ],
       },
+      nextStep: {
+        title: "पूरे प्रोग्राम के लिए तैयार?",
+        desc: `${programs.qsr.nameHi} में ${trainer.nameHi} के साथ 7 लाइव सेशन और पूरा 30-दिवसीय पाठ्यक्रम शामिल है।`,
+        cta: "30-दिवसीय प्रोग्राम देखें",
+      },
       pricing: {
         eyebrow: "प्राइसिंग",
         title: "सीधी, ईमानदार प्राइसिंग",
@@ -3823,14 +3886,14 @@ export const translations = {
     retreatLanding: {
       hero: {
         eyebrow: "ऑनलाइन · 2014 से · छोटा समूह",
-        headline: "अपने उच्च मन को जगाएं",
+        headline: "गहरा ध्यान, लाइव मार्गदर्शन में",
         headlineEm: programs.onlineRetreat.nameHi,
-        sub: "कोई और मेडिटेशन ऐप नहीं, जो आपको वहीं छोड़ दे जहां से आपने शुरुआत की थी। यह असली क्रिया योग, प्राण, और ब्रह्मांडीय ऊर्जा में एक गहन, लाइव, 11-दिवसीय यात्रा है — प्रतिरात डॉ. कपिल देव शर्मा द्वारा मार्गदर्शित, जो 2014 से व्यक्तिगत रूप से यह मार्ग सिखा रहे हैं।",
+        sub: "कोई और मेडिटेशन ऐप नहीं, जो आपको वहीं छोड़ दे जहां से आपने शुरुआत की थी। पारंपरिक क्रिया योग, प्राणायाम (श्वास-अभ्यास) और गहरे ध्यान की 11 रातों की लाइव, मार्गदर्शित साधना — शांत मन, स्थिर भावनाओं और बेहतर नींद के लिए। प्रतिरात डॉ. कपिल देव शर्मा द्वारा मार्गदर्शित, जो 2014 से यह मार्ग सिखा रहे हैं।",
         ctaPrimary: "अपनी रिट्रीट सीट सुरक्षित करें",
         ctaPrimaryMeta: "Razorpay के ज़रिए सुरक्षित चेकआउट",
         ctaSecondary: "11-दिवसीय पाठ्यक्रम देखें",
         ctaTertiary: "बुक करने के लिए तैयार नहीं हैं? पहले असली विद्यार्थियों की कहानियां देखें",
-        trustLine: "थके हुए पेशेवरों, लगातार ओवरथिंक करने वालों, और असली आध्यात्मिक खोजियों के लिए — जो सिद्धांत से थक चुके हैं और एक वास्तविक आंतरिक अनुभव के लिए तैयार हैं।",
+        trustLine: "व्यस्त पेशेवरों, लगातार ओवरथिंक करने वालों और सच्चे साधकों के लिए, जो एक असली, मार्गदर्शित अभ्यास चाहते हैं — कोई और ऐप नहीं।",
         visualPlaceholderLabel: "रिट्रीट परिचय — जल्द आ रहा है",
       },
       coreProblem: {
@@ -3839,11 +3902,11 @@ export const translations = {
         desc: "आपने ऐप्स आज़माए हैं। सांस लेने के अभ्यास। बारिश की आवाज़ों वाले दस-मिनट के गाइडेड सेशन। पांच मिनट बाद भी आपके दिमाग़ का वह चक्र वहीं है।",
         painPoints: [
           "दस मिनट की रिकॉर्डिंग उस पल में मदद कर सकती है। यह ग्यारह रातों का निरंतर, लाइव अभ्यास है — असली गहराई, कोई दोहराई जाने वाली लूप नहीं।",
-          "आपको एक और रिलैक्सेशन तकनीक की ज़रूरत नहीं है। आपको किसी असली चीज़ से संपर्क चाहिए — अपनी खुद की जीवन-शक्ति, उसकी अनुपस्थिति से ध्यान भटकाने वाली चीज़ नहीं।",
+          "आपको एक और रिलैक्सेशन तकनीक की ज़रूरत नहीं है। आपको एक नियमित दैनिक अभ्यास चाहिए, सही तरीके से सिखाया गया, जिसे आप रिट्रीट के बाद भी जारी रख सकें।",
           "हर ऐप शांति का वादा करता है। लगभग कोई नहीं बताता कि आपके भीतर वास्तव में क्या हो रहा है, या इसे बदलने का कोई असली तरीका देता है।",
         ],
         solution:
-          "यह रिट्रीट आधुनिक वेलनेस ट्रेंड्स पर आधारित नहीं है। यह क्रिया योग में निहित है — प्राण, आपकी अपनी जीवन-शक्ति, के साथ सीधे काम करने की एक असली, सदियों पुरानी विधि — ब्रह्मांडीय ऊर्जा और ब्रह्मांडीय संलयन के ज़रिए — सिर्फ आपके ध्यान की अवधि नहीं। 11 रातों तक जो आप अभ्यास करते हैं, वह एक महसूस होने वाला, वास्तविक बदलाव लाता है, पांच शांत मिनट नहीं।",
+          "यह रिट्रीट आधुनिक वेलनेस ट्रेंड्स पर आधारित नहीं है। यह क्रिया योग में निहित है — श्वास, जागरूकता और ध्यान की एक पारंपरिक विधि। 11 रातों में आप प्राणायाम, गहरी स्थिरता और सरल दैनिक दिनचर्या सीखते हैं, जो मन को शांत और शरीर को स्थिर करने में मदद करती हैं।",
       },
       schedule: {
         eyebrow: "बैच शेड्यूल",
@@ -3865,33 +3928,33 @@ export const translations = {
         ],
       },
       disciplines: {
-        eyebrow: "आप क्या सीखेंगे",
-        title: "छह अनुशासन, एक 11-दिवसीय यात्रा",
+        eyebrow: "आप क्या अभ्यास करेंगे",
+        title: "छह अभ्यास, एक 11-दिवसीय यात्रा",
         desc: "हर रात पिछली रात पर आधारित होती है, डॉ. कपिल देव शर्मा द्वारा लाइव मार्गदर्शित — कभी कोई सिद्धांत नहीं जिसे आप सिर्फ पढ़ें, हमेशा एक अभ्यास जिसे आप महसूस करें।",
         items: [
           {
-            title: "मानसिक तरंग संचार (टेलीपैथी)",
-            desc: "मौन, प्रत्यक्ष मन-से-मन तालमेल का अनुभव करें — एक ऐसा गहरा जुड़ाव जिसे शब्द कभी व्यक्त नहीं कर सकते।",
+            title: "क्रिया योग की बुनियाद",
+            desc: "श्वास, आसन और जागरूकता का वह पारंपरिक क्रम जिस पर यह रिट्रीट आधारित है, कदम-दर-कदम सिखाया गया।",
           },
           {
-            title: "आभा स्कैनिंग और रीडिंग",
-            desc: "अपने चारों ओर की ऊर्जा को महसूस करना सीखें, अपनी ऊर्जा की रक्षा करें, और वह पढ़ें जो लोगों के शब्द नहीं बताते।",
+            title: "प्राणायाम और श्वास-अभ्यास",
+            desc: "ध्यान से पहले तेज़ दौड़ते मन को धीमा करने और शरीर को स्थिर करने वाले श्वास-अभ्यास।",
           },
           {
             title: "समाधि ध्यान",
-            desc: "उन मानसिक चक्रों को शांत करें जो रुकते ही नहीं, और उनके नीचे छिपी उस स्थिरता को छुएं जो हमेशा से वहां थी।",
+            desc: "उन मानसिक चक्रों को शांत करें जो रुकते ही नहीं, और उनके नीचे की स्थिरता में विश्राम करें।",
           },
           {
-            title: "चक्र सक्रियण और ज्ञानोदय",
-            desc: "वर्षों से ढोए जा रहे ऊर्जा अवरोधों को दूर करें, और असली जीवन-शक्ति — कैफीन नहीं, इच्छाशक्ति नहीं — को फिर से अपने शरीर में प्रवाहित होने दें।",
+            title: "चक्र ध्यान",
+            desc: "एक पारंपरिक केंद्रित-जागरूकता अभ्यास, जो ध्यान को शरीर के केंद्रों से होकर ले जाता है — शांति और स्थिरता के लिए।",
           },
           {
-            title: "कुंडलिनी ध्यान",
-            desc: "रीढ़ के आधार पर सुप्त ऊर्जा को सुरक्षित रूप से जगाएं और उसे आपको हिलाने नहीं, बल्कि आगे बढ़ाने दें।",
+            title: "भावनात्मक स्थिरता",
+            desc: "तीव्र भावनाओं को पहचानने और शांत करने के अभ्यास, ताकि दबाव आपको कम बार असंतुलित करे।",
           },
           {
-            title: "सूक्ष्म शरीर यात्रा",
-            desc: "भौतिक सीमाओं से आगे कदम रखें — और जो वहां मिले उससे बदलकर लौटें।",
+            title: "नींद और स्थिरता",
+            desc: "सोने से पहले के अभ्यास, जो कई प्रतिभागियों को बेहतर नींद और शांत सुबह में मदद करते हैं।",
           },
         ],
       },
@@ -3941,10 +4004,10 @@ export const translations = {
         eyebrow: "11 रातों के बाद",
         title: "रिट्रीट खत्म होने पर क्या बदलता है",
         items: [
-          "मानसिक चक्र आखिरकार शांत हो जाते हैं — दबाए नहीं जाते, सुलझ जाते हैं",
-          "अपनी ऊर्जा का एक महसूस होने वाला एहसास, सिर्फ एक विचार नहीं",
-          "उस दबाव में असली भावनात्मक स्थिरता जो पहले आपको तोड़ देता था",
-          "अपने मन को अनुभव करने के तरीके में एक स्थायी बदलाव — दिन 12 तक ख़त्म होने वाला 11-दिवसीय उत्साह नहीं",
+          "जब मानसिक चक्र शुरू हों, तो उन्हें शांत करने का एक तरीका",
+          "दबाव में ज़्यादा स्थिर भावनाएं",
+          "कई प्रतिभागियों के लिए बेहतर नींद और शांत सुबह",
+          "एक दैनिक ध्यान दिनचर्या जिसे आप दिन 11 के बाद भी जारी रख सकें",
         ],
       },
       gallery: {
@@ -3974,19 +4037,19 @@ export const translations = {
         title: "दिन 1 से पहले लोग जो सवाल पूछते हैं",
         items: [
           {
-            question: "क्या मुझे ध्यान या ऊर्जा-कार्य का कोई पूर्व अनुभव चाहिए?",
+            question: "क्या मुझे ध्यान का कोई पूर्व अनुभव चाहिए?",
             answer:
               "किसी विशेष विश्वास प्रणाली या पूर्व अनुभव की ज़रूरत नहीं है। क्रिया योग 11 रातों में धीरे-धीरे आगे बढ़ता है — आप अपना खुलापन लाएं, डॉ. कपिल देव शर्मा हर कदम पर विधि बताएंगे।",
           },
           {
-            question: "क्या ऊर्जा कार्य — कुंडलिनी, समाधि — वाकई सुरक्षित है?",
+            question: "क्या गहरा ध्यान सुरक्षित है? अगर तीव्र भावनाएं उभरें तो?",
             answer:
-              "हर तकनीक चरण-दर-चरण, लाइव सिखाई जाती है, और हर रात डॉ. कपिल देव शर्मा गति का मार्गदर्शन करते हैं। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान या ऊर्जा-केंद्रित कार्य तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि गति उसके अनुसार समायोजित की जा सके। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
+              "हर तकनीक चरण-दर-चरण, लाइव सिखाई जाती है, और हर रात डॉ. कपिल देव शर्मा गति का मार्गदर्शन करते हैं। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि गति उसके अनुसार समायोजित की जा सके। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
           },
           {
             question: "क्रिया योग वास्तव में क्या है?",
             answer:
-              "क्रिया योग प्राण — आपकी अपनी जीवन-शक्ति — के साथ सीधे काम करने की एक असली, सदियों पुरानी विधि है, सांस और विशेष आंतरिक तकनीकों के ज़रिए, कोई ऐसा दर्शनशास्त्र नहीं जिसे आप सिर्फ पढ़ें। यही पूरे 11-दिवसीय रिट्रीट की नींव है।",
+              "क्रिया योग श्वास-अभ्यास (प्राणायाम), जागरूकता और ध्यान तकनीकों की एक पारंपरिक, सदियों पुरानी विधि है — जिसका अभ्यास किया जाता है, सिर्फ पढ़ा नहीं जाता। यही पूरे 11-दिवसीय रिट्रीट की नींव है।",
           },
           {
             question: "प्रतिदिन कितना समय देना होगा?",
@@ -4018,7 +4081,7 @@ export const translations = {
       },
       finalCta: {
         eyebrow: "जब आप तैयार हों",
-        title: "आपका जागरण एक फैसले से शुरू होता है",
+        title: "शांत मन एक फैसले से शुरू होता है",
         desc: "नामांकन की पुष्टि डॉ. कपिल की अपनी टीम व्यक्तिगत रूप से करती है — कोई ऑटोमेटेड सिस्टम नहीं। 2014 से, 150+ असली विद्यार्थी, एक समय में एक छोटा समूह। अगले बैच में अपनी सीट बुक करें।",
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
       },
@@ -4038,11 +4101,11 @@ export const translations = {
         eyebrow: "रेजिडेंशियल मेडिटेशन रिट्रीट्स · 2014 से · छोटे समूह",
         headline: "पूरी तरह दूर हट जाएं।",
         headlineEm: programs.residentialRetreat.nameHi,
-        sub: "आपने बिस्तर पर मेडिटेशन किया, ट्रैफिक में किया, एक ऐप के साथ किया जो कहता रहा बस सांस लें। यह काम नहीं आया — इसलिए नहीं कि आप असफल हुए, बल्कि इसलिए कि एक 10-मिनट की रिकॉर्डिंग वहां तक कभी नहीं पहुंच सकती जहां थकान असल में रहती है। यह डॉ. कपिल देव शर्मा हैं, आपके साथ उसी कमरे में, कई दिनों तक — क्रिया योग, प्राण, और ब्रह्मांडीय ऊर्जा का काम, सीधे मार्गदर्शन में, 2014 से।",
+        sub: "आपने बिस्तर पर मेडिटेशन किया, ट्रैफिक में किया, एक ऐप के साथ किया जो कहता रहा बस सांस लें। यह काम नहीं आया — इसलिए नहीं कि आप असफल हुए, बल्कि इसलिए कि एक 10-मिनट की रिकॉर्डिंग असली गहराई के लिए बनी ही नहीं थी। यह डॉ. कपिल देव शर्मा हैं, आपके साथ उसी कमरे में, कई दिनों तक — पारंपरिक क्रिया योग, प्राणायाम और गहरा ध्यान, सीधे मार्गदर्शन में, 2014 से।",
         ctaPrimary: "अपनी रेजिडेंशियल सीट सुरक्षित करें",
         ctaPrimaryMeta: "डॉ. कपिल की टीम द्वारा व्यक्तिगत रूप से पुष्टि",
         ctaSecondary: "2026–27 का शेड्यूल देखें",
-        trustLine: "थके हुए पेशेवरों, लगातार ओवरथिंक करने वालों, और असली आध्यात्मिक खोजियों के लिए — जो सिर्फ लॉग ऑफ नहीं, वाकई छोड़ने के लिए तैयार हैं।",
+        trustLine: "व्यस्त पेशेवरों, लगातार ओवरथिंक करने वालों और सच्चे साधकों के लिए — जो सिर्फ लॉग ऑफ नहीं, सही मायने में कुछ दिन दूर जाने के लिए तैयार हैं।",
       },
       roadmap: {
         eyebrow: "आधिकारिक शेड्यूल",
@@ -4063,10 +4126,10 @@ export const translations = {
         painPoints: [
           "एक ऐप उस नर्वस सिस्टम से मुकाबला करता है जो वर्षों से हल्के अलार्म में रहा है — और हर बार हार जाता है, क्योंकि वह अब भी उसी शोरगुल वाले माहौल में चल रहा है जिसने थकान पैदा की।",
           "एक लाइव ऑनलाइन रिट्रीट में भी आपका फोन मेज़ पर बगल में रखा होता है। असली डिस्कनेक्ट स्क्रीन के ज़रिए कभी नहीं होता, मार्गदर्शन चाहे जितना अच्छा हो।",
-          "गहन ऊर्जा कार्य — कुंडलिनी, समाधि, सीधा प्राणिक सक्रियण — सबसे सुरक्षित और सशक्त तब होता है जब गुरु शारीरिक रूप से मौजूद हों और ठीक-ठीक देख सकें आप कहां हैं, वीडियो कॉल से अंदाज़ा लगाने के बजाय।",
+          "गहरा ध्यान और श्वास-अभ्यास तब सबसे सुरक्षित होते हैं जब गुरु शारीरिक रूप से मौजूद हों और ठीक-ठीक देख सकें कि आप कहां हैं, वीडियो कॉल से अंदाज़ा लगाकर नहीं।",
         ],
         solution:
-          "इसीलिए रेजिडेंशियल फॉर्मैट मौजूद है। असली क्रिया योग, सीधे प्राण के साथ काम — आपकी अपनी जीवन शक्ति — ब्रह्मांडीय ऊर्जा और कॉस्मिक फ्यूज़न के ज़रिए, एक ऐसे कमरे में जहां कोई नोटिफिकेशन नहीं, कोई इनबॉक्स नहीं, और एक जीवित गुरु जो वाकई आपको देख सकते हैं। इन दिनों में जो होता है वह एक महसूस होने वाला, भौतिक बदलाव पैदा करता है, न कि घर लौटते ही मिटने वाली अस्थायी शांति।",
+          "इसीलिए रेजिडेंशियल फॉर्मैट मौजूद है। पारंपरिक क्रिया योग, प्राणायाम और ध्यान, एक ऐसे कमरे में जहां कोई नोटिफिकेशन नहीं, कोई इनबॉक्स नहीं, और एक गुरु जो आपको वाकई देख सकते हैं — कई दिनों का अभ्यास जो आपको ज़्यादा शांत, स्थिर और बेहतर आराम में छोड़ता है।",
       },
       advantage: {
         eyebrow: "वह हिस्सा जो कोई ऐप दोहरा नहीं सकता",
@@ -4078,8 +4141,8 @@ export const translations = {
             desc: "कोई नोटिफिकेशन नहीं, कोई इनबॉक्स नहीं, कोई \"बस एक चीज़ देख लूं\" नहीं। आपका नर्वस सिस्टम पूरी तरह शांत हो पाता है — अक्सर वर्षों में पहली बार।",
           },
           {
-            title: "सीधा ऊर्जा संचरण",
-            desc: "एक गुरु की रिकॉर्डिंग और उसी कमरे में बैठने में एक वास्तविक, महसूस होने वाला अंतर है। इसे डिजिटल नहीं किया जा सकता।",
+            title: "व्यक्तिगत मार्गदर्शन",
+            desc: "एक गुरु की रिकॉर्डिंग और उसी कमरे में बैठने में वास्तविक अंतर है — अभ्यास करते समय आपका आसन, सांस और गति ठीक की जाती है।",
           },
           {
             title: "छोटे, विशिष्ट समूह",
@@ -4094,23 +4157,23 @@ export const translations = {
       journey: {
         eyebrow: "काम खुद",
         title: "एक संरचित, बहु-दिवसीय विसर्जन",
-        desc: "हर रेजिडेंशियल रिट्रीट एक जानबूझकर बनाई गई यात्रा के रूप में खुलता है — पहले ग्राउंडिंग, फिर ऊर्जा सक्रियण, फिर गहन स्थिरता, फिर एकीकरण — ताकि बदलाव को वाकई बैठने का समय मिले।",
+        desc: "हर रेजिडेंशियल रिट्रीट एक जानबूझकर बनाई गई यात्रा के रूप में खुलता है — पहले ग्राउंडिंग, फिर श्वास-अभ्यास और क्रिया योग, फिर गहन स्थिरता, फिर एकीकरण — ताकि बदलाव को बैठने का समय मिले।",
         items: [
           {
             title: "ग्राउंडिंग और आगमन",
             desc: "सांस पुनर्संतुलन और नर्वस सिस्टम को शांत करना — गहरे काम की शुरुआत से पहले पूरी तरह उपस्थित होना।",
           },
           {
-            title: "क्रिया योग और प्राणिक सक्रियण",
+            title: "क्रिया योग और प्राणायाम",
             desc: "मूल तकनीक, संरचित, सुरक्षित क्रम में सिखाई गई, व्यक्तिगत रूप से सुधारी गई।",
           },
           {
-            title: "ऊर्जा और चक्र कार्य",
+            title: "चक्र ध्यान और श्वास-अभ्यास",
             desc: "सीधा, निर्देशित अभ्यास — किसी स्लाइड पर पढ़ा गया सिद्धांत नहीं।",
           },
           {
             title: "गहन स्थिरता और समाधि अभ्यास",
-            desc: "वह अवस्था जिसकी ओर रिट्रीट का बाकी हर हिस्सा चुपचाप बढ़ रहा था।",
+            desc: "लंबे मौन सत्र, जिनकी ओर रिट्रीट का बाकी हर हिस्सा बढ़ रहा था।",
           },
           {
             title: "एकीकरण और समापन",
@@ -4209,7 +4272,7 @@ export const translations = {
           "आप एक हाई-परफॉर्मर हैं जो चुपचाप बर्नआउट में हैं — कागज़ पर सफल, अंदर से थके हुए",
           "आप लगातार ओवरथिंक करते हैं — हालात ठीक होने से लूप रुकता नहीं",
           "आपने ऐप्स, किताबें, पॉडकास्ट आज़माए हैं — और अस्थायी राहत मिली, असली बदलाव कभी नहीं",
-          "आप एक असली आध्यात्मिक खोजी हैं — असली अभ्यास के लिए तैयार, और कंटेंट के लिए नहीं",
+          "आप एक सच्चे साधक हैं — असली अभ्यास के लिए तैयार, और कंटेंट के लिए नहीं",
           "आप रिट्रीट की पूरी अवधि के लिए पूरी तरह प्रतिबद्ध हो सकते हैं — यह तभी काम करता है जब आप वाकई निकलें",
         ],
         disclaimer: "अगर आप थोड़े योग के साथ एक आरामदायक छुट्टी ढूंढ रहे हैं, तो यह वह नहीं है। अगर आप एक गुरु की करीबी निगरानी में असली, संरचित आंतरिक काम के लिए तैयार हैं, तो आप सही जगह हैं।",
@@ -4220,16 +4283,16 @@ export const translations = {
         items: [
           {
             question: "क्या यह पूर्ण शुरुआती लोगों के लिए उपयुक्त है?",
-            answer: "हां। क्रिया योग, मेडिटेशन, या ऊर्जा कार्य का कोई पूर्व अनुभव आवश्यक नहीं। हर अभ्यास शुरुआत से सिखाया जाता है, सुरक्षित, संरचित क्रम में।",
+            answer: "हां। क्रिया योग या मेडिटेशन का कोई पूर्व अनुभव आवश्यक नहीं। हर अभ्यास शुरुआत से सिखाया जाता है, सुरक्षित, संरचित क्रम में।",
           },
           {
-            question: "क्या ऊर्जा कार्य — कुंडलिनी, समाधि — वाकई सुरक्षित है?",
+            question: "क्या गहरा ध्यान सुरक्षित है? अगर तीव्र भावनाएं उभरें तो?",
             answer:
-              "हर तकनीक चरण-दर-चरण सिखाई जाती है, सीधी व्यक्तिगत निगरानी में। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान या ऊर्जा-केंद्रित कार्य तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि डॉ. कपिल देव शर्मा उसके अनुसार गति समायोजित कर सकें। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
+              "हर तकनीक चरण-दर-चरण सिखाई जाती है, सीधी व्यक्तिगत निगरानी में। फिर भी, ये गहन अभ्यास हैं — कुछ लोगों के लिए, गहरा ध्यान तीव्र भावनात्मक अनुभव सामने ला सकता है। हम प्रतिभागियों से रिट्रीट से पहले किसी भी प्रासंगिक मानसिक स्वास्थ्य इतिहास को साझा करने का अनुरोध करते हैं, ताकि डॉ. कपिल देव शर्मा उसके अनुसार गति समायोजित कर सकें। यह रिट्रीट एक व्यक्तिगत और आध्यात्मिक अभ्यास है, लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं — यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, तो कृपया शामिल होने से पहले अपने चिकित्सक से सलाह लें।",
           },
           {
             question: "यह आपके 11-दिवसीय ऑनलाइन रिट्रीट से कैसे अलग है?",
-            answer: "ऑनलाइन रिट्रीट एक लाइव, निर्देशित यात्रा है जिसे आप घर से जुड़ते हैं। रेजिडेंशियल रिट्रीट में आपको शारीरिक रूप से यात्रा करनी और वहां ठहरना होता है — पूर्ण डिस्कनेक्ट, सीधा व्यक्तिगत ऊर्जा संचरण, और एक छोटा व्यक्तिगत समूह जो ऑनलाइन फॉर्मैट दोहरा नहीं सकता।",
+            answer: "ऑनलाइन रिट्रीट एक लाइव, निर्देशित यात्रा है जिसे आप घर से जुड़ते हैं। रेजिडेंशियल रिट्रीट में आपको शारीरिक रूप से यात्रा करनी और वहां ठहरना होता है — पूर्ण डिस्कनेक्ट, व्यक्तिगत मार्गदर्शन, और एक छोटा व्यक्तिगत समूह जो ऑनलाइन फॉर्मैट दोहरा नहीं सकता।",
           },
           {
             question: "कीमत में क्या शामिल है?",
@@ -4631,11 +4694,6 @@ export const translations = {
               "हर दिन में एक ट्रेनिंग वीडियो, एक एजुकेशनल वीडियो, गाइडेड मेडिटेशन, एक दैनिक गतिविधि, और PDF वर्कबुक सामग्री शामिल है। ₹999 प्लान में अतिरिक्त रूप से डॉ. कपिल के साथ 2 लाइव सेशंस शामिल हैं।",
           },
           {
-            question: "क्या लाइव सेशंस दोनों प्लान्स में शामिल हैं?",
-            answer:
-              "नहीं। लाइव सेशंस केवल ₹999 / 6-महीने प्लान के साथ शामिल हैं। ₹499 / 1-महीना प्लान पूरी तरह सेल्फ-पेस्ड है, इसमें कोई लाइव सेशन नहीं है।",
-          },
-          {
             question: "₹499 और ₹999 में क्या फर्क है?",
             answer:
               "दो चीज़ें: एक्सेस अवधि (₹499 के साथ 1 महीना बनाम ₹999 के साथ 6 महीने), और लाइव सेशंस — ₹999 प्लान में डॉ. कपिल के साथ 2 लाइव सेशंस शामिल हैं, जो ₹499 प्लान में नहीं हैं।",
@@ -4656,14 +4714,6 @@ export const translations = {
             question: "क्या यह कोर्स एंग्ज़ायटी या डिप्रेशन का इलाज है?",
             answer:
               "नहीं। यह एक शैक्षणिक, सेल्फ-अवेयरनेस-केंद्रित कोर्स है। यह लाइसेंस-प्राप्त थेरेपी या मनोरोग उपचार का विकल्प नहीं है। यदि आप वर्तमान में किसी मानसिक स्वास्थ्य स्थिति के लिए उपचार ले रहे हैं, या संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर या स्थानीय आपातकालीन सेवाओं से संपर्क करें।",
-          },
-          {
-            question: "क्या मैं खरीदने से पहले ओवरथिंकिंग टेस्ट ले सकता/सकती हूं?",
-            answer: "हां — ओवरथिंकिंग टेस्ट मुफ़्त है और किसी के लिए भी उपलब्ध है, चाहे आप कोर्स में नामांकन करें या नहीं।",
-          },
-          {
-            question: "खरीदने के बाद क्या होता है?",
-            answer: "[एक्सेस-डिलीवरी के विवरण पुष्टि होना बाकी — आपको Classplus प्लेटफ़ॉर्म के लिए एक्सेस निर्देश मिलेंगे, जहां यह कोर्स होस्ट है।]",
           },
         ],
       },

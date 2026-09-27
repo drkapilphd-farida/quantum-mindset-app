@@ -14,10 +14,14 @@ import { Eyebrow } from "../ui";
 // videos yet. Per "show fewer cards rather than reusing mismatched
 // ones," this renders just that one real quote and an honest note,
 // rather than a video grid with nothing real to put in it.
-export default function MentoringTestimonials(): React.JSX.Element {
+export default function MentoringTestimonials(): React.JSX.Element | null {
   const { t } = useLanguage();
   const section = t.mentoringLanding.testimonials;
   const featured = useProgramTestimonials("oneOnOneCoaching").find((item) => item.quote !== null);
+
+  // No verified 1-on-1 testimonial yet → hide the whole section rather than
+  // showing a "being added" placeholder.
+  if (featured === undefined) return null;
 
   return (
     <section className="border-b border-line px-6 py-24 sm:px-8">
@@ -39,9 +43,6 @@ export default function MentoringTestimonials(): React.JSX.Element {
           </div>
         )}
 
-        <p className="mx-auto mt-8 max-w-md text-center text-[12.5px] leading-relaxed text-ink-faint">
-          {section.comingSoonNote}
-        </p>
       </div>
     </section>
   );

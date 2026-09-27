@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
@@ -40,24 +39,6 @@ export default function QsrFounderVideo(): React.JSX.Element {
             {section.ctaLabel}
           </a>
 
-          {/* Live Session Proof Visual™ — additive only, same reasoning as
-              QsrHero.tsx: the founder photo/video slot to the right stays
-              exactly as-is (it's reserved for Dr. Kapil's own face, real
-              or eventually on video) — this is a supporting glimpse of
-              what a live masterclass session actually looks like.
-              `object-contain` inside an exact-aspect-ratio container
-              guarantees the full app UI is never cropped. */}
-          <div className="mt-8 w-full max-w-md overflow-hidden rounded-sm border border-line-strong bg-panel2 shadow-[0_12px_30px_rgba(34,31,29,0.1)] lg:max-w-xl">
-            <div className="relative aspect-[2442/1317] w-full">
-              <Image
-                src="/images/quantum-mind/18-live-masterclasses-mentorship.png"
-                alt="Inside a live Quantum Speed Reading masterclass session"
-                fill
-                sizes="(min-width: 1024px) 576px, (min-width: 448px) 448px, 90vw"
-                className="object-contain"
-              />
-            </div>
-          </div>
         </div>
 
         {/* Real per-language intro video — key={lang} forces a full

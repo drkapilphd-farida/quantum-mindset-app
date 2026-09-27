@@ -2,6 +2,7 @@
 
 import { MapPin } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { programs } from "@/config/site.config";
 import { Eyebrow } from "../ui";
 import { buildResidentialWhatsAppLink } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
@@ -13,7 +14,7 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 // specific date so Dr. Kapil's team knows which retreat the visitor
 // means without back-and-forth.
 export default function ResidentialRoadmap(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const residential = t.residentialLanding;
 
   return (
@@ -23,6 +24,13 @@ export default function ResidentialRoadmap(): React.JSX.Element {
           <Eyebrow color="text-gold">{residential.roadmap.eyebrow}</Eyebrow>
           <h2 className="mt-4 text-[28px] font-extrabold leading-tight sm:text-[34px]">{residential.roadmap.title}</h2>
           <p className="mt-3 text-[15.5px] text-ink-dim">{residential.roadmap.desc}</p>
+          {programs.residentialRetreat.durationDays !== null && (
+            <p className="mt-2 font-mono text-[13px] font-semibold uppercase tracking-[0.06em] text-gold">
+              {lang === "hi"
+                ? `हर रिट्रीट ${programs.residentialRetreat.durationDays} दिन की`
+                : `${programs.residentialRetreat.durationDays} days per retreat`}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">

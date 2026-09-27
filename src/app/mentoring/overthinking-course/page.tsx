@@ -18,6 +18,7 @@ import MindResetPricing from '@/components/mind-reset/MindResetPricing'
 import MindResetHowItWorks from '@/components/mind-reset/MindResetHowItWorks'
 import MindResetFaq from '@/components/mind-reset/MindResetFaq'
 import MindResetFinalCta from '@/components/mind-reset/MindResetFinalCta'
+import ProgramNextStep from '@/components/ProgramNextStep'
 import Footer from '@/components/Footer'
 import MindResetStickyBar from '@/components/mind-reset/MindResetStickyBar'
 import MindResetWhatsAppWidget from '@/components/mind-reset/MindResetWhatsAppWidget'
@@ -89,19 +90,28 @@ export default function OverthinkingMasteryCoursePage(): React.JSX.Element {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: courseSchema }} />
       <MindResetNav />
       <main>
+        {/* Structure (site-rebuild Phase 5): Problem → Who it's for → What
+            changes → How it works → What's included → Price & checkout →
+            Trainer → FAQ → Final CTA → next step. No testimonial section
+            until verified reviews exist (src/config/testimonials.ts). */}
         <MindResetHero />
         <MindResetProblem />
         <MindResetWhatIsOverthinking />
-        <MindResetAssessmentCta />
+        <MindResetWhoFor />
         <MindResetExperience />
         <MindResetJourney />
-        <MindResetWhoFor />
         <MindResetIncluded />
-        <MindResetGuide />
+        <MindResetAssessmentCta />
         <MindResetPricing />
         <MindResetHowItWorks />
+        <MindResetGuide />
         <MindResetFaq />
         <MindResetFinalCta />
+        <ProgramNextStep
+          program="oneOnOneCoaching"
+          en={{ title: "Need more personal help?", desc: "If you'd rather work one-to-one on your own situation, private coaching is the deeper option." }}
+          hi={{ title: "और व्यक्तिगत मदद चाहिए?", desc: "अगर आप अपनी स्थिति पर व्यक्तिगत रूप से काम करना चाहते हैं, तो निजी कोचिंग गहरा विकल्प है।" }}
+        />
       </main>
       <Footer />
       <MindResetStickyBar />

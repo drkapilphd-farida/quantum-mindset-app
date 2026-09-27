@@ -39,6 +39,8 @@ function RegistrationsClosedNotice(): React.JSX.Element {
 
 export function ExecutiveWorkshopPricing(): React.JSX.Element {
   const config = executiveBrainWorkshopConfig
+  const soldFraction = config.totalSeats > 0 ? (config.totalSeats - config.seatsRemaining) / config.totalSeats : 0
+  const showSeatsCounter = soldFraction >= config.showSeatsCounterFromSoldFraction
   const [registrationsClosed, setRegistrationsClosed] = useState(() => hasExecutiveWorkshopEventPassed())
 
   useEffect(() => {
@@ -65,9 +67,11 @@ export function ExecutiveWorkshopPricing(): React.JSX.Element {
           </div>
           {!registrationsClosed && (
             <div className="text-left sm:text-right">
-              <p className="text-[13.5px] font-medium text-slate-600">
-                {config.seatsRemaining} of {config.totalSeats} seats remaining
-              </p>
+              {showSeatsCounter && (
+                <p className="text-[13.5px] font-medium text-slate-600">
+                  {config.seatsRemaining} of {config.totalSeats} seats remaining
+                </p>
+              )}
               {config.earlyBirdDeadlineISO !== '' && <ExecutiveWorkshopCountdown deadlineIso={config.earlyBirdDeadlineISO} />}
             </div>
           )}

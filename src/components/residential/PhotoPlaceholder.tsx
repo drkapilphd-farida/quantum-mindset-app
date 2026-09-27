@@ -30,13 +30,16 @@ export default function PhotoPlaceholder({
   sizes = "100vw",
   priority = false,
   variant = "card",
-}: PhotoPlaceholderProps): React.JSX.Element {
+}: PhotoPlaceholderProps): React.JSX.Element | null {
   // The outer div carries the consumer's `className` verbatim — including,
   // for the hero, "absolute inset-0". An inner div always gets `relative`
   // instead of putting it on the same element as `className`: Tailwind's
   // fixed utility ordering makes `.relative` win over `.absolute` when
   // both land on one element regardless of source order, which silently
   // collapsed this layer to zero height before this split existed.
+  // No photo yet → render nothing (no labelled placeholder tiles on the live site).
+  if (src === undefined) return null;
+
   if (src !== undefined) {
     return (
       <div className={`overflow-hidden ${className}`}>
