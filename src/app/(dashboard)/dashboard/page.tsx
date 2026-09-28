@@ -1,5 +1,10 @@
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 import { getAppDomain } from '@/lib/domains/appDomain'
+import { appFeatures } from '@/config/site.config'
+import { createClient } from '@/lib/supabase/server'
+import { getOnboardingProfile } from '@/features/onboarding/queries/getOnboardingProfile'
+import type { LearningFocus } from '@/features/onboarding/onboardingOptions'
 import { HabitDashboard } from './HabitDashboard'
 import { QsrDashboard } from './QsrDashboard'
 
@@ -42,5 +47,24 @@ export default async function TransformationDashboard({ searchParams }: Transfor
   if (appDomain === 'habit') return <HabitDashboard />
 
   const params = await searchParams
-  return <QsrDashboard view={params.view === 'parent' ? 'parent' : 'student'} />
+  let view: 'student' | 'parent' | null = params.view === 'parent' ? 'parent' : params.view === 'student' ? 'student' : null
+  let learningFocus: LearningFocus | null = null
+
+  // Onboarding (Phase 8, Item 10): shown once — first login or, for
+  // existing users, their next dashboard visit. Parents land on the parent
+  // view unless they explicitly pick the student view.
+  if (appFeatures.onboarding) {
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (user) {
+      const onboarding = await getOnboardingProfile(user.id)
+      if (onboarding.hasProfile && !onboarding.seen) redirect('/welcome/about-you?next=/dashboard')
+      if (view === null && onboarding.role === 'parent') view = 'parent'
+      learningFocus = onboarding.focus
+    }
+  }
+
+  return <QsrDashboard view={view ?? 'student'} learningFocus={learningFocus} />
 }

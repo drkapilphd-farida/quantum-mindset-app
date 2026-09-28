@@ -16,7 +16,7 @@ export function DashboardViewToggle({ activeView }: DashboardViewToggleProps): R
   return (
     <div className="inline-flex items-center gap-0.5 rounded-full border border-border/60 bg-card/60 p-1 text-xs font-medium">
       <Link
-        href="/dashboard"
+        href="/dashboard?view=student"
         className={cn(
           'rounded-full px-3 py-1.5 transition-colors',
           activeView === 'student' ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',

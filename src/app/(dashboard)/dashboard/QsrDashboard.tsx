@@ -21,6 +21,9 @@ import { getFixationSessions } from '@/features/visual-intelligence/fixation/que
 import { getFixationStats } from '@/features/visual-intelligence/fixation/queries/getFixationStats'
 import { ParentFeedbackPrompt } from '@/features/school-dashboard/components/ParentFeedbackPrompt'
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
+import { GoalRecommendationsCard } from '@/features/onboarding/components/GoalRecommendationsCard'
+import { programFirstFor } from '@/features/onboarding/goalRecommendations'
+import type { LearningFocus } from '@/features/onboarding/onboardingOptions'
 import { programs } from '@/config/site.config'
 
 const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((ex) => ex.exerciseId)
@@ -36,6 +39,8 @@ function computeMindScore(completionPercent: number, currentStreak: number): num
 
 type QsrDashboardProps = {
   view: 'student' | 'parent'
+  /** Onboarding goal (Phase 8) — null when not answered or the feature is off. */
+  learningFocus?: LearningFocus | null
 }
 
 // Domain Split™ — app.mindurmind.org.in's dashboard: the Eye Foundation
@@ -49,7 +54,7 @@ type QsrDashboardProps = {
 // already embedded as a tab on /masterclasses; branching before the
 // student-only Promise.all below skips those queries entirely on the
 // parent view instead of fetching and discarding them.
-export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.JSX.Element> {
+export async function QsrDashboard({ view, learningFocus = null }: QsrDashboardProps): Promise<React.JSX.Element> {
   const supabase = await createClient()
   const {
     data: { user },
@@ -99,6 +104,21 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
   const studentName = profile?.fullName ?? 'there'
   const studentFirstName = studentName.trim().split(' ').at(0) ?? 'there'
 
+  const programFirst = programFirstFor(learningFocus)
+  // Onboarding goal (Phase 8): for exam / memory / reading goals the
+  // 30-day program comes before the document tools.
+  const programsSection = (
+    <section aria-labelledby="programs-heading" className="space-y-4 sm:space-y-6">
+      <DashboardSectionHeader
+        id="programs-heading"
+        eyebrow="Tier 3 · Flagship Program"
+        title={programs.sharpBrain.name}
+        description="A flagship, structured 30-day mastery path with live mentorship."
+      />
+      <ThirtyDayMasterclassHeroCard />
+    </section>
+  )
+
   return (
     <div className="glass-premium relative -m-6 space-y-4 p-6 sm:-m-8 sm:space-y-6 sm:p-8">
       {/* Dashboard Glass™ ambient background — fixed so it stays full-
@@ -136,6 +156,10 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
         </div>
       </div>
 
+      {learningFocus !== null && <GoalRecommendationsCard focus={learningFocus} />}
+
+      {programFirst && programsSection}
+
       {/* 3-Tier Value Ladder™ — Tier 1: My Document Tools. AI Document
           Transformer™ is the anchor target for Choose Your Path™'s
           "Upload & Learn™" card (/dashboard#upload-document), the direct,
@@ -147,6 +171,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           (AIDocumentTransformerWidget) shows the real ₹9,999 paywall
           modal for a non-pro user — no separate pricing chip needed here
           anymore. */}
+
       <section aria-labelledby="document-tools-heading">
         <DashboardSectionHeader
           id="document-tools-heading"
@@ -163,15 +188,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           hosted the 21-Day Habit Builder card (Tier 2). That card now
           lives only on HabitDashboard.tsx, so this section is Tier 3
           only — copy updated to match, not just the card removed. */}
-      <section aria-labelledby="programs-heading" className="space-y-4 sm:space-y-6">
-        <DashboardSectionHeader
-          id="programs-heading"
-          eyebrow="Tier 3 · Flagship Program"
-          title={programs.sharpBrain.name}
-          description="A flagship, structured 30-day mastery path with live mentorship."
-        />
-        <ThirtyDayMasterclassHeroCard />
-      </section>
+      {!programFirst && programsSection}
 
       {/* Mind Score™ */}
       <MindScoreCard mindScore={mindScore} readingScore={completionPercent} memoryScore={memoryScore} focusScore={focusScore} />

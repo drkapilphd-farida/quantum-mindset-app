@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { Separator } from '@/components/ui/separator'
+import { appFeatures } from '@/config/site.config'
+import { AboutYouForm } from '@/features/onboarding/components/AboutYouForm'
+import { ChildDataDeletionRequest } from '@/features/onboarding/components/ChildDataDeletionRequest'
+import { getOnboardingProfile } from '@/features/onboarding/queries/getOnboardingProfile'
 import { UpdateProfileForm } from '@/features/user/components/UpdateProfileForm'
 import { UpdatePasswordForm } from '@/features/user/components/UpdatePasswordForm'
 import { SoundPreferenceToggle } from '@/features/user/components/SoundPreferenceToggle'
@@ -28,6 +32,7 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
 
   const fullName = profile?.full_name ?? ''
   const retakeableAssessments = await listRetakeableAssessments(user.id)
+  const onboarding = appFeatures.onboarding ? await getOnboardingProfile(user.id) : null
 
   return (
     <div className="space-y-6">
@@ -50,6 +55,21 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
           </div>
           <UpdateProfileForm defaultFullName={fullName} />
         </section>
+
+        {onboarding !== null && (
+          <>
+            <Separator />
+            <section id="about-you" className="scroll-mt-20 space-y-4">
+              <AboutYouForm mode="settings" initialRole={onboarding.role} initialFocus={onboarding.focus} />
+            </section>
+            {onboarding.role === 'parent' && (
+              <>
+                <Separator />
+                <ChildDataDeletionRequest />
+              </>
+            )}
+          </>
+        )}
 
         <Separator />
 

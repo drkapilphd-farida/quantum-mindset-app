@@ -438,6 +438,30 @@ export const analytics: { readonly ga4MeasurementId: string; readonly metaPixelI
   metaPixelId: '',
 }
 
+/**
+ * Sharp Brain app features (Phase 8). Each is off by default and switched
+ * on one at a time once its item is reviewed and deployed.
+ */
+export const appFeatures: {
+  readonly onboarding: boolean
+  readonly dayThirtyComparison: boolean
+  readonly mobileDiscipline: boolean
+  readonly parentWeeklySummary: boolean
+  readonly sharpBrainCertificate: boolean
+} = {
+  onboarding: false,
+  dayThirtyComparison: false,
+  mobileDiscipline: false,
+  parentWeeklySummary: false,
+  sharpBrainCertificate: false,
+}
+
+/** Sharp Brain 30-Day Program rules used by the app. */
+export const sharpBrainProgram = {
+  /** Certificate eligibility: at least this many practice days out of 30, plus the Day 30 re-test. */
+  certificateMinPracticeDays: 20,
+} as const
+
 /** The first checkout/enquiry link of a program — throws at module load if the registry entry has none. */
 export function primaryCheckoutHref(id: ProgramId): string {
   const first = programs[id].checkout[0]

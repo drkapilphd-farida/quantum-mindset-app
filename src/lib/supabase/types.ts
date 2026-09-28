@@ -1405,6 +1405,36 @@ export type Database = {
         }
         Relationships: []
       }
+      guardian_consents: {
+        Row: {
+          accepted_at: string
+          child_user_id: string | null
+          context: string
+          guardian_user_id: string
+          id: string
+          lang: string
+          wording_version: string
+        }
+        Insert: {
+          accepted_at?: string
+          child_user_id?: string | null
+          context: string
+          guardian_user_id: string
+          id?: string
+          lang: string
+          wording_version: string
+        }
+        Update: {
+          accepted_at?: string
+          child_user_id?: string | null
+          context?: string
+          guardian_user_id?: string
+          id?: string
+          lang?: string
+          wording_version?: string
+        }
+        Relationships: []
+      }
       habit_builder_payments: {
         Row: {
           amount_cents: number | null
@@ -1851,6 +1881,9 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          learner_role: string | null
+          learning_focus: string | null
+          onboarding_seen_at: string | null
           phone: string | null
           selected_reading_goal: string | null
           updated_at: string
@@ -1861,6 +1894,9 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id: string
+          learner_role?: string | null
+          learning_focus?: string | null
+          onboarding_seen_at?: string | null
           phone?: string | null
           selected_reading_goal?: string | null
           updated_at?: string
@@ -1871,6 +1907,9 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          learner_role?: string | null
+          learning_focus?: string | null
+          onboarding_seen_at?: string | null
           phone?: string | null
           selected_reading_goal?: string | null
           updated_at?: string

@@ -56,6 +56,11 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
             Usage data from the {brand.appName} — reading speed (WPM), comprehension scores, and daily practice
             activity across the {programs.sharpBrain.name} curriculum and other exercises.
           </li>
+          <li>
+            In the {brand.appName}, the role (parent, student or working professional) and main goal (focus, memory,
+            exam preparation or reading) you choose when you first sign in — used only to put the most relevant
+            practice first on your dashboard. You can change or skip these at any time in Settings.
+          </li>
         </ul>
       </section>
 
@@ -98,6 +103,18 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
           You can block or delete cookies in your browser settings, opt out of Google Analytics with Google&rsquo;s
           browser add-on, and manage ad personalisation in your Facebook or Instagram ad preferences. The site works
           without these cookies.
+        </p>
+      </section>
+
+      <section>
+        <h2 className={legalStyles.h2}>Children</h2>
+        <p className={legalStyles.p}>
+          Many learners in our programs are children. When a parent or legal guardian sets up the {brand.appName} for a
+          child, we ask them to confirm their consent, and we store that confirmation with its date and the wording
+          shown. We collect only what the practice features need — no public profiles — and anything shared from the
+          app (for example a progress card or a WhatsApp summary) shows the child&rsquo;s first name only, never contact
+          details. A parent or guardian can ask us to delete their child&rsquo;s practice and assessment data at any time
+          from Settings in the app, by email to info@mindurmind.org.in, or on WhatsApp.
         </p>
       </section>
 
