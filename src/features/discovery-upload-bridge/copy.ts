@@ -25,4 +25,4 @@ export const WHAT_HAPPENS_NEXT_CARDS = [
 
 // One unified line, never three separate product badges — "Present them
 // as one unified AI Learning System."
-export const POWERED_BY_LINE = 'Quantum Speed Reading™ · Memory Intelligence™ · Focus Intelligence™'
+export const POWERED_BY_LINE = 'Sharp Brain™ · Memory Intelligence™ · Focus Intelligence™'

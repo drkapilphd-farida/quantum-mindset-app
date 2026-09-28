@@ -63,10 +63,10 @@ const WORD_CHUNKS: readonly string[] = [
   'focus anchors',
   'focus goes deeper',
   'attention stays sharp',
-  'quantum focus builds',
+  'deep focus builds',
   'focus holds steady',
   'your focus keeps deepening',
-  'quantum stillness meets clarity',
+  'deep stillness meets clarity',
   'focus becomes second nature',
   // Speed Reading
   'read faster',
@@ -560,7 +560,7 @@ export function QuantumTachistoscopeMultiWordBlast({ onComplete, onExit }: Visua
         />
       </div>
 
-      <p className="text-xs font-semibold tracking-widest text-primary uppercase">Quantum Tachistoscope Multi-Word Blast</p>
+      <p className="text-xs font-semibold tracking-widest text-primary uppercase">Tachistoscope Multi-Word Blast</p>
 
       {phase === 'intro' && (
         <motion.div

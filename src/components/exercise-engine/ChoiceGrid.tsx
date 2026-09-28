@@ -8,7 +8,7 @@
 import { useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { FitText } from '@/components/typography/FitText'
-import { playCorrectChime, playGentleMissChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playCorrectChime, playGentleMissChime } from '@/app/unified-session-preview/components/soundEngine'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 
 type ChoiceGridProps = {

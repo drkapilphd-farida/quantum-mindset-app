@@ -10,7 +10,7 @@ type CrossLateralTapExperienceProps = {
 }
 
 export function CrossLateralTapExperience({ onComplete, onExit }: CrossLateralTapExperienceProps = {}): React.JSX.Element {
-  const curriculumSession = useCurriculumSessionCompletion('cross-lateral-tap', '/labs/quantum-speed-reading')
+  const curriculumSession = useCurriculumSessionCompletion('cross-lateral-tap', '/labs/sharp-brain')
   return <BrainGymDrillExperience
       config={CROSS_LATERAL_TAP_CONFIG}
       {...(curriculumSession.isActiveStep ? { onComplete: curriculumSession.advance } : onComplete !== undefined ? { onComplete } : {})}

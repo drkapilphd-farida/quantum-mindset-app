@@ -11,7 +11,7 @@ export type NavLink = { label: string; href: string; external?: boolean }
 export type NavGroup = { heading: string; links: NavLink[] }
 
 export const FREE_TEST_LINKS = {
-  speedTest: '/programs/quantum-speed-reading/speed-test',
+  speedTest: '/programs/sharp-brain/speed-test',
   overthinkingTest: '/mind-assessment',
 } as const
 
@@ -30,7 +30,7 @@ export function programGroups(lang: Lang): NavGroup[] {
     {
       heading: hi ? 'ब्रेन' : 'Brain',
       links: [
-        { label: n('qsr', lang), href: programs.qsr.url },
+        { label: 'Sharp Brain™', href: programs.sharpBrain.url },
         { label: n('executiveWorkshop', lang), href: programs.executiveWorkshop.url },
       ],
     },

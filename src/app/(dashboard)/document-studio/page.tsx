@@ -41,7 +41,7 @@ export default async function DocumentStudioPage(): Promise<React.JSX.Element> {
         <p className={TYPOGRAPHY.label}>Pillar 3</p>
         <h1 className={cn(TYPOGRAPHY.h1, 'mt-1')}>📚 Document Mastery Studio</h1>
         <p className={cn(TYPOGRAPHY.body, 'mt-2 text-muted-foreground')}>
-          Upload any PDF, textbook, or research paper — get Quantum Speed Reading drills, Smart Summaries, and Neural Map Notes. Your past uploads and study projects live here too.
+          Upload any PDF, textbook, or research paper — get Smart Reading drills, Smart Summaries, and Neural Map Notes. Your past uploads and study projects live here too.
         </p>
       </div>
 

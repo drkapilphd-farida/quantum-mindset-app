@@ -39,7 +39,7 @@ export function QuantumJourneyPhraseStage({ projectId, phraseAssets, onComplete,
     <PhraseReadingExperience
       initialSeed={initialSeed}
       assetPool={clusters}
-      exitHref={`/preview/learning-projects/${projectId}/quantum-journey`}
+      exitHref={`/preview/learning-projects/${projectId}/learning-journey`}
       onComplete={onComplete}
     />
   )

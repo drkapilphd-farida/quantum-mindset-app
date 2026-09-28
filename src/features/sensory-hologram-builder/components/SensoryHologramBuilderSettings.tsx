@@ -52,7 +52,7 @@ export function SensoryHologramBuilderSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sensory Hologram Builder™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sensory Imagery Builder</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           A guided, voice-narrated journey — grounding, then sight, touch, and scent — that builds a vivid mental
           hologram of a life goal or sensory anchor you choose. About 3 to 4 minutes.

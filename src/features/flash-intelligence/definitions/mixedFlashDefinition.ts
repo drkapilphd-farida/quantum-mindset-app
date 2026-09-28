@@ -32,8 +32,8 @@ export const MIXED_FLASH_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/mixed-flash',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/mixed-flash',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.mixed_flash.title',

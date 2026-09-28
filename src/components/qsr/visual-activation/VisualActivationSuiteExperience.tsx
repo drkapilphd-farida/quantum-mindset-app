@@ -17,7 +17,7 @@ import { ThetaBreathingAnchor } from './ThetaBreathingAnchor'
 import { TratakAfterimageStretches } from './TratakAfterimageStretches'
 import { VISUAL_ACTIVATION_SUITE } from './visualActivationSuite'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 
 type SuitePhase =
   | 'theta-breathing-anchor'

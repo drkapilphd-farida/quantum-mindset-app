@@ -29,7 +29,7 @@ export function FluidEnergyBalancerSettings({ onStart }: FluidEnergyBalancerSett
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Fluid Energy Balancer™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Calm Breath Balance</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Two opposing energies — heavy Earth &amp; Gold, light Air &amp; Water — pull against each other. Hold{' '}
           <span className="font-semibold text-foreground">Ground It</span> or{' '}

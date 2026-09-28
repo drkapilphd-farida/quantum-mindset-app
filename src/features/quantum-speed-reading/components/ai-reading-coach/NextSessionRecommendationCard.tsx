@@ -18,7 +18,7 @@ export function NextSessionRecommendationCard({ recommendation }: NextSessionRec
       <p className="mt-1 text-sm text-muted-foreground">{recommendation.passage.title}</p>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{recommendation.reason}</p>
       <Button asChild size="sm" className="mt-4 gap-2 rounded-full">
-        <Link href={`/labs/quantum-speed-reading/start/prepare?passage=${recommendation.passage.id}`}>
+        <Link href={`/labs/sharp-brain/start/prepare?passage=${recommendation.passage.id}`}>
           Start This Passage
           <ArrowRight className="size-3.5" />
         </Link>

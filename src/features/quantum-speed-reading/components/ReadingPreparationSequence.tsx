@@ -45,7 +45,7 @@ function PreparationStepRunner({ exerciseId, Canvas, onStepComplete }: Preparati
   const handleExit = useCallback(
     (durationMs: number) => {
       void recordExit(durationMs).then(() => {
-        router.push('/labs/quantum-speed-reading')
+        router.push('/labs/sharp-brain')
       })
     },
     [recordExit, router],

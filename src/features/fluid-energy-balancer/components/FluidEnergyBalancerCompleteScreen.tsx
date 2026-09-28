@@ -28,7 +28,7 @@ export function FluidEnergyBalancerCompleteScreen({
   bestScorePercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: FluidEnergyBalancerCompleteScreenProps): React.JSX.Element {
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">

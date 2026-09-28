@@ -1,0 +1,12 @@
+import type { Metadata } from 'next'
+import { PeripheralExpandingCircleExperience } from '@/features/brain-gym/components/PeripheralExpandingCircleExperience'
+
+export const metadata: Metadata = {
+  title: 'Peripheral Expanding Circle™ — Sharp Brain Lab',
+  description: 'Catch a dot flashing in your peripheral vision without moving your eyes from center.',
+  robots: { index: false, follow: false },
+}
+
+export default function PeripheralExpandingCirclePage(): React.JSX.Element {
+  return <PeripheralExpandingCircleExperience />
+}

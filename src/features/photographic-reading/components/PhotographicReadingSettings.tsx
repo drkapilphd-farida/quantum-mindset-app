@@ -39,10 +39,10 @@ export function PhotographicReadingSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Photographic Reading™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Visual Memory Reading</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Meaningful word clusters flash across shifting corners of the screen — training your eyes to capture layout
-          non-linearly, the foundation of photographic memory. 3 quick questions check what stuck.
+          non-linearly, the foundation of visual memory. 3 quick questions check what stuck.
         </p>
         {/* Deliberately rendered as null on both the server and the
             client's first paint (only ever set from a useEffect in the

@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Flame } from 'lucide-react'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
-import { playRewardChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playRewardChime } from '@/app/unified-session-preview/components/soundEngine'
 
 type JourneyMilestoneCelebrationProps = {
   // An exact-match 3/7/14/21-day streak (getMilestoneHitExactly's own

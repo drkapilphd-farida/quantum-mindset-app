@@ -33,7 +33,7 @@ import { ReadingSessionComplete } from './ReadingSessionComplete'
 import { ReadingInsightCallout } from '@/components/learning/reading/ReadingInsightCallout'
 import { Button } from '@/components/ui/button'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const TIMER_TICK_MS = 250
 const LIGHT_THEMES = READING_THEMES.filter((theme) => theme !== 'dark') as readonly Exclude<ReadingPreferences['theme'], 'dark'>[]
 
@@ -446,7 +446,7 @@ export function ReadingExperience({ passage, mode }: ReadingExperienceProps): Re
         estimatedWpm={liveWpm}
         wordsRead={passage.wordCount}
         labHref={LAB_HREF}
-        continueHref={`/labs/quantum-speed-reading/start/read/quiz?${modeQuery}passage=${passage.id}&readingTimeMs=${elapsedMs}&focusMode=${preferences.focusMode}`}
+        continueHref={`/labs/sharp-brain/start/read/quiz?${modeQuery}passage=${passage.id}&readingTimeMs=${elapsedMs}&focusMode=${preferences.focusMode}`}
         confidenceScore={readingIntelligenceScore}
         recommendationMessage={recommendation}
       />
@@ -505,7 +505,7 @@ export function ReadingExperience({ passage, mode }: ReadingExperienceProps): Re
         ref={scrollRef}
         onScroll={handleScroll}
         className="h-[100dvh] overflow-y-auto pt-20 pb-28 scroll-smooth"
-        aria-label="Quantum Speed Reading passage"
+        aria-label="Smart Reading passage"
       >
         <ReadingPassageView
           title={passage.title}

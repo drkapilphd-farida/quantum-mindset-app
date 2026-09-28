@@ -26,7 +26,7 @@ type BrainGymCircuitExperienceProps = {
   onComplete?: () => void
   // 30-Day Curriculum In-Page Master Player™ — additive, optional. When
   // supplied, replaces the intro screen's own previously-hardcoded
-  // `/labs/quantum-speed-reading` exit link and gets forwarded to each
+  // `/labs/sharp-brain` exit link and gets forwarded to each
   // segment's own BrainGymDrillExperience, so a mid-drill exit never
   // dumps to the lab root while this is embedded in the wizard.
   onExit?: () => void
@@ -43,7 +43,7 @@ type BrainGymCircuitExperienceProps = {
 // only ever composes them via BrainGymDrillExperience's existing,
 // unmodified props.
 export function BrainGymCircuitExperience({ onComplete, onExit }: BrainGymCircuitExperienceProps = {}): React.JSX.Element {
-  const curriculumSession = useCurriculumSessionCompletion('brain-gym-circuit', '/labs/quantum-speed-reading')
+  const curriculumSession = useCurriculumSessionCompletion('brain-gym-circuit', '/labs/sharp-brain')
   const [hasStarted, setHasStarted] = useState(false)
   const [segmentIndex, setSegmentIndex] = useState(0)
 

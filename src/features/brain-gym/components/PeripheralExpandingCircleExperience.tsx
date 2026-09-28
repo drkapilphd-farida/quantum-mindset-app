@@ -10,7 +10,7 @@ type PeripheralExpandingCircleExperienceProps = {
 }
 
 export function PeripheralExpandingCircleExperience({ onComplete, onExit }: PeripheralExpandingCircleExperienceProps = {}): React.JSX.Element {
-  const curriculumSession = useCurriculumSessionCompletion('peripheral-expanding-circle', '/labs/quantum-speed-reading')
+  const curriculumSession = useCurriculumSessionCompletion('peripheral-expanding-circle', '/labs/sharp-brain')
   return <BrainGymDrillExperience
       config={PERIPHERAL_EXPANDING_CIRCLE_CONFIG}
       {...(curriculumSession.isActiveStep ? { onComplete: curriculumSession.advance } : onComplete !== undefined ? { onComplete } : {})}

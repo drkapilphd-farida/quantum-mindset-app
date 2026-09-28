@@ -15,7 +15,7 @@ export const CROSS_LATERAL_TAP_CONFIG: BrainGymDrillConfig = {
   stimulusDurationMs: 0,
   storageKey: 'qsr-cross-lateral-tap-best',
   completeHeading: 'Wired Up',
-  completeSubline: 'Left and right brain, working together.',
+  completeSubline: 'Both sides of the body, working together.',
   buildRound: () => {
     const shown: 'left' | 'right' = Math.random() < 0.5 ? 'left' : 'right'
     const correctOptionId: 'left' | 'right' = shown === 'left' ? 'right' : 'left'

@@ -7,13 +7,13 @@ import { motion } from 'framer-motion'
 import { Flame, TrendingUp, Award } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
-import { playCertificateFanfare } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playCertificateFanfare } from '@/app/unified-session-preview/components/soundEngine'
 import { ConfettiBurst } from './ConfettiBurst'
 import { AppTwoFinaleUpsellCta } from './AppTwoFinaleUpsellCta'
 import { generateJourneyCompletionSummary } from '../actions/generateJourneyCompletionSummary'
 import { programs } from '@/config/site.config'
 
-const CERTIFICATE_HREF = '/labs/quantum-speed-reading/journey/certificate'
+const CERTIFICATE_HREF = '/labs/sharp-brain/journey/certificate'
 
 type GrandCelebrationScreenProps = {
   studentFirstName: string

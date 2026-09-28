@@ -14,7 +14,7 @@ function minPrice(id: keyof typeof programs): number | null {
   return amounts.length === 0 ? null : Math.min(...amounts)
 }
 
-const qsrFrom = minPrice('qsr')
+const qsrFrom = minPrice('sharpBrain')
 const execFrom = minPrice('executiveWorkshop')
 const resetFrom = minPrice('overthinkingReset')
 const residentialFrom = minPrice('residentialRetreat')
@@ -40,7 +40,7 @@ export type HomeCopy = {
   hero: { h1: string; sub: string; trust: string; ctaPrimary: string; ctaSecondary: string; photoAlt: string }
   problems: { eyebrow: string; title: string; cards: ProblemCard[] }
   startFree: { eyebrow: string; title: string; items: { title: string; desc: string; href: string; cta: string }[] }
-  proof: { eyebrow: string; title: string; desc: string; tabs: { learning: string; meditation: string }; playlistCta: string }
+  proof: { eyebrow: string; title: string; desc: string; tabs: { learning: string; meditation: string }; playlistCta: string; learningNote: string }
   how: { eyebrow: string; title: string; steps: { title: string; desc: string }[]; eegLine: string }
   about: { eyebrow: string; readStory: string }
   upcoming: { eyebrow: string; title: string; from: string; cta: string }
@@ -64,12 +64,12 @@ const en: HomeCopy = {
       {
         id: 'learning',
         pillar: 'Brain',
-        pain: '“I read and study for hours but can’t remember.”',
-        audience: 'For students, exam aspirants and professionals',
-        programs: [{ name: programs.qsr.name, href: programs.qsr.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} one-time` }],
-        cta: { label: 'See the 30-day program', href: programs.qsr.url },
-        extras: [{ label: 'For my child →', href: `${programs.qsr.url}#every-age` }],
-        note: 'Prefer in person? Offline workshops with a live EEG brain-state demo in 6 cities.',
+        pain: '“I study for hours but can’t remember.” / “My child is lost in the phone.”',
+        audience: 'For students, exam aspirants, professionals — and parents of children aged about 10–17',
+        programs: [{ name: programs.sharpBrain.name, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} one-time` }],
+        cta: { label: 'See Sharp Brain™', href: programs.sharpBrain.url },
+        extras: [{ label: 'For my child →', href: `${programs.sharpBrain.url}#parents` }],
+        note: 'Focus · Memory · Smart Reading · Mobile Discipline — measured from your own Day 1 to Day 30.',
       },
       {
         id: 'work',
@@ -126,7 +126,7 @@ const en: HomeCopy = {
     eyebrow: 'Start free',
     title: 'Not sure yet? Start with a free step.',
     items: [
-      { title: 'Reading Speed Test', desc: '2 minutes · your real reading speed and comprehension', href: '/programs/quantum-speed-reading/speed-test', cta: 'Take the test' },
+      { title: 'Reading Speed Test', desc: '2 minutes · your real reading speed and comprehension', href: '/programs/sharp-brain/speed-test', cta: 'Take the test' },
       { title: 'Overthinking Test', desc: '2 minutes · a self-awareness check, not a diagnosis', href: '/mind-assessment', cta: 'Take the test' },
       { title: programs.focusStarter.name, desc: 'About 10 minutes a day · free for 7 days', href: programs.focusStarter.url, cta: 'Start free' },
     ],
@@ -137,6 +137,7 @@ const en: HomeCopy = {
     desc: 'Unscripted video reviews from our YouTube channel.',
     tabs: { learning: 'Learning', meditation: 'Meditation' },
     playlistCta: 'See all video reviews on YouTube',
+    learningNote: 'From earlier batches (the program was then called Quantum Speed Reading)',
   },
   how: {
     eyebrow: 'How we work',
@@ -163,7 +164,7 @@ const en: HomeCopy = {
     items: [
       {
         question: 'Which program is right for me?',
-        answer: `Start with the problem you want to solve. Reading and remembering → ${programs.qsr.name}. Overthinking and stress → the ${programs.overthinkingReset.name}, or ${programs.oneOnOneCoaching.name} for personal help. Calm focus at work → the ${programs.executiveWorkshop.name}. Deeper meditation → the retreats. Not sure? Take a free test or message us on WhatsApp.`,
+        answer: `Start with the problem you want to solve. Reading and remembering → ${programs.sharpBrain.name}. Overthinking and stress → the ${programs.overthinkingReset.name}, or ${programs.oneOnOneCoaching.name} for personal help. Calm focus at work → the ${programs.executiveWorkshop.name}. Deeper meditation → the retreats. Not sure? Take a free test or message us on WhatsApp.`,
       },
       {
         question: 'Is this science-based or spiritual?',
@@ -172,7 +173,7 @@ const en: HomeCopy = {
       },
       {
         question: 'Online or offline?',
-        answer: `Most programs run online and live. In-person options: offline Quantum Speed Reading workshops, the ${programs.executiveWorkshop.name} in Mumbai, and residential retreats in Lonavala and Rishikesh.`,
+        answer: `Most programs run online and live. In-person options: offline Sharp Brain Workshops, the ${programs.executiveWorkshop.name} in Mumbai, and residential retreats in Lonavala and Rishikesh.`,
       },
       {
         question: 'Hindi or English?',
@@ -180,7 +181,7 @@ const en: HomeCopy = {
       },
       {
         question: 'What about refunds?',
-        answer: `Each program’s terms are on our Refund & Cancellation Policy page. ${programs.qsr.name} also carries a results guarantee: ${qsrGuarantee.en.statement}`,
+        answer: `Each program’s terms are on our Refund & Cancellation Policy page. ${programs.sharpBrain.name} also carries a results guarantee: ${qsrGuarantee.en.statement}`,
       },
       {
         question: 'How do I contact you?',
@@ -206,12 +207,12 @@ const hi: HomeCopy = {
       {
         id: 'learning',
         pillar: 'ब्रेन',
-        pain: '“मैं घंटों पढ़ता हूं, पर याद नहीं रहता।”',
-        audience: 'विद्यार्थियों, परीक्षा उम्मीदवारों और पेशेवरों के लिए',
-        programs: [{ name: programs.qsr.nameHi, href: programs.qsr.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} एकमुश्त` }],
-        cta: { label: '30-दिवसीय प्रोग्राम देखें', href: programs.qsr.url },
-        extras: [{ label: 'मेरे बच्चे के लिए →', href: `${programs.qsr.url}#every-age` }],
-        note: 'व्यक्तिगत रूप से सीखना पसंद है? 6 शहरों में लाइव EEG ब्रेन-स्टेट डेमो के साथ ऑफलाइन वर्कशॉप।',
+        pain: '“घंटों पढ़ता हूं, पर याद नहीं रहता।” / “मेरा बच्चा फ़ोन में खोया रहता है।”',
+        audience: 'विद्यार्थियों, परीक्षा उम्मीदवारों, पेशेवरों — और लगभग 10–17 साल के बच्चों के अभिभावकों के लिए',
+        programs: [{ name: programs.sharpBrain.nameHi, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} एकमुश्त` }],
+        cta: { label: 'Sharp Brain™ देखें', href: programs.sharpBrain.url },
+        extras: [{ label: 'मेरे बच्चे के लिए →', href: `${programs.sharpBrain.url}#parents` }],
+        note: 'Focus · Memory · Smart Reading · Mobile Discipline — Day 1 से Day 30 तक नापा हुआ सुधार।',
       },
       {
         id: 'work',
@@ -268,7 +269,7 @@ const hi: HomeCopy = {
     eyebrow: 'फ्री में शुरू करें',
     title: 'अभी तय नहीं? एक फ्री कदम से शुरू करें।',
     items: [
-      { title: 'रीडिंग स्पीड टेस्ट', desc: '2 मिनट · आपकी असली रीडिंग स्पीड और समझ', href: '/programs/quantum-speed-reading/speed-test', cta: 'टेस्ट दें' },
+      { title: 'रीडिंग स्पीड टेस्ट', desc: '2 मिनट · आपकी असली रीडिंग स्पीड और समझ', href: '/programs/sharp-brain/speed-test', cta: 'टेस्ट दें' },
       { title: 'ओवरथिंकिंग टेस्ट', desc: '2 मिनट · एक सेल्फ-अवेयरनेस चेक, निदान नहीं', href: '/mind-assessment', cta: 'टेस्ट दें' },
       { title: programs.focusStarter.nameHi, desc: 'रोज़ लगभग 10 मिनट · 7 दिन फ्री', href: programs.focusStarter.url, cta: 'फ्री शुरू करें' },
     ],
@@ -279,6 +280,7 @@ const hi: HomeCopy = {
     desc: 'हमारे YouTube चैनल से बिना स्क्रिप्ट के वीडियो रिव्यूज़।',
     tabs: { learning: 'सीखना', meditation: 'मेडिटेशन' },
     playlistCta: 'YouTube पर सभी वीडियो रिव्यूज़ देखें',
+    learningNote: 'पहले के बैच से (तब इस प्रोग्राम का नाम Quantum Speed Reading था)',
   },
   how: {
     eyebrow: 'हम कैसे काम करते हैं',
@@ -305,7 +307,7 @@ const hi: HomeCopy = {
     items: [
       {
         question: 'मेरे लिए कौन सा प्रोग्राम सही है?',
-        answer: `उस समस्या से शुरू करें जिसे आप हल करना चाहते हैं। पढ़ना और याद रखना → ${programs.qsr.nameHi}। ओवरथिंकिंग और तनाव → ${programs.overthinkingReset.nameHi}, या व्यक्तिगत मदद के लिए ${programs.oneOnOneCoaching.nameHi}। काम पर शांत फोकस → ${programs.executiveWorkshop.nameHi}। गहरा ध्यान → रिट्रीट्स। तय नहीं? एक फ्री टेस्ट दें या हमें WhatsApp पर संदेश भेजें।`,
+        answer: `उस समस्या से शुरू करें जिसे आप हल करना चाहते हैं। पढ़ना और याद रखना → ${programs.sharpBrain.nameHi}। ओवरथिंकिंग और तनाव → ${programs.overthinkingReset.nameHi}, या व्यक्तिगत मदद के लिए ${programs.oneOnOneCoaching.nameHi}। काम पर शांत फोकस → ${programs.executiveWorkshop.nameHi}। गहरा ध्यान → रिट्रीट्स। तय नहीं? एक फ्री टेस्ट दें या हमें WhatsApp पर संदेश भेजें।`,
       },
       {
         question: 'यह विज्ञान-आधारित है या आध्यात्मिक?',
@@ -314,7 +316,7 @@ const hi: HomeCopy = {
       },
       {
         question: 'ऑनलाइन या ऑफलाइन?',
-        answer: `ज़्यादातर प्रोग्राम ऑनलाइन और लाइव चलते हैं। व्यक्तिगत विकल्प: ऑफलाइन क्वांटम स्पीड रीडिंग वर्कशॉप, मुंबई में ${programs.executiveWorkshop.nameHi}, और लोनावला व ऋषिकेश में रेजिडेंशियल रिट्रीट्स।`,
+        answer: `ज़्यादातर प्रोग्राम ऑनलाइन और लाइव चलते हैं। व्यक्तिगत विकल्प: ऑफलाइन Sharp Brain वर्कशॉप, मुंबई में ${programs.executiveWorkshop.nameHi}, और लोनावला व ऋषिकेश में रेजिडेंशियल रिट्रीट्स।`,
       },
       {
         question: 'हिंदी या अंग्रेज़ी?',
@@ -322,7 +324,7 @@ const hi: HomeCopy = {
       },
       {
         question: 'रिफंड के बारे में?',
-        answer: `हर प्रोग्राम की शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर हैं। ${programs.qsr.nameHi} के साथ एक रिज़ल्ट गारंटी भी है: ${qsrGuarantee.hi.statement}`,
+        answer: `हर प्रोग्राम की शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर हैं। ${programs.sharpBrain.nameHi} के साथ एक रिज़ल्ट गारंटी भी है: ${qsrGuarantee.hi.statement}`,
       },
       {
         question: 'आपसे संपर्क कैसे करें?',

@@ -34,7 +34,7 @@ export function AfterImageGazingCompleteScreen({
   bestClarityPercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: AfterImageGazingCompleteScreenProps): React.JSX.Element {
   const clarityPercent = Math.round((clearCount / ROUNDS_PER_SESSION) * 100)
   const isPerfectSession = clearCount === ROUNDS_PER_SESSION

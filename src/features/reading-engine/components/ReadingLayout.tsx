@@ -26,7 +26,7 @@ const SAFE_TOP = 'top-[max(1rem,env(safe-area-inset-top))]'
 // control, and a parametrized "safe reading width" (maxWidthClassName)
 // instead of each mode hardcoding its own container class.
 //
-// Standalone (own route, e.g. /labs/quantum-speed-reading/rsvp): a true
+// Standalone (own route, e.g. /labs/sharp-brain/rsvp): a true
 // viewport lock — fixed inset-0, never the page scrolling — with its own
 // Exit button and watermark, since no other chrome exists on that route.
 //

@@ -1,4 +1,4 @@
-import type { DailyQuantumSessionRecord } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
+import type { DailyQuantumSessionRecord } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import { TOTAL_JOURNEY_DAYS } from '../quantumJourneyLevels'
 
 // Analytics Dashboard™ — pure transforms only, no DB access. Mirrors this

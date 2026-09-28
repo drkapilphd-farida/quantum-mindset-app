@@ -30,7 +30,7 @@ export function NumberFlashGridCompleteScreen({
   bestScorePercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: NumberFlashGridCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = computeAccuracyPercent(totalCorrect, totalDigits)
 

@@ -23,8 +23,8 @@ export const GALLERY_PHOTOS: readonly GalleryPhotoEntry[] = [
   { id: "retreat-02", src: undefined, alt: "Retreat venue setting", category: "retreats" },
   { id: "retreat-03", src: undefined, alt: "Retreat participants between sessions", category: "retreats" },
   { id: "retreat-04", src: undefined, alt: "Retreat closing circle", category: "retreats" },
-  { id: "qsr-01", src: undefined, alt: "Quantum Speed Reading masterclass session", category: "qsr" },
-  { id: "qsr-02", src: undefined, alt: "Quantum Speed Reading live class", category: "qsr" },
-  { id: "qsr-03", src: undefined, alt: "Quantum Speed Reading student practice", category: "qsr" },
-  { id: "qsr-04", src: undefined, alt: "Quantum Speed Reading graduation moment", category: "qsr" },
+  { id: "qsr-01", src: undefined, alt: "Sharp Brain live class", category: "qsr" },
+  { id: "qsr-02", src: undefined, alt: "Sharp Brain live class", category: "qsr" },
+  { id: "qsr-03", src: undefined, alt: "Sharp Brain student practice", category: "qsr" },
+  { id: "qsr-04", src: undefined, alt: "Sharp Brain graduation moment", category: "qsr" },
 ]

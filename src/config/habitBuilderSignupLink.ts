@@ -4,14 +4,14 @@
 // brand-new user (no session history, no baseline diagnostic) straight to
 // the mandatory baseline diagnostic before Day 1 ever renders — so this
 // only ever needs to point at Day 1 itself, not the diagnostic directly.
-const JOURNEY_DAY_ONE_PATH = '/labs/quantum-speed-reading/journey/1'
+const JOURNEY_DAY_ONE_PATH = '/labs/sharp-brain/journey/1'
 
 // /signup/page.tsx reads `next` and passes it through SignUpForm →
 // signUp.ts, which already honors it end-to-end (including the
 // email-confirmation redirect) — see that action's own doc comment.
 // The one signup link for the 7-Day Free Focus & Reading Starter
 // (site-rebuild Phase 5). It must be on the habit subdomain: the journey
-// (/labs/quantum-speed-reading/journey/*) is habit-only in middleware.ts,
+// (/labs/sharp-brain/journey/*) is habit-only in middleware.ts,
 // so signing up on www and then opening Day 1 bounces the user to the
 // www dashboard instead of Day 1.
 export const HABIT_BUILDER_APP_ORIGIN = 'https://habit.mindurmind.org.in'

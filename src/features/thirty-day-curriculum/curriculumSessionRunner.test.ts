@@ -79,7 +79,7 @@ describe('getCurrentSessionExerciseId / getCurrentSessionExerciseHref', () => {
     const id = getCurrentSessionExerciseId(session)
     expect(id).not.toBeNull()
     const href = getCurrentSessionExerciseHref(session)
-    expect(href).toMatch(/^\/labs\/quantum-speed-reading\//)
+    expect(href).toMatch(/^\/labs\/sharp-brain\//)
   })
 })
 

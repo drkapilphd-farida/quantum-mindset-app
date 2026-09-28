@@ -39,7 +39,7 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
   // that landed on any of these 10 ids would sit through the whole
   // 10-drill circuit before the wizard ever got a chance to advance to
   // Right-Brain/Visualization/Reading, and exiting mid-circuit fell
-  // through to a raw `/labs/quantum-speed-reading` redirect since the
+  // through to a raw `/labs/sharp-brain` redirect since the
   // orchestrator's own `onExit` was never wired here). Each individual
   // drill component (ThetaBreathingAnchor, etc.) already takes exactly
   // `{ onComplete: () => void; onExit: () => void }` — both required —

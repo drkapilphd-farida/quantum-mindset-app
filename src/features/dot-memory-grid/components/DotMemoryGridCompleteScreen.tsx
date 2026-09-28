@@ -30,7 +30,7 @@ export function DotMemoryGridCompleteScreen({
   bestScorePercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: DotMemoryGridCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = computeAccuracyPercent(totalCorrect, totalDots)
 

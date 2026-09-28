@@ -41,7 +41,7 @@ export function QuantumJourneySentenceStage({ projectId, chapterId, sentenceAsse
     <SentenceReadingExperience
       initialSeed={initialSeed}
       assetPool={chapters}
-      exitHref={`/preview/learning-projects/${projectId}/quantum-journey`}
+      exitHref={`/preview/learning-projects/${projectId}/learning-journey`}
       onComplete={onComplete}
     />
   )

@@ -27,7 +27,7 @@ import { markCurriculumDayComplete } from './curriculumProgress'
 import { isCheckpointDay } from './curriculumDatabase'
 import { completeCurriculumDay } from './actions/completeCurriculumDay'
 
-const CURRICULUM_ROUTE = '/labs/quantum-speed-reading/thirty-day-curriculum'
+const CURRICULUM_ROUTE = '/labs/sharp-brain/thirty-day-curriculum'
 
 function buildDayReturnUrl(day: number, dayComplete: boolean): string {
   const params = new URLSearchParams({ view: 'day', day: String(day) })

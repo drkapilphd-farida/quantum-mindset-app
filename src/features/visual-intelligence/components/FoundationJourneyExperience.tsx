@@ -19,7 +19,7 @@ const PHASE_ORDER: readonly JourneyPhase[] = ['stage-1', 'stage-2', 'stage-3', '
 // rather than looping back to this journey's own home screen. No query
 // params, no gating integration: a plain link, matching this sprint's
 // "architecture + UI only" scope.
-const READING_LAB_HREF = '/labs/quantum-speed-reading'
+const READING_LAB_HREF = '/labs/sharp-brain'
 
 type FoundationJourneyExperienceProps = {
   // Sprint-3B — the one image (now with rich category metadata, chosen via

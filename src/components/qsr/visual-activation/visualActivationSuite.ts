@@ -52,7 +52,7 @@ export const VISUAL_ACTIVATION_SUITE: readonly VisualActivationExerciseMeta[] = 
   {
     id: 'quantum-tachistoscope-multi-word-blast',
     order: 5,
-    title: 'Quantum Tachistoscope Multi-Word Blast',
+    title: 'Tachistoscope Multi-Word Blast',
     summary: 'Rapid multi-word flashes that train your eyes to take in whole chunks at once.',
     trains: 'Multi-word chunking',
     icon: Sparkles,

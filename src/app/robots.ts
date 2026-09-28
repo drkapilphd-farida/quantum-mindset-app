@@ -18,7 +18,7 @@ export default function robots(): MetadataRoute.Robots {
         '/welcome/',
         '/discover-learning-potential/',
         '/discover-welcome-preview/',
-        '/unified-quantum-session-preview/',
+        '/unified-session-preview/',
         '/assessments/',
         '/partner-admin/',
         '/school-admin/',

@@ -56,7 +56,7 @@ function downloadCsv(csv: string): void {
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
-  link.download = `quantum-mind-tenants-${new Date().toISOString().slice(0, 10)}.csv`
+  link.download = `mind-ur-mind-tenants-${new Date().toISOString().slice(0, 10)}.csv`
   link.click()
   URL.revokeObjectURL(url)
 }

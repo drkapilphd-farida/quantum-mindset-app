@@ -12,7 +12,7 @@ import { QuantumMentalRotationSettings } from './QuantumMentalRotationSettings'
 import { QuantumMentalRotationCanvas } from './QuantumMentalRotationCanvas'
 import { QuantumMentalRotationCompleteScreen } from './QuantumMentalRotationCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-quantum-mental-rotation-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

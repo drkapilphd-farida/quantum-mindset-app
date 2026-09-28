@@ -5,13 +5,13 @@ import { primaryCheckoutHref, programs, waLink } from './site.config'
 // and any future placement never risk drifting to two different numbers
 // or pre-filled messages.
 export const WHATSAPP_MASTERCLASS_INQUIRY_LINK =
-  waLink(`Hi Dr. Kapil, I want to know more about the ${programs.qsr.name}`)
+  waLink(`Hi Dr. Kapil, I want to know more about the ${programs.sharpBrain.name}`)
 
 // Same number, enrollment-intent message — for placements (like the
 // /reviews success-stories page) where the visitor has already seen the
 // proof and is ready to join, not just asking to learn more.
 export const WHATSAPP_ENROLLMENT_INQUIRY_LINK =
-  waLink(`Hi Dr. Kapil, I want to enroll in the ${programs.qsr.name}`)
+  waLink(`Hi Dr. Kapil, I want to enroll in the ${programs.sharpBrain.name}`)
 
 // Same number, Free Live Intro Session-specific message — for the
 // QsrLiveIntroSession section on the QSR landing page. There's no
@@ -33,8 +33,8 @@ export const WHATSAPP_FREE_INTRO_SESSION_LINK =
 export function buildOfflineEegWorkshopWhatsAppLink(city: string, status: 'waitlist' | 'confirmed'): string {
   const intent =
     status === 'confirmed'
-      ? `I want to register for the 2-Day Offline QSR + EEG Workshop in ${city}`
-      : `I want to join the waitlist for the 2-Day Offline QSR + EEG Workshop in ${city}`
+      ? `I want to register for the 2-day Sharp Brain Workshop in ${city}`
+      : `I want to join the waitlist for the 2-day Sharp Brain Workshop in ${city}`
   return `https://wa.me/919540123161?text=${encodeURIComponent(`Hi Dr. Kapil, ${intent}`)}`
 }
 
@@ -94,7 +94,7 @@ export const WHATSAPP_FRANCHISE_TEAM_INQUIRY_LINK =
 // drop-off friction the WhatsApp conversation itself doesn't need; those
 // details are simply given in the chat that opens).
 export const WHATSAPP_FRANCHISE_INSTANT_APPLY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20apply%20to%20become%20a%20certified%20Quantum%20Speed%20Reading%20trainer%20partner.'
+  primaryCheckoutHref('franchise')
 
 // Same number, used by the Franchise/Individual Trainer application form
 // (/franchise-individual) to hand off every submitted field — this is the
@@ -194,18 +194,6 @@ export function buildResidentialWhatsAppLink(detail: string): string {
   return `https://wa.me/919540123161?text=${encodeURIComponent(`Hi Dr. Kapil, I want to secure my seat — ${detail}`)}`
 }
 
-// Mumbai in-person QSR workshop (pilot batch, 2 days, ₹9,999) — same "no
-// dedicated checkout exists yet" situation as the other date-bound/
-// limited-seat offers above, so this is the real, working primary
-// registration path today. Deliberately NOT reusing
-// RAZORPAY_MASTERCLASS_PAYMENT_LINK: that link has no way to tag a buyer
-// as "Mumbai pilot batch" vs. "online," and batch/seat confirmation for a
-// small, age-segmented pilot cohort needs a real person to coordinate
-// anyway — same reasoning as the Retreats/Residential/Mentoring links
-// above. If a dedicated payment link is set up later, only this constant
-// needs to change.
-export const WHATSAPP_MUMBAI_WORKSHOP_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20know%20more%20about%20the%20Mumbai%20in-person%20Quantum%20Speed%20Reading%20workshop%20(pilot%20batch)'
 
 // PREfrontal POWER (27 Sept 2026, Mumbai, ₹3,500, 40 seats) — same "no
 // dedicated checkout exists yet" situation as the Retreats and Personal

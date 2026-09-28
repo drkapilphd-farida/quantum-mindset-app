@@ -21,7 +21,7 @@ import { ParagraphReadingModeCanvas } from './ParagraphReadingModeCanvas'
 import { ParagraphReadingModeVerticalCanvas } from './ParagraphReadingModeVerticalCanvas'
 import { ParagraphReadingModeQuiz } from './ParagraphReadingModeQuiz'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 
 // Same literal storage key the pre-overhaul version used — kept exact so an
 // existing user's Best Record survives this redesign.

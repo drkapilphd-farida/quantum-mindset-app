@@ -6,7 +6,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/franchise-individual',
   ownOgImage: true,
   title: 'Franchise & Trainer Opportunity — Mind Ur Mind',
-  description: 'Start your own Quantum Speed Reading training business with a ready platform, marketing kit, and certification.',
+  description: 'Start your own Sharp Brain training business with a ready platform, marketing kit, and certification.',
 })
 
 export default function FranchiseIndividualPage(): React.JSX.Element {

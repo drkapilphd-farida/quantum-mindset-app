@@ -21,7 +21,7 @@ import { GuidedParagraphReadingModeCanvas } from './GuidedParagraphReadingModeCa
 import { GuidedParagraphReadingModeHorizontalCanvas } from './GuidedParagraphReadingModeHorizontalCanvas'
 import { GuidedParagraphReadingModeQuiz } from './GuidedParagraphReadingModeQuiz'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 // Own storage key, unchanged — kept exact so an existing user's Best
 // Record survives this redesign.
 const BEST_WPM_STORAGE_KEY = 'qsr-guided-paragraph-reading-mode-best'

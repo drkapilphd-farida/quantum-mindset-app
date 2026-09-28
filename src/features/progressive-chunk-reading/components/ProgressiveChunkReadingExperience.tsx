@@ -127,8 +127,8 @@ import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/t
 import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
 
 const EXERCISE_ID = 'progressive-chunk-reading'
-const LAB_HREF = '/labs/quantum-speed-reading'
-const NEXT_MISSION_HREF = '/labs/quantum-speed-reading/phrase-reading'
+const LAB_HREF = '/labs/sharp-brain'
+const NEXT_MISSION_HREF = '/labs/sharp-brain/phrase-reading'
 const NEXT_MISSION_ID = 'phrase-reading'
 const NEXT_MISSION_NAME = 'Phrase Reading™'
 

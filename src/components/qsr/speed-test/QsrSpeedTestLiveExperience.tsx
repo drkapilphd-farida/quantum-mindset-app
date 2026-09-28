@@ -11,7 +11,7 @@ import { LIVE_DEMO_PASSAGE } from "./liveDemoPassage";
 // Standalone Ready" task) — a separate, simpler flow from
 // QsrSpeedTestExperience.tsx (the RSVP-demo marketing funnel that
 // homepage/QSR CTAs already link to and keep using unchanged). Reached
-// only via /programs/quantum-speed-reading/speed-test?mode=live — the
+// only via /programs/sharp-brain/speed-test?mode=live — the
 // default public URL's behavior is untouched. Built for one specific
 // job: a screen-recordable, no-login, run-it-twice speed test with a
 // fixed passage so the same ~285-word text and 5 questions come up
@@ -288,7 +288,7 @@ export default function QsrSpeedTestLiveExperience(): React.JSX.Element {
                 <RotateCcw className="h-4 w-4" aria-hidden="true" /> Run It Again
               </button>
               <Link
-                href="/programs/quantum-speed-reading/speed-test"
+                href="/programs/sharp-brain/speed-test"
                 className="text-[13px] font-semibold text-teal transition-colors hover:text-teal-light"
               >
                 Exit Live Mode

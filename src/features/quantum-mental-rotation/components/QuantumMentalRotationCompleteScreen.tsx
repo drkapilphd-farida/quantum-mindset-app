@@ -34,7 +34,7 @@ export function QuantumMentalRotationCompleteScreen({
   bestAccuracyPercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: QuantumMentalRotationCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
   const isPerfectSession = correctCount === ROUNDS_PER_SESSION

@@ -31,7 +31,7 @@ export function HemisphericColorSyncSettings({ onStart }: HemisphericColorSyncSe
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Hemispheric Color-Word Sync Grid™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Color-Word Sync Grid</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           A color name flashes in a mismatched ink. Tap the swatch matching either the WORD or the INK, whichever the
           round asks for.

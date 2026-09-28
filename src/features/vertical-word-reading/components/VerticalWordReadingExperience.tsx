@@ -14,7 +14,7 @@ import { buildUnitsForCategory, pickSessionCategory, type VerticalWordReadingCat
 import { VerticalWordReadingSettings } from './VerticalWordReadingSettings'
 import { VerticalWordReadingCanvas } from './VerticalWordReadingCanvas'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 
 // Same literal storage key the pre-migration version used — kept exact so
 // an existing user's Best Record survives this reorganization into its

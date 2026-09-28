@@ -27,7 +27,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
         <Sparkles className="size-5" />
       </div>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed font-medium text-foreground sm:text-base">
-        अब अपनी इस नई स्पीड को अपने खुद के डॉक्यूमेंट्स और किताबों पर आजमाएं — Get 30-Day QSR Pro Suite (App 2) with Upload Documents, Spider
+        अब अपनी इस नई स्पीड को अपने खुद के डॉक्यूमेंट्स और किताबों पर आजमाएं — Get 30-Day Sharp Brain Pro Suite (App 2) with Upload Documents, Spider
         Notes, &amp; Memory Techniques at ₹9,999.
       </p>
       <a

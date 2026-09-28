@@ -1,7 +1,7 @@
 'use client'
 
 import { Brain } from 'lucide-react'
-import { playClickChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playClickChime } from '@/app/unified-session-preview/components/soundEngine'
 
 type DynamicChunkingRecallCheckProps = {
   // The real Brain Challenge tally from the just-finished Dynamic

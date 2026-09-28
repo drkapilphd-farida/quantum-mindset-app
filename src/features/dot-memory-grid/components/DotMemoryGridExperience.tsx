@@ -12,7 +12,7 @@ import { DotMemoryGridSettings } from './DotMemoryGridSettings'
 import { DotMemoryGridCanvas } from './DotMemoryGridCanvas'
 import { DotMemoryGridCompleteScreen } from './DotMemoryGridCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-dot-memory-grid-best'
 const DEFAULT_GRID_SIZE: DotMemoryGridSize = 5
 

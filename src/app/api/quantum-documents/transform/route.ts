@@ -96,7 +96,7 @@ export async function POST(request: Request): Promise<Response> {
         {
           success: false,
           code: 'upgrade_required',
-          error: `Document Mastery Studio is included with the ${programs.qsr.name} — enroll to unlock it.`,
+          error: `Document Mastery Studio is included with the ${programs.sharpBrain.name} — enroll to unlock it.`,
         },
         { status: 402 },
       )

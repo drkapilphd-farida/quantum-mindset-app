@@ -19,7 +19,7 @@ const AGENDA_BLOCKS = [
     title: 'Focus & Mental Load',
     items: [
       'Brain-dump technique to clear mental overload',
-      'Visual attention and focus sprints (from Quantum Speed Reading training)',
+      'Visual attention and focus sprints (from Sharp Brain training)',
       'Single-tasking and digital hygiene',
     ],
   },

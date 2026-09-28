@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
     <LegalPageShell title="Privacy Policy" lastUpdated={LAST_UPDATED} brandName="Mind Ur Mind">
       <p className="text-muted-foreground leading-relaxed">
         Mind Ur Mind (&ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;our&rdquo;) operates mindurmind.org.in and the
-        {brand.appName}, offering Quantum Speed Reading, meditation and inner-mastery retreats, 1-on-1 mentoring,
+        {brand.appName}, offering Sharp Brain, meditation and inner-mastery retreats, 1-on-1 mentoring,
         and related cognitive-training programs. This policy explains what personal data we collect, why, and how
         it&rsquo;s handled.
       </p>
@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
           </li>
           <li>
             Usage data from the {brand.appName} — reading speed (WPM), comprehension scores, and daily practice
-            activity across the {programs.qsr.name} curriculum and other exercises.
+            activity across the {programs.sharpBrain.name} curriculum and other exercises.
           </li>
         </ul>
       </section>

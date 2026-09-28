@@ -48,7 +48,7 @@ const WEEK_1_POOL: readonly JourneyStepExercise[] = [
 const WEEK_2_POOL: readonly JourneyStepExercise[] = [
   { exerciseId: 'photographic-memory', title: 'Deep Visualisation Recall™', domain: 'right_brain' },
   { exerciseId: 'color-scene-transformation', title: 'Color & Scene Transformation Journey™', domain: 'visualisation' },
-  { exerciseId: 'quantum-mental-rotation', title: 'Quantum Mental Object Rotation™', domain: 'visualisation' },
+  { exerciseId: 'quantum-mental-rotation', title: 'Mental Object Rotation', domain: 'visualisation' },
 ]
 
 // Week 3 (Advanced Quantum Flow & Intuition) — Zener Card Telepathy
@@ -57,9 +57,9 @@ const WEEK_2_POOL: readonly JourneyStepExercise[] = [
 // Visualisation exercises are strategically placed across both Week 2
 // and Week 3, never confined to just one week.
 const WEEK_3_POOL: readonly JourneyStepExercise[] = [
-  { exerciseId: 'esp-zener-telepathy', title: 'ESP Zener Card Telepathy Sprint™', domain: 'intuition' },
-  { exerciseId: 'hemispheric-color-sync', title: 'Hemispheric Color-Word Sync Grid™', domain: 'right_brain' },
-  { exerciseId: 'quantum-mental-rotation', title: 'Quantum Mental Object Rotation™', domain: 'visualisation' },
+  { exerciseId: 'esp-zener-telepathy', title: 'Zener Card Attention Sprint', domain: 'intuition' },
+  { exerciseId: 'hemispheric-color-sync', title: 'Color-Word Sync Grid', domain: 'right_brain' },
+  { exerciseId: 'quantum-mental-rotation', title: 'Mental Object Rotation', domain: 'visualisation' },
 ]
 
 // Every domain-tracked exercise, grouped by domain — used only to pick a
@@ -94,7 +94,7 @@ export function getWeekTheme(day: number): string {
   const week = getWeekNumber(day)
   if (week === 1) return 'Foundation & Brain Gym'
   if (week === 2) return 'Expansion & Visualisation'
-  return 'Advanced Quantum Flow & Intuition'
+  return 'Advanced Focus Flow & Intuition'
 }
 
 function getWeekPool(day: number): readonly JourneyStepExercise[] {
@@ -193,7 +193,7 @@ export type ExerciseLabelVariant = 'productivity' | 'spiritual'
 
 const ZENER_LABEL_BY_VARIANT: Record<ExerciseLabelVariant, string> = {
   productivity: 'Pattern Intuition Sprint™',
-  spiritual: 'ESP Zener Card Telepathy™',
+  spiritual: 'Zener Card Attention',
 }
 
 export function resolveExerciseDisplayTitle(exercise: JourneyStepExercise, variant: ExerciseLabelVariant): string {

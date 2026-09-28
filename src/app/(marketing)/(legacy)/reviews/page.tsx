@@ -9,7 +9,7 @@ import { brand, programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Success Stories',
-  description: 'Real student video reviews of the Quantum Speed Reading — 30-Day Live Program on YouTube.',
+  description: 'Real student video reviews of the Sharp Brain — 30-Day Live Program on YouTube.',
   robots: { index: false, follow: false },
 }
 
@@ -49,10 +49,10 @@ export default function ReviewsPage(): React.JSX.Element {
             60+ Real Student Video Reviews
           </span>
           <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Success Stories: See How Thousands of Students Mastered Quantum Speed Reading
+            Success Stories: See How Thousands of Students Built Their Sharp Brain Skills
           </h1>
           <p className="mt-4 text-base leading-7 text-muted-foreground">
-            Real students, in their own words — recorded across every batch of the 30-Day Quantum Speed Reading Mastery + Live Cohort.
+            Real students, in their own words — recorded across every batch of the Sharp Brain 30-Day Program + Live Classes.
           </p>
         </div>
 
@@ -88,7 +88,7 @@ export default function ReviewsPage(): React.JSX.Element {
           <div className="glass-premium-card rounded-2xl p-5">
             <PlayCircle className="size-6 text-primary" aria-hidden="true" />
             <p className="mt-3 text-sm font-semibold text-foreground">60+ Video Reviews</p>
-            <p className="mt-1 text-sm text-muted-foreground">Real testimonials from real students, across every batch of the {programs.qsr.name}.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Real testimonials from real students, across every batch of the {programs.sharpBrain.name}.</p>
           </div>
           <a
             href={WHATSAPP_MASTERCLASS_INQUIRY_LINK}

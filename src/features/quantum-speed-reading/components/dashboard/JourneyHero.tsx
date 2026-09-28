@@ -59,7 +59,7 @@ export function JourneyHero({
     <div className="animate-in fade-in rounded-3xl border bg-card p-8 text-center shadow-md duration-(--duration-slow) ease-out sm:p-10">
       <p className="text-sm text-muted-foreground">{greeting}</p>
       <h1 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-        Quantum Speed Reading™
+        Sharp Brain™
       </h1>
 
       {isJourneyComplete || currentStageTitle === null ? (

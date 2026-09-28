@@ -24,8 +24,8 @@ export const CHUNK_READING_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/chunk-reading',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/chunk-reading',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.chunk_reading.title',

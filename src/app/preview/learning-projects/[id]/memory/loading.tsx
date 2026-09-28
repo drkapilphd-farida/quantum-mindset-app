@@ -3,7 +3,7 @@ import { AIPresenceLoadingState } from '@/components/learning/AIPresenceLoadingS
 
 // Memory Mode™ Sprint-5 — Premium Apple-quality UX Polish™. A skeleton
 // reads as "loading, calmly" — a spinner reads as "stuck," the same
-// reasoning QSR's own `/labs/quantum-speed-reading/loading.tsx` already
+// reasoning QSR's own `/labs/sharp-brain/loading.tsx` already
 // documents. Four blocks approximate the Header/Progress/Card/Controls
 // sections `MemoryWorkspace` renders once its real initial state
 // resolves. New file — no existing loading.tsx to preserve, no Sprint-2

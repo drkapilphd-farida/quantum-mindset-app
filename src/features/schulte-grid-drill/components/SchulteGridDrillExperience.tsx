@@ -9,7 +9,7 @@ import { SchulteGridDrillSettings } from './SchulteGridDrillSettings'
 import { SchulteGridDrillCanvas } from './SchulteGridDrillCanvas'
 import { SchulteGridDrillCompleteScreen } from './SchulteGridDrillCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_TIME_STORAGE_KEY = 'qsr-schulte-grid-drill-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

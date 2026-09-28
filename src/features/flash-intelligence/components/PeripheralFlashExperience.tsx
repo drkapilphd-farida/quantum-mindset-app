@@ -72,7 +72,7 @@ import '../symbolFlashDataset'
 const EXERCISE_ID = 'peripheral-flash'
 // Sprint-12: Peripheral Flash is the last Flash Intelligence Pack™
 // mission — this now points into Core Reading Journey™'s first exercise.
-const NEXT_EXERCISE_HREF = '/labs/quantum-speed-reading/progressive-chunk-reading'
+const NEXT_EXERCISE_HREF = '/labs/sharp-brain/progressive-chunk-reading'
 
 const PLAYER_COPY_BASE = {
   exit: 'Exit Mission',

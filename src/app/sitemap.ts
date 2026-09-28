@@ -25,8 +25,8 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/executive-brain-workshop', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/prefrontal-power-mumbai', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/mind-assessment', changeFrequency: 'monthly', priority: 0.7 },
-  { path: '/programs/quantum-speed-reading', changeFrequency: 'weekly', priority: 1 },
-  { path: '/programs/quantum-speed-reading/speed-test', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/programs/sharp-brain', changeFrequency: 'weekly', priority: 1 },
+  { path: '/programs/sharp-brain/speed-test', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/programs/habit-builder', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/retreats/residential', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/retreats/online-11-day', changeFrequency: 'weekly', priority: 0.8 },
@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   // The legacy course marketplace (/courses/*) and the unpublished
-  // /programs/quantum-speed-reading-mumbai (notFound() until its venue/
+  // /programs/sharp-brain (notFound() until its venue/
   // date placeholders are filled) are deliberately NOT listed: both are
   // noindex/404 and /courses/ is disallowed in robots.ts, so listing them
   // only produced "submitted URL marked noindex" errors in Search Console.

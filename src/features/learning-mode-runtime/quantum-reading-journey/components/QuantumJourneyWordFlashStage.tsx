@@ -53,7 +53,7 @@ export function QuantumJourneyWordFlashStage({ projectId, wordAssets, onComplete
       speedMode: 'adaptive',
       scoringRules: DEFAULT_SCORING_RULES,
       intelligenceDimension: 'reading',
-      href: `/preview/learning-projects/${projectId}/quantum-journey`,
+      href: `/preview/learning-projects/${projectId}/learning-journey`,
       labHref: `/preview/learning-projects/${projectId}`,
       locale: 'en',
       i18nKeys: {

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import type { DailyQuantumSessionRecord } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
+import type { DailyQuantumSessionRecord } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import { buildReadingSpeedTrendPoints, computeAverageWpm, type ReadingSpeedWindowDays } from '../readingSpeedTrend'
 
 type ReadingSpeedTrendCardProps = {

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Play, ArrowRight, RotateCcw, CheckCircle2 } from "lucide-react";
 import { Eyebrow } from "../../ui";
-import QsrGuaranteeBadge from "../QsrGuaranteeBadge";
+import GuaranteeBadge from "@/components/sharp-brain/GuaranteeBadge";
 import { computeLiveWpm } from "@/features/quantum-speed-reading/readingSessionEngine";
 import { splitWordAtOrp } from "@/features/quantum-journey/readingModes/pacingMath";
 import { buildProgressiveChunks, computeRampWpm, RAMP_START_WPM } from "./speedDemoPacing";
@@ -441,7 +441,7 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
                 emphasize
               />
               <ComparisonBar label="Average untrained reader" value="~230 WPM" percent={38} tone="faint" />
-              <ComparisonBar label="Trained QSR target" value="550–600 WPM" percent={96} tone="teal" />
+              <ComparisonBar label="Trained reading target" value="550–600 WPM" percent={96} tone="teal" />
             </div>
 
             <div className="mt-6 rounded-r-sm border-l-[3px] border-gold bg-gold-soft px-4 py-3.5 text-[14px] leading-relaxed text-ink">
@@ -462,12 +462,12 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
 
             <div className="mt-8 border-t border-line-strong pt-6">
               <Link
-                href="/programs/quantum-speed-reading#pricing"
+                href="/programs/sharp-brain#pricing"
                 className="flex w-full items-center justify-center gap-2 rounded-sm bg-gold px-7 py-4 text-[15px] font-semibold text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]"
               >
-                See the {programs.qsr.shortName} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                See the {programs.sharpBrain.shortName} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
-              <QsrGuaranteeBadge className="mt-4" />
+              <GuaranteeBadge className="mt-4" />
             </div>
 
             <button

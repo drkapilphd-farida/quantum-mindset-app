@@ -37,7 +37,7 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
               {day !== null ? `Day ${day} is part of the Masterclass` : 'This is part of the Masterclass'}
             </DialogTitle>
             <DialogDescription className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              All 30 days of the Quantum Speed Reading Mastery Curriculum™ — real WPM + comprehension checkpoints, and 7 live mentorship sessions with
+              All 30 days of the Sharp Brain 30-Day Curriculum — real WPM + comprehension checkpoints, and 7 live mentorship sessions with
               Dr. Kapil Dev Sharma — unlock with enrollment.
             </DialogDescription>
           </div>

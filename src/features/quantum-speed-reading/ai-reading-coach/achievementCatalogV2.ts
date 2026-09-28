@@ -17,5 +17,5 @@ export const ACHIEVEMENT_CATALOG_V2: readonly AchievementV2Definition[] = [
   { id: 'streak-3', title: '3-Day Streak', description: 'Read 3 days in a row.' },
   { id: 'comprehension-master', title: 'Comprehension Master', description: 'Average 95%+ comprehension across your last 5 sessions.' },
   { id: 'balanced-reader', title: 'Balanced Reader', description: 'Develop a confident Balanced Reader profile.' },
-  { id: 'speed-explorer', title: 'Speed Explorer', description: 'Complete a session in Speed or Quantum reading mode.' },
+  { id: 'speed-explorer', title: 'Speed Explorer', description: 'Complete a session in Speed or Deep Focus reading mode.' },
 ]

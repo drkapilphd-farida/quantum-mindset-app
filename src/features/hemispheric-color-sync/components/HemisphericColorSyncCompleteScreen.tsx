@@ -34,7 +34,7 @@ export function HemisphericColorSyncCompleteScreen({
   bestAccuracyPercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: HemisphericColorSyncCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
   const isPerfectSprint = correctCount === ROUNDS_PER_SESSION
@@ -43,7 +43,7 @@ export function HemisphericColorSyncCompleteScreen({
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sync Complete</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Nice hemispheric control.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Nice colour-word control.</p>
         {isPerfectSprint && (
           <p className="mt-2 text-sm font-semibold text-emerald-600">Flawless sync! +{PERFECT_SESSION_BONUS} bonus included.</p>
         )}

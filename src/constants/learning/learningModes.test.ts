@@ -19,7 +19,7 @@ describe('resolveLearningModeHref', () => {
   })
 
   it('routes Quantum Speed Reading™ directly to the real Quantum Reading Journey, not the generic workspace shell', () => {
-    expect(resolveLearningModeHref(modeById('quantum-speed-reading'), 'project-1')).toBe('/preview/learning-projects/project-1/quantum-journey')
+    expect(resolveLearningModeHref(modeById('quantum-speed-reading'), 'project-1')).toBe('/preview/learning-projects/project-1/learning-journey')
   })
 
   it('routes every Learning Mode with no real runtime yet through the same universal Learning Workspace™, never null and never a stale demo link', () => {

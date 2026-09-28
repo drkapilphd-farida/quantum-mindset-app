@@ -40,8 +40,8 @@ type ReadingSetDef = {
 const READING_SET_DEFS: readonly ReadingSetDef[] = [
   {
     id: 'quantum-speed-reading',
-    theme: 'Quantum Speed Reading',
-    text: 'Quantum speed reading trains your eyes to absorb whole phrases instead of single words. Readers who practice this technique for just ten minutes a day often double their reading speed within a month.',
+    theme: 'Smart Reading',
+    text: 'Smart reading trains your eyes to absorb whole phrases instead of single words. Readers who practice this technique for just ten minutes a day often read noticeably faster within a month.',
     factQuestion: 'According to the passage, how long must someone practice each day to see results?',
     factOptions: ['Ten minutes', 'One hour', 'Thirty seconds', 'Two hours'],
     factCorrectIndex: 0,

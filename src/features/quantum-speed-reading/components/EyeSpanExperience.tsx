@@ -28,7 +28,7 @@ export function EyeSpanExperience(): React.JSX.Element {
     <ExerciseRunner
       definition={EYE_SPAN_DEFINITION}
       Canvas={EyeSpanCanvas}
-      labHref="/labs/quantum-speed-reading"
+      labHref="/labs/sharp-brain"
       previousExercise={previous}
       nextExercise={next}
     />

@@ -36,7 +36,7 @@ export function EyeWarmupExperience({ onComplete, completionActionLabel }: EyeWa
     <ExerciseRunner
       definition={EYE_WARM_UP_DEFINITION}
       Canvas={EyeWarmupCanvas}
-      labHref="/labs/quantum-speed-reading"
+      labHref="/labs/sharp-brain"
       previousExercise={previous}
       nextExercise={next}
       {...(onComplete !== undefined ? { onComplete } : {})}

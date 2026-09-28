@@ -160,7 +160,7 @@ export function EspZenerTelepathyCanvas({ onComplete, onExitRequested }: EspZene
   return (
     <ReadingLayout maxWidthClassName="max-w-2xl" onExit={() => onExitRequested(elapsedMs)}>
       <div className="flex w-full items-center justify-between">
-        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">ESP Zener Card Telepathy Sprint™</p>
+        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Zener Card Attention Sprint</p>
         <button
           type="button"
           onClick={handleToggleSound}

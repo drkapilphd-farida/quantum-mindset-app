@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { playClickChime, playCorrectChime, playGentleMissChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
-import { computeReadingPowerScore } from '@/app/unified-quantum-session-preview/components/quantumReadingSprintDataset'
+import { playClickChime, playCorrectChime, playGentleMissChime } from '@/app/unified-session-preview/components/soundEngine'
+import { computeReadingPowerScore } from '@/app/unified-session-preview/components/quantumReadingSprintDataset'
 import { pickJourneyReadingSet, type JourneyReadingSet, type JourneyLengthTier } from '../readingContent'
 
 export type ReadingPresentationMode = 'phrase' | 'vertical-word' | 'sentence' | 'paragraph'

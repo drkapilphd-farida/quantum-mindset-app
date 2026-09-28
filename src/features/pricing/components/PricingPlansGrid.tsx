@@ -136,17 +136,17 @@ export function PricingPlansGrid(): React.JSX.Element {
         <PlanCard
           name="The Foundation"
           subtitle="Start for free"
-          description={`Explore Quantum Speed Reading for free — enroll in the ${programs.qsr.name} to unlock Document Mastery Studio.`}
+          description={`Explore Sharp Brain for free — enroll in the ${programs.sharpBrain.name} to unlock Document Mastery Studio.`}
           priceAmount="₹0"
           priceUnit="forever"
           features={[
-            'Quantum Speed Reading & Active Recall sessions',
+            'Smart Reading & Active Recall sessions',
             // QSR-Bundled Access™ (see the "Upload & Learn / QSR Bundling"
             // task) — Document Mastery Studio no longer has its own free
             // tier (FREE_TIER_DOCUMENT_LIMIT); it's bundled entirely into
             // the ₹9,999 Masterclass banner below, so this card is honest
             // about that instead of still advertising free transformations.
-            `Document Mastery Studio (Upload & Learn) — included with the ${programs.qsr.name}`,
+            `Document Mastery Studio (Upload & Learn) — included with the ${programs.sharpBrain.name}`,
           ]}
           cta={
             <Button asChild variant="outline" size="lg" className="w-full rounded-full">
@@ -165,7 +165,7 @@ export function PricingPlansGrid(): React.JSX.Element {
           features={[
             '~20 AI-Powered Cognitive Transformations/month',
             'Advanced Memory & Speed Drills',
-            'Unlimited Quantum Speed Reading Sessions',
+            'Unlimited Smart Reading Sessions',
             'Everything in The Foundation',
           ]}
           cta={
@@ -216,14 +216,14 @@ export function PricingPlansGrid(): React.JSX.Element {
           real, honest posture as every SubscribeButton above: a real
           Razorpay Payment Link, no promise of automatic access — the
           batch schedule follows by email after payment.
-          QSR-Bundled Access™ (see the "Upload & Learn / QSR Bundling"
+          QSR-Bundled Access™ (see the "Upload & Learn / Sharp Brain bundle"
           task) — Document Mastery Studio (Upload & Learn) is no longer
           its own separate ₹499/mo product; it's included here, so this
           description says so instead of a second, now-removed banner
           below repeating what used to be a contradictory separate price. */}
       <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-3xl border border-primary/30 bg-primary/[0.03] p-8 sm:flex-row">
         <div>
-          <p className="text-lg font-semibold text-foreground">30-Day Quantum Speed Reading Mastery + Live Cohort</p>
+          <p className="text-lg font-semibold text-foreground">Sharp Brain 30-Day Program + Live Classes</p>
           <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
             The self-paced 30-day curriculum, paired with 7 live mentorship sessions from Dr. Kapil Dev Sharma — plus full access to Document Mastery
             Studio (Upload & Learn). One-time enrollment — ₹9,999.

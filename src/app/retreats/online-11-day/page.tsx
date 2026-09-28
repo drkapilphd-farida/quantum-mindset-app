@@ -27,7 +27,7 @@ export const metadata: Metadata = buildPageMetadata({
   ownOgImage: true,
   title: `${programs.onlineRetreat.name} — Dr. Kapil Dev Sharma`,
   description:
-    'Authentic Kriya Yoga, Prana, and cosmic energy — an intensive, live, 11-day journey through telepathy, aura reading, Samadhi meditation, chakra activation, Kundalini meditation, and astral projection. Guided nightly by Dr. Kapil Dev Sharma, teaching since 2014. Monthly batch, 10th–20th, 7:30–10:30 PM.',
+    'Eleven nights of live, guided practice in traditional Kriya Yoga, pranayama and deep meditation — for a calmer mind, steadier emotions and better sleep. Guided nightly by Dr. Kapil Dev Sharma, teaching since 2014. Monthly batch, 10th–20th, 7:30–10:30 PM. ₹6,999 per person.',
 })
 
 // Flagship Retreat Landing Page™ — the real destination TierRetreats'

@@ -8,14 +8,14 @@ const PROTECTED_PATHS = ['/dashboard', '/labs', '/practice', '/progress', '/sett
 const AUTH_PATHS = ['/login', '/signup']
 
 // Domain Split™ — checked independently of PROTECTED_PATHS/auth state,
-// since /unified-quantum-session-preview is intentionally login-optional
+// since /unified-session-preview is intentionally login-optional
 // today (anonymous visitors already degrade gracefully there). Ordered
-// most-specific-first: /labs/quantum-speed-reading/journey must be
-// checked before the broader /labs/quantum-speed-reading catch-all.
+// most-specific-first: /labs/sharp-brain/journey must be
+// checked before the broader /labs/sharp-brain catch-all.
 const DOMAIN_ROUTES: { prefix: string; domain: AppDomain }[] = [
   // habit-only
-  { prefix: '/labs/quantum-speed-reading/journey', domain: 'habit' },
-  { prefix: '/unified-quantum-session-preview', domain: 'habit' },
+  { prefix: '/labs/sharp-brain/journey', domain: 'habit' },
+  { prefix: '/unified-session-preview', domain: 'habit' },
   // app-only
   { prefix: '/preview', domain: 'app' },
   { prefix: '/parent-dashboard', domain: 'app' },
@@ -24,7 +24,7 @@ const DOMAIN_ROUTES: { prefix: string; domain: AppDomain }[] = [
   { prefix: '/masterclasses', domain: 'app' },
   { prefix: '/document-studio', domain: 'app' },
   { prefix: '/labs/visual-intelligence', domain: 'app' },
-  { prefix: '/labs/quantum-speed-reading', domain: 'app' }, // catch-all, checked last
+  { prefix: '/labs/sharp-brain', domain: 'app' }, // catch-all, checked last
 ]
 
 function domainGuardRedirect(appDomain: AppDomain, pathname: string, request: NextRequest): NextResponse | null {

@@ -66,11 +66,11 @@ import {
 import { computeReadingReadiness } from '../../flash-intelligence/wordFlashInsights'
 
 const EXERCISE_ID = 'multi-line-reading'
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 // Sprint-12: Sentence Reading now exists and is next in Core Reading
 // Journey™'s sequence — Mission Complete continues forward into it instead
 // of dead-ending back at the lab.
-const NEXT_EXERCISE_HREF = '/labs/quantum-speed-reading/sentence-reading'
+const NEXT_EXERCISE_HREF = '/labs/sharp-brain/sentence-reading'
 
 const FEEDBACK_MS = 450
 const MIN_LINE_DISPLAY_MS = 1200

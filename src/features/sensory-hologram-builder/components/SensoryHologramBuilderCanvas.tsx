@@ -336,7 +336,7 @@ export function SensoryHologramBuilderCanvas({ goal, language, onComplete, onExi
   return (
     <ReadingLayout maxWidthClassName="max-w-xl" onExit={() => onExitRequested(elapsedMs)}>
       <div className="w-full max-w-md">
-        <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Sensory Hologram Builder™</p>
+        <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Sensory Imagery Builder</p>
         <div className="grid grid-cols-2 gap-3 text-center">
           <ReadingStatTile label="Phase" value={`${phaseIndex + 1} / ${totalPhases}`} />
           <ReadingStatTile label="Time" value={formatElapsedTime(elapsedMs)} />

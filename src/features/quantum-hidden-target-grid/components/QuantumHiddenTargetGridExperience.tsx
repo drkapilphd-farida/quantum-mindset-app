@@ -12,7 +12,7 @@ import { QuantumHiddenTargetGridSettings } from './QuantumHiddenTargetGridSettin
 import { QuantumHiddenTargetGridCanvas } from './QuantumHiddenTargetGridCanvas'
 import { QuantumHiddenTargetGridCompleteScreen } from './QuantumHiddenTargetGridCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-quantum-hidden-target-grid-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

@@ -15,7 +15,7 @@ import { PhraseReadingModeSettings, type PhraseSize, type PhraseFlowOrientation 
 import { PhraseReadingModeCanvas } from './PhraseReadingModeCanvas'
 import { PhraseReadingModeVerticalCanvas } from './PhraseReadingModeVerticalCanvas'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 
 // Same literal storage key the pre-overhaul version used — kept exact so an
 // existing user's Best Record survives this redesign.

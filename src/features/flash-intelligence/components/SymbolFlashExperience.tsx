@@ -36,7 +36,7 @@ import '../symbolFlashDataset'
 const EXERCISE_ID = 'symbol-flash'
 // Sprint-12: Flash Intelligence Pack™ is now one guided sequence — this
 // points at the next real mission (Mixed Flash), not back to the lab hub.
-const NEXT_EXERCISE_HREF = '/labs/quantum-speed-reading/mixed-flash'
+const NEXT_EXERCISE_HREF = '/labs/sharp-brain/mixed-flash'
 const STAGE_COUNT = SYMBOL_GROUP_STAGES.length // 4 — single/two/three/mixed
 
 const PLAYER_COPY = {

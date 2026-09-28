@@ -1,0 +1,27 @@
+import type { Metadata } from 'next'
+import { FixationReductionExperience } from '@/features/quantum-speed-reading/components/FixationReductionExperience'
+import { ExerciseLockedScreen } from '@/components/exercises/ExerciseLockedScreen'
+import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
+import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readingExpansionModule'
+
+export const metadata: Metadata = {
+  title: 'Fixation Reduction — Sharp Brain Lab',
+  description: "Let's train your eyes to cover the same line in fewer stops.",
+  robots: { index: false, follow: false },
+}
+
+export default async function FixationReductionPage(): Promise<React.JSX.Element> {
+  const access = await getExerciseAccess('quantum-speed-reading', READING_EXPANSION_MODULE, 'fixation-reduction')
+
+  if (!access.allowed) {
+    return (
+      <ExerciseLockedScreen
+        title="Fixation Reduction"
+        unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
+        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+      />
+    )
+  }
+
+  return <FixationReductionExperience />
+}

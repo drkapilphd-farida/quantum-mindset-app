@@ -15,7 +15,7 @@ export default function HabitBuilderNextStep(): React.JSX.Element {
         <h2 className="text-[22px] font-extrabold leading-tight sm:text-[26px]">{section.title}</h2>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-dim">{section.desc}</p>
         <Link
-          href={programs.qsr.url}
+          href={programs.sharpBrain.url}
           className="mt-5 inline-flex rounded-sm bg-gold px-6 py-3 text-[14.5px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
         >
           {section.cta} →

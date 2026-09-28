@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { SITE_NAME, absoluteUrl } from './siteUrl'
 
 type BuildPageMetadataInput = {
-  /** Route path, e.g. '/programs/quantum-speed-reading'. Used for canonical + og:url. */
+  /** Route path, e.g. '/programs/sharp-brain'. Used for canonical + og:url. */
   path: string
   /** Full, literal page title — always rendered as-is (bypasses the root layout's title template). */
   title: string

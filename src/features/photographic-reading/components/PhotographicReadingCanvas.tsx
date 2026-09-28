@@ -277,7 +277,7 @@ export function PhotographicReadingCanvas({
   return (
     <ReadingLayout maxWidthClassName="max-w-3xl" onExit={onExit}>
       <div className="w-full max-w-md">
-        <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Photographic Reading™</p>
+        <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Visual Memory Reading</p>
         {categoryLabel && <p className="mb-3 text-center text-xs text-muted-foreground">Reading: {categoryLabel}</p>}
 
         <div className="grid grid-cols-3 gap-x-4 text-center">

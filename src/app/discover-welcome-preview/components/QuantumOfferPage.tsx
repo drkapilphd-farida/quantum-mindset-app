@@ -38,7 +38,7 @@ const SUPPORTING_PILLARS: readonly Pillar[] = [
   },
   {
     icon: Eye,
-    title: 'Right-Brain Visualization',
+    title: 'Visualization Training',
     description: 'Processing blocks of text instantly, as whole images — not word by word.',
   },
   {
@@ -55,7 +55,7 @@ const SUPPORTING_PILLARS: readonly Pillar[] = [
 
 const CAPSTONE_PILLAR: Pillar = {
   icon: Zap,
-  title: 'Quantum Reading Speed',
+  title: 'Smart Reading Speed',
   description: 'Achieving effortless 600+ WPM flow — the natural result of the four pillars above, not a trick layered on top.',
 }
 
@@ -68,7 +68,7 @@ const OLD_WAY_POINTS: readonly string[] = [
 
 const QUANTUM_WAY_POINTS: readonly string[] = [
   'Builds real attention stability first',
-  'Awakens right-brain visual processing',
+  'Trains visual processing',
   'Develops intuitive comprehension',
   'Speed emerges naturally, with full retention',
 ]
@@ -153,7 +153,7 @@ export function QuantumOfferPage({ fullName, readingWpm, onClaimAccess }: Quantu
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             {firstName}, you read at <strong className="font-semibold text-foreground">{readingWpm} WPM</strong> today —
             that&rsquo;s your conscious mind&rsquo;s ceiling. Your conscious speed is limited, but your right-brain{' '}
-            <strong className="font-semibold text-foreground">Quantum potential is 600+ WPM</strong>, and it has never
+            <strong className="font-semibold text-foreground">Trained reading target: 600+ WPM</strong>, and it has never
             been trained.
           </p>
 
@@ -259,7 +259,7 @@ export function QuantumOfferPage({ fullName, readingWpm, onClaimAccess }: Quantu
               </ul>
             </div>
             <div className="rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 via-violet-500/5 to-teal-500/10 p-6">
-              <p className="text-xs font-semibold tracking-wide text-indigo-600 uppercase dark:text-indigo-400">The Quantum Way</p>
+              <p className="text-xs font-semibold tracking-wide text-indigo-600 uppercase dark:text-indigo-400">The Sharp Brain Way</p>
               <p className="mt-1 text-sm font-semibold text-foreground">Whole-Brain Development</p>
               <ul className="mt-4 flex flex-col gap-2.5">
                 {QUANTUM_WAY_POINTS.map((point) => (

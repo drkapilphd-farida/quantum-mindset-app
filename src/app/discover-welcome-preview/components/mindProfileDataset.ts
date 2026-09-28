@@ -102,8 +102,8 @@ export function computeQuantumSpeedMultiplierLabel(currentWpm: number): string {
 // retention at speed, not raw pace).
 export function buildQuantumSpeedCopy(currentWpm: number): string {
   if (currentWpm >= QUANTUM_SPEED_TARGET_WPM) {
-    return `This assessment only measured your baseline reading speed — and you're already near Quantum pace. Our Quantum Speed Reading Program is engineered to make 600+ WPM your sustained norm, with complete retention, not just a short burst.`
+    return `This assessment only measured your baseline reading speed — and you're already near a trained pace. Our Sharp Brain 30-Day Program is engineered to make 600+ WPM your sustained norm, with complete retention, not just a short burst.`
   }
   const multiplierLabel = computeQuantumSpeedMultiplierLabel(currentWpm)
-  return `This assessment only measured your baseline reading speed — the speed your brain defaults to without training. Our Quantum Speed Reading Program is engineered to unlock 3-5x faster reading, up to 600+ WPM, with complete retention — not skimming. At your current pace, that's up to ${multiplierLabel} more words absorbed every minute.`
+  return `This assessment only measured your baseline reading speed — the speed your brain defaults to without training. Our Sharp Brain 30-Day Program is engineered to unlock 3-5x faster reading, up to 600+ WPM, with complete retention — not skimming. At your current pace, that's up to ${multiplierLabel} more words absorbed every minute.`
 }

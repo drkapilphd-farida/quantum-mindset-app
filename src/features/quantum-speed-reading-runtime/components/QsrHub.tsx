@@ -115,7 +115,7 @@ export function QsrHub({ activeMode, recommendation, onSelectMode, currentWpm, s
   return (
     <div className="space-y-7 rounded-2xl border border-border bg-card/60 p-5 sm:p-8">
       {/* 1. Identity */}
-      <p className={cn(TYPOGRAPHY.label, 'text-muted-foreground')}>Quantum Speed Reading™</p>
+      <p className={cn(TYPOGRAPHY.label, 'text-muted-foreground')}>Sharp Brain™</p>
 
       {/* 2. Reading Progress — WPM is the visual hero: the single
           largest, most confident number on the Hub. Level and Today's

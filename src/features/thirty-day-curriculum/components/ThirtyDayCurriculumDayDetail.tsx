@@ -207,7 +207,7 @@ export function ThirtyDayCurriculumDayDetail({
               <div>
                 <p className="text-sm font-semibold text-foreground">Upload Today&rsquo;s Chapter</p>
                 <p className="text-xs text-muted-foreground">
-                  Bring real reading material for &ldquo;{plan.theme.title}&rdquo; and practice Quantum Speed Reading on the real thing.
+                  Bring real reading material for &ldquo;{plan.theme.title}&rdquo; and practice Sharp Brain on the real thing.
                 </p>
               </div>
             </div>

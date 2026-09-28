@@ -140,9 +140,9 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           Transformer™ is the anchor target for Choose Your Path™'s
           "Upload & Learn™" card (/dashboard#upload-document), the direct,
           one-click destination for uploading a document from onboarding.
-          QSR-Bundled Access™ (see the "Upload & Learn / QSR Bundling"
+          QSR-Bundled Access™ (see the "Upload & Learn / Sharp Brain bundle"
           task) — no longer its own separate ₹499/mo product; it's
-          included in the 30-Day QSR Masterclass, the exact same access
+          included in the 30-Day Sharp Brain Masterclass, the exact same access
           check every curriculum day already gates on. The widget itself
           (AIDocumentTransformerWidget) shows the real ₹9,999 paywall
           modal for a non-pro user — no separate pricing chip needed here
@@ -152,7 +152,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           id="document-tools-heading"
           eyebrow="Tier 1 · Utility Hub"
           title="📄 Document Mastery Studio™"
-          description="Drop any PDF, textbook, or research paper. Our AI instantly converts it into Quantum Speed Reading drills, Mind Maps, and Neural Map Notes."
+          description="Drop any PDF, textbook, or research paper. Our AI instantly converts it into Smart Reading drills, Mind Maps, and Neural Map Notes."
         />
         <div id="upload-document">
           <AIDocumentTransformerWidget isPro={isPaidUser} recentDocuments={recentQuantumDocuments.slice(0, 1)} />
@@ -167,7 +167,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
         <DashboardSectionHeader
           id="programs-heading"
           eyebrow="Tier 3 · Flagship Program"
-          title={programs.qsr.name}
+          title={programs.sharpBrain.name}
           description="A flagship, structured 30-day mastery path with live mentorship."
         />
         <ThirtyDayMasterclassHeroCard />

@@ -53,7 +53,7 @@ export function QuantumDocumentMcqQuizView({ title, quizQuestions, onComplete, o
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className={TYPOGRAPHY.label}>Quantum Recall Quiz™</p>
+          <p className={TYPOGRAPHY.label}>Recall Quiz</p>
           <p className="truncate text-sm font-medium text-foreground">{title}</p>
         </div>
         <Button type="button" variant="ghost" size="icon-sm" onClick={onExit} aria-label="Exit quiz">

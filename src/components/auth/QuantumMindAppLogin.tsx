@@ -53,7 +53,7 @@ export default function QuantumMindAppLogin(): React.JSX.Element {
     setPending(false);
 
     if (accessResult.status === "unpaid") {
-      setError(`Your free practice window has ended. Purchase the ₹499 plan or join the ${programs.qsr.name} to continue.`);
+      setError(`Your free practice window has ended. Purchase the ₹499 plan or join the ${programs.sharpBrain.name} to continue.`);
       return;
     }
 

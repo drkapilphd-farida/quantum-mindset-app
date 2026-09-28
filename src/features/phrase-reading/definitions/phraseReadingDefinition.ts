@@ -31,8 +31,8 @@ export const PHRASE_READING_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/phrase-reading',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/phrase-reading',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.phrase_reading.title',

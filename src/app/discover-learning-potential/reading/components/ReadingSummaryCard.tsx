@@ -97,7 +97,7 @@ export function ReadingSummaryCard({ onContinue, measuredWpm, signalCount, hesit
     if (measuredWpm !== null) params.set('wpm', String(measuredWpm))
     params.set('style', highlights.profileLabel)
     params.set('opportunity', highlights.biggestImprovement)
-    router.push(`/discover-learning-potential/reading/quantum-speed-reading-intro?${params.toString()}`)
+    router.push(`/discover-learning-potential/reading/sharp-brain-intro?${params.toString()}`)
   }
 
   return (
@@ -182,7 +182,7 @@ export function ReadingSummaryCard({ onContinue, measuredWpm, signalCount, hesit
       >
         <p className={cn(TYPOGRAPHY.label, 'text-primary')}>Next Journey</p>
         <p className="mt-1 text-sm text-muted-foreground">{whyQuantumSpeedReadingHelps}</p>
-        <p className="mt-3 font-heading text-xl font-bold text-foreground">🚀 Quantum Speed Reading™</p>
+        <p className="mt-3 font-heading text-xl font-bold text-foreground">🚀 Sharp Brain™</p>
         <p className="mt-1 text-sm text-muted-foreground">Read Fast. Learn Better.</p>
         <p className="mt-2 text-sm font-semibold text-primary">{growthPotentialMessage}</p>
         <Button size="lg" className="mt-4 min-h-12 w-full rounded-full text-base font-semibold" onClick={handleStartQuantumSpeedReading}>

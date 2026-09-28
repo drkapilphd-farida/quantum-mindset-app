@@ -25,16 +25,16 @@ export type VerticalChunkSlidingCategory = {
 export const VERTICAL_CHUNK_SLIDING_CATEGORIES: readonly VerticalChunkSlidingCategory[] = [
   {
     id: 'quantum-focus',
-    label: 'Quantum Focus',
+    label: 'Deep Focus',
     sentences: [
       'Deep focus narrows the mind until only the essential signal remains clearly visible, and everything else fades quietly into the background.',
-      'A quantum mind holds one clear intention while filtering out every competing distraction that tries to pull it elsewhere.',
+      'A focused mind holds one clear intention while filtering out every competing distraction that tries to pull it elsewhere.',
       'True concentration feels quiet, not forced, like a lens settling perfectly into place after a long search.',
       'The sharpest attention usually arrives only after the noisy urge to multitask has finally faded away completely.',
       'Research on interruptions suggests that once attention is broken, it can take several minutes for the mind to fully return to its previous depth of focus.',
       'Focused energy directed at one clear target accomplishes more in an hour than scattered effort accomplishes in an entire afternoon.',
       'A single clear thought, held steadily without wavering, consistently outperforms a dozen half-finished ones chasing each other.',
-      'Quantum focus treats attention as a genuinely limited resource, not an unlimited tap that can be split infinitely.',
+      'Deep focus treats attention as a genuinely limited resource, not an unlimited tap that can be split infinitely.',
       'The mind that tries to watch everything at once ends up truly seeing almost nothing in real detail.',
       'Training this kind of focus starts small, often with just a few uninterrupted minutes practiced consistently every single day.',
       'A quiet room helps, but the real skill is learning to create quiet within a mind that is not.',
@@ -170,7 +170,7 @@ export const VERTICAL_CHUNK_SLIDING_CATEGORIES: readonly VerticalChunkSlidingCat
   },
   {
     id: 'speed-reading-science',
-    label: 'Speed Reading Science',
+    label: 'Reading Science',
     sentences: [
       'Fast readers see whole phrases at once instead of tracking one single word at a time across the page.',
       'Eye movement research shows the brain actually absorbs meaning during brief pauses, called fixations, not during the motion between them.',

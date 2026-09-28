@@ -15,7 +15,7 @@ import { VerticalChunkSlidingSettings } from './VerticalChunkSlidingSettings'
 import { VerticalChunkSlidingCanvas } from './VerticalChunkSlidingCanvas'
 import { VerticalChunkSlidingQuiz } from './VerticalChunkSlidingQuiz'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-vertical-chunk-sliding-best'
 
 type VerticalChunkSlidingExperienceProps = {

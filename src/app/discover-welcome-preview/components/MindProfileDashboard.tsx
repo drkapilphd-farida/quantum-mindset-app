@@ -137,7 +137,7 @@ export function MindProfileDashboard({
         >
           <div className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-indigo-600 uppercase dark:text-indigo-400">
             <Zap className="size-3.5" aria-hidden="true" />
-            Quantum Speed Reading Target
+            Smart Reading Target
           </div>
 
           <div className="mt-4 flex items-end justify-between gap-4">
@@ -149,7 +149,7 @@ export function MindProfileDashboard({
             </div>
             <ArrowRight className="mb-1.5 size-5 shrink-0 text-muted-foreground" aria-hidden="true" />
             <div className="text-right">
-              <p className="text-xs text-muted-foreground">Quantum Target</p>
+              <p className="text-xs text-muted-foreground">Trained Target</p>
               <p className="font-heading bg-gradient-to-r from-indigo-500 to-teal-500 bg-clip-text text-3xl font-bold tabular-nums text-transparent">
                 {QUANTUM_SPEED_TARGET_WPM}+ <span className="text-base font-medium text-muted-foreground">WPM</span>
               </p>
@@ -183,7 +183,7 @@ export function MindProfileDashboard({
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
           )}
         >
-          🔥 Unlock 600+ WPM Quantum Speed Reading Now
+          🔥 Unlock 600+ WPM Sharp Brain Now
           <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
         </motion.button>
       </motion.div>

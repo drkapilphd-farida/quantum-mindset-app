@@ -17,7 +17,7 @@ type QuantumReadingLandingProps = {
   todaysGoal: string
 }
 
-const MODE_SELECT_HREF_FALLBACK = '/labs/quantum-speed-reading/start/mode'
+const MODE_SELECT_HREF_FALLBACK = '/labs/sharp-brain/start/mode'
 
 const FEATURE_CHIPS = [
   { icon: Zap, label: 'Faster Reading' },
@@ -69,7 +69,7 @@ export function QuantumReadingLanding({
           Reading Intelligence Lab™
         </p>
         <h1 className="mt-3 font-heading text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl">
-          Quantum Speed Reading™
+          Sharp Brain™
         </h1>
         <p className="mx-auto mt-4 max-w-lg text-2xl leading-snug font-medium text-balance text-foreground/80 sm:text-3xl">
           Read entire pages,<br className="hidden sm:block" /> not individual words.

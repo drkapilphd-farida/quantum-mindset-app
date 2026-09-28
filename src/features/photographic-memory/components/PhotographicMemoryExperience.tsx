@@ -12,7 +12,7 @@ import { PhotographicMemorySettings } from './PhotographicMemorySettings'
 import { PhotographicMemoryCanvas } from './PhotographicMemoryCanvas'
 import { PhotographicMemoryCompleteScreen } from './PhotographicMemoryCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-photographic-memory-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

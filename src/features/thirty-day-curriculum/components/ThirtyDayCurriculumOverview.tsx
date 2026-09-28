@@ -62,7 +62,7 @@ export function ThirtyDayCurriculumOverview({
       <div className="relative rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 p-6 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95">
         <BrandWatermark className="absolute top-4 left-6" />
         <div className="mt-8 flex flex-col gap-2 sm:mt-6">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">30-Day Quantum Speed Reading Mastery Curriculum™</p>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Sharp Brain 30-Day Curriculum</p>
           <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Your Daily Roadmap</h1>
           <p className="max-w-2xl text-sm text-muted-foreground">
             30 sequential days across 4 phases, blending Brain Gym, Right-Brain/Intuition, Visualization, and Core Reading Intelligence into one

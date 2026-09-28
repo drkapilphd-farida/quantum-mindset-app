@@ -28,7 +28,7 @@ export function RsvpExperience(): React.JSX.Element {
     <ExerciseRunner
       definition={RSVP_DEFINITION}
       Canvas={RsvpCanvas}
-      labHref="/labs/quantum-speed-reading"
+      labHref="/labs/sharp-brain"
       previousExercise={previous}
       nextExercise={next}
     />

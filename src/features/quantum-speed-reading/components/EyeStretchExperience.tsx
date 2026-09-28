@@ -28,7 +28,7 @@ export function EyeStretchExperience(): React.JSX.Element {
     <ExerciseRunner
       definition={EYE_STRETCH_DEFINITION}
       Canvas={EyeStretchCanvas}
-      labHref="/labs/quantum-speed-reading"
+      labHref="/labs/sharp-brain"
       previousExercise={previous}
       nextExercise={next}
     />

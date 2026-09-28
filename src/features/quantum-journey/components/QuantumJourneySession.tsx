@@ -14,13 +14,13 @@ import {
   playSessionCompleteChime,
   startFocusAmbient,
   stopFocusAmbient,
-} from '@/app/unified-quantum-session-preview/components/soundEngine'
+} from '@/app/unified-session-preview/components/soundEngine'
 import { useSoundPreference } from '@/hooks/exercises/useSoundPreference'
-import { MindAwakeningPhase } from '@/app/unified-quantum-session-preview/components/MindAwakeningPhase'
-import { QuantumReadingSprintPhase, type QuantumReadingSprintResult } from '@/app/unified-quantum-session-preview/components/QuantumReadingSprintPhase'
-import { RetentionCheckPhase } from '@/app/unified-quantum-session-preview/components/RetentionCheckPhase'
-import { computeReadingXp, computeRetentionXp, computeReadingPowerScore } from '@/app/unified-quantum-session-preview/components/quantumReadingSprintDataset'
-import { saveDailyQuantumSession } from '@/app/unified-quantum-session-preview/actions/saveDailyQuantumSession'
+import { MindAwakeningPhase } from '@/app/unified-session-preview/components/MindAwakeningPhase'
+import { QuantumReadingSprintPhase, type QuantumReadingSprintResult } from '@/app/unified-session-preview/components/QuantumReadingSprintPhase'
+import { RetentionCheckPhase } from '@/app/unified-session-preview/components/RetentionCheckPhase'
+import { computeReadingXp, computeRetentionXp, computeReadingPowerScore } from '@/app/unified-session-preview/components/quantumReadingSprintDataset'
+import { saveDailyQuantumSession } from '@/app/unified-session-preview/actions/saveDailyQuantumSession'
 import { ProgressiveChunkReadingExperience } from '@/features/progressive-chunk-reading/components/ProgressiveChunkReadingExperience'
 import type { RuntimeResult } from '@/hooks/exercise-engine/useUniversalExerciseRuntime'
 import { EyeWarmupExperience } from '@/features/quantum-speed-reading/components/EyeWarmupExperience'
@@ -111,7 +111,7 @@ const READING_MODE_STEP_LABELS: Record<ReadingMode, string> = {
   'vertical-word': 'Vertical Word Reading™',
   sentence: 'Sentence Reading™',
   paragraph: 'Paragraph Reading™',
-  'dynamic-chunking': 'Quantum Chunk Reading™',
+  'dynamic-chunking': 'Chunk Reading™',
 }
 
 function WarmupPrepScreen({ exerciseTitle, onStart, onSkip }: { exerciseTitle: string; onStart: () => void; onSkip: () => void }): React.JSX.Element {
@@ -848,7 +848,7 @@ export function QuantumJourneySession({
             <div className="flex flex-col items-center gap-3 sm:flex-row">
               {day < 21 && (
                 <Button asChild size="lg" className="rounded-full">
-                  <Link href={`/labs/quantum-speed-reading/journey/${day + 1}`}>Start Day {day + 1} →</Link>
+                  <Link href={`/labs/sharp-brain/journey/${day + 1}`}>Start Day {day + 1} →</Link>
                 </Button>
               )}
               <Button type="button" variant="outline" size="lg" className="rounded-full" onClick={() => router.push('/dashboard')}>

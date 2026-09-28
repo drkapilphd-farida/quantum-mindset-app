@@ -15,7 +15,7 @@ export type LearningModeDefinition = {
 // Research Mode™ gained a real runtime in Production AI Integration
 // (ALS-24) — see UNAVAILABLE_MODE_IDS below.
 export const LEARNING_MODES: readonly LearningModeDefinition[] = [
-  { id: 'quantum-speed-reading', emoji: '📖', title: 'Quantum Speed Reading™', description: 'Read using the AI Reading Engine.' },
+  { id: 'quantum-speed-reading', emoji: '📖', title: 'Sharp Brain™', description: 'Read using the AI Reading Engine.' },
   { id: 'memory-mode', emoji: '🧠', title: 'Memory Mode™', description: 'Improve long-term retention using AI-guided memory strategies.' },
   { id: 'smart-notes', emoji: '📝', title: 'Smart Notes™', description: 'Structured AI-generated notes.' },
   // AI Learning Studio™ Sprint ALS-16 — a real, stepped session like the
@@ -73,7 +73,7 @@ export const LEARNING_MODES: readonly LearningModeDefinition[] = [
 // bug, not a design choice.
 export function resolveLearningModeHref(mode: LearningModeDefinition, projectId: string): string {
   if (mode.id === 'ai-mentor') return '/preview/ai-mentor'
-  if (mode.id === 'quantum-speed-reading') return `/preview/learning-projects/${projectId}/quantum-journey`
+  if (mode.id === 'quantum-speed-reading') return `/preview/learning-projects/${projectId}/learning-journey`
   return `/preview/learning-projects/${projectId}/workspace?mode=${mode.id}`
 }
 

@@ -53,7 +53,7 @@ export function QuantumJourneyChunkReadingStage({ projectId, chunkAssets, onComp
       speedMode: 'auto',
       scoringRules: DEFAULT_SCORING_RULES,
       intelligenceDimension: 'reading',
-      href: `/preview/learning-projects/${projectId}/quantum-journey`,
+      href: `/preview/learning-projects/${projectId}/learning-journey`,
       labHref: `/preview/learning-projects/${projectId}`,
       locale: 'en',
       i18nKeys: {

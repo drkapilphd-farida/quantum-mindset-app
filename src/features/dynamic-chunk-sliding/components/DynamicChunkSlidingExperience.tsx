@@ -14,7 +14,7 @@ import { DYNAMIC_CHUNK_SLIDING_UNITS } from '../dynamicChunkSlidingDataset'
 import { DynamicChunkSlidingSettings } from './DynamicChunkSlidingSettings'
 import { DynamicChunkSlidingCanvas } from './DynamicChunkSlidingCanvas'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-dynamic-chunk-sliding-best'
 
 const UNIT_TEXTS = DYNAMIC_CHUNK_SLIDING_UNITS.map((unit) => unit.text)

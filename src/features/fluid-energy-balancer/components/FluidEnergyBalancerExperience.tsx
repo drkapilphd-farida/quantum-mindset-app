@@ -11,7 +11,7 @@ import { FluidEnergyBalancerSettings } from './FluidEnergyBalancerSettings'
 import { FluidEnergyBalancerCanvas } from './FluidEnergyBalancerCanvas'
 import { FluidEnergyBalancerCompleteScreen } from './FluidEnergyBalancerCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-fluid-energy-balancer-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

@@ -10,7 +10,7 @@ import { PictorialEssenceSprintSettings } from './PictorialEssenceSprintSettings
 import { PictorialEssenceSprintCanvas } from './PictorialEssenceSprintCanvas'
 import { PictorialEssenceSprintCompleteScreen } from './PictorialEssenceSprintCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-pictorial-essence-sprint-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

@@ -20,7 +20,7 @@ import { buildWordsForCategory, pickSessionCategory, type FlashRecallSprintCateg
 import { VerticalFlashRecallSettings } from './VerticalFlashRecallSettings'
 import { VerticalFlashRecallCanvas } from './VerticalFlashRecallCanvas'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-vertical-flash-recall-best'
 
 type VerticalFlashRecallExperienceProps = {

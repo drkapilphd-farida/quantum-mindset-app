@@ -267,7 +267,7 @@ export function ReadingWorkspace({ documentId, documentTitle, chunkStrategy, ini
         <EmptyStateCard
           icon={BookOpen}
           title={documentTitle}
-          description="Start your first Quantum Speed Reading™ session for this document."
+          description="Start your first Sharp Brain™ session for this document."
           action={
             <Button disabled={pending} onClick={() => runAction(() => startReadingSession({ documentId, chunkStrategy }))}>
               {pending ? 'Starting…' : 'Start Reading'}

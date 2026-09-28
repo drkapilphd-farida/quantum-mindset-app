@@ -50,7 +50,7 @@ export default async function SubscriptionPage(): Promise<React.JSX.Element> {
         <p className="mt-4 text-sm text-muted-foreground">
           {isPaidUser
             ? 'Your account has an active subscription. Manage billing, seats, or your plan directly through Razorpay’s checkout confirmation email.'
-            : `You’re on the free plan. Upgrade any time to unlock unlimited AI document transformations, the ${programs.qsr.name}, and more.`}
+            : `You’re on the free plan. Upgrade any time to unlock unlimited AI document transformations, the ${programs.sharpBrain.name}, and more.`}
         </p>
 
         <Button asChild className="mt-5 w-full rounded-full sm:w-auto">

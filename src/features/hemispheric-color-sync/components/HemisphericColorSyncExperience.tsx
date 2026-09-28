@@ -12,7 +12,7 @@ import { HemisphericColorSyncSettings } from './HemisphericColorSyncSettings'
 import { HemisphericColorSyncCanvas } from './HemisphericColorSyncCanvas'
 import { HemisphericColorSyncCompleteScreen } from './HemisphericColorSyncCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-hemispheric-color-sync-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

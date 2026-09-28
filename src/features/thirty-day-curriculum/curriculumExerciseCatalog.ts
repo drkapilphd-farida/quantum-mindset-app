@@ -23,7 +23,7 @@ export const CURRICULUM_EXERCISE_CATEGORIES: readonly CurriculumExerciseCategory
 
 export const CURRICULUM_CATEGORY_LABELS: Record<CurriculumExerciseCategory, string> = {
   'brain-gym': 'Brain Gym',
-  'right-brain-intuition': 'Right-Brain / Intuition',
+  'right-brain-intuition': 'Visual Focus / Intuition',
   visualization: 'Visualization',
   'reading-intelligence': 'Reading Intelligence',
 }
@@ -38,36 +38,36 @@ export type CurriculumCatalogExercise = {
 // ---- Brain Gym (Visual Activation Suite + standalone Brain Gym configs
 // + Eye Foundation Module) ----
 const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'theta-breathing-anchor', title: 'Theta Breathing & Focal Anchor', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
+  { id: 'theta-breathing-anchor', title: 'Theta Breathing & Focal Anchor', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
   {
     id: 'cardinal-oculomotor-stretches',
     title: 'Cardinal Oculomotor Stretches',
-    href: '/labs/quantum-speed-reading/brain-gym',
+    href: '/labs/sharp-brain/brain-gym',
     category: 'brain-gym',
   },
-  { id: 'infinity-figure-eight-gliding', title: 'Infinity Figure-8 Gliding', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
-  { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
+  { id: 'infinity-figure-eight-gliding', title: 'Infinity Figure-8 Gliding', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
   {
     id: 'quantum-tachistoscope-multi-word-blast',
-    title: 'Quantum Tachistoscope Multi-Word Blast',
-    href: '/labs/quantum-speed-reading/brain-gym',
+    title: 'Tachistoscope Multi-Word Blast',
+    href: '/labs/sharp-brain/brain-gym',
     category: 'brain-gym',
   },
-  { id: 'aura-edge-color-pulsing', title: 'Aura Edge Color Pulsing', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
-  { id: 'blink-trigger-micro-recall', title: 'Blink-Trigger Micro-Recall', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
-  { id: 'tratak-afterimage-stretches', title: 'Tratak Afterimage Stretches', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
-  { id: 'schulte-grid-speed-drill', title: 'Peripheral Vision Activator', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
-  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', href: '/labs/quantum-speed-reading/brain-gym', category: 'brain-gym' },
-  { id: 'saccadic-eye-jump', title: 'Saccadic Eye Jump', href: '/labs/quantum-speed-reading/saccadic-eye-jump', category: 'brain-gym' },
-  { id: 'cross-lateral-tap', title: 'Cross-Lateral Tap', href: '/labs/quantum-speed-reading/cross-lateral-tap', category: 'brain-gym' },
-  { id: 'fast-pattern-blinking', title: 'Fast Pattern Blinking', href: '/labs/quantum-speed-reading/fast-pattern-blinking', category: 'brain-gym' },
+  { id: 'aura-edge-color-pulsing', title: 'Aura Edge Color Pulsing', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'blink-trigger-micro-recall', title: 'Blink-Trigger Micro-Recall', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'tratak-afterimage-stretches', title: 'Tratak Afterimage Stretches', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'schulte-grid-speed-drill', title: 'Peripheral Vision Activator', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'saccadic-eye-jump', title: 'Saccadic Eye Jump', href: '/labs/sharp-brain/saccadic-eye-jump', category: 'brain-gym' },
+  { id: 'cross-lateral-tap', title: 'Cross-Lateral Tap', href: '/labs/sharp-brain/cross-lateral-tap', category: 'brain-gym' },
+  { id: 'fast-pattern-blinking', title: 'Fast Pattern Blinking', href: '/labs/sharp-brain/fast-pattern-blinking', category: 'brain-gym' },
   {
     id: 'peripheral-expanding-circle',
     title: 'Peripheral Expanding Circle',
-    href: '/labs/quantum-speed-reading/peripheral-expanding-circle',
+    href: '/labs/sharp-brain/peripheral-expanding-circle',
     category: 'brain-gym',
   },
-  { id: 'brain-gym-circuit', title: '2-Minute Brain Gym Circuit™', href: '/labs/quantum-speed-reading/brain-gym-circuit', category: 'brain-gym' },
+  { id: 'brain-gym-circuit', title: '2-Minute Brain Gym Circuit™', href: '/labs/sharp-brain/brain-gym-circuit', category: 'brain-gym' },
 ]
 
 // Eye Foundation Module™ — a real, server-enforced sequential-locking
@@ -79,49 +79,49 @@ const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
 // keeps a learner who follows the curriculum day by day from ever hitting
 // a locked screen for a prerequisite they haven't reached yet.
 const EYE_FOUNDATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'eye-warm-up', title: 'Eye Warm-up', href: '/labs/quantum-speed-reading/eye-warm-up', category: 'brain-gym' },
-  { id: 'eye-stretch', title: 'Eye Stretch', href: '/labs/quantum-speed-reading/eye-stretch', category: 'brain-gym' },
-  { id: 'eye-span', title: 'Eye Span', href: '/labs/quantum-speed-reading/eye-span', category: 'brain-gym' },
-  { id: 'regression-control', title: 'Regression Control', href: '/labs/quantum-speed-reading/regression-control', category: 'brain-gym' },
-  { id: 'reading-speed', title: 'Reading Speed', href: '/labs/quantum-speed-reading/reading-speed', category: 'brain-gym' },
-  { id: 'rsvp', title: 'RSVP', href: '/labs/quantum-speed-reading/rsvp', category: 'brain-gym' },
+  { id: 'eye-warm-up', title: 'Eye Warm-up', href: '/labs/sharp-brain/eye-warm-up', category: 'brain-gym' },
+  { id: 'eye-stretch', title: 'Eye Stretch', href: '/labs/sharp-brain/eye-stretch', category: 'brain-gym' },
+  { id: 'eye-span', title: 'Eye Span', href: '/labs/sharp-brain/eye-span', category: 'brain-gym' },
+  { id: 'regression-control', title: 'Regression Control', href: '/labs/sharp-brain/regression-control', category: 'brain-gym' },
+  { id: 'reading-speed', title: 'Reading Speed', href: '/labs/sharp-brain/reading-speed', category: 'brain-gym' },
+  { id: 'rsvp', title: 'RSVP', href: '/labs/sharp-brain/rsvp', category: 'brain-gym' },
 ]
 
 // ---- Right-Brain / Intuition (Right Brain Hub + Intuition Hub) ----
 const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'photographic-memory', title: 'Deep Visualisation Recall™', href: '/labs/quantum-speed-reading/photographic-memory', category: 'right-brain-intuition' },
+  { id: 'photographic-memory', title: 'Deep Visualisation Recall™', href: '/labs/sharp-brain/visual-memory', category: 'right-brain-intuition' },
   {
     id: 'pictorial-essence-sprint',
     title: 'High-Speed Pictorial Essence Sprint™',
-    href: '/labs/quantum-speed-reading/pictorial-essence-sprint',
+    href: '/labs/sharp-brain/pictorial-essence-sprint',
     category: 'right-brain-intuition',
   },
   {
     id: 'hemispheric-color-sync',
-    title: 'Hemispheric Color-Word Sync Grid™',
-    href: '/labs/quantum-speed-reading/hemispheric-color-sync',
+    title: 'Color-Word Sync Grid',
+    href: '/labs/sharp-brain/color-word-sync',
     category: 'right-brain-intuition',
   },
   {
     id: 'after-image-gazing',
     title: 'After-Image / Complementary Color Gazing™',
-    href: '/labs/quantum-speed-reading/after-image-gazing',
+    href: '/labs/sharp-brain/after-image-gazing',
     category: 'right-brain-intuition',
   },
-  { id: 'dot-memory-grid', title: 'Dot Memory Grid™', href: '/labs/quantum-speed-reading/dot-memory-grid', category: 'right-brain-intuition' },
-  { id: 'number-flash-grid', title: 'Number Flash Grid™', href: '/labs/quantum-speed-reading/number-flash-grid', category: 'right-brain-intuition' },
-  { id: 'word-flash-grid', title: 'Word Flash Grid™', href: '/labs/quantum-speed-reading/word-flash-grid', category: 'right-brain-intuition' },
-  { id: 'image-flash-grid', title: 'Image Flash Grid™', href: '/labs/quantum-speed-reading/image-flash-grid', category: 'right-brain-intuition' },
+  { id: 'dot-memory-grid', title: 'Dot Memory Grid™', href: '/labs/sharp-brain/dot-memory-grid', category: 'right-brain-intuition' },
+  { id: 'number-flash-grid', title: 'Number Flash Grid™', href: '/labs/sharp-brain/number-flash-grid', category: 'right-brain-intuition' },
+  { id: 'word-flash-grid', title: 'Word Flash Grid™', href: '/labs/sharp-brain/word-flash-grid', category: 'right-brain-intuition' },
+  { id: 'image-flash-grid', title: 'Image Flash Grid™', href: '/labs/sharp-brain/image-flash-grid', category: 'right-brain-intuition' },
   {
     id: 'esp-zener-telepathy-sprint',
-    title: 'ESP Zener Card Telepathy Sprint™',
-    href: '/labs/quantum-speed-reading/esp-zener-telepathy',
+    title: 'Zener Card Attention Sprint',
+    href: '/labs/sharp-brain/zener-intuition',
     category: 'right-brain-intuition',
   },
   {
     id: 'quantum-hidden-target-grid',
-    title: 'Quantum Hidden Target Grid™',
-    href: '/labs/quantum-speed-reading/quantum-hidden-target-grid',
+    title: 'Hidden Target Grid',
+    href: '/labs/sharp-brain/hidden-target-grid',
     category: 'right-brain-intuition',
   },
 ]
@@ -130,23 +130,23 @@ const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
 const VISUALIZATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   {
     id: 'quantum-mental-rotation',
-    title: 'Quantum Mental Object Rotation™',
-    href: '/labs/quantum-speed-reading/quantum-mental-rotation',
+    title: 'Mental Object Rotation',
+    href: '/labs/sharp-brain/mental-rotation',
     category: 'visualization',
   },
   {
     id: 'color-scene-transformation',
     title: 'Color & Scene Transformation Journey™',
-    href: '/labs/quantum-speed-reading/color-scene-transformation',
+    href: '/labs/sharp-brain/color-scene-transformation',
     category: 'visualization',
   },
   {
     id: 'sensory-hologram-builder',
-    title: 'Sensory Hologram Builder™',
-    href: '/labs/quantum-speed-reading/sensory-hologram-builder',
+    title: 'Sensory Imagery Builder',
+    href: '/labs/sharp-brain/sensory-hologram-builder',
     category: 'visualization',
   },
-  { id: 'fluid-energy-balancer', title: 'Fluid Energy Balancer™', href: '/labs/quantum-speed-reading/fluid-energy-balancer', category: 'visualization' },
+  { id: 'fluid-energy-balancer', title: 'Calm Breath Balance', href: '/labs/sharp-brain/fluid-energy-balancer', category: 'visualization' },
 ]
 
 // ---- Core Reading Intelligence (Reading Hub + orphaned standalone) ----
@@ -154,68 +154,68 @@ const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
   {
     id: 'dynamic-chunk-sliding',
     title: 'Dynamic Chunk Sliding™',
-    href: '/labs/quantum-speed-reading/dynamic-chunk-sliding',
+    href: '/labs/sharp-brain/dynamic-chunk-sliding',
     category: 'reading-intelligence',
   },
   {
     id: 'vertical-chunk-sliding',
     title: 'Vertical Chunk Sliding™',
-    href: '/labs/quantum-speed-reading/vertical-chunk-sliding',
+    href: '/labs/sharp-brain/vertical-chunk-sliding',
     category: 'reading-intelligence',
   },
   {
     id: 'flash-recall-sprint',
     title: 'Flash Recall & Retention Sprint™',
-    href: '/labs/quantum-speed-reading/flash-recall-sprint',
+    href: '/labs/sharp-brain/flash-recall-sprint',
     category: 'reading-intelligence',
   },
   {
     id: 'vertical-flash-recall',
     title: 'Vertical Flash Recall & Retention Sprint™',
-    href: '/labs/quantum-speed-reading/vertical-flash-recall',
+    href: '/labs/sharp-brain/vertical-flash-recall',
     category: 'reading-intelligence',
   },
   {
     id: 'vertical-word-reading',
     title: 'Vertical Word Reading™',
-    href: '/labs/quantum-speed-reading/vertical-word-reading',
+    href: '/labs/sharp-brain/vertical-word-reading',
     category: 'reading-intelligence',
   },
-  { id: 'phrase-reading-mode', title: 'Phrase Reading™', href: '/labs/quantum-speed-reading/phrase-reading-mode', category: 'reading-intelligence' },
+  { id: 'phrase-reading-mode', title: 'Phrase Reading™', href: '/labs/sharp-brain/phrase-reading-mode', category: 'reading-intelligence' },
   {
     id: 'sentence-reading-mode',
     title: 'Sentence Reading™',
-    href: '/labs/quantum-speed-reading/sentence-reading-mode',
+    href: '/labs/sharp-brain/sentence-reading-mode',
     category: 'reading-intelligence',
   },
   {
     id: 'paragraph-reading-mode',
     title: 'Paragraph Reading™',
-    href: '/labs/quantum-speed-reading/paragraph-reading-mode',
+    href: '/labs/sharp-brain/paragraph-reading-mode',
     category: 'reading-intelligence',
   },
   {
     id: 'guided-paragraph-reading-mode',
     title: 'Guided Paragraph Reading™',
-    href: '/labs/quantum-speed-reading/guided-paragraph-reading-mode',
+    href: '/labs/sharp-brain/guided-paragraph-reading-mode',
     category: 'reading-intelligence',
   },
   {
     id: 'subvocalization-destroyer',
-    title: 'Subvocalization Destroyer™',
-    href: '/labs/quantum-speed-reading/subvocalization-destroyer',
+    title: 'Inner Voice Control™',
+    href: '/labs/sharp-brain/subvocalization-destroyer',
     category: 'reading-intelligence',
   },
   {
     id: 'photographic-reading',
-    title: 'Photographic Reading™',
-    href: '/labs/quantum-speed-reading/photographic-reading',
+    title: 'Visual Memory Reading',
+    href: '/labs/sharp-brain/visual-reading',
     category: 'reading-intelligence',
   },
   {
     id: 'dual-stream-split-reader',
     title: 'Dual-Stream Split Reader™',
-    href: '/labs/quantum-speed-reading/dual-stream-split-reader',
+    href: '/labs/sharp-brain/dual-stream-split-reader',
     category: 'reading-intelligence',
   },
 ]
@@ -225,13 +225,13 @@ const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
 // paragraph-reading (see readingExpansionModule.ts). Listed in that exact
 // order for the same reason as EYE_FOUNDATION_EXERCISES above.
 const READING_EXPANSION_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'phrase-reading', title: 'Phrase Reading (Idea Recognition)', href: '/labs/quantum-speed-reading/phrase-reading', category: 'reading-intelligence' },
-  { id: 'multi-line-reading', title: 'Multi-Line Reading', href: '/labs/quantum-speed-reading/multi-line-reading', category: 'reading-intelligence' },
-  { id: 'sentence-reading', title: 'Sentence Reading (Idea Recognition)', href: '/labs/quantum-speed-reading/sentence-reading', category: 'reading-intelligence' },
+  { id: 'phrase-reading', title: 'Phrase Reading (Idea Recognition)', href: '/labs/sharp-brain/phrase-reading', category: 'reading-intelligence' },
+  { id: 'multi-line-reading', title: 'Multi-Line Reading', href: '/labs/sharp-brain/multi-line-reading', category: 'reading-intelligence' },
+  { id: 'sentence-reading', title: 'Sentence Reading (Idea Recognition)', href: '/labs/sharp-brain/sentence-reading', category: 'reading-intelligence' },
   {
     id: 'paragraph-reading',
     title: 'Paragraph Reading (Meaning Block Recognition™)',
-    href: '/labs/quantum-speed-reading/paragraph-reading',
+    href: '/labs/sharp-brain/paragraph-reading',
     category: 'reading-intelligence',
   },
 ]
@@ -241,17 +241,17 @@ const READING_EXPANSION_EXERCISES: readonly CurriculumCatalogExercise[] = [
 // peripheral-flash (see flashIntelligenceModule.ts). Same ordering
 // discipline as above.
 const FLASH_INTELLIGENCE_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'word-flash', title: 'Rapid Recognition Drill', href: '/labs/quantum-speed-reading/word-flash', category: 'reading-intelligence' },
-  { id: 'number-flash', title: 'Number Flash', href: '/labs/quantum-speed-reading/number-flash', category: 'reading-intelligence' },
-  { id: 'symbol-flash', title: 'Symbol Flash', href: '/labs/quantum-speed-reading/symbol-flash', category: 'reading-intelligence' },
-  { id: 'mixed-flash', title: 'Mixed Flash', href: '/labs/quantum-speed-reading/mixed-flash', category: 'reading-intelligence' },
-  { id: 'peripheral-flash', title: 'Peripheral Flash', href: '/labs/quantum-speed-reading/peripheral-flash', category: 'reading-intelligence' },
+  { id: 'word-flash', title: 'Rapid Recognition Drill', href: '/labs/sharp-brain/word-flash', category: 'reading-intelligence' },
+  { id: 'number-flash', title: 'Number Flash', href: '/labs/sharp-brain/number-flash', category: 'reading-intelligence' },
+  { id: 'symbol-flash', title: 'Symbol Flash', href: '/labs/sharp-brain/symbol-flash', category: 'reading-intelligence' },
+  { id: 'mixed-flash', title: 'Mixed Flash', href: '/labs/sharp-brain/mixed-flash', category: 'reading-intelligence' },
+  { id: 'peripheral-flash', title: 'Peripheral Flash', href: '/labs/sharp-brain/peripheral-flash', category: 'reading-intelligence' },
 ]
 
 const PROGRESSIVE_CHUNK_READING: CurriculumCatalogExercise = {
   id: 'progressive-chunk-reading',
   title: 'Progressive Chunk Reading',
-  href: '/labs/quantum-speed-reading/progressive-chunk-reading',
+  href: '/labs/sharp-brain/progressive-chunk-reading',
   category: 'reading-intelligence',
 }
 

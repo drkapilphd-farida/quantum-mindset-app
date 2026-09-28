@@ -24,8 +24,8 @@ export const SYMBOL_FLASH_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/symbol-flash',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/symbol-flash',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.symbol_flash.title',

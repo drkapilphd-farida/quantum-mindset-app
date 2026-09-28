@@ -34,7 +34,7 @@ import '../numberFlashDataset'
 const EXERCISE_ID = 'number-flash'
 // Sprint-12: Flash Intelligence Pack™ is now one guided sequence — this
 // points at the next real mission (Symbol Flash), not back to the lab hub.
-const NEXT_EXERCISE_HREF = '/labs/quantum-speed-reading/symbol-flash'
+const NEXT_EXERCISE_HREF = '/labs/sharp-brain/symbol-flash'
 const LEVEL_COUNT = RAMP_LEVEL_TIERS.length // 5 — Beginner..Master
 
 const PLAYER_COPY = {

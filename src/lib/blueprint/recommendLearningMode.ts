@@ -39,7 +39,7 @@ export function recommendLearningMode(blueprint: LearningBlueprint): LearningMod
     return {
       modeId: 'quantum-speed-reading',
       reason:
-        "This chapter is concept-heavy and requires continuous reading. We recommend beginning with Quantum Speed Reading™ to improve comprehension before memory practice.",
+        "This chapter is concept-heavy and requires continuous reading. We recommend beginning with Sharp Brain™ to improve comprehension before memory practice.",
     }
   }
 
@@ -59,6 +59,6 @@ export function recommendLearningMode(blueprint: LearningBlueprint): LearningMod
 
   return {
     modeId: 'quantum-speed-reading',
-    reason: 'A steady first read is the best place to start with this material. We recommend Quantum Speed Reading™ to build a solid foundation before anything else.',
+    reason: 'A steady first read is the best place to start with this material. We recommend Sharp Brain™ to build a solid foundation before anything else.',
   }
 }

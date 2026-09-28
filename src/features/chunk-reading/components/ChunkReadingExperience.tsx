@@ -19,7 +19,7 @@ import { getContentForExercise } from '@/lib/exercise-engine/datasetEngine'
 import '../chunkDataset'
 
 const EXERCISE_ID = 'chunk-reading'
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 
 // ── Chunk stimulus renderer ───────────────────────────────────────────────────
 // Sizing is handled by the shared Typography Engine (FitText) — it scales by

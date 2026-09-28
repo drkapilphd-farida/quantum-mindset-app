@@ -13,7 +13,7 @@ import {
 } from '@/features/thirty-day-curriculum/curriculumProgress'
 import { programs } from '@/config/site.config'
 
-const CURRICULUM_ROUTE = '/labs/quantum-speed-reading/thirty-day-curriculum'
+const CURRICULUM_ROUTE = '/labs/sharp-brain/thirty-day-curriculum'
 
 // Member-Exclusive Simplification™ — this used to also carry the ₹9,999
 // enrollment CTA, a WhatsApp promo banner, and a reviews link. All
@@ -54,7 +54,7 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex w-fit items-center rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold tracking-wider text-emerald-700 uppercase dark:text-emerald-400">
-                {programs.qsr.name}
+                {programs.sharpBrain.name}
               </span>
               {currentStreak > 0 && (
                 <span
@@ -66,7 +66,7 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
                 </span>
               )}
             </div>
-            <h2 className="mt-2 font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl">⚡ 30-Day Quantum Speed Reading Mastery™</h2>
+            <h2 className="mt-2 font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl">⚡ Sharp Brain 30-Day Program</h2>
           </div>
         </div>
 

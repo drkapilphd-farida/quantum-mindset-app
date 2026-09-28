@@ -24,10 +24,10 @@ import { trainer, upcomingEvents } from '@/config/site.config'
 // identity (per explicit brief) rather than the QSR-flagship-only
 // framing the previous title/description used; the QSR program itself
 // is still the first product featured on the page and keeps its own
-// title/description on its own /programs/quantum-speed-reading route.
+// title/description on its own /programs/sharp-brain route.
 const homeTitle = 'Dr. Kapil Dev Sharma — Brain, Mind & Meditation Coach | Mind Ur Mind'
 const homeDescription =
-  `${trainer.name} — brain, mind and meditation coach with ${trainer.years.total} years in education and mind training. Quantum Speed Reading, overthinking reset, meditation retreats, 1-on-1 coaching and corporate brain performance workshops.`
+  `${trainer.name} — brain, mind and meditation coach with ${trainer.years.total} years in education and mind training. Sharp Brain, overthinking reset, meditation retreats, 1-on-1 coaching and corporate brain performance workshops.`
 
 export const metadata: Metadata = {
   ...buildPageMetadata({
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     'exam preparation reading speed',
     'competitive exam study techniques',
     'reading speed test India',
-    'quantum speed reading Vadodara',
+    'sharp brain program Vadodara',
     'Dr. Kapil Dev Sharma',
     'brain and mind coach Vadodara',
   ],
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
 // The Mumbai in-person workshop banner (previously rendered here via
 // HomeMumbaiWorkshopFeature) is removed from the homepage entirely per
 // that task — the component file and its own page
-// (/programs/quantum-speed-reading-mumbai) are untouched and still
+// (/programs/sharp-brain) are untouched and still
 // directly reachable, just not linked from here until the batch is
 // confirmed. HomeGalleryGlimpse is still not rendered here (unrelated to
 // this pass — see the prior architecture note this replaces).

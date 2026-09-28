@@ -30,7 +30,7 @@ export function WordFlashGridCompleteScreen({
   bestScorePercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: WordFlashGridCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = computeAccuracyPercent(totalCorrect, totalWords)
 

@@ -19,7 +19,7 @@ import { SensoryHologramBuilderCanvas } from './SensoryHologramBuilderCanvas'
 import { SensoryHologramBuilderReflectionScreen } from './SensoryHologramBuilderReflectionScreen'
 import { SensoryHologramBuilderCompleteScreen } from './SensoryHologramBuilderCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = SENSORY_HOLOGRAM_BUILDER_STORAGE_KEY
 const DEFAULT_GOAL_ID = HOLOGRAM_GOALS[0]!.id
 

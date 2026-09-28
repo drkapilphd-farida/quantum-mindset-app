@@ -6,7 +6,7 @@ import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessi
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
 import { ReadingProgressBar } from '@/features/reading-engine/components/ReadingProgressBar'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
-import { playCorrectChime, playGentleMissChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playCorrectChime, playGentleMissChime } from '@/app/unified-session-preview/components/soundEngine'
 import {
   ROUNDS_PER_SESSION,
   PRESENTATION_DURATION_CHOICES_MS,
@@ -229,7 +229,7 @@ export function QuantumMentalRotationCanvas({ onComplete, onExitRequested }: Qua
           canvas renders (the 3D object, option swatches) can ever
           visually escape to the right on narrow mobile viewports. */}
       <div className="w-full overflow-x-hidden">
-        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Quantum Mental Object Rotation™</p>
+        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Mental Object Rotation</p>
 
         <div className="mt-4 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
           <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${ROUNDS_PER_SESSION}`} />

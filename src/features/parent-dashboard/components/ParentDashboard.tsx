@@ -1,6 +1,6 @@
 import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
 import { computeDailyStreak, computeTodaysProgress } from '@/lib/exercises/practiceHistory'
-import { getDailyQuantumSessionHistory } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
+import { getDailyQuantumSessionHistory } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import { getQuantumDocumentSessionHistory } from '@/features/quantum-document-transformer/actions/getQuantumDocumentSessionHistory'
 import { getQuantumDocumentChapterScores } from '@/features/quantum-document-transformer/actions/getQuantumDocumentChapterScores'
 import { getQuantumDocumentCount } from '@/features/quantum-document-transformer/getQuantumDocumentCount'

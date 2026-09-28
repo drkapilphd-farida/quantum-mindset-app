@@ -39,24 +39,24 @@ export const READING_EXPANSION_MODULE: readonly ExerciseSequenceItem[] = [
     exerciseId: 'phrase-reading',
     title: 'Phrase Reading',
     summary: 'Recognise the exact meaning of a phrase among near-identical wording.',
-    href: '/labs/quantum-speed-reading/phrase-reading',
+    href: '/labs/sharp-brain/phrase-reading',
   },
   {
     exerciseId: 'multi-line-reading',
     title: 'Multi-Line Reading',
     summary: 'Read a real paragraph, then recall exactly which line contained what.',
-    href: '/labs/quantum-speed-reading/multi-line-reading',
+    href: '/labs/sharp-brain/multi-line-reading',
   },
   {
     exerciseId: 'sentence-reading',
     title: 'Sentence Reading',
     summary: 'Recognise a sentence\'s complete idea instantly, without reading word by word.',
-    href: '/labs/quantum-speed-reading/sentence-reading',
+    href: '/labs/sharp-brain/sentence-reading',
   },
   {
     exerciseId: 'paragraph-reading',
     title: 'Paragraph Reading',
     summary: 'Read a complete paragraph as one meaning block, then show what you understood.',
-    href: '/labs/quantum-speed-reading/paragraph-reading',
+    href: '/labs/sharp-brain/paragraph-reading',
   },
 ] as const

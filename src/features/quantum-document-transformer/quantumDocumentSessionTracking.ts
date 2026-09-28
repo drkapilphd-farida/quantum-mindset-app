@@ -1,6 +1,6 @@
 // Gamification & XP Sync — pure transforms over a Quantum Document session
 // history. Own-copy convention (mirrors
-// src/app/unified-quantum-session-preview/components/dailyQuantumSessionTracking.ts's
+// src/app/unified-session-preview/components/dailyQuantumSessionTracking.ts's
 // own UTC-day-key bucketing, rather than importing across feature
 // folders — a deliberate, previously-established pattern in this
 // codebase). Streak and lifetime XP are both computed fresh from the log

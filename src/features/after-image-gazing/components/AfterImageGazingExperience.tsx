@@ -10,7 +10,7 @@ import { AfterImageGazingSettings } from './AfterImageGazingSettings'
 import { AfterImageGazingCanvas } from './AfterImageGazingCanvas'
 import { AfterImageGazingCompleteScreen } from './AfterImageGazingCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-after-image-gazing-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

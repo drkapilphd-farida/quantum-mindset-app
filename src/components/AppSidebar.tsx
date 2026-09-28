@@ -49,7 +49,7 @@ export function AppSidebar({ brandName = null, brandLogoUrl = null, appDomain, f
         </Link>
       </div>
       {/* Consistent Branding™ — the one place a habit-domain visitor sees
-          "Quantum Mindset & Habit Builder" spelled out near the wordmark,
+          "Sharp Brain 21-Day Starter" spelled out near the wordmark,
           never anything about document upload or speed reading. Own row
           below the h-14 header rather than crammed inline next to the
           wordmark — the full tagline is too long to fit that single row

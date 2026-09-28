@@ -85,11 +85,11 @@ import {
 } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 
 const EXERCISE_ID = 'paragraph-reading'
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 // Sprint-12: Fixation Reduction is Core Reading Journey™'s capstone —
 // Mission Complete continues forward into it instead of dead-ending back
 // at the lab.
-const NEXT_EXERCISE_HREF = '/labs/quantum-speed-reading/fixation-reduction'
+const NEXT_EXERCISE_HREF = '/labs/sharp-brain/fixation-reduction'
 const TOTAL_MISSIONS = 20
 
 const FEEDBACK_MS = 450

@@ -20,10 +20,10 @@ describe('CURRICULUM_EXERCISE_CATALOG', () => {
     }
   })
 
-  it('every exercise has a non-empty title and a real /labs/quantum-speed-reading href', () => {
+  it('every exercise has a non-empty title and a real /labs/sharp-brain href', () => {
     for (const exercise of CURRICULUM_EXERCISE_CATALOG) {
       expect(exercise.title.length).toBeGreaterThan(0)
-      expect(exercise.href.startsWith('/labs/quantum-speed-reading/')).toBe(true)
+      expect(exercise.href.startsWith('/labs/sharp-brain/')).toBe(true)
     }
   })
 

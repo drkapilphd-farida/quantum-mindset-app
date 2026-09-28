@@ -54,19 +54,19 @@ const ACCEPT = [
 const PROCESSING_STEPS = [
   { threshold: 0, message: 'Reading document content...' },
   { threshold: 35, message: 'Building Neural Map Notes & AI Summary...' },
-  { threshold: 75, message: 'Preparing Quantum Session...' },
+  { threshold: 75, message: 'Preparing your session...' },
 ] as const
 
 const URL_PROCESSING_STEPS_WEBSITE = [
   { threshold: 0, message: 'Fetching article content...' },
   { threshold: 35, message: 'Building Neural Map Notes & AI Summary...' },
-  { threshold: 75, message: 'Generating quantum mind maps...' },
+  { threshold: 75, message: 'Generating mind maps...' },
 ] as const
 
 const URL_PROCESSING_STEPS_YOUTUBE = [
   { threshold: 0, message: 'Fetching transcript...' },
   { threshold: 35, message: 'Building Neural Map Notes & AI Summary...' },
-  { threshold: 75, message: 'Generating quantum mind maps...' },
+  { threshold: 75, message: 'Generating mind maps...' },
 ] as const
 
 function getProcessingMessage(progress: number, steps: readonly { threshold: number; message: string }[] = PROCESSING_STEPS): string {
@@ -657,7 +657,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
         {!isPro && (
           <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400">
             <Lock className="size-3" aria-hidden="true" />
-            Included with the {programs.qsr.shortName}
+            Included with the {programs.sharpBrain.shortName}
           </span>
         )}
       </div>
@@ -679,7 +679,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
             <div>
               <p className="text-sm font-semibold text-foreground">Unlock Document Mastery Studio</p>
               <p className="mt-1 max-w-xs text-xs text-muted-foreground">
-                Included with the {programs.qsr.name} — turn any PDF, textbook, or article into speed-reading drills, mind maps, and
+                Included with the {programs.sharpBrain.name} — turn any PDF, textbook, or article into speed-reading drills, mind maps, and
                 smart summaries.
               </p>
             </div>

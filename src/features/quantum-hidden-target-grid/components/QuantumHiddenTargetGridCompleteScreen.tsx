@@ -31,7 +31,7 @@ export function QuantumHiddenTargetGridCompleteScreen({
   bestAccuracyPercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: QuantumHiddenTargetGridCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = Math.round((correctCount / GRID_SIZE) * 100)
 

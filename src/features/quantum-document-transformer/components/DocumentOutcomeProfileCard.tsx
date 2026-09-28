@@ -39,7 +39,7 @@ export function DocumentOutcomeProfileCard({ profile }: DocumentOutcomeProfileCa
       </div>
 
       {profile.attemptsCount === 0 ? (
-        <p className="mt-3 text-sm text-muted-foreground">Not yet attempted — complete a Quantum Session to see your mastery here.</p>
+        <p className="mt-3 text-sm text-muted-foreground">Not yet attempted — complete a Sharp Brain session to see your mastery here.</p>
       ) : (
         <>
           <div className="mt-4 grid grid-cols-3 gap-3 text-center">

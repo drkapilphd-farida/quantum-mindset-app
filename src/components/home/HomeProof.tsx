@@ -47,6 +47,9 @@ export default function HomeProof(): React.JSX.Element {
         </div>
 
         <div id={`proof-panel-${tab}`} role="tabpanel" aria-labelledby={`proof-tab-${tab}`} className="mt-8">
+          {tab === "learning" && (
+            <p className="mb-4 font-mono text-[11.5px] uppercase tracking-[0.08em] text-ink-faint">{c.learningNote}</p>
+          )}
           {tab === "learning" ? (
             <VideoReviewGrid
               videos={[...QSR_YOUNG_LEARNER_VIDEO_REVIEWS, ...QSR_ADULT_VIDEO_REVIEWS]}

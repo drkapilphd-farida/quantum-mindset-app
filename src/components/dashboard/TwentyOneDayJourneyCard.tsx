@@ -36,7 +36,7 @@ const TOTAL_DAYS = 21
 const FREE_JOURNEY_DAYS = 7
 
 function journeyDayHref(day: number): string {
-  return `/labs/quantum-speed-reading/journey/${day}`
+  return `/labs/sharp-brain/journey/${day}`
 }
 
 // Quantum Mindset & Habit Builder™ — every day (1-21) launches
@@ -99,7 +99,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-foreground">Day {currentDay}</p>
-            <p className="truncate text-xs text-slate-700 dark:text-slate-300">Reading · Intuition · Right Brain · Visualisation</p>
+            <p className="truncate text-xs text-slate-700 dark:text-slate-300">Reading · Intuition · Visual Focus · Visualisation</p>
           </div>
           <span className="shrink-0 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:from-indigo-500 hover:to-indigo-400 active:scale-95">
             {isReplay ? 'Continue →' : 'Begin →'}

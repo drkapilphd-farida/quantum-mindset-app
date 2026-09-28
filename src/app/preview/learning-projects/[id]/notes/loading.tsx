@@ -3,7 +3,7 @@ import { AIPresenceLoadingState } from '@/components/learning/AIPresenceLoadingS
 
 // Smart Notes™ Sprint-5 — Production Polish. A skeleton reads as
 // "loading, calmly" — a spinner reads as "stuck," the same reasoning
-// QSR's own `/labs/quantum-speed-reading/loading.tsx` and Memory's own
+// QSR's own `/labs/sharp-brain/loading.tsx` and Memory's own
 // `/preview/learning-projects/[id]/memory/loading.tsx` already document.
 // Blocks approximate the Header/Progress/Card/Controls/Notes sections
 // `SmartNotesWorkspace` renders once its real initial state resolves.

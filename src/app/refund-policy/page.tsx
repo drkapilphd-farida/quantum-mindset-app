@@ -24,7 +24,7 @@ import { programs, qsrGuarantee } from '@/config/site.config'
 export const metadata: Metadata = buildPageMetadata({
   path: '/refund-policy',
   title: 'Refund & Cancellation Policy — Mind Ur Mind',
-  description: `Refund and cancellation terms for the ${programs.qsr.name}, ${programs.focusStarter.name}, retreats, and other Mind Ur Mind programs.`,
+  description: `Refund and cancellation terms for the ${programs.sharpBrain.name}, ${programs.focusStarter.name}, retreats, and other Mind Ur Mind programs.`,
 })
 
 const LAST_UPDATED = 'September 2026'
@@ -34,12 +34,12 @@ export default function RefundPolicyPage(): React.JSX.Element {
     <LegalPageShell title="Refund & Cancellation Policy" lastUpdated={LAST_UPDATED} brandName="Mind Ur Mind">
       <p className="text-muted-foreground leading-relaxed">
         This policy explains how refunds and cancellations work across Mind Ur Mind&rsquo;s programs. It&rsquo;s
-        organized by program, since our {programs.qsr.name} carries a specific results
+        organized by program, since our {programs.sharpBrain.name} carries a specific results
         guarantee that our other programs don&rsquo;t.
       </p>
 
       <section>
-        <h2 className={legalStyles.h2}>{programs.qsr.name} — 100% Results Guarantee</h2>
+        <h2 className={legalStyles.h2}>{programs.sharpBrain.name} — 100% Results Guarantee</h2>
         <p className={legalStyles.p}>{qsrGuarantee.en.statement}</p>
         <ul className={legalStyles.list}>
           <li>
@@ -77,7 +77,7 @@ export default function RefundPolicyPage(): React.JSX.Element {
         <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Coaching, Focus & Reading Starter, Courses)</h2>
         <p className={legalStyles.p}>
           These programs don&rsquo;t carry the 30-Day Live Program&rsquo;s results guarantee, since they&rsquo;re not
-          structured around a measurable WPM/comprehension checkpoint the way Quantum Speed Reading is.
+          structured around a measurable WPM/comprehension checkpoint the way Sharp Brain is.
         </p>
         <ul className={legalStyles.list}>
           <li>

@@ -32,7 +32,7 @@ export function QuantumMentalRotationSettings({ onStart }: QuantumMentalRotation
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Quantum Mental Object Rotation™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Mental Object Rotation</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Memorize a labeled 3D object, picture it rotating in your mind, then say which color faces the named
           direction.

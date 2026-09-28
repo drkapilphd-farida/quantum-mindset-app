@@ -18,7 +18,7 @@ import { RapidVisualSpanExpanderSettings, DEFAULT_TARGET_WPM } from './RapidVisu
 import { RapidVisualSpanExpanderBlockRuntime } from './RapidVisualSpanExpanderBlockRuntime'
 import { RapidVisualSpanExpanderRoundTransition } from './RapidVisualSpanExpanderRoundTransition'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-rapid-visual-span-expander-best'
 
 // Pure Timed Progression Sprint — no more MCQ/recall gate: this is now a

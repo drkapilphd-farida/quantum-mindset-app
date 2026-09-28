@@ -32,7 +32,7 @@ export function PhotographicMemoryCompleteScreen({
   bestScorePercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: PhotographicMemoryCompleteScreenProps): React.JSX.Element {
   const scorePercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
   const isPerfectSprint = correctCount === ROUNDS_PER_SESSION
@@ -41,14 +41,14 @@ export function PhotographicMemoryCompleteScreen({
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sprint Complete</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Nice photographic recall.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Nice visual recall.</p>
         {isPerfectSprint && (
           <p className="mt-2 text-sm font-semibold text-emerald-600">Flawless dash! +{PERFECT_SESSION_BONUS} bonus included.</p>
         )}
       </div>
 
       <div className="grid w-full grid-cols-2 gap-4">
-        <ReadingStatTile variant="card" label="Right Brain Photographic Score" value={`${scorePercent}%`} />
+        <ReadingStatTile variant="card" label="Visual Memory Score" value={`${scorePercent}%`} />
         <ReadingStatTile variant="card" label="Correct Recalls" value={`${correctCount} / ${ROUNDS_PER_SESSION}`} />
         <ReadingStatTile variant="card" label="Total Points" value={String(totalScore)} />
         <ReadingStatTile variant="card" label="Best Streak" value={String(bestStreak)} />

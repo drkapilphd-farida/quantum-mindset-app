@@ -30,7 +30,7 @@ export default function TermsOfServicePage(): React.JSX.Element {
     <LegalPageShell title="Terms of Service" lastUpdated={LAST_UPDATED} brandName="Mind Ur Mind">
       <p className="text-muted-foreground leading-relaxed">
         These Terms of Service (&ldquo;Terms&rdquo;) govern your use of mindurmind.org.in and enrollment in any Mind
-        Ur Mind program — Quantum Speed Reading, meditation and inner-mastery retreats, 1-on-1 mentoring, the
+        Ur Mind program — Sharp Brain, meditation and inner-mastery retreats, 1-on-1 mentoring, the
         {brand.appName}, and our self-paced courses (together, the &ldquo;Service&rdquo;). By
         creating an account or enrolling in a program, you agree to these Terms.
       </p>
@@ -65,10 +65,10 @@ export default function TermsOfServicePage(): React.JSX.Element {
           <li>
             Most Mind Ur Mind programs are one-time payments, not recurring subscriptions, except where a specific
             program page states otherwise (for example, the optional ₹499/month continued-practice plan after
-            completing the {programs.qsr.name}).
+            completing the {programs.sharpBrain.name}).
           </li>
           <li>
-            Refunds and cancellations — including the {programs.qsr.name}&rsquo;s 100% Results
+            Refunds and cancellations — including the {programs.sharpBrain.name}&rsquo;s 100% Results
             Guarantee — are governed by our{' '}
             <a href="/refund-policy" className="text-foreground underline underline-offset-2">
               Refund &amp; Cancellation Policy

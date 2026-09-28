@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Flame, MoonStar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { playClickChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playClickChime } from '@/app/unified-session-preview/components/soundEngine'
 import { saveDigitalDetoxCheckin } from '../actions/saveDigitalDetoxCheckin'
 
 type Phase = 'asking' | 'saving' | 'answered'

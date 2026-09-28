@@ -18,7 +18,7 @@ type GatewayAuthModalProps = {
   onOpenChange: (open: boolean) => void
   // Where sign-in/sign-up should land the user afterward — the exact
   // Choose Your Path™ card destination they clicked (e.g.
-  // "/labs/quantum-speed-reading/journey/1" or
+  // "/labs/sharp-brain/journey/1" or
   // "/dashboard#upload-document"), not a generic "back to the gateway"
   // fallback. This is what makes "route them accordingly" true: the modal
   // is a detour, not a dead end that costs a second click.

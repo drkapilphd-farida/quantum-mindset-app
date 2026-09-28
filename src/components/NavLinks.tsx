@@ -30,7 +30,7 @@ const SHARED_LEADING_NAV_ITEMS = [{ href: '/dashboard', label: 'Dashboard', icon
 // pointing at the same /settings page the account dropdown already links
 // to, just also reachable from the main nav on this domain.
 const HABIT_NAV_ITEMS = [
-  { href: '/labs/quantum-speed-reading/journey/analytics', label: 'History', icon: BarChart3 },
+  { href: '/labs/sharp-brain/journey/analytics', label: 'History', icon: BarChart3 },
   { href: '/settings', label: 'Settings', icon: Settings },
 ] as const
 
@@ -42,7 +42,7 @@ const HABIT_NAV_ITEMS = [
 // a separate browsable catalog. Parents Dashboard stays reachable as a
 // tab inside Pillar 1 (/masterclasses), not a separate top-level item.
 const QSR_NAV_ITEMS = [
-  { href: '/masterclasses', label: programs.qsr.shortName, icon: Radio },
+  { href: '/masterclasses', label: programs.sharpBrain.shortName, icon: Radio },
   { href: '/document-studio', label: 'Document Studio', icon: BookOpen },
 ] as const
 

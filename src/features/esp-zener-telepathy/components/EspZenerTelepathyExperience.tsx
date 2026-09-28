@@ -12,7 +12,7 @@ import { EspZenerTelepathySettings } from './EspZenerTelepathySettings'
 import { EspZenerTelepathyCanvas } from './EspZenerTelepathyCanvas'
 import { EspZenerTelepathyCompleteScreen } from './EspZenerTelepathyCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-esp-zener-telepathy-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

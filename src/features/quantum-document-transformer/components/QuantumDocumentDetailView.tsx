@@ -235,7 +235,7 @@ export function QuantumDocumentDetailView({ document, initialOutcomeProfile }: Q
                   onClick={() => setIsSummaryPracticeOpen(true)}
                 >
                   <Rocket className="size-4" aria-hidden="true" />
-                  Practice this summary in Quantum Speed Reading Mode
+                  Practice this summary in Smart Reading Mode
                 </Button>
 
                 {/* One-Sentence Summary™ — the single powerful line a
@@ -332,7 +332,7 @@ export function QuantumDocumentDetailView({ document, initialOutcomeProfile }: Q
                   <QuickOverviewFeatureNotice label="The full Quiz session" />
                 ) : (
                   <Button type="button" size="lg" className="w-full rounded-full" onClick={() => setSessionPhase('reading')}>
-                    🚀 Start Quantum Speed Reading ({document.quizQuestions.length} recall question{document.quizQuestions.length !== 1 ? 's' : ''})
+                    🚀 Start Sharp Brain ({document.quizQuestions.length} recall question{document.quizQuestions.length !== 1 ? 's' : ''})
                   </Button>
                 )}
 
@@ -357,7 +357,7 @@ export function QuantumDocumentDetailView({ document, initialOutcomeProfile }: Q
 
       <Dialog open={sessionDialogOpen} onOpenChange={(open) => { if (!open) setSessionPhase('results') }}>
         <DialogContent className="flex h-[85vh] max-w-3xl flex-col p-6 sm:max-w-3xl" showCloseButton={false}>
-          <DialogTitle className="sr-only">{document.title} — Quantum Session</DialogTitle>
+          <DialogTitle className="sr-only">{document.title} — Learning Session</DialogTitle>
           {sessionPhase === 'reading' && (
             <QuantumDocumentSpeedReadingView
               title={document.title}

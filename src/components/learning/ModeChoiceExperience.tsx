@@ -94,10 +94,10 @@ export function ModeChoiceExperience({ projectId, projectTitle, documentTitle, m
           href={modeAHref}
           icon={BookOpenText}
           eyebrow="Mode A"
-          title="Pure Speed Reading"
+          title="Smart Reading with Recall"
           description="A clean, distraction-free reading session with a live, adjustable WPM pacer."
           points={['Choose your own reading method', 'Live speed control as you read', 'The real 6-stage reading flow']}
-          ctaLabel="Start Speed Reading →"
+          ctaLabel="Start Smart Reading →"
           onSelect={() => trackChoice('speed-reading')}
         />
         <ModeCard

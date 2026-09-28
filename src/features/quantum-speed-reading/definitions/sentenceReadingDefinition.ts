@@ -39,8 +39,8 @@ export const SENTENCE_READING_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/sentence-reading',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/sentence-reading',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.sentence_reading.title',

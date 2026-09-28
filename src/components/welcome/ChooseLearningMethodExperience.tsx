@@ -19,7 +19,7 @@ import { brand, programs } from '@/config/site.config'
 // Habit Builder™ Rebrand) — habit stays strictly single-option by
 // product decision. App domain shows TWO cards: "Quantum Speed Reading"
 // (pointing at the 30-Day Masterclass, not the habit-only journey route —
-// /labs/quantum-speed-reading/journey/* is habit-only per middleware's
+// /labs/sharp-brain/journey/* is habit-only per middleware's
 // DOMAIN_ROUTES, an app-domain visitor clicking through would just get
 // bounced straight back) and "Upload & Learn" (→ /document-studio,
 // app-only per the same DOMAIN_ROUTES). A prior sprint (Upload & Learn
@@ -152,22 +152,22 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain }: C
             <div className="w-full max-w-sm">
               <PathCard
                 emoji="🎯"
-                title="21-Day Quantum Habit Journey"
+                title="Sharp Brain 21-Day Starter"
                 description="Transform your mindset with daily cognitive drills, visualization, and habit-building exercises."
                 points={['Daily Mindset & Focus Drills', 'Guided Breathing & Visualization', '21-Day Progressive Habit Loop']}
                 ctaLabel="Start Training →"
-                onSelect={() => handleSelect('/labs/quantum-speed-reading/journey/1')}
+                onSelect={() => handleSelect('/labs/sharp-brain/journey/1')}
               />
             </div>
           ) : (
             <div className="grid w-full max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
               <PathCard
                 emoji="⚡"
-                title="Quantum Speed Reading"
+                title="Sharp Brain"
                 description="A real, structured 30-day mastery program — guided live by Dr. Kapil Dev Sharma."
-                points={['Peripheral Vision Activator, Rapid Recognition Drill, Quantum Chunk Reading', '7 Live Masterclasses with Dr. Kapil Dev Sharma']}
+                points={['Peripheral Vision Activator, Rapid Recognition Drill, Chunk Reading', '7 Live Masterclasses with Dr. Kapil Dev Sharma']}
                 ctaLabel="Start Training →"
-                onSelect={() => handleSelect('/labs/quantum-speed-reading/thirty-day-curriculum')}
+                onSelect={() => handleSelect('/labs/sharp-brain/thirty-day-curriculum')}
               />
               <PathCard
                 emoji="📄"

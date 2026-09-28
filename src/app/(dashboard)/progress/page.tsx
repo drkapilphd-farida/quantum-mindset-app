@@ -164,7 +164,7 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
       { label: 'Reading Intelligence', score: readingScore, trendPercent: weeklyTrend },
       { label: 'Reading Speed (WPM Growth)', score: readingSpeedScore, trendPercent: wpmGrowth?.growthPercent ?? null },
       { label: 'Comprehension Accuracy', score: comprehensionScore, trendPercent: null },
-      { label: 'Right-Brain Visualization Depth', score: visualizationDepthScore, trendPercent: null },
+      { label: 'Visualization Depth', score: visualizationDepthScore, trendPercent: null },
       { label: 'Consistency & Streak Momentum', score: consistencyScore, trendPercent: null },
       { label: 'Neural Retraining Index', score: neuralRetrainingIndex, trendPercent: null },
     ],

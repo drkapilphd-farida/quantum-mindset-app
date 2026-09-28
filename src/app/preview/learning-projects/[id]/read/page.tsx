@@ -20,7 +20,7 @@ import type { ReadingWorkspaceInitialState } from '@/features/quantum-speed-read
 import type { UniversalLearningObject } from '@/core/universal-learning-engine/universal-learning-object'
 
 export const metadata: Metadata = {
-  title: 'Quantum Speed Reading',
+  title: 'Sharp Brain',
   robots: { index: false, follow: false },
 }
 
@@ -59,7 +59,7 @@ function parseQsrModeParam(qsrMode: string | undefined): QsrModeId | undefined {
 // in AI Learning Studio™ Sprint ALS-8 once every real Learning Mode
 // routed through the universal Learning Workspace™ instead. This route
 // is unaffected — same disclosed-not-silent pattern this arc has used
-// for the legacy `/labs/quantum-speed-reading/*` system since Sprint-1.
+// for the legacy `/labs/sharp-brain/*` system since Sprint-1.
 //
 // Same auth + ownership pattern as every other `/preview/learning-
 // projects/*` route. What renders depends entirely on real, checked

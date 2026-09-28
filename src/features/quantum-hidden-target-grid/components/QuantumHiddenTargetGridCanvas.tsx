@@ -130,7 +130,7 @@ export function QuantumHiddenTargetGridCanvas({ onComplete, onExitRequested }: Q
 
   return (
     <ReadingLayout maxWidthClassName="max-w-2xl" onExit={() => onExitRequested(elapsedMs)}>
-      <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Quantum Hidden Target Grid™</p>
+      <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Hidden Target Grid</p>
 
       <div className="mt-4 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
         <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${GRID_SIZE}`} />

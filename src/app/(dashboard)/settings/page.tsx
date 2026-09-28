@@ -83,7 +83,7 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
               <div>
                 <h2 className="text-base font-medium">Reading Assessment</h2>
                 <p className="text-muted-foreground mt-1 text-sm">
-                  Retake your Quantum Speed Reading assessment for a document to re-measure how you read it.
+                  Retake your Smart Reading assessment for a document to re-measure how you read it.
                 </p>
               </div>
               <ul className="space-y-3">

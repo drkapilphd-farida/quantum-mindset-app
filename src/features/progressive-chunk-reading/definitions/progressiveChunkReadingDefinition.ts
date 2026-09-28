@@ -31,8 +31,8 @@ export const PROGRESSIVE_CHUNK_READING_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/progressive-chunk-reading',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/progressive-chunk-reading',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.progressive_chunk_reading.title',

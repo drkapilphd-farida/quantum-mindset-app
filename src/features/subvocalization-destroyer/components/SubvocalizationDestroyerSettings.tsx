@@ -45,7 +45,7 @@ export function SubvocalizationDestroyerSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Subvocalization Destroyer™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Inner Voice Control™</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           An ultra-high-speed word stream, faster than your inner voice can keep up with. 3 quick questions check
           what stuck.

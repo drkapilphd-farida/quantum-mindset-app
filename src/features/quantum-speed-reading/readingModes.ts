@@ -56,7 +56,7 @@ export const READING_MODES: readonly ReadingModeContent[] = [
   },
   {
     id: 'quantum',
-    title: 'Quantum Mode',
+    title: 'Deep Focus Mode',
     description: 'The fastest pace this Lab offers — trains your brain to process meaning in larger visual chunks.',
     difficultyLevel: 4,
     idealFor: 'Experienced readers ready to push their limits',

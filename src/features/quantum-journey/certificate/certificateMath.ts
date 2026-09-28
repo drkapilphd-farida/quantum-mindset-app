@@ -1,4 +1,4 @@
-import type { DailyQuantumSessionRecord } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
+import type { DailyQuantumSessionRecord } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 
 // Day 21 Completion Certificate™ — pure functions only, no DB/React.
 // Mirrors this project's existing convention (analyticsMath.ts,

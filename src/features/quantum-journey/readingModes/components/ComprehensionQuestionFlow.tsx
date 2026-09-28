@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { playClickChime, playCorrectChime, playGentleMissChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playClickChime, playCorrectChime, playGentleMissChime } from '@/app/unified-session-preview/components/soundEngine'
 import type { JourneyReadingSet } from '../../readingContent'
 
 const QUESTIONS_PER_SET = 2

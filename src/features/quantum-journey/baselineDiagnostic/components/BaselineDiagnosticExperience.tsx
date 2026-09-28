@@ -118,7 +118,7 @@ export function BaselineDiagnosticExperience(): React.JSX.Element {
           </div>
 
           <Button asChild size="lg" className="rounded-full">
-            <Link href="/labs/quantum-speed-reading/journey/1">Begin Day 1 →</Link>
+            <Link href="/labs/sharp-brain/journey/1">Begin Day 1 →</Link>
           </Button>
         </div>
       )}

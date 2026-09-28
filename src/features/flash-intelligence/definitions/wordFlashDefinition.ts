@@ -24,8 +24,8 @@ export const WORD_FLASH_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/word-flash',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/word-flash',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.word_flash.title',

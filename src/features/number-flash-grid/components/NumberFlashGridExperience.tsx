@@ -12,7 +12,7 @@ import { NumberFlashGridSettings } from './NumberFlashGridSettings'
 import { NumberFlashGridCanvas } from './NumberFlashGridCanvas'
 import { NumberFlashGridCompleteScreen } from './NumberFlashGridCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-number-flash-grid-best'
 const DEFAULT_GRID_SIZE: NumberFlashGridSize = 4
 

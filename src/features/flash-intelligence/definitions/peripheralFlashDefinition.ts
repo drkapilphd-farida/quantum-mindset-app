@@ -31,8 +31,8 @@ export const PERIPHERAL_FLASH_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/peripheral-flash',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/peripheral-flash',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.peripheral_flash.title',

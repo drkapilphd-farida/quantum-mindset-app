@@ -28,7 +28,7 @@ export function ReadingSpeedExperience(): React.JSX.Element {
     <ExerciseRunner
       definition={READING_SPEED_DEFINITION}
       Canvas={ReadingSpeedCanvas}
-      labHref="/labs/quantum-speed-reading"
+      labHref="/labs/sharp-brain"
       previousExercise={previous}
       nextExercise={next}
     />

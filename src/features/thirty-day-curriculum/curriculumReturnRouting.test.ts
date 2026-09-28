@@ -61,34 +61,34 @@ describe('isCurriculumSessionCurrentExercise', () => {
 
 describe('getCurriculumSmartExitHref', () => {
   it('falls back to the given href when there is no matching active session', () => {
-    expect(getCurriculumSmartExitHref('eye-warm-up', '/labs/quantum-speed-reading')).toBe('/labs/quantum-speed-reading')
+    expect(getCurriculumSmartExitHref('eye-warm-up', '/labs/sharp-brain')).toBe('/labs/sharp-brain')
   })
 
   it('returns the day view (not the fallback) and clears the session for a matching exercise', () => {
     const firstId = firstExerciseIdForDay(7)
-    const href = getCurriculumSmartExitHref(firstId, '/labs/quantum-speed-reading')
-    expect(href).toBe('/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=7')
+    const href = getCurriculumSmartExitHref(firstId, '/labs/sharp-brain')
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=7')
     expect(loadActiveCurriculumSession()).toBeNull()
   })
 
   it('does not mark the day complete on an early exit', () => {
     const firstId = firstExerciseIdForDay(2)
-    getCurriculumSmartExitHref(firstId, '/labs/quantum-speed-reading')
+    getCurriculumSmartExitHref(firstId, '/labs/sharp-brain')
     expect(loadCurriculumProgress().completedDays).toEqual([])
   })
 })
 
 describe('getCurriculumSmartCompleteHref', () => {
   it('falls back to the given href when there is no matching active session', () => {
-    expect(getCurriculumSmartCompleteHref('eye-warm-up', '/labs/quantum-speed-reading')).toBe('/labs/quantum-speed-reading')
+    expect(getCurriculumSmartCompleteHref('eye-warm-up', '/labs/sharp-brain')).toBe('/labs/sharp-brain')
   })
 
   it('on a non-final step, advances the session pointer but ALWAYS returns to the day view — never chains straight to the next exercise page', () => {
     const firstId = firstExerciseIdForDay(1)
-    const href = getCurriculumSmartCompleteHref(firstId, '/labs/quantum-speed-reading')
+    const href = getCurriculumSmartCompleteHref(firstId, '/labs/sharp-brain')
     const session = loadActiveCurriculumSession() as ActiveCurriculumSession
     expect(session.currentIndex).toBe(1)
-    expect(href).toBe('/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=1')
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=1')
   })
 
   it('on the final exercise of a non-checkpoint day, marks the day complete, clears the session, and returns the day view with dayComplete=1', () => {
@@ -96,12 +96,12 @@ describe('getCurriculumSmartCompleteHref', () => {
     let session = startCurriculumSession(2)
     while (session.currentIndex < session.exerciseIds.length - 1) {
       const currentId = session.exerciseIds[session.currentIndex]!
-      getCurriculumSmartCompleteHref(currentId, '/labs/quantum-speed-reading')
+      getCurriculumSmartCompleteHref(currentId, '/labs/sharp-brain')
       session = loadActiveCurriculumSession() as ActiveCurriculumSession
     }
     const finalId = session.exerciseIds[session.currentIndex]!
-    const href = getCurriculumSmartCompleteHref(finalId, '/labs/quantum-speed-reading')
-    expect(href).toBe('/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=2&dayComplete=1')
+    const href = getCurriculumSmartCompleteHref(finalId, '/labs/sharp-brain')
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=2&dayComplete=1')
     expect(loadActiveCurriculumSession()).toBeNull()
     expect(loadCurriculumProgress().completedDays).toEqual([2])
   })
@@ -111,12 +111,12 @@ describe('getCurriculumSmartCompleteHref', () => {
     let session = startCurriculumSession(1)
     while (session.currentIndex < session.exerciseIds.length - 1) {
       const currentId = session.exerciseIds[session.currentIndex]!
-      getCurriculumSmartCompleteHref(currentId, '/labs/quantum-speed-reading')
+      getCurriculumSmartCompleteHref(currentId, '/labs/sharp-brain')
       session = loadActiveCurriculumSession() as ActiveCurriculumSession
     }
     const finalId = session.exerciseIds[session.currentIndex]!
-    const href = getCurriculumSmartCompleteHref(finalId, '/labs/quantum-speed-reading')
-    expect(href).toBe('/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=1')
+    const href = getCurriculumSmartCompleteHref(finalId, '/labs/sharp-brain')
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=1')
     expect(loadActiveCurriculumSession()).toBeNull()
     expect(loadCurriculumProgress().completedDays).toEqual([])
   })
@@ -125,51 +125,51 @@ describe('getCurriculumSmartCompleteHref', () => {
 describe('setActiveWizardDay', () => {
   it('makes getCurriculumSmartExitHref return the day view for ANY exercise id, with no session needed', () => {
     setActiveWizardDay(12)
-    expect(getCurriculumSmartExitHref('literally-anything', '/labs/quantum-speed-reading')).toBe(
-      '/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=12',
+    expect(getCurriculumSmartExitHref('literally-anything', '/labs/sharp-brain')).toBe(
+      '/labs/sharp-brain/thirty-day-curriculum?view=day&day=12',
     )
   })
 
   it('takes priority even when a real session exists for a different day', () => {
     startCurriculumSession(3)
     setActiveWizardDay(12)
-    expect(getCurriculumSmartExitHref('unrelated-id', '/labs/quantum-speed-reading')).toBe(
-      '/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=12',
+    expect(getCurriculumSmartExitHref('unrelated-id', '/labs/sharp-brain')).toBe(
+      '/labs/sharp-brain/thirty-day-curriculum?view=day&day=12',
     )
   })
 
   it('stops applying once cleared back to null', () => {
     setActiveWizardDay(12)
     setActiveWizardDay(null)
-    expect(getCurriculumSmartExitHref('some-id', '/labs/quantum-speed-reading')).toBe('/labs/quantum-speed-reading')
+    expect(getCurriculumSmartExitHref('some-id', '/labs/sharp-brain')).toBe('/labs/sharp-brain')
   })
 })
 
 describe('getWizardAwareBackHref', () => {
   it('falls back to the given href with no active wizard day or session', () => {
-    expect(getWizardAwareBackHref('any-id', '/labs/quantum-speed-reading')).toBe('/labs/quantum-speed-reading')
+    expect(getWizardAwareBackHref('any-id', '/labs/sharp-brain')).toBe('/labs/sharp-brain')
   })
 
   it('returns the day view when a wizard is active, for ANY exercise id, without mutating anything', () => {
     setActiveWizardDay(9)
-    const href1 = getWizardAwareBackHref('id-a', '/labs/quantum-speed-reading')
-    const href2 = getWizardAwareBackHref('id-b', '/labs/quantum-speed-reading')
-    expect(href1).toBe('/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=9')
+    const href1 = getWizardAwareBackHref('id-a', '/labs/sharp-brain')
+    const href2 = getWizardAwareBackHref('id-b', '/labs/sharp-brain')
+    expect(href1).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=9')
     expect(href2).toBe(href1)
     // Calling it repeatedly must not have cleared or advanced anything.
-    expect(getWizardAwareBackHref('id-a', '/labs/quantum-speed-reading')).toBe(href1)
+    expect(getWizardAwareBackHref('id-a', '/labs/sharp-brain')).toBe(href1)
   })
 
   it('returns the day view when a real session matches this exact exercise, without clearing it', () => {
     const firstId = firstExerciseIdForDay(6)
-    const href = getWizardAwareBackHref(firstId, '/labs/quantum-speed-reading')
-    expect(href).toBe('/labs/quantum-speed-reading/thirty-day-curriculum?view=day&day=6')
+    const href = getWizardAwareBackHref(firstId, '/labs/sharp-brain')
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=6')
     // Still there — this is a passive preview, not a real exit.
     expect(loadActiveCurriculumSession()).not.toBeNull()
   })
 
   it('falls back to the given href when a real session exists but points at a different exercise', () => {
     firstExerciseIdForDay(6)
-    expect(getWizardAwareBackHref('not-the-current-one', '/labs/quantum-speed-reading')).toBe('/labs/quantum-speed-reading')
+    expect(getWizardAwareBackHref('not-the-current-one', '/labs/sharp-brain')).toBe('/labs/sharp-brain')
   })
 })

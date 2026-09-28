@@ -10,7 +10,7 @@ type SaccadicEyeJumpExperienceProps = {
 }
 
 export function SaccadicEyeJumpExperience({ onComplete, onExit }: SaccadicEyeJumpExperienceProps = {}): React.JSX.Element {
-  const curriculumSession = useCurriculumSessionCompletion('saccadic-eye-jump', '/labs/quantum-speed-reading')
+  const curriculumSession = useCurriculumSessionCompletion('saccadic-eye-jump', '/labs/sharp-brain')
   return <BrainGymDrillExperience
       config={SACCADIC_EYE_JUMP_CONFIG}
       {...(curriculumSession.isActiveStep ? { onComplete: curriculumSession.advance } : onComplete !== undefined ? { onComplete } : {})}

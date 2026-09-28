@@ -15,7 +15,7 @@ import { FlashRecallSprintSettings } from './FlashRecallSprintSettings'
 import { FlashRecallSprintCanvas } from './FlashRecallSprintCanvas'
 import { FlashRecallSprintQuiz } from './FlashRecallSprintQuiz'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-flash-recall-sprint-best'
 
 type FlashRecallSprintExperienceProps = {

@@ -7,7 +7,7 @@ import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMoti
 import { CURRICULUM_PHASES, type CurriculumPhase } from '@/features/thirty-day-curriculum/curriculumDatabase'
 import { loadCurriculumProgress } from '@/features/thirty-day-curriculum/curriculumProgress'
 
-const CURRICULUM_ROUTE = '/labs/quantum-speed-reading/thirty-day-curriculum'
+const CURRICULUM_ROUTE = '/labs/sharp-brain/thirty-day-curriculum'
 
 const RING_SIZE = 88
 const RING_STROKE = 9

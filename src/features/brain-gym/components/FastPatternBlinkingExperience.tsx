@@ -10,7 +10,7 @@ type FastPatternBlinkingExperienceProps = {
 }
 
 export function FastPatternBlinkingExperience({ onComplete, onExit }: FastPatternBlinkingExperienceProps = {}): React.JSX.Element {
-  const curriculumSession = useCurriculumSessionCompletion('fast-pattern-blinking', '/labs/quantum-speed-reading')
+  const curriculumSession = useCurriculumSessionCompletion('fast-pattern-blinking', '/labs/sharp-brain')
   return <BrainGymDrillExperience
       config={FAST_PATTERN_BLINKING_CONFIG}
       {...(curriculumSession.isActiveStep ? { onComplete: curriculumSession.advance } : onComplete !== undefined ? { onComplete } : {})}

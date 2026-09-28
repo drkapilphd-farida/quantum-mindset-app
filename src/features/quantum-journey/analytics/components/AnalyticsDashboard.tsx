@@ -22,7 +22,7 @@ export type AnalyticsDashboardProps = {
 //
 // Habit App Isolation™ — this whole tree is reachable only from
 // habit.mindurmind.org.in (src/middleware.ts's DOMAIN_ROUTES routes
-// /labs/quantum-speed-reading/journey to the habit domain exclusively),
+// /labs/sharp-brain/journey to the habit domain exclusively),
 // so every metric here is chosen for a pure habit-building context —
 // never WPM/speed-reading figures, which live only on the app-domain
 // Reading Intelligence Lab's own analytics (coach/reports/*).

@@ -15,7 +15,7 @@ import { DualStreamSplitReaderSettings } from './DualStreamSplitReaderSettings'
 import { DualStreamSplitReaderCanvas } from './DualStreamSplitReaderCanvas'
 import { DualStreamSplitReaderQuiz } from './DualStreamSplitReaderQuiz'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-dual-stream-split-reader-best'
 
 type DualStreamSplitReaderExperienceProps = {

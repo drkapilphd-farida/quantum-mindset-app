@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 // Visual Activation™ (rebuilt as "Brain Gym") moved to its own pillar at
-// /labs/quantum-speed-reading/brain-gym and is no longer part of this hub
+// /labs/sharp-brain/brain-gym and is no longer part of this hub
 // — this route stays alive since FixationHub/TratakJourneyLanding/
 // TratakJourneyLocked all still link back here as their own "back to hub"
 // destination, but its content is now real links to the two sibling

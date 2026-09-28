@@ -12,7 +12,7 @@ import { ImageFlashGridSettings } from './ImageFlashGridSettings'
 import { ImageFlashGridCanvas } from './ImageFlashGridCanvas'
 import { ImageFlashGridCompleteScreen } from './ImageFlashGridCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-image-flash-grid-best'
 const DEFAULT_GRID_SIZE: ImageFlashGridSize = 4
 

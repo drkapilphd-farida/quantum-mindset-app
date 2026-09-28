@@ -31,7 +31,7 @@ type Widen<T> = T extends string
 // Headline numbers — edit here only; bios, stats and trust lines are built from them.
 const YEARS_TOTAL = 26
 const YEARS_PROFESSOR = 15
-const QSR_SINCE = 2015
+const SKILLS_TRAINING_SINCE = 2015
 const FOUNDED = 2014
 const LEARNERS = '10,000+'
 const WORKSHOPS = '500+'
@@ -77,7 +77,7 @@ const trainerData = {
   // (TrainerBio does) — a TODO or empty value never reaches a page.
   doctorate: null as string | null,
   years: { total: YEARS_TOTAL, professor: YEARS_PROFESSOR },
-  qsrSinceYear: QSR_SINCE,
+  qsrSinceYear: SKILLS_TRAINING_SINCE,
   learners: LEARNERS,
   workshops: WORKSHOPS,
   photo: {
@@ -93,9 +93,9 @@ const trainerData = {
   },
   en: {
     title: 'Brain, Mind & Meditation Coach',
-    shortBio: `${YEARS_TOTAL} years in education and mind training · Quantum Speed Reading trainer since ${QSR_SINCE} · ${LEARNERS} learners · ${WORKSHOPS} workshops`,
+    shortBio: `${YEARS_TOTAL} years in education and mind training · Trainer in reading, focus and memory skills since ${SKILLS_TRAINING_SINCE} · ${LEARNERS} learners · ${WORKSHOPS} workshops`,
     longBio:
-      `Dr. Kapil Dev Sharma brings ${YEARS_TOTAL} years of experience — ${YEARS_PROFESSOR} years as a professor and researcher in formal education, and more than a decade as a mind trainer, life coach and meditation teacher. He was one of the first trainers to teach Quantum Speed Reading in India, since ${QSR_SINCE}, and has developed his own structured 30-day method.`,
+      `Dr. Kapil Dev Sharma brings ${YEARS_TOTAL} years of experience — ${YEARS_PROFESSOR} years as a professor and researcher in formal education, and more than a decade as a mind trainer, life coach and meditation teacher. He has trained learners in reading, focus and memory skills since ${SKILLS_TRAINING_SINCE}, and developed his own structured 30-day method, now called Sharp Brain™.`,
     stats: [
       { value: String(YEARS_TOTAL), label: 'Years in education & mind training' },
       { value: LEARNERS, label: 'Learners' },
@@ -105,9 +105,9 @@ const trainerData = {
   } satisfies TrainerCopy,
   hi: {
     title: 'ब्रेन, माइंड व मेडिटेशन कोच',
-    shortBio: `शिक्षा और माइंड ट्रेनिंग में ${YEARS_TOTAL} वर्ष · ${QSR_SINCE} से क्वांटम स्पीड रीडिंग ट्रेनर · ${LEARNERS} विद्यार्थी · ${WORKSHOPS} वर्कशॉप्स`,
+    shortBio: `शिक्षा और माइंड ट्रेनिंग में ${YEARS_TOTAL} वर्ष · ${SKILLS_TRAINING_SINCE} से रीडिंग, फोकस और मेमोरी स्किल्स के ट्रेनर · ${LEARNERS} विद्यार्थी · ${WORKSHOPS} वर्कशॉप्स`,
     longBio:
-      `डॉ. कपिल देव शर्मा के पास ${YEARS_TOTAL} वर्षों का अनुभव है — ${YEARS_PROFESSOR} वर्ष औपचारिक शिक्षा में प्रोफेसर और शोधकर्ता के रूप में, और एक दशक से अधिक समय से माइंड ट्रेनर, लाइफ कोच और मेडिटेशन शिक्षक के रूप में। वे ${QSR_SINCE} से भारत में क्वांटम स्पीड रीडिंग सिखाने वाले शुरुआती ट्रेनर्स में से एक हैं, और उन्होंने अपनी खुद की संरचित 30-दिवसीय विधि विकसित की है।`,
+      `डॉ. कपिल देव शर्मा के पास ${YEARS_TOTAL} वर्षों का अनुभव है — ${YEARS_PROFESSOR} वर्ष औपचारिक शिक्षा में प्रोफेसर और शोधकर्ता के रूप में, और एक दशक से अधिक समय से माइंड ट्रेनर, लाइफ कोच और मेडिटेशन शिक्षक के रूप में। वे ${SKILLS_TRAINING_SINCE} से विद्यार्थियों को रीडिंग, फोकस और मेमोरी स्किल्स सिखा रहे हैं, और उन्होंने अपनी खुद की संरचित 30-दिवसीय विधि विकसित की है, जिसे अब Sharp Brain™ कहा जाता है।`,
     stats: [
       { value: String(YEARS_TOTAL), label: 'वर्ष शिक्षा व माइंड ट्रेनिंग में' },
       { value: LEARNERS, label: 'विद्यार्थी' },
@@ -166,27 +166,74 @@ export type Program = {
 }
 
 const programsData = {
-  qsr: {
-    id: 'qsr',
-    name: 'Quantum Speed Reading — 30-Day Live Program',
-    nameHi: 'क्वांटम स्पीड रीडिंग — 30-दिवसीय लाइव प्रोग्राम',
-    shortName: '30-Day Live Program',
-    shortNameHi: '30-दिवसीय लाइव प्रोग्राम',
-    outcome: 'Read faster with stronger comprehension and retention, trained over 30 days of guided daily practice.',
-    audience: 'Students, competitive-exam aspirants, professionals and parents',
-    format: 'Online · 30 days · 7 live sessions + daily app practice',
+  // Sharp Brain™ — Focus · Memory · Smart Reading (formerly "Quantum Speed
+  // Reading"; renamed in site-rebuild Phase 5B). Cognitive-skills program,
+  // pillar: brain. Formats below share one landing page, /programs/sharp-brain.
+  sharpBrain: {
+    id: 'sharpBrain',
+    name: 'Sharp Brain 30-Day Program',
+    nameHi: 'Sharp Brain 30-दिवसीय प्रोग्राम',
+    shortName: 'Sharp Brain',
+    shortNameHi: 'Sharp Brain',
+    outcome: 'Focus, memory, smart reading and mobile discipline — improvement measured from your own Day 1 to Day 30.',
+    audience: 'Parents (for children ~10–17), students and exam aspirants, working professionals',
+    format: 'Online · 7 live classes + 30 days of app practice',
     prices: [{ label: 'One-time enrolment', amountInr: 9999 }],
+    // TODO(business): the Razorpay product behind this link may still be named
+    // "Quantum Speed Reading" / "30-Day Masterclass" — rename it in Razorpay.
     checkout: [{ label: 'Razorpay', href: RAZORPAY_MASTERCLASS_PAYMENT_LINK }],
-    url: '/programs/quantum-speed-reading',
+    url: '/programs/sharp-brain',
     status: 'active',
     pillar: 'brain',
   },
+  sharpBrainWorkshop: {
+    id: 'sharpBrainWorkshop',
+    name: 'Sharp Brain Workshop',
+    nameHi: 'Sharp Brain वर्कशॉप',
+    outcome: 'Two days of live, hands-on training in focus, memory and smart reading, online or in person.',
+    audience: 'Students, parents with children, professionals',
+    format: '2 days · online or offline (city batches)',
+    // TODO(content): workshop price not published — shown once added here.
+    prices: [] as ProgramPrice[],
+    checkout: [{ label: 'Join the waitlist on WhatsApp', href: waLink('Hi Dr. Kapil, I want to know about the next Sharp Brain Workshop.') }],
+    url: '/programs/sharp-brain#formats',
+    status: 'active',
+    pillar: 'brain',
+  },
+  sharpBrainSelfLearning: {
+    id: 'sharpBrainSelfLearning',
+    name: 'Sharp Brain Self-Learning',
+    nameHi: 'Sharp Brain सेल्फ-लर्निंग',
+    outcome: 'Recorded lessons plus 30 days of app practice, at your own pace.',
+    audience: 'Learners who prefer to study at their own pace',
+    format: 'Recorded lessons + 30 days of app practice',
+    // TODO(content): self-learning price and checkout link not provided yet.
+    prices: [] as ProgramPrice[],
+    checkout: [{ label: 'Ask on WhatsApp', href: waLink('Hi Dr. Kapil, I want to know about Sharp Brain Self-Learning.') }],
+    url: '/programs/sharp-brain#formats',
+    status: 'active',
+    pillar: 'brain',
+  },
+  sharpBrainSchools: {
+    id: 'sharpBrainSchools',
+    name: 'Sharp Brain for Schools',
+    nameHi: 'स्कूलों के लिए Sharp Brain',
+    outcome: 'Focus, memory, smart reading and mobile discipline for students, delivered in schools.',
+    audience: 'Schools and institutions',
+    format: 'In-school programs and talks',
+    prices: [] as ProgramPrice[],
+    checkout: [{ label: 'Enquire on WhatsApp', href: waLink('Hi Dr. Kapil, I want to bring Sharp Brain to our school.') }],
+    url: '/executive-brain-workshop#corporate',
+    status: 'active',
+    pillar: 'brain',
+  },
+
   focusStarter: {
     id: 'focusStarter',
-    name: '7-Day Free Focus & Reading Starter',
-    nameHi: '7-दिवसीय फ्री फोकस व रीडिंग स्टार्टर',
-    appName: '21-Day Focus & Reading Program',
-    appNameHi: '21-दिवसीय फोकस व रीडिंग प्रोग्राम',
+    name: 'Sharp Brain 7-Day Free Starter',
+    nameHi: 'Sharp Brain 7-दिवसीय फ्री स्टार्टर',
+    appName: 'Sharp Brain 21-Day Starter',
+    appNameHi: 'Sharp Brain 21-दिवसीय स्टार्टर',
     outcome: 'Build a daily focus and reading habit — start free for 7 days, continue to 21 days if it works for you.',
     audience: 'Anyone who wants an easy, low-commitment start',
     format: 'App-based · 10 minutes a day · Days 1–7 free, Days 8–21 optional',
@@ -320,29 +367,16 @@ const programsData = {
     },
     pillar: 'brain',
   },
-  qsrMumbai: {
-    id: 'qsrMumbai',
-    name: 'Quantum Speed Reading — Mumbai 2-Day Live Workshop',
-    nameHi: 'क्वांटम स्पीड रीडिंग — मुंबई 2-दिवसीय लाइव वर्कशॉप',
-    outcome: 'The 30-day program with two in-person coaching days in Mumbai.',
-    audience: 'Mumbai-based learners who prefer in-person coaching',
-    format: 'In person · Mumbai · 2 days + 30-day app curriculum',
-    prices: [{ label: 'One-time enrolment', amountInr: 9999 }],
-    checkout: [],
-    url: '/programs/quantum-speed-reading-mumbai',
-    // Unpublished pilot — the page returns 404 until venue/dates are confirmed.
-    status: 'closed',
-    pillar: 'brain',
-  },
+
   franchise: {
     id: 'franchise',
     name: 'Franchise & Trainer Partner Program',
     nameHi: 'फ्रैंचाइज़ व ट्रेनर पार्टनर प्रोग्राम',
-    outcome: 'Run your own Quantum Speed Reading training business with a ready curriculum, platform and certification.',
+    outcome: 'Run your own Sharp Brain™ training business with a ready curriculum, platform and certification.',
     audience: 'Educators, graduates and entrepreneurs',
     format: 'Application · 7-day certification · ongoing partner support',
     prices: [],
-    checkout: [{ label: 'Apply on WhatsApp', href: waLink('Hi Dr. Kapil, I want to apply to become a certified Quantum Speed Reading trainer partner.') }],
+    checkout: [{ label: 'Apply on WhatsApp', href: waLink('Hi Dr. Kapil, I want to apply to become a certified Sharp Brain trainer partner.') }],
     url: '/franchise-individual',
     status: 'active',
     pillar: 'business',

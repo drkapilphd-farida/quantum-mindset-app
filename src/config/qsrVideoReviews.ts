@@ -48,11 +48,11 @@ export const QSR_YOUNG_LEARNER_VIDEO_REVIEWS: readonly QsrVideoReview[] = [
 // reachable via the "Watch More Student Stories" toggle in
 // QsrVideoTestimonials.tsx.
 export const QSR_MORE_VIDEO_REVIEWS: readonly QsrVideoReview[] = [
-  { videoId: 'UM9LBm0hh0Y', thumbnailSrc: '/qsr-videos/UM9LBm0hh0Y-thumb.jpg', label: 'Quantum Speed Reading Student' },
-  { videoId: '1pvc5yHgJGU', thumbnailSrc: '/qsr-videos/1pvc5yHgJGU-thumb.jpg', label: 'Quantum Speed Reading Student' },
-  { videoId: 'B2HwCJwMPDQ', thumbnailSrc: '/qsr-videos/B2HwCJwMPDQ-thumb.jpg', label: 'Quantum Speed Reading Student' },
-  { videoId: 'V_-iUWQarT4', thumbnailSrc: '/qsr-videos/V_-iUWQarT4-thumb.jpg', label: 'Quantum Speed Reading Student' },
-  { videoId: 'QutuICwaKJ4', thumbnailSrc: '/qsr-videos/QutuICwaKJ4-thumb.jpg', label: 'Quantum Speed Reading Student' },
-  { videoId: 'TpCltll0VFc', thumbnailSrc: '/qsr-videos/TpCltll0VFc-thumb.jpg', label: 'Quantum Speed Reading Student' },
-  { videoId: 'uetG4y2SXTY', thumbnailSrc: '/qsr-videos/uetG4y2SXTY-thumb.jpg', label: 'Quantum Speed Reading Student' },
+  { videoId: 'UM9LBm0hh0Y', thumbnailSrc: '/qsr-videos/UM9LBm0hh0Y-thumb.jpg', label: 'Student' },
+  { videoId: '1pvc5yHgJGU', thumbnailSrc: '/qsr-videos/1pvc5yHgJGU-thumb.jpg', label: 'Student' },
+  { videoId: 'B2HwCJwMPDQ', thumbnailSrc: '/qsr-videos/B2HwCJwMPDQ-thumb.jpg', label: 'Student' },
+  { videoId: 'V_-iUWQarT4', thumbnailSrc: '/qsr-videos/V_-iUWQarT4-thumb.jpg', label: 'Student' },
+  { videoId: 'QutuICwaKJ4', thumbnailSrc: '/qsr-videos/QutuICwaKJ4-thumb.jpg', label: 'Student' },
+  { videoId: 'TpCltll0VFc', thumbnailSrc: '/qsr-videos/TpCltll0VFc-thumb.jpg', label: 'Student' },
+  { videoId: 'uetG4y2SXTY', thumbnailSrc: '/qsr-videos/uetG4y2SXTY-thumb.jpg', label: 'Student' },
 ]

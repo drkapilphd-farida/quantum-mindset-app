@@ -15,7 +15,7 @@ import { ColorSceneTransformationSettings } from './ColorSceneTransformationSett
 import { ColorSceneTransformationCanvas } from './ColorSceneTransformationCanvas'
 import { ColorSceneTransformationCompleteScreen } from './ColorSceneTransformationCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-color-scene-transformation-best'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'

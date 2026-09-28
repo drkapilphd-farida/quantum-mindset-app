@@ -1,4 +1,4 @@
-import type { DailyQuantumSessionRecord } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
+import type { DailyQuantumSessionRecord } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 
 export type ReadingSpeedWindowDays = 7 | 14 | 30
 

@@ -15,7 +15,7 @@ import { SubvocalizationDestroyerSettings } from './SubvocalizationDestroyerSett
 import { SubvocalizationDestroyerCanvas } from './SubvocalizationDestroyerCanvas'
 import { SubvocalizationDestroyerQuiz } from './SubvocalizationDestroyerQuiz'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-subvocalization-destroyer-best'
 
 // The locked useReadingRuntime.ts defaults to 250 WPM, well below this

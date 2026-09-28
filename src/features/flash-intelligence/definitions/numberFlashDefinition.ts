@@ -24,8 +24,8 @@ export const NUMBER_FLASH_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/number-flash',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/number-flash',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.number_flash.title',

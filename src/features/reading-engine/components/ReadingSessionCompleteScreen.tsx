@@ -37,7 +37,7 @@ export function ReadingSessionCompleteScreen({
   result,
   bestWpm,
   onReadAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
   onContinue,
 }: ReadingSessionCompleteScreenProps): React.JSX.Element {
   return (

@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Pause, Play } from 'lucide-react'
-import { computeReadingPowerScore } from '@/app/unified-quantum-session-preview/components/quantumReadingSprintDataset'
+import { computeReadingPowerScore } from '@/app/unified-session-preview/components/quantumReadingSprintDataset'
 import { pickJourneyReadingSet, type JourneyReadingSet, type JourneyLengthTier } from '../../readingContent'
 import { ComprehensionQuestionFlow } from './ComprehensionQuestionFlow'
 import { clampTargetWpm, MIN_TARGET_WPM, MAX_TARGET_WPM } from '../pacingMath'

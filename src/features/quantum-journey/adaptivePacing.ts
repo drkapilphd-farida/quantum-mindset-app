@@ -1,4 +1,4 @@
-import type { DailyQuantumSessionRecord } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
+import type { DailyQuantumSessionRecord } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 
 // Baseline Test™ (legacy fallback) — before the mandatory 30-Second
 // Baseline Speed & Comprehension Diagnostic™ existed, Day 1's first-ever

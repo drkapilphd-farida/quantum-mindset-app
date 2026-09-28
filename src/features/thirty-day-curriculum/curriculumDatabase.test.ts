@@ -53,7 +53,7 @@ describe('getPhaseForDay / getCurriculumPhase', () => {
     expect(() => getPhaseForDay(31)).toThrow()
   })
   it('getCurriculumPhase returns the matching phase descriptor', () => {
-    expect(getCurriculumPhase(3).title).toContain('Holographic Manifestation')
+    expect(getCurriculumPhase(3).title).toContain('Multi-Sensory Visualisation')
   })
 })
 
@@ -130,7 +130,7 @@ describe('buildCurriculumDayPlan', () => {
     expect(buildCurriculumDayPlan(15)).toEqual(buildCurriculumDayPlan(15))
   })
 
-  it('Phase 3 (days 15-21) includes Sensory Hologram Builder and Fluid Energy Balancer in its visualization rotation', () => {
+  it('Phase 3 (days 15-21) includes Sensory Imagery Builder and Calm Breath Balance in its visualization rotation', () => {
     const phase3VisualizationIds = new Set<string>()
     for (let day = 15; day <= 21; day++) {
       for (const exercise of buildCurriculumDayPlan(day).exercises.visualization) {

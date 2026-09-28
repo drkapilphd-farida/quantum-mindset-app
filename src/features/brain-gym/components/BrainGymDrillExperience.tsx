@@ -11,7 +11,7 @@ import { BrainGymDrillCanvas } from './BrainGymDrillCanvas'
 import { BrainGymDrillCompleteScreen } from './BrainGymDrillCompleteScreen'
 import type { BrainGymDrillConfig } from '../types'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'
 
@@ -34,7 +34,7 @@ type BrainGymDrillExperienceProps = {
   // supplied, replaces the default "back to lab root" destination for a
   // mid-drill exit. This was previously missing entirely (a real,
   // confirmed bug: every one of the 5 catalog exercises that share this
-  // engine dumped straight to `/labs/quantum-speed-reading` on exit,
+  // engine dumped straight to `/labs/sharp-brain` on exit,
   // regardless of curriculum context) — now falls back to
   // getCurriculumSmartExitHref when omitted, same as every other
   // embeddable exercise's own exit path.

@@ -38,8 +38,8 @@ export const PARAGRAPH_READING_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/paragraph-reading',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/paragraph-reading',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.paragraph_reading.title',

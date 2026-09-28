@@ -28,7 +28,7 @@ export function RegressionControlExperience(): React.JSX.Element {
     <ExerciseRunner
       definition={REGRESSION_CONTROL_DEFINITION}
       Canvas={RegressionControlCanvas}
-      labHref="/labs/quantum-speed-reading"
+      labHref="/labs/sharp-brain"
       previousExercise={previous}
       nextExercise={next}
     />

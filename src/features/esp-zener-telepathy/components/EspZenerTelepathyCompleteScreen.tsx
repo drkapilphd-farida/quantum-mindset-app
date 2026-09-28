@@ -31,7 +31,7 @@ export function EspZenerTelepathyCompleteScreen({
   bestAccuracyPercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: EspZenerTelepathyCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = Math.round((correctCount / ZENER_DECK_SIZE) * 100)
 

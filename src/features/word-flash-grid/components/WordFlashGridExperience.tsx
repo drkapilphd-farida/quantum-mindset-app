@@ -12,7 +12,7 @@ import { WordFlashGridSettings } from './WordFlashGridSettings'
 import { WordFlashGridCanvas } from './WordFlashGridCanvas'
 import { WordFlashGridCompleteScreen } from './WordFlashGridCompleteScreen'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-word-flash-grid-best'
 const DEFAULT_GRID_SIZE: WordFlashGridSize = 4
 

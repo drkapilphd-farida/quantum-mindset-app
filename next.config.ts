@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs/config'
+import { LEGACY_REDIRECTS } from './src/config/legacyRedirects'
 
 // The Supabase project origin is read from the same env var the client
 // SDK itself uses, so the CSP always matches whichever project a given
@@ -197,6 +198,7 @@ const nextConfig: NextConfig = {
         destination: '/mentoring/overthinking-course',
         permanent: true,
       },
+      ...LEGACY_REDIRECTS,
     ]
   },
 

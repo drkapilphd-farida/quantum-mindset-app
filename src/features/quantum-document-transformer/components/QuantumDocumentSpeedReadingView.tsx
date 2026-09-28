@@ -71,7 +71,7 @@ export function QuantumDocumentSpeedReadingView({ title, readingText, onComplete
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className={TYPOGRAPHY.label}>Quantum Speed Reading™</p>
+          <p className={TYPOGRAPHY.label}>Sharp Brain™</p>
           <p className="truncate text-sm font-medium text-foreground">{title}</p>
         </div>
         <Button type="button" variant="ghost" size="icon-sm" onClick={onExit} aria-label="Exit reading session">

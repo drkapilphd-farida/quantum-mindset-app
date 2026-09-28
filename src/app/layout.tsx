@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 // variables they define (--font-homepage-sans/-mono/-display/-devanagari)
 // are consumed exclusively by .warm-light (globals.css) and its two
 // pages' own components (src/app/(marketing)/page.tsx and
-// src/app/programs/quantum-speed-reading/page.tsx). Every other route
+// src/app/programs/sharp-brain/page.tsx). Every other route
 // keeps using Geist exactly as before — nothing here touches
 // --font-sans/--font-mono globally. Deliberately namespaced (not
 // `--font-mono`/`--font-display`) so they can never collide with the

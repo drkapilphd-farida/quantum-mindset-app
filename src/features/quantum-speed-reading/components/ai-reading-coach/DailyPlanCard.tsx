@@ -19,7 +19,7 @@ export function DailyPlanCard({ plan }: DailyPlanCardProps): React.JSX.Element {
         {plan.steps.map((step, index) => (
           <div key={`${step.passage.id}-${index}`} className="flex items-center gap-3">
             <Link
-              href={`/labs/quantum-speed-reading/start/prepare?passage=${step.passage.id}`}
+              href={`/labs/sharp-brain/start/prepare?passage=${step.passage.id}`}
               className="flex flex-1 items-center justify-between gap-3 rounded-xl bg-muted/40 px-4 py-3 transition-colors hover:bg-muted/70"
             >
               <div>

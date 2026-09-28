@@ -40,7 +40,7 @@ export function PictorialEssenceSprintCompleteScreen({
   bestAccuracyPercentAllTime,
   bestStreakAllTime,
   onPlayAgain,
-  backHref = '/labs/quantum-speed-reading',
+  backHref = '/labs/sharp-brain',
 }: PictorialEssenceSprintCompleteScreenProps): React.JSX.Element {
   const accuracyPercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
   const isPerfectSprint = variant === 'complete' && correctCount === ROUNDS_PER_SESSION

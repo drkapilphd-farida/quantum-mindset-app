@@ -19,15 +19,15 @@ export const metadata: Metadata = buildPageMetadata({
   ownOgImage: true,
   title: `${programs.focusStarter.name} | Mind Ur Mind`,
   description:
-    'The free first step before Quantum Speed Reading: about 10 minutes a day of focus, memory and reading drills. Days 1–7 are free; continue to Day 21 for a one-time ₹99 — never a subscription.',
+    'The free first step before Sharp Brain: about 10 minutes a day of focus, memory and reading drills. Days 1–7 are free; continue to Day 21 for a one-time ₹99 — never a subscription.',
 })
 
 // Quantum Mindset & Habit Builder™ public landing page — the real
 // standalone marketing page the earlier audit confirmed did not exist:
-// the product itself only lived behind /labs/quantum-speed-reading/journey/*,
+// the product itself only lived behind /labs/sharp-brain/journey/*,
 // which middleware.ts gates behind login, so a logged-out visitor had
 // nowhere to actually learn about or sign up for it. This page lives
-// under /programs (same tier as /programs/quantum-speed-reading) —
+// under /programs (same tier as /programs/sharp-brain) —
 // outside PROTECTED_PATHS and outside DOMAIN_ROUTES, so it's reachable
 // logged-out from either domain. Its own CTAs route through
 // HABIT_BUILDER_SIGNUP_HREF (/signup?next=.../journey/1), which now

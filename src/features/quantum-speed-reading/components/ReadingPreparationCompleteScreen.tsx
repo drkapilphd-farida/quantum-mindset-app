@@ -33,7 +33,7 @@ export function ReadingPreparationCompleteScreen(): React.JSX.Element {
         </ul>
 
         <Button asChild size="lg" className="mt-10 min-w-[280px] rounded-full shadow-sm">
-          <Link href="/labs/quantum-speed-reading/word-flash">Continue to Flash Intelligence Pack™</Link>
+          <Link href="/labs/sharp-brain/word-flash">Continue to Flash Intelligence Pack™</Link>
         </Button>
       </div>
     </div>

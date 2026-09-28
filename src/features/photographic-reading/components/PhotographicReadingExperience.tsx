@@ -16,7 +16,7 @@ import { PhotographicReadingSettings } from './PhotographicReadingSettings'
 import { PhotographicReadingCanvas } from './PhotographicReadingCanvas'
 import { PhotographicReadingQuiz } from './PhotographicReadingQuiz'
 
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 const BEST_WPM_STORAGE_KEY = 'qsr-photographic-reading-best'
 
 type PhotographicReadingExperienceProps = {

@@ -40,8 +40,8 @@ export const MULTI_LINE_READING_DEFINITION: ExerciseDefinition = {
   speedMode: 'adaptive',
   scoringRules: DEFAULT_SCORING_RULES,
   intelligenceDimension: 'reading',
-  href: '/labs/quantum-speed-reading/multi-line-reading',
-  labHref: '/labs/quantum-speed-reading',
+  href: '/labs/sharp-brain/multi-line-reading',
+  labHref: '/labs/sharp-brain',
   locale: 'en',
   i18nKeys: {
     title: 'exercise.multi_line_reading.title',

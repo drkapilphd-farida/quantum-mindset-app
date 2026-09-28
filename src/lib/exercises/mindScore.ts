@@ -181,7 +181,7 @@ export function getMindScoreLabel(score: number): MindScoreLabel {
 export type MindScoreRank = { rank: string; description: string }
 
 export function getMindScoreRank(score: number): MindScoreRank {
-  if (score >= 800) return { rank: 'Quantum Master', description: 'Elite mastery across every dimension' }
+  if (score >= 800) return { rank: 'Sharp Brain Master', description: 'Elite mastery across every dimension' }
   if (score >= 400) return { rank: 'Speed Reader', description: 'Consistent, confident real progress' }
   return { rank: 'Novice Reader', description: 'Every rank starts here' }
 }

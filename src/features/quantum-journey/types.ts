@@ -8,6 +8,6 @@ export type JourneyDomain = 'reading' | 'intuition' | 'right_brain' | 'visualisa
 export const JOURNEY_DOMAIN_LABELS: Record<JourneyDomain, string> = {
   reading: 'Reading',
   intuition: 'Intuition',
-  right_brain: 'Right Brain',
+  right_brain: 'Visual Focus',
   visualisation: 'Visualisation',
 }

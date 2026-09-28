@@ -5,7 +5,7 @@ import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMoti
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
 import { ReadingProgressBar } from '@/features/reading-engine/components/ReadingProgressBar'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
-import { playCorrectChime, playGentleMissChime } from '@/app/unified-quantum-session-preview/components/soundEngine'
+import { playCorrectChime, playGentleMissChime } from '@/app/unified-session-preview/components/soundEngine'
 import type { BrainGymDrillConfig, BrainGymRound } from '../types'
 
 const REVEAL_DURATION_MS = 700

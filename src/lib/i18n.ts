@@ -1,19 +1,8 @@
-import { brand, programs, qsrGuarantee, trainer } from "@/config/site.config";
+import { brand, programs, trainer } from "@/config/site.config";
 export type Lang = "en" | "hi";
 
 export const translations = {
   en: {
-    nav: {
-      links: [
-        { label: "Programs", href: "#explore-programs" },
-        { label: "Retreats", href: "/retreats/online-11-day" },
-        { label: "Mentoring", href: "/mentoring/personal-class" },
-        { label: "For Leaders", href: "/executive-brain-workshop" },
-        { label: "About", href: "/about" },
-        { label: "FAQ", href: "#faq" },
-      ],
-      ctaPrimary: "Start 7 Days Free",
-    },
     // Shared, not nested under qsrLanding/retreatLanding — the exact same
     // trust line and policy link appear next to every primary Razorpay
     // CTA across both pages, so one translated copy avoids drift between
@@ -31,25 +20,10 @@ export const translations = {
     wellnessDisclaimer: {
       line: "This is a spiritual and personal-development practice, not a substitute for licensed medical or mental health treatment. If you're in crisis, please contact a licensed professional or local emergency services.",
     },
-    // Shared, not nested under a page — the same two-part pricing story
-    // (live masterclass / continue plan) appears on the homepage and the
-    // QSR landing page, so one translated copy avoids the two pages
-    // drifting out of sync (see AccessModelStrip.tsx). No free-access
-    // tier — removed per explicit correction: neither the app alone nor
-    // the live sessions alone deliver the program's result, so there is
-    // no free way to get the program itself. What's genuinely free (the
-    // Reading Speed Test, the live intro session) lives in its own
-    // sections, never framed as "free access to the program."
-    accessModel: {
-      masterclassLabel: `${programs.qsr.shortName} — ₹9,999`,
-      masterclassDesc: "The full 30-day curriculum, 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout — one-time.",
-      continueLabel: "Continue — ₹499/mo",
-      continueDesc: "For graduates who've completed the program and want continued app practice afterward.",
-    },
     hero: {
       eyebrow: "Dr. Kapil Dev Sharma — Mind Ur Mind",
       credentials: trainer.en.shortBio.split(" · "),
-      headline: "Science-Informed Quantum Speed Reading",
+      headline: "Sharp Brain™ — Focus · Memory · Smart Reading",
       headlineEm: "Read Faster. Remember More. Study Smarter.",
       headlineNote: "Measured from your own Day 1 baseline.",
       sub: "Struggling to finish your syllabus? Reading for hours but remembering nothing? Your child studies for hours but forgets everything? This isn't a reading problem — it's a training problem. No hypnosis, no shortcuts — structured, measurable skills training.",
@@ -58,222 +32,11 @@ export const translations = {
       portraitName: "Dr. Kapil Dev Sharma",
       portraitTitle: trainer.en.title,
       stats: [
-        { value: "30-Day Streak", label: "Quantum Speed Reading" },
+        { value: "30-Day Streak", label: "Sharp Brain™" },
         { value: "11 Days, Monthly", label: programs.onlineRetreat.name },
         { value: "3–4× / Year", label: "Residential · Rishikesh & Lonavala" },
         { value: "1-on-1", label: programs.oneOnOneCoaching.name },
       ],
-    },
-    tier1: {
-      eyebrow: "Tier 01 · Prime Flagship",
-      audienceTag: "For Students & Professionals",
-      title: "Quantum Speed Reading",
-      titleEm: programs.qsr.shortName,
-      desc: "Not a webinar. A 30-day rebuild of how your mind processes information — for students, professionals, and lifelong learners of every age.",
-      features: [
-        "30-day progressive app streak with daily drills",
-        "7 live masterclass sessions with Dr. Kapil Dev Sharma",
-        "WPM & comprehension tracking, not just raw speed",
-        "Designed for every age group and reading level",
-      ],
-      trustQuote: {
-        quote: "I finished two books in the time it used to take me to finish one chapter.",
-        name: "Ananya R.",
-      },
-      cta: `Unlock the ${programs.qsr.shortName}`,
-      visualCaption: "Day 22 of 30 · Streak Active",
-    },
-    tier2: {
-      eyebrow: "Tier 02 · Deep Immersive Retreats",
-      title: "Go beyond technique —",
-      titleEm: "into direct experience",
-      desc: "For those ready to move past reading and into meditation and inner mastery, online or in person.",
-      online: {
-        tag: "Online · Monthly Batch",
-        audienceTag: "For Deep Seekers",
-        urgency: "Small Cohort · Limited Enrollment",
-        title: programs.onlineRetreat.name,
-        desc: "An intensive, live, 11-day journey through meditation and inner mastery disciplines — guided daily by Dr. Kapil Dev Sharma.",
-        pills: [
-          "Kriya Yoga Foundations",
-          "Pranayama & Breathwork",
-          "Samadhi Meditation",
-          "Chakra Meditation",
-          "Emotional Steadiness",
-          "Sleep & Stillness",
-        ],
-        trustQuote: {
-          quote: "The Kundalini sessions alone were worth the entire eleven days.",
-          name: "Vikram S.",
-        },
-        cta: "Secure Your Batch Spot",
-        freePracticeLinkLabel: "Or try a free guided practice first",
-      },
-      residential: {
-        tag: "In-Person · 3–4× a Year",
-        audienceTag: "For Deep Seekers",
-        urgency: "Small Group · Limited Seats",
-        title: programs.residentialRetreat.name,
-        desc: "Small-group, fully immersive retreats held in Rishikesh and Lonavala — the deepest format Mind Ur Mind offers.",
-        pills: ["Rishikesh", "Lonavala", "Small Group, Exclusive", "Full Immersion"],
-        cta: "Secure Your Retreat Seat",
-      },
-    },
-    tier3: {
-      eyebrow: "Tier 03 · Specialized & 1-on-1",
-      title: "Precise work for a",
-      titleEm: "specific problem",
-      desc: "Not everyone needs a retreat. Some people need one mind fixed on one thing — starting with their own.",
-      mentoring: {
-        tag: "Private · Custom Intensity",
-        audienceTag: "Customized 1-on-1",
-        title: programs.oneOnOneCoaching.name,
-        desc: "Direct, private mentoring with Dr. Kapil Dev Sharma, fully customized — for life stress and spiritual breakthroughs, not a replacement for therapy.",
-        pills: ["Spiritual Breakthroughs", "Fully Customized"],
-        trustQuote: {
-          quote: "Six private sessions did what years of general advice never managed.",
-          name: "Priya M.",
-        },
-        cta: "Apply for 1-on-1 Mind Coaching",
-      },
-      course: {
-        tag: "21-Day Program",
-        audienceTag: "For Overthinkers",
-        title: programs.overthinkingReset.name,
-        desc: "A focused, 21-day course built to interrupt the overthinking loop — practical, daily, specific.",
-        pills: ["Daily Practice", "21 Days", "Mental Clarity Focus"],
-        cta: "Begin Your 21-Day Reset",
-      },
-    },
-    programSelector: {
-      title: "Where Would You Like to Begin?",
-      subtitle: "Tell us who this is for — we'll point you the right way.",
-      // Audience-first path cards (see the "Homepage & QSR Conversion
-      // Rewrite" task) — replaces the earlier "QSR flagship + 3 other
-      // programs" layout with 3 cards keyed to WHO the visitor is
-      // shopping for, not which product they'd pick. Two of the three
-      // point at QSR itself (self vs. parent framing); the third is the
-      // only homepage path into deeper mind-training work (meditation /
-      // overthinking) since that's not sold as a single product.
-      paths: [
-        {
-          key: "self",
-          title: "Learning for Myself",
-          desc: "Read faster, retain more, and get through your syllabus or reading list without burning out.",
-          cta: "Explore Quantum Speed Reading",
-        },
-        {
-          key: "child",
-          title: "Looking for My Child",
-          desc: "Help your child study less, remember more, and feel less stressed before exams.",
-          cta: "See the Program for Parents",
-        },
-        {
-          key: "deeper",
-          title: "Deeper Mind Training",
-          desc: "For meditation, inner stillness, and working through overthinking with direct guidance.",
-          cta: "Explore Mentoring",
-        },
-      ],
-    },
-    homeProgramCards: {
-      eyebrow: "The Catalog",
-      title: "Explore Our Programs",
-      habitBuilder: {
-        number: "02",
-        eyebrowLabel: "A Lead-In to Quantum Speed Reading",
-        title: programs.focusStarter.name,
-        desc: "Build your daily focus habit before starting QSR — free 7-day starter.",
-        priceLine: "7 Days Free · ₹99 one-time",
-        cta: "Start Free",
-      },
-      featured: {
-        number: "01",
-        eyebrowLabel: `${programs.qsr.shortName} · Flagship`,
-        cta: "Explore Program",
-      },
-      retreat: {
-        number: "03",
-        eyebrowLabel: "11-Day Immersive Experience",
-        cta: "Explore Retreat",
-      },
-      course: {
-        number: "04",
-        eyebrowLabel: "21-Day Self-Paced Program",
-        cta: "Explore Program",
-      },
-      mentoring: {
-        number: "05",
-        eyebrowLabel: "Personalised Guidance",
-        cta: "Apply for Mentoring",
-      },
-      whatsappCard: {
-        title: "Have Questions?",
-        desc: "Not sure which program fits? Message us directly — a real person replies, not a bot.",
-        cta: "Chat on WhatsApp",
-      },
-    },
-    homeHabitFeature: {
-      // Positioning fix (see the "Fix Homepage & QSR Page Positioning"
-      // task) — this section previously got homepage-hero-level visual
-      // treatment (a large headline, a dominant 250px phone mockup, four
-      // supporting thumbnails), which competed with the QSR flagship for
-      // attention. Copy now explicitly frames this as a low-commitment
-      // on-ramp for a visitor not ready for the full Masterclass, rather
-      // than implying it via layout alone.
-      eyebrow: "Before You Start QSR",
-      title: "Build the Focus Habit First",
-      lead: "Build your daily focus habit before starting QSR — free 7-day starter. A low-commitment, 21-day guided on-ramp, no pressure to enroll in anything else.",
-      freeLabel: "7 DAYS FREE",
-      priceLabel: "₹99 one-time",
-      noSubscriptionLabel: "No monthly subscription.",
-      cta: "Start 7 Days Free",
-      mainScreenshotAlt: `The ${programs.focusStarter.appName} dashboard — a real streak and daily continue screen`,
-    },
-    // Mumbai in-person QSR workshop — a bright, distinct homepage card
-    // (see the "Build the Mumbai Offline Workshop Feature + Fix EEG
-    // Copy" task, Part 2). Deliberately more eye-catching than the
-    // site's other Tier-2/3 secondary cards (a real "NEW" launch worth
-    // standing out), but still placed below and never larger than the
-    // QSR flagship block in ProgramSelector above it.
-    homeMumbaiWorkshop: {
-      badge: "New · Pilot Batch",
-      title: "QSR, Now Live In-Person in Mumbai",
-      desc: "A 2-day in-person extension of the 30-Day Live Program — live coaching, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
-      meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
-      cta: "Explore the Mumbai Workshop",
-    },
-    // Offline QSR + EEG Cognitive Testing — multi-city (see the
-    // "Homepage, QSR & Multi-City EEG Rewrite" task) — replaces the old
-    // single-line "EEG available in Vadodara" mention and the old
-    // Mumbai-only workshop banner. Shared between the QSR page (full
-    // placement, all copy below) and the homepage (teaserDesc + a single
-    // CTA pointing at the full section on the QSR page, not the
-    // full city grid). City list/status lives in eegWorkshopCities.ts,
-    // not here — this block is copy only.
-    offlineEegWorkshop: {
-      eyebrow: "Offline QSR Workshop",
-      title: "Offline QSR Workshops with a Live EEG Brain-State Demo",
-      desc: "Prefer learning in person? Our 2-Day Offline QSR Workshop adds hands-on coaching and a live EEG brain-state demo. The rest of your 30-day program continues online, at your own pace. EEG demos are for learning and engagement, not medical tests.",
-      teaserDesc: "Our 2-Day Offline QSR Workshop adds in-person coaching and a live EEG brain-state demo — now open across 6 cities. EEG demos are for learning and engagement, not medical tests.",
-      howItWorksLabel: "How It Works",
-      steps: [
-        "Register for the 2-day offline workshop in your nearest city (live EEG brain-state demo included)",
-        "Attend 2 days in person for hands-on coaching and a live EEG brain-state demo",
-        "Continue the remaining sessions of your 30-day program online",
-      ],
-      citiesLabel: "Available Cities",
-      waitlistCta: "Join Waitlist — We'll Confirm Your City's Date",
-      registerCta: "Register Now",
-      teaserCta: "See Cities & Join the Waitlist",
-    },
-    homeOverviewVideo: {
-      eyebrow: "Real People. Real Sessions.",
-      title: "See the Mind Ur Mind Experience",
-      subtitle: "A look inside real workshops, with real participants — not a promotional reel.",
-      closingMessage: "Find the path that's right for you.",
-      cta: "Explore Your Path",
-      videoTitle: "The Mind Ur Mind Experience",
     },
     homePodcastFeature: {
       eyebrow: "Featured Podcast",
@@ -283,43 +46,6 @@ export const translations = {
       playAriaLabel: "Play video: Dr. Kapil Dev Sharma on Solomon Daniel's Podcast",
       channelCredit: "Featured on Solomon Daniel's Podcast",
     },
-    homeSpeedTest: {
-      eyebrow: "Always Free",
-      title: "How Fast Do You Really Read?",
-      lead: "Most people have never measured their actual reading speed.",
-      desc: "Take our free reading speed test and discover your current reading speed and potential.",
-      cta: "Take the Free Reading Speed Test",
-    },
-    homeWhy: {
-      eyebrow: "More Than Courses",
-      title: "More Than Courses.",
-      subtitle: "A Different Approach to Learning & Transformation.",
-      lead: "We don't believe everyone should learn the same way.",
-      concepts: [
-        { title: "Learn", desc: "Knowledge and learning systems", programLabel: "Quantum Speed Reading" },
-        { title: "Practice", desc: "Daily exercises and structured challenges", programLabel: programs.focusStarter.name },
-        { title: "Experience", desc: "Retreats and immersive learning", programLabel: "Retreats" },
-        { title: "Personalise", desc: "Individual mentoring and guidance", programLabel: programs.oneOnOneCoaching.name },
-      ],
-    },
-    homeGuide: {
-      eyebrow: "The Teacher Behind the Method",
-      title: `Meet ${trainer.name}`,
-      cta: "Discover Dr. Kapil's Journey",
-    },
-    homeFinalCta: {
-      title: "Ready to Read Differently?",
-      desc: "Watch the free training and see the method before you commit to anything.",
-      ctaPrimary: "Watch the Free Training Now",
-      ctaSecondary: "Explore All Programs",
-    },
-    galleryGlimpse: {
-      eyebrow: "A Glimpse Inside",
-      title: "Moments From Our Workshops",
-      subPrefix: "Real workshops. Real people. Across",
-      subSuffix: "cities in India.",
-      viewGalleryCta: "View Full Gallery",
-    },
     galleryPage: {
       eyebrow: "The Gallery",
       title: "Real Moments From Real Programs",
@@ -327,19 +53,13 @@ export const translations = {
       filterAll: "All",
       filterWorkshops: "Workshops",
       filterRetreats: "Retreats",
-      filterQsr: "QSR Sessions",
-    },
-    homeFranchiseTeaser: {
-      eyebrow: "A Different Path",
-      headline: "Are You a Trainer or Edupreneur?",
-      line: "Start your own QSR Training Business — with a ready platform, marketing kit, and certification.",
-      cta: "See Franchise Details",
+      filterQsr: "Sharp Brain Sessions",
     },
     franchisePage: {
       hero: {
         eyebrow: "Franchise Opportunity",
         headline: "Are You a Trainer or Edupreneur?",
-        sub: "Start your own Quantum Speed Reading training business — with a ready platform, marketing kit, and certification.",
+        sub: "Start your own Sharp Brain™ training business — with a ready platform, marketing kit, and certification.",
         ctaPrimary: "Apply to Become a Certified Trainer",
         ctaSecondary: "Watch Introduction",
       },
@@ -368,7 +88,7 @@ export const translations = {
         items: [
           {
             title: "Training & Certification",
-            desc: "A structured 7-day trainer certification program that equips you to launch and run your own Quantum Speed Reading training practice immediately — not just learn a skill.",
+            desc: "A structured 7-day trainer certification program that equips you to launch and run your own Sharp Brain™ training practice immediately — not just learn a skill.",
           },
           {
             title: "Branded Software",
@@ -383,7 +103,7 @@ export const translations = {
             desc: "Resources to help you promote the program to your own audience.",
           },
           {
-            title: "Quantum Speed Reading Methodology",
+            title: "Sharp Brain™ Methodology",
             desc: "The complete, structured curriculum developed and refined by Dr. Kapil Dev Sharma since 2015.",
           },
           {
@@ -401,7 +121,7 @@ export const translations = {
       studentTestimonials: {
         eyebrow: "What Students Say",
         title: "What Students Say",
-        desc: "Real experiences from learners who have experienced Quantum Speed Reading.",
+        desc: "Real experiences from learners who have experienced Sharp Brain™.",
         videoLabel: "Student Testimonial",
       },
       earning: {
@@ -441,7 +161,7 @@ export const translations = {
         renewalValue: "₹5,000",
         weProvideTitle: "We Provide",
         weProvideItems: [
-          "The Quantum Speed Reading methodology",
+          "The Sharp Brain™ methodology",
           "Training & certification",
           "Software access, branded with your own name and logo",
           "A ready-to-use landing page",
@@ -463,7 +183,7 @@ export const translations = {
           { title: "Screening", desc: "Our team reviews your application." },
           { title: "Call", desc: "A short conversation to understand fit on both sides." },
           { title: "Selection", desc: "Confirmed partners move forward to certification." },
-          { title: "Training", desc: "Learn the complete Quantum Speed Reading methodology." },
+          { title: "Training", desc: "Learn the complete Sharp Brain™ methodology." },
           { title: "Certification", desc: "Complete the 7-day certification program." },
         ],
       },
@@ -472,7 +192,7 @@ export const translations = {
         headline: "Who You're Partnering With",
         bio: trainer.en.longBio,
         credentials: trainer.en.shortBio.split(" · "),
-        videoTitle: "Quantum Speed Reading Introduction",
+        videoTitle: "Sharp Brain™ Introduction",
       },
       whoFor: {
         eyebrow: "Who Is This For",
@@ -510,7 +230,7 @@ export const translations = {
           },
           {
             question: "What exactly do I receive?",
-            answer: "Training and Quantum Speed Reading certification, access to the training software under your own brand name and logo, a ready-to-use landing page, and marketing material to help you promote the program.",
+            answer: "Training and Sharp Brain™ certification, access to the training software under your own brand name and logo, a ready-to-use landing page, and marketing material to help you promote the program.",
           },
           {
             question: "Do you provide students?",
@@ -544,7 +264,7 @@ export const translations = {
       },
       apply: {
         eyebrow: "Apply",
-        title: "Ready to Build Your Quantum Speed Reading Training Practice?",
+        title: "Ready to Build Your Sharp Brain™ Training Practice?",
         sub: "Apply to become a certified trainer and explore whether this partnership is right for you.",
         instantApplyCta: "Apply Instantly via WhatsApp",
         talkToTeamLabel: "Talk to Our Team",
@@ -555,156 +275,10 @@ export const translations = {
         ariaLabel: "Chat with the Mind Ur Mind team on WhatsApp about the trainer partner program",
       },
     },
-    testimonials: {
-      eyebrow: "Real People, Real Shifts",
-      title: "What changes when you read differently",
-      desc: "A few of the students, professionals, and exam aspirants who've been through Quantum Speed Reading — in their own words.",
-      videoLabel: "Watch Real Stories",
-      // Young-learner/adult sub-labels (see the "Home Page Video
-      // Testimonial Reorder" task) — this section only ever imported
-      // QSR_ADULT_VIDEO_REVIEWS, never QSR_YOUNG_LEARNER_VIDEO_REVIEWS,
-      // so reordering the QSR page's two video blocks had nothing to
-      // touch here. Now mirrors that same QSR page structure: Young
-      // Learners first, Adults second, same two arrays from the same
-      // shared qsrVideoReviews.ts data source.
-      videoYoungLearnersLabel: "Young Learners",
-      videoAdultsLabel: "Adults",
-      viewAll: "Watch More Stories",
-    },
-    faq: {
-      eyebrow: "Before You Reach Out",
-      title: "Questions people ask before starting",
-      desc: "Straight answers to the things most people hesitate on. Still unsure? Message us directly below.",
-      // Reordered to lead with Quantum Speed Reading (see the "Homepage,
-      // QSR & Multi-City EEG Rewrite" task) — this used to open with 4
-      // questions about Habit Builder's ₹99 pricing before QSR was
-      // mentioned at all, which undercut the whole site's QSR-first
-      // positioning right at the one section every hesitant visitor
-      // actually reads. Habit Builder's pricing questions (free/₹99/
-      // subscription) move to positions 8–10 — kept here rather than
-      // duplicated onto /programs/habit-builder, which already has its
-      // own dedicated HabitBuilderFaq covering the same ground.
-      items: [
-        {
-          question: "Who is Quantum Speed Reading for?",
-          answer:
-            "Students, working professionals, and lifelong learners of every age who want to read, learn, and retain information faster — no prior speed-reading experience needed.",
-        },
-        {
-          question: "I'm completely new to this — will it work for me?",
-          answer:
-            "Yes. Every program starts from zero. Quantum Speed Reading assumes no prior skill — Dr. Kapil Dev Sharma has taught it since 2015, and most learners start as complete beginners.",
-        },
-        {
-          question: "Is this hypnosis or some unscientific method?",
-          answer:
-            "No. It's skills training informed by reading and attention research — eye-movement practice, breathing-based focus drills, and memory techniques. Progress is measured in the app from your own Day 1 baseline, not claimed. There's no hypnosis, no blindfold reading, no belief system required — it's trained the way you'd train any other cognitive skill.",
-        },
-        {
-          question: `How much does the ${programs.qsr.name} cost, and what's included?`,
-          answer:
-            `The ${programs.qsr.name} is ₹9,999, one-time — the full curriculum, 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout, backed by our 100% Results Guarantee (exact conditions on our Refund & Cancellation Policy page). We don't offer free access to the program itself, but you can watch the free training video or take our free 2-minute Reading Speed Test first. Graduates who want continued app practice afterward can continue for ₹499/month.`,
-        },
-        {
-          question: "How does the offline workshop work, and which cities is it in?",
-          answer:
-            "Our 2-Day Offline QSR Workshop adds in-person coaching and a live EEG brain-state demo to the same 30-day program (EEG demos are for learning and engagement, not medical tests): you register for your nearest city, attend 2 days in person, then continue the remaining sessions online at your own pace. Currently open in Mumbai, Pune, Vadodara, Surat, Ahmedabad, and Noida — exact batch dates are confirmed city by city, so most cities start on a waitlist until a date is locked, rather than a fixed 'register now' date we can't yet guarantee.",
-        },
-        {
-          question: "What age group are these programs designed for?",
-          answer:
-            "Students, working professionals, and lifelong learners of every age go through these programs — from teenagers preparing for exams to retirees exploring meditation for the first time. Each track is paced to fit where you are.",
-        },
-        {
-          question: "Which program should I start with?",
-          answer:
-            `If you specifically want to read and learn faster, start with Quantum Speed Reading — this site's flagship program. If you want the easiest, lowest-commitment way in first, start with the ${programs.focusStarter.name} before QSR. If you're looking for deeper inner work, explore the Retreats or apply for ${programs.oneOnOneCoaching.name}.`,
-        },
-        {
-          question: `Is the ${programs.focusStarter.name} really free?`,
-          answer:
-            "Yes — Days 1–7 are completely free, no card required to start. Day 8 onward is a single one-time payment of ₹99 to continue through Day 21.",
-        },
-        {
-          question: "What happens after the 7-day free period?",
-          answer:
-            "You'll be asked to make the one-time ₹99 payment to keep going. Nothing charges automatically — you choose when, or whether, to continue.",
-        },
-        {
-          question: "Is ₹99 a subscription?",
-          answer: "No. ₹99 is a one-time payment to continue the full journey — there is no recurring charge at any point.",
-        },
-        {
-          question: "Are the retreats online or residential?",
-          answer:
-            `Both. The ${programs.onlineRetreat.name} runs monthly from wherever you are; the ${programs.residentialRetreat.name} run 3–4 times a year in small groups for those who want the fully in-person format.`,
-        },
-        {
-          question: `How does ${programs.oneOnOneCoaching.name} work?`,
-          answer:
-            `${programs.oneOnOneCoaching.name} is private, custom-paced coaching — sessions are built entirely around your own goals and challenges, not a fixed curriculum. Apply to discuss fit and scheduling.`,
-        },
-        {
-          question: "Do I need to believe in anything specific — is this religious?",
-          answer:
-            "No particular belief system is required. The meditation and awareness work draws on breathwork and inner-awareness practices — you bring your own openness, we guide the method.",
-        },
-        {
-          question: "What if I have a question this didn't answer?",
-          answer: "Message Dr. Kapil's team directly on WhatsApp for a real, direct answer — no bots.",
-        },
-      ],
-      ctaLabel: "Ask on WhatsApp",
-    },
     whatsapp: {
-      bubble: "Have questions about retreats or masterclasses? Chat directly with Dr. Kapil's team.",
+      bubble: "Have questions about our programs? Chat directly with Dr. Kapil's team.",
       button: "Chat on WhatsApp",
       ariaLabel: "Chat with Dr. Kapil's team on WhatsApp",
-    },
-    footer: {
-      blurb: "Quantum Speed Reading and advanced Meditation & Mind-Training under Dr. Kapil Dev Sharma.",
-      columns: {
-        programs: {
-          heading: "Programs",
-          links: [
-            { label: "Quantum Speed Reading", href: "/programs/quantum-speed-reading" },
-            { label: programs.focusStarter.name, href: programs.focusStarter.url },
-          ],
-        },
-        retreats: {
-          heading: "Retreats",
-          links: [
-            { label: "Online 11-Day Retreat", href: "/retreats/online-11-day" },
-            { label: programs.residentialRetreat.name, href: programs.residentialRetreat.url },
-          ],
-        },
-        mentoring: {
-          heading: "Mentoring",
-          links: [
-            { label: programs.oneOnOneCoaching.name, href: programs.oneOnOneCoaching.url },
-            { label: programs.overthinkingReset.name, href: programs.overthinkingReset.url },
-          ],
-        },
-        habitApp: {
-          heading: brand.appName,
-          links: [{ label: `${programs.focusStarter.name} · ₹99 for Days 8–21`, href: programs.focusStarter.url }],
-        },
-        philosophy: {
-          heading: "Dr. Kapil's Philosophy",
-          links: [
-            { label: "About Us", href: "/about" },
-            { label: "Contact", href: "/contact" },
-            { label: "Become a Partner", href: "/franchise-individual" },
-          ],
-        },
-      },
-      legalLinks: [
-        { label: "Privacy Policy", href: "/privacy" },
-        { label: "Terms of Service", href: "/terms" },
-        { label: "Refund & Cancellation Policy", href: "/refund-policy" },
-      ],
-      copyright: "© Mind Ur Mind. mindurmind.org.in",
-      location: "Vadodara, Gujarat, India",
     },
     contactPage: {
       headline: "Get in Touch",
@@ -721,7 +295,7 @@ export const translations = {
       headline: "About Mind Ur Mind",
       body: [
         "Mind Ur Mind was founded in 2014 by Dr. Kapil Dev Sharma, bringing together academic research and hands-on coaching into a single practice focused on how people read, think, and manage their own minds.",
-        `What began as in-person workshops has grown into a full range of programs — Quantum Speed Reading, spiritual retreats, one-on-one mentoring, and the ${brand.appName} — while staying rooted in the same principle: real cognitive and personal change comes from structured, sustained practice, not quick fixes.`,
+        `What began as in-person workshops has grown into a full range of programs — Sharp Brain™ (focus, memory and smart reading), meditation retreats, one-on-one coaching, and the ${brand.appName} — while staying rooted in the same principle: real cognitive and personal change comes from structured, sustained practice, not quick fixes.`,
         "Mind Ur Mind is a proprietorship led by Dr. Kapil Dev Sharma, based in Vadodara, Gujarat, and works with students, professionals, and lifelong learners across India.",
       ],
       guide: {
@@ -730,721 +304,12 @@ export const translations = {
           "Most people already know what they need to change. The harder work is understanding why they haven't — and building the conditions where that becomes possible.",
       },
     },
-    qsrLanding: {
-      hero: {
-        eyebrow: "Science-Informed Reading & Memory Training",
-        headline: "Quantum Speed Reading for Students, Exam Aspirants & Parents",
-        headlineEm: "Read Faster. Remember More. Study Smarter.",
-        headlineNote: "Measured from your own Day 1 baseline.",
-        sub: "Studying for hours but forgetting by the next day? This isn't about willpower — it's about how your brain reads.",
-        ctaPrimary: "Watch the Free Training Now",
-        ctaPrimaryMeta: "Free · Watch Anytime",
-        // CTA restructure (see the "Homepage, QSR & Multi-City EEG
-        // Rewrite" task) — primary is now the real, honestly-labeled
-        // on-demand video (QsrFounderVideo, id="founder" — a genuine
-        // short intro from Dr. Kapil, not inflated into a claimed
-        // 45-minute walkthrough it isn't). Paid enrollment stays
-        // secondary here (own price meta + checkout trust/guarantee
-        // copy). The live Q&A session moved out of this hero entirely —
-        // it already has its own dedicated section further down
-        // (QsrLiveIntroSession) so it isn't lost, just not fighting for
-        // hero-level space alongside two other CTAs. The 2-minute Speed
-        // Test stays a plain tertiary text link below.
-        ctaSecondary: "Secure Your Batch Spot",
-        ctaSecondaryMeta: "₹9,999 · One-Time Enrollment",
-        ctaTertiary: "Or take the free 2-minute Speed Test",
-        trustLine: "For students, professionals, and lifelong learners of every age group.",
-        visualCaption: "Your 30-Day Streak Starts Day 1",
-      },
-      speedTestCta: {
-        afterScience: "Curious how fast you actually read? Try the free 2-minute test.",
-        beforePricing: "Not ready to commit yet? Try the free 2-minute Reading Speed Test first — no card required.",
-      },
-      // "Who is this for?" audience strip (see the "Homepage & QSR
-      // Conversion Rewrite" task) — 3 visual-confirmation cards directly
-      // under the hero pain point, before any feature/metric content.
-      // No deep-linked subsections exist yet for each audience, so these
-      // currently just confirm "yes, this page is for you" rather than
-      // jumping anywhere — simplest version to ship first, per the
-      // task's own fallback instruction.
-      whoIsThisFor: {
-        title: "Who Is This For?",
-        cards: [
-          {
-            title: "Competitive Exam Aspirant",
-            desc: "UPSC, JEE, NEET, Banking — too much syllabus, too little time to revise it all.",
-          },
-          {
-            title: "School Student",
-            desc: "Hours of homework and textbook reading that still doesn't stick by test day.",
-          },
-          {
-            title: "Working Professional",
-            desc: "Reports, research, and reading piling up faster than you can get through them.",
-          },
-        ],
-      },
-      // Pain Points section (see the "Homepage & QSR Conversion Rewrite"
-      // task) — two audiences, each in their own plain language, toggled
-      // rather than both dumped on screen at once. Placed before
-      // QsrBrainScience/QsrNeuroCognitiveScience's metrics content, per
-      // the task's explicit ordering.
-      paths: {
-        eyebrow: "Who It's For",
-        title: "Three ways people use this program",
-        heroLabel: "Choose your path:",
-        students: { label: "For Students & Exam Aspirants", title: "For Students & Exam Aspirants", desc: "Cover your syllabus with less re-reading, and remember more of it on exam day." },
-        professionals: { label: "For Working Professionals", title: "For Working Professionals", desc: "Get through reports, research and books faster, without losing what they say." },
-        parents: { label: "For Parents", title: "For Parents (Children's Path)", desc: "A guided path for younger learners, with practical screen-time habits built in.", tipsLabel: "Screen time & focus, built in" },
-      },
-      outcomes: {
-        eyebrow: "What Changes",
-        title: "What you can expect after 30 days",
-        items: [
-          "Read noticeably faster — measured against your own Day 1 baseline",
-          "Remember more of what you read, using visual memory techniques",
-          "Hold your focus longer, thanks to short daily attention drills",
-          "Finish study material and reports with less re-reading",
-        ],
-        note: "Results vary from person to person; your own before-and-after numbers are tracked in the app.",
-      },
-      included: {
-        title: "What's included",
-        items: [
-          "The full 30-day progressive app curriculum",
-          `7 live sessions with ${trainer.name}`,
-          "WPM and comprehension tracking from your Day 1 baseline",
-          "Day 1 goal-setting and practical memory techniques",
-          "Also in the app: the AI Document Studio — upload a PDF or textbook and get speed-reading drills and revision notes",
-        ],
-      },
-      eegLine: "In-person students in Vadodara can also join live EEG brain-state sessions — for learning and engagement, not a medical test.",
-      nextStep: {
-        ctaTitle: "Ready to start your 30 days?",
-        title: "Not ready to enrol yet?",
-        desc: "Take the free step first — no payment needed.",
-        speedTest: "Take the free Reading Speed Test",
-        starter: `Try the ${programs.focusStarter.name}`,
-      },
-      painPoints: {
-        eyebrow: "Sound Familiar?",
-        title: "The Real Problem Isn't Effort",
-        toggleSelf: "I'm learning for myself",
-        toggleParent: "I'm looking into this for my child",
-        self: {
-          title: "For Competitive Exam Aspirants",
-          items: [
-            "Syllabus too large to revise in the time you have left",
-            "Forgetting entire chapters by the time the test actually arrives",
-            "Hours of study time that don't translate into proportional results",
-            "Watching other aspirants seem to move faster than you",
-            "Current affairs and long passages that take too long to get through",
-          ],
-        },
-        parent: {
-          title: "For Parents Evaluating This for Their Child",
-          items: [
-            "Your child studies for hours but retains very little of it",
-            "Homework and school reading drag on, pushing bedtime later and later",
-            "Screen time has visibly shortened their attention span",
-            "Visible stress before exams because revision never finishes in time",
-            "You're wary of \"hypnosis\" or unverified methods — you need to see this is actually evidence-based",
-          ],
-        },
-      },
-      trustBadge: {
-        title: "Personally Confirmed, Not Automated",
-        desc: "Every enrollment is confirmed by Dr. Kapil's own team within 24 hours of checkout — a real person, not a bot.",
-        secondaryLine: `Secure checkout via Razorpay · ${trainer.learners} learners · QSR trainer since ${trainer.qsrSinceYear}`,
-      },
-      guarantee: {
-        title: qsrGuarantee.en.title,
-        desc: `${qsrGuarantee.en.statement} ${qsrGuarantee.en.requestWindow}`,
-        policyLabel: "See our Refund & Cancellation Policy",
-        heroLine: qsrGuarantee.en.short,
-      },
-      brainScience: {
-        eyebrow: "The Science Behind It",
-        title: "Why this works when other methods don't",
-        desc: "Quantum Speed Reading isn't a trick — it trains four skills most reading habits never practise: visual processing, attention and memory.",
-        cards: [
-          {
-            title: "Visual Processing",
-            desc: "Traditional reading processes text one word at a time. Training visual processing helps your eyes and brain take in word groups and familiar patterns, so you read in meaningful chunks rather than word by word.",
-          },
-          {
-            title: "Visualization & Memory",
-            desc: "Turning what you read into mental images is a well-established memory technique. The program trains you to do it deliberately, so key ideas are easier to recall later.",
-          },
-          {
-            title: "Peripheral Vision",
-            desc: "Most readers only take in the handful of letters directly in their focal point. Widening your peripheral visual span lets your eyes capture whole phrases, sometimes whole lines, in a single fixation.",
-          },
-          {
-            title: "Deep Concentration",
-            desc: "None of the above holds without sustained, distraction-free focus. The same daily drills that build reading speed also train your ability to hold attention on one task for longer stretches.",
-          },
-        ],
-      },
-      // Brainwave Science Infographic™ (see the "Add Brainwave Science
-      // Infographic to QSR Page" task) — a supplied side-by-side graphic
-      // (public/brainwave-science.png), placed right after the 4-card
-      // "why this works" section and before the metrics/EEG section, so
-      // it reads as the visual payoff of the cards above rather than a
-      // bolted-on addition.
-      // Science-Backed Neuro-Cognitive Positioning™ — the program's own
-      // real, already-computed metrics (Brain Score, comprehension %,
-      // daily-streak consistency — see practiceHistory.ts /
-      // ThirtyDayCurriculumOverview.tsx) presented as clean typographic
-      // stat callouts, never a chart or dashboard screenshot standing in
-      // for real EEG data that doesn't exist for the online cohort.
-      // Alpha/Theta are framed as the states the breathing/concentration
-      // and visualization/memory drills are designed to help a student
-      // access — a training target, not a per-session measured claim,
-      // since only the Vadodara in-person track has physical EEG
-      // hardware to actually verify brain state (see eeg below).
-      neuroCognitive: {
-        eyebrow: "How Progress Is Measured",
-        title: "Science-Informed Reading, Attention and Memory Training",
-        desc: "Read faster with better recall — trained daily and tracked on real metrics from your own Day 1 baseline.",
-        metrics: [
-          {
-            label: "Brain Score",
-            desc: "A composite score built from your real reading growth and comprehension data, tracked from your own Day 1 baseline.",
-          },
-          {
-            label: "Comprehension %",
-            desc: "How much of what you read you actually retain, scored every session — never speed reported without it.",
-          },
-          {
-            label: "Consistency",
-            desc: "Your daily practice streak — the single strongest real predictor of whether the training actually sticks.",
-          },
-        ],
-        // "Normal Reading vs. Quantum Speed Reading" comparison (see the
-        // "Homepage & QSR Conversion Rewrite" task) — replaces the
-        // earlier plain "Trained Toward Two Brain States" alpha/theta
-        // block with a fuller side-by-side, folding the same alpha/theta
-        // framing into the "with QSR" column rather than dropping it.
-        comparison: {
-          title: "Normal Reading vs. Quantum Speed Reading",
-          normal: {
-            label: "Normal Reading — What's Happening Now",
-            points: [
-              "Eyes move in constant stop-start jumps (saccades) with frequent regressions — 10–15 stops per line",
-              "Attention drifts easily, and re-reading and silent inner narration slow you down and tire you out",
-              "Words are processed one at a time with little visualization, which makes content harder to remember",
-            ],
-            result: "Result: slow speed, shallow retention, quick mental fatigue",
-          },
-          quantum: {
-            label: "With Quantum Speed Reading",
-            points: [
-              "Eyes trained to move across wider visual spans (peripheral vision training) — fewer fixations and regressions",
-              "Breathing and focus drills train sustained attention before and during reading",
-              "Visual processing, attention and memory training — you practise grouping words and turning key ideas into mental images",
-            ],
-            result: "Result: read faster with better recall — measured from your own Day 1 baseline",
-          },
-          measuredNote: "How this is measured: the Brain Score, comprehension % and consistency tracking above, from your own Day 1 baseline. Offline workshops add a live EEG brain-state demo — EEG demos are for learning and engagement, not medical tests.",
-          notHypnosisLine: "This is not hypnosis, not blindfold reading, and not any supernatural claim. It's cognitive training — the same way you'd train a muscle at the gym.",
-          researchNote: "Informed by established reading research — eye fixations and regressions, attention training, and visualization-based memory techniques. No proprietary brain claims.",
-        },
-        disclaimer: "The program trains skills — reading speed, comprehension, attention and recall — measured in the app. It makes no claims about changing brainwaves.",
-      },
-      appPreview: {
-        eyebrow: "Inside the App",
-        title: "What your daily drill actually looks like",
-        desc: "Every day of the 30-day streak opens the same way — a short, focused session the app tracks automatically.",
-        drillLabel: "Today's Drill",
-        drillValue: "Peripheral Expansion",
-        stats: [
-          { label: "Session Length", value: "~10 min" },
-          { label: "Current WPM", value: "412" },
-          { label: "Comprehension", value: "91%" },
-        ],
-        caption: "Example preview — your real numbers start from your own Day 1 baseline.",
-      },
-      ageGroups: {
-        eyebrow: "Built For Every Age",
-        title: "One Program, Tailored for Every Age Group",
-        desc: "The same core training, expressed through two real, verified pathways — because a child and a working professional don't learn the same way, and this program doesn't ask them to.",
-        pathways: [
-          {
-            title: "For Children",
-            tag: "Learns Quickly",
-            desc: "Children often pick up new visual and reading skills quickly. With guided training, many develop faster word recognition and reading fluency from their own starting point — you can see these sessions in our student video reviews.",
-          },
-          {
-            title: "For Adults & Professionals",
-            tag: "Faster Reading at Work",
-            desc: "Working professionals bring focus and reading discipline built up over years — a real foundation the training builds on. With guided practice, most adults read noticeably faster while keeping comprehension, measured against their own Day 1 baseline.",
-          },
-        ],
-        unifyingLine:
-          "Different expression, same underlying training: peripheral vision, deep concentration, and visual processing, attention and memory training — every skill covered in \"The Science Behind It\" above. Whichever path a student takes, that's what they're building.",
-        ctaLabel: "Watch Real Student Videos",
-      },
-      authority: {
-        // TODO(Dr. Sharma): the "10,000+ students" figure appears
-        // sitewide (this card, QSR hero credentials/stat/secondaryLine,
-        // the QSR FAQ, homepage meta description, the franchise page,
-        // and both retreat/residential pages — see the "QSR Page Cleanup
-        // & Credibility Fixes" task, Fix 5, for the full list) as a
-        // specific, checkable statistic. Please confirm it's accurate
-        // before it stays live; if not verified, it should be replaced
-        // or softened per the site's existing "no fabricated statistics"
-        // standard.
-        //
-        // RESOLVED (site-rebuild Phase 1): the 2014-vs-2015 conflict this
-        // TODO used to flag is not actually one claim — it's two real,
-        // different facts that just read like the same one. Confirmed
-        // founding line: "Mind Ur Mind founded 2014 · Quantum Speed
-        // Reading since 2015" — 2014 is when Mind Ur Mind (and Dr.
-        // Sharma's general teaching workshops) started; 2015 is
-        // specifically when the QSR method was developed/introduced. The
-        // "500+ Workshops Delivered" card below is worded accordingly.
-        eyebrow: "Direct From The Source",
-        title: `Learn Directly From ${trainer.name}`,
-      },
-      credibilityStrip: {
-        label: "Trusted By Learners From",
-        placeholderStatement: "Workshops delivered across [CITY LIST NEEDED — confirm real cities/count]",
-        citiesHeadlinePrefix: "Workshops delivered across",
-        citiesHeadlineSuffix: "cities in India",
-      },
-      founderVideo: {
-        eyebrow: "From Dr. Kapil, Directly",
-        title: "Why Quantum Speed Reading is different",
-        desc: `A short introduction from ${trainer.name} — ${trainer.years.total} years in education and mind training, and a Quantum Speed Reading trainer since ${trainer.qsrSinceYear}. Hear how his 30-day method works before you decide.`,
-        placeholderLabel: "Video coming soon",
-        ctaLabel: "Ask a Question Instead",
-        videoTitle: "Quantum Speed Reading Introduction",
-      },
-      liveIntroSession: {
-        eyebrow: "Free · 45 Minutes · Live",
-        title: "Reserve Your Spot — Live Q&A with Dr. Kapil",
-        desc: "One real Quantum Speed Reading technique, taught live, plus open Q&A — a genuinely free session, not free access to the 30-day program itself, and not a recording. If it clicks, you'll get a straightforward invite to join a paid batch afterward — no pressure either way.",
-        ctaLabel: "Reserve Your Spot",
-      },
-      videoTestimonials: {
-        eyebrow: "Watch Real Students",
-        title: "60+ video reviews on YouTube — real students, not paid actors",
-        desc: "Every video in this playlist is a real student, filmed after finishing the program — unscripted.",
-        moreLabel: "More Real Quantum Speed Reading Students",
-        watchLabel: "Watch Video",
-        adultsLabel: "Adults",
-        youngLearnersLabel: "Young Learners",
-        watchMoreVideosLabel: "Watch More Student Stories",
-        watchFewerVideosLabel: "Show Fewer",
-      },
-      mechanics: {
-        eyebrow: "How It Works",
-        title: "Two systems, one transformation",
-        desc: "A daily app streak that trains the skill, and live sessions that install the mindset behind it.",
-        app: {
-          tag: "Daily · In the App",
-          title: "The 30-Day App Streak",
-          desc: `Progressive cognitive drills you do at your own pace, every day, right inside the ${brand.appName}.`,
-          bullets: [
-            "WPM (words-per-minute) tracked every session, not just once",
-            "Comprehension scored alongside speed — never one without the other",
-            "Progressive difficulty — Day 30 asks more of you than Day 1",
-            "Every completed day stays open — practice it again anytime",
-            "About 10 minutes a day",
-          ],
-        },
-        live: {
-          tag: "Weekly · Live with Dr. Kapil Dev Sharma",
-          title: "The 7 Live Masterclasses",
-          desc: "Interactive sessions across the 30 days where Dr. Kapil Dev Sharma personally walks you through the technique in real time.",
-          bullets: [
-            "Visual reading and memory techniques, taught live, not pre-recorded",
-            "Direct Q&A — ask about your own specific sticking point",
-            "Group accountability with your live batch cohort",
-            "Recordings available if you miss a session",
-          ],
-        },
-      },
-      moreThanSpeed: {
-        eyebrow: "Beyond Reading Speed",
-        title: "More Than Just Speed",
-        goalSetting: {
-          tag: "Day 1",
-          title: "Goal-Setting",
-          desc: "On Day 1, every student sets personal reading and learning goals with their trainer — creating ownership from day one.",
-        },
-        memoryTechniques: {
-          tag: "Practical Skills",
-          title: "Practical Memory Techniques",
-          desc: "Beyond reading speed, students learn real-world memory tools — the Memory Palace, the Peg System, and Acronym techniques — skills they can demonstrate immediately.",
-        },
-      },
-      focusInDistractedWorld: {
-        eyebrow: "Screen Time & Focus",
-        title: "Building Focus in a Distracted World",
-        intro: "Many parents worry about screen time affecting their child's focus and reading habits. This program includes practical screen-management guidance alongside the reading training.",
-        tips: [
-          {
-            title: "Posture & Eye-Care",
-            desc: "Simple tips to protect posture and reduce eye strain during long reading sessions.",
-          },
-          {
-            title: "The 20-20-20 Rule",
-            desc: "Every 20 minutes, look at something 20 feet away for 20 seconds.",
-          },
-          {
-            title: "Digital Detox Habits",
-            desc: "Simple habits — like keeping the phone away for 10 minutes before practice.",
-          },
-        ],
-      },
-      documentMastery: {
-        // Judgment call (see the "QSR Page Cleanup & Credibility Fixes"
-        // task, Fix 3): reframed from a 5-screenshot promotional showcase
-        // (its own primary image + 4 supporting images) down to a single
-        // compact "what's included" list — see QsrDocumentMastery.tsx.
-        // Deliberately NOT claiming this is free/included with the
-        // ₹9,999 enrollment: the app's real pricing page
-        // (PricingPlansGrid.tsx) shows this Document Studio feature has
-        // its own separate ₹399–₹699/month subscription tiers, a fact
-        // this rewritten copy avoids contradicting rather than guessing
-        // at the real relationship between Masterclass enrollment and
-        // Document Studio access.
-        eyebrow: "Also In The App",
-        title: "The AI Document Studio",
-        desc: `The same AI-powered Document Studio available inside the ${brand.appName} — upload any PDF, textbook, or research paper and get speed-reading drills, mind maps, and revision notes built from it.`,
-        items: [
-          {
-            title: "Upload & Learn",
-            desc: "Drop in any PDF or textbook — no manual formatting or setup needed.",
-          },
-          {
-            title: "AI-Generated Drills",
-            desc: "Your own material becomes real Quantum Speed Reading practice, not generic sample text.",
-          },
-          {
-            title: "Visual Knowledge Maps",
-            desc: "See how the ideas in your document actually connect, at a glance.",
-          },
-          {
-            title: "Key Concept Extraction",
-            desc: "The core ideas pulled out automatically, so you know what actually matters.",
-          },
-          {
-            title: "Memory & Revision Notes",
-            desc: "Built-in notes designed for review later — not just a one-time read.",
-          },
-        ],
-      },
-      curriculum: {
-        eyebrow: "The Curriculum",
-        title: "What the 30 days actually look like",
-        desc: "Four structured phases. Each one builds directly on the last — nothing here is optional filler.",
-        weeks: [
-          {
-            range: "Days 1–7",
-            title: "Breaking Ocular Fixation",
-            desc: "Retrain how your eyes physically move across a page — expanding peripheral vision and eliminating the stop-start fixation habit that caps most readers under 250 WPM.",
-          },
-          {
-            range: "Days 8–14",
-            title: "Bypassing Sub-Vocalization",
-            desc: "Interrupt the inner voice that silently narrates every word as you read. This single shift is usually where your reading speed jumps the most.",
-          },
-          {
-            range: "Days 15–21",
-            title: "Visual Memory Techniques",
-            desc: "Layer in visual and multi-sensory memory techniques so what you read fast, you also remember.",
-          },
-          {
-            range: "Days 22–30",
-            title: "Full-Book Synthesis & Mastery",
-            desc: "Apply everything to a real, full-length book, speed-test your final numbers, and complete your Mastery Certification.",
-          },
-        ],
-      },
-      examBenefits: {
-        eyebrow: "Subject By Subject",
-        title: "How QSR Helps You, Subject by Subject",
-        cards: [
-          {
-            title: "UPSC / Banking / Government Exam Aspirants",
-            desc: "Cover the same current-affairs and editorial volume in half the time, freeing up hours for revision cycles.",
-          },
-          {
-            title: "JEE / NEET Aspirants",
-            desc: "Retain diagrams, formulas, and long theory chapters faster through visual encoding, leaving more time for mock tests.",
-          },
-          {
-            title: "School Students (Board Exams)",
-            desc: "Turn long descriptive chapters into structured mental maps instead of rote memorization, for faster, more durable recall.",
-          },
-        ],
-      },
-      // Positioning fix — this used to open with a "Three kinds of people
-      // take this Masterclass" 3-persona grid (Students/Professionals/
-      // Lifelong Learners), which diluted the ICP by trying to speak to
-      // everyone equally. Removed: real testimonials elsewhere on this
-      // page already show who this is for (a business owner, a doctor,
-      // students) without a dedicated multi-persona pitch, and the
-      // homepage/hero already lead with students & exam aspirants as the
-      // primary audience. What's left is the one piece of this section
-      // that was never about persona-spreading — concrete, day-to-day
-      // parent-facing outcomes — now flattened to one level instead of
-      // nested under a `parentSection` key that no longer needs to share
-      // space with anything else. The fourth item (a monthly parent-child
-      // reading activity) moved here from the removed AllRoundDevelopment
-      // section's "Family Bonding" card — same real detail, just no
-      // longer pitched as a fourth equal "pillar" of the program.
-      audience: {
-        eyebrow: "For Parents",
-        title: "What Changes Day to Day",
-        items: [
-          "Homework and reading sessions that used to drag on start finishing faster",
-          "Your child sees a book through instead of abandoning it midway",
-          "Less last-minute panic before exams, because syllabus gets covered on schedule",
-          "A monthly parent-child reading activity, built into the program",
-        ],
-      },
-      faq: {
-        eyebrow: "Before You Enroll",
-        title: "Questions people ask before Day 1",
-        items: [
-          {
-            question: "Is this hard for a complete beginner?",
-            answer:
-              "No. The 30-day structure assumes zero prior skill and starts from your true baseline — Dr. Kapil Dev Sharma has taught Quantum Speed Reading since 2015, and most learners start as complete beginners.",
-          },
-          {
-            question: "What's the time commitment per day?",
-            answer:
-              "About 10 minutes a day inside the app, plus one live masterclass session a week with Dr. Kapil Dev Sharma. It's designed to fit around a full-time job or study schedule, not compete with it.",
-          },
-          {
-            question: "Does this work for every age group?",
-            answer:
-              "Yes — students preparing for exams, working professionals, and lifelong learners of every age have all completed this program. The pace adapts to where you're starting from.",
-          },
-          {
-            question: "Is any of this actually free?",
-            answer:
-              `The ${programs.qsr.name} itself is a fully paid, result-oriented program — ₹9,999 one-time for the full 30-day curriculum, all 7 live sessions with Dr. Kapil Dev Sharma, and app access throughout. We don't offer free access to the program, because neither the app alone nor the live sessions alone deliver the result — they're built to work together. What is free: our 2-minute Reading Speed Test, and our free 45-minute live intro session with Dr. Kapil Dev Sharma — see below.`,
-          },
-          {
-            question: "What exactly do I get for ₹9,999?",
-            answer:
-              "The full 30-day progressive app curriculum, all 7 live masterclass sessions with Dr. Kapil Dev Sharma, WPM & comprehension tracking throughout, and app access for the full 30 days — a one-time enrollment, not a subscription. Once you finish the program, continued app practice is a separate ₹499/month option if you want it.",
-          },
-          {
-            question: "What if it doesn't work for me?",
-            answer:
-              `${qsrGuarantee.en.statement} ${qsrGuarantee.en.requestWindow} See our Refund & Cancellation Policy for the full terms.`,
-          },
-          {
-            question: "What happens right after I pay?",
-            answer:
-              "Enrollment is confirmed personally by Dr. Kapil's team, not an automated system — you'll hear from us with your batch schedule shortly after checkout.",
-          },
-          {
-            question: "Is this hypnosis or some unscientific method?",
-            answer:
-              "No. Quantum Speed Reading is skills training informed by reading and attention research — peripheral vision practice, breathing/focus drills, and visual memory techniques — with your progress measured on real Brain Score, comprehension, and consistency metrics. In-person students in Vadodara can also join live EEG brain-state sessions, which are for learning and engagement, not medical tests. It is not hypnosis, not blindfold reading, and not any pseudoscientific technique.",
-          },
-        ],
-        ctaLabel: "Ask on WhatsApp",
-      },
-      finalCta: {
-        eyebrow: "Ready When You Are",
-        title: "Your 30 Days Start With One Decision",
-        desc: "Enrollment is confirmed personally by Dr. Kapil's own team, not an automated system.",
-        cta: "Secure Your Batch Spot",
-        ctaMeta: "₹9,999 · One-Time Enrollment",
-        batchNoticeLabel: "Next Batch Starts",
-        cadenceLine: "New batches begin twice a month — the 7th and the 25th.",
-        structureLine: "7 live classes across your 30 days · daily practice through the app",
-      },
-      stickyBar: {
-        text: programs.qsr.name,
-        price: "₹9,999 · One-Time",
-        cta: "Secure Your Batch Spot",
-      },
-      whatsapp: {
-        bubble: "Have questions about the QSR batch? Chat with Dr. Kapil's team instantly.",
-        button: "Chat on WhatsApp",
-        ariaLabel: `Chat with Dr. Kapil's team on WhatsApp about the ${programs.qsr.name}`,
-      },
-      // Bright, distinct card promoting the Mumbai in-person workshop
-      // (see the "Build the Mumbai Offline Workshop Feature + Fix EEG
-      // Copy" task, Part 3) — replaces the earlier plain text-link
-      // banner. Deliberately worded as a complementary option ("also
-      // available"), not a competing primary offer.
-      mumbaiWorkshopCard: {
-        badge: "New · Pilot Batch",
-        title: "Also Available: Live, In-Person in Mumbai",
-        desc: "A 2-day in-person extension of this program — live coaching from Dr. Kapil Dev Sharma, a Cognitive & Focus Engagement Demo, and the same ₹9,999 price.",
-        meta: "Mumbai · 2 Days · ₹9,999 · Limited Seats",
-        cta: "Explore the Mumbai Workshop",
-      },
-    },
-    // Mumbai In-Person Workshop™ — a hybrid extension of the QSR 30-Day
-    // Masterclass: a live, 2-day, in-person kickoff in Mumbai (Cognitive
-    // & Focus Engagement Demo, in-person coaching, WPM + retention
-    // measured across an overnight gap), after which the same app
-    // curriculum as the online track continues. Deliberately its own
-    // i18n block (not folded into qsrLanding) since it's a distinct page
-    // with its own nav/sticky bar/WhatsApp widget, mirroring the
-    // retreatLanding/residentialLanding pattern for a dedicated landing
-    // page. EEG language throughout is deliberately "Cognitive & Focus
-    // Engagement Demo" (see the "Build the Mumbai Offline Workshop
-    // Feature + Fix EEG Copy" task, Fix A, for why this exact term was
-    // chosen over "Attention & Focus Engagement Snapshot," used in an
-    // earlier pass), never "brain test," "brain mapping," or
-    // "diagnostic" — an explicit, non-negotiable framing rule for this
-    // page (contrast with qsrLanding.neuroCognitive.eeg above, which
-    // predates this rule and describes a different, hardware-verified
-    // Vadodara offering in clinical language — that section is out of
-    // scope and was left untouched, but the inconsistency is worth a
-    // look).
-    qsrMumbaiLanding: {
-      hero: {
-        eyebrow: "Live, In-Person · Mumbai · Pilot Batch",
-        headline: "Read Faster. Remember More.",
-        headlineEm: "Live, In Person, in Mumbai.",
-        sub: `A 2-day, in-person extension of the ${programs.qsr.name} — live coaching from Dr. Kapil Dev Sharma, a real-time cognitive & focus engagement demo, and your reading speed measured on Day 1 and again on Day 2, after an overnight gap. The remaining 28 days then continue through the same app as our online track.`,
-        ctaPrimary: "Reserve a Pilot Batch Seat",
-        ctaPrimaryMeta: "₹9,999 · Same Price as the Online Program",
-        ctaSecondary: "See the 2-Day Schedule",
-        badge: "2-Day Live Event",
-      },
-      whatsDifferent: {
-        eyebrow: "In-Person vs. Online",
-        title: "What's Different From the Online Program",
-        items: [
-          {
-            title: "A Live Cognitive & Focus Engagement Demo",
-            desc: "A short, in-person live EEG brain-state demo on Day 1 — see below for exactly what this is, and isn't.",
-          },
-          {
-            title: "In-Person Coaching From Dr. Kapil Dev Sharma",
-            desc: "Live, face-to-face technique correction across both days — not a video call.",
-          },
-          {
-            title: "Reading Speed Measured Twice, a Night Apart",
-            desc: "An initial WPM reading on Day 1, then a final WPM and retention check on Day 2 — after a real overnight gap, not back-to-back.",
-          },
-          {
-            title: "Then the Same App-Based Curriculum",
-            desc: "After the 2-day event, the remaining 28 days continue through the same Quantum Speed Reading app our online students use — no separate, disconnected track.",
-          },
-        ],
-      },
-      schedule: {
-        eyebrow: "The 2 Days",
-        title: "How the Workshop Runs",
-        day1: {
-          label: "Day 1 · Saturday",
-          title: "Baseline & Technique",
-          items: [
-            "Live EEG brain-state demo (for learning and engagement, not a medical test)",
-            "Core Quantum Speed Reading technique, taught live",
-            "First guided practice session",
-            "Initial reading speed (WPM) measurement",
-          ],
-        },
-        day2: {
-          label: "Day 2 · Sunday",
-          title: "Practice & Results",
-          items: [
-            "Further guided practice",
-            "Final WPM and retention measurement",
-            "Certificate of completion",
-            "Optional video testimonial recording",
-          ],
-        },
-        overnightCallout: {
-          title: "Why Two Days, Not One?",
-          desc: "Retention is measured after a full night's sleep, not in the same session it was taught in — sleep-based consolidation is part of how the technique is designed to stick, so the gap between Day 1 and Day 2 is a deliberate design choice, not a scheduling convenience.",
-        },
-      },
-      venue: {
-        eyebrow: "Venue & Batch",
-        title: "Mumbai · Pilot Batch",
-        venueLine: "[Venue name & address to be confirmed — Powai or Bandra West area]",
-        dateLine: "[Exact dates to be confirmed]",
-        timeLine: "[Timings to be confirmed]",
-        pilotNote: "This is our first in-person batch in this format — seats are genuinely limited, and we're keeping it small on purpose. Batches are grouped by age (a younger group and an older/adult group run separately, not mixed), for delivery quality.",
-      },
-      eegDemo: {
-        eyebrow: "Day 1",
-        title: "Cognitive & Focus Engagement Demo",
-        desc: "On Day 1, a live EEG brain-state demo shows your focus and engagement in real time while you practise — a way to see the training happening, not just take our word for it.",
-        disclaimer: "This is a live engagement demo tool, not a diagnostic or medical device. It does not produce a clinical brain report, and it isn't a substitute for any medical or neurological assessment.",
-        addOn: {
-          title: "Optional: A Detailed Personal Engagement Report",
-          desc: "For those who want it, a more detailed personal engagement report based on your session is available as a paid add-on.",
-          pricePlaceholder: "[Add-on price to be confirmed]",
-        },
-      },
-      pricing: {
-        title: "₹9,999",
-        priceNote: "One-time — same price as the online program. Includes both days in Mumbai plus the full 30-day app curriculum that follows.",
-        addOnNote: "The personal engagement report above is a separate, optional add-on.",
-        cta: "Reserve a Pilot Batch Seat",
-      },
-      faq: {
-        eyebrow: "Questions",
-        title: "Before You Reserve a Seat",
-        items: [
-          {
-            question: "How is this different from the online program?",
-            answer: "The curriculum is the same 30-day program. This adds a live, in-person 2-day kickoff in Mumbai — a face-to-face session with Dr. Kapil Dev Sharma, a live cognitive & focus engagement demo, and reading speed measured on both days with an overnight gap in between. After Day 2, you continue on the same app the online track uses.",
-          },
-          {
-            question: "What does the EEG demo do — is it a medical test?",
-            answer: "No. It's a live EEG brain-state demo, meant to show your focus during practice in real time. It is not a diagnostic or medical device, and it does not produce a clinical or medical brain report.",
-          },
-          {
-            question: "What if my child can only attend one day, not both?",
-            answer: "The two days are designed to build on each other — Day 1 teaches the technique and takes a baseline, Day 2 measures real retention after an overnight gap. We'd strongly recommend attending both. [Exact policy for partial attendance to be confirmed.]",
-          },
-          {
-            question: "How does the rest of the 30-day program continue after the 2 days?",
-            answer: "After the in-person weekend, you continue through the same Quantum Speed Reading app used by our online students, for the remainder of the 30-day curriculum.",
-          },
-          {
-            question: "Is this for children of all ages?",
-            answer: "Yes — but we run separate batches by age group (a younger group and an older/adult group) rather than mixing all ages in one session, so the pace and delivery suit each group properly.",
-          },
-          {
-            question: "What's the refund policy for the in-person workshop?",
-            answer: "The same Refund & Cancellation Policy that covers the online program applies here — see our full Refund & Cancellation Policy page for eligibility windows and how to request one. Because this workshop includes the live in-person days, our results guarantee is assessed the same way: complete the full 30-day protocol as instructed (both in-person days plus the app-based days that follow), and if your reading speed and comprehension haven't measurably improved, you're covered.",
-          },
-        ],
-        ctaLabel: "Ask on WhatsApp",
-      },
-      testimonialsPlaceholder: {
-        eyebrow: "Social Proof",
-        title: "Real Stories, Coming After the Pilot Batch",
-        desc: "This is our first in-person batch in this format. We'll add real video testimonials from Mumbai participants here after the pilot batch runs — nothing fabricated in the meantime.",
-      },
-      stickyBar: {
-        text: "Mumbai Workshop · 2-Day Pilot Batch",
-        price: "₹9,999 · One-Time",
-        cta: "Reserve a Seat",
-      },
-      whatsapp: {
-        bubble: "Have questions about the Mumbai workshop? Chat with Dr. Kapil's team instantly.",
-        button: "Chat on WhatsApp",
-        ariaLabel: "Chat with Dr. Kapil's team on WhatsApp about the Mumbai in-person workshop",
-      },
-    },
     habitBuilderLanding: {
       hero: {
-        eyebrow: "Free first step · before Quantum Speed Reading",
+        eyebrow: "Free first step · before the Sharp Brain 30-Day Program",
         headline: programs.focusStarter.name,
         headlineEm: "Try the method for a week, free — then decide.",
-        sub: `About 10 minutes a day of focus, memory and reading drills — the same foundations used in the ${programs.qsr.name}. Days 1–7 are free. If it works for you, continue to Day 21 for a one-time ₹99, or move on to the full 30-day program.`,
+        sub: `About 10 minutes a day of focus, memory and reading drills — the same foundations used in the ${programs.sharpBrain.name}. Days 1–7 are free. If it works for you, continue to Day 21 for a one-time ₹99, or move on to the full 30-day program.`,
         ctaPrimary: "Start Free — 7 Days, No Payment Required",
         navCta: "Start Free",
         ctaPrimaryMeta: "No card required to start",
@@ -1488,7 +353,7 @@ export const translations = {
           },
           {
             range: "Days 15–21",
-            title: "Advanced Quantum Flow & Intuition",
+            title: "Advanced Focus Flow & Intuition",
             desc: "The most advanced exercises in the program, building toward your Day 21 finale.",
           },
         ],
@@ -1502,7 +367,7 @@ export const translations = {
       },
       nextStep: {
         title: "Ready for the full program?",
-        desc: `The ${programs.qsr.name} adds 7 live sessions with ${trainer.name} and a full 30-day curriculum.`,
+        desc: `The ${programs.sharpBrain.name} adds 7 live sessions with ${trainer.name} and a full 30-day curriculum.`,
         cta: "See the 30-day program",
       },
       pricing: {
@@ -2125,7 +990,7 @@ export const translations = {
           {
             question: "How is this different from the group programs?",
             answer:
-              `Group programs (like the ${programs.qsr.name} or the ${programs.onlineRetreat.name}) run on a fixed schedule with standardised content for everyone in the batch. This is private, one-on-one, and shaped entirely around your own situation — the pace, focus areas, and format adjust to you, not the other way around.`,
+              `Group programs (like the ${programs.sharpBrain.name} or the ${programs.onlineRetreat.name}) run on a fixed schedule with standardised content for everyone in the batch. This is private, one-on-one, and shaped entirely around your own situation — the pace, focus areas, and format adjust to you, not the other way around.`,
           },
           {
             question: "What if I'm not sure what I need help with?",
@@ -2514,17 +1379,6 @@ export const translations = {
   },
 
   hi: {
-    nav: {
-      links: [
-        { label: "प्रोग्राम्स", href: "#explore-programs" },
-        { label: "रिट्रीट्स", href: "/retreats/online-11-day" },
-        { label: "मेंटरिंग", href: "/mentoring/personal-class" },
-        { label: "लीडर्स के लिए", href: "/executive-brain-workshop" },
-        { label: "परिचय", href: "/about" },
-        { label: "सवाल-जवाब", href: "#faq" },
-      ],
-      ctaPrimary: "7 दिन मुफ़्त शुरू करें",
-    },
     checkoutTrust: {
       line: "भुगतान Razorpay द्वारा सुरक्षित। 100% सुरक्षित और एन्क्रिप्टेड — हम कभी आपके कार्ड की जानकारी संग्रहीत नहीं करते।",
       refundLabel: "रिफंड और कैंसिलेशन नीति",
@@ -2532,16 +1386,10 @@ export const translations = {
     wellnessDisclaimer: {
       line: "यह एक आध्यात्मिक और व्यक्तिगत-विकास अभ्यास है, लाइसेंस-प्राप्त चिकित्सा या मानसिक स्वास्थ्य उपचार का विकल्प नहीं। यदि आप संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर या स्थानीय आपातकालीन सेवाओं से संपर्क करें।",
     },
-    accessModel: {
-      masterclassLabel: `${programs.qsr.shortNameHi} — ₹9,999`,
-      masterclassDesc: "पूरा 30-दिवसीय पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस — एकमुश्त।",
-      continueLabel: "जारी रखें — ₹499/माह",
-      continueDesc: "उन ग्रेजुएट्स के लिए जिन्होंने प्रोग्राम पूरा कर लिया है और बाद में भी ऐप अभ्यास जारी रखना चाहते हैं।",
-    },
     hero: {
       eyebrow: "डॉ. कपिल देव शर्मा — माइंड उर माइंड",
       credentials: trainer.hi.shortBio.split(" · "),
-      headline: "विज्ञान-सूचित क्वांटम स्पीड रीडिंग",
+      headline: "Sharp Brain™ — Focus · Memory · Smart Reading",
       headlineEm: "तेज़ पढ़ें। ज़्यादा याद रखें। स्मार्ट तरीके से पढ़ाई करें।",
       headlineNote: "आपके अपने दिन 1 के बेसलाइन से मापा गया।",
       sub: "सिलेबस पूरा करने में दिक्कत हो रही है? घंटों पढ़ते हैं पर कुछ याद नहीं रहता? आपका बच्चा घंटों पढ़ता है पर सब भूल जाता है? यह पढ़ाई की समस्या नहीं है — यह ट्रेनिंग की समस्या है। कोई सम्मोहन नहीं, कोई शॉर्टकट नहीं — संरचित, मापने योग्य स्किल ट्रेनिंग।",
@@ -2550,194 +1398,11 @@ export const translations = {
       portraitName: "डॉ. कपिल देव शर्मा",
       portraitTitle: trainer.hi.title,
       stats: [
-        { value: "30-दिन की स्ट्रीक", label: "क्वांटम स्पीड रीडिंग" },
+        { value: "30-दिन की स्ट्रीक", label: "Sharp Brain™" },
         { value: "11 दिन, मासिक", label: programs.onlineRetreat.nameHi },
         { value: "वर्ष में 3–4 बार", label: "रेजिडेंशियल · ऋषिकेश और लोनावला" },
         { value: "1-ऑन-1", label: programs.oneOnOneCoaching.nameHi },
       ],
-    },
-    tier1: {
-      eyebrow: "टियर 01 · प्रमुख फ्लैगशिप",
-      audienceTag: "विद्यार्थियों और पेशेवरों के लिए",
-      title: "क्वांटम स्पीड रीडिंग",
-      titleEm: programs.qsr.shortNameHi,
-      desc: "यह कोई वेबिनार नहीं है। यह हर आयु वर्ग के विद्यार्थियों, पेशेवरों और आजीवन सीखने वालों के लिए, आपके मस्तिष्क की सूचना प्रोसेस करने की क्षमता का 30-दिवसीय पुनर्निर्माण है।",
-      features: [
-        "दैनिक अभ्यास के साथ 30-दिवसीय प्रगतिशील ऐप स्ट्रीक",
-        "डॉ. कपिल देव शर्मा के साथ 7 लाइव मास्टरक्लास सत्र",
-        "केवल गति नहीं, बल्कि WPM और समझ (comprehension) की ट्रैकिंग",
-        "हर आयु वर्ग और पठन-स्तर के लिए उपयुक्त",
-      ],
-      trustQuote: {
-        quote: "जितने समय में पहले एक अध्याय पूरा होता था, अब उतने समय में दो किताबें पूरी हो जाती हैं।",
-        name: "अनन्या आर.",
-      },
-      cta: `${programs.qsr.shortNameHi} अनलॉक करें`,
-      visualCaption: "30 में से दिन 22 · स्ट्रीक सक्रिय",
-    },
-    tier2: {
-      eyebrow: "टियर 02 · गहन इमर्सिव रिट्रीट",
-      title: "तकनीक से आगे —",
-      titleEm: "प्रत्यक्ष अनुभव की ओर",
-      desc: "जो लोग रीडिंग से आगे बढ़कर ध्यान और आंतरिक मास्टरी में जाने के लिए तैयार हैं, उनके लिए — ऑनलाइन या व्यक्तिगत रूप से।",
-      online: {
-        tag: "ऑनलाइन · मासिक बैच",
-        audienceTag: "गहरी खोज करने वालों के लिए",
-        urgency: "छोटा समूह · सीमित नामांकन",
-        title: programs.onlineRetreat.nameHi,
-        desc: "ध्यान और आंतरिक मास्टरी के मुख्य अनुशासनों के माध्यम से एक गहन, लाइव, 11-दिवसीय यात्रा — प्रतिदिन डॉ. कपिल देव शर्मा द्वारा मार्गदर्शित।",
-        pills: [
-          "क्रिया योग की बुनियाद",
-          "प्राणायाम और श्वास-अभ्यास",
-          "समाधि ध्यान",
-          "चक्र ध्यान",
-          "भावनात्मक स्थिरता",
-          "नींद और स्थिरता",
-        ],
-        trustQuote: {
-          quote: "अकेले कुंडलिनी सत्र ही पूरे ग्यारह दिनों के लायक थे।",
-          name: "विक्रम एस.",
-        },
-        cta: "अपनी बैच सीट सुरक्षित करें",
-        freePracticeLinkLabel: "या पहले एक मुफ़्त गाइडेड अभ्यास आज़माएं",
-      },
-      residential: {
-        tag: "व्यक्तिगत उपस्थिति · वर्ष में 3–4 बार",
-        audienceTag: "गहरी खोज करने वालों के लिए",
-        urgency: "छोटा समूह · सीमित सीटें",
-        title: programs.residentialRetreat.nameHi,
-        desc: "ऋषिकेश और लोनावला में आयोजित छोटे-समूह, पूर्ण-विसर्जन रिट्रीट — माइंड उर माइंड का सबसे गहन प्रारूप।",
-        pills: ["ऋषिकेश", "लोनावला", "छोटा समूह, एक्सक्लूसिव", "पूर्ण विसर्जन"],
-        cta: "अपनी रिट्रीट सीट सुरक्षित करें",
-      },
-    },
-    tier3: {
-      eyebrow: "टियर 03 · विशेष एवं 1-ऑन-1",
-      title: "एक विशिष्ट समस्या के लिए",
-      titleEm: "सटीक कार्य",
-      desc: "हर किसी को रिट्रीट की ज़रूरत नहीं होती। कुछ लोगों को बस एक चीज़ पर केंद्रित मन चाहिए होता है — अपने ही मन से शुरुआत करते हुए।",
-      mentoring: {
-        tag: "निजी · कस्टम इंटेंसिटी",
-        audienceTag: "पूरी तरह कस्टमाइज़्ड 1-ऑन-1",
-        title: programs.oneOnOneCoaching.nameHi,
-        desc: "डॉ. कपिल देव शर्मा के साथ सीधा, निजी मार्गदर्शन, पूरी तरह कस्टमाइज़्ड — जीवन के तनाव और आध्यात्मिक सफलताओं के लिए, थेरेपी का विकल्प नहीं।",
-        pills: ["आध्यात्मिक सफलताएं", "पूरी तरह कस्टमाइज़्ड"],
-        trustQuote: {
-          quote: "छह निजी सत्रों ने वह कर दिखाया जो वर्षों की सामान्य सलाह कभी नहीं कर पाई।",
-          name: "प्रिया एम.",
-        },
-        cta: "1-on-1 माइंड कोचिंग के लिए आवेदन करें",
-      },
-      course: {
-        tag: "21-दिवसीय कार्यक्रम",
-        audienceTag: "अति-चिंतन करने वालों के लिए",
-        title: programs.overthinkingReset.nameHi,
-        desc: "ओवरथिंकिंग के चक्र को तोड़ने के लिए बनाया गया एक केंद्रित, 21-दिवसीय कोर्स — व्यावहारिक, दैनिक, विशिष्ट।",
-        pills: ["दैनिक अभ्यास", "21 दिन", "मानसिक स्पष्टता पर केंद्रित"],
-        cta: "अपना 21-दिवसीय रीसेट शुरू करें",
-      },
-    },
-    programSelector: {
-      title: "आप कहां से शुरू करना चाहेंगे?",
-      subtitle: "बताइए यह किसके लिए है — हम आपको सही रास्ता दिखाएंगे।",
-      paths: [
-        {
-          key: "self",
-          title: "अपने लिए सीखना",
-          desc: "तेज़ी से पढ़ें, ज़्यादा याद रखें, और बिना थके अपना सिलेबस या रीडिंग लिस्ट पूरी करें।",
-          cta: "क्वांटम स्पीड रीडिंग एक्सप्लोर करें",
-        },
-        {
-          key: "child",
-          title: "अपने बच्चे के लिए ढूंढ रहे हैं",
-          desc: "अपने बच्चे को कम पढ़ाई में ज़्यादा याद रखने और परीक्षा से पहले कम तनाव महसूस करने में मदद करें।",
-          cta: "पेरेंट्स के लिए प्रोग्राम देखें",
-        },
-        {
-          key: "deeper",
-          title: "गहरी माइंड ट्रेनिंग",
-          desc: "ध्यान, आंतरिक शांति, और ओवरथिंकिंग से निपटने के लिए सीधे मार्गदर्शन के साथ।",
-          cta: "मेंटरिंग एक्सप्लोर करें",
-        },
-      ],
-    },
-    homeProgramCards: {
-      eyebrow: "कैटलॉग",
-      title: "हमारे प्रोग्राम्स एक्सप्लोर करें",
-      habitBuilder: {
-        number: "02",
-        eyebrowLabel: "क्वांटम स्पीड रीडिंग की ओर एक शुरुआत",
-        title: programs.focusStarter.nameHi,
-        desc: "QSR शुरू करने से पहले अपनी दैनिक फोकस आदत बनाएं — फ्री 7-दिन स्टार्टर।",
-        priceLine: "7 दिन मुफ़्त · ₹99 एकमुश्त",
-        cta: "मुफ़्त शुरू करें",
-      },
-      featured: {
-        number: "01",
-        eyebrowLabel: `${programs.qsr.shortNameHi} · फ्लैगशिप`,
-        cta: "प्रोग्राम एक्सप्लोर करें",
-      },
-      retreat: {
-        number: "03",
-        eyebrowLabel: "11-दिवसीय इमर्सिव अनुभव",
-        cta: "रिट्रीट एक्सप्लोर करें",
-      },
-      course: {
-        number: "04",
-        eyebrowLabel: "21-दिवसीय सेल्फ-पेस्ड प्रोग्राम",
-        cta: "प्रोग्राम एक्सप्लोर करें",
-      },
-      mentoring: {
-        number: "05",
-        eyebrowLabel: "व्यक्तिगत मार्गदर्शन",
-        cta: "मेंटरिंग के लिए आवेदन करें",
-      },
-      whatsappCard: {
-        title: "सवाल हैं?",
-        desc: "पक्का नहीं कि कौन सा प्रोग्राम सही है? सीधे हमें मैसेज करें — एक असली व्यक्ति जवाब देगा, कोई बॉट नहीं।",
-        cta: "WhatsApp पर चैट करें",
-      },
-    },
-    homeHabitFeature: {
-      eyebrow: "QSR शुरू करने से पहले",
-      title: "पहले फोकस की आदत बनाएं",
-      lead: "QSR शुरू करने से पहले अपनी दैनिक फोकस आदत बनाएं — फ्री 7-दिन स्टार्टर। एक कम-प्रतिबद्धता वाला 21-दिवसीय गाइडेड शुरुआत, किसी और चीज़ में दाखिला लेने का कोई दबाव नहीं।",
-      freeLabel: "7 दिन मुफ़्त",
-      priceLabel: "₹99 एकमुश्त",
-      noSubscriptionLabel: "कोई मंथली सब्सक्रिप्शन नहीं।",
-      cta: "7 दिन मुफ़्त शुरू करें",
-      mainScreenshotAlt: `${programs.focusStarter.appNameHi} डैशबोर्ड — असली स्ट्रीक और डेली continue स्क्रीन`,
-    },
-    homeMumbaiWorkshop: {
-      badge: "नया · पायलट बैच",
-      title: "QSR, अब मुंबई में लाइव व्यक्तिगत रूप से",
-      desc: "30-दिवसीय लाइव प्रोग्राम का एक 2-दिवसीय व्यक्तिगत विस्तार — लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
-      meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
-      cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
-    },
-    offlineEegWorkshop: {
-      eyebrow: "ऑफलाइन QSR वर्कशॉप",
-      title: "लाइव EEG ब्रेन-स्टेट डेमो के साथ ऑफलाइन QSR वर्कशॉप",
-      desc: "व्यक्तिगत रूप से सीखना पसंद है? हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में हैंड्स-ऑन कोचिंग और एक लाइव EEG ब्रेन-स्टेट डेमो शामिल है। आपके 30-दिवसीय प्रोग्राम का बाकी हिस्सा ऑनलाइन, आपकी अपनी गति से जारी रहता है। EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं।",
-      teaserDesc: "हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप में व्यक्तिगत कोचिंग और एक लाइव EEG ब्रेन-स्टेट डेमो शामिल है — अब 6 शहरों में उपलब्ध। EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं।",
-      howItWorksLabel: "यह कैसे काम करता है",
-      steps: [
-        "अपने नज़दीकी शहर में 2-दिवसीय ऑफलाइन वर्कशॉप के लिए रजिस्टर करें (लाइव EEG ब्रेन-स्टेट डेमो शामिल)",
-        "लाइव ब्रेन-स्टेट ट्रैकिंग और हैंड्स-ऑन कोचिंग के लिए 2 दिन व्यक्तिगत रूप से शामिल हों",
-        "अपने 30-दिवसीय प्रोग्राम के बाकी सेशन ऑनलाइन जारी रखें",
-      ],
-      citiesLabel: "उपलब्ध शहर",
-      waitlistCta: "वेटलिस्ट जॉइन करें — हम आपके शहर की तारीख कन्फर्म करेंगे",
-      registerCta: "अभी रजिस्टर करें",
-      teaserCta: "शहर देखें और वेटलिस्ट जॉइन करें",
-    },
-    homeOverviewVideo: {
-      eyebrow: "असली लोग। असली सेशन।",
-      title: "माइंड उर माइंड एक्सपीरियंस देखें",
-      subtitle: "असली वर्कशॉप्स और असली प्रतिभागियों की एक झलक — कोई प्रचार रील नहीं।",
-      closingMessage: "वह रास्ता खोजें जो आपके लिए सही है।",
-      cta: "अपना रास्ता एक्सप्लोर करें",
-      videoTitle: "माइंड उर माइंड एक्सपीरियंस",
     },
     homePodcastFeature: {
       eyebrow: "फीचर्ड पॉडकास्ट",
@@ -2747,43 +1412,6 @@ export const translations = {
       playAriaLabel: "वीडियो चलाएं: डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर",
       channelCredit: "Solomon Daniel के पॉडकास्ट पर फीचर्ड",
     },
-    homeSpeedTest: {
-      eyebrow: "हमेशा मुफ़्त",
-      title: "आप असल में कितनी तेज़ी से पढ़ते हैं?",
-      lead: "ज़्यादातर लोगों ने कभी अपनी असली रीडिंग स्पीड नहीं मापी।",
-      desc: "हमारा मुफ़्त रीडिंग स्पीड टेस्ट लें और अपनी मौजूदा रीडिंग स्पीड और क्षमता जानें।",
-      cta: "मुफ़्त रीडिंग स्पीड टेस्ट लें",
-    },
-    homeWhy: {
-      eyebrow: "सिर्फ़ कोर्सेज़ से कहीं ज़्यादा",
-      title: "सिर्फ़ कोर्सेज़ से कहीं ज़्यादा।",
-      subtitle: "सीखने और बदलाव के लिए एक अलग तरीका।",
-      lead: "हम यह नहीं मानते कि सभी को एक ही तरीके से सीखना चाहिए।",
-      concepts: [
-        { title: "सीखें", desc: "ज्ञान और सीखने के सिस्टम", programLabel: "क्वांटम स्पीड रीडिंग" },
-        { title: "अभ्यास करें", desc: "रोज़ की एक्सरसाइज़ और संरचित चैलेंजेस", programLabel: programs.focusStarter.nameHi },
-        { title: "अनुभव करें", desc: "रिट्रीट्स और इमर्सिव लर्निंग", programLabel: "रिट्रीट्स" },
-        { title: "व्यक्तिगत बनाएं", desc: "व्यक्तिगत मेंटरिंग और मार्गदर्शन", programLabel: programs.oneOnOneCoaching.nameHi },
-      ],
-    },
-    homeGuide: {
-      eyebrow: "मेथड के पीछे के शिक्षक",
-      title: `${trainer.nameHi} से मिलें`,
-      cta: "डॉ. कपिल की यात्रा जानें",
-    },
-    homeFinalCta: {
-      title: "क्या आप अलग तरीके से पढ़ने के लिए तैयार हैं?",
-      desc: "फ्री ट्रेनिंग देखें और किसी भी प्रतिबद्धता से पहले खुद यह तरीका देखें।",
-      ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
-      ctaSecondary: "सभी प्रोग्राम्स एक्सप्लोर करें",
-    },
-    galleryGlimpse: {
-      eyebrow: "एक झलक",
-      title: "हमारी वर्कशॉप्स के पल",
-      subPrefix: "असली वर्कशॉप्स। असली लोग। भारत के",
-      subSuffix: "शहरों में।",
-      viewGalleryCta: "पूरी गैलरी देखें",
-    },
     galleryPage: {
       eyebrow: "गैलरी",
       title: "असली प्रोग्राम्स के असली पल",
@@ -2791,19 +1419,13 @@ export const translations = {
       filterAll: "सभी",
       filterWorkshops: "वर्कशॉप्स",
       filterRetreats: "रिट्रीट्स",
-      filterQsr: "QSR सेशंस",
-    },
-    homeFranchiseTeaser: {
-      eyebrow: "एक अलग रास्ता",
-      headline: "क्या आप Trainer या Edupreneur हैं?",
-      line: "अपना खुद का QSR Training Business शुरू करें — ready platform, marketing kit, और certification के साथ",
-      cta: "Franchise Details देखें",
+      filterQsr: "Sharp Brain सेशंस",
     },
     franchisePage: {
       hero: {
         eyebrow: "फ्रेंचाइज़ी अवसर",
         headline: "क्या आप Trainer या Edupreneur हैं?",
-        sub: "अपना खुद का Quantum Speed Reading Training Business शुरू करें — ready platform, marketing kit, और certification के साथ।",
+        sub: "अपना खुद का Sharp Brain™ Training Business शुरू करें — ready platform, marketing kit, और certification के साथ।",
         ctaPrimary: "Certified Trainer बनने के लिए आवेदन करें",
         ctaSecondary: "परिचय वीडियो देखें",
       },
@@ -2832,7 +1454,7 @@ export const translations = {
         items: [
           {
             title: "ट्रेनिंग और सर्टिफिकेशन",
-            desc: "एक structured 7-दिन का trainer certification प्रोग्राम, जो आपको सिर्फ एक स्किल सिखाने के बजाय अपनी खुद की Quantum Speed Reading training practice तुरंत शुरू करने और चलाने के लिए तैयार करता है।",
+            desc: "एक structured 7-दिन का trainer certification प्रोग्राम, जो आपको सिर्फ एक स्किल सिखाने के बजाय अपनी खुद की Sharp Brain™ training practice तुरंत शुरू करने और चलाने के लिए तैयार करता है।",
           },
           {
             title: "ब्रांडेड सॉफ्टवेयर",
@@ -2847,7 +1469,7 @@ export const translations = {
             desc: "अपने ऑडियंस तक प्रोग्राम पहुंचाने में मदद करने वाले resources।",
           },
           {
-            title: "Quantum Speed Reading मेथडोलॉजी",
+            title: "Sharp Brain™ मेथडोलॉजी",
             desc: "डॉ. कपिल देव शर्मा द्वारा 2015 से विकसित और परिष्कृत की गई पूरी, structured कर्रिकुलम।",
           },
           {
@@ -2865,7 +1487,7 @@ export const translations = {
       studentTestimonials: {
         eyebrow: "विद्यार्थी क्या कहते हैं",
         title: "विद्यार्थी क्या कहते हैं",
-        desc: "Quantum Speed Reading का अनुभव करने वाले विद्यार्थियों के असली अनुभव।",
+        desc: "Sharp Brain™ का अनुभव करने वाले विद्यार्थियों के असली अनुभव।",
         videoLabel: "विद्यार्थी की प्रतिक्रिया",
       },
       earning: {
@@ -2905,7 +1527,7 @@ export const translations = {
         renewalValue: "₹5,000",
         weProvideTitle: "हम क्या देते हैं",
         weProvideItems: [
-          "Quantum Speed Reading मेथडोलॉजी",
+          "Sharp Brain™ मेथडोलॉजी",
           "ट्रेनिंग और सर्टिफिकेशन",
           "आपके अपने नाम और लोगो के साथ ब्रांडेड सॉफ्टवेयर एक्सेस",
           "एक तैयार लैंडिंग पेज",
@@ -2927,7 +1549,7 @@ export const translations = {
           { title: "स्क्रीनिंग", desc: "हमारी टीम आपके आवेदन की समीक्षा करती है।" },
           { title: "कॉल", desc: "दोनों तरफ़ से फ़िट समझने के लिए एक छोटी बातचीत।" },
           { title: "सिलेक्शन", desc: "चुने गए पार्टनर्स सर्टिफिकेशन की ओर बढ़ते हैं।" },
-          { title: "ट्रेनिंग", desc: "पूरी Quantum Speed Reading मेथडोलॉजी सीखें।" },
+          { title: "ट्रेनिंग", desc: "पूरी Sharp Brain™ मेथडोलॉजी सीखें।" },
           { title: "सर्टिफिकेशन", desc: "7-दिन का सर्टिफिकेशन प्रोग्राम पूरा करें।" },
         ],
       },
@@ -2936,7 +1558,7 @@ export const translations = {
         headline: "आप किनके साथ पार्टनर बन रहे हैं",
         bio: trainer.hi.longBio,
         credentials: trainer.hi.shortBio.split(" · "),
-        videoTitle: "क्वांटम स्पीड रीडिंग परिचय",
+        videoTitle: "Sharp Brain™ परिचय",
       },
       whoFor: {
         eyebrow: "यह किनके लिए है",
@@ -2974,7 +1596,7 @@ export const translations = {
           },
           {
             question: "मुझे बिल्कुल क्या मिलता है?",
-            answer: "ट्रेनिंग और Quantum Speed Reading सर्टिफिकेशन, आपके अपने ब्रांड नाम और लोगो के तहत ट्रेनिंग सॉफ्टवेयर का एक्सेस, एक तैयार लैंडिंग पेज, और प्रोग्राम प्रमोट करने में मदद करने वाली मार्केटिंग सामग्री।",
+            answer: "ट्रेनिंग और Sharp Brain™ सर्टिफिकेशन, आपके अपने ब्रांड नाम और लोगो के तहत ट्रेनिंग सॉफ्टवेयर का एक्सेस, एक तैयार लैंडिंग पेज, और प्रोग्राम प्रमोट करने में मदद करने वाली मार्केटिंग सामग्री।",
           },
           {
             question: "क्या आप विद्यार्थी उपलब्ध कराते हैं?",
@@ -3008,7 +1630,7 @@ export const translations = {
       },
       apply: {
         eyebrow: "आवेदन करें",
-        title: "अपनी Quantum Speed Reading Training Practice बनाने के लिए तैयार हैं?",
+        title: "अपनी Sharp Brain™ Training Practice बनाने के लिए तैयार हैं?",
         sub: "Certified trainer बनने के लिए आवेदन करें और जानें कि यह पार्टनरशिप आपके लिए सही है या नहीं।",
         instantApplyCta: "WhatsApp पर तुरंत आवेदन करें",
         talkToTeamLabel: "हमारी टीम से बात करें",
@@ -3019,145 +1641,10 @@ export const translations = {
         ariaLabel: "Trainer partner प्रोग्राम के बारे में माइंड उर माइंड टीम से WhatsApp पर चैट करें",
       },
     },
-    testimonials: {
-      eyebrow: "वास्तविक लोग, वास्तविक बदलाव",
-      title: "जब आप अलग तरीके से पढ़ते हैं, तो क्या बदलता है",
-      desc: "क्वांटम स्पीड रीडिंग से गुज़रे कुछ विद्यार्थी, पेशेवर और परीक्षा उम्मीदवार — उन्हीं के शब्दों में।",
-      videoLabel: "असली कहानियां देखें",
-      videoYoungLearnersLabel: "युवा शिक्षार्थी",
-      videoAdultsLabel: "वयस्क",
-      viewAll: "और कहानियां देखें",
-    },
-    faq: {
-      eyebrow: "संपर्क करने से पहले",
-      title: "शुरू करने से पहले लोग जो सवाल पूछते हैं",
-      desc: "ज़्यादातर लोग जिन बातों पर हिचकिचाते हैं, उनके सीधे जवाब। फिर भी असमंजस में हैं? नीचे सीधे हमसे संपर्क करें।",
-      items: [
-        {
-          question: "क्वांटम स्पीड रीडिंग किनके लिए है?",
-          answer:
-            "हर उम्र के विद्यार्थी, कामकाजी पेशेवर, और जीवन-पर्यंत सीखने वाले जो जानकारी को तेज़ी से पढ़ना, सीखना और याद रखना चाहते हैं — पहले से किसी स्पीड-रीडिंग अनुभव की ज़रूरत नहीं।",
-        },
-        {
-          question: "मैं इसमें बिल्कुल नया हूं — क्या यह मेरे लिए काम करेगा?",
-          answer:
-            "हां, बिल्कुल। हर कार्यक्रम शून्य से शुरू होता है। क्वांटम स्पीड रीडिंग में किसी पूर्व कौशल की ज़रूरत नहीं — डॉ. कपिल देव शर्मा 2015 से इसे सिखा रहे हैं, और अधिकांश विद्यार्थी पूर्ण शुरुआती के रूप में शुरू करते हैं।",
-        },
-        {
-          question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
-          answer:
-            "नहीं। यह रीडिंग और अटेंशन रिसर्च से सूचित स्किल ट्रेनिंग है — आई-मूवमेंट अभ्यास, श्वास-आधारित फोकस अभ्यास, और मेमोरी तकनीकें। प्रगति ऐप में आपके अपने दिन 1 के बेसलाइन से मापी जाती है, दावों से नहीं। इसमें कोई सम्मोहन नहीं, कोई ब्लाइंडफोल्ड रीडिंग नहीं, किसी विश्वास प्रणाली की ज़रूरत नहीं — इसे किसी भी अन्य कॉग्निटिव कौशल की तरह प्रशिक्षित किया जाता है।",
-        },
-        {
-          question: `${programs.qsr.nameHi} की कीमत कितनी है, और इसमें क्या शामिल है?`,
-          answer:
-            `${programs.qsr.nameHi} की कीमत ₹9,999 है, एकमुश्त — पूरा पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ 7 लाइव सेशन, और पूरे समय ऐप एक्सेस, हमारी 100% रिज़ल्ट गारंटी के साथ (सटीक शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर)। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, लेकिन आप पहले फ्री ट्रेनिंग वीडियो देख सकते हैं या हमारा मुफ़्त 2-मिनट स्पीड टेस्ट आज़मा सकते हैं। जो ग्रेजुएट्स बाद में भी ऐप अभ्यास जारी रखना चाहते हैं, वे ₹499/माह में जारी रख सकते हैं।`,
-        },
-        {
-          question: "ऑफलाइन वर्कशॉप कैसे काम करती है, और यह किन शहरों में है?",
-          answer:
-            "हमारी 2-दिवसीय ऑफलाइन QSR वर्कशॉप उसी 30-दिवसीय प्रोग्राम में व्यक्तिगत कोचिंग और एक लाइव EEG ब्रेन-स्टेट डेमो जोड़ती है (EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं): आप अपने नज़दीकी शहर के लिए रजिस्टर करते हैं, 2 दिन व्यक्तिगत रूप से शामिल होते हैं, फिर बाकी सेशन अपनी गति से ऑनलाइन जारी रखते हैं। फिलहाल मुंबई, पुणे, वडोदरा, सूरत, अहमदाबाद, और नोएडा में उपलब्ध — सटीक बैच तारीखें शहर-दर-शहर तय होती हैं, इसलिए ज़्यादातर शहर तारीख पक्की होने तक वेटलिस्ट पर रहते हैं, न कि एक तय 'अभी रजिस्टर करें' तारीख पर जिसकी हम अभी गारंटी नहीं दे सकते।",
-        },
-        {
-          question: "ये कार्यक्रम किस आयु वर्ग के लिए बने हैं?",
-          answer:
-            "विद्यार्थी, कामकाजी पेशेवर, और हर उम्र के जीवन-पर्यंत सीखने वाले इन कार्यक्रमों से गुज़रते हैं — परीक्षा की तैयारी करने वाले किशोरों से लेकर पहली बार ध्यान करने वाले रिटायर्ड लोगों तक। हर ट्रैक आपकी स्थिति के अनुसार गति में रहता है।",
-        },
-        {
-          question: "मुझे किस प्रोग्राम से शुरुआत करनी चाहिए?",
-          answer:
-            `अगर आप खासतौर पर तेज़ी से पढ़ना और सीखना चाहते हैं, तो क्वांटम स्पीड रीडिंग से शुरू करें — इस साइट का फ्लैगशिप प्रोग्राम। अगर आप पहले सबसे आसान, सबसे कम कमिटमेंट वाला रास्ता चाहते हैं, तो QSR से पहले ${programs.focusStarter.nameHi} से शुरू करें। अगर आप गहरे आंतरिक कार्य की तलाश में हैं, तो रिट्रीट्स एक्सप्लोर करें या ${programs.oneOnOneCoaching.nameHi} के लिए आवेदन करें।`,
-        },
-        {
-          question: `क्या ${programs.focusStarter.nameHi} वाकई मुफ़्त है?`,
-          answer:
-            "हां — दिन 1 से 7 पूरी तरह मुफ़्त हैं, शुरू करने के लिए कोई कार्ड ज़रूरी नहीं। दिन 8 से आगे जारी रखने के लिए ₹99 की एक-बार की पेमेंट है।",
-        },
-        {
-          question: "7 दिन के मुफ़्त पीरियड के बाद क्या होता है?",
-          answer:
-            "आगे जारी रखने के लिए आपसे एक-बार ₹99 की पेमेंट करने को कहा जाएगा। कुछ भी अपने आप चार्ज नहीं होता — जारी रखना है या नहीं, यह आप तय करते हैं।",
-        },
-        {
-          question: "क्या ₹99 एक सब्सक्रिप्शन है?",
-          answer: "नहीं। ₹99 पूरी यात्रा जारी रखने के लिए एक-बार की पेमेंट है — किसी भी समय कोई रिकरिंग चार्ज नहीं है।",
-        },
-        {
-          question: "क्या रिट्रीट्स ऑनलाइन हैं या रेजिडेंशियल?",
-          answer:
-            `दोनों। ${programs.onlineRetreat.nameHi} हर महीने चलता है, जहां से भी आप हों; ${programs.residentialRetreat.nameHi} वर्ष में 3–4 बार छोटे समूहों में उन लोगों के लिए होते हैं जो पूरी तरह व्यक्तिगत उपस्थिति वाला प्रारूप चाहते हैं।`,
-        },
-        {
-          question: "अगला ऑनलाइन रिट्रीट या रेजिडेंशियल बैच कब है?",
-          answer:
-            "11-दिवसीय ऑनलाइन रिट्रीट हर महीने चलता है; ऋषिकेश और लोनावला में रेजिडेंशियल रिट्रीट वर्ष में 3–4 बार छोटे समूहों में आयोजित होते हैं। अगली पक्की तारीख और बची हुई सीटों के लिए हमसे WhatsApp पर बात करें।",
-        },
-        {
-          question: `${programs.oneOnOneCoaching.nameHi} कैसे काम करती है?`,
-          answer:
-            `${programs.oneOnOneCoaching.nameHi} निजी, कस्टम-पेस्ड कोचिंग है — सेशन पूरी तरह आपके अपने लक्ष्यों और चुनौतियों के आसपास बनाए जाते हैं, किसी फिक्स्ड कर्रिकुलम पर नहीं। फिट और शेड्यूलिंग पर चर्चा के लिए आवेदन करें।`,
-        },
-        {
-          question: "क्या मुझे किसी विशेष चीज़ में विश्वास रखना ज़रूरी है — क्या यह धार्मिक है?",
-          answer:
-            "किसी विशेष विश्वास प्रणाली की आवश्यकता नहीं है। ध्यान और जागरूकता का यह कार्य श्वास-अभ्यास और आंतरिक-जागरूकता की तकनीकों पर आधारित है — आप अपना खुलापन लाएं, विधि हम बताएंगे।",
-        },
-        {
-          question: "अगर मेरा सवाल यहां नहीं है तो?",
-          answer: "डॉ. कपिल की टीम को सीधे WhatsApp पर संदेश भेजें — असली, सीधा जवाब मिलेगा, कोई बॉट नहीं।",
-        },
-      ],
-      ctaLabel: "WhatsApp पर पूछें",
-    },
     whatsapp: {
-      bubble: "रिट्रीट्स या 30-दिवसीय लाइव प्रोग्राम के बारे में सवाल हैं? डॉ. कपिल की टीम से सीधे बात करें।",
+      bubble: "हमारे प्रोग्राम्स के बारे में सवाल हैं? डॉ. कपिल की टीम से सीधे बात करें।",
       button: "WhatsApp पर चैट करें",
       ariaLabel: "डॉ. कपिल की टीम से WhatsApp पर चैट करें",
-    },
-    footer: {
-      blurb: "डॉ. कपिल देव शर्मा के मार्गदर्शन में क्वांटम स्पीड रीडिंग और उन्नत मेडिटेशन एवं माइंड-ट्रेनिंग।",
-      columns: {
-        programs: {
-          heading: "प्रोग्राम्स",
-          links: [
-            { label: "क्वांटम स्पीड रीडिंग", href: "/programs/quantum-speed-reading" },
-            { label: programs.focusStarter.nameHi, href: programs.focusStarter.url },
-          ],
-        },
-        retreats: {
-          heading: "रिट्रीट्स",
-          links: [
-            { label: "ऑनलाइन 11-दिवसीय रिट्रीट", href: "/retreats/online-11-day" },
-            { label: programs.residentialRetreat.nameHi, href: programs.residentialRetreat.url },
-          ],
-        },
-        mentoring: {
-          heading: "मेंटरिंग",
-          links: [
-            { label: programs.oneOnOneCoaching.nameHi, href: programs.oneOnOneCoaching.url },
-            { label: programs.overthinkingReset.nameHi, href: programs.overthinkingReset.url },
-          ],
-        },
-        habitApp: {
-          heading: brand.appName,
-          links: [{ label: `${programs.focusStarter.nameHi} · दिन 8–21 के लिए ₹99`, href: programs.focusStarter.url }],
-        },
-        philosophy: {
-          heading: "डॉ. कपिल का दर्शन",
-          links: [
-            { label: "हमारे बारे में", href: "/about" },
-            { label: "संपर्क करें", href: "/contact" },
-            { label: "पार्टनर बनें", href: "/franchise-individual" },
-          ],
-        },
-      },
-      legalLinks: [
-        { label: "गोपनीयता नीति", href: "/privacy" },
-        { label: "सेवा की शर्तें", href: "/terms" },
-        { label: "रिफ़ंड एवं रद्दीकरण नीति", href: "/refund-policy" },
-      ],
-      copyright: "© माइंड उर माइंड। mindurmind.org.in",
-      location: "वडोदरा, गुजरात, भारत",
     },
     contactPage: {
       headline: "संपर्क करें",
@@ -3174,7 +1661,7 @@ export const translations = {
       headline: "माइंड उर माइंड के बारे में",
       body: [
         "माइंड उर माइंड की स्थापना 2014 में डॉ. कपिल देव शर्मा ने की थी, जिन्होंने शैक्षणिक शोध और प्रत्यक्ष कोचिंग को एक ही प्रैक्टिस में जोड़ा — इस पर केंद्रित कि लोग कैसे पढ़ते हैं, सोचते हैं, और अपने मन को कैसे संभालते हैं।",
-        `जो व्यक्तिगत वर्कशॉप्स के रूप में शुरू हुआ, वह अब प्रोग्राम्स की एक पूरी रेंज बन चुका है — क्वांटम स्पीड रीडिंग, आध्यात्मिक रिट्रीट्स, वन-ऑन-वन मेंटरिंग, और ${brand.appName} — फिर भी एक ही सिद्धांत में जड़ें जमाए हुए: असली संज्ञानात्मक और व्यक्तिगत बदलाव संरचित, निरंतर अभ्यास से आता है, त्वरित उपायों से नहीं।`,
+        `जो व्यक्तिगत वर्कशॉप्स के रूप में शुरू हुआ, वह अब प्रोग्राम्स की एक पूरी रेंज बन चुका है — Sharp Brain™ (फोकस, मेमोरी और स्मार्ट रीडिंग), मेडिटेशन रिट्रीट्स, वन-ऑन-वन कोचिंग, और ${brand.appName} — फिर भी एक ही सिद्धांत में जड़ें जमाए हुए: असली संज्ञानात्मक और व्यक्तिगत बदलाव संरचित, निरंतर अभ्यास से आता है, त्वरित उपायों से नहीं।`,
         "माइंड उर माइंड डॉ. कपिल देव शर्मा के नेतृत्व में एक प्रोप्राइटरशिप है, जो वडोदरा, गुजरात में स्थित है, और पूरे भारत में विद्यार्थियों, पेशेवरों, और आजीवन सीखने वालों के साथ काम करती है।",
       ],
       guide: {
@@ -3183,608 +1670,12 @@ export const translations = {
           "ज़्यादातर लोग पहले से जानते हैं कि उन्हें क्या बदलना है। मुश्किल काम यह समझना है कि उन्होंने अब तक ऐसा क्यों नहीं किया — और वे स्थितियां बनाना जिनमें यह संभव हो सके।",
       },
     },
-    qsrLanding: {
-      hero: {
-        eyebrow: "विज्ञान-सूचित रीडिंग व मेमोरी ट्रेनिंग",
-        headline: "विद्यार्थियों, परीक्षा उम्मीदवारों और अभिभावकों के लिए क्वांटम स्पीड रीडिंग",
-        headlineEm: "तेज़ पढ़ें। ज़्यादा याद रखें। स्मार्ट तरीके से पढ़ाई करें।",
-        headlineNote: "आपके अपने दिन 1 के बेसलाइन से मापा गया।",
-        sub: "घंटों पढ़ते हैं पर अगले दिन तक भूल जाते हैं? यह इच्छाशक्ति की कमी नहीं है — यह इस बात का मामला है कि आपका दिमाग कैसे पढ़ता है।",
-        ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
-        ctaPrimaryMeta: "फ्री · कभी भी देखें",
-        ctaSecondary: "अपनी बैच सीट सुरक्षित करें",
-        ctaSecondaryMeta: "₹9,999 · एकमुश्त नामांकन",
-        ctaTertiary: "या मुफ़्त 2-मिनट स्पीड टेस्ट लें",
-        trustLine: "विद्यार्थियों, पेशेवरों, और हर आयु वर्ग के आजीवन सीखने वालों के लिए।",
-        visualCaption: "आपकी 30-दिवसीय स्ट्रीक दिन 1 से शुरू होती है",
-      },
-      speedTestCta: {
-        afterScience: "जानना चाहते हैं कि आप असल में कितनी तेज़ी से पढ़ते हैं? मुफ़्त 2-मिनट टेस्ट लें।",
-        beforePricing: "अभी फैसला नहीं कर पा रहे? पहले मुफ़्त 2-मिनट रीडिंग स्पीड टेस्ट आज़माएं — कोई कार्ड ज़रूरी नहीं।",
-      },
-      whoIsThisFor: {
-        title: "यह किसके लिए है?",
-        cards: [
-          {
-            title: "प्रतियोगी परीक्षा उम्मीदवार",
-            desc: "UPSC, JEE, NEET, बैंकिंग — सिलेबस बहुत बड़ा, रिवीज़न के लिए समय बहुत कम।",
-          },
-          {
-            title: "स्कूल का छात्र",
-            desc: "घंटों होमवर्क और किताबें पढ़ना, फिर भी परीक्षा के दिन तक याद नहीं रहता।",
-          },
-          {
-            title: "कामकाजी पेशेवर",
-            desc: "रिपोर्ट्स, रिसर्च और रीडिंग — इतनी तेज़ी से जमा होती है कि पूरी नहीं हो पाती।",
-          },
-        ],
-      },
-      paths: {
-        eyebrow: "यह किसके लिए है",
-        title: "लोग इस प्रोग्राम का उपयोग तीन तरह से करते हैं",
-        heroLabel: "अपना रास्ता चुनें:",
-        students: { label: "विद्यार्थियों व परीक्षा उम्मीदवारों के लिए", title: "विद्यार्थियों व परीक्षा उम्मीदवारों के लिए", desc: "कम दोहराव के साथ सिलेबस पूरा करें, और परीक्षा के दिन उसमें से ज़्यादा याद रखें।" },
-        professionals: { label: "कामकाजी पेशेवरों के लिए", title: "कामकाजी पेशेवरों के लिए", desc: "रिपोर्ट्स, रिसर्च और किताबें तेज़ी से पढ़ें, बिना यह खोए कि उनमें क्या लिखा है।" },
-        parents: { label: "अभिभावकों के लिए", title: "अभिभावकों के लिए (बच्चों का रास्ता)", desc: "छोटे विद्यार्थियों के लिए एक मार्गदर्शित रास्ता, जिसमें स्क्रीन-टाइम की व्यावहारिक आदतें शामिल हैं।", tipsLabel: "स्क्रीन टाइम और फोकस, शामिल" },
-      },
-      outcomes: {
-        eyebrow: "क्या बदलता है",
-        title: "30 दिनों के बाद आप क्या उम्मीद कर सकते हैं",
-        items: [
-          "काफ़ी तेज़ पढ़ना — आपके अपने दिन 1 के बेसलाइन से मापा गया",
-          "विज़ुअल मेमोरी तकनीकों से जो पढ़ें उसका ज़्यादा याद रखना",
-          "छोटे दैनिक ध्यान अभ्यासों से लंबे समय तक फोकस बनाए रखना",
-          "कम दोहराव के साथ पढ़ाई की सामग्री और रिपोर्ट्स पूरी करना",
-        ],
-        note: "नतीजे हर व्यक्ति के लिए अलग होते हैं; आपके अपने पहले-और-बाद के आंकड़े ऐप में ट्रैक होते हैं।",
-      },
-      included: {
-        title: "इसमें क्या शामिल है",
-        items: [
-          "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम",
-          `${trainer.nameHi} के साथ 7 लाइव सेशन`,
-          "दिन 1 के बेसलाइन से WPM और समझ की ट्रैकिंग",
-          "दिन 1 पर लक्ष्य-निर्धारण और व्यावहारिक मेमोरी तकनीकें",
-          "ऐप में यह भी: AI डॉक्यूमेंट स्टूडियो — कोई PDF या किताब अपलोड करें और स्पीड-रीडिंग ड्रिल्स व रिवीज़न नोट्स पाएं",
-        ],
-      },
-      eegLine: "वडोदरा में व्यक्तिगत रूप से आने वाले विद्यार्थी लाइव EEG ब्रेन-स्टेट सेशन में भी शामिल हो सकते हैं — सीखने और एंगेजमेंट के लिए, मेडिकल टेस्ट नहीं।",
-      nextStep: {
-        ctaTitle: "अपने 30 दिन शुरू करने के लिए तैयार?",
-        title: "अभी नामांकन के लिए तैयार नहीं?",
-        desc: "पहले मुफ़्त कदम उठाएं — कोई भुगतान नहीं।",
-        speedTest: "मुफ़्त रीडिंग स्पीड टेस्ट दें",
-        starter: `${programs.focusStarter.nameHi} आज़माएं`,
-      },
-      painPoints: {
-        eyebrow: "जाना-पहचाना लगता है?",
-        title: "असली समस्या मेहनत की कमी नहीं है",
-        toggleSelf: "मैं अपने लिए सीख रहा/रही हूं",
-        toggleParent: "मैं अपने बच्चे के लिए देख रहा/रही हूं",
-        self: {
-          title: "प्रतियोगी परीक्षा उम्मीदवारों के लिए",
-          items: [
-            "बचे हुए समय में रिवीज़न के लिए सिलेबस बहुत बड़ा है",
-            "टेस्ट तक आते-आते पूरे चैप्टर भूल जाना",
-            "पढ़ाई के घंटे नतीजों के अनुपात में नहीं मिलना",
-            "दूसरे उम्मीदवारों को खुद से आगे बढ़ता देखना",
-            "करेंट अफेयर्स और लंबे पैसेज पढ़ने में बहुत समय लगना",
-          ],
-        },
-        parent: {
-          title: "अपने बच्चे के लिए विचार कर रहे अभिभावकों के लिए",
-          items: [
-            "आपका बच्चा घंटों पढ़ता है पर बहुत कम याद रख पाता है",
-            "होमवर्क और स्कूल की रीडिंग लंबी खिंचती है, सोने का समय देर होता जाता है",
-            "स्क्रीन टाइम ने ध्यान केंद्रित करने की क्षमता को साफ़ तौर पर कम कर दिया है",
-            "रिवीज़न समय पर पूरा न होने के कारण परीक्षा से पहले साफ़ दिखने वाला तनाव",
-            "आपको \"सम्मोहन\" या असत्यापित तरीकों से सावधानी है — आपको यह देखना है कि यह वाकई विज्ञान-आधारित है",
-          ],
-        },
-      },
-      trustBadge: {
-        title: "व्यक्तिगत रूप से पुष्टि, कोई ऑटोमेशन नहीं",
-        desc: "हर नामांकन की पुष्टि चेकआउट के 24 घंटों के भीतर डॉ. कपिल की अपनी टीम करती है — एक असली व्यक्ति, कोई बॉट नहीं।",
-        secondaryLine: `Razorpay के ज़रिए सुरक्षित चेकआउट · ${trainer.learners} विद्यार्थी · ${trainer.qsrSinceYear} से QSR ट्रेनर`,
-      },
-      guarantee: {
-        title: qsrGuarantee.hi.title,
-        desc: `${qsrGuarantee.hi.statement} ${qsrGuarantee.hi.requestWindow}`,
-        policyLabel: "हमारी रिफंड और कैंसिलेशन नीति देखें",
-        heroLine: qsrGuarantee.hi.short,
-      },
-      brainScience: {
-        eyebrow: "इसके पीछे का विज्ञान",
-        title: "यह तरीका क्यों काम करता है, जब बाकी तरीके नहीं करते",
-        desc: "क्वांटम स्पीड रीडिंग कोई तिकड़म नहीं है — यह चार ऐसे कौशल प्रशिक्षित करती है जिनका ज़्यादातर पढ़ने की आदतें कभी अभ्यास नहीं करातीं: विज़ुअल प्रोसेसिंग, ध्यान और याददाश्त।",
-        cards: [
-          {
-            title: "विज़ुअल प्रोसेसिंग",
-            desc: "पारंपरिक पढ़ाई टेक्स्ट को एक-एक शब्द करके प्रोसेस करती है। विज़ुअल प्रोसेसिंग का प्रशिक्षण आपकी आंखों और दिमाग को शब्द-समूह और परिचित पैटर्न एक साथ ग्रहण करने में मदद करता है, ताकि आप एक-एक शब्द नहीं, बल्कि अर्थपूर्ण हिस्सों में पढ़ें।",
-          },
-          {
-            title: "विज़ुअलाइज़ेशन और याददाश्त",
-            desc: "जो आप पढ़ते हैं उसे मानसिक चित्रों में बदलना याददाश्त की एक स्थापित तकनीक है। यह प्रोग्राम आपको इसे सोच-समझकर करना सिखाता है, ताकि मुख्य बातें बाद में आसानी से याद आएं।",
-          },
-          {
-            title: "पेरिफेरल विज़न",
-            desc: "ज़्यादातर पाठक केवल अपने केंद्र-बिंदु पर मौजूद कुछ अक्षर ही ग्रहण करते हैं। अपने पेरिफेरल दृष्टि क्षेत्र का विस्तार करने से आपकी आंखें एक ही फिक्सेशन में पूरे वाक्यांश — कभी-कभी पूरी पंक्तियां — ग्रहण कर पाती हैं।",
-          },
-          {
-            title: "गहन एकाग्रता",
-            desc: "ऊपर बताई गई कोई भी बात बिना निरंतर, विकर्षण-मुक्त फोकस के टिक नहीं पाती। वही दैनिक अभ्यास जो पढ़ने की गति बढ़ाते हैं, आपकी लंबे समय तक एक ही काम पर ध्यान केंद्रित करने की क्षमता को भी प्रशिक्षित करते हैं।",
-          },
-        ],
-      },
-      neuroCognitive: {
-        eyebrow: "प्रगति कैसे मापी जाती है",
-        title: "विज्ञान-सूचित रीडिंग, ध्यान और याददाश्त प्रशिक्षण",
-        desc: "बेहतर याददाश्त के साथ तेज़ पढ़ें — रोज़ प्रशिक्षित, और आपके अपने दिन 1 के बेसलाइन से असली मेट्रिक्स पर ट्रैक किया गया।",
-        metrics: [
-          {
-            label: "ब्रेन स्कोर",
-            desc: "आपकी असली रीडिंग ग्रोथ और कॉम्प्रिहेंशन डेटा से बना एक समग्र स्कोर, आपकी अपनी Day 1 बेसलाइन से ट्रैक किया जाता है।",
-          },
-          {
-            label: "कॉम्प्रिहेंशन %",
-            desc: "आप जो पढ़ते हैं उसमें से वास्तव में कितना याद रखते हैं — हर सेशन में स्कोर होता है, स्पीड कभी अकेले नहीं बताई जाती।",
-          },
-          {
-            label: "कंसिस्टेंसी",
-            desc: "आपकी दैनिक अभ्यास स्ट्रीक — यह सबसे मज़बूत असली संकेतक है कि ट्रेनिंग वाकई असर करेगी या नहीं।",
-          },
-        ],
-        comparison: {
-          title: "सामान्य पढ़ाई बनाम क्वांटम स्पीड रीडिंग",
-          normal: {
-            label: "सामान्य पढ़ाई — अभी क्या हो रहा है",
-            points: [
-              "आंखें बार-बार रुक-रुक कर उछलती हैं (सैकेड्स) और बार-बार पीछे जाती हैं — प्रति पंक्ति 10–15 रुकावटें",
-              "ध्यान आसानी से भटकता है, और दोबारा पढ़ना व मन में शब्द बोलना आपको धीमा और थका देता है",
-              "शब्द एक-एक करके, बहुत कम विज़ुअलाइज़ेशन के साथ प्रोसेस होते हैं, जिससे सामग्री याद रखना कठिन हो जाता है",
-            ],
-            result: "नतीजा: धीमी गति, कम याददाश्त, जल्दी मानसिक थकान",
-          },
-          quantum: {
-            label: "क्वांटम स्पीड रीडिंग के साथ",
-            points: [
-              "आंखें व्यापक विज़ुअल स्पैन में चलने के लिए प्रशिक्षित (पेरिफेरल विज़न ट्रेनिंग) — कम फिक्सेशन और कम पीछे जाना",
-              "श्वास और फोकस अभ्यास पढ़ने से पहले और पढ़ते समय लगातार ध्यान बनाए रखने का प्रशिक्षण देते हैं",
-              "विज़ुअल प्रोसेसिंग, ध्यान और याददाश्त का प्रशिक्षण — आप शब्दों को समूह में पढ़ने और मुख्य बातों को मानसिक चित्रों में बदलने का अभ्यास करते हैं",
-            ],
-            result: "नतीजा: बेहतर याददाश्त के साथ तेज़ पढ़ाई — आपके अपने दिन 1 के बेसलाइन से मापी गई",
-          },
-          measuredNote: "यह कैसे मापा जाता है: ऊपर बताए गए ब्रेन स्कोर, कॉम्प्रिहेंशन % और कंसिस्टेंसी ट्रैकिंग, आपके अपने दिन 1 के बेसलाइन से। ऑफलाइन वर्कशॉप में एक लाइव EEG ब्रेन-स्टेट डेमो भी होता है — EEG डेमो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं।",
-          notHypnosisLine: "यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई अलौकिक दावा नहीं है। यह कॉग्निटिव ट्रेनिंग है — बिल्कुल वैसे ही जैसे जिम में मांसपेशी को प्रशिक्षित किया जाता है।",
-          researchNote: "स्थापित रीडिंग रिसर्च से सूचित — आंखों के फिक्सेशन और रिग्रेशन, ध्यान प्रशिक्षण, और विज़ुअलाइज़ेशन-आधारित मेमोरी तकनीकें। कोई प्रोप्राइटरी ब्रेन दावे नहीं।",
-        },
-        disclaimer: "यह प्रोग्राम कौशल प्रशिक्षित करता है — रीडिंग स्पीड, समझ, ध्यान और याद रखना — जो ऐप में मापे जाते हैं। यह ब्रेनवेव बदलने का कोई दावा नहीं करता।",
-      },
-      appPreview: {
-        eyebrow: "ऐप के भीतर",
-        title: "आपका दैनिक अभ्यास वास्तव में कैसा दिखता है",
-        desc: "30-दिवसीय स्ट्रीक का हर दिन एक जैसे शुरू होता है — एक छोटा, केंद्रित सत्र जिसे ऐप अपने आप ट्रैक करता है।",
-        drillLabel: "आज का अभ्यास",
-        drillValue: "पेरिफेरल विस्तार",
-        stats: [
-          { label: "सत्र की अवधि", value: "~10 मिनट" },
-          { label: "वर्तमान WPM", value: "412" },
-          { label: "समझ", value: "91%" },
-        ],
-        caption: "उदाहरण के तौर पर पूर्वावलोकन — आपके असली आंकड़े आपके अपने दिन 1 के आधार-स्तर से शुरू होंगे।",
-      },
-      ageGroups: {
-        eyebrow: "हर उम्र के लिए बनाया गया",
-        title: "एक प्रोग्राम, हर आयु वर्ग के लिए अनुकूलित",
-        desc: "एक ही मूल प्रशिक्षण, दो असली और सत्यापित तरीकों में — क्योंकि एक बच्चा और एक कामकाजी पेशेवर एक जैसे नहीं सीखते, और यह कार्यक्रम उनसे ऐसा करने को नहीं कहता।",
-        pathways: [
-          {
-            title: "बच्चों के लिए",
-            tag: "जल्दी सीखते हैं",
-            desc: "बच्चे अक्सर नए विज़ुअल और रीडिंग कौशल जल्दी सीखते हैं। सही मार्गदर्शन के साथ, कई बच्चे अपनी शुरुआती स्थिति से तेज़ शब्द-पहचान और पढ़ने में सहजता विकसित करते हैं — आप ये सेशन हमारे विद्यार्थी वीडियो रिव्यूज़ में देख सकते हैं।",
-          },
-          {
-            title: "वयस्कों और पेशेवरों के लिए",
-            tag: "काम के लिए तेज़ पढ़ाई",
-            desc: "कामकाजी पेशेवर वर्षों से बनाया गया फोकस और पढ़ने का अनुशासन साथ लाते हैं — एक असली बुनियाद जिस पर यह प्रशिक्षण आगे बढ़ता है। सही अभ्यास के साथ, ज़्यादातर वयस्क समझ बनाए रखते हुए काफ़ी तेज़ पढ़ने लगते हैं, जो उनके अपने दिन 1 के बेसलाइन से मापा जाता है।",
-          },
-        ],
-        unifyingLine:
-          "अलग अभिव्यक्ति, लेकिन एक ही अंतर्निहित प्रशिक्षण: पेरिफेरल विज़न, गहन एकाग्रता, और विज़ुअल प्रोसेसिंग, ध्यान व याददाश्त प्रशिक्षण — वही कौशल जो ऊपर \"इसके पीछे का विज्ञान\" में बताए गए हैं। विद्यार्थी चाहे कोई भी रास्ता चुनें, वही बुनियाद बन रही होती है।",
-        ctaLabel: "असली विद्यार्थियों के वीडियो देखें",
-      },
-      authority: {
-        eyebrow: "सीधे मूल स्रोत से",
-        title: `${trainer.nameHi} से सीधे सीखें`,
-      },
-      credibilityStrip: {
-        label: "इनके विद्यार्थी हम पर भरोसा करते हैं",
-        placeholderStatement: "भारत के [CITY LIST NEEDED — confirm real cities/count] शहरों में वर्कशॉप्स आयोजित",
-        citiesHeadlinePrefix: "भारत के",
-        citiesHeadlineSuffix: "शहरों में वर्कशॉप्स आयोजित",
-      },
-      founderVideo: {
-        eyebrow: "डॉ. कपिल की ओर से, सीधे",
-        title: "क्वांटम स्पीड रीडिंग अलग क्यों है",
-        desc: `${trainer.nameHi} की ओर से एक संक्षिप्त परिचय — शिक्षा और माइंड ट्रेनिंग में ${trainer.years.total} वर्ष, और ${trainer.qsrSinceYear} से क्वांटम स्पीड रीडिंग ट्रेनर। फैसला करने से पहले सुनें कि उनकी 30-दिवसीय विधि कैसे काम करती है।`,
-        placeholderLabel: "वीडियो जल्द आ रहा है",
-        ctaLabel: "इसके बजाय सवाल पूछें",
-        videoTitle: "क्वांटम स्पीड रीडिंग परिचय",
-      },
-      liveIntroSession: {
-        eyebrow: "मुफ़्त · 45 मिनट · लाइव",
-        title: "अपनी सीट रिज़र्व करें — डॉ. कपिल के साथ लाइव Q&A",
-        desc: "एक असली क्वांटम स्पीड रीडिंग तकनीक, लाइव सिखाई गई, साथ में खुला Q&A — यह वाकई एक मुफ़्त सेशन है, 30-दिवसीय प्रोग्राम का मुफ़्त एक्सेस नहीं, और कोई रिकॉर्डिंग नहीं। अगर यह आपको पसंद आता है, तो बाद में आपको एक सीधा-सादा पेड बैच जॉइन करने का न्योता मिलेगा — किसी भी तरह कोई दबाव नहीं।",
-        ctaLabel: "अपनी सीट रिज़र्व करें",
-      },
-      videoTestimonials: {
-        eyebrow: "असली विद्यार्थियों को देखें",
-        title: "YouTube पर 60+ वीडियो रिव्यूज़ — असली विद्यार्थी, कोई पेड एक्टर नहीं",
-        desc: "इस प्लेलिस्ट का हर वीडियो एक असली विद्यार्थी का है, जो प्रोग्राम पूरा करने के बाद फिल्माया गया — बिना किसी स्क्रिप्ट के।",
-        moreLabel: "क्वांटम स्पीड रीडिंग के और असली विद्यार्थी",
-        watchLabel: "वीडियो देखें",
-        adultsLabel: "वयस्क",
-        youngLearnersLabel: "युवा शिक्षार्थी",
-        watchMoreVideosLabel: "और विद्यार्थी कहानियां देखें",
-        watchFewerVideosLabel: "कम दिखाएं",
-      },
-      mechanics: {
-        eyebrow: "यह कैसे काम करता है",
-        title: "दो प्रणालियां, एक बदलाव",
-        desc: "एक दैनिक ऐप स्ट्रीक जो कौशल सिखाती है, और लाइव सत्र जो उसके पीछे की मानसिकता स्थापित करते हैं।",
-        app: {
-          tag: "प्रतिदिन · ऐप में",
-          title: "30-दिवसीय ऐप स्ट्रीक",
-          desc: `आपकी अपनी गति से, हर दिन, ${brand.appName} के भीतर ही प्रगतिशील संज्ञानात्मक अभ्यास।`,
-          bullets: [
-            "हर सत्र में WPM (शब्द प्रति मिनट) ट्रैक होता है, केवल एक बार नहीं",
-            "गति के साथ-साथ समझ का भी स्कोर — कभी एक के बिना दूसरा नहीं",
-            "प्रगतिशील कठिनाई — दिन 30, दिन 1 से कहीं ज़्यादा मांग करता है",
-            "हर पूरा किया गया दिन खुला रहता है — जब चाहें दोबारा अभ्यास करें",
-            "लगभग 10 मिनट प्रतिदिन",
-          ],
-        },
-        live: {
-          tag: "साप्ताहिक · डॉ. कपिल देव शर्मा के साथ लाइव",
-          title: "7 लाइव मास्टरक्लास सत्र",
-          desc: "30 दिनों में फैले इंटरैक्टिव सत्र, जहां डॉ. कपिल देव शर्मा व्यक्तिगत रूप से रीयल-टाइम में आपको तकनीक सिखाते हैं।",
-          bullets: [
-            "विज़ुअल रीडिंग और मेमोरी तकनीकें — लाइव सिखाई जाती हैं, पहले से रिकॉर्ड नहीं",
-            "सीधा प्रश्नोत्तर — अपनी खास अटकी हुई समस्या के बारे में पूछें",
-            "अपने लाइव बैच समूह के साथ ग्रुप एकाउंटेबिलिटी",
-            "सत्र छूट जाने पर रिकॉर्डिंग उपलब्ध",
-          ],
-        },
-      },
-      moreThanSpeed: {
-        eyebrow: "स्पीड से आगे",
-        title: "सिर्फ स्पीड से कहीं ज़्यादा",
-        goalSetting: {
-          tag: "दिन 1",
-          title: "गोल-सेटिंग",
-          desc: "दिन 1 पर ही, हर विद्यार्थी अपने ट्रेनर के साथ अपने personal reading और learning goals तय करता है — जिससे शुरुआत से ही ownership बनती है।",
-        },
-        memoryTechniques: {
-          tag: "प्रैक्टिकल स्किल्स",
-          title: "प्रैक्टिकल मेमोरी तकनीकें",
-          desc: "रीडिंग स्पीड से आगे, विद्यार्थी असली मेमोरी टूल्स सीखते हैं — Memory Palace, Peg System, और Acronym तकनीकें — जिन्हें वे तुरंत दिखा भी सकते हैं।",
-        },
-      },
-      focusInDistractedWorld: {
-        eyebrow: "स्क्रीन टाइम और फोकस",
-        title: "एक distracted दुनिया में फोकस बनाना",
-        intro: "कई माता-पिता चिंतित रहते हैं कि स्क्रीन टाइम उनके बच्चे के फोकस और रीडिंग हैबिट्स को प्रभावित कर रहा है। यह प्रोग्राम रीडिंग ट्रेनिंग के साथ-साथ प्रैक्टिकल स्क्रीन-मैनेजमेंट गाइडेंस भी शामिल करता है।",
-        tips: [
-          {
-            title: "पोश्चर और आई-केयर",
-            desc: "लंबे रीडिंग सेशन के दौरान पोश्चर और आँखों की थकान कम करने के आसान टिप्स।",
-          },
-          {
-            title: "20-20-20 नियम",
-            desc: "हर 20 मिनट में, 20 फीट दूर किसी चीज़ को 20 सेकंड के लिए देखें।",
-          },
-          {
-            title: "डिजिटल डिटॉक्स हैबिट्स",
-            desc: "आसान आदतें — जैसे प्रैक्टिस से पहले 10 मिनट के लिए फोन दूर रखना।",
-          },
-        ],
-      },
-      documentMastery: {
-        eyebrow: "ऐप में यह भी है",
-        title: "AI Document Studio",
-        desc: `${brand.appName} के अंदर मौजूद वही AI-पावर्ड Document Studio — कोई भी PDF, टेक्स्टबुक या रिसर्च पेपर अपलोड करें और उससे स्पीड-रीडिंग ड्रिल्स, माइंड मैप्स, और रिवीज़न नोट्स पाएं।`,
-        items: [
-          {
-            title: "अपलोड करें और सीखें",
-            desc: "कोई भी PDF या टेक्स्टबुक डालें — किसी मैनुअल फॉर्मेटिंग या सेटअप की ज़रूरत नहीं।",
-          },
-          {
-            title: "AI-जनरेटेड ड्रिल्स",
-            desc: "आपकी अपनी सामग्री असली Quantum Speed Reading प्रैक्टिस बन जाती है, कोई जेनेरिक सैंपल टेक्स्ट नहीं।",
-          },
-          {
-            title: "विज़ुअल नॉलेज मैप्स",
-            desc: "देखें कि आपके डॉक्यूमेंट के विचार असल में एक-दूसरे से कैसे जुड़े हैं, एक नज़र में।",
-          },
-          {
-            title: "मुख्य अवधारणाएं निकालना",
-            desc: "मुख्य विचार अपने आप निकाले जाते हैं, ताकि आपको पता चले कि असल में क्या मायने रखता है।",
-          },
-          {
-            title: "मेमोरी और रिवीज़न नोट्स",
-            desc: "बाद में रिवीजन के लिए बने नोट्स — सिर्फ एक बार पढ़ने के लिए नहीं।",
-          },
-        ],
-      },
-      curriculum: {
-        eyebrow: "पाठ्यक्रम",
-        title: "30 दिन वास्तव में कैसे दिखते हैं",
-        desc: "चार संरचित चरण। हर चरण पिछले पर सीधे आधारित है — यहां कुछ भी वैकल्पिक फिलर नहीं है।",
-        weeks: [
-          {
-            range: "दिन 1–7",
-            title: "ऑकुलर फिक्सेशन तोड़ना",
-            desc: "आपकी आंखें पन्ने पर शारीरिक रूप से कैसे चलती हैं, इसे फिर से प्रशिक्षित करें — पेरिफेरल विज़न का विस्तार, और उस रुक-रुक कर पढ़ने की आदत को खत्म करना जो ज़्यादातर पाठकों को 250 WPM से नीचे रोके रखती है।",
-          },
-          {
-            range: "दिन 8–14",
-            title: "सब-वोकलाइज़ेशन को बायपास करना",
-            desc: "उस भीतरी आवाज़ को रोकें जो पढ़ते समय चुपचाप हर शब्द बोलती है। यही एक बदलाव आमतौर पर आपकी पढ़ने की गति में सबसे बड़ी छलांग लाता है।",
-          },
-          {
-            range: "दिन 15–21",
-            title: "विज़ुअल मेमोरी तकनीकें",
-            desc: "विज़ुअल और बहु-संवेदी मेमोरी तकनीकें जोड़ें, ताकि जो आप तेज़ी से पढ़ें, वह याद भी रहे।",
-          },
-          {
-            range: "दिन 22–30",
-            title: "पूर्ण-पुस्तक संश्लेषण और मास्टरी",
-            desc: "सब कुछ एक असली, पूर्ण-लंबाई की किताब पर लागू करें, अपने अंतिम आंकड़ों की स्पीड-टेस्टिंग करें, और अपना मास्टरी सर्टिफिकेशन पूरा करें।",
-          },
-        ],
-      },
-      examBenefits: {
-        eyebrow: "विषय दर विषय",
-        title: "QSR आपकी कैसे मदद करता है, विषय दर विषय",
-        cards: [
-          {
-            title: "UPSC / बैंकिंग / सरकारी परीक्षा के उम्मीदवार",
-            desc: "उतनी ही करेंट-अफेयर्स और एडिटोरियल मात्रा को आधे समय में कवर करें, रिवीज़न साइकिल के लिए घंटों खाली करते हुए।",
-          },
-          {
-            title: "JEE / NEET के उम्मीदवार",
-            desc: "विज़ुअल एन्कोडिंग के ज़रिए डायग्राम, फॉर्मूले, और लंबे थ्योरी चैप्टर तेज़ी से याद रखें, मॉक टेस्ट के लिए ज़्यादा समय बचाते हुए।",
-          },
-          {
-            title: "स्कूली विद्यार्थी (बोर्ड परीक्षाएं)",
-            desc: "लंबे वर्णनात्मक चैप्टरों को रटने के बजाय संरचित मेंटल मैप्स में बदलें, तेज़ और ज़्यादा टिकाऊ याददाश्त के लिए।",
-          },
-        ],
-      },
-      audience: {
-        eyebrow: "अभिभावकों के लिए",
-        title: "दिन-प्रतिदिन क्या बदलता है",
-        items: [
-          "होमवर्क और पढ़ाई के सेशन जो पहले लंबे खिंचते थे, अब जल्दी खत्म होने लगते हैं",
-          "आपका बच्चा किताब को बीच में छोड़ने के बजाय पूरा पढ़ता है",
-          "परीक्षा से पहले आखिरी समय की घबराहट कम होती है, क्योंकि सिलेबस समय पर कवर हो जाता है",
-          "एक मासिक पेरेंट-चाइल्ड रीडिंग एक्टिविटी, प्रोग्राम में शामिल",
-        ],
-      },
-      faq: {
-        eyebrow: "नामांकन से पहले",
-        title: "दिन 1 से पहले लोग जो सवाल पूछते हैं",
-        items: [
-          {
-            question: "क्या यह पूर्ण शुरुआती के लिए मुश्किल है?",
-            answer:
-              "नहीं। 30-दिवसीय संरचना यह मानकर चलती है कि आपको कोई पूर्व कौशल नहीं है और आपकी असली शुरुआत से आरंभ होती है — डॉ. कपिल देव शर्मा 2015 से क्वांटम स्पीड रीडिंग सिखा रहे हैं, और अधिकांश विद्यार्थी पूर्ण शुरुआती के रूप में शुरू करते हैं।",
-          },
-          {
-            question: "प्रतिदिन कितना समय देना होगा?",
-            answer:
-              "ऐप में लगभग 10 मिनट प्रतिदिन, साथ ही डॉ. कपिल देव शर्मा के साथ सप्ताह में एक लाइव मास्टरक्लास सत्र। यह पूर्णकालिक नौकरी या पढ़ाई के शेड्यूल के साथ फिट होने के लिए बनाया गया है, उससे टकराने के लिए नहीं।",
-          },
-          {
-            question: "क्या यह हर आयु वर्ग के लिए काम करता है?",
-            answer:
-              "हां — परीक्षा की तैयारी करने वाले विद्यार्थियों, कामकाजी पेशेवरों, और हर उम्र के आजीवन सीखने वालों ने यह प्रोग्राम पूरा किया है। गति आपकी शुरुआती स्थिति के अनुसार ढल जाती है।",
-          },
-          {
-            question: "क्या इसमें से कुछ वास्तव में मुफ़्त है?",
-            answer:
-              `${programs.qsr.nameHi} खुद एक पूरी तरह से भुगतान वाला, परिणाम-उन्मुख प्रोग्राम है — ₹9,999 एकमुश्त में पूरा 30-दिवसीय पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव सेशन, और पूरे समय ऐप एक्सेस मिलता है। हम प्रोग्राम का मुफ़्त एक्सेस नहीं देते, क्योंकि न तो अकेले ऐप और न ही अकेले लाइव सेशन पूरा परिणाम देते हैं — दोनों एक साथ काम करने के लिए बनाए गए हैं। जो मुफ़्त है: हमारा 2-मिनट रीडिंग स्पीड टेस्ट, और डॉ. कपिल देव शर्मा के साथ हमारा मुफ़्त 45-मिनट लाइव इंट्रो सेशन — नीचे देखें।`,
-          },
-          {
-            question: "₹9,999 में मुझे वास्तव में क्या मिलता है?",
-            answer:
-              "पूरा 30-दिवसीय प्रगतिशील ऐप पाठ्यक्रम, डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव मास्टरक्लास सत्र, पूरे समय WPM व समझ की ट्रैकिंग, और पूरे 30 दिनों का ऐप एक्सेस — एक एकमुश्त नामांकन, कोई सब्सक्रिप्शन नहीं। प्रोग्राम पूरा करने के बाद, निरंतर ऐप अभ्यास एक अलग ₹499/माह विकल्प है, अगर आप चाहें।",
-          },
-          {
-            question: "अगर यह मेरे लिए काम नहीं करता तो?",
-            answer:
-              `${qsrGuarantee.hi.statement} ${qsrGuarantee.hi.requestWindow} पूरी शर्तों के लिए हमारी रिफंड और कैंसिलेशन नीति देखें।`,
-          },
-          {
-            question: "भुगतान के तुरंत बाद क्या होता है?",
-            answer:
-              "नामांकन की पुष्टि डॉ. कपिल की टीम व्यक्तिगत रूप से करती है, कोई ऑटोमेटेड सिस्टम नहीं — चेकआउट के तुरंत बाद हम आपसे आपके बैच शेड्यूल के साथ संपर्क करेंगे।",
-          },
-          {
-            question: "क्या यह सम्मोहन है या कोई अवैज्ञानिक तरीका?",
-            answer:
-              "नहीं। क्वांटम स्पीड रीडिंग रीडिंग और अटेंशन रिसर्च से सूचित स्किल ट्रेनिंग है — पेरिफेरल विज़न अभ्यास, श्वास/फोकस अभ्यास, और विज़ुअल मेमोरी तकनीकें — जिसमें आपकी प्रगति असली ब्रेन स्कोर, कॉम्प्रिहेंशन और कंसिस्टेंसी मेट्रिक्स पर मापी जाती है। वडोदरा में व्यक्तिगत रूप से आने वाले विद्यार्थी लाइव EEG ब्रेन-स्टेट सेशन में भी शामिल हो सकते हैं, जो सीखने और एंगेजमेंट के लिए हैं, मेडिकल टेस्ट नहीं। यह सम्मोहन नहीं है, ब्लाइंडफोल्ड रीडिंग नहीं है, और कोई छद्म-वैज्ञानिक तकनीक नहीं है।",
-          },
-        ],
-        ctaLabel: "WhatsApp पर पूछें",
-      },
-      finalCta: {
-        eyebrow: "जब आप तैयार हों",
-        title: "आपके 30 दिन एक फैसले से शुरू होते हैं",
-        desc: "नामांकन की पुष्टि डॉ. कपिल की अपनी टीम व्यक्तिगत रूप से करती है, कोई ऑटोमेटेड सिस्टम नहीं।",
-        cta: "अपनी बैच सीट सुरक्षित करें",
-        ctaMeta: "₹9,999 · एकमुश्त नामांकन",
-        batchNoticeLabel: "अगला बैच शुरू होता है",
-        cadenceLine: "नए बैच महीने में दो बार शुरू होते हैं — 7 तारीख और 25 तारीख को।",
-        structureLine: "आपके 30 दिनों में 7 लाइव क्लासेज़ · दैनिक अभ्यास ऐप के ज़रिए",
-      },
-      stickyBar: {
-        text: programs.qsr.nameHi,
-        price: "₹9,999 · एकमुश्त",
-        cta: "अपनी बैच सीट सुरक्षित करें",
-      },
-      whatsapp: {
-        bubble: "QSR बैच के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
-        button: "WhatsApp पर चैट करें",
-        ariaLabel: `${programs.qsr.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
-      },
-      mumbaiWorkshopCard: {
-        badge: "नया · पायलट बैच",
-        title: "यह भी उपलब्ध: मुंबई में लाइव, व्यक्तिगत रूप से",
-        desc: "इस प्रोग्राम का एक 2-दिवसीय व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक Cognitive व Focus Engagement Demo, और वही ₹9,999 कीमत।",
-        meta: "मुंबई · 2 दिन · ₹9,999 · सीमित सीटें",
-        cta: "मुंबई वर्कशॉप एक्सप्लोर करें",
-      },
-    },
-    qsrMumbaiLanding: {
-      hero: {
-        eyebrow: "लाइव, व्यक्तिगत रूप से · मुंबई · पायलट बैच",
-        headline: "तेज़ पढ़ें। ज़्यादा याद रखें।",
-        headlineEm: "मुंबई में लाइव, व्यक्तिगत रूप से।",
-        sub: `${programs.qsr.nameHi} का एक 2-दिवसीय, व्यक्तिगत विस्तार — डॉ. कपिल देव शर्मा से लाइव कोचिंग, एक रियल-टाइम कॉग्निटिव व फोकस एंगेजमेंट डेमो, और आपकी रीडिंग स्पीड दिन 1 और फिर एक रात के अंतराल के बाद दिन 2 पर मापी जाती है। इसके बाद बाकी 28 दिन उसी ऐप के ज़रिए जारी रहते हैं जो हमारे ऑनलाइन ट्रैक में इस्तेमाल होता है।`,
-        ctaPrimary: "पायलट बैच सीट सुरक्षित करें",
-        ctaPrimaryMeta: "₹9,999 · ऑनलाइन प्रोग्राम जैसी ही कीमत",
-        ctaSecondary: "2-दिवसीय शेड्यूल देखें",
-        badge: "2-दिवसीय लाइव इवेंट",
-      },
-      whatsDifferent: {
-        eyebrow: "व्यक्तिगत बनाम ऑनलाइन",
-        title: "ऑनलाइन प्रोग्राम से क्या अलग है",
-        items: [
-          {
-            title: "एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो",
-            desc: "दिन 1 पर एक संक्षिप्त, व्यक्तिगत लाइव EEG ब्रेन-स्टेट डेमो — यह वास्तव में क्या है (और क्या नहीं) यह नीचे देखें।",
-          },
-          {
-            title: "डॉ. कपिल देव शर्मा से व्यक्तिगत कोचिंग",
-            desc: "दोनों दिनों में लाइव, आमने-सामने तकनीक सुधार — कोई वीडियो कॉल नहीं।",
-          },
-          {
-            title: "रीडिंग स्पीड दो बार, एक रात के अंतराल पर मापी जाती है",
-            desc: "दिन 1 पर एक शुरुआती WPM रीडिंग, फिर दिन 2 पर एक अंतिम WPM और रिटेंशन चेक — एक असली रात के अंतराल के बाद, लगातार नहीं।",
-          },
-          {
-            title: "फिर वही ऐप-आधारित पाठ्यक्रम",
-            desc: "2-दिवसीय इवेंट के बाद, बाकी 28 दिन उसी Quantum Speed Reading ऐप के ज़रिए जारी रहते हैं जो हमारे ऑनलाइन विद्यार्थी इस्तेमाल करते हैं — कोई अलग, डिस्कनेक्टेड ट्रैक नहीं।",
-          },
-        ],
-      },
-      schedule: {
-        eyebrow: "2 दिन",
-        title: "वर्कशॉप कैसे चलती है",
-        day1: {
-          label: "दिन 1 · शनिवार",
-          title: "बेसलाइन और तकनीक",
-          items: [
-            "लाइव EEG ब्रेन-स्टेट डेमो (सीखने और एंगेजमेंट के लिए, मेडिकल टेस्ट नहीं)",
-            "मुख्य Quantum Speed Reading तकनीक, लाइव सिखाई जाएगी",
-            "पहला गाइडेड प्रैक्टिस सेशन",
-            "शुरुआती रीडिंग स्पीड (WPM) मापन",
-          ],
-        },
-        day2: {
-          label: "दिन 2 · रविवार",
-          title: "अभ्यास और परिणाम",
-          items: [
-            "आगे का गाइडेड अभ्यास",
-            "अंतिम WPM और रिटेंशन मापन",
-            "पूर्णता प्रमाणपत्र",
-            "वैकल्पिक वीडियो टेस्टिमोनियल रिकॉर्डिंग",
-          ],
-        },
-        overnightCallout: {
-          title: "दो दिन ही क्यों, एक क्यों नहीं?",
-          desc: "रिटेंशन एक पूरी रात की नींद के बाद मापी जाती है, उसी सेशन में नहीं जिसमें सिखाई गई थी — स्लीप-आधारित कंसॉलिडेशन इस बात का हिस्सा है कि यह तकनीक टिकने के लिए कैसे डिज़ाइन की गई है, इसलिए दिन 1 और दिन 2 के बीच का अंतराल एक जानबूझकर लिया गया डिज़ाइन निर्णय है, कोई शेड्यूलिंग सुविधा नहीं।",
-        },
-      },
-      venue: {
-        eyebrow: "वेन्यू और बैच",
-        title: "मुंबई · पायलट बैच",
-        venueLine: "[वेन्यू का नाम व पता पुष्टि होना बाकी — पवई या बांद्रा वेस्ट क्षेत्र]",
-        dateLine: "[सटीक तारीखें पुष्टि होना बाकी]",
-        timeLine: "[समय पुष्टि होना बाकी]",
-        pilotNote: "यह इस फॉर्मेट में हमारा पहला व्यक्तिगत बैच है — सीटें वाकई सीमित हैं, और हम इसे जानबूझकर छोटा रख रहे हैं। बैच उम्र के अनुसार बांटे जाते हैं (एक युवा समूह और एक बड़ा/वयस्क समूह अलग-अलग चलाया जाता है, मिलाकर नहीं), डिलीवरी की गुणवत्ता के लिए।",
-      },
-      eegDemo: {
-        eyebrow: "दिन 1",
-        title: "कॉग्निटिव व फोकस एंगेजमेंट डेमो",
-        desc: "दिन 1 पर, एक लाइव EEG ब्रेन-स्टेट डेमो अभ्यास के दौरान आपका फोकस और एंगेजमेंट रियल-टाइम में दिखाता है — ट्रेनिंग को होते हुए देखने का एक तरीका, सिर्फ़ हमारी बात मान लेने के बजाय।",
-        disclaimer: "यह एक लाइव एंगेजमेंट डेमो टूल है, कोई डायग्नोस्टिक या मेडिकल डिवाइस नहीं। यह कोई क्लिनिकल ब्रेन रिपोर्ट नहीं बनाता, और यह किसी भी मेडिकल या न्यूरोलॉजिकल असेसमेंट का विकल्प नहीं है।",
-        addOn: {
-          title: "वैकल्पिक: एक विस्तृत व्यक्तिगत एंगेजमेंट रिपोर्ट",
-          desc: "जो चाहें उनके लिए, आपके सेशन पर आधारित एक अधिक विस्तृत व्यक्तिगत एंगेजमेंट रिपोर्ट एक पेड ऐड-ऑन के रूप में उपलब्ध है।",
-          pricePlaceholder: "[ऐड-ऑन की कीमत पुष्टि होना बाकी]",
-        },
-      },
-      pricing: {
-        title: "₹9,999",
-        priceNote: "एकमुश्त — ऑनलाइन प्रोग्राम जैसी ही कीमत। इसमें मुंबई के दोनों दिन और उसके बाद आने वाला पूरा 30-दिवसीय ऐप पाठ्यक्रम शामिल है।",
-        addOnNote: "ऊपर बताई गई व्यक्तिगत एंगेजमेंट रिपोर्ट एक अलग, वैकल्पिक ऐड-ऑन है।",
-        cta: "पायलट बैच सीट सुरक्षित करें",
-      },
-      faq: {
-        eyebrow: "सवाल",
-        title: "सीट सुरक्षित करने से पहले",
-        items: [
-          {
-            question: "यह ऑनलाइन प्रोग्राम से कैसे अलग है?",
-            answer: "पाठ्यक्रम वही 30-दिवसीय प्रोग्राम है। इसमें मुंबई में एक लाइव, व्यक्तिगत 2-दिवसीय शुरुआत जुड़ती है — डॉ. कपिल देव शर्मा के साथ आमने-सामने सेशन, एक लाइव कॉग्निटिव व फोकस एंगेजमेंट डेमो, और दोनों दिनों में एक रात के अंतराल के साथ मापी गई रीडिंग स्पीड। दिन 2 के बाद, आप उसी ऐप पर जारी रखते हैं जो ऑनलाइन ट्रैक इस्तेमाल करता है।",
-          },
-          {
-            question: "EEG डेमो क्या करता है — क्या यह एक मेडिकल टेस्ट है?",
-            answer: "नहीं। यह एक लाइव EEG ब्रेन-स्टेट डेमो है, जिसका मकसद अभ्यास के दौरान आपका फोकस रियल-टाइम में दिखाना है। यह कोई डायग्नोस्टिक या मेडिकल टेस्ट नहीं है, और यह कोई क्लिनिकल या मेडिकल ब्रेन रिपोर्ट नहीं बनाता।",
-          },
-          {
-            question: "अगर मेरा बच्चा एक दिन ही आ सकता है, दोनों दिन नहीं — तो क्या होगा?",
-            answer: "दोनों दिन एक-दूसरे पर बनने के लिए डिज़ाइन किए गए हैं — दिन 1 तकनीक सिखाता है और एक बेसलाइन लेता है, दिन 2 एक रात के अंतराल के बाद असली रिटेंशन मापता है। हम दोनों दिन आने की ज़ोरदार सलाह देंगे। [आंशिक उपस्थिति के लिए सटीक नीति पुष्टि होना बाकी।]",
-          },
-          {
-            question: "2 दिन के बाद बाकी 30-day प्रोग्राम कैसे continue होगा?",
-            answer: "व्यक्तिगत वीकेंड के बाद, आप बाकी 30-दिवसीय पाठ्यक्रम के लिए उसी Quantum Speed Reading ऐप के ज़रिए जारी रखते हैं जो हमारे ऑनलाइन विद्यार्थी इस्तेमाल करते हैं।",
-          },
-          {
-            question: "क्या यह सभी उम्र के बच्चों के लिए है?",
-            answer: "हां — लेकिन हम उम्र के अनुसार अलग बैच चलाते हैं (एक युवा समूह और एक बड़ा/वयस्क समूह) बजाय सभी उम्र को एक सेशन में मिलाने के, ताकि गति और डिलीवरी हर समूह के लिए सही रहे।",
-          },
-          {
-            question: "Refund policy in-person workshop के लिए क्या है?",
-            answer: "वही रिफ़ंड व कैंसिलेशन नीति जो ऑनलाइन प्रोग्राम को कवर करती है, यहां भी लागू होती है — पात्रता अवधि और रिफ़ंड का अनुरोध कैसे करें, इसके लिए हमारा पूरा रिफ़ंड व कैंसिलेशन नीति पेज देखें। चूंकि इस वर्कशॉप में लाइव व्यक्तिगत दिन शामिल हैं, हमारी परिणाम गारंटी उसी तरह आंकी जाती है: पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करें (दोनों व्यक्तिगत दिन और उसके बाद के ऐप-आधारित दिन), और अगर आपकी रीडिंग स्पीड और समझ में मापने योग्य सुधार नहीं होता, तो आप कवर हैं।",
-          },
-        ],
-        ctaLabel: "WhatsApp पर पूछें",
-      },
-      testimonialsPlaceholder: {
-        eyebrow: "सोशल प्रूफ़",
-        title: "असली कहानियां, पायलट बैच के बाद आएंगी",
-        desc: "यह इस फॉर्मेट में हमारा पहला व्यक्तिगत बैच है। पायलट बैच चलने के बाद हम यहां मुंबई के प्रतिभागियों के असली वीडियो टेस्टिमोनियल जोड़ेंगे — तब तक कुछ भी गढ़ा हुआ नहीं।",
-      },
-      stickyBar: {
-        text: "मुंबई वर्कशॉप · 2-दिवसीय पायलट बैच",
-        price: "₹9,999 · एकमुश्त",
-        cta: "सीट सुरक्षित करें",
-      },
-      whatsapp: {
-        bubble: "मुंबई वर्कशॉप के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
-        button: "WhatsApp पर चैट करें",
-        ariaLabel: "मुंबई व्यक्तिगत वर्कशॉप के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
-      },
-    },
     habitBuilderLanding: {
       hero: {
-        eyebrow: "पहला मुफ़्त कदम · क्वांटम स्पीड रीडिंग से पहले",
+        eyebrow: "पहला मुफ़्त कदम · Sharp Brain 30-दिवसीय प्रोग्राम से पहले",
         headline: programs.focusStarter.nameHi,
         headlineEm: "एक हफ़्ते तक तरीका मुफ़्त आज़माएं — फिर फ़ैसला करें।",
-        sub: `रोज़ लगभग 10 मिनट के फोकस, मेमोरी और रीडिंग अभ्यास — वही बुनियाद जो ${programs.qsr.nameHi} में इस्तेमाल होती है। दिन 1–7 मुफ़्त हैं। अगर यह आपके लिए काम करे, तो ₹99 के एकमुश्त भुगतान से दिन 21 तक जारी रखें, या पूरे 30-दिवसीय प्रोग्राम पर जाएं।`,
+        sub: `रोज़ लगभग 10 मिनट के फोकस, मेमोरी और रीडिंग अभ्यास — वही बुनियाद जो ${programs.sharpBrain.nameHi} में इस्तेमाल होती है। दिन 1–7 मुफ़्त हैं। अगर यह आपके लिए काम करे, तो ₹99 के एकमुश्त भुगतान से दिन 21 तक जारी रखें, या पूरे 30-दिवसीय प्रोग्राम पर जाएं।`,
         ctaPrimary: "मुफ़्त शुरू करें — 7 दिन, कोई भुगतान नहीं",
         navCta: "मुफ़्त शुरू करें",
         ctaPrimaryMeta: "शुरू करने के लिए कार्ड की ज़रूरत नहीं",
@@ -3828,7 +1719,7 @@ export const translations = {
           },
           {
             range: "दिन 15–21",
-            title: "एडवांस्ड क्वांटम फ्लो एंड इंट्यूशन",
+            title: "एडवांस्ड फोकस फ्लो एंड इंट्यूशन",
             desc: "प्रोग्राम के सबसे advanced अभ्यास, आपके Day 21 finale की ओर ले जाते हुए।",
           },
         ],
@@ -3842,7 +1733,7 @@ export const translations = {
       },
       nextStep: {
         title: "पूरे प्रोग्राम के लिए तैयार?",
-        desc: `${programs.qsr.nameHi} में ${trainer.nameHi} के साथ 7 लाइव सेशन और पूरा 30-दिवसीय पाठ्यक्रम शामिल है।`,
+        desc: `${programs.sharpBrain.nameHi} में ${trainer.nameHi} के साथ 7 लाइव सेशन और पूरा 30-दिवसीय पाठ्यक्रम शामिल है।`,
         cta: "30-दिवसीय प्रोग्राम देखें",
       },
       pricing: {
@@ -4465,7 +2356,7 @@ export const translations = {
           {
             question: "यह ग्रुप प्रोग्राम्स से कैसे अलग है?",
             answer:
-              `ग्रुप प्रोग्राम्स (जैसे ${programs.qsr.nameHi} या ${programs.onlineRetreat.nameHi}) एक तय शेड्यूल पर चलते हैं, पूरे बैच के लिए मानकीकृत सामग्री के साथ। यह निजी, वन-ऑन-वन है, और पूरी तरह आपकी अपनी स्थिति के अनुसार ढाला गया है — गति, फोकस क्षेत्र, और प्रारूप आपके अनुसार समायोजित होते हैं, इसके उलट नहीं।`,
+              `ग्रुप प्रोग्राम्स (जैसे ${programs.sharpBrain.nameHi} या ${programs.onlineRetreat.nameHi}) एक तय शेड्यूल पर चलते हैं, पूरे बैच के लिए मानकीकृत सामग्री के साथ। यह निजी, वन-ऑन-वन है, और पूरी तरह आपकी अपनी स्थिति के अनुसार ढाला गया है — गति, फोकस क्षेत्र, और प्रारूप आपके अनुसार समायोजित होते हैं, इसके उलट नहीं।`,
           },
           {
             question: "अगर मुझे यकीन नहीं है कि मुझे किस चीज़ में मदद चाहिए?",

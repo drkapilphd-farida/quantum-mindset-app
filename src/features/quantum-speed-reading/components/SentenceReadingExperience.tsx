@@ -86,11 +86,11 @@ import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/t
 import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
 
 const EXERCISE_ID = 'sentence-reading'
-const LAB_HREF = '/labs/quantum-speed-reading'
+const LAB_HREF = '/labs/sharp-brain'
 // Sprint-12: Paragraph Reading now exists and is next in Core Reading
 // Journey™'s sequence — Mission Complete continues forward into it instead
 // of dead-ending back at the lab.
-const NEXT_EXERCISE_HREF = '/labs/quantum-speed-reading/paragraph-reading'
+const NEXT_EXERCISE_HREF = '/labs/sharp-brain/paragraph-reading'
 
 const FEEDBACK_MS = 450
 const MIN_SENTENCE_DISPLAY_MS = 1200

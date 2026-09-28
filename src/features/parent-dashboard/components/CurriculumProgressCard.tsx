@@ -23,7 +23,7 @@ export function CurriculumProgressCard({ completions }: CurriculumProgressCardPr
       <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Daily Curriculum Progress</p>
 
       {daysCompleted === 0 ? (
-        <p className="mt-4 text-sm text-muted-foreground">No {programs.qsr.shortName} days completed yet.</p>
+        <p className="mt-4 text-sm text-muted-foreground">No {programs.sharpBrain.shortName} days completed yet.</p>
       ) : (
         <>
           <div className="mt-4 flex items-center gap-4">

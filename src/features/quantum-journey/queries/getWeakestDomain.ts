@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { getDailyQuantumSessionHistory } from '@/app/unified-quantum-session-preview/actions/getDailyQuantumSessionHistory'
+import { getDailyQuantumSessionHistory } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import type { JourneyDomain } from '../types'
 
 const MIN_SESSIONS_TO_QUALIFY = 2
