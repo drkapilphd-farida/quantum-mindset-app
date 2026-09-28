@@ -6,7 +6,7 @@ import Link from "next/link";
 import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { programs, trainer, primaryCheckoutHref } from "@/config/site.config";
-import { FREE_TEST_LINKS } from "@/config/navigation";
+import { FREE_TEST_LINKS, ORGANISATIONS_HREF, SCHOOLS_HREF } from "@/config/navigation";
 import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { QSR_ADULT_VIDEO_REVIEWS, QSR_MORE_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
 import { SUCCESS_STORIES_PLAYLIST_WATCH_URL } from "@/config/reviewsPlaylist";
@@ -241,6 +241,16 @@ export function SharpBrainFormats(): React.JSX.Element {
         </div>
         <p className="mt-4 text-[12.5px] text-ink-faint">
           {lang === "hi" ? "Razorpay के ज़रिए सुरक्षित चेकआउट" : "Secure checkout via Razorpay"}
+        </p>
+        <p className="mt-6 text-[14px] text-ink-dim">
+          {c.orgLine.lead}{" "}
+          <Link href={SCHOOLS_HREF} className="font-semibold text-gold hover:underline">
+            {c.orgLine.schools} →
+          </Link>
+          <span className="mx-2 text-ink-faint">·</span>
+          <Link href={ORGANISATIONS_HREF} className="font-semibold text-gold hover:underline">
+            {c.orgLine.corporate} →
+          </Link>
         </p>
       </div>
     </section>

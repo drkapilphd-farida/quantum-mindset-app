@@ -74,6 +74,8 @@ one by hand and tick it off.
 - [ ] Channel "About", channel banner, and links in descriptions (point them to `mindurmind.org.in/programs/sharp-brain`; old links redirect, but new links are cleaner).
 - [ ] Pinned comments and end screens.
 - [ ] Shorts captions and hashtags (#QuantumSpeedReading → #SharpBrain).
+- [ ] **Custom thumbnails with "QUANTUM SPEED READING" in the image** (shown on the website): videos `B2HwCJwMPDQ`, `V_-iUWQarT4`, `QutuICwaKJ4`, `TpCltll0VFc`, `uetG4y2SXTY`. The videos stay on the site in "More reviews" under the "from earlier batches" label (your decision, 28 Sep 2026). **You** replace the thumbnails on YouTube, then tell me so I can refresh the local copies in `public/learner-videos/`.
+- [ ] Franchise intro videos (`Zsz0eUQ3t0o` EN, `64UmqM5_mEM` HI): check the title, description and spoken references to the old name.
 
 ## 6. Google Business Profile
 
@@ -95,6 +97,7 @@ one by hand and tick it off.
   - social pages;
   - Google listings.
 - [ ] School proposal: use the name "Sharp Brain for Schools".
+- [ ] **Trainer testimonial screenshot:** Dev Prakash's WhatsApp message (`public/trainer_testimonial_dev_prakash_whatsapp.jpg`) says "Quantum Speed Reading" in his own words. It is a testimonial, so it is not edited; it stays hidden until verified. When it is verified, the franchise page's partner line already explains the rename.
 
 ## 8. Certificates already printed
 

@@ -1,9 +1,10 @@
-import { programs, brand } from './site.config'
+import { programs, contact } from './site.config'
 import { WHATSAPP_GENERAL_INQUIRY_LINK } from './whatsappSupportLink'
 
 // Site-wide navigation (header + footer), built from the programs registry
-// so names and URLs never drift from site.config.ts. Grouped by pillar:
-// Brain · Mind · Meditation.
+// so URLs never drift from site.config.ts. Grouped by pillar, matching the
+// tagline "Sharp Brain. Calm Mind. Better Life.": Sharp Brain · Calm Mind ·
+// Meditation. Menu labels are deliberately shorter than the registry names.
 
 type Lang = 'en' | 'hi'
 
@@ -15,8 +16,9 @@ export const FREE_TEST_LINKS = {
   overthinkingTest: '/mind-assessment',
 } as const
 
-export const ORGANISATIONS_HREF = '/executive-brain-workshop#corporate'
-export const CONTACT_EMAIL = 'info@mindurmind.org.in'
+export const ORGANISATIONS_HREF = '/corporate'
+export const SCHOOLS_HREF = '/corporate#schools'
+export const CONTACT_EMAIL = contact.email
 export const TALK_TO_US_HREF = WHATSAPP_GENERAL_INQUIRY_LINK
 
 function n(id: keyof typeof programs, lang: Lang): string {
@@ -28,24 +30,24 @@ export function programGroups(lang: Lang): NavGroup[] {
   const hi = lang === 'hi'
   return [
     {
-      heading: hi ? 'ब्रेन' : 'Brain',
+      heading: 'Sharp Brain',
       links: [
-        { label: 'Sharp Brain™', href: programs.sharpBrain.url },
-        { label: n('executiveWorkshop', lang), href: programs.executiveWorkshop.url },
+        { label: hi ? 'Sharp Brain™ प्रोग्राम' : 'Sharp Brain™ Program', href: programs.sharpBrain.url },
+        { label: 'Executive Workshop', href: programs.executiveWorkshop.url },
       ],
     },
     {
-      heading: hi ? 'माइंड' : 'Mind',
+      heading: hi ? 'शांत मन' : 'Calm Mind',
       links: [
         { label: n('overthinkingReset', lang), href: programs.overthinkingReset.url },
-        { label: n('oneOnOneCoaching', lang), href: programs.oneOnOneCoaching.url },
+        { label: hi ? '1-on-1 माइंड कोचिंग' : '1-on-1 Mind Coaching', href: programs.oneOnOneCoaching.url },
       ],
     },
     {
       heading: hi ? 'मेडिटेशन' : 'Meditation',
       links: [
-        { label: n('onlineRetreat', lang), href: programs.onlineRetreat.url },
-        { label: n('residentialRetreat', lang), href: programs.residentialRetreat.url },
+        { label: hi ? 'ऑनलाइन रिट्रीट' : 'Online Retreat', href: programs.onlineRetreat.url },
+        { label: hi ? 'रेजिडेंशियल रिट्रीट्स' : 'Residential Retreats', href: programs.residentialRetreat.url },
       ],
     },
   ]
@@ -83,7 +85,7 @@ export function navLabels(lang: Lang): {
   }
 }
 
-/** Footer columns: Brain / Mind / Meditation / Free Tests / For Organisations / For Trainers. */
+/** Footer columns: Sharp Brain / Calm Mind / Meditation / Free Tests / For Organisations / For Trainers. */
 export function footerGroups(lang: Lang): NavGroup[] {
   const hi = lang === 'hi'
   return [
@@ -93,7 +95,7 @@ export function footerGroups(lang: Lang): NavGroup[] {
       heading: hi ? 'संस्थाओं के लिए' : 'For Organisations',
       links: [
         { label: hi ? 'कॉर्पोरेट टीमें' : 'Corporate teams', href: ORGANISATIONS_HREF },
-        { label: hi ? 'स्कूल' : 'Schools', href: ORGANISATIONS_HREF },
+        { label: hi ? 'स्कूल व कॉलेज' : 'Schools & colleges', href: SCHOOLS_HREF },
       ],
     },
     {
@@ -114,4 +116,4 @@ export function footerMetaLinks(lang: Lang): NavLink[] {
   ]
 }
 
-export const FOOTER_LOCATION = { en: `${brand.city}, Gujarat, India`, hi: 'वडोदरा, गुजरात, भारत' } as const
+export const FOOTER_LOCATION = contact.address

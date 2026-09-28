@@ -44,7 +44,7 @@ export type HomeCopy = {
   how: { eyebrow: string; title: string; steps: { title: string; desc: string }[]; eegLine: string }
   about: { eyebrow: string; readStory: string }
   upcoming: { eyebrow: string; title: string; from: string; cta: string }
-  organisations: { eyebrow: string; title: string; desc: string; cta: string }
+  organisations: { eyebrow: string; title: string; desc: string; ctaCorporate: string; ctaSchools: string }
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] }
 }
 
@@ -155,8 +155,9 @@ const en: HomeCopy = {
   organisations: {
     eyebrow: 'For organisations',
     title: 'Brain performance training for teams and schools',
-    desc: 'Workshops on focus, stress and clear decision-making for corporate teams, and reading and focus programs for schools.',
-    cta: 'Talk about your team',
+    desc: 'Workshops on focus, stress and clear decision-making for corporate teams, and Sharp Brain for Schools — focus, memory, smart reading and mobile discipline for students.',
+    ctaCorporate: 'For Corporate Teams',
+    ctaSchools: 'For Schools',
   },
   faq: {
     eyebrow: 'Questions',
@@ -298,8 +299,9 @@ const hi: HomeCopy = {
   organisations: {
     eyebrow: 'संस्थाओं के लिए',
     title: 'टीमों और स्कूलों के लिए ब्रेन परफॉर्मेंस ट्रेनिंग',
-    desc: 'कॉर्पोरेट टीमों के लिए फोकस, तनाव और स्पष्ट निर्णय पर वर्कशॉप, और स्कूलों के लिए रीडिंग व फोकस प्रोग्राम।',
-    cta: 'अपनी टीम के बारे में बात करें',
+    desc: 'कॉर्पोरेट टीमों के लिए फोकस, तनाव और स्पष्ट निर्णय पर वर्कशॉप, और स्कूलों के लिए Sharp Brain — विद्यार्थियों के लिए फोकस, मेमोरी, स्मार्ट रीडिंग और मोबाइल डिसिप्लिन।',
+    ctaCorporate: 'कॉर्पोरेट टीमों के लिए',
+    ctaSchools: 'स्कूलों के लिए',
   },
   faq: {
     eyebrow: 'सवाल',

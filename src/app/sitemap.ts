@@ -17,6 +17,7 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/', changeFrequency: 'daily', priority: 1 },
   { path: '/about', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/contact', changeFrequency: 'yearly', priority: 0.4 },
+  { path: '/corporate', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/gallery', changeFrequency: 'monthly', priority: 0.4 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
@@ -46,10 +47,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }))
 
-  // The legacy course marketplace (/courses/*) and the unpublished
-  // /programs/sharp-brain (notFound() until its venue/
-  // date placeholders are filled) are deliberately NOT listed: both are
-  // noindex/404 and /courses/ is disallowed in robots.ts, so listing them
-  // only produced "submitted URL marked noindex" errors in Search Console.
+  // The legacy course marketplace (/courses/*) is deliberately NOT
+  // listed: it is noindex and disallowed in robots.ts, so listing it only
+  // produced "submitted URL marked noindex" errors in Search Console.
   return staticUrls
 }

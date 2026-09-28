@@ -77,7 +77,7 @@ const trainerData = {
   // (TrainerBio does) — a TODO or empty value never reaches a page.
   doctorate: null as string | null,
   years: { total: YEARS_TOTAL, professor: YEARS_PROFESSOR },
-  qsrSinceYear: SKILLS_TRAINING_SINCE,
+  skillsTrainingSinceYear: SKILLS_TRAINING_SINCE,
   learners: LEARNERS,
   workshops: WORKSHOPS,
   photo: {
@@ -223,7 +223,7 @@ const programsData = {
     format: 'In-school programs and talks',
     prices: [] as ProgramPrice[],
     checkout: [{ label: 'Enquire on WhatsApp', href: waLink('Hi Dr. Kapil, I want to bring Sharp Brain to our school.') }],
-    url: '/executive-brain-workshop#corporate',
+    url: '/corporate#schools',
     status: 'active',
     pillar: 'brain',
   },
@@ -422,6 +422,29 @@ export function primaryCheckoutHref(id: ProgramId): string {
  * TODO(content): waiting for the confirmed list of verified names.
  */
 export const verifiedTestimonialNames: readonly string[] = []
+
+const contactData = {
+  email: 'info@mindurmind.org.in',
+  /** Same number for calls and WhatsApp. */
+  phoneDisplay: '+91 95401 23161',
+  phoneHref: 'tel:+919540123161',
+  address: {
+    en: 'Gitanjali Duplex, Novino–Tarsali Road, Vadodara, Gujarat, India',
+    hi: 'गीतांजलि डुप्लेक्स, नोविनो–तरसाली रोड, वडोदरा, गुजरात, भारत',
+  },
+  // TODO(content): working hours not provided yet — do not invent. Pages
+  // hide this when null (a preview-only TODO marker shows instead).
+  hours: null as { en: string; hi: string } | null,
+} as const
+
+export const contact: Widen<typeof contactData> = contactData
+
+/**
+ * Companies, schools and institutions Dr. Kapil Dev Sharma has worked
+ * with — shown on /about and /corporate only when listed here.
+ * TODO(content): waiting for the confirmed list; do not invent names.
+ */
+export const organisationsWorkedWith: readonly string[] = []
 
 /**
  * QSR results guarantee — the single wording used on the QSR page, FAQs

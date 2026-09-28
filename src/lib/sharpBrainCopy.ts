@@ -28,6 +28,7 @@ export type SharpBrainCopy = {
     priceOnRequest: string
     items: { id: 'workshop' | 'program' | 'self'; name: string; desc: string; cta: string; recommended?: boolean }[]
     oneTime: string
+    orgLine: { lead: string; schools: string; corporate: string }
   }
   parents: { eyebrow: string; title: string; points: string[] }
   proof: { eyebrow: string; title: string; oldLabel: string; playlistCta: string }
@@ -119,6 +120,7 @@ const en: SharpBrainCopy = {
       { id: 'self', name: p.sharpBrainSelfLearning.name, desc: p.sharpBrainSelfLearning.format + '. Learn at your own pace.', cta: 'Ask on WhatsApp' },
     ],
     oneTime: 'one-time',
+    orgLine: { lead: 'For a whole class, school or team:', schools: 'Sharp Brain for Schools', corporate: 'For Corporate Teams' },
   },
   parents: {
     eyebrow: 'For parents',
@@ -271,6 +273,7 @@ const hi: SharpBrainCopy = {
       { id: 'self', name: p.sharpBrainSelfLearning.nameHi, desc: 'रिकॉर्डेड लेसन + 30 दिन ऐप अभ्यास। अपनी गति से सीखें।', cta: 'WhatsApp पर पूछें' },
     ],
     oneTime: 'एकमुश्त',
+    orgLine: { lead: 'पूरी क्लास, स्कूल या टीम के लिए:', schools: 'स्कूलों के लिए Sharp Brain', corporate: 'कॉर्पोरेट टीमों के लिए' },
   },
   parents: {
     eyebrow: 'अभिभावकों के लिए',

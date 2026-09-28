@@ -2,7 +2,7 @@
 // YouTube video URLs (Shorts + long-form), split into a featured 6 (3
 // Adults + 3 Young Learners) and a "Watch More" 7. Thumbnails are
 // YouTube's own official static thumbnail (i.ytimg.com/.../hqdefault.jpg),
-// downloaded once and stored locally under public/qsr-videos/ — not an
+// downloaded once and stored locally under public/learner-videos/ — not an
 // arbitrary scrubbed frame, so there was no ability to hand-pick a
 // different moment from within a video. Each was visually inspected
 // before selection; none of the 13 official thumbnails happen to be
@@ -33,26 +33,26 @@ export type QsrVideoReview = {
 }
 
 export const QSR_ADULT_VIDEO_REVIEWS: readonly QsrVideoReview[] = [
-  { videoId: 'l77qMQmRdqY', thumbnailSrc: '/qsr-videos/l77qMQmRdqY-thumb.jpg', label: 'Working Professional' },
-  { videoId: 'R2icA1-gbTY', thumbnailSrc: '/qsr-videos/R2icA1-gbTY-thumb.jpg', label: 'Working Professional' },
-  { videoId: 'RX7t26jYNUg', thumbnailSrc: '/qsr-videos/RX7t26jYNUg-thumb.jpg', label: 'Working Professional' },
+  { videoId: 'l77qMQmRdqY', thumbnailSrc: '/learner-videos/l77qMQmRdqY-thumb.jpg', label: 'Working Professional' },
+  { videoId: 'R2icA1-gbTY', thumbnailSrc: '/learner-videos/R2icA1-gbTY-thumb.jpg', label: 'Working Professional' },
+  { videoId: 'RX7t26jYNUg', thumbnailSrc: '/learner-videos/RX7t26jYNUg-thumb.jpg', label: 'Working Professional' },
 ]
 
 export const QSR_YOUNG_LEARNER_VIDEO_REVIEWS: readonly QsrVideoReview[] = [
-  { videoId: 'WCt_kzlmdj8', thumbnailSrc: '/qsr-videos/WCt_kzlmdj8-thumb.jpg', label: 'Student' },
-  { videoId: 'FyOm01mfBf0', thumbnailSrc: '/qsr-videos/FyOm01mfBf0-thumb.jpg', label: 'Student' },
-  { videoId: 'VHgzVzVr-B8', thumbnailSrc: '/qsr-videos/VHgzVzVr-B8-thumb.jpg', label: 'Student' },
+  { videoId: 'WCt_kzlmdj8', thumbnailSrc: '/learner-videos/WCt_kzlmdj8-thumb.jpg', label: 'Student' },
+  { videoId: 'FyOm01mfBf0', thumbnailSrc: '/learner-videos/FyOm01mfBf0-thumb.jpg', label: 'Student' },
+  { videoId: 'VHgzVzVr-B8', thumbnailSrc: '/learner-videos/VHgzVzVr-B8-thumb.jpg', label: 'Student' },
 ]
 
 // The remaining 7 of the 13 supplied videos — never hidden, always
 // reachable via the "Watch More Student Stories" toggle in
 // QsrVideoTestimonials.tsx.
 export const QSR_MORE_VIDEO_REVIEWS: readonly QsrVideoReview[] = [
-  { videoId: 'UM9LBm0hh0Y', thumbnailSrc: '/qsr-videos/UM9LBm0hh0Y-thumb.jpg', label: 'Student' },
-  { videoId: '1pvc5yHgJGU', thumbnailSrc: '/qsr-videos/1pvc5yHgJGU-thumb.jpg', label: 'Student' },
-  { videoId: 'B2HwCJwMPDQ', thumbnailSrc: '/qsr-videos/B2HwCJwMPDQ-thumb.jpg', label: 'Student' },
-  { videoId: 'V_-iUWQarT4', thumbnailSrc: '/qsr-videos/V_-iUWQarT4-thumb.jpg', label: 'Student' },
-  { videoId: 'QutuICwaKJ4', thumbnailSrc: '/qsr-videos/QutuICwaKJ4-thumb.jpg', label: 'Student' },
-  { videoId: 'TpCltll0VFc', thumbnailSrc: '/qsr-videos/TpCltll0VFc-thumb.jpg', label: 'Student' },
-  { videoId: 'uetG4y2SXTY', thumbnailSrc: '/qsr-videos/uetG4y2SXTY-thumb.jpg', label: 'Student' },
+  { videoId: 'UM9LBm0hh0Y', thumbnailSrc: '/learner-videos/UM9LBm0hh0Y-thumb.jpg', label: 'Student' },
+  { videoId: '1pvc5yHgJGU', thumbnailSrc: '/learner-videos/1pvc5yHgJGU-thumb.jpg', label: 'Student' },
+  { videoId: 'B2HwCJwMPDQ', thumbnailSrc: '/learner-videos/B2HwCJwMPDQ-thumb.jpg', label: 'Student' },
+  { videoId: 'V_-iUWQarT4', thumbnailSrc: '/learner-videos/V_-iUWQarT4-thumb.jpg', label: 'Student' },
+  { videoId: 'QutuICwaKJ4', thumbnailSrc: '/learner-videos/QutuICwaKJ4-thumb.jpg', label: 'Student' },
+  { videoId: 'TpCltll0VFc', thumbnailSrc: '/learner-videos/TpCltll0VFc-thumb.jpg', label: 'Student' },
+  { videoId: 'uetG4y2SXTY', thumbnailSrc: '/learner-videos/uetG4y2SXTY-thumb.jpg', label: 'Student' },
 ]

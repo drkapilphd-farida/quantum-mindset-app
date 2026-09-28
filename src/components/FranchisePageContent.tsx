@@ -53,17 +53,17 @@ const INTRO_VIDEO_ID: Record<Lang, string> = {
 
 // Real student testimonial YouTube Shorts — the same 6 verified video IDs
 // supplied for this page, with thumbnails already downloaded locally
-// (public/qsr-videos/) from the QSR video-testimonial work. No names/
+// (public/learner-videos/) from the QSR video-testimonial work. No names/
 // cities are attached — none were confidently verified for these specific
 // videos, so each card is labeled generically via studentTestimonials
 // .videoLabel rather than guessed.
 const STUDENT_TESTIMONIAL_VIDEOS: ReadonlyArray<{ videoId: string; thumbnailSrc: string | undefined }> = [
-  { videoId: "WCt_kzlmdj8", thumbnailSrc: "/qsr-videos/WCt_kzlmdj8-thumb.jpg" },
-  { videoId: "1pvc5yHgJGU", thumbnailSrc: "/qsr-videos/1pvc5yHgJGU-thumb.jpg" },
-  { videoId: "VHgzVzVr-B8", thumbnailSrc: "/qsr-videos/VHgzVzVr-B8-thumb.jpg" },
-  { videoId: "UM9LBm0hh0Y", thumbnailSrc: "/qsr-videos/UM9LBm0hh0Y-thumb.jpg" },
-  { videoId: "RX7t26jYNUg", thumbnailSrc: "/qsr-videos/RX7t26jYNUg-thumb.jpg" },
-  { videoId: "R2icA1-gbTY", thumbnailSrc: "/qsr-videos/R2icA1-gbTY-thumb.jpg" },
+  { videoId: "WCt_kzlmdj8", thumbnailSrc: "/learner-videos/WCt_kzlmdj8-thumb.jpg" },
+  { videoId: "1pvc5yHgJGU", thumbnailSrc: "/learner-videos/1pvc5yHgJGU-thumb.jpg" },
+  { videoId: "VHgzVzVr-B8", thumbnailSrc: "/learner-videos/VHgzVzVr-B8-thumb.jpg" },
+  { videoId: "UM9LBm0hh0Y", thumbnailSrc: "/learner-videos/UM9LBm0hh0Y-thumb.jpg" },
+  { videoId: "RX7t26jYNUg", thumbnailSrc: "/learner-videos/RX7t26jYNUg-thumb.jpg" },
+  { videoId: "R2icA1-gbTY", thumbnailSrc: "/learner-videos/R2icA1-gbTY-thumb.jpg" },
 ];
 
 function SectionCta({ label }: { label: string }): React.JSX.Element {
@@ -146,6 +146,11 @@ export default function FranchisePageContent(): React.JSX.Element {
                 {page.hero.ctaSecondary}
               </a>
             </div>
+
+            <p className="mx-auto mt-8 max-w-xl rounded-sm border border-teal/30 bg-panel2 px-4 py-3 text-[14px] leading-relaxed text-ink">
+              {page.hero.partnerNote}
+            </p>
+            <p className="mx-auto mt-3 max-w-xl text-[13px] leading-relaxed text-ink-dim">{page.hero.formatsLine}</p>
 
             {/* First-Screen Trust Strip™ — reuses the same verified
                 credentials already stated in the Founder section below
@@ -318,6 +323,7 @@ export default function FranchisePageContent(): React.JSX.Element {
                 Component default (1/2/3 columns at mobile/tablet/desktop)
                 already matches this section's required layout exactly. */}
             <div className="rounded-sm border border-line-strong bg-panel2 p-5 sm:p-8">
+              <p className="mb-4 font-mono text-[11.5px] uppercase tracking-[0.08em] text-ink-faint">{page.studentTestimonials.oldLabel}</p>
               <VideoReviewGrid
                 videos={STUDENT_TESTIMONIAL_VIDEOS}
                 aspectRatioClassName="aspect-[9/16]"

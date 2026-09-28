@@ -149,6 +149,13 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  // Content TODO markers (src/components/site/SiteTodo.tsx) render on
+  // local and preview builds so missing content is visible during review,
+  // and never on the production deployment.
+  env: {
+    NEXT_PUBLIC_SHOW_CONTENT_TODOS: process.env.VERCEL_ENV === 'production' ? 'false' : 'true',
+  },
+
   // pdfjs-dist (PDF text extraction, src/core/universal-learning-engine/
   // extraction/extractors/extractPDF.ts) optionally loads @napi-rs/canvas
   // at runtime — a native binary — as its Node.js polyfill source for

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { LivingBrainLogo } from "./brand/LivingBrainLogo";
-import { brand } from "@/config/site.config";
+import { brand, contact } from "@/config/site.config";
 import {
   CONTACT_EMAIL,
   FOOTER_LOCATION,
@@ -12,9 +12,10 @@ import {
   TALK_TO_US_HREF,
 } from "@/config/navigation";
 
-// Site-wide footer (site-rebuild Phase 4): Brain / Mind / Meditation /
-// Free Tests / For Organisations / For Trainers, then About · Contact ·
-// policies, location and WhatsApp. Built from src/config/navigation.ts.
+// Site-wide footer: Sharp Brain / Calm Mind / Meditation / Free Tests /
+// For Organisations / For Trainers, then About · Contact · policies,
+// address, phone, WhatsApp and email. Built from src/config/navigation.ts
+// and the contact block in site.config.ts.
 export default function Footer(): React.JSX.Element {
   const { lang } = useLanguage();
   const hi = lang === "hi";
@@ -40,6 +41,14 @@ export default function Footer(): React.JSX.Element {
             >
               {hi ? "WhatsApp पर बात करें →" : "WhatsApp us →"}
             </a>
+            <div className="mt-3 space-y-1 text-[13px] text-ink-dim">
+              <a href={contact.phoneHref} className="block hover:text-ink">
+                {contact.phoneDisplay}
+              </a>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="block break-all hover:text-ink">
+                {CONTACT_EMAIL}
+              </a>
+            </div>
           </div>
 
           {groups.map((group) => (
@@ -71,7 +80,7 @@ export default function Footer(): React.JSX.Element {
 
         <div className="mt-4 flex flex-col gap-3 font-mono text-[12px] uppercase tracking-[0.05em] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
           <span>© {brand.name} · mindurmind.org.in</span>
-          <span>{hi ? FOOTER_LOCATION.hi : FOOTER_LOCATION.en}</span>
+          <address className="not-italic">{hi ? FOOTER_LOCATION.hi : FOOTER_LOCATION.en}</address>
         </div>
       </div>
     </footer>

@@ -34,6 +34,8 @@ type TrainerBioProps = {
   ctaHref?: string;
   /** long only — render as a full-width <section> (default) or a bare block inside an existing section. */
   asSection?: boolean;
+  /** long only — false when the page already shows the photo (e.g. the /about hero). */
+  showPhoto?: boolean;
   /** Force a language on English-only pages; defaults to the site language toggle. */
   lang?: Lang;
 };
@@ -77,6 +79,7 @@ export default function TrainerBio({
   ctaLabel,
   ctaHref,
   asSection = true,
+  showPhoto = true,
   lang: forcedLang,
 }: TrainerBioProps): React.JSX.Element {
   const { lang: siteLang } = useLanguage();
@@ -117,10 +120,12 @@ export default function TrainerBio({
         )}
       </div>
 
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[240px_1fr] lg:items-start">
-        <div className={`relative aspect-square w-full max-w-[240px] overflow-hidden rounded-sm border ${accentClasses.ring}`}>
-          <Image src={trainer.photo.src} alt={trainer.photo.alt} fill sizes="240px" className="object-cover object-top" />
-        </div>
+      <div className={`grid grid-cols-1 gap-10 lg:items-start ${showPhoto ? "lg:grid-cols-[240px_1fr]" : ""}`}>
+        {showPhoto && (
+          <div className={`relative aspect-square w-full max-w-[240px] overflow-hidden rounded-sm border ${accentClasses.ring}`}>
+            <Image src={trainer.photo.src} alt={trainer.photo.alt} fill sizes="240px" className="object-cover object-top" />
+          </div>
+        )}
 
         <div>
           <p className={`text-[16px] leading-relaxed ${toneClasses.body}`}>{copy.longBio}</p>

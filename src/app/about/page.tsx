@@ -7,9 +7,9 @@ import { brand, trainer } from '@/config/site.config'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/about',
-  title: 'About Us — Mind Ur Mind',
+  title: `About ${trainer.name} — ${trainer.en.title} | ${brand.name}`,
   description:
-    `The story of ${trainer.name} and ${brand.name} (founded ${brand.foundedYear}) — ${trainer.years.total} years in education and mind training, Sharp Brain trainer since ${trainer.qsrSinceYear}, based in ${brand.city}.`,
+    `The story of ${trainer.name} and ${brand.name} (founded ${brand.foundedYear}) — ${trainer.years.total} years in education and mind training, trainer in reading, focus and memory skills since ${trainer.skillsTrainingSinceYear}, based in ${brand.city}.`,
 })
 
 export default function AboutPage(): React.JSX.Element {

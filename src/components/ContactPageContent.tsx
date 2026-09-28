@@ -1,24 +1,33 @@
 "use client";
 
-import { Mail, MessageCircle, MapPin } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import SimplePageNav from "./SimplePageNav";
 import Footer from "./Footer";
 import WhatsAppWidget from "./WhatsAppWidget";
+import SiteTodo from "./site/SiteTodo";
+import { contact } from "@/config/site.config";
 import { WHATSAPP_GENERAL_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
-// Contact Us™ — real contact methods only (WhatsApp + email), no
-// backend contact form. Matches this site's established pattern: every
-// other page routes inquiries through WhatsApp/email rather than a
-// database-backed form (see QsrLiveIntroSession.tsx, RetreatFaq.tsx,
-// etc.) — the content package that specified this page offered a form
-// as an explicitly optional alternative, and adding one here would mean
-// a new Server Action + validation + a way to actually deliver the
-// message, none of which exists yet for a simple contact page.
+// Contact Us — real contact methods only (phone, WhatsApp, email, address),
+// all from the contact block in site.config.ts. No backend contact form:
+// every other page routes enquiries through WhatsApp/email too.
+
+type Row = { icon: typeof Mail; label: string; value: string; href?: string; external?: boolean };
+
 export default function ContactPageContent(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const c = t.contactPage;
+  const hours = contact.hours === null ? null : contact.hours[lang];
+
+  const rows: Row[] = [
+    { icon: Phone, label: c.phoneLabel, value: contact.phoneDisplay, href: contact.phoneHref },
+    { icon: MessageCircle, label: c.whatsappLabel, value: contact.phoneDisplay, href: WHATSAPP_GENERAL_INQUIRY_LINK, external: true },
+    { icon: Mail, label: c.emailLabel, value: contact.email, href: `mailto:${contact.email}` },
+    { icon: MapPin, label: c.addressLabel, value: contact.address[lang] },
+    ...(hours === null ? [] : [{ icon: Clock, label: c.hoursLabel, value: hours }]),
+  ];
 
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
@@ -29,33 +38,26 @@ export default function ContactPageContent(): React.JSX.Element {
           <p className="mx-auto mt-4 max-w-md text-[15.5px] leading-relaxed text-ink-dim">{c.sub}</p>
 
           <div className="mx-auto mt-12 max-w-sm space-y-4 text-left">
-            <div className="flex items-start gap-3.5 rounded-sm border border-line-strong bg-panel2 px-5 py-4">
-              <Mail className="mt-0.5 h-4.5 w-4.5 flex-none text-gold" aria-hidden="true" />
-              <div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{c.emailLabel}</div>
-                <a href="mailto:info@mindurmind.org.in" className="mt-0.5 block text-[14.5px] font-semibold text-ink hover:text-gold">
-                  info@mindurmind.org.in
-                </a>
+            {rows.map((row) => (
+              <div key={row.label} className="flex items-start gap-3.5 rounded-sm border border-line-strong bg-panel2 px-5 py-4">
+                <row.icon className="mt-0.5 h-4.5 w-4.5 flex-none text-gold" aria-hidden="true" />
+                <div className="min-w-0">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{row.label}</div>
+                  {row.href === undefined ? (
+                    <p className="mt-0.5 text-[14.5px] leading-relaxed text-ink">{row.value}</p>
+                  ) : (
+                    <a
+                      href={row.href}
+                      {...(row.external === true ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className="mt-0.5 block break-words text-[14.5px] font-semibold text-ink hover:text-gold"
+                    >
+                      {row.value}
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-
-            <div className="flex items-start gap-3.5 rounded-sm border border-line-strong bg-panel2 px-5 py-4">
-              <MessageCircle className="mt-0.5 h-4.5 w-4.5 flex-none text-gold" aria-hidden="true" />
-              <div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{c.whatsappLabel}</div>
-                <a href={WHATSAPP_GENERAL_INQUIRY_LINK} target="_blank" rel="noopener noreferrer" className="mt-0.5 block text-[14.5px] font-semibold text-ink hover:text-gold">
-                  +91 95401 23161
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3.5 rounded-sm border border-line-strong bg-panel2 px-5 py-4">
-              <MapPin className="mt-0.5 h-4.5 w-4.5 flex-none text-gold" aria-hidden="true" />
-              <div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{c.addressLabel}</div>
-                <p className="mt-0.5 text-[14.5px] leading-relaxed text-ink">{c.address}</p>
-              </div>
-            </div>
+            ))}
+            {hours === null && <SiteTodo>working hours are empty in site.config (contact.hours) — hidden on production.</SiteTodo>}
           </div>
 
           <p className="mt-8 text-[13px] text-ink-faint">{c.responseTime}</p>
@@ -71,8 +73,8 @@ export default function ContactPageContent(): React.JSX.Element {
               {c.ctaPrimary}
               <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
             </a>
-            <a href="mailto:info@mindurmind.org.in" className="text-[13.5px] text-ink-dim underline decoration-ink-faint/50 underline-offset-2 hover:text-ink">
-              {c.ctaSecondary} info@mindurmind.org.in
+            <a href={`mailto:${contact.email}`} className="text-[13.5px] text-ink-dim underline decoration-ink-faint/50 underline-offset-2 hover:text-ink">
+              {c.ctaSecondary} {contact.email}
             </a>
           </div>
         </div>
