@@ -38,6 +38,9 @@ export async function saveDigitalDetoxCheckin(keptPhoneAway: boolean): Promise<S
     .from('digital_detox_checkins')
     .select('kept_phone_away, occurred_at')
     .eq('user_id', user.id)
+    // Only the journey's own "phone away" check-ins — the Mobile Discipline
+    // screen-goal check-ins (Phase 8) share this table but not this streak.
+    .eq('kind', 'phone_away')
     .order('occurred_at', { ascending: false })
     .limit(STREAK_HISTORY_LIMIT)
 

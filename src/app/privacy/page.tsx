@@ -68,6 +68,11 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
             not a medical or psychological test. A share card is only created if you ask for it, and it shows your first
             name and these numbers only.
           </li>
+          <li>
+            If you use Mobile Discipline: the daily screen-time goal you set, your answer to the daily check-in, and the
+            focus-timer sessions you finish. This is self-reported — the app never blocks your device or reads your use
+            of other apps.
+          </li>
         </ul>
       </section>
 

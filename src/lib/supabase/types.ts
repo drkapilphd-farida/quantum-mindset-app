@@ -477,22 +477,31 @@ export type Database = {
       }
       digital_detox_checkins: {
         Row: {
+          check_date: string | null
           id: string
           kept_phone_away: boolean
+          kind: string
           occurred_at: string
           user_id: string
+          within_goal: boolean | null
         }
         Insert: {
+          check_date?: string | null
           id?: string
           kept_phone_away: boolean
+          kind?: string
           occurred_at?: string
           user_id: string
+          within_goal?: boolean | null
         }
         Update: {
+          check_date?: string | null
           id?: string
           kept_phone_away?: boolean
+          kind?: string
           occurred_at?: string
           user_id?: string
+          within_goal?: boolean | null
         }
         Relationships: []
       }
@@ -1402,6 +1411,30 @@ export type Database = {
           submitted_at?: string
           updated_at?: string
           why_interested?: string | null
+        }
+        Relationships: []
+      }
+      focus_sessions: {
+        Row: {
+          completed_at: string
+          id: string
+          planned_minutes: number
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          planned_minutes: number
+          started_at: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          planned_minutes?: number
+          started_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -2495,6 +2528,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      screen_time_goals: {
+        Row: {
+          daily_limit_minutes: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          daily_limit_minutes: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          daily_limit_minutes?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       schools: {
         Row: {

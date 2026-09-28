@@ -23,6 +23,7 @@ import { ParentFeedbackPrompt } from '@/features/school-dashboard/components/Par
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
 import { GoalRecommendationsCard } from '@/features/onboarding/components/GoalRecommendationsCard'
 import { AssessmentEntryCard } from '@/features/sharp-brain-assessment/components/AssessmentEntryCard'
+import { MobileDisciplineEntryCard } from '@/features/mobile-discipline/components/MobileDisciplineEntryCard'
 import { programFirstFor } from '@/features/onboarding/goalRecommendations'
 import type { LearningFocus } from '@/features/onboarding/onboardingOptions'
 import { appFeatures, programs } from '@/config/site.config'
@@ -160,6 +161,7 @@ export async function QsrDashboard({ view, learningFocus = null }: QsrDashboardP
       {learningFocus !== null && <GoalRecommendationsCard focus={learningFocus} />}
 
       {appFeatures.dayThirtyComparison && isPaidUser && <AssessmentEntryCard />}
+      {appFeatures.mobileDiscipline && isPaidUser && <MobileDisciplineEntryCard />}
 
       {programFirst && programsSection}
 

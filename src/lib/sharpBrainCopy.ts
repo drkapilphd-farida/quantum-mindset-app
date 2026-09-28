@@ -5,6 +5,8 @@ import type { Lang } from '@/lib/i18n'
 // only while appFeatures.dayThirtyComparison is on, so the page never
 // promises more than the app does (docs/sharp-brain-deferred-claims.md).
 const D30 = appFeatures.dayThirtyComparison
+// Mobile Discipline module (Item 12), same approach.
+const MD = appFeatures.mobileDiscipline
 
 // Copy for /programs/sharp-brain (site-rebuild Phase 5B), EN + HI.
 // Sharp Brain™ — Focus · Memory · Smart Reading, formerly "Quantum Speed
@@ -66,6 +68,7 @@ const en: SharpBrainCopy = {
         title: 'For parents of children aged about 10–17',
         points: [
           'Homework and reading that used to drag on start finishing sooner',
+          ...(MD ? ['A mobile-discipline routine your child sets and tracks'] : []),
           'Simple screen-time habits: the 20-20-20 rule, posture and eye care, phone away before practice',
           D30 ? 'You see the Day 1 and Day 30 results side by side' : 'A parent view in the app showing reading speed, comprehension and practice consistency',
         ],
@@ -100,7 +103,12 @@ const en: SharpBrainCopy = {
       { title: 'Memory & Retention', desc: 'Practical memory techniques — memory palace, peg system, acronyms — so what you study stays.' },
       { title: 'Smart Reading', desc: 'Reading with recall: read in meaningful chunks, with fewer re-reads, while keeping comprehension.' },
       { title: 'Visual Learning', desc: 'Turn text into mental images and mind maps, a well-established way to remember more.' },
-      { title: 'Mobile Discipline', desc: 'Simple screen-time habits — phone away before practice, the 20-20-20 rule, posture and eye care.' },
+      {
+        title: 'Mobile Discipline',
+        desc: MD
+          ? 'A self-set daily screen-time goal, a focus timer (10, 15 or 25 minutes), a daily check-in and a streak — built into the program.'
+          : 'Simple screen-time habits — phone away before practice, the 20-20-20 rule, posture and eye care.',
+      },
     ],
   },
   how: {
@@ -138,7 +146,9 @@ const en: SharpBrainCopy = {
     eyebrow: 'For parents',
     title: 'From screen time to focus time',
     points: [
-      'Simple screen-time habits: phone away before practice, the 20-20-20 rule, posture and eye care',
+      MD
+        ? 'A mobile-habit module: your child sets a daily screen-time goal, runs focus sessions and keeps a streak'
+        : 'Simple screen-time habits: phone away before practice, the 20-20-20 rule, posture and eye care',
       'About 10 minutes of guided daily practice in the Mind Ur Mind App',
       D30 ? 'You see the Day 1 and Day 30 results side by side' : 'A parent view in the app showing reading speed, comprehension and practice consistency',
     ],
@@ -226,6 +236,7 @@ const hi: SharpBrainCopy = {
         title: 'लगभग 10–17 साल के बच्चों के अभिभावकों के लिए',
         points: [
           'जो होमवर्क और पढ़ाई पहले खिंचती थी, वह जल्दी पूरी होने लगती है',
+          ...(MD ? ['मोबाइल-डिसिप्लिन की एक दिनचर्या, जिसे आपका बच्चा खुद तय और ट्रैक करता है'] : []),
           'स्क्रीन-टाइम की आसान आदतें: 20-20-20 नियम, सही बैठने और आंखों की देखभाल, अभ्यास से पहले फ़ोन दूर',
           D30 ? 'आप दिन 1 और दिन 30 के नतीजे साथ-साथ देखते हैं' : 'ऐप में अभिभावकों के लिए एक व्यू, जिसमें रीडिंग स्पीड, समझ और अभ्यास की नियमितता दिखती है',
         ],
@@ -260,7 +271,12 @@ const hi: SharpBrainCopy = {
       { title: 'Memory & Retention', desc: 'व्यावहारिक मेमोरी तकनीकें — मेमोरी पैलेस, पेग सिस्टम, एक्रोनिम — ताकि जो पढ़ें वह याद रहे।' },
       { title: 'Smart Reading', desc: 'याद रखते हुए पढ़ना: अर्थपूर्ण हिस्सों में पढ़ें, कम दोहराव के साथ, समझ बनाए रखते हुए।' },
       { title: 'Visual Learning', desc: 'टेक्स्ट को मानसिक चित्रों और माइंड मैप में बदलें — ज़्यादा याद रखने का एक स्थापित तरीका।' },
-      { title: 'Mobile Discipline', desc: 'स्क्रीन-टाइम की आसान आदतें — अभ्यास से पहले फ़ोन दूर, 20-20-20 नियम, सही बैठना और आंखों की देखभाल।' },
+      {
+        title: 'Mobile Discipline',
+        desc: MD
+          ? 'खुद तय किया रोज़ का स्क्रीन-टाइम लक्ष्य, फोकस टाइमर (10, 15 या 25 मिनट), रोज़ का चेक-इन और स्ट्रीक — प्रोग्राम में शामिल।'
+          : 'स्क्रीन-टाइम की आसान आदतें — अभ्यास से पहले फ़ोन दूर, 20-20-20 नियम, सही बैठना और आंखों की देखभाल।',
+      },
     ],
   },
   how: {
@@ -298,7 +314,9 @@ const hi: SharpBrainCopy = {
     eyebrow: 'अभिभावकों के लिए',
     title: 'Screen से Focus तक',
     points: [
-      'स्क्रीन-टाइम की आसान आदतें: अभ्यास से पहले फ़ोन दूर, 20-20-20 नियम, सही बैठना और आंखों की देखभाल',
+      MD
+        ? 'मोबाइल-हैबिट मॉड्यूल: आपका बच्चा रोज़ का स्क्रीन-टाइम लक्ष्य तय करता है, फोकस सेशन करता है और स्ट्रीक बनाए रखता है'
+        : 'स्क्रीन-टाइम की आसान आदतें: अभ्यास से पहले फ़ोन दूर, 20-20-20 नियम, सही बैठना और आंखों की देखभाल',
       'Mind Ur Mind App में रोज़ लगभग 10 मिनट का गाइडेड अभ्यास',
       D30 ? 'आप दिन 1 और दिन 30 के नतीजे साथ-साथ देखते हैं' : 'ऐप में अभिभावकों के लिए एक व्यू, जिसमें रीडिंग स्पीड, समझ और अभ्यास की नियमितता दिखती है',
     ],

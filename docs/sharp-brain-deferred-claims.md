@@ -8,6 +8,12 @@ hand. `src/lib/sharpBrainCopy.ts` switches them automatically with
 - Day 30: "The same measures again, with a different passage of the same
   level, compared with your Day 1 results."
 
+**Update (Phase 8, Item 12):** section 2 (Mobile Discipline) also switches
+automatically, with `appFeatures.mobileDiscipline`. The skills card reads:
+"A self-set daily screen-time goal, a focus timer (10, 15 or 25 minutes), a
+daily check-in and a streak — built into the program." The parents wording
+returns as listed below.
+
 In Phase 5B, the Sharp Brain page (`src/lib/sharpBrainCopy.ts`) was softened
 to describe only what the app does today. Nothing says "coming soon". When a
 feature below is built, restore its original wording (EN and HI), then tick it off.
