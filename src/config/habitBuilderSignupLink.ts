@@ -4,7 +4,13 @@
 // brand-new user (no session history, no baseline diagnostic) straight to
 // the mandatory baseline diagnostic before Day 1 ever renders — so this
 // only ever needs to point at Day 1 itself, not the diagnostic directly.
-const JOURNEY_DAY_ONE_PATH = '/labs/sharp-brain/journey/1'
+// HOTFIX (28 Sep 2026): habit.mindurmind.org.in is still served by the
+// older mind-ur-mind-learning-lab deployment, which only has the journey at
+// its pre-rename path. This path works on BOTH codebases: the old one serves
+// it directly, and this one 301-redirects it to /labs/sharp-brain/journey/1
+// (src/config/legacyRedirects.ts). Switch back to the new path once habit.
+// is served by this project.
+const JOURNEY_DAY_ONE_PATH = '/labs/quantum-speed-reading/journey/1'
 
 // /signup/page.tsx reads `next` and passes it through SignUpForm →
 // signUp.ts, which already honors it end-to-end (including the

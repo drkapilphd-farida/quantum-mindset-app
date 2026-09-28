@@ -12,6 +12,7 @@ Run this before merging `site-rebuild` into `main`.
   - `photographic`
   - `telepathy`
   - `originator` / `India's first`
+- [ ] **Allowed exception (hotfix, 28 Sep 2026):** the Starter sign-up link's `next=/labs/quantum-speed-reading/journey/1` (URL-encoded, in the link's address, not visible text). `habit.` still runs the older deployment, which only has that path. Change it back once `habit.` is served by this project.
 - [ ] **Allowed exceptions:**
   - the "program was then called Quantum Speed Reading" label;
   - the FAQ "What happened to Quantum Speed Reading?";

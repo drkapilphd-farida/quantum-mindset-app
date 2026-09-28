@@ -24,6 +24,19 @@ function exerciseRedirects(base: string): Redirect[] {
   ])
 }
 
+const WORDPRESS_REDIRECTS: Redirect[] = [
+  ['/faq', '/#faq'],
+  ['/testimonials', '/#proof'],
+  ['/personalclass', '/mentoring/personal-class'],
+  ['/workshops', '/#upcoming'],
+  ['/anxiety', '/mentoring/overthinking-course'],
+  ['/telepathy', '/'],
+  ['/telepathycourse', '/'],
+  ['/about-us-telepathy', '/'],
+  ['/free', '/'],
+  ['/elementor-landing-page-1483', '/'],
+].map(([source, destination]) => ({ source: source as string, destination: destination as string, statusCode: 301 as const }))
+
 export const LEGACY_REDIRECTS: Redirect[] = [
   // Marketing: the program page (and its sub-pages such as the speed test)
   { source: '/programs/quantum-speed-reading-mumbai', destination: '/programs/sharp-brain', statusCode: 301 },
@@ -43,4 +56,9 @@ export const LEGACY_REDIRECTS: Redirect[] = [
     statusCode: 301,
   },
   { source: '/preview/learning-projects/:id/quantum-journey', destination: '/preview/learning-projects/:id/learning-journey', statusCode: 301 },
+  // Old WordPress site (still in Google's index, 28 Sep 2026): each URL to
+  // the closest current page. Discontinued topics (telepathy etc.) go to the
+  // homepage rather than to a program they would misdescribe. /courses is
+  // left alone — that path is a real (legacy) page on this site.
+  ...WORDPRESS_REDIRECTS,
 ]
