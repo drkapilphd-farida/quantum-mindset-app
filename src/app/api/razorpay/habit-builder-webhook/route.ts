@@ -1,7 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
 import { verifyRazorpayWebhookSignature } from '@/lib/razorpay/verifyWebhookSignature'
 import { createServiceClient } from '@/lib/supabase/service'
+import { RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK } from '@/config/quantumMindsetHabitBuilderPaymentLink'
+import { linkIdsFromEnv, paymentForLink } from '@/lib/razorpay/paymentLinkEvent'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
 
@@ -18,28 +19,16 @@ import { logger } from '@/lib/logger'
 //
 // Uses its own webhook secret (RAZORPAY_HABIT_BUILDER_WEBHOOK_SECRET) —
 // register a THIRD webhook endpoint in the Razorpay Dashboard subscribed
-// to "payment.captured" only, on RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK
-// specifically, so a bug here can't affect the tenant billing or
+// to "payment_link.paid", so a bug here can't affect the tenant billing or
 // Masterclass webhooks or vice versa.
+//
+// Starter payments only (28 Sep 2026): Razorpay webhooks are account-wide,
+// so this endpoint also receives program, retreat and workshop payments.
+// Access is granted ONLY from "payment_link.paid" for the ₹99 Starter link
+// (RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK, plus optional extra
+// link ids in RAZORPAY_HABIT_BUILDER_EXTRA_LINK_IDS). Everything else,
+// including payment.captured, is acknowledged and ignored.
 const WEBHOOK_RATE_LIMIT = { max: 60, windowMs: 60_000 }
-
-const RazorpayPaymentCapturedPayloadSchema = z.object({
-  event: z.string(),
-  payload: z.object({
-    payment: z.object({
-      entity: z.object({
-        id: z.string(),
-        amount: z.number(),
-        currency: z.string(),
-        // Razorpay's payment entity field names, not ours — email/contact
-        // are whatever the payer entered on Razorpay's own checkout form,
-        // same payment-to-account matching caveat as the masterclass webhook.
-        email: z.string().nullable().optional(),
-        contact: z.string().nullable().optional(),
-      }),
-    }),
-  }),
-})
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const clientIp = await getClientIp()
@@ -89,22 +78,17 @@ async function handleHabitBuilderWebhook(request: NextRequest): Promise<NextResp
     return NextResponse.json({ error: 'Invalid JSON.' }, { status: 400 })
   }
 
-  const parsed = RazorpayPaymentCapturedPayloadSchema.safeParse(json)
-  if (!parsed.success) {
-    logger.warn('[razorpay-habit-builder-webhook] payload failed validation')
-    return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
-  }
-
-  const { event, payload } = parsed.data
-
-  // Only ever subscribed to payment.captured in the Razorpay Dashboard,
-  // but ack (200) anything else defensively — same posture as the other
-  // two webhooks.
-  if (event !== 'payment.captured') {
+  const result = paymentForLink(json, RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK, linkIdsFromEnv(process.env.RAZORPAY_HABIT_BUILDER_EXTRA_LINK_IDS))
+  if (!result.ok) {
+    if (result.reason === 'invalid_payload') {
+      logger.warn('[razorpay-habit-builder-webhook] payment_link.paid payload failed validation')
+      return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
+    }
+    // Not a payment_link.paid for the Starter link — not ours; acknowledge.
     return NextResponse.json({ received: true })
   }
 
-  const { id: razorpayPaymentId, amount, currency, email, contact } = payload.payment.entity
+  const { id: razorpayPaymentId, amount, currency, email, contact } = result.payment
   const supabase = createServiceClient()
 
   // Idempotent on razorpay_payment_id — Razorpay's documented

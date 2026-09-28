@@ -4,12 +4,14 @@ import { verifyRazorpayWebhookSignature } from '@/lib/razorpay/verifyWebhookSign
 import { createServiceClient } from '@/lib/supabase/service'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
+import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
+import { linkIdsFromEnv, paymentForLink, type LinkPayment } from '@/lib/razorpay/paymentLinkEvent'
 import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 
 // Automated Masterclass Access™ — sibling to /api/razorpay/webhook, not an
 // extension of it: that route handles tenant/school Subscription
 // lifecycle events (schools table); this one handles a single consumer
-// Payment event (payment.captured) from RAZORPAY_MASTERCLASS_PAYMENT_LINK
+// payment (payment_link.paid) from RAZORPAY_MASTERCLASS_PAYMENT_LINK
 // (a static, unauthenticated Payment Link — see masterclassPaymentLink.ts)
 // and grants access via the REAL paywall (public.subscriptions +
 // getIsPaidUser(), see 20260826000001_add_masterclass_entitlement_and_device_binding.sql),
@@ -17,8 +19,8 @@ import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 //
 // Uses its own webhook secret (RAZORPAY_MASTERCLASS_WEBHOOK_SECRET) —
 // register a second webhook endpoint in the Razorpay Dashboard subscribed
-// to "payment.captured" only, so a bug here can't affect the tenant
-// billing webhook or vice versa.
+// to "payment_link.paid" (+ "refund.processed"), so a bug here can't affect
+// the tenant billing webhook or vice versa.
 //
 // Refund revocation (see the "Pre-Launch Audit Fix Pass" task, Phase 2)
 // — "refund.processed" now revokes the matching user's masterclass
@@ -26,29 +28,19 @@ import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 // can also call manually (see revokeMasterclassAccess.ts). This webhook
 // endpoint must ALSO be subscribed to "refund.processed" in the Razorpay
 // Dashboard (Settings > Webhooks > this endpoint > Active Events) — it
-// is not automatically included just because "payment.captured" already
+// is not automatically included just because "payment_link.paid" already
 // is; both need to be checked explicitly for refunds to actually revoke
 // access.
+//
+// Program payments only (28 Sep 2026): Razorpay webhooks are account-wide,
+// so this endpoint also receives retreat, workshop and Starter payments.
+// Access is granted ONLY from "payment_link.paid" events for the 30-Day
+// Program link (RAZORPAY_MASTERCLASS_PAYMENT_LINK, plus optional extra link
+// ids in RAZORPAY_MASTERCLASS_EXTRA_LINK_IDS, e.g. a test-mode link).
+// "payment.captured" is acknowledged and ignored — it doesn't say which link
+// was paid. An already-active subscription (e.g. granted by hand) is never
+// overwritten; the payment is still recorded against that learner.
 const WEBHOOK_RATE_LIMIT = { max: 60, windowMs: 60_000 }
-
-const RazorpayPaymentCapturedPayloadSchema = z.object({
-  event: z.literal('payment.captured'),
-  payload: z.object({
-    payment: z.object({
-      entity: z.object({
-        id: z.string(),
-        amount: z.number(),
-        currency: z.string(),
-        // Razorpay's payment entity field names, not ours — email/contact
-        // are whatever the payer entered on Razorpay's own checkout form,
-        // which is why matching to an app account can fail (see the
-        // migration's doc comment on masterclass_payments).
-        email: z.string().nullable().optional(),
-        contact: z.string().nullable().optional(),
-      }),
-    }),
-  }),
-})
 
 // Razorpay's documented refund.processed shape — the refund entity
 // carries `payment_id`, the original payment this refund belongs to,
@@ -127,14 +119,13 @@ async function handleMasterclassWebhook(request: NextRequest): Promise<NextRespo
     return handleRefundProcessed(json)
   }
 
-  if (envelope.data.event === 'payment.captured') {
-    return handlePaymentCaptured(json)
+  if (envelope.data.event === 'payment_link.paid') {
+    return handlePaymentLinkPaid(json)
   }
 
-  // Only ever subscribed to payment.captured + refund.processed in the
-  // Razorpay Dashboard, but ack (200) anything else defensively rather
-  // than 400 — same "don't make Razorpay retry a webhook we simply
-  // don't act on" posture as the tenant billing webhook.
+  // Subscribe this endpoint to payment_link.paid + refund.processed only.
+  // Anything else (including payment.captured, which doesn't say which link
+  // was paid) is acknowledged (200) and ignored, so Razorpay doesn't retry.
   return NextResponse.json({ received: true })
 }
 
@@ -174,14 +165,21 @@ async function handleRefundProcessed(json: unknown): Promise<NextResponse> {
   return NextResponse.json({ received: true })
 }
 
-async function handlePaymentCaptured(json: unknown): Promise<NextResponse> {
-  const parsed = RazorpayPaymentCapturedPayloadSchema.safeParse(json)
-  if (!parsed.success) {
-    logger.warn('[razorpay-masterclass-webhook] payment.captured payload failed validation')
-    return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
+async function handlePaymentLinkPaid(json: unknown): Promise<NextResponse> {
+  const result = paymentForLink(json, RAZORPAY_MASTERCLASS_PAYMENT_LINK, linkIdsFromEnv(process.env.RAZORPAY_MASTERCLASS_EXTRA_LINK_IDS))
+  if (!result.ok) {
+    if (result.reason === 'invalid_payload') {
+      logger.warn('[razorpay-masterclass-webhook] payment_link.paid payload failed validation')
+      return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
+    }
+    // Another product's payment link (retreat, Starter, workshop …): not ours.
+    return NextResponse.json({ received: true })
   }
+  return recordAndGrant(result.payment)
+}
 
-  const { id: razorpayPaymentId, amount, currency, email, contact } = parsed.data.payload.payment.entity
+async function recordAndGrant(payment: LinkPayment): Promise<NextResponse> {
+  const { id: razorpayPaymentId, amount, currency, email, contact } = payment
   const supabase = createServiceClient()
 
   // Idempotent on razorpay_payment_id — Razorpay's documented
@@ -202,8 +200,8 @@ async function handlePaymentCaptured(json: unknown): Promise<NextResponse> {
     .from('masterclass_payments')
     .insert({
       razorpay_payment_id: razorpayPaymentId,
-      email: email ?? null,
-      phone: contact ?? null,
+      email,
+      phone: contact,
       amount_cents: amount,
       currency,
     })
@@ -212,8 +210,7 @@ async function handlePaymentCaptured(json: unknown): Promise<NextResponse> {
 
   if (insertError || !insertedPayment) {
     // A unique-violation redelivery race (two webhook deliveries landing
-    // concurrently) is the one expected case here — already logged via
-    // the SELECT above in the common case; anything else is a real
+    // concurrently) is the one expected case here; anything else is a real
     // failure worth surfacing as a 500 so Razorpay retries.
     if (insertError?.code === '23505') {
       return NextResponse.json({ received: true })
@@ -231,11 +228,11 @@ async function handlePaymentCaptured(json: unknown): Promise<NextResponse> {
   // signup case, the more common real-world ordering for a static,
   // unauthenticated Payment Link).
   let matchedUserId: string | null = null
-  if (email !== null && email !== undefined) {
+  if (email !== null) {
     const { data } = await supabase.from('profiles').select('id').eq('email', email).maybeSingle()
     matchedUserId = data?.id ?? null
   }
-  if (matchedUserId === null && contact !== null && contact !== undefined) {
+  if (matchedUserId === null && contact !== null) {
     const { data } = await supabase.from('profiles').select('id').eq('phone', contact).maybeSingle()
     matchedUserId = data?.id ?? null
   }
@@ -244,18 +241,12 @@ async function handlePaymentCaptured(json: unknown): Promise<NextResponse> {
     const { data: plan } = await supabase.from('plans').select('id').eq('key', 'qsr-masterclass').maybeSingle()
 
     if (plan) {
-      const { error: subscriptionError } = await supabase
-        .from('subscriptions')
-        .upsert(
-          { user_id: matchedUserId, plan_id: plan.id, status: 'active', current_period_start: new Date().toISOString() },
-          { onConflict: 'user_id,plan_id' },
-        )
-
-      if (subscriptionError) {
+      const granted = await grantWithoutOverwriting(supabase, matchedUserId, plan.id)
+      if (!granted.ok) {
         logger.error('[razorpay-masterclass-webhook] failed to grant subscription', {
           razorpayPaymentId,
           userId: matchedUserId,
-          error: subscriptionError.message,
+          error: granted.error,
         })
         return NextResponse.json({ error: 'Failed to grant access.' }, { status: 500 })
       }
@@ -270,4 +261,31 @@ async function handlePaymentCaptured(json: unknown): Promise<NextResponse> {
   }
 
   return NextResponse.json({ received: true })
+}
+
+/**
+ * Active access (e.g. granted by hand before the webhook existed) is left
+ * exactly as it is; cancelled access is reactivated; otherwise a new
+ * subscription is created. Never a second row (unique user_id + plan_id).
+ */
+async function grantWithoutOverwriting(
+  supabase: ReturnType<typeof createServiceClient>,
+  userId: string,
+  planId: string,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const { data: existing, error: readError } = await supabase
+    .from('subscriptions')
+    .select('id, status')
+    .eq('user_id', userId)
+    .eq('plan_id', planId)
+    .maybeSingle()
+  if (readError) return { ok: false, error: readError.message }
+
+  if (existing && (existing.status === 'active' || existing.status === 'trialing')) return { ok: true }
+
+  const now = new Date().toISOString()
+  const { error } = existing
+    ? await supabase.from('subscriptions').update({ status: 'active', canceled_at: null, current_period_start: now }).eq('id', existing.id)
+    : await supabase.from('subscriptions').insert({ user_id: userId, plan_id: planId, status: 'active', current_period_start: now })
+  return error ? { ok: false, error: error.message } : { ok: true }
 }
