@@ -1,9 +1,12 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
-import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from "@/config/overthinkingCoursePaymentLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const OVERTHINKING_CHECKOUT_HREF = primaryCheckoutHref('overthinkingReset');
 
 // SECTION 13 — Final CTA. No Habit Builder button here or anywhere else
 // on this page (see the master prompt's Step 1b) — exactly two
@@ -23,7 +26,7 @@ export default function MindResetFinalCta(): React.JSX.Element {
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <a
-            href={CLASSPLUS_OVERTHINKING_COURSE_LINK}
+            href={OVERTHINKING_CHECKOUT_HREF}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackGaEvent("classplus_click", { location: "mind_reset_final_cta" })}

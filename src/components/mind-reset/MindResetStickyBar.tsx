@@ -1,9 +1,12 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from "@/config/overthinkingCoursePaymentLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const OVERTHINKING_CHECKOUT_HREF = primaryCheckoutHref('overthinkingReset');
 
 // Same scroll-reveal-after-threshold pattern used by every other sticky
 // CTA bar on this site (QsrStickyBar.tsx etc). Promotes the ₹499 primary
@@ -37,7 +40,7 @@ export default function MindResetStickyBar(): React.JSX.Element {
           <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{section.price}</p>
         </div>
         <a
-          href={CLASSPLUS_OVERTHINKING_COURSE_LINK}
+          href={OVERTHINKING_CHECKOUT_HREF}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackGaEvent("classplus_click", { location: "mind_reset_sticky_bar" })}

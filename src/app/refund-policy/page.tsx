@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
 import { buildPageMetadata } from '@/lib/seo/metadata'
-import { programs, qsrGuarantee } from '@/config/site.config'
+import { programs, qsrGuarantee, waLink } from '@/config/site.config'
 
 // New, dedicated Refund & Cancellation Policy (see the "Pre-Launch Audit
 // Fix Pass" task, Phase 3) — this page didn't exist before. The only
@@ -74,9 +74,9 @@ export default function RefundPolicyPage(): React.JSX.Element {
       </section>
 
       <section>
-        <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Coaching, Focus & Reading Starter, Courses)</h2>
+        <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Coaching, {programs.focusStarter.name}, Courses)</h2>
         <p className={legalStyles.p}>
-          These programs don&rsquo;t carry the 30-Day Live Program&rsquo;s results guarantee, since they&rsquo;re not
+          These programs don&rsquo;t carry the {programs.sharpBrain.name}&rsquo;s results guarantee, since they&rsquo;re not
           structured around a measurable WPM/comprehension checkpoint the way Sharp Brain is.
         </p>
         <ul className={legalStyles.list}>
@@ -107,7 +107,7 @@ export default function RefundPolicyPage(): React.JSX.Element {
         <p className={legalStyles.p}>
           For any refund or cancellation request, message us on WhatsApp at{' '}
           <a
-            href="https://wa.me/919540123161"
+            href={waLink('Hi Dr. Kapil, I have a question about a refund or cancellation.')}
             target="_blank"
             rel="noopener noreferrer"
             className="text-foreground underline underline-offset-2"

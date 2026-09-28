@@ -9,7 +9,9 @@ type ExecutiveWorkshopCountdownProps = {
 function getRemaining(deadlineIso: string): { days: number; hours: number; minutes: number } | null {
   // Explicit +05:30 — the deadline is always 11:59 PM IST regardless of
   // the visitor's own timezone, not their browser's local midnight.
-  const diffMs = new Date(`${deadlineIso}T23:59:59+05:30`).getTime() - Date.now()
+  const deadline = new Date(`${deadlineIso}T23:59:59+05:30`).getTime()
+  if (Number.isNaN(deadline)) return null
+  const diffMs = deadline - Date.now()
   if (diffMs <= 0) return null
   return {
     days: Math.floor(diffMs / (1000 * 60 * 60 * 24)),
@@ -23,11 +25,14 @@ function getRemaining(deadlineIso: string): { days: number; hours: number; minut
 // fake or auto-decreasing number, just a real countdown to a real
 // config-supplied date. Ticks once a minute; renders nothing once the
 // deadline has actually passed rather than showing a stale/negative
-// countdown.
+// countdown. Starts empty and is filled in after mount: the page is
+// prerendered at build time, so computing "now" during render made the
+// server HTML and the first client render disagree (React error #418).
 export function ExecutiveWorkshopCountdown({ deadlineIso }: ExecutiveWorkshopCountdownProps): React.JSX.Element | null {
-  const [remaining, setRemaining] = useState(() => getRemaining(deadlineIso))
+  const [remaining, setRemaining] = useState<ReturnType<typeof getRemaining>>(null)
 
   useEffect(() => {
+    setRemaining(getRemaining(deadlineIso))
     const interval = setInterval(() => setRemaining(getRemaining(deadlineIso)), 60_000)
     return () => clearInterval(interval)
   }, [deadlineIso])

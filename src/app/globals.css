@@ -218,12 +218,14 @@
   --color-panel-2: #f5f1ea;
   --color-ink: #221f1d;
   --color-ink-dim: #6e6660;
-  --color-ink-faint: #8a8177;
+  /* ink-faint and teal darkened (Phase 7 accessibility): every small
+     label now meets WCAG AA 4.5:1 on void, panel and panel-2. */
+  --color-ink-faint: #6b6259;
   --color-gold: #b8862e;
   --color-gold-dim: #8f6820;
   --color-gold-soft: rgba(184, 134, 46, 0.12);
-  --color-teal: #a85a2a;
-  --color-teal-light: #c17240;
+  --color-teal: #94491c;
+  --color-teal-light: #a85a2a;
   --color-teal-soft: rgba(168, 90, 42, 0.08);
   --color-rose: #9c4a4a;
   --color-rose-soft: rgba(156, 74, 74, 0.08);
@@ -232,6 +234,21 @@
 
   background-color: var(--color-void);
   color: var(--color-ink);
+}
+
+/* Gold stays bright as a button background (dark text on it is 5.6:1), but
+   gold TEXT on the light backgrounds is only ~2.9:1 — so text uses a darker
+   gold (4.85:1+). Same layer as Tailwind's utilities, higher specificity. */
+@layer utilities {
+  .warm-light .text-gold {
+    color: #835f16;
+  }
+
+  /* /executive-brain-workshop: teal text on its white / slate-50 sections
+     is ~4.1:1 — use a darker teal there (6:1+). Dark sections keep teal. */
+  .exec-light :is(.bg-white, .bg-slate-50, .bg-teal-soft) .text-teal {
+    color: #0f6b5f;
+  }
 }
 
 .warm-light ::selection {

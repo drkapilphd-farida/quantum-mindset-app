@@ -1,12 +1,15 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
 import PracticeDisclaimer from "../PracticeDisclaimer";
-import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
 import RetreatPaymentNote from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const RETREAT_CHECKOUT_HREF = primaryCheckoutHref('onlineRetreat');
 
 export default function RetreatFinalCta(): React.JSX.Element {
   const { t } = useLanguage();
@@ -22,7 +25,7 @@ export default function RetreatFinalCta(): React.JSX.Element {
         <p className="mx-auto mt-4 max-w-lg text-[15.5px] leading-relaxed text-ink-dim">{section.desc}</p>
         <div className="mt-9 flex justify-center">
           <a
-            href={RAZORPAY_RETREAT_PAYMENT_LINK}
+            href={RETREAT_CHECKOUT_HREF}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackGaEvent("razorpay_checkout_click", { location: "retreat_final_cta" })}

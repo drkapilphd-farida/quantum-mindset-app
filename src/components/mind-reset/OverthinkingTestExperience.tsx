@@ -1,5 +1,6 @@
 "use client";
 
+import { trackLead } from "@/lib/analytics/conversions";
 import { useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -111,7 +112,10 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
           <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-dim">{section.hero.sub}</p>
           <button
             type="button"
-            onClick={() => setStage("quiz")}
+            onClick={() => {
+              trackLead("Free Overthinking Test", "free_test_started");
+              setStage("quiz");
+            }}
             className="group mt-9 inline-flex items-center gap-2.5 rounded-sm bg-rose px-8 py-[17px] text-[15px] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#b8757e]"
           >
             {section.hero.startCta}

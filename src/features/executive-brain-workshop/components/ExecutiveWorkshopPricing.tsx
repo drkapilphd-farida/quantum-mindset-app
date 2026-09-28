@@ -5,7 +5,6 @@ import { Check } from 'lucide-react'
 import { executiveBrainWorkshopConfig, hasExecutiveWorkshopEventPassed } from '@/config/executiveBrainWorkshopConfig'
 import { buildWhatsAppLink } from '../utmTracking'
 import { trackGaEvent } from '@/lib/analytics/ga4'
-import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
 import { ExecutiveWorkshopCountdown } from './ExecutiveWorkshopCountdown'
 
 // Registrations Closed™ — once the event's own end time has passed,
@@ -50,7 +49,6 @@ export function ExecutiveWorkshopPricing(): React.JSX.Element {
 
   function handlePlanClick(planName: string): void {
     trackGaEvent('razorpay_checkout_click', { location: 'pricing', plan: planName })
-    trackMetaPixelEvent('InitiateCheckout', { content_name: planName })
   }
 
   function handleConfirmWhatsAppClick(planName: string): void {
@@ -106,7 +104,7 @@ export function ExecutiveWorkshopPricing(): React.JSX.Element {
                     <p className="text-[15.5px] font-bold text-slate-900">{plan.name}</p>
                     <p className="mt-3 text-[34px] font-bold tabular-nums text-slate-900">
                       {priceLabel}
-                      {config.gstApplicable && <span className="ml-1.5 text-[13px] font-medium text-slate-400">+ GST as applicable</span>}
+                      {config.gstApplicable && <span className="ml-1.5 text-[13px] font-medium text-slate-500">+ GST as applicable</span>}
                     </p>
                     {plan.availabilityNote !== '' && <p className="mt-1 text-[12.5px] font-medium text-teal">{plan.availabilityNote}</p>}
 

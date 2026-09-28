@@ -4,18 +4,26 @@ import { Providers } from '@/components/Providers'
 import { Toaster } from '@/components/ui/sonner'
 import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import ConversionTracker from '@/components/analytics/ConversionTracker'
+import { MetaPixel } from '@/components/analytics/MetaPixel'
+import { analytics } from '@/config/site.config'
 import { LanguageProvider } from '@/context/LanguageContext'
 import { SITE_URL, SITE_NAME } from '@/lib/seo/siteUrl'
 import './globals.css'
 
+// Only Inter (the main marketing body font) is preloaded. The others load
+// on demand when a page actually uses them, so ~250 KB of font preloads no
+// longer compete with the hero image and text on slow mobile connections.
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
+  preload: false,
 })
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+  preload: false,
 })
 
 // Warm Luxury Mentorship™ — additive only: these 4 fonts and the
@@ -39,6 +47,7 @@ const homepageDevanagari = Noto_Sans_Devanagari({
   weight: ['400', '500', '600', '700'],
   variable: '--font-homepage-devanagari',
   display: 'swap',
+  preload: false,
 })
 
 const homepageDisplay = Instrument_Serif({
@@ -47,6 +56,7 @@ const homepageDisplay = Instrument_Serif({
   style: ['normal', 'italic'],
   variable: '--font-homepage-display',
   display: 'swap',
+  preload: false,
 })
 
 const homepageMono = IBM_Plex_Mono({
@@ -54,6 +64,7 @@ const homepageMono = IBM_Plex_Mono({
   weight: ['400', '500'],
   variable: '--font-homepage-mono',
   display: 'swap',
+  preload: false,
 })
 
 // Strict App Naming™ — every surface that shows "the app name" (browser
@@ -145,6 +156,8 @@ export default function RootLayout({
         <Toaster />
         <ServiceWorkerRegistration />
         <GoogleAnalytics />
+        <MetaPixel pixelId={analytics.metaPixelId} />
+        <ConversionTracker />
       </body>
     </html>
   )

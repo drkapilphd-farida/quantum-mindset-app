@@ -1,12 +1,15 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
-import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
 import RetreatPaymentNote, { formatInr, retreatFee } from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const RETREAT_CHECKOUT_HREF = primaryCheckoutHref('onlineRetreat');
 
 const BATCH_START_DAY = 10;
 const BATCH_END_DAY = 20;
@@ -152,7 +155,7 @@ export default function RetreatSchedule(): React.JSX.Element {
 
             <div className="mt-7">
               <a
-                href={RAZORPAY_RETREAT_PAYMENT_LINK}
+                href={RETREAT_CHECKOUT_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackGaEvent("razorpay_checkout_click", { location: "retreat_schedule" })}

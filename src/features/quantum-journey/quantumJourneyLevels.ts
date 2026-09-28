@@ -94,7 +94,7 @@ export function getWeekTheme(day: number): string {
   const week = getWeekNumber(day)
   if (week === 1) return 'Foundation & Brain Gym'
   if (week === 2) return 'Expansion & Visualisation'
-  return 'Advanced Focus Flow & Intuition'
+  return 'Advanced Focus Flow & Attention'
 }
 
 function getWeekPool(day: number): readonly JourneyStepExercise[] {

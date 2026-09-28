@@ -4,7 +4,6 @@ import { MessageCircle } from 'lucide-react'
 import { executiveBrainWorkshopConfig } from '@/config/executiveBrainWorkshopConfig'
 import { buildWhatsAppLink } from '../utmTracking'
 import { trackGaEvent } from '@/lib/analytics/ga4'
-import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
 
 // Mobile-only sticky bottom bar — Reserve Seat + a WhatsApp icon button,
 // always visible (unlike the desktop nav's CTA, which scrolls out of
@@ -19,7 +18,6 @@ export function ExecutiveWorkshopStickyBar(): React.JSX.Element {
         href="#pricing"
         onClick={() => {
           trackGaEvent('signup_cta_click', { location: 'mobile_sticky_bar' })
-          trackMetaPixelEvent('InitiateCheckout', { content_name: 'mobile_sticky_reserve_seat' })
         }}
         className="flex-1 rounded-sm bg-gold px-4 py-3 text-center text-[14px] font-semibold text-[#1B1508]"
       >

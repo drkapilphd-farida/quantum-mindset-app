@@ -5,9 +5,11 @@ import Link from 'next/link'
 import { Check, ExternalLink, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
 import { RAZORPAY_SUBSCRIPTION_LINKS, type BillingPeriod } from '../razorpaySubscriptionLinks'
-import { programs } from '@/config/site.config'
+import { programs, primaryCheckoutHref } from '@/config/site.config'
+
+// Paid button link — read from the programs registry (site.config.ts).
+const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
 // Real, confirmed prices for both billing periods — Razorpay's own
 // checkout page always shows the real, authoritative amount regardless
@@ -230,7 +232,7 @@ export function PricingPlansGrid(): React.JSX.Element {
           </p>
         </div>
         <Button asChild size="lg" className="w-full shrink-0 rounded-full sm:w-auto">
-          <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+          <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
             Enroll Now for ₹9,999
             <ExternalLink className="size-4" aria-hidden="true" />
           </a>

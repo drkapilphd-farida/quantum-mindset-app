@@ -1,5 +1,6 @@
 "use client";
 
+import { trackLead } from "@/lib/analytics/conversions";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Play, ArrowRight, RotateCcw } from "lucide-react";
@@ -107,6 +108,7 @@ export default function QsrSpeedTestLiveExperience(): React.JSX.Element {
   }, [stage]);
 
   function startTest(): void {
+    trackLead("Free Reading Speed Test", "free_test_started");
     setAnswers(new Array(LIVE_DEMO_PASSAGE.questions.length).fill(null) as Array<number | null>);
     setWpm(null);
     setStage("reading");

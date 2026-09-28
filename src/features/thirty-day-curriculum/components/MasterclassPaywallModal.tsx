@@ -1,9 +1,12 @@
 'use client'
 
+import { primaryCheckoutHref } from '@/config/site.config'
 import { Lock, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
+
+// Paid button link — read from the programs registry (site.config.ts).
+const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
 type MasterclassPaywallModalProps = {
   open: boolean
@@ -18,7 +21,7 @@ type MasterclassPaywallModalProps = {
 // of navigating anywhere (see ThirtyDayCurriculumOverview.tsx /
 // ThirtyDayCurriculumExperience.tsx). Same real, hosted Razorpay
 // Payment Link the dashboard hero card's own "Enroll Now" button already
-// uses (RAZORPAY_MASTERCLASS_PAYMENT_LINK) — one real checkout URL, not
+// uses (SHARP_BRAIN_CHECKOUT_HREF) — one real checkout URL, not
 // a second one that could drift. Completing that checkout takes real
 // payment but does not automatically grant in-app access yet (no
 // entitlement is wired to it today — see getIsPaidUser.ts's own doc
@@ -53,7 +56,7 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
             className="w-full rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-md transition-all duration-300 hover:from-emerald-500 hover:to-emerald-400 active:scale-95"
             data-enroll-button="true"
           >
-            <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+            <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
               Enroll Now for ₹9,999 →
             </a>

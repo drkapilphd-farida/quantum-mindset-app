@@ -1,8 +1,11 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import { useLanguage } from "@/context/LanguageContext";
-import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from "@/config/overthinkingCoursePaymentLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const OVERTHINKING_CHECKOUT_HREF = primaryCheckoutHref('overthinkingReset');
 
 // Dark Product Hero™ — a bounded island (dark only for this hero +
 // MindResetNav above it; every section below returns to the site's
@@ -42,7 +45,7 @@ export default function MindResetHero(): React.JSX.Element {
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <a
-            href={CLASSPLUS_OVERTHINKING_COURSE_LINK}
+            href={OVERTHINKING_CHECKOUT_HREF}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackGaEvent("classplus_click", { location: "mind_reset_hero" })}

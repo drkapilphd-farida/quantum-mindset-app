@@ -408,6 +408,36 @@ export type ProgramId = keyof typeof programs
 
 export const siteConfig = { brand, trainer, programs } as const
 
+/** A program's checkout link by its label — throws at module load if missing. */
+export function checkoutHref(id: ProgramId, label: string): string {
+  const found = programs[id].checkout.find((c) => c.label === label)
+  if (found === undefined) throw new Error(`site.config: program "${id}" has no checkout "${label}"`)
+  return found.href
+}
+
+/** The program whose page is `pathname` (hash-only anchor entries excluded). */
+export function programForPath(pathname: string): (typeof programs)[ProgramId] | null {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  const all = Object.values(programs) as (typeof programs)[ProgramId][]
+  return all.find((p) => !p.url.includes('#') && p.url === path) ?? null
+}
+
+/** The program a checkout link belongs to (first match in registry order). */
+export function programForCheckoutHref(href: string): (typeof programs)[ProgramId] | null {
+  const all = Object.values(programs) as (typeof programs)[ProgramId][]
+  return all.find((p) => p.checkout.some((c) => c.href === href)) ?? null
+}
+
+/**
+ * Analytics IDs — loaded site-wide only when set. Leave empty until the
+ * real IDs are supplied; never put a placeholder here.
+ * TODO(content): GA4 measurement ID (G-…) and Meta Pixel ID not provided yet.
+ */
+export const analytics: { readonly ga4MeasurementId: string; readonly metaPixelId: string } = {
+  ga4MeasurementId: '',
+  metaPixelId: '',
+}
+
 /** The first checkout/enquiry link of a program — throws at module load if the registry entry has none. */
 export function primaryCheckoutHref(id: ProgramId): string {
   const first = programs[id].checkout[0]
@@ -445,6 +475,14 @@ export const contact: Widen<typeof contactData> = contactData
  * TODO(content): waiting for the confirmed list; do not invent names.
  */
 export const organisationsWorkedWith: readonly string[] = []
+
+/**
+ * Sharp Brain formats that franchise / trainer partners may run — shown on
+ * /franchise-individual when set (use the registry names, e.g.
+ * programs.sharpBrainWorkshop.name).
+ * TODO(content): not confirmed yet — do not guess.
+ */
+export const franchisePartnerFormats: readonly string[] | null = null
 
 /**
  * QSR results guarantee — the single wording used on the QSR page, FAQs

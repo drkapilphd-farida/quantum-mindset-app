@@ -1,5 +1,7 @@
 "use client";
 
+import { franchisePartnerFormats } from "@/config/site.config";
+import SiteTodo from "./site/SiteTodo";
 import Image from "next/image";
 import {
   BookOpen,
@@ -151,6 +153,16 @@ export default function FranchisePageContent(): React.JSX.Element {
               {page.hero.partnerNote}
             </p>
             <p className="mx-auto mt-3 max-w-xl text-[13px] leading-relaxed text-ink-dim">{page.hero.formatsLine}</p>
+            {franchisePartnerFormats === null ? (
+              <div className="mx-auto mt-3 max-w-xl text-left">
+                <SiteTodo>which Sharp Brain formats partners may run is empty in site.config (franchisePartnerFormats) — hidden on production.</SiteTodo>
+              </div>
+            ) : (
+              <p className="mx-auto mt-2 max-w-xl text-[13px] font-semibold leading-relaxed text-ink">
+                {lang === "hi" ? "पार्टनर ये फॉर्मेट चला सकते हैं: " : "Partners can run: "}
+                {franchisePartnerFormats.join(" · ")}
+              </p>
+            )}
 
             {/* First-Screen Trust Strip™ — reuses the same verified
                 credentials already stated in the Founder section below

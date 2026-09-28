@@ -8,7 +8,7 @@ export const translations = {
     // CTA across both pages, so one translated copy avoids drift between
     // them (see CheckoutTrustLine.tsx).
     checkoutTrust: {
-      line: "Payments secured by Razorpay. 100% safe & encrypted — we never store your card details.",
+      line: "Payments secured by Razorpay. Safe and encrypted — we never store your card details.",
       refundLabel: "Refund & Cancellation Policy",
     },
     // Shared, not nested under retreatLanding/residentialLanding/tier3 —
@@ -357,7 +357,7 @@ export const translations = {
           },
           {
             range: "Days 15–21",
-            title: "Advanced Focus Flow & Intuition",
+            title: "Advanced Focus Flow & Attention",
             desc: "The most advanced exercises in the program, building toward your Day 21 finale.",
           },
         ],
@@ -1389,7 +1389,7 @@ export const translations = {
 
   hi: {
     checkoutTrust: {
-      line: "भुगतान Razorpay द्वारा सुरक्षित। 100% सुरक्षित और एन्क्रिप्टेड — हम कभी आपके कार्ड की जानकारी संग्रहीत नहीं करते।",
+      line: "भुगतान Razorpay द्वारा सुरक्षित। सुरक्षित और एन्क्रिप्टेड — हम कभी आपके कार्ड की जानकारी संग्रहीत नहीं करते।",
       refundLabel: "रिफंड और कैंसिलेशन नीति",
     },
     wellnessDisclaimer: {
@@ -1732,7 +1732,7 @@ export const translations = {
           },
           {
             range: "दिन 15–21",
-            title: "एडवांस्ड फोकस फ्लो एंड इंट्यूशन",
+            title: "एडवांस्ड फोकस फ्लो एंड अटेंशन",
             desc: "प्रोग्राम के सबसे advanced अभ्यास, आपके Day 21 finale की ओर ले जाते हुए।",
           },
         ],

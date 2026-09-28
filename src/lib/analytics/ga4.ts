@@ -1,10 +1,13 @@
+import { analytics } from '@/config/site.config'
+
 // Google Analytics 4 — marketing/conversion tracking for the public
 // landing pages (QSR, Retreat, homepage). Deliberately separate from
 // track.ts's `trackEvent` (Sprint 1's internal product-analytics log,
 // typed to in-app learning events and backed by the app logger, not
 // GA4) — different destination, different event vocabulary, no shared
 // call sites.
-export const GA_MEASUREMENT_ID = process.env['NEXT_PUBLIC_GA_MEASUREMENT_ID']
+// From site.config.ts `analytics` — empty means GA4 is not loaded at all.
+export const GA_MEASUREMENT_ID = analytics.ga4MeasurementId
 
 declare global {
   interface Window {
@@ -31,6 +34,11 @@ export type GaEventName =
   | 'signup_cta_click'
   | 'watch_training_click'
   | 'corporate_enquiry_submit'
+  // Site-wide conversion events (src/lib/analytics/conversions.ts), mirroring
+  // the Meta Pixel standard events ViewContent / InitiateCheckout / Lead.
+  | 'view_item'
+  | 'begin_checkout'
+  | 'generate_lead'
 
 // No-ops when GA isn't configured (NEXT_PUBLIC_GA_MEASUREMENT_ID unset)
 // or gtag.js hasn't loaded yet — never throws, since a tracking call

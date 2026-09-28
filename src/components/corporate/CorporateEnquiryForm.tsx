@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { executiveBrainWorkshopConfig } from '@/config/executiveBrainWorkshopConfig'
 import { buildWhatsAppLink, readUtmParams } from '@/features/executive-brain-workshop/utmTracking'
 import { trackGaEvent } from '@/lib/analytics/ga4'
-import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
+import { trackLead } from '@/lib/analytics/conversions'
 
 // Corporate / school enquiry form, shared by /executive-brain-workshop
 // (#corporate) and /corporate. Posts to executiveBrainWorkshopConfig
@@ -124,7 +124,7 @@ export function CorporateEnquiryForm({
     setStatus('submitting')
 
     trackGaEvent('corporate_enquiry_submit', { team_size: form.teamSize, format: form.format, page })
-    trackMetaPixelEvent('Lead', { content_name: 'corporate_enquiry' })
+    trackLead(page === 'corporate' ? 'Corporate & school enquiry' : 'Executive workshop corporate enquiry', 'form')
 
     if (config.corporateFormEndpoint === '') {
       window.open(buildWhatsAppLink(config.whatsappNumber, whatsappMessage()), '_blank', 'noopener,noreferrer')

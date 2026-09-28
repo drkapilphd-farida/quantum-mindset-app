@@ -1,10 +1,13 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
 import { formatInr, retreatFee } from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const RETREAT_CHECKOUT_HREF = primaryCheckoutHref('onlineRetreat');
 
 // Same scroll-reveal pattern as QsrStickyBar.tsx — stays off-screen until
 // the visitor scrolls past the hero's own CTA, so it doesn't just
@@ -41,7 +44,7 @@ export default function RetreatStickyBar(): React.JSX.Element {
           </p>
         </div>
         <a
-          href={RAZORPAY_RETREAT_PAYMENT_LINK}
+          href={RETREAT_CHECKOUT_HREF}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackGaEvent("razorpay_checkout_click", { location: "retreat_sticky_bar" })}

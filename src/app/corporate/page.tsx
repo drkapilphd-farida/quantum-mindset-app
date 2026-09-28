@@ -6,6 +6,7 @@ import { corporateCopy } from '@/lib/corporateCopy'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/corporate',
+  ownOgImage: true,
   title: 'For Organisations — Corporate Teams & Schools | Mind Ur Mind',
   description:
     'Brain performance programs for companies, schools and institutions — calm, focus and clear decisions, measured before and after. Led by Dr. Kapil Dev Sharma.',

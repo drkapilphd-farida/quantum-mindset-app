@@ -1,3 +1,5 @@
+import { primaryCheckoutHref } from './site.config'
+
 // Executive Brain Performance Workshop™ — single source of truth for
 // every operational value on /executive-brain-workshop (date, time,
 // prices, seats, links, tracking IDs). Edit this file only — no other
@@ -25,7 +27,8 @@ export type ExecutiveWorkshopPricingPlan = {
 // price button also shows a short note asking the payer to confirm the
 // exact plan/amount on WhatsApp after paying — see
 // ExecutiveWorkshopPricing.tsx.
-const RAZORPAY_PAYMENT_LINK = 'https://razorpay.me/@mindurmindacademy'
+// Paid buttons read their link from the programs registry (site.config.ts).
+const RAZORPAY_PAYMENT_LINK = primaryCheckoutHref('executiveWorkshop')
 
 export const executiveBrainWorkshopConfig = {
   // ── Event details ──────────────────────────────────────────────────
@@ -122,17 +125,8 @@ export const executiveBrainWorkshopConfig = {
   // never a dead end.
   corporateFormEndpoint: '', // TODO
 
-  // ── Tracking ─────────────────────────────────────────────────────────
-  // Meta Pixel ID for THIS campaign page specifically (separate from any
-  // sitewide pixel). Leave empty to not load Meta Pixel at all.
-  metaPixelId: '', // TODO
-  // Google Analytics 4 measurement ID for this campaign specifically. The
-  // sitewide GA4 (NEXT_PUBLIC_GA_MEASUREMENT_ID, already configured in
-  // .env) fires on every page including this one regardless — this is
-  // only for an ADDITIONAL, page-scoped GA4 property if the campaign
-  // needs separate reporting. Leave empty to skip.
-  ga4MeasurementId: '', // TODO
-
+  // Tracking IDs (GA4, Meta Pixel) are site-wide — see `analytics` in
+  // site.config.ts.
 } as const
 
 // Plain checklist for a non-technical editor — every field a human still
@@ -144,8 +138,6 @@ export const EXECUTIVE_WORKSHOP_TODO_FIELDS = [
   'contactEmail — confirm',
   'brochurePdfUrl — add once a brochure PDF exists, else leave empty',
   'corporateFormEndpoint — add a Formspree or Google Apps Script URL, else WhatsApp fallback is used',
-  'metaPixelId — add if running Meta Ads for this campaign',
-  'ga4MeasurementId — add only if this campaign needs a separate GA4 property from the sitewide one',
   'testimonials — add real reviews of THIS workshop to src/config/testimonials.ts (program: executiveWorkshop) and list the names in site.config verifiedTestimonialNames',
 ] as const
 

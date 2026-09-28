@@ -1,10 +1,13 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import { Check, Sparkles } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
-import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from "@/config/overthinkingCoursePaymentLink";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const OVERTHINKING_CHECKOUT_HREF = primaryCheckoutHref('overthinkingReset');
 
 // SECTION 10 — Pricing™. The single most important pricing-correction
 // section: Card 1 (₹499) never lists live sessions; Card 2 (₹999) lists
@@ -13,7 +16,7 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 // same list. Both CTAs use the same real Classplus link — tier/price
 // selection happens at Classplus checkout itself, same "all access
 // lengths selected at checkout" pattern the old 3-tier courseLanding
-// page already used (see CLASSPLUS_OVERTHINKING_COURSE_LINK's own doc
+// page already used (see OVERTHINKING_CHECKOUT_HREF's own doc
 // comment).
 export default function MindResetPricing(): React.JSX.Element {
   const { t } = useLanguage();
@@ -50,7 +53,7 @@ export default function MindResetPricing(): React.JSX.Element {
             </div>
 
             <a
-              href={CLASSPLUS_OVERTHINKING_COURSE_LINK}
+              href={OVERTHINKING_CHECKOUT_HREF}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackGaEvent("classplus_click", { location: "mind_reset_pricing_499" })}
@@ -85,7 +88,7 @@ export default function MindResetPricing(): React.JSX.Element {
             </div>
 
             <a
-              href={CLASSPLUS_OVERTHINKING_COURSE_LINK}
+              href={OVERTHINKING_CHECKOUT_HREF}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackGaEvent("classplus_click", { location: "mind_reset_pricing_999" })}

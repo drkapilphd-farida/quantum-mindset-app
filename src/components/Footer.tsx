@@ -41,11 +41,11 @@ export default function Footer(): React.JSX.Element {
             >
               {hi ? "WhatsApp पर बात करें →" : "WhatsApp us →"}
             </a>
-            <div className="mt-3 space-y-1 text-[13px] text-ink-dim">
-              <a href={contact.phoneHref} className="block hover:text-ink">
+            <div className="mt-2 text-[13px] text-ink-dim">
+              <a href={contact.phoneHref} className="block py-1.5 hover:text-ink">
                 {contact.phoneDisplay}
               </a>
-              <a href={`mailto:${CONTACT_EMAIL}`} className="block break-all hover:text-ink">
+              <a href={`mailto:${CONTACT_EMAIL}`} className="block break-all py-1.5 hover:text-ink">
                 {CONTACT_EMAIL}
               </a>
             </div>

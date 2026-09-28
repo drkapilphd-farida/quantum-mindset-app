@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
 import { buildPageMetadata } from '@/lib/seo/metadata'
-import { brand, programs } from '@/config/site.config'
+import { brand, programs, waLink } from '@/config/site.config'
 
 // Replaces stale legacy content (see the "Pre-Launch Audit Fix Pass"
 // task, Phase 3) — this page previously described a different business
@@ -75,8 +75,30 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
           <li>Razorpay (payment processing for our own programs).</li>
           <li>Classplus (delivery of specific self-paced courses, where applicable).</li>
           <li>Supabase (our database and authentication infrastructure).</li>
+          <li>Google (Google Analytics 4 — website measurement).</li>
+          <li>Meta Platforms (Meta Pixel — measuring the results of our Facebook and Instagram ads).</li>
         </ul>
         <p className={legalStyles.p}>We do not sell your personal data to third parties.</p>
+      </section>
+
+      <section>
+        <h2 className={legalStyles.h2}>Cookies, analytics and advertising pixels</h2>
+        <p className={legalStyles.p}>
+          Our website uses Google Analytics 4 and the Meta Pixel to understand how visitors use the site and to
+          measure the results of our advertising. These tools set cookies or similar identifiers in your browser and
+          record events such as page views, clicks on WhatsApp or payment buttons, form submissions (not the form
+          contents) and free tests started.
+        </p>
+        <p className={legalStyles.p}>
+          If you arrive from a link with campaign tags (utm_source, utm_medium, utm_campaign …), we keep those tags in
+          your browser for the current session and add them to the WhatsApp message or enquiry you send us, so we know
+          which campaign brought you.
+        </p>
+        <p className={legalStyles.p}>
+          You can block or delete cookies in your browser settings, opt out of Google Analytics with Google&rsquo;s
+          browser add-on, and manage ad personalisation in your Facebook or Instagram ad preferences. The site works
+          without these cookies.
+        </p>
       </section>
 
       <section>
@@ -128,7 +150,7 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
           </a>{' '}
           or WhatsApp{' '}
           <a
-            href="https://wa.me/919540123161"
+            href={waLink('Hi Dr. Kapil, I have a question about your privacy policy.')}
             target="_blank"
             rel="noopener noreferrer"
             className="text-foreground underline underline-offset-2"

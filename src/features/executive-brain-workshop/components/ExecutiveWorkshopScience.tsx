@@ -19,7 +19,7 @@ export function ExecutiveWorkshopScience(): React.JSX.Element {
           ))}
         </div>
 
-        <p className="mt-6 text-[12.5px] text-slate-400">Workshop techniques are based on published research. Individual results vary.</p>
+        <p className="mt-6 text-[12.5px] text-slate-500">Workshop techniques are based on published research. Individual results vary.</p>
       </div>
     </section>
   )

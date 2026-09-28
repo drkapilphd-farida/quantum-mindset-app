@@ -1,5 +1,8 @@
+import { primaryCheckoutHref } from '@/config/site.config'
 import { Sparkles } from 'lucide-react'
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
+
+// Paid button link — read from the programs registry (site.config.ts).
+const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
 // App 1 → App 2 Upsell™ — the Day 21 finale (Grand Celebration screen and
 // the always-revisitable certificate page) is this app's single
@@ -15,7 +18,7 @@ import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLi
 // own printed/exported output — this is a screen-only upsell, never
 // part of the "official record" the certificate represents. Completing
 // this checkout takes real payment; it does not automatically grant
-// in-app access (see RAZORPAY_MASTERCLASS_PAYMENT_LINK's own doc
+// in-app access (see SHARP_BRAIN_CHECKOUT_HREF's own doc
 // comment) — this CTA's copy never promises otherwise.
 export function AppTwoFinaleUpsellCta(): React.JSX.Element {
   return (
@@ -31,7 +34,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
         Notes, &amp; Memory Techniques at ₹9,999.
       </p>
       <a
-        href={RAZORPAY_MASTERCLASS_PAYMENT_LINK}
+        href={SHARP_BRAIN_CHECKOUT_HREF}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:from-emerald-500 hover:to-emerald-400 active:scale-95"

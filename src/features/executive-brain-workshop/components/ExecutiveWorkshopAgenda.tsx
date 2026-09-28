@@ -52,7 +52,7 @@ export function ExecutiveWorkshopAgenda(): React.JSX.Element {
                   {index + 1}
                 </span>
                 <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-slate-400">{block.label}</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-slate-500">{block.label}</p>
                   <p className="text-[16.5px] font-bold text-slate-900">{block.title}</p>
                 </div>
               </div>

@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { Check, Flame, FlaskConical, Lock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK } from '@/config/quantumMindsetHabitBuilderPaymentLink'
-import { programs } from '@/config/site.config'
+import { programs, checkoutHref } from '@/config/site.config'
+
+// Paid button link — read from the programs registry (site.config.ts).
+const STARTER_UNLOCK_CHECKOUT_HREF = checkoutHref('focusStarter', 'Razorpay (Days 8–21)')
 
 type TwentyOneDayJourneyCardProps = {
   isPaidUser: boolean
@@ -107,7 +109,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
         </Link>
       ) : (
         <a
-          href={RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK}
+          href={STARTER_UNLOCK_CHECKOUT_HREF}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-4 flex items-center gap-4 rounded-xl border border-dashed bg-muted/30 p-4 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -160,7 +162,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
             // the dashboard stays put behind the checkout.
             <a
               key={day}
-              href={RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK}
+              href={STARTER_UNLOCK_CHECKOUT_HREF}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Day ${day}, locked, upgrade to Pro`}

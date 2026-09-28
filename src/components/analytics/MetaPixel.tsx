@@ -6,11 +6,11 @@ type MetaPixelProps = {
   pixelId: string
 }
 
-// Page-scoped Meta Pixel loader — renders nothing when pixelId is empty
-// (see executiveBrainWorkshopConfig.ts). Standard Meta base code, fires
+// Site-wide Meta Pixel loader (root layout) — renders nothing when
+// pixelId is empty (site.config.ts `analytics.metaPixelId`). Standard Meta base code, fires
 // PageView automatically on load; trackMetaPixelEvent (metaPixel.ts)
-// fires the rest (ViewContent/InitiateCheckout/Lead) from this page's
-// own components.
+// fires the rest (ViewContent/InitiateCheckout/Lead) via
+// src/lib/analytics/conversions.ts.
 export function MetaPixel({ pixelId }: MetaPixelProps): React.JSX.Element | null {
   if (pixelId === '') return null
 

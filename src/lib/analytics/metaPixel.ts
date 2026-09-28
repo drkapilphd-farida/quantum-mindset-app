@@ -1,8 +1,6 @@
-// Meta Pixel — page-scoped conversion tracking for
-// /executive-brain-workshop specifically (see
-// executiveBrainWorkshopConfig.ts's `metaPixelId`), distinct from GA4
-// (ga4.ts), which already fires sitewide. Only ever loaded when a real
-// pixel ID is configured — never fetches or calls fbq() otherwise.
+// Meta Pixel — site-wide, loaded by components/analytics/MetaPixel.tsx
+// only when site.config.ts `analytics.metaPixelId` is set; never fetches
+// or calls fbq() otherwise.
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void

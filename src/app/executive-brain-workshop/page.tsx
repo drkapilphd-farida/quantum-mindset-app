@@ -24,8 +24,6 @@ import { ExecutiveWorkshopFinalCta } from '@/features/executive-brain-workshop/c
 import { ExecutiveWorkshopFooter } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopFooter'
 import { ExecutiveWorkshopStickyBar } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopStickyBar'
 import { ExecutiveWorkshopWhatsAppWidget } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopWhatsAppWidget'
-import { ExecutiveWorkshopViewContentTracker } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopViewContentTracker'
-import { MetaPixel } from '@/features/executive-brain-workshop/components/MetaPixel'
 
 const PAGE_TITLE = 'Executive Brain Performance Workshop Mumbai | Calm, Focus & Decision Clarity'
 const PAGE_DESCRIPTION =
@@ -72,11 +70,9 @@ export default function ExecutiveBrainWorkshopPage(): React.JSX.Element {
   const faqSchema = buildFaqPageSchema(getResolvedExecutiveWorkshopFaqItems())
 
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900 antialiased">
+    <div className="exec-light min-h-screen bg-white font-sans text-slate-900 antialiased">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: eventSchema }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
-      <MetaPixel pixelId={config.metaPixelId} />
-      <ExecutiveWorkshopViewContentTracker />
 
       <ExecutiveWorkshopNav />
       <main>

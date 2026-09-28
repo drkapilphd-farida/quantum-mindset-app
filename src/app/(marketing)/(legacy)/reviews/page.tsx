@@ -2,10 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ExternalLink, GraduationCap, MessageCircle, PlayCircle, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
 import { WHATSAPP_ENROLLMENT_INQUIRY_LINK, WHATSAPP_MASTERCLASS_INQUIRY_LINK } from '@/config/whatsappSupportLink'
 import { SUCCESS_STORIES_PLAYLIST_EMBED_URL, SUCCESS_STORIES_PLAYLIST_WATCH_URL } from '@/config/reviewsPlaylist'
-import { brand, programs } from '@/config/site.config'
+import { brand, programs, primaryCheckoutHref } from '@/config/site.config'
+
+// Paid button link — read from the programs registry (site.config.ts).
+const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
 export const metadata: Metadata = {
   title: 'Success Stories',
@@ -31,7 +33,7 @@ export default function ReviewsPage(): React.JSX.Element {
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm font-medium text-foreground">Ready to write your own success story?</p>
           <Button asChild size="sm" className="brand-gradient w-full rounded-full text-white shadow-md hover:opacity-90 sm:w-auto">
-            <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+            <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
               Enroll Now for ₹9,999 →
             </a>
@@ -63,7 +65,7 @@ export default function ReviewsPage(): React.JSX.Element {
             className="brand-gradient w-full rounded-full text-white shadow-lg hover:opacity-90 sm:w-auto"
             data-enroll-button="true"
           >
-            <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+            <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
               Enroll Now for ₹9,999 →
             </a>
@@ -101,7 +103,7 @@ export default function ReviewsPage(): React.JSX.Element {
             <p className="mt-1 text-sm text-muted-foreground">Chat directly with Dr. Kapil on WhatsApp — batch timing, pricing, anything.</p>
           </a>
           <a
-            href={RAZORPAY_MASTERCLASS_PAYMENT_LINK}
+            href={SHARP_BRAIN_CHECKOUT_HREF}
             target="_blank"
             rel="noopener noreferrer"
             className="glass-premium-card glass-premium-lift rounded-2xl p-5 transition-opacity hover:opacity-90"
@@ -149,7 +151,7 @@ export default function ReviewsPage(): React.JSX.Element {
           </div>
           <div className="flex w-full flex-col gap-2.5 sm:w-fit sm:flex-row">
             <Button asChild size="lg" className="brand-gradient w-full rounded-full text-white shadow-lg hover:opacity-90 sm:w-auto">
-              <a href={RAZORPAY_MASTERCLASS_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+              <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
                 <Sparkles className="size-4" aria-hidden="true" />
                 Enroll Now for ₹9,999 →
               </a>

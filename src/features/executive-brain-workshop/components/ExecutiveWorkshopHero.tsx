@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { executiveBrainWorkshopConfig } from '@/config/executiveBrainWorkshopConfig'
 import { buildWhatsAppLink } from '../utmTracking'
 import { trackGaEvent } from '@/lib/analytics/ga4'
-import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
 import { EegWaveform } from './EegWaveform'
 import { trainer } from '@/config/site.config'
 
@@ -20,7 +19,6 @@ export function ExecutiveWorkshopHero(): React.JSX.Element {
 
   function handleReserveClick(): void {
     trackGaEvent('signup_cta_click', { location: 'hero' })
-    trackMetaPixelEvent('InitiateCheckout', { content_name: 'hero_reserve_seat' })
   }
 
   function handleWhatsAppClick(): void {

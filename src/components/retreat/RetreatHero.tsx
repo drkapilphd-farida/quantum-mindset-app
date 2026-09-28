@@ -1,12 +1,15 @@
 "use client";
 
+import { primaryCheckoutHref } from "@/config/site.config";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
 import CheckoutTrustLine from "../CheckoutTrustLine";
-import { RAZORPAY_RETREAT_PAYMENT_LINK } from "@/config/retreatPaymentLink";
 import RetreatPaymentNote, { formatInr, retreatFee } from "./RetreatPaymentNote";
 import { trackGaEvent } from "@/lib/analytics/ga4";
+
+// Paid button link — read from the programs registry (site.config.ts).
+const RETREAT_CHECKOUT_HREF = primaryCheckoutHref('onlineRetreat');
 
 type RetreatHeroProps = {
   // No real retreat introduction video is wired up yet — same honest
@@ -73,7 +76,7 @@ export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <div>
               <a
-                href={RAZORPAY_RETREAT_PAYMENT_LINK}
+                href={RETREAT_CHECKOUT_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackGaEvent("razorpay_checkout_click", { location: "retreat_hero" })}

@@ -1,8 +1,11 @@
 'use client'
 
+import { primaryCheckoutHref } from '@/config/site.config'
 import { useState } from 'react'
 import { Sparkles, X } from 'lucide-react'
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
+
+// Paid button link — read from the programs registry (site.config.ts).
+const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
 type AppTwoMilestoneBannerProps = {
   day: 7 | 14
@@ -51,7 +54,7 @@ export function AppTwoMilestoneBanner({ day }: AppTwoMilestoneBannerProps): Reac
       </div>
 
       <a
-        href={RAZORPAY_MASTERCLASS_PAYMENT_LINK}
+        href={SHARP_BRAIN_CHECKOUT_HREF}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-emerald-500"

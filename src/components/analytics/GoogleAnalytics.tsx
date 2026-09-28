@@ -1,12 +1,12 @@
 import Script from "next/script";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics/ga4";
 
-// Renders nothing when NEXT_PUBLIC_GA_MEASUREMENT_ID is unset (no real
-// ID has been provided for this project) — gtag.js is never fetched and
+// Renders nothing while site.config.ts `analytics.ga4MeasurementId` is
+// empty (no real ID has been provided yet) — gtag.js is never fetched and
 // window.gtag never exists, which is exactly what trackGaEvent's no-op
 // guard expects.
 export default function GoogleAnalytics(): React.JSX.Element | null {
-  if (GA_MEASUREMENT_ID === undefined || GA_MEASUREMENT_ID === "") return null;
+  if (GA_MEASUREMENT_ID === "") return null;
 
   return (
     <>

@@ -1,5 +1,6 @@
 "use client";
 
+import { trackLead } from "@/lib/analytics/conversions";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Play, ArrowRight, RotateCcw, CheckCircle2 } from "lucide-react";
@@ -138,6 +139,7 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
   }
 
   function startCalibration(): void {
+    trackLead("Free Reading Speed Test", "free_test_started");
     calibStartRef.current = performance.now();
     setStage("calibration");
   }

@@ -74,7 +74,15 @@ function buildContentSecurityPolicy(): string {
       'https://connect.facebook.net',
     ],
     'style-src': ["'self'", "'unsafe-inline'"],
-    'img-src': ["'self'", 'data:', 'blob:', 'https://www.facebook.com', ...(supabase ? [supabase] : [])],
+    'img-src': [
+      "'self'",
+      'data:',
+      'blob:',
+      'https://www.facebook.com',
+      'https://*.google-analytics.com',
+      'https://www.googletagmanager.com',
+      ...(supabase ? [supabase] : []),
+    ],
     'font-src': ["'self'", 'data:'],
     // Sentry ingest — both regional endpoints allowed proactively (same
     // "allow before it's wired up" posture as the Razorpay/GA entries
@@ -85,8 +93,10 @@ function buildContentSecurityPolicy(): string {
       ...(supabase ? [supabase, supabase.replace('https://', 'wss://')] : []),
       'https://api.razorpay.com',
       'https://lumberjack.razorpay.com',
-      'https://www.google-analytics.com',
-      'https://analytics.google.com',
+      // GA4 sends hits to regional hosts (region1.google-analytics.com …).
+      'https://*.google-analytics.com',
+      'https://*.analytics.google.com',
+      'https://www.googletagmanager.com',
       'https://*.ingest.sentry.io',
       'https://*.ingest.us.sentry.io',
       'https://*.ingest.de.sentry.io',
@@ -203,7 +213,7 @@ const nextConfig: NextConfig = {
       {
         source: '/mentoring/mind-reset-system',
         destination: '/mentoring/overthinking-course',
-        permanent: true,
+        statusCode: 301,
       },
       ...LEGACY_REDIRECTS,
     ]
