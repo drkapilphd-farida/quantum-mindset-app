@@ -1883,6 +1883,7 @@ export type Database = {
           correct_answers: number
           effective_wpm: number
           id: string
+          lang: string
           passage_id: string
           reading_ms: number
           stage: string
@@ -1900,6 +1901,7 @@ export type Database = {
           correct_answers: number
           effective_wpm: number
           id?: string
+          lang?: string
           passage_id: string
           reading_ms: number
           stage: string
@@ -1917,6 +1919,7 @@ export type Database = {
           correct_answers?: number
           effective_wpm?: number
           id?: string
+          lang?: string
           passage_id?: string
           reading_ms?: number
           stage?: string

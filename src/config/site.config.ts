@@ -4,6 +4,7 @@ import { HABIT_BUILDER_SIGNUP_HREF } from './habitBuilderSignupLink'
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from './overthinkingCoursePaymentLink'
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from './retreatPaymentLink'
 import { STARTER_MONTHLY_399, FAMILY_PRO_MONTHLY_699 } from './pricingLinks'
+import { applyFeatureOverrides, featureOverrideFor, type AppFeatures } from './featureOverrides'
 
 // Single source of truth for everything public-facing that used to be
 // retyped by hand across pages: brand name and tagline, the trainer's
@@ -12,7 +13,8 @@ import { STARTER_MONTHLY_399, FAMILY_PRO_MONTHLY_699 } from './pricingLinks'
 // OG images and WhatsApp pre-filled messages read from here, so a rename
 // or a price change is one edit, not a codebase-wide search.
 //
-// Deliberately a leaf module: it only imports plain link constants, never
+// Deliberately a leaf module: it only imports plain link constants (and the
+// leaf featureOverrides helper), never
 // whatsappSupportLink.ts or i18n.ts (both import *this* file).
 
 // Widens literal types (from `as const`) back to string/number while
@@ -442,19 +444,20 @@ export const analytics: { readonly ga4MeasurementId: string; readonly metaPixelI
  * Sharp Brain app features (Phase 8). Each is off by default and switched
  * on one at a time once its item is reviewed and deployed.
  */
-export const appFeatures: {
-  readonly onboarding: boolean
-  readonly dayThirtyComparison: boolean
-  readonly mobileDiscipline: boolean
-  readonly parentWeeklySummary: boolean
-  readonly sharpBrainCertificate: boolean
-} = {
+const APP_FEATURES_DEFAULT: AppFeatures = {
   onboarding: false,
   dayThirtyComparison: false,
   mobileDiscipline: false,
   parentWeeklySummary: false,
   sharpBrainCertificate: false,
 }
+
+// A Vercel preview can switch features on via PREVIEW_APP_FEATURES (see
+// featureOverrides.ts); production always gets the defaults above.
+export const appFeatures: AppFeatures = applyFeatureOverrides(
+  APP_FEATURES_DEFAULT,
+  featureOverrideFor(process.env['VERCEL_ENV'], process.env['NEXT_PUBLIC_APP_FEATURE_OVERRIDES']),
+)
 
 /** Sharp Brain 30-Day Program rules used by the app. */
 export const sharpBrainProgram = {

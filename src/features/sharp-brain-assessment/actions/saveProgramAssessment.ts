@@ -22,10 +22,13 @@ import {
 // every score is recomputed here. Rules enforced on the server:
 // - Day 1 can be retaken (a new baseline) only while there is no Day 30.
 // - Day 30 needs a Day 1, an open window, and can be taken once.
-// - Each stage must use its assigned passage (Day 30 = the other form).
+// - Each stage must use its assigned passage (Day 30 = the other form,
+//   same language as Day 1).
 
 const SaveSchema = z.object({
   stage: z.enum(['day1', 'day30']),
+  /** Chosen at Day 1; Day 30 always follows Day 1's language. */
+  lang: z.enum(['en', 'hi']),
   passageId: z.string(),
   readingMs: z.number().int().min(1000).max(60 * 60 * 1000),
   answers: z.array(z.number().int().min(0).max(2)),
@@ -62,7 +65,7 @@ export async function saveProgramAssessment(input: unknown): Promise<SaveAssessm
 
   const parsed = SaveSchema.safeParse(input)
   if (!parsed.success) return { ok: false, reason: 'invalid_input' }
-  const { stage, passageId, readingMs, answers, attentionTrials } = parsed.data
+  const { stage, lang, passageId, readingMs, answers, attentionTrials } = parsed.data
 
   const noGoCount = attentionTrials.filter((trial) => !trial.go).length
   const inconsistent = attentionTrials.some((trial) => trial.responded !== (trial.rtMs !== null))
@@ -93,7 +96,7 @@ export async function saveProgramAssessment(input: unknown): Promise<SaveAssessm
     if (window.status !== 'open' && window.status !== 'late') return { ok: false, reason: 'not_open' }
   }
 
-  const assigned = passageForStage(stage, day1?.passage_id ?? null)
+  const assigned = passageForStage(stage, day1?.passage_id ?? null, lang)
   const passage = getAssessmentPassage(passageId)
   if (passage === null || passage.id !== assigned.id) return { ok: false, reason: 'wrong_passage' }
   if (answers.length !== passage.questions.length) return { ok: false, reason: 'invalid_input' }
@@ -113,6 +116,7 @@ export async function saveProgramAssessment(input: unknown): Promise<SaveAssessm
       user_id: user.id,
       stage,
       passage_id: passage.id,
+      lang: passage.lang,
       word_count: wordCount,
       reading_ms: readingMs,
       wpm,

@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs/config'
+import { featureOverrideFor } from './src/config/featureOverrides'
 import { LEGACY_REDIRECTS } from './src/config/legacyRedirects'
 
 // The Supabase project origin is read from the same env var the client
@@ -164,6 +165,9 @@ const nextConfig: NextConfig = {
   // and never on the production deployment.
   env: {
     NEXT_PUBLIC_SHOW_CONTENT_TODOS: process.env.VERCEL_ENV === 'production' ? 'false' : 'true',
+    // Preview-only app feature switches (src/config/featureOverrides.ts) —
+    // always baked in as '' for production builds.
+    NEXT_PUBLIC_APP_FEATURE_OVERRIDES: featureOverrideFor(process.env.VERCEL_ENV, process.env.PREVIEW_APP_FEATURES),
   },
 
   // pdfjs-dist (PDF text extraction, src/core/universal-learning-engine/

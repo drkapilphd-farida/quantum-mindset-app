@@ -1,3 +1,5 @@
+import { programs } from '@/config/site.config'
+
 // EN/HI copy for the Day 1 / Day 30 assessment (Phase 8, Item 11).
 // The reading passages themselves are English only for now.
 
@@ -18,6 +20,9 @@ export const ASSESSMENT_COPY = {
     open: 'Your Day 30 re-test is open.',
     late: 'Late re-test: it is now past day 35, so the gap is longer than 30 days. You can still take it.',
     day1Results: 'Your Day 1 results',
+    chooseLanguage: 'Reading language',
+    languageNote: 'Choose the language you read best in. Your Day 30 re-test will be in the same language, with a different passage.',
+    day30Language: (language: string) => `Your Day 30 passage is in ${language}, the same language as your Day 1.`,
     // Flow
     readIntro: 'Read the passage at your normal pace — not faster than usual. The timer starts when you tap Start and stops when you tap Done. You can’t go back to the text after that.',
     startReading: 'Start reading',
@@ -52,9 +57,15 @@ export const ASSESSMENT_COPY = {
     day1: 'Day 1',
     day30: 'Day 30',
     share: 'Create a share card',
-    shareNote: 'Shows your first name and these numbers only. Nothing is shared unless you choose to.',
+    shareNote: 'The card is made on your device and shows your first name and these numbers only. Nothing is shared unless you choose to.',
     download: 'Download image',
     shareButton: 'Share',
+    card: {
+      program: programs.sharpBrain.name,
+      heading: (firstName: string | null) => (firstName === null ? 'Day 1 → Day 30' : `${firstName}’s Day 1 → Day 30`),
+      rows: { wpm: 'Reading speed (wpm)', comprehension: 'Comprehension', effective: 'Effective reading speed', accuracy: 'Attention accuracy' },
+      disclaimer: 'Practice assessment — not a medical or psychological test',
+    },
   },
   hi: {
     title: 'दिन 1 बनाम दिन 30 असेसमेंट',
@@ -72,6 +83,9 @@ export const ASSESSMENT_COPY = {
     open: 'आपका दिन 30 री-टेस्ट खुला है।',
     late: 'देर से री-टेस्ट: दिन 35 बीत चुका है, इसलिए अंतर 30 दिनों से ज़्यादा है। आप फिर भी इसे दे सकते हैं।',
     day1Results: 'आपके दिन 1 के परिणाम',
+    chooseLanguage: 'पढ़ने की भाषा',
+    languageNote: 'वह भाषा चुनें जिसमें आप सबसे अच्छा पढ़ते हैं। आपका दिन 30 री-टेस्ट इसी भाषा में होगा, एक अलग पैसेज के साथ।',
+    day30Language: (language: string) => `आपका दिन 30 पैसेज ${language} में है — वही भाषा जो दिन 1 में थी।`,
     readIntro: 'पैसेज अपनी सामान्य गति से पढ़ें — सामान्य से तेज़ नहीं। Start दबाते ही टाइमर शुरू होगा और Done दबाने पर रुकेगा। उसके बाद आप टेक्स्ट पर वापस नहीं जा सकेंगे।',
     startReading: 'पढ़ना शुरू करें',
     done: 'हो गया',
@@ -104,9 +118,15 @@ export const ASSESSMENT_COPY = {
     day1: 'दिन 1',
     day30: 'दिन 30',
     share: 'शेयर कार्ड बनाएं',
-    shareNote: 'इसमें सिर्फ़ आपका पहला नाम और ये आंकड़े होते हैं। आप चुनें तभी कुछ शेयर होगा।',
+    shareNote: 'कार्ड आपके डिवाइस पर बनता है और इसमें सिर्फ़ आपका पहला नाम और ये आंकड़े होते हैं। आप चुनें तभी कुछ शेयर होगा।',
     download: 'इमेज डाउनलोड करें',
     shareButton: 'शेयर करें',
+    card: {
+      program: programs.sharpBrain.nameHi,
+      heading: (firstName: string | null) => (firstName === null ? 'दिन 1 → दिन 30' : `${firstName} — दिन 1 → दिन 30`),
+      rows: { wpm: 'रीडिंग स्पीड (शब्द/मिनट)', comprehension: 'समझ', effective: 'प्रभावी रीडिंग स्पीड', accuracy: 'ध्यान की सटीकता' },
+      disclaimer: 'अभ्यास असेसमेंट — मेडिकल या मनोवैज्ञानिक टेस्ट नहीं',
+    },
   },
 } as const
 

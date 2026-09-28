@@ -1,6 +1,7 @@
 -- Phase 8, Item 11 — Sharp Brain Day 1 / Day 30 assessments.
 --
--- One row per user per stage ('day1', 'day30'). Every number is computed
+-- One row per user per stage ('day1', 'day30'). The learner chooses the
+-- language (en / hi) at Day 1; Day 30 uses the other form in that language. Every number is computed
 -- on the server from the raw answers and timings (self-paced timed read,
 -- five comprehension questions, 60-trial go/no-go attention task).
 -- Practice assessment only — not a medical or psychological test.
@@ -12,6 +13,7 @@ CREATE TABLE public.program_assessments (
   user_id                     uuid        NOT NULL REFERENCES auth.users (id) ON DELETE CASCADE,
   stage                       text        NOT NULL CHECK (stage IN ('day1', 'day30')),
   passage_id                  text        NOT NULL,
+  lang                        text        NOT NULL DEFAULT 'en' CHECK (lang IN ('en', 'hi')),
   word_count                  integer     NOT NULL CHECK (word_count > 0),
   reading_ms                  integer     NOT NULL CHECK (reading_ms > 0),
   wpm                         integer     NOT NULL CHECK (wpm >= 0),

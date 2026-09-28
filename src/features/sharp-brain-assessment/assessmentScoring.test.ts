@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ASSESSMENT_PASSAGES, countWords, passageForStage } from './assessmentPassages'
+import { ASSESSMENT_PASSAGES, countWords, getAssessmentPassage, passageForStage, type AssessmentPassage } from './assessmentPassages'
 import {
   computeEffectiveWpm,
   computeWpm,
@@ -12,24 +12,33 @@ import {
 } from './assessmentScoring'
 
 function sentenceStats(text: string): { avgSentenceWords: number; avgWordLetters: number } {
-  const sentences = text.split(/[.!?]+\s/).filter((s) => s.trim().length > 0)
+  const sentences = text.split(/[.!?।]+\s/).filter((s) => s.trim().length > 0)
   const words = text.split(/\s+/).filter((w) => w.length > 0)
   const letters = words.reduce((sum, w) => sum + w.replace(/[^A-Za-z]/g, '').length, 0)
   return { avgSentenceWords: words.length / sentences.length, avgWordLetters: letters / words.length }
 }
 
-describe('assessment passages', () => {
-  const [a, b] = ASSESSMENT_PASSAGES
+function byId(id: string): AssessmentPassage {
+  const passage = getAssessmentPassage(id)
+  if (passage === null) throw new Error(id)
+  return passage
+}
 
-  it('are parallel forms: similar length and reading level', () => {
+describe('assessment passages', () => {
+  it.each([
+    ['en', 'form-a', 'form-b', 280],
+    ['hi', 'form-a-hi', 'form-b-hi', 280],
+  ] as const)('%s forms are parallel: similar length and reading level', (_lang, idA, idB, minWords) => {
+    const a = byId(idA)
+    const b = byId(idB)
     const wa = countWords(a)
     const wb = countWords(b)
     expect(Math.abs(wa - wb) / Math.max(wa, wb)).toBeLessThan(0.1)
-    expect(wa).toBeGreaterThan(280)
+    expect(wa).toBeGreaterThan(minWords)
     const sa = sentenceStats(a.paragraphs.join(' '))
     const sb = sentenceStats(b.paragraphs.join(' '))
     expect(Math.abs(sa.avgSentenceWords - sb.avgSentenceWords) / sa.avgSentenceWords).toBeLessThan(0.15)
-    expect(Math.abs(sa.avgWordLetters - sb.avgWordLetters) / sa.avgWordLetters).toBeLessThan(0.1)
+    if (a.lang === 'en') expect(Math.abs(sa.avgWordLetters - sb.avgWordLetters) / sa.avgWordLetters).toBeLessThan(0.1)
   })
 
   it('each have five questions with three options and a valid answer', () => {
@@ -42,10 +51,18 @@ describe('assessment passages', () => {
     }
   })
 
-  it('Day 30 always uses the other form', () => {
-    expect(passageForStage('day1', null).id).toBe('form-a')
+  it('Day 30 always uses the other form in the same language as Day 1', () => {
+    expect(passageForStage('day1', null, 'en').id).toBe('form-a')
+    expect(passageForStage('day1', null, 'hi').id).toBe('form-a-hi')
     expect(passageForStage('day30', 'form-a').id).toBe('form-b')
     expect(passageForStage('day30', 'form-b').id).toBe('form-a')
+    // Day 30 language follows Day 1, whatever the current UI language.
+    expect(passageForStage('day30', 'form-a-hi', 'en').id).toBe('form-b-hi')
+    expect(passageForStage('day30', 'form-a', 'hi').id).toBe('form-b')
+  })
+
+  it('has four passages, one per form and language', () => {
+    expect(ASSESSMENT_PASSAGES.map((p) => p.id).sort()).toEqual(['form-a', 'form-a-hi', 'form-b', 'form-b-hi'])
   })
 })
 

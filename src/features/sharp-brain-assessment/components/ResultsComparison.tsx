@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { drawShareCard } from '../drawShareCard'
 import type { AssessmentCopy } from '../assessmentCopy'
 import type { AssessmentRecord } from '../assessmentTypes'
 
@@ -81,13 +82,29 @@ export function ResultsComparison({ day1, day30, copy }: { day1: AssessmentRecor
   )
 }
 
-export function ShareCard({ copy }: { copy: AssessmentCopy }): React.JSX.Element {
-  const [open, setOpen] = useState(false)
-  const src = '/labs/sharp-brain/assessment/share-card'
+export function ShareCard({ copy, firstName, day1, day30 }: { copy: AssessmentCopy; firstName: string | null; day1: AssessmentRecord; day30: AssessmentRecord }): React.JSX.Element {
+  const [url, setUrl] = useState<string | null>(null)
+  const [blob, setBlob] = useState<Blob | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  async function create(): Promise<void> {
+    const canvas = canvasRef.current
+    if (canvas === null) return
+    await drawShareCard(canvas, { firstName, day1, day30, labels: copy.card })
+    canvas.toBlob((result) => {
+      if (result === null) return
+      setBlob(result)
+      setUrl(URL.createObjectURL(result))
+    }, 'image/png')
+  }
+
+  useEffect(() => () => {
+    if (url !== null) URL.revokeObjectURL(url)
+  }, [url])
 
   async function share(): Promise<void> {
+    if (blob === null) return
     try {
-      const blob = await (await fetch(src)).blob()
       const file = new File([blob], 'sharp-brain-results.png', { type: 'image/png' })
       if (navigator.canShare?.({ files: [file] })) await navigator.share({ files: [file] })
     } catch {
@@ -95,29 +112,27 @@ export function ShareCard({ copy }: { copy: AssessmentCopy }): React.JSX.Element
     }
   }
 
-  if (!open) {
-    return (
-      <div className="space-y-2">
-        <button type="button" onClick={() => setOpen(true)} className="inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm font-medium hover:bg-muted">
-          {copy.share}
-        </button>
-        <p className="text-xs text-muted-foreground">{copy.shareNote}</p>
-      </div>
-    )
-  }
-
   return (
     <div className="space-y-3">
-      {/* eslint-disable-next-line @next/next/no-img-element -- generated per user on request; next/image optimisation doesn't apply. */}
-      <img src={src} alt={copy.resultsTitle} width={540} height={540} className="h-auto w-full max-w-[540px] rounded-2xl border border-border" />
-      <div className="flex flex-wrap gap-2">
-        <a href={src} download="sharp-brain-results.png" className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground">
-          {copy.download}
-        </a>
-        <button type="button" onClick={() => void share()} className="inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm font-medium hover:bg-muted">
-          {copy.shareButton}
+      <canvas ref={canvasRef} className="hidden" aria-hidden="true" />
+      {url === null ? (
+        <button type="button" onClick={() => void create()} className="inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm font-medium hover:bg-muted">
+          {copy.share}
         </button>
-      </div>
+      ) : (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element -- a local blob: URL drawn on request, not an optimisable asset. */}
+          <img src={url} alt={copy.resultsTitle} width={540} height={540} className="h-auto w-full max-w-[540px] rounded-2xl border border-border" />
+          <div className="flex flex-wrap gap-2">
+            <a href={url} download="sharp-brain-results.png" className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground">
+              {copy.download}
+            </a>
+            <button type="button" onClick={() => void share()} className="inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm font-medium hover:bg-muted">
+              {copy.shareButton}
+            </button>
+          </div>
+        </>
+      )}
       <p className="text-xs text-muted-foreground">{copy.shareNote}</p>
     </div>
   )

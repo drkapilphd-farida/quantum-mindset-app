@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { ASSESSMENT_PASSAGES, countWords } from '../assessmentPassages'
+import { ASSESSMENT_PASSAGES, countWords, type AssessmentPassage } from '../assessmentPassages'
 import { generateAttentionSequence, type AttentionTrial } from '../assessmentScoring'
 
 type Existing = { stage: string; passage_id: string; taken_at: string }
@@ -47,8 +47,14 @@ function trials(): AttentionTrial[] {
   return generateAttentionSequence(1).map((t) => (t.go ? { go: true, responded: true, rtMs: 400 } : { go: false, responded: false, rtMs: null }))
 }
 
-const [formA, formB] = ASSESSMENT_PASSAGES
-const allCorrect = (passage: typeof formA): number[] => passage.questions.map((q) => q.correctIndex)
+const find = (id: string): AssessmentPassage => {
+  const passage = ASSESSMENT_PASSAGES.find((p) => p.id === id)
+  if (passage === undefined) throw new Error(id)
+  return passage
+}
+const formA = find('form-a')
+const formB = find('form-b')
+const allCorrect = (passage: AssessmentPassage): number[] => passage.questions.map((q) => q.correctIndex)
 const daysAgo = (n: number): string => new Date(Date.now() - n * 86_400_000).toISOString()
 
 describe('saveProgramAssessment', () => {
@@ -57,7 +63,7 @@ describe('saveProgramAssessment', () => {
   it('does nothing while the feature is switched off', async () => {
     const { client, upserts } = makeClient()
     const { saveProgramAssessment } = await importAction(client, false)
-    const result = await saveProgramAssessment({ stage: 'day1', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: trials() })
+    const result = await saveProgramAssessment({ stage: 'day1', lang: 'en', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: trials() })
     expect(result).toEqual({ ok: false, reason: 'disabled' })
     expect(upserts).toHaveLength(0)
   })
@@ -66,7 +72,7 @@ describe('saveProgramAssessment', () => {
     const { client } = makeClient()
     const { saveProgramAssessment } = await importAction(client)
     const allGo = trials().map(() => ({ go: true, responded: true, rtMs: 300 }))
-    expect(await saveProgramAssessment({ stage: 'day1', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: allGo })).toEqual({
+    expect(await saveProgramAssessment({ stage: 'day1', lang: 'en', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: allGo })).toEqual({
       ok: false,
       reason: 'invalid_input',
     })
@@ -78,7 +84,7 @@ describe('saveProgramAssessment', () => {
     const words = countWords(formA)
     const answers = allCorrect(formA)
     answers[0] = (answers[0]! + 1) % 3 // one wrong → 80%
-    const result = await saveProgramAssessment({ stage: 'day1', passageId: 'form-a', readingMs: 90_000, answers, attentionTrials: trials() })
+    const result = await saveProgramAssessment({ stage: 'day1', lang: 'en', passageId: 'form-a', readingMs: 90_000, answers, attentionTrials: trials() })
     expect(result).toEqual({ ok: true })
     const wpm = Math.round(words / 1.5)
     expect(upserts[0]).toMatchObject({
@@ -97,7 +103,7 @@ describe('saveProgramAssessment', () => {
   it('rejects an implausible reading time', async () => {
     const { client, upserts } = makeClient()
     const { saveProgramAssessment } = await importAction(client)
-    expect(await saveProgramAssessment({ stage: 'day1', passageId: 'form-a', readingMs: 5_000, answers: allCorrect(formA), attentionTrials: trials() })).toEqual({
+    expect(await saveProgramAssessment({ stage: 'day1', lang: 'en', passageId: 'form-a', readingMs: 5_000, answers: allCorrect(formA), attentionTrials: trials() })).toEqual({
       ok: false,
       reason: 'implausible_timing',
     })
@@ -107,13 +113,13 @@ describe('saveProgramAssessment', () => {
   it('needs a Day 1 before Day 30', async () => {
     const { client } = makeClient()
     const { saveProgramAssessment } = await importAction(client)
-    expect((await saveProgramAssessment({ stage: 'day30', passageId: 'form-b', readingMs: 60_000, answers: allCorrect(formB), attentionTrials: trials() })).ok).toBe(false)
+    expect((await saveProgramAssessment({ stage: 'day30', lang: 'en', passageId: 'form-b', readingMs: 60_000, answers: allCorrect(formB), attentionTrials: trials() })).ok).toBe(false)
   })
 
   it('keeps Day 30 locked before day 28', async () => {
     const { client } = makeClient([{ stage: 'day1', passage_id: 'form-a', taken_at: daysAgo(10) }])
     const { saveProgramAssessment } = await importAction(client)
-    expect(await saveProgramAssessment({ stage: 'day30', passageId: 'form-b', readingMs: 60_000, answers: allCorrect(formB), attentionTrials: trials() })).toEqual({
+    expect(await saveProgramAssessment({ stage: 'day30', lang: 'en', passageId: 'form-b', readingMs: 60_000, answers: allCorrect(formB), attentionTrials: trials() })).toEqual({
       ok: false,
       reason: 'not_open',
     })
@@ -122,17 +128,29 @@ describe('saveProgramAssessment', () => {
   it('opens Day 30 early once curriculum Day 29 is done after the baseline', async () => {
     const { client, upserts } = makeClient([{ stage: 'day1', passage_id: 'form-a', taken_at: daysAgo(10) }], { completed_at: daysAgo(1) })
     const { saveProgramAssessment } = await importAction(client)
-    expect(await saveProgramAssessment({ stage: 'day30', passageId: 'form-b', readingMs: 60_000, answers: allCorrect(formB), attentionTrials: trials() })).toEqual({ ok: true })
+    expect(await saveProgramAssessment({ stage: 'day30', lang: 'en', passageId: 'form-b', readingMs: 60_000, answers: allCorrect(formB), attentionTrials: trials() })).toEqual({ ok: true })
     expect(upserts[0]).toMatchObject({ stage: 'day30', passage_id: 'form-b' })
   })
 
   it('makes Day 30 use the other passage', async () => {
     const { client } = makeClient([{ stage: 'day1', passage_id: 'form-a', taken_at: daysAgo(29) }])
     const { saveProgramAssessment } = await importAction(client)
-    expect(await saveProgramAssessment({ stage: 'day30', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: trials() })).toEqual({
+    expect(await saveProgramAssessment({ stage: 'day30', lang: 'en', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: trials() })).toEqual({
       ok: false,
       reason: 'wrong_passage',
     })
+  })
+
+  it('keeps Day 30 in the Day 1 language (Hindi Day 1 → Hindi Form B)', async () => {
+    const { client, upserts } = makeClient([{ stage: 'day1', passage_id: 'form-a-hi', taken_at: daysAgo(29) }])
+    const { saveProgramAssessment } = await importAction(client)
+    const formBHi = find('form-b-hi')
+    expect(await saveProgramAssessment({ stage: 'day30', lang: 'en', passageId: 'form-b', readingMs: 60_000, answers: allCorrect(formB), attentionTrials: trials() })).toEqual({
+      ok: false,
+      reason: 'wrong_passage',
+    })
+    expect(await saveProgramAssessment({ stage: 'day30', lang: 'en', passageId: 'form-b-hi', readingMs: 60_000, answers: allCorrect(formBHi), attentionTrials: trials() })).toEqual({ ok: true })
+    expect(upserts[0]).toMatchObject({ passage_id: 'form-b-hi', lang: 'hi' })
   })
 
   it('allows no retakes once Day 30 is done (Day 1 can no longer be replaced)', async () => {
@@ -141,7 +159,7 @@ describe('saveProgramAssessment', () => {
       { stage: 'day30', passage_id: 'form-b', taken_at: daysAgo(5) },
     ])
     const { saveProgramAssessment } = await importAction(client)
-    expect(await saveProgramAssessment({ stage: 'day1', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: trials() })).toEqual({
+    expect(await saveProgramAssessment({ stage: 'day1', lang: 'en', passageId: 'form-a', readingMs: 60_000, answers: allCorrect(formA), attentionTrials: trials() })).toEqual({
       ok: false,
       reason: 'day30_done',
     })

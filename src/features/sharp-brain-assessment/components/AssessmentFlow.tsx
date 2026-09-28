@@ -63,6 +63,7 @@ export function AssessmentFlow({ stage, passage, copy, onCancel }: AssessmentFlo
       void (async () => {
         const result = await saveProgramAssessment({
           stage,
+          lang: passage.lang,
           passageId: passage.id,
           readingMs: readingMsRef.current,
           answers,
@@ -77,7 +78,7 @@ export function AssessmentFlow({ stage, passage, copy, onCancel }: AssessmentFlo
         setStep('error')
       })()
     },
-    [answers, copy, onCancel, passage.id, router, stage],
+    [answers, copy, onCancel, passage.id, passage.lang, router, stage],
   )
 
   const question = passage.questions[questionIndex]
@@ -94,7 +95,7 @@ export function AssessmentFlow({ stage, passage, copy, onCancel }: AssessmentFlo
       )}
 
       {step === 'reading' && (
-        <article className="space-y-4">
+        <article lang={passage.lang} className="space-y-4">
           <h2 className="text-xl font-semibold">{passage.title}</h2>
           {passage.paragraphs.map((paragraph) => (
             <p key={paragraph.slice(0, 24)} className="text-[17px] leading-[1.75]">
@@ -110,7 +111,7 @@ export function AssessmentFlow({ stage, passage, copy, onCancel }: AssessmentFlo
       )}
 
       {step === 'quiz' && question !== undefined && (
-        <fieldset className="space-y-4">
+        <fieldset lang={passage.lang} className="space-y-4">
           <legend className="text-sm text-muted-foreground">{copy.question(questionIndex + 1, passage.questions.length)}</legend>
           <p className="text-lg font-semibold">{question.question}</p>
           <div className="space-y-2.5">
