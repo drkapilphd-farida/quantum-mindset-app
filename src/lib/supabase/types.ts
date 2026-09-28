@@ -1874,6 +1874,60 @@ export type Database = {
         }
         Relationships: []
       }
+      program_assessments: {
+        Row: {
+          attention_accuracy_percent: number
+          attention_mean_rt_ms: number | null
+          attention_trials: number
+          comprehension_percent: number
+          correct_answers: number
+          effective_wpm: number
+          id: string
+          passage_id: string
+          reading_ms: number
+          stage: string
+          taken_at: string
+          total_questions: number
+          user_id: string
+          word_count: number
+          wpm: number
+        }
+        Insert: {
+          attention_accuracy_percent: number
+          attention_mean_rt_ms?: number | null
+          attention_trials: number
+          comprehension_percent: number
+          correct_answers: number
+          effective_wpm: number
+          id?: string
+          passage_id: string
+          reading_ms: number
+          stage: string
+          taken_at?: string
+          total_questions: number
+          user_id: string
+          word_count: number
+          wpm: number
+        }
+        Update: {
+          attention_accuracy_percent?: number
+          attention_mean_rt_ms?: number | null
+          attention_trials?: number
+          comprehension_percent?: number
+          correct_answers?: number
+          effective_wpm?: number
+          id?: string
+          passage_id?: string
+          reading_ms?: number
+          stage?: string
+          taken_at?: string
+          total_questions?: number
+          user_id?: string
+          word_count?: number
+          wpm?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

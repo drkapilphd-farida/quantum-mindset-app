@@ -1,5 +1,13 @@
 # Sharp Brain page — wording to restore when app features ship
 
+**Update (Phase 8, Item 11):** sections 1 and 4 are no longer restored by
+hand. `src/lib/sharpBrainCopy.ts` switches them automatically with
+`appFeatures.dayThirtyComparison`, using wording that matches what was built:
+- Day 1: "A self-paced reading speed check, 5 comprehension questions and a
+  2-minute attention task — your own baseline."
+- Day 30: "The same measures again, with a different passage of the same
+  level, compared with your Day 1 results."
+
 In Phase 5B, the Sharp Brain page (`src/lib/sharpBrainCopy.ts`) was softened
 to describe only what the app does today. Nothing says "coming soon". When a
 feature below is built, restore its original wording (EN and HI), then tick it off.

@@ -1,5 +1,10 @@
-import { programs, qsrGuarantee } from '@/config/site.config'
+import { appFeatures, programs, qsrGuarantee } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
+
+// Wording tied to the Day 1 vs Day 30 assessment (Phase 8, Item 11): shown
+// only while appFeatures.dayThirtyComparison is on, so the page never
+// promises more than the app does (docs/sharp-brain-deferred-claims.md).
+const D30 = appFeatures.dayThirtyComparison
 
 // Copy for /programs/sharp-brain (site-rebuild Phase 5B), EN + HI.
 // Sharp Brain™ — Focus · Memory · Smart Reading, formerly "Quantum Speed
@@ -44,7 +49,7 @@ const p = programs
 const en: SharpBrainCopy = {
   hero: {
     h1: 'Sharp Brain™ — Focus · Memory · Smart Reading',
-    sub: 'Reads but doesn’t remember? Attention lost to the phone? In 30 days, build focus, memory and reading skills — with your progress tracked from Day 1.',
+    sub: `Reads but doesn’t remember? Attention lost to the phone? In 30 days, build focus, memory and reading skills — ${D30 ? 'measured from Day 1 to Day 30' : 'with your progress tracked from Day 1'}.`,
     positioning:
       'A cognitive skills program for focus, memory, smart reading and mobile discipline — with improvement measured from your own Day 1 to Day 30.',
     parentLine: 'From screen time to focus time',
@@ -62,7 +67,7 @@ const en: SharpBrainCopy = {
         points: [
           'Homework and reading that used to drag on start finishing sooner',
           'Simple screen-time habits: the 20-20-20 rule, posture and eye care, phone away before practice',
-          'A parent view in the app showing reading speed, comprehension and practice consistency',
+          D30 ? 'You see the Day 1 and Day 30 results side by side' : 'A parent view in the app showing reading speed, comprehension and practice consistency',
         ],
       },
       {
@@ -100,12 +105,19 @@ const en: SharpBrainCopy = {
   },
   how: {
     eyebrow: 'How it works',
-    title: 'Measure, train, practise, track',
+    title: D30 ? 'Measure, train, practise, re-measure' : 'Measure, train, practise, track',
     steps: [
-      { title: 'Day 1 assessment', desc: 'Reading speed and comprehension — your own baseline.' },
+      {
+        title: 'Day 1 assessment',
+        desc: D30
+          ? 'A self-paced reading speed check, 5 comprehension questions and a 2-minute attention task — your own baseline.'
+          : 'Reading speed and comprehension — your own baseline.',
+      },
       { title: '7 live classes', desc: 'Live classes with Dr. Kapil Dev Sharma across the 30 days — not recordings.' },
       { title: '30 days of app practice', desc: 'About 10 minutes a day in the Mind Ur Mind App, with progress tracked automatically.' },
-      { title: 'Track your progress', desc: 'Your reading speed and comprehension are tracked through the 30 days, so you can see how far you have come from Day 1.' },
+      D30
+        ? { title: 'Day 30 re-assessment', desc: 'The same measures again, with a different passage of the same level, compared with your Day 1 results.' }
+        : { title: 'Track your progress', desc: 'Your reading speed and comprehension are tracked through the 30 days, so you can see how far you have come from Day 1.' },
     ],
     eegLine: 'In-person students in Vadodara can also join live EEG brain-state sessions — for learning and engagement, not a medical test.',
   },
@@ -128,7 +140,7 @@ const en: SharpBrainCopy = {
     points: [
       'Simple screen-time habits: phone away before practice, the 20-20-20 rule, posture and eye care',
       'About 10 minutes of guided daily practice in the Mind Ur Mind App',
-      'A parent view in the app showing reading speed, comprehension and practice consistency',
+      D30 ? 'You see the Day 1 and Day 30 results side by side' : 'A parent view in the app showing reading speed, comprehension and practice consistency',
     ],
   },
   proof: {
@@ -198,7 +210,7 @@ const en: SharpBrainCopy = {
 const hi: SharpBrainCopy = {
   hero: {
     h1: 'Sharp Brain™ — Focus · Memory · Smart Reading',
-    sub: 'पढ़ता है पर याद नहीं रहता? ध्यान मोबाइल में रहता है? 30 दिन में focus, memory और reading की skills — Day 1 से आपकी प्रगति ट्रैक होती है।',
+    sub: `पढ़ता है पर याद नहीं रहता? ध्यान मोबाइल में रहता है? 30 दिन में focus, memory और reading की skills — ${D30 ? 'Day 1 से Day 30 तक नापी हुई' : 'Day 1 से आपकी प्रगति ट्रैक होती है'}।`,
     positioning: 'Focus, Memory, Smart Reading और Mobile Discipline का cognitive skills program — Day 1 से Day 30 तक नापा हुआ सुधार।',
     parentLine: 'Screen से Focus तक',
     ctaPrimary: 'फॉर्मेट और कीमत देखें',
@@ -215,7 +227,7 @@ const hi: SharpBrainCopy = {
         points: [
           'जो होमवर्क और पढ़ाई पहले खिंचती थी, वह जल्दी पूरी होने लगती है',
           'स्क्रीन-टाइम की आसान आदतें: 20-20-20 नियम, सही बैठने और आंखों की देखभाल, अभ्यास से पहले फ़ोन दूर',
-          'ऐप में अभिभावकों के लिए एक व्यू, जिसमें रीडिंग स्पीड, समझ और अभ्यास की नियमितता दिखती है',
+          D30 ? 'आप दिन 1 और दिन 30 के नतीजे साथ-साथ देखते हैं' : 'ऐप में अभिभावकों के लिए एक व्यू, जिसमें रीडिंग स्पीड, समझ और अभ्यास की नियमितता दिखती है',
         ],
       },
       {
@@ -253,12 +265,19 @@ const hi: SharpBrainCopy = {
   },
   how: {
     eyebrow: 'यह कैसे काम करता है',
-    title: 'मापें, सीखें, अभ्यास करें, प्रगति देखें',
+    title: D30 ? 'मापें, सीखें, अभ्यास करें, फिर मापें' : 'मापें, सीखें, अभ्यास करें, प्रगति देखें',
     steps: [
-      { title: 'दिन 1 असेसमेंट', desc: 'रीडिंग स्पीड और समझ — आपका अपना बेसलाइन।' },
+      {
+        title: 'दिन 1 असेसमेंट',
+        desc: D30
+          ? 'अपनी गति से पढ़ने की स्पीड जांच, समझ के 5 सवाल और 2 मिनट का ध्यान टास्क — आपका अपना बेसलाइन।'
+          : 'रीडिंग स्पीड और समझ — आपका अपना बेसलाइन।',
+      },
       { title: '7 लाइव क्लासेस', desc: '30 दिनों में डॉ. कपिल देव शर्मा के साथ लाइव क्लासेस — रिकॉर्डिंग नहीं।' },
       { title: '30 दिन ऐप अभ्यास', desc: 'Mind Ur Mind App में रोज़ लगभग 10 मिनट, प्रगति अपने-आप ट्रैक होती है।' },
-      { title: 'अपनी प्रगति देखें', desc: 'पूरे 30 दिन आपकी रीडिंग स्पीड और समझ ट्रैक होती है, ताकि आप देख सकें कि दिन 1 से कितना आगे आए।' },
+      D30
+        ? { title: 'दिन 30 दोबारा असेसमेंट', desc: 'वही माप दोबारा, उसी स्तर के एक अलग पैसेज के साथ, आपके दिन 1 के नतीजों से तुलना करते हुए।' }
+        : { title: 'अपनी प्रगति देखें', desc: 'पूरे 30 दिन आपकी रीडिंग स्पीड और समझ ट्रैक होती है, ताकि आप देख सकें कि दिन 1 से कितना आगे आए।' },
     ],
     eegLine: 'वडोदरा में व्यक्तिगत रूप से आने वाले विद्यार्थी लाइव EEG ब्रेन-स्टेट सेशन में भी शामिल हो सकते हैं — सीखने और एंगेजमेंट के लिए, मेडिकल टेस्ट नहीं।',
   },
@@ -281,7 +300,7 @@ const hi: SharpBrainCopy = {
     points: [
       'स्क्रीन-टाइम की आसान आदतें: अभ्यास से पहले फ़ोन दूर, 20-20-20 नियम, सही बैठना और आंखों की देखभाल',
       'Mind Ur Mind App में रोज़ लगभग 10 मिनट का गाइडेड अभ्यास',
-      'ऐप में अभिभावकों के लिए एक व्यू, जिसमें रीडिंग स्पीड, समझ और अभ्यास की नियमितता दिखती है',
+      D30 ? 'आप दिन 1 और दिन 30 के नतीजे साथ-साथ देखते हैं' : 'ऐप में अभिभावकों के लिए एक व्यू, जिसमें रीडिंग स्पीड, समझ और अभ्यास की नियमितता दिखती है',
     ],
   },
   proof: {

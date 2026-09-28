@@ -43,7 +43,11 @@ records only.
 ## Deletion requests
 
 Settings → "Delete my child's data" (shown to parents): a request by email
-(info@mindurmind.org.in) or WhatsApp. Until a self-service delete exists, the
+(info@mindurmind.org.in) or WhatsApp.
+
+**Deadline: every deletion request must be acted on within 7 days of
+receipt, and the parent must be told once it is done** (reply by the same
+channel: email or WhatsApp). Log the date received and the date completed. Until a self-service delete exists, the
 Mind Ur Mind team handles each request by hand:
 
 1. Confirm the requester is the linked parent.

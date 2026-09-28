@@ -61,6 +61,13 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
             exam preparation or reading) you choose when you first sign in — used only to put the most relevant
             practice first on your dashboard. You can change or skip these at any time in Settings.
           </li>
+          <li>
+            If you take the {programs.sharpBrain.name} Day 1 and Day 30 assessments: your reading time, answers to the
+            comprehension questions and your attention-task responses, from which we calculate reading speed,
+            comprehension, effective reading speed, attention accuracy and reaction time. These are practice results,
+            not a medical or psychological test. A share card is only created if you ask for it, and it shows your first
+            name and these numbers only.
+          </li>
         </ul>
       </section>
 

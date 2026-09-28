@@ -22,9 +22,10 @@ import { getFixationStats } from '@/features/visual-intelligence/fixation/querie
 import { ParentFeedbackPrompt } from '@/features/school-dashboard/components/ParentFeedbackPrompt'
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
 import { GoalRecommendationsCard } from '@/features/onboarding/components/GoalRecommendationsCard'
+import { AssessmentEntryCard } from '@/features/sharp-brain-assessment/components/AssessmentEntryCard'
 import { programFirstFor } from '@/features/onboarding/goalRecommendations'
 import type { LearningFocus } from '@/features/onboarding/onboardingOptions'
-import { programs } from '@/config/site.config'
+import { appFeatures, programs } from '@/config/site.config'
 
 const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((ex) => ex.exerciseId)
 
@@ -157,6 +158,8 @@ export async function QsrDashboard({ view, learningFocus = null }: QsrDashboardP
       </div>
 
       {learningFocus !== null && <GoalRecommendationsCard focus={learningFocus} />}
+
+      {appFeatures.dayThirtyComparison && isPaidUser && <AssessmentEntryCard />}
 
       {programFirst && programsSection}
 
