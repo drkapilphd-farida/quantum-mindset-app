@@ -766,6 +766,7 @@ export const translations = {
         eyebrow: "Choose Your Room",
         title: "One Price, No Surprises",
         desc: "Same rate across all four 2026–27 dates — per person, food and stay included.",
+        travelNote: "Stay is included. Travel to and from the retreat venue is not included — participants arrange their own travel.",
         tiers: [
           {
             name: "Sharing Room",
@@ -831,7 +832,11 @@ export const translations = {
           },
           {
             question: "What's included in the price?",
-            answer: "Both room options — ₹35,000 sharing, ₹45,000 private — include the full residential retreat, all sessions, pure satvik meals, and your stay at the venue.",
+            answer: "Both room options — ₹35,000 sharing, ₹45,000 private — include the full residential retreat, all sessions, pure satvik meals, and your stay at the venue. Travel to and from the venue is not included.",
+          },
+          {
+            question: "Is travel included?",
+            answer: "Stay is included. Travel to and from the retreat venue is not included — participants arrange their own travel.",
           },
           {
             question: "What should I bring?",
@@ -2136,6 +2141,7 @@ export const translations = {
         eyebrow: "अपना कमरा चुनें",
         title: "एक कीमत, कोई आश्चर्य नहीं",
         desc: "सभी चार 2026–27 तारीखों पर एक समान दर — प्रति व्यक्ति, भोजन और ठहरना शामिल।",
+        travelNote: "ठहरना शामिल है। रिट्रीट वेन्यू तक आने-जाने की यात्रा शामिल नहीं है — प्रतिभागी अपनी यात्रा खुद व्यवस्थित करते हैं।",
         tiers: [
           {
             name: "शेयरिंग रूम",
@@ -2201,7 +2207,11 @@ export const translations = {
           },
           {
             question: "कीमत में क्या शामिल है?",
-            answer: "दोनों रूम विकल्प — ₹35,000 शेयरिंग, ₹45,000 प्राइवेट — में पूरा रेजिडेंशियल रिट्रीट, सभी सेशन, शुद्ध सात्विक भोजन, और वेन्यू पर आपका ठहरना शामिल है।",
+            answer: "दोनों रूम विकल्प — ₹35,000 शेयरिंग, ₹45,000 प्राइवेट — में पूरा रेजिडेंशियल रिट्रीट, सभी सेशन, शुद्ध सात्विक भोजन, और वेन्यू पर आपका ठहरना शामिल है। वेन्यू तक आने-जाने की यात्रा शामिल नहीं है।",
+          },
+          {
+            question: "क्या यात्रा शामिल है?",
+            answer: "ठहरना शामिल है। रिट्रीट वेन्यू तक आने-जाने की यात्रा शामिल नहीं है — प्रतिभागी अपनी यात्रा खुद व्यवस्थित करते हैं।",
           },
           {
             question: "मुझे क्या साथ लाना चाहिए?",

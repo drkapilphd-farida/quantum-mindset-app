@@ -25,6 +25,9 @@ export default function ResidentialPricing(): React.JSX.Element {
           <Eyebrow color="text-gold">{section.eyebrow}</Eyebrow>
           <h2 className="mt-4 text-[28px] font-extrabold leading-tight sm:text-[34px]">{section.title}</h2>
           <p className="mt-3 text-[15.5px] text-ink-dim">{section.desc}</p>
+          <p className="mt-4 rounded-sm border border-gold/40 bg-panel2 px-4 py-3 text-[14.5px] font-semibold leading-relaxed text-ink">
+            {section.travelNote}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -37,7 +40,9 @@ export default function ResidentialPricing(): React.JSX.Element {
               </div>
               {days !== null && (
                 <p className="mt-2 text-[13.5px] font-semibold text-ink-dim">
-                  {lang === "hi" ? `${days} दिन · ठहरना और सात्विक भोजन शामिल` : `${days} days · stay and satvik meals included`}
+                  {lang === "hi"
+                    ? `${days} दिन · ठहरना और सात्विक भोजन शामिल · यात्रा शामिल नहीं`
+                    : `${days} days · stay and satvik meals included · travel not included`}
                 </p>
               )}
 

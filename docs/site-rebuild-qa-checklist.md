@@ -33,10 +33,9 @@ Run this before merging `site-rebuild` into `main`.
 - [ ] Working hours (`contact.hours`): hidden on /contact until provided.
 - [ ] Organisations / schools / companies worked with (`organisationsWorkedWith`): section hidden until listed.
 - [ ] Real workshop photos for /about and /gallery (gallery entries have no image yet).
-- [ ] **Waiting for your answers, then update the /corporate FAQ and the franchise formats line:**
-  - travel and stay: quoted separately, or included in the quote? (Current wording, true either way: "covered in the quote".)
-  - live online sessions for organisations: yes or no? (Current wording mentions neither.)
-  - which formats franchise partners can run. (The franchise line currently lists the program's formats only.)
+- [x] /corporate FAQs: online and in-person sessions both offered; trainer's travel and stay outside Vadodara are paid by the organisation, shown separately in the quote.
+- [x] /retreats/residential: stay included, travel to and from the venue not included (price block, room cards, FAQ).
+- [ ] Waiting for your answer: which formats franchise partners can run. The franchise line currently lists the program's formats only.
 - [x] Five "Quantum Speed Reading Demonstration" videos: keep them under the "from earlier batches" label. You will replace the thumbnails on YouTube (see the offline checklist).
 - [ ] Preview-only TODO markers (`SiteTodo`) are hidden when `VERCEL_ENV === 'production'`; check that none appear on the live site after deploy.
 

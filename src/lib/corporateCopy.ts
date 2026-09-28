@@ -95,9 +95,9 @@ const en: CorporateCopy = {
         answer: 'Yes. Share your organisation’s billing and GST details with your enquiry and we will issue a GST invoice.',
       },
       {
-        question: 'Do you travel to our city?',
+        question: 'Who pays for the trainer’s travel?',
         answer:
-          'Yes — sessions run at your office, school or an offsite venue anywhere in India. For locations outside Vadodara, travel and stay are covered in the quote we send you.',
+          'For in-person sessions outside Vadodara, the trainer’s travel and stay are paid by the organisation, in addition to the program fee. We will show this separately in the quote.',
       },
       {
         question: 'What group size works?',
@@ -106,7 +106,7 @@ const en: CorporateCopy = {
       {
         question: 'Online or offline?',
         answer:
-          'Most organisations choose in-person sessions at their own venue. If your team is spread across cities, mention it in the form and we will suggest the best way to run it.',
+          'Both. We run live online sessions and in-person sessions at your location. If your team is spread across cities, a live online format usually works best.',
       },
     ],
   },
@@ -177,13 +177,13 @@ const hi: CorporateCopy = {
     items: [
       { question: 'क्या हमें GST इनवॉइस मिल सकता है?', answer: 'हां। अपनी पूछताछ के साथ संस्था की बिलिंग और GST जानकारी भेजें, हम GST इनवॉइस जारी करेंगे।' },
       {
-        question: 'क्या आप हमारे शहर आते हैं?',
-        answer: 'हां — सेशन आपके ऑफिस, स्कूल या किसी ऑफसाइट जगह पर, पूरे भारत में होते हैं। वडोदरा से बाहर के लिए यात्रा और ठहरने की जानकारी हमारे भेजे गए कोटेशन में दी जाती है।',
+        question: 'ट्रेनर की यात्रा का खर्च कौन देता है?',
+        answer: 'वडोदरा से बाहर इन-पर्सन सेशन के लिए ट्रेनर की यात्रा और ठहरने का खर्च संस्था देती है, जो प्रोग्राम फीस के अलावा है। हम इसे कोटेशन में अलग से दिखाएंगे।',
       },
       { question: 'समूह कितना बड़ा हो सकता है?', answer: 'लगभग 10 लोगों से 100+ तक। फॉर्म में समूह का आकार बताएं, हम सही फॉर्मेट सुझाएंगे।' },
       {
         question: 'ऑनलाइन या ऑफलाइन?',
-        answer: 'ज़्यादातर संस्थाएं अपनी जगह पर इन-पर्सन सेशन चुनती हैं। अगर आपकी टीम अलग-अलग शहरों में है, तो फॉर्म में बताएं — हम सबसे अच्छा तरीका सुझाएंगे।',
+        answer: 'दोनों। हम लाइव ऑनलाइन सेशन और आपकी जगह पर इन-पर्सन सेशन, दोनों करते हैं। अगर आपकी टीम अलग-अलग शहरों में है, तो आमतौर पर लाइव ऑनलाइन फॉर्मेट सबसे अच्छा रहता है।',
       },
     ],
   },
