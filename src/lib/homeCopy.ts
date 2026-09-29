@@ -136,7 +136,7 @@ const en: HomeCopy = {
     title: 'Hear it from people who did the work',
     desc: 'Unscripted video reviews from our YouTube channel.',
     tabs: { learning: 'Learning', meditation: 'Meditation' },
-    playlistCta: 'See all video reviews on YouTube',
+    playlistCta: 'See all videos on YouTube',
     learningNote: 'From earlier batches (the program was then called Quantum Speed Reading)',
   },
   how: {
@@ -280,7 +280,7 @@ const hi: HomeCopy = {
     title: 'उन लोगों से सुनें जिन्होंने मेहनत की',
     desc: 'हमारे YouTube चैनल से बिना स्क्रिप्ट के वीडियो रिव्यूज़।',
     tabs: { learning: 'सीखना', meditation: 'मेडिटेशन' },
-    playlistCta: 'YouTube पर सभी वीडियो रिव्यूज़ देखें',
+    playlistCta: 'YouTube पर सभी वीडियो देखें',
     learningNote: 'पहले के बैच से (तब इस प्रोग्राम का नाम Quantum Speed Reading था)',
   },
   how: {

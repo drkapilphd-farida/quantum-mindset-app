@@ -1,5 +1,5 @@
 import { SITE_URL } from './siteUrl'
-import { brand, trainer } from '@/config/site.config'
+import { brand, contact, trainer } from '@/config/site.config'
 
 // schema.org Organization JSON-LD — same server-side, escape-then-inject
 // pattern as faqSchema.ts/courseSchema.ts. Rendered on the homepage and
@@ -19,6 +19,7 @@ export function buildOrganizationSchema(): string {
       '@type': 'Person',
       name: trainer.name,
     },
+    sameAs: [contact.youtube.url],
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Vadodara',

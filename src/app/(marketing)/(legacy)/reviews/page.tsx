@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ExternalLink, GraduationCap, MessageCircle, PlayCircle, Sparkles } from 'lucide-react'
+import { GraduationCap, MessageCircle, PlayCircle, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { WHATSAPP_ENROLLMENT_INQUIRY_LINK, WHATSAPP_MASTERCLASS_INQUIRY_LINK } from '@/config/whatsappSupportLink'
-import { SUCCESS_STORIES_PLAYLIST_EMBED_URL, SUCCESS_STORIES_PLAYLIST_WATCH_URL } from '@/config/reviewsPlaylist'
-import { brand, programs, primaryCheckoutHref } from '@/config/site.config'
+import { YOUTUBE_CHANNEL_URL } from '@/config/reviewsPlaylist'
+import { programs, primaryCheckoutHref } from '@/config/site.config'
 
 // Paid button link — read from the programs registry (site.config.ts).
 const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
@@ -15,12 +15,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-// Success Stories™ — houses the real, live YouTube playlist of 200+
-// student video reviews (see reviewsPlaylist.ts) as a dedicated
-// conversion page for the flagship 30-Day Masterclass. No per-video data
-// is fabricated: without a YouTube Data API key wired up, the page
-// embeds the real playlist directly via YouTube's own player rather than
-// faking individual video cards — see reviewsPlaylist.ts's doc comment.
+// Success Stories™ — conversion page for the flagship 30-Day program that
+// links to the official YouTube channel for video reviews (the old
+// playlist is retired, see reviewsPlaylist.ts). No per-video data is
+// fabricated.
 // Entirely static markup (no client state needed), so this stays a
 // Server Component end to end.
 export default function ReviewsPage(): React.JSX.Element {
@@ -114,30 +112,19 @@ export default function ReviewsPage(): React.JSX.Element {
           </a>
         </div>
 
-        {/* The real playlist, embedded directly — every video shown here
-            is real and pulled live from YouTube, not a fabricated list. */}
-        <div className="glass-premium-card glass-premium-card--emphasized mt-14 overflow-hidden rounded-2xl p-3 sm:p-4">
-          <div className="aspect-video w-full overflow-hidden rounded-xl bg-black">
-            <iframe
-              src={SUCCESS_STORIES_PLAYLIST_EMBED_URL}
-              title={`${brand.name} — Success Stories playlist`}
-              className="size-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-          <div className="flex flex-col items-center justify-between gap-2 px-2 pt-4 pb-1 text-center sm:flex-row sm:text-left">
-            <p className="text-xs text-muted-foreground">Browse all the stories using the list inside the player above.</p>
-            <Link
-              href={SUCCESS_STORIES_PLAYLIST_WATCH_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-primary hover:underline"
-            >
-              Watch the full playlist on YouTube
-              <ExternalLink className="size-3.5" aria-hidden="true" />
-            </Link>
-          </div>
+        {/* The old success-stories playlist is retired; the channel holds
+            every video (see reviewsPlaylist.ts). */}
+        <div className="glass-premium-card glass-premium-card--emphasized mt-14 flex flex-col items-center gap-3 rounded-2xl p-6 text-center">
+          <PlayCircle className="size-8 text-primary" aria-hidden="true" />
+          <p className="text-sm text-muted-foreground">Watch the video reviews on our YouTube channel.</p>
+          <Link
+            href={YOUTUBE_CHANNEL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            See all videos on YouTube →
+          </Link>
         </div>
 
         {/* Bottom conversion banner — same real CTAs, repeated for anyone

@@ -465,6 +465,11 @@ const contactData = {
   // TODO(content): working hours not provided yet — do not invent. Pages
   // hide this when null (a preview-only TODO marker shows instead).
   hours: null as { en: string; hi: string } | null,
+  /** Official YouTube channel ("MindUrMind | Dr Kapil Dev Sharma"). */
+  youtube: {
+    handle: '@innershiftWithDrKapil',
+    url: 'https://www.youtube.com/@innershiftWithDrKapil',
+  },
 } as const
 
 export const contact: Widen<typeof contactData> = contactData

@@ -1,5 +1,5 @@
 import { SITE_URL } from './siteUrl'
-import { brand, trainer } from '@/config/site.config'
+import { brand, contact, trainer } from '@/config/site.config'
 
 // schema.org Person JSON-LD — same server-side, escape-then-inject
 // pattern as faqSchema.ts/courseSchema.ts. Rendered on the homepage and
@@ -21,6 +21,7 @@ export function buildPersonSchema(): string {
       name: brand.name,
       url: SITE_URL,
     },
+    sameAs: [contact.youtube.url],
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Vadodara',

@@ -7,7 +7,7 @@ import VideoReviewGrid from "../VideoReviewGrid";
 import { useLanguage } from "@/context/LanguageContext";
 import { HOME_LEARNING_VIDEO_REVIEWS, isEarlierBatchTitle } from "@/config/testimonials";
 import { RETREAT_VIDEO_REVIEWS, RETREAT_VIDEO_REVIEWS_PLAYLIST_WATCH_URL } from "@/config/retreatVideoReviews";
-import { SUCCESS_STORIES_PLAYLIST_WATCH_URL } from "@/config/reviewsPlaylist";
+import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 
 type Tab = "learning" | "meditation";
 
@@ -71,7 +71,7 @@ export default function HomeProof(): React.JSX.Element {
           )}
           <div className="mt-8 flex justify-center">
             <a
-              href={tab === "learning" ? SUCCESS_STORIES_PLAYLIST_WATCH_URL : RETREAT_VIDEO_REVIEWS_PLAYLIST_WATCH_URL}
+              href={tab === "learning" ? YOUTUBE_CHANNEL_URL : RETREAT_VIDEO_REVIEWS_PLAYLIST_WATCH_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[14px] font-semibold text-gold hover:underline"

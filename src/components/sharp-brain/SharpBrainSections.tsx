@@ -9,7 +9,7 @@ import { programs, trainer, primaryCheckoutHref } from "@/config/site.config";
 import { FREE_TEST_LINKS, ORGANISATIONS_HREF, SCHOOLS_HREF } from "@/config/navigation";
 import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { QSR_ADULT_VIDEO_REVIEWS, QSR_MORE_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
-import { SUCCESS_STORIES_PLAYLIST_WATCH_URL } from "@/config/reviewsPlaylist";
+import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 import { sharpBrainCopy, type AudienceTab } from "@/lib/sharpBrainCopy";
@@ -322,7 +322,7 @@ export function SharpBrainProof(): React.JSX.Element {
           <button type="button" onClick={() => setShowMore((value) => !value)} className="text-[14px] font-semibold text-gold hover:underline">
             {showMore ? (lang === "hi" ? "कम दिखाएं" : "Show fewer") : lang === "hi" ? "और वीडियो देखें" : "Watch more videos"}
           </button>
-          <a href={SUCCESS_STORIES_PLAYLIST_WATCH_URL} target="_blank" rel="noopener noreferrer" className="text-[14px] font-semibold text-gold hover:underline">
+          <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-[14px] font-semibold text-gold hover:underline">
             {c.playlistCta} →
           </a>
         </div>

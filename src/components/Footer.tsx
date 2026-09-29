@@ -48,6 +48,9 @@ export default function Footer(): React.JSX.Element {
               <a href={`mailto:${CONTACT_EMAIL}`} className="block break-all py-1.5 hover:text-ink">
                 {CONTACT_EMAIL}
               </a>
+              <a href={contact.youtube.url} target="_blank" rel="noopener noreferrer" className="block py-1.5 hover:text-ink">
+                YouTube · {contact.youtube.handle}
+              </a>
             </div>
           </div>
 

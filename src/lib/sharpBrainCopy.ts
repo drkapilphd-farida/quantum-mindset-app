@@ -135,7 +135,7 @@ const en: SharpBrainCopy = {
     eyebrow: 'Real learners',
     title: 'Video reviews',
     oldLabel: 'From earlier batches (the program was then called Quantum Speed Reading)',
-    playlistCta: 'See all video reviews on YouTube',
+    playlistCta: 'See all videos on YouTube',
   },
   trainer: { eyebrow: 'Your trainer', readStory: 'Read his full story →' },
   guarantee: {
@@ -288,7 +288,7 @@ const hi: SharpBrainCopy = {
     eyebrow: 'असली विद्यार्थी',
     title: 'वीडियो रिव्यूज़',
     oldLabel: 'पहले के बैच से (तब इस प्रोग्राम का नाम Quantum Speed Reading था)',
-    playlistCta: 'YouTube पर सभी वीडियो रिव्यूज़ देखें',
+    playlistCta: 'YouTube पर सभी वीडियो देखें',
   },
   trainer: { eyebrow: 'आपके ट्रेनर', readStory: 'पूरी कहानी पढ़ें →' },
   guarantee: {
