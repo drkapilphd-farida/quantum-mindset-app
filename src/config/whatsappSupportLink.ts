@@ -73,15 +73,6 @@ export const WHATSAPP_RESIDENTIAL_INQUIRY_LINK =
 export const WHATSAPP_MENTORING_INQUIRY_LINK =
   primaryCheckoutHref('oneOnOneCoaching')
 
-// Same number, Quantum Mindset & Habit Builder-specific message — for
-// the dedicated /programs/habit-builder landing page. The real
-// conversion path there is the "Start Free" signup CTA, not WhatsApp —
-// this is only for pre-signup questions (e.g. about the Day 8+ ₹99
-// one-time payment), same "inquiry, not primary checkout" role every
-// other WHATSAPP_*_INQUIRY_LINK on this page plays for its own program.
-export const WHATSAPP_HABIT_BUILDER_INQUIRY_LINK =
-  waLink(`Hi Dr. Kapil, I have a question about the ${programs.focusStarter.name}`)
-
 // Same number, pre-application "Talk to Our Team" message — for a visitor
 // on /franchise-individual who wants to ask a question first, not a
 // substitute for the instant-apply link below.

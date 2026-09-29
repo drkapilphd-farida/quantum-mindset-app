@@ -38,6 +38,10 @@ const WORDPRESS_REDIRECTS: Redirect[] = [
 ].map(([source, destination]) => ({ source: source as string, destination: destination as string, statusCode: 301 as const }))
 
 export const LEGACY_REDIRECTS: Redirect[] = [
+  // The ₹99 Starter / Habit Builder is closed to new buyers (2026-09-29):
+  // its landing page now leads to the one Sharp Brain program.
+  { source: '/programs/habit-builder', destination: '/programs/sharp-brain', statusCode: 301 },
+  { source: '/programs/habit-builder/:path*', destination: '/programs/sharp-brain', statusCode: 301 },
   // Marketing: the program page (and its sub-pages such as the speed test)
   { source: '/programs/quantum-speed-reading-mumbai', destination: '/programs/sharp-brain', statusCode: 301 },
   { source: '/programs/quantum-speed-reading', destination: '/programs/sharp-brain', statusCode: 301 },

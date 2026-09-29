@@ -35,7 +35,7 @@ export type SharpBrainCopy = {
   trainer: { eyebrow: string; readStory: string }
   guarantee: { title: string; statement: string; request: string; policy: string }
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] }
-  final: { title: string; cta: string; freeTitle: string; freeDesc: string; starter: string; speedTest: string; liveSession: string }
+  final: { title: string; cta: string; freeTitle: string; freeDesc: string; speedTest: string; liveSession: string }
   sticky: { cta: string }
 }
 
@@ -49,7 +49,7 @@ const en: SharpBrainCopy = {
       'A cognitive skills program for focus, memory, smart reading and mobile discipline — with improvement measured from your own Day 1 to Day 30.',
     parentLine: 'From screen time to focus time',
     ctaPrimary: 'See formats & prices',
-    ctaSecondary: `Try the ${p.focusStarter.name}`,
+    ctaSecondary: 'Book a free live session',
   },
   audiences: {
     eyebrow: 'Who it’s for',
@@ -188,9 +188,8 @@ const en: SharpBrainCopy = {
     cta: 'Enrol in the 30-Day Program',
     freeTitle: 'Not ready yet? Start free.',
     freeDesc: 'No payment needed.',
-    starter: `Try the ${p.focusStarter.name}`,
     speedTest: 'Take the free Reading Speed Test',
-    liveSession: 'Join a free live Q&A with Dr. Kapil',
+    liveSession: 'Book a free live session',
   },
   sticky: { cta: 'Enrol' },
 }
@@ -202,7 +201,7 @@ const hi: SharpBrainCopy = {
     positioning: 'Focus, Memory, Smart Reading और Mobile Discipline का cognitive skills program — Day 1 से Day 30 तक नापा हुआ सुधार।',
     parentLine: 'Screen से Focus तक',
     ctaPrimary: 'फॉर्मेट और कीमत देखें',
-    ctaSecondary: `${p.focusStarter.nameHi} आज़माएं`,
+    ctaSecondary: 'फ्री लाइव सेशन बुक करें',
   },
   audiences: {
     eyebrow: 'यह किसके लिए है',
@@ -319,9 +318,8 @@ const hi: SharpBrainCopy = {
     cta: '30-दिवसीय प्रोग्राम में नामांकन करें',
     freeTitle: 'अभी तैयार नहीं? फ्री में शुरू करें।',
     freeDesc: 'कोई भुगतान नहीं।',
-    starter: `${p.focusStarter.nameHi} आज़माएं`,
     speedTest: 'फ्री रीडिंग स्पीड टेस्ट दें',
-    liveSession: 'डॉ. कपिल के साथ फ्री लाइव Q&A में शामिल हों',
+    liveSession: 'फ्री लाइव सेशन बुक करें',
   },
   sticky: { cta: 'नामांकन' },
 }

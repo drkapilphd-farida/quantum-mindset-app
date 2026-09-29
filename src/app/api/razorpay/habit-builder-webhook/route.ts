@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { verifyRazorpayWebhookSignature } from '@/lib/razorpay/verifyWebhookSignature'
-import { createServiceClient } from '@/lib/supabase/service'
 import { RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK } from '@/config/quantumMindsetHabitBuilderPaymentLink'
 import { linkIdsFromEnv, paymentForLink } from '@/lib/razorpay/paymentLinkEvent'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
@@ -21,6 +20,11 @@ import { logger } from '@/lib/logger'
 // register a THIRD webhook endpoint in the Razorpay Dashboard subscribed
 // to "payment_link.paid", so a bug here can't affect the tenant billing or
 // Masterclass webhooks or vice versa.
+//
+// CLOSED (29 Sep 2026): the ₹99 Starter is no longer sold. This route now
+// acknowledges every event and grants nothing; existing entitlements are
+// untouched. A Starter payment that still arrives (before the link is
+// deactivated in Razorpay) is logged for a manual refund.
 //
 // Starter payments only (28 Sep 2026): Razorpay webhooks are account-wide,
 // so this endpoint also receives program, retreat and workshop payments.
@@ -79,99 +83,14 @@ async function handleHabitBuilderWebhook(request: NextRequest): Promise<NextResp
   }
 
   const result = paymentForLink(json, RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK, linkIdsFromEnv(process.env.RAZORPAY_HABIT_BUILDER_EXTRA_LINK_IDS))
-  if (!result.ok) {
-    if (result.reason === 'invalid_payload') {
-      logger.warn('[razorpay-habit-builder-webhook] payment_link.paid payload failed validation')
-      return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
-    }
-    // Not a payment_link.paid for the Starter link — not ours; acknowledge.
-    return NextResponse.json({ received: true })
-  }
-
-  const { id: razorpayPaymentId, amount, currency, email, contact } = result.payment
-  const supabase = createServiceClient()
-
-  // Idempotent on razorpay_payment_id — Razorpay's documented
-  // at-least-once redelivery, or a manual resend from the Dashboard,
-  // must never grant a second entitlement row or double-count revenue.
-  const { data: existingPayment } = await supabase
-    .from('habit_builder_payments')
-    .select('id, granted_at')
-    .eq('razorpay_payment_id', razorpayPaymentId)
-    .maybeSingle()
-
-  if (existingPayment) {
-    logger.warn('[razorpay-habit-builder-webhook] duplicate delivery, already recorded', { razorpayPaymentId })
-    return NextResponse.json({ received: true })
-  }
-
-  const { data: insertedPayment, error: insertError } = await supabase
-    .from('habit_builder_payments')
-    .insert({
-      razorpay_payment_id: razorpayPaymentId,
-      email: email ?? null,
-      phone: contact ?? null,
-      amount_cents: amount,
-      currency,
+  if (result.ok) {
+    // Starter closed: never grant, never record (a recorded unclaimed row
+    // would be granted at sign-up by handle_new_user()). Logged so a late
+    // payment can be refunded by hand. Payment id and amount only, no PII.
+    logger.warn('[razorpay-habit-builder-webhook] Starter payment received after closing; no access granted', {
+      razorpayPaymentId: result.payment.id,
+      amount: result.payment.amount,
     })
-    .select('id')
-    .single()
-
-  if (insertError || !insertedPayment) {
-    // A unique-violation redelivery race (two webhook deliveries landing
-    // concurrently) is the one expected case here — already logged via
-    // the SELECT above in the common case; anything else is a real
-    // failure worth surfacing as a 500 so Razorpay retries.
-    if (insertError?.code === '23505') {
-      return NextResponse.json({ received: true })
-    }
-    logger.error('[razorpay-habit-builder-webhook] failed to record payment', {
-      razorpayPaymentId,
-      error: insertError?.message,
-    })
-    return NextResponse.json({ error: 'Failed to record payment.' }, { status: 500 })
   }
-
-  // Try to match an existing account immediately (signup-before-payment
-  // case). If no match, the row sits unclaimed — handle_new_user() picks
-  // it up the moment a matching account is created (payment-before-
-  // signup case, the more common real-world ordering for a static,
-  // unauthenticated Payment Link).
-  let matchedUserId: string | null = null
-  if (email !== null && email !== undefined) {
-    const { data } = await supabase.from('profiles').select('id').eq('email', email).maybeSingle()
-    matchedUserId = data?.id ?? null
-  }
-  if (matchedUserId === null && contact !== null && contact !== undefined) {
-    const { data } = await supabase.from('profiles').select('id').eq('phone', contact).maybeSingle()
-    matchedUserId = data?.id ?? null
-  }
-
-  if (matchedUserId !== null) {
-    // Grants via public.entitlements (user-level override, plan_id NULL)
-    // — never public.subscriptions. See this file's own top comment for
-    // why: isolation from getIsPaidUser() is the whole point.
-    const { error: entitlementError } = await supabase
-      .from('entitlements')
-      .upsert(
-        { user_id: matchedUserId, key: 'habit_builder_access', value: { granted: true } },
-        { onConflict: 'user_id,key' },
-      )
-
-    if (entitlementError) {
-      logger.error('[razorpay-habit-builder-webhook] failed to grant entitlement', {
-        razorpayPaymentId,
-        userId: matchedUserId,
-        error: entitlementError.message,
-      })
-      return NextResponse.json({ error: 'Failed to grant access.' }, { status: 500 })
-    }
-
-    await supabase
-      .from('habit_builder_payments')
-      .update({ user_id: matchedUserId, granted_at: new Date().toISOString() })
-      .eq('id', insertedPayment.id)
-  }
-
   return NextResponse.json({ received: true })
 }

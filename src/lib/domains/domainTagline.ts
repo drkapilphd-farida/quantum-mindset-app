@@ -13,5 +13,5 @@ import { programs } from '@/config/site.config'
 // Mind" wordmark across dashboard chrome, auth pages, and the legacy
 // marketing chrome — never invented separately per call site.
 export function getDomainTagline(appDomain: AppDomain): string {
-  return appDomain === 'habit' ? programs.focusStarter.appName : 'AI Reading & Document Intelligence™'
+  return appDomain === 'habit' ? programs.sharpBrain.shortName : 'AI Reading & Document Intelligence™'
 }

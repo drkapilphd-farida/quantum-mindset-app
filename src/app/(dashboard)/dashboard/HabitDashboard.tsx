@@ -7,7 +7,10 @@ import { isDevUnlockEnabled } from '@/lib/dev/isDevUnlockEnabled'
 import { getDailyQuantumSessionHistory } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import { computeDailyQuantumStreak } from '@/app/unified-session-preview/components/dailyQuantumSessionTracking'
 import { getNextJourneyDay } from '@/features/quantum-journey/streakMotivation'
-import { programs } from '@/config/site.config'
+import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/hasStartedPracticeJourney'
+import { programs, SHARP_BRAIN_APP_CURRICULUM_URL } from '@/config/site.config'
+
+const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 // Domain Split™ — habit.mindurmind.org.in's entire dashboard: the 21-Day
 // Quantum Habit Builder journey and its own real streak tracker, nothing
@@ -23,10 +26,11 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
 
   if (!user) return <div />
 
-  const [profile, dailyQuantumSessionHistory, isPaidUser] = await Promise.all([
+  const [profile, dailyQuantumSessionHistory, isPaidUser, hasStartedJourney] = await Promise.all([
     getCurrentUserProfile(user.id),
     getDailyQuantumSessionHistory(),
     hasHabitBuilderAccess(user.id, user.email ?? null),
+    hasStartedPracticeJourney(user.id),
   ])
 
   // The next real 21-Day Journey day (1-21) — daily_quantum_sessions has
@@ -54,10 +58,29 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
 
       <div className="glass-premium-card glass-premium-lift p-6 sm:p-8">
         <GreetingHeading studentName={studentFirstName} />
-        <p className="mt-1 text-sm text-muted-foreground">Day {nextJourneyDay} of your {programs.focusStarter.appName}.</p>
+        {hasStartedJourney && (
+          <p className="mt-1 text-sm text-muted-foreground">Day {nextJourneyDay} of your {programs.focusStarter.appName}.</p>
+        )}
       </div>
 
-      <TwentyOneDayJourneyCard isPaidUser={isPaidUser} isDevUnlocked={isDevUnlockEnabled()} currentDay={nextJourneyDay} currentStreak={journeyStreak} />
+      {hasStartedJourney ? (
+        <TwentyOneDayJourneyCard isPaidUser={isPaidUser} isDevUnlocked={isDevUnlockEnabled()} currentDay={nextJourneyDay} currentStreak={journeyStreak} />
+      ) : (
+        // The Practice Journey is closed to new learners — offer the program.
+        <div className="glass-premium-card glass-premium-lift p-6 sm:p-8">
+          <h2 className="font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl">{programs.sharpBrain.name}</h2>
+          <p className="mt-2 text-sm text-muted-foreground">{programs.sharpBrain.outcome}</p>
+          <p className="mt-2 text-sm text-foreground">
+            Day 1 is a free preview. The full program is {PROGRAM_PRICE}.
+          </p>
+          <a
+            href={SHARP_BRAIN_APP_CURRICULUM_URL}
+            className="mt-4 inline-flex rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-500 hover:to-indigo-400"
+          >
+            Try Day 1 free →
+          </a>
+        </div>
+      )}
     </div>
   )
 }

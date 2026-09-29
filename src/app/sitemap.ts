@@ -28,7 +28,6 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/mind-assessment', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/programs/sharp-brain', changeFrequency: 'weekly', priority: 1 },
   { path: '/programs/sharp-brain/speed-test', changeFrequency: 'monthly', priority: 0.7 },
-  { path: '/programs/habit-builder', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/retreats/residential', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/retreats/online-11-day', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/mentoring/overthinking-course', changeFrequency: 'weekly', priority: 0.8 },

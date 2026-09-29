@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { ChooseLearningMethodExperience } from '@/components/welcome/ChooseLearningMethodExperience'
+import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/hasStartedPracticeJourney'
 
 // Belt-and-suspenders against edge/CDN caching serving the wrong
 // domain's card — same reasoning and same fix as
@@ -39,6 +40,7 @@ export default async function ChooseLearningMethodPage(): Promise<React.JSX.Elem
     data: { user },
   } = await supabase.auth.getUser()
   const appDomain = await getAppDomain()
+  const hasStartedJourney = user !== null && appDomain === 'habit' ? await hasStartedPracticeJourney(user.id) : false
 
-  return <ChooseLearningMethodExperience isAuthenticated={user !== null} appDomain={appDomain} />
+  return <ChooseLearningMethodExperience isAuthenticated={user !== null} appDomain={appDomain} hasStartedJourney={hasStartedJourney} />
 }

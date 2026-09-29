@@ -18,6 +18,7 @@ export default function HomeStartFree(): React.JSX.Element {
             <Link
               key={item.href}
               href={item.href}
+              {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="group flex flex-col rounded-sm border border-teal/30 bg-panel p-5 transition-colors hover:border-teal/70"
             >
               <span className="text-[16.5px] font-bold text-ink">{item.title}</span>

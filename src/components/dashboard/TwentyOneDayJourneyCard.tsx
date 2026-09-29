@@ -1,10 +1,13 @@
 import Link from 'next/link'
 import { Check, Flame, FlaskConical, Lock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { programs, checkoutHref } from '@/config/site.config'
+import { programs } from '@/config/site.config'
+import { absoluteUrl } from '@/lib/seo/siteUrl'
 
-// Paid button link — read from the programs registry (site.config.ts).
-const STARTER_UNLOCK_CHECKOUT_HREF = checkoutHref('focusStarter', 'Razorpay (Days 8–21)')
+// Locked days lead to the Sharp Brain 30-Day Program (the ₹99 Starter
+// unlock is closed to new buyers; existing holders already have access).
+const PROGRAM_OFFER_HREF = absoluteUrl(`${programs.sharpBrain.url}#formats`)
+const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 type TwentyOneDayJourneyCardProps = {
   isPaidUser: boolean
@@ -46,11 +49,8 @@ function journeyDayHref(day: number): string {
 // guided 4-level session chaining a real Reading Intelligence, Intuition
 // Development, Right Brain Activation, and Visualisation exercise (which
 // exact exercises per day is QuantumJourneySession's own, real, deterministic
-// day-parity rotation — never fabricated). Locked days (Day 8+ for a
-// free user) are real links straight to the Razorpay one-time payment
-// link, not dead ends — tapping one is exactly how a free user is meant
-// to discover the upgrade. Opened in a new tab (external checkout,
-// target="_blank") so the dashboard itself is never navigated away from.
+// day-parity rotation — never fabricated). Locked days (Day 8+ without
+// Starter access) link to the Sharp Brain 30-Day Program page in a new tab.
 export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay, currentStreak }: TwentyOneDayJourneyCardProps): React.JSX.Element {
   const otherDays = Array.from({ length: TOTAL_DAYS }, (_, i) => i + 1).filter((day) => day !== currentDay)
   const hasProAccess = isPaidUser || isDevUnlocked
@@ -79,7 +79,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
           {!hasProAccess && (
             <Badge variant="secondary" className="gap-1">
               <Lock className="size-2.5" aria-hidden="true" />
-              Free through Day {FREE_JOURNEY_DAYS} — Pro unlocks the rest
+              Free through Day {FREE_JOURNEY_DAYS} — continue in the {programs.sharpBrain.name}
             </Badge>
           )}
           {isDevUnlocked && !isPaidUser && (
@@ -109,7 +109,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
         </Link>
       ) : (
         <a
-          href={STARTER_UNLOCK_CHECKOUT_HREF}
+          href={PROGRAM_OFFER_HREF}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-4 flex items-center gap-4 rounded-xl border border-dashed bg-muted/30 p-4 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -119,10 +119,12 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-foreground">Day {currentDay}</p>
-            <p className="truncate text-xs text-slate-700 dark:text-slate-300">Upgrade to Pro to unlock this day</p>
+            <p className="truncate text-xs text-slate-700 dark:text-slate-300">
+              Part of the {programs.sharpBrain.name} · {PROGRAM_PRICE}
+            </p>
           </div>
           <span className="shrink-0 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:from-indigo-500 hover:to-indigo-400 active:scale-95">
-            Upgrade →
+            See the program →
           </span>
         </a>
       )}
@@ -155,17 +157,14 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
               {day}
             </Link>
           ) : (
-            // Locked days are real links straight to the Razorpay
-            // one-time payment link, not dead <div>s — clicking a locked
-            // day is a real upgrade entry point, exactly how a free user
-            // is meant to discover the upgrade. Opened in a new tab so
-            // the dashboard stays put behind the checkout.
+            // Locked days link to the Sharp Brain program page, not dead
+            // <div>s. Opened in a new tab so the dashboard stays put.
             <a
               key={day}
-              href={STARTER_UNLOCK_CHECKOUT_HREF}
+              href={PROGRAM_OFFER_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Day ${day}, locked, upgrade to Pro`}
+              aria-label={`Day ${day}, locked, part of the ${programs.sharpBrain.name}`}
               className="flex aspect-square flex-col items-center justify-center gap-0.5 rounded-lg border border-slate-200/60 bg-muted/40 text-[11px] font-medium text-muted-foreground/50 transition-colors hover:bg-muted/60 hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-slate-800/60"
             >
               <Lock className="size-2.5" aria-hidden="true" />

@@ -58,7 +58,6 @@ export function freeTestLinks(lang: Lang): NavLink[] {
   return [
     { label: hi ? 'रीडिंग स्पीड टेस्ट' : 'Reading Speed Test', href: FREE_TEST_LINKS.speedTest },
     { label: hi ? 'ओवरथिंकिंग टेस्ट' : 'Overthinking Test', href: FREE_TEST_LINKS.overthinkingTest },
-    { label: n('focusStarter', lang), href: programs.focusStarter.url },
   ]
 }
 

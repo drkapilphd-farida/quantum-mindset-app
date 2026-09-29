@@ -24,10 +24,10 @@ import { programs, qsrGuarantee, waLink } from '@/config/site.config'
 export const metadata: Metadata = buildPageMetadata({
   path: '/refund-policy',
   title: 'Refund & Cancellation Policy — Mind Ur Mind',
-  description: `Refund and cancellation terms for the ${programs.sharpBrain.name}, ${programs.focusStarter.name}, retreats, and other Mind Ur Mind programs.`,
+  description: `Refund and cancellation terms for the ${programs.sharpBrain.name}, retreats, and other Mind Ur Mind programs.`,
 })
 
-const LAST_UPDATED = 'September 2026'
+const LAST_UPDATED = '29 September 2026'
 
 export default function RefundPolicyPage(): React.JSX.Element {
   return (
@@ -74,7 +74,7 @@ export default function RefundPolicyPage(): React.JSX.Element {
       </section>
 
       <section>
-        <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Coaching, {programs.focusStarter.name}, Courses)</h2>
+        <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Coaching, Courses)</h2>
         <p className={legalStyles.p}>
           These programs don&rsquo;t carry the {programs.sharpBrain.name}&rsquo;s results guarantee, since they&rsquo;re not
           structured around a measurable WPM/comprehension checkpoint the way Sharp Brain is.
@@ -89,11 +89,6 @@ export default function RefundPolicyPage(): React.JSX.Element {
             <strong>{programs.oneOnOneCoaching.name}:</strong> refundable in full if canceled before your first session. Once your
             first session has taken place, remaining unused sessions in a package may be refunded on a pro-rated
             basis at our discretion — message us to discuss your specific situation.
-          </li>
-          <li>
-            <strong>{programs.focusStarter.name}:</strong> Days 1-7 are free — nothing is charged, so there&rsquo;s
-            nothing to refund. The ₹99 one-time payment to continue past Day 7 is non-refundable once paid, since it
-            unlocks the remaining content immediately.
           </li>
           <li>
             <strong>Self-paced courses (e.g. the {programs.overthinkingReset.name}):</strong> refundable within 7 days of

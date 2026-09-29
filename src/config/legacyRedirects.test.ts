@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import { LEGACY_REDIRECTS } from './legacyRedirects'
-import { HABIT_BUILDER_SIGNUP_HREF } from './habitBuilderSignupLink'
 
 const find = (source: string): { destination: string; statusCode: number } | undefined => LEGACY_REDIRECTS.find((r) => r.source === source)
 
@@ -26,11 +25,9 @@ describe('legacy redirects', () => {
   })
 })
 
-describe('Starter sign-up link (hotfix)', () => {
-  it('points at a journey path both codebases serve (old path; this site 301s it to the new one)', () => {
-    const next = new URL(HABIT_BUILDER_SIGNUP_HREF).searchParams.get('next')
-    expect(next).toBe('/labs/quantum-speed-reading/journey/1')
-    expect(find('/labs/quantum-speed-reading/:path*')?.destination).toBe('/labs/sharp-brain/:path*')
-    expect(new URL(HABIT_BUILDER_SIGNUP_HREF).host).toBe('habit.mindurmind.org.in')
+describe('Starter closed to new buyers', () => {
+  it('sends the old Starter landing page and its sub-paths to the Sharp Brain program', () => {
+    expect(find('/programs/habit-builder')?.destination).toBe('/programs/sharp-brain')
+    expect(find('/programs/habit-builder/:path*')?.destination).toBe('/programs/sharp-brain')
   })
 })

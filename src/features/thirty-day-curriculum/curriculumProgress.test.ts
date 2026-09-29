@@ -84,9 +84,10 @@ describe('markCurriculumDayComplete', () => {
 })
 
 describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
-  it('30-Day Masterclass Paywall: a NEW (not-yet-completed) day is locked for a non-Pro user, including day 1', () => {
-    expect(isCurriculumDayUnlocked(1, [], false)).toBe(false)
+  it('Day 1 is a free preview; every other new day is locked for a non-Pro user', () => {
+    expect(isCurriculumDayUnlocked(1, [], false)).toBe(true)
     expect(isCurriculumDayUnlocked(2, [], false)).toBe(false)
+    expect(isCurriculumDayUnlocked(2, [1], false)).toBe(false)
   })
 
   it('day 1 is unlocked for a Pro user', () => {
@@ -176,7 +177,7 @@ describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
     it('leaves the real Pro + sequential gate untouched when the bypass is off', () => {
       vi.stubEnv('NEXT_PUBLIC_DEV_UNLOCK', 'false')
       expect(isCurriculumDayUnlocked(15, [], true)).toBe(false)
-      expect(isCurriculumDayUnlocked(1, [], false)).toBe(false)
+      expect(isCurriculumDayUnlocked(2, [], false)).toBe(false)
       expect(getHighestUnlockedDay({ completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] })).toBe(1)
     })
   })

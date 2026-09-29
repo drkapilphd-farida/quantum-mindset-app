@@ -46,18 +46,23 @@ const QSR_NAV_ITEMS = [
   { href: '/document-studio', label: 'Document Studio', icon: BookOpen },
 ] as const
 
-function navItemsFor(appDomain: AppDomain): readonly NavItem[] {
-  return [...SHARED_LEADING_NAV_ITEMS, ...(appDomain === 'habit' ? HABIT_NAV_ITEMS : QSR_NAV_ITEMS)]
+// "History" belongs to the Practice Journey, shown only to learners who
+// already started it (see hasStartedPracticeJourney).
+function navItemsFor(appDomain: AppDomain, showPracticeJourney: boolean): readonly NavItem[] {
+  if (appDomain !== 'habit') return [...SHARED_LEADING_NAV_ITEMS, ...QSR_NAV_ITEMS]
+  const habitItems = HABIT_NAV_ITEMS.filter((item) => showPracticeJourney || !item.href.startsWith('/labs/sharp-brain/journey'))
+  return [...SHARED_LEADING_NAV_ITEMS, ...habitItems]
 }
 
 type NavLinksProps = {
   onSelect?: (() => void) | undefined
   appDomain: AppDomain
+  showPracticeJourney: boolean
 }
 
-export function NavLinks({ onSelect, appDomain }: NavLinksProps): React.JSX.Element {
+export function NavLinks({ onSelect, appDomain, showPracticeJourney }: NavLinksProps): React.JSX.Element {
   const pathname = usePathname()
-  const navItems = navItemsFor(appDomain)
+  const navItems = navItemsFor(appDomain, showPracticeJourney)
 
   return (
     <nav className="flex flex-col gap-0.5 px-2" aria-label="Main navigation">

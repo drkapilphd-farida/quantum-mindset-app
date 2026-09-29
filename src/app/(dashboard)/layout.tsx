@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { getTenantBrandingForUser } from '@/features/school-dashboard/queries/getTenantBrandingForUser'
+import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/hasStartedPracticeJourney'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { AppSidebar } from '@/components/AppSidebar'
 import { Topbar } from '@/components/Topbar'
@@ -33,6 +34,7 @@ export default async function DashboardLayout({
     getTenantBrandingForUser(user.id),
     getAppDomain(),
   ])
+  const showPracticeJourney = appDomain === 'habit' && (await hasStartedPracticeJourney(user.id))
 
   return (
     <div className={`bg-muted/30 flex h-screen overflow-hidden ${plusJakartaSans.variable} ${inter.variable}`}>
@@ -42,6 +44,7 @@ export default async function DashboardLayout({
           brandName={tenantBranding?.name ?? null}
           brandLogoUrl={tenantBranding?.logoUrl ?? null}
           appDomain={appDomain}
+          showPracticeJourney={showPracticeJourney}
           fullName={profile?.fullName ?? null}
           avatarUrl={profile?.avatarUrl ?? null}
           email={user.email ?? ''}
@@ -57,6 +60,7 @@ export default async function DashboardLayout({
           brandName={tenantBranding?.name ?? null}
           brandLogoUrl={tenantBranding?.logoUrl ?? null}
           appDomain={appDomain}
+          showPracticeJourney={showPracticeJourney}
         />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-4xl px-6 py-8 sm:px-8">{children}</div>

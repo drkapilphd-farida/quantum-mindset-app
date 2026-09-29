@@ -9,8 +9,12 @@ describe('curriculumDayAccess — the enroll popup only for learners who have no
     expect(curriculumDayAccess(6, [1, 6], true)).toBe('open')
   })
 
-  it('offers enrolment for any other day to a learner without the program', () => {
-    expect(curriculumDayAccess(1, [], false)).toBe('needs_enrolment')
+  it('opens Day 1 as a free preview for a learner without the program', () => {
+    expect(curriculumDayAccess(1, [], false)).toBe('open')
+  })
+
+  it('offers enrolment for every other day to a learner without the program', () => {
+    expect(curriculumDayAccess(2, [1], false)).toBe('needs_enrolment')
     expect(curriculumDayAccess(25, [1, 2, 3], false)).toBe('needs_enrolment')
   })
 

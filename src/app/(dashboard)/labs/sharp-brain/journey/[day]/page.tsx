@@ -12,10 +12,12 @@ import { isDevUnlockEnabled } from '@/lib/dev/isDevUnlockEnabled'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { hasHabitBuilderAccess } from '@/lib/subscription/hasHabitBuilderAccess'
-import { programs, checkoutHref } from '@/config/site.config'
+import { programs } from '@/config/site.config'
+import { absoluteUrl } from '@/lib/seo/siteUrl'
 
-// Paid button link — read from the programs registry (site.config.ts).
-const STARTER_UNLOCK_CHECKOUT_HREF = checkoutHref('focusStarter', 'Razorpay (Days 8–21)')
+// Locked days go to the Sharp Brain 30-Day Program page — the ₹99 Starter
+// unlock is closed to new buyers (existing holders keep their access).
+const PROGRAM_OFFER_HREF = absoluteUrl(`${programs.sharpBrain.url}#formats`)
 
 // 21-Day Journey Paywall™ — Days 1 through 7 (the full first week) are
 // free for every user (the real "try it for real, not a demo" window);
@@ -55,14 +57,12 @@ export default async function QuantumJourneyDayPage({ params }: QuantumJourneyDa
 
   // 21-Day Journey Paywall™ — checked before anything else below: no
   // point resolving weakest-domain/streak/baseline data for a session the
-  // user isn't allowed to start. Locked days go straight to the real
-  // Razorpay one-time payment link (STARTER_UNLOCK_CHECKOUT_HREF),
-  // not the general /pricing page — same "one real checkout URL" pattern
-  // the 30-Day Masterclass's own paywall already uses.
+  // user isn't allowed to start. Locked days go to the Sharp Brain
+  // program page (PROGRAM_OFFER_HREF).
   if (dayNumber > FREE_JOURNEY_DAYS && !isDevUnlockEnabled()) {
     const hasAccess = user ? await hasHabitBuilderAccess(user.id, user.email ?? null) : false
     if (!hasAccess) {
-      redirect(STARTER_UNLOCK_CHECKOUT_HREF)
+      redirect(PROGRAM_OFFER_HREF)
     }
   }
 

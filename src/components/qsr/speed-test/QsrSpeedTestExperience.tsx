@@ -17,7 +17,9 @@ import {
   type SpeedTestPassage,
   type SpeedTestPersonaId,
 } from "./speedTestContent";
-import { programs } from '@/config/site.config'
+import { programs, SHARP_BRAIN_FREE_LIVE_SESSION_HREF } from '@/config/site.config'
+
+const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 // Reading Speed Test™ — a free lead-magnet tool, NOT the paid program.
 // Every stage's copy is written to keep that distinction explicit (see
@@ -463,12 +465,21 @@ export default function QsrSpeedTestExperience(): React.JSX.Element {
             </div>
 
             <div className="mt-8 border-t border-line-strong pt-6">
+              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">Your next step</p>
               <Link
-                href="/programs/sharp-brain#pricing"
+                href={`${programs.sharpBrain.url}#formats`}
                 className="flex w-full items-center justify-center gap-2 rounded-sm bg-gold px-7 py-4 text-[15px] font-semibold text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]"
               >
-                See the {programs.sharpBrain.shortName} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                Join the {programs.sharpBrain.name} · {PROGRAM_PRICE} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
+              <a
+                href={SHARP_BRAIN_FREE_LIVE_SESSION_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-sm border border-line-strong px-7 py-4 text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
+              >
+                Book a free live session
+              </a>
               <GuaranteeBadge className="mt-4" />
             </div>
 

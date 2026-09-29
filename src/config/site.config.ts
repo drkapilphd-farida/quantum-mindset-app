@@ -1,6 +1,4 @@
 import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from './masterclassPaymentLink'
-import { RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK } from './quantumMindsetHabitBuilderPaymentLink'
-import { HABIT_BUILDER_SIGNUP_HREF } from './habitBuilderSignupLink'
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from './overthinkingCoursePaymentLink'
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from './retreatPaymentLink'
 import { STARTER_MONTHLY_399, FAMILY_PRO_MONTHLY_699 } from './pricingLinks'
@@ -42,6 +40,12 @@ export const SITE_CONFIG_WHATSAPP_NUMBER = '919540123161'
 export function waLink(message: string): string {
   return `https://wa.me/${SITE_CONFIG_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
+
+/** The free next step for Sharp Brain leads (the ₹99 Starter is closed). */
+export const SHARP_BRAIN_FREE_LIVE_SESSION_HREF = waLink('I want to join the free Sharp Brain live session')
+
+/** The 30-day curriculum on the app host — Day 1 is a free preview there. */
+export const SHARP_BRAIN_APP_CURRICULUM_URL = 'https://app.mindurmind.org.in/labs/sharp-brain/thirty-day-curriculum'
 
 const brandData = {
   name: 'Mind Ur Mind',
@@ -230,10 +234,12 @@ const programsData = {
 
   focusStarter: {
     id: 'focusStarter',
-    name: 'Sharp Brain 7-Day Free Starter',
-    nameHi: 'Sharp Brain 7-दिवसीय फ्री स्टार्टर',
-    appName: 'Sharp Brain 21-Day Starter',
-    appNameHi: 'Sharp Brain 21-दिवसीय स्टार्टर',
+    // Shown only to learners who already started it (see
+    // hasStartedPracticeJourney). Never "Starter" or "₹99" in visible text.
+    name: 'Sharp Brain Practice Journey',
+    nameHi: 'Sharp Brain प्रैक्टिस जर्नी',
+    appName: 'Sharp Brain Practice Journey',
+    appNameHi: 'Sharp Brain प्रैक्टिस जर्नी',
     outcome: 'Build a daily focus and reading habit — start free for 7 days, continue to 21 days if it works for you.',
     audience: 'Anyone who wants an easy, low-commitment start',
     format: 'App-based · 10 minutes a day · Days 1–7 free, Days 8–21 optional',
@@ -241,12 +247,13 @@ const programsData = {
       { label: 'Days 1–7', amountInr: 0 },
       { label: 'Days 8–21 (one-time)', amountInr: 99 },
     ],
-    checkout: [
-      { label: 'Free sign-up', href: HABIT_BUILDER_SIGNUP_HREF },
-      { label: 'Razorpay (Days 8–21)', href: RAZORPAY_QUANTUM_MINDSET_HABIT_BUILDER_PAYMENT_LINK },
-    ],
+    // Closed to new buyers (positioning decision, 2026-09-29): one program,
+    // one price, one path — Sharp Brain leads go to the ₹9,999 program or a
+    // free live session. Existing Starter holders keep their app access.
+    // /programs/habit-builder 301-redirects to /programs/sharp-brain.
+    checkout: [] as ProgramCheckout[],
     url: '/programs/habit-builder',
-    status: 'active',
+    status: 'closed',
     pillar: 'brain',
   },
   overthinkingReset: {

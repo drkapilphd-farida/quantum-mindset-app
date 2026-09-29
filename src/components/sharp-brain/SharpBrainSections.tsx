@@ -5,9 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { programs, trainer, primaryCheckoutHref } from "@/config/site.config";
+import { programs, trainer, primaryCheckoutHref, SHARP_BRAIN_FREE_LIVE_SESSION_HREF } from "@/config/site.config";
 import { FREE_TEST_LINKS, ORGANISATIONS_HREF, SCHOOLS_HREF } from "@/config/navigation";
-import { WHATSAPP_FREE_INTRO_SESSION_LINK } from "@/config/whatsappSupportLink";
 import { QSR_ADULT_VIDEO_REVIEWS, QSR_MORE_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
@@ -51,12 +50,15 @@ export function SharpBrainHero(): React.JSX.Element {
             >
               {c.ctaPrimary} ↓
             </a>
-            <Link
-              href={programs.focusStarter.url}
+            <a
+              href={SHARP_BRAIN_FREE_LIVE_SESSION_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackGaEvent("whatsapp_click", { location: "sharp_brain_hero_live_session" })}
               className="inline-flex items-center justify-center rounded-sm border border-line-strong px-7 py-[15px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
             >
               {c.ctaSecondary}
-            </Link>
+            </a>
           </div>
         </div>
         <div className="relative mx-auto w-full max-w-[480px]">
@@ -392,14 +394,11 @@ export function SharpBrainFinal(): React.JSX.Element {
           <p className="text-[16px] font-bold text-ink">{c.freeTitle}</p>
           <p className="mt-1 text-[14px] text-ink-dim">{c.freeDesc}</p>
           <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap sm:gap-6">
-            <Link href={programs.focusStarter.url} className="text-[14px] font-semibold text-teal hover:underline">
-              {c.starter} →
-            </Link>
             <Link href={FREE_TEST_LINKS.speedTest} className="text-[14px] font-semibold text-teal hover:underline">
               {c.speedTest} →
             </Link>
             <a
-              href={WHATSAPP_FREE_INTRO_SESSION_LINK}
+              href={SHARP_BRAIN_FREE_LIVE_SESSION_HREF}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackGaEvent("whatsapp_click", { location: "sharp_brain_live_session" })}

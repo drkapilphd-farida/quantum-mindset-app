@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { AIPresenceLogo } from './AIPresenceLogo'
 import { GatewayAuthModal } from './GatewayAuthModal'
-import { brand, programs } from '@/config/site.config'
+import { brand, programs, SHARP_BRAIN_APP_CURRICULUM_URL } from '@/config/site.config'
 
 // Domain Split™ — this is the universal front door for BOTH
 // habit.mindurmind.org.in and app.mindurmind.org.in (never gated by
@@ -45,7 +45,12 @@ import { brand, programs } from '@/config/site.config'
 type ChooseLearningMethodExperienceProps = {
   isAuthenticated: boolean
   appDomain: AppDomain
+  // habit host only: the Practice Journey is shown only to learners who
+  // already started it; everyone else is offered the Sharp Brain program.
+  hasStartedJourney: boolean
 }
+
+const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 type PathCardProps = {
   emoji: string
@@ -86,8 +91,9 @@ function PathCard({ emoji, title, description, points, ctaLabel, onSelect }: Pat
   )
 }
 
-export function ChooseLearningMethodExperience({ isAuthenticated, appDomain }: ChooseLearningMethodExperienceProps): React.JSX.Element {
+export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, hasStartedJourney }: ChooseLearningMethodExperienceProps): React.JSX.Element {
   const router = useRouter()
+  const showJourney = appDomain === 'habit' && hasStartedJourney
   const prefersReducedMotion = usePrefersReducedMotion()
   const [isExiting, setIsExiting] = useState(false)
   const [pendingDestination, setPendingDestination] = useState<string | null>(null)
@@ -127,13 +133,20 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain }: C
           <p className="brand-gradient-text text-xl font-bold tracking-tight">{brand.appName}</p>
         </div>
 
-        {appDomain === 'habit' ? (
+        {showJourney ? (
           <div>
             <h1 className={TYPOGRAPHY.display}>{programs.focusStarter.appName}</h1>
             <p className="mt-6 flex flex-col gap-1 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl md:text-4xl">
               <span>Rewire your brain.</span>
               <span>Build unbreakable habits.</span>
               <span>Unlock your true potential in just 10 minutes a day.</span>
+            </p>
+          </div>
+        ) : appDomain === 'habit' ? (
+          <div>
+            <h1 className={TYPOGRAPHY.display}>{programs.sharpBrain.name}</h1>
+            <p className="mt-6 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl">
+              Day 1 is a free preview. The full program is {PROGRAM_PRICE}.
             </p>
           </div>
         ) : (
@@ -148,15 +161,26 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain }: C
         )}
 
         <div className="flex w-full justify-center">
-          {appDomain === 'habit' ? (
+          {showJourney ? (
             <div className="w-full max-w-sm">
               <PathCard
                 emoji="🎯"
-                title="Sharp Brain 21-Day Starter"
+                title={programs.focusStarter.appName}
                 description="Transform your mindset with daily cognitive drills, visualization, and habit-building exercises."
                 points={['Daily Mindset & Focus Drills', 'Guided Breathing & Visualization', '21-Day Progressive Habit Loop']}
                 ctaLabel="Start Training →"
                 onSelect={() => handleSelect('/labs/sharp-brain/journey/1')}
+              />
+            </div>
+          ) : appDomain === 'habit' ? (
+            <div className="w-full max-w-sm">
+              <PathCard
+                emoji="⚡"
+                title={programs.sharpBrain.name}
+                description={programs.sharpBrain.outcome}
+                points={[programs.sharpBrain.format, `Day 1 free · full program ${PROGRAM_PRICE}`]}
+                ctaLabel="Try Day 1 free →"
+                onSelect={() => window.location.assign(SHARP_BRAIN_APP_CURRICULUM_URL)}
               />
             </div>
           ) : (

@@ -31,6 +31,7 @@ type TopbarProps = {
   brandLogoUrl?: string | null
   // Domain Split™ — see AppSidebar.tsx's identical prop.
   appDomain: AppDomain
+  showPracticeJourney: boolean
 }
 
 export function Topbar({
@@ -40,6 +41,7 @@ export function Topbar({
   brandName = null,
   brandLogoUrl = null,
   appDomain,
+  showPracticeJourney,
 }: TopbarProps): React.JSX.Element {
   const [open, setOpen] = useState(false)
 
@@ -76,7 +78,7 @@ export function Topbar({
           {/* Consistent Branding™ — see AppSidebar.tsx's identical row. */}
           <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain)}</p>
           <div className="flex-1 overflow-y-auto py-4">
-            <NavLinks onSelect={() => setOpen(false)} appDomain={appDomain} />
+            <NavLinks onSelect={() => setOpen(false)} appDomain={appDomain} showPracticeJourney={showPracticeJourney} />
           </div>
           <SheetFooter className="border-t border-border/60 p-2">
             <MobileSignOutButton />

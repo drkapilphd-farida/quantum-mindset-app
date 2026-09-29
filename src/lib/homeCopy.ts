@@ -1,4 +1,4 @@
-import { brand, programs, qsrGuarantee, trainer } from '@/config/site.config'
+import { brand, programs, qsrGuarantee, SHARP_BRAIN_FREE_LIVE_SESSION_HREF, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
 // Copy for the problem-first homepage (site-rebuild Phase 4), EN + HI.
@@ -128,7 +128,7 @@ const en: HomeCopy = {
     items: [
       { title: 'Reading Speed Test', desc: '2 minutes · your real reading speed and comprehension', href: '/programs/sharp-brain/speed-test', cta: 'Take the test' },
       { title: 'Overthinking Test', desc: '2 minutes · a self-awareness check, not a diagnosis', href: '/mind-assessment', cta: 'Take the test' },
-      { title: programs.focusStarter.name, desc: 'About 10 minutes a day · free for 7 days', href: programs.focusStarter.url, cta: 'Start free' },
+      { title: 'Free live session', desc: 'Meet Dr. Kapil live and ask about the Sharp Brain program', href: SHARP_BRAIN_FREE_LIVE_SESSION_HREF, cta: 'Book on WhatsApp' },
     ],
   },
   proof: {
@@ -272,7 +272,7 @@ const hi: HomeCopy = {
     items: [
       { title: 'रीडिंग स्पीड टेस्ट', desc: '2 मिनट · आपकी असली रीडिंग स्पीड और समझ', href: '/programs/sharp-brain/speed-test', cta: 'टेस्ट दें' },
       { title: 'ओवरथिंकिंग टेस्ट', desc: '2 मिनट · एक सेल्फ-अवेयरनेस चेक, निदान नहीं', href: '/mind-assessment', cta: 'टेस्ट दें' },
-      { title: programs.focusStarter.nameHi, desc: 'रोज़ लगभग 10 मिनट · 7 दिन फ्री', href: programs.focusStarter.url, cta: 'फ्री शुरू करें' },
+      { title: 'फ्री लाइव सेशन', desc: 'डॉ. कपिल से लाइव मिलें और Sharp Brain प्रोग्राम के बारे में पूछें', href: SHARP_BRAIN_FREE_LIVE_SESSION_HREF, cta: 'WhatsApp पर बुक करें' },
     ],
   },
   proof: {

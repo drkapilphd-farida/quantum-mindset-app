@@ -2,8 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { programForPath, programs } from "@/config/site.config";
-import { HABIT_BUILDER_SIGNUP_HREF } from "@/config/habitBuilderSignupLink";
+import { programForPath } from "@/config/site.config";
 import { captureUtmParams, withUtmInWhatsAppHref } from "@/lib/analytics/utm";
 import { classifyHref, contentNameFor, trackInitiateCheckout, trackLead, trackViewContent } from "@/lib/analytics/conversions";
 
@@ -33,10 +32,6 @@ export default function ConversionTracker(): null {
       if (!(target instanceof Element)) return;
       const anchor = target.closest("a[href]");
       if (!(anchor instanceof HTMLAnchorElement)) return;
-      if (anchor.href === new URL(HABIT_BUILDER_SIGNUP_HREF, window.location.href).href) {
-        trackLead(programs.focusStarter.name, "free_starter_signup");
-        return;
-      }
       const kind = classifyHref(anchor.href);
       if (kind === null) return;
       const path = window.location.pathname;
