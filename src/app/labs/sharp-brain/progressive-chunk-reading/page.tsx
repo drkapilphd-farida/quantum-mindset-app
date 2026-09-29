@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { ProLockedScreen } from '@/components/exercises/ProLockedScreen'
+import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { ProgressiveChunkReadingExperience } from '@/features/progressive-chunk-reading/components/ProgressiveChunkReadingExperience'
 import { ExerciseLockedScreen } from '@/components/exercises/ExerciseLockedScreen'
 import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
@@ -15,6 +17,12 @@ export const metadata: Metadata = {
 const FLASH_INTELLIGENCE_EXERCISE_IDS = FLASH_INTELLIGENCE_MODULE.map((exercise) => exercise.exerciseId)
 
 export default async function ProgressiveChunkReadingPage(): Promise<React.JSX.Element> {
+  // Curriculum exercise — paid access checked on the server, like the other
+  // curriculum exercise pages (it could previously be opened by URL).
+  if (!(await hasQuantumSpeedReadingProAccess())) {
+    return <ProLockedScreen title="Progressive Chunk Reading" />
+  }
+
   // Progressive Chunk Reading is the entry point of Core Reading Journey™
   // (Stage 4) — it additionally requires Flash Intelligence Pack™ (Stage 3)
   // to be fully complete, mirroring every earlier cross-stage gate.

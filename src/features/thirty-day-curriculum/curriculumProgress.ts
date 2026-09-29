@@ -170,6 +170,19 @@ export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readon
   return serverCompletedDays.includes(day - 1)
 }
 
+/**
+ * Why a day is closed, so the page never offers enrolment to someone who has
+ * already paid: 'needs_enrolment' → the enroll popup; 'finish_previous' → a
+ * paying learner simply hasn't reached this day yet. Completed days are
+ * always open.
+ */
+export type CurriculumDayAccess = 'open' | 'needs_enrolment' | 'finish_previous'
+
+export function curriculumDayAccess(day: number, serverCompletedDays: readonly number[], isPro: boolean): CurriculumDayAccess {
+  if (isCurriculumDayUnlocked(day, serverCompletedDays, isPro)) return 'open'
+  return isPro ? 'finish_previous' : 'needs_enrolment'
+}
+
 // The highest day the learner has progressed to by real completion —
 // day N+1 once day N is complete, capped at TOTAL_CURRICULUM_DAYS. A
 // pure content-sequencing display helper (the dashboard hero card's

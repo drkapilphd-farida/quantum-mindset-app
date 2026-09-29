@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 import { ThirtyDayCurriculumExperience } from '@/features/thirty-day-curriculum/components/ThirtyDayCurriculumExperience'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { getCurriculumDayCompletions } from '@/features/thirty-day-curriculum/actions/getCurriculumDayCompletions'
 import { getCurriculumWatermarkText } from '@/features/thirty-day-curriculum/actions/getCurriculumWatermarkText'
+import { isCurriculumDayUnlocked } from '@/features/thirty-day-curriculum/curriculumProgress'
 
 export const metadata: Metadata = {
   title: 'Sharp Brain 30-Day Program Curriculum — Sharp Brain Lab',
@@ -32,12 +34,25 @@ export const metadata: Metadata = {
 // completedDays: never re-derived client-side, and null for the
 // excluded owner account means CurriculumWatermarkOverlay simply isn't
 // rendered at all for that one login.
-export default async function ThirtyDayCurriculumPage(): Promise<React.JSX.Element> {
+type ThirtyDayCurriculumPageProps = {
+  searchParams: Promise<{ view?: string | undefined; day?: string | undefined }>
+}
+
+export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDayCurriculumPageProps): Promise<React.JSX.Element> {
   const [isPro, completions, watermarkText] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
     getCurriculumDayCompletions(),
     getCurriculumWatermarkText(),
   ])
   const initialServerCompletedDays = completions.map((completion) => completion.day)
+
+  // Server check: a day opened by URL (?view=day&day=N) that this learner
+  // may not open never renders its content — back to the overview, which
+  // shows the enroll offer or "finish the previous day" as appropriate.
+  const params = await searchParams
+  const requestedDay = params.view === 'day' ? Number(params.day) : null
+  if (requestedDay !== null && Number.isInteger(requestedDay) && !isCurriculumDayUnlocked(requestedDay, initialServerCompletedDays, isPro)) {
+    redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
+  }
   return <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} />
 }

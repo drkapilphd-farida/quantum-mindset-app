@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { ProLockedScreen } from '@/components/exercises/ProLockedScreen'
+import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { NumberFlashExperience } from '@/features/flash-intelligence/components/NumberFlashExperience'
 import { ExerciseLockedScreen } from '@/components/exercises/ExerciseLockedScreen'
 import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
@@ -11,6 +13,12 @@ export const metadata: Metadata = {
 }
 
 export default async function NumberFlashPage(): Promise<React.JSX.Element> {
+  // Curriculum exercise — paid access checked on the server, like the other
+  // curriculum exercise pages (it could previously be opened by URL).
+  if (!(await hasQuantumSpeedReadingProAccess())) {
+    return <ProLockedScreen title="Number Flash" />
+  }
+
   const access = await getExerciseAccess('quantum-speed-reading', FLASH_INTELLIGENCE_MODULE, 'number-flash')
 
   if (!access.allowed) {

@@ -1,5 +1,6 @@
 'use client'
 
+import { programs } from '@/config/site.config'
 import { useEffect, useState } from 'react'
 import { CheckCircle2, Lock, Sparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
@@ -20,6 +21,8 @@ const CARD_CLASS_NAME = 'rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 s
 type ThirtyDayCurriculumOverviewProps = {
   onSelectDay: (day: number) => void
   onLockedDayClick: (day: number) => void
+  /** Opens the enrolment offer (shown only to learners without the program). */
+  onStartProgram: () => void
   isPro: boolean
   // Server-authoritative completion gate (see the "Pre-Launch Audit Fix
   // Pass" task, Phase 4) — passed straight through from
@@ -38,6 +41,7 @@ function metricLabel(value: number | null, suffix: string): string {
 export function ThirtyDayCurriculumOverview({
   onSelectDay,
   onLockedDayClick,
+  onStartProgram,
   isPro,
   serverCompletedDays,
   refreshKey,
@@ -65,7 +69,7 @@ export function ThirtyDayCurriculumOverview({
           <p className="text-xs font-semibold tracking-widest text-primary uppercase">Sharp Brain 30-Day Curriculum</p>
           <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Your Daily Roadmap</h1>
           <p className="max-w-2xl text-sm text-muted-foreground">
-            30 sequential days across 4 phases, blending Brain Gym, Right-Brain/Intuition, Visualization, and Core Reading Intelligence into one
+            30 sequential days across 4 phases, blending Brain Gym, Visual Memory & Attention, Visualization, and Core Reading Intelligence into one
             balanced circuit — with real WPM and comprehension checkpoints along the way.
           </p>
         </div>
@@ -81,7 +85,7 @@ export function ThirtyDayCurriculumOverview({
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {CURRICULUM_PHASES.map((phase) => (
-          <PhaseCard key={phase.id} phaseId={phase.id} progress={progress} />
+          <PhaseCard key={phase.id} phaseId={phase.id} serverCompletedDays={serverCompletedDays} />
         ))}
       </div>
 
@@ -90,8 +94,18 @@ export function ThirtyDayCurriculumOverview({
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro
             ? 'Day N unlocks once Day N-1 is complete. Star days are real WPM + comprehension checkpoints.'
-            : 'Enroll to unlock the full 30-day curriculum. Star days are real WPM + comprehension checkpoints.'}
+            : 'Enroll to unlock the full 30-day curriculum. Days you have already completed stay open. Star days are real WPM + comprehension checkpoints.'}
         </p>
+        {!isPro && (
+          <button
+            type="button"
+            onClick={onStartProgram}
+            className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground"
+            data-enroll-button="true"
+          >
+            Start the {programs.sharpBrain.name}
+          </button>
+        )}
         <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-6 md:grid-cols-10">
           {Array.from({ length: TOTAL_CURRICULUM_DAYS }, (_, index) => index + 1).map((day) => (
             <DayCell
@@ -118,11 +132,12 @@ function MetricTile({ label, value }: { label: string; value: string }): React.J
   )
 }
 
-function PhaseCard({ phaseId, progress }: { phaseId: CurriculumPhaseId; progress: CurriculumProgress }): React.JSX.Element {
+function PhaseCard({ phaseId, serverCompletedDays }: { phaseId: CurriculumPhaseId; serverCompletedDays: readonly number[] }): React.JSX.Element {
   const phase = CURRICULUM_PHASES.find((candidate) => candidate.id === phaseId)!
   const [start, end] = phase.dayRange
   const totalDaysInPhase = end - start + 1
-  const completedDaysInPhase = progress.completedDays.filter((day) => day >= start && day <= end).length
+  // Same server-recorded days as the grid below, so counts and ticks always agree.
+  const completedDaysInPhase = serverCompletedDays.filter((day) => day >= start && day <= end).length
 
   return (
     <Card className={CARD_CLASS_NAME}>

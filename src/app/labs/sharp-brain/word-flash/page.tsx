@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { ProLockedScreen } from '@/components/exercises/ProLockedScreen'
+import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { WordFlashExperience } from '@/features/flash-intelligence/components/WordFlashExperience'
 import { ExerciseLockedScreen } from '@/components/exercises/ExerciseLockedScreen'
 import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
@@ -15,6 +17,12 @@ export const metadata: Metadata = {
 const READING_PREPARATION_EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((exercise) => exercise.exerciseId)
 
 export default async function WordFlashPage(): Promise<React.JSX.Element> {
+  // Curriculum exercise — paid access checked on the server, like the other
+  // curriculum exercise pages (it could previously be opened by URL).
+  if (!(await hasQuantumSpeedReadingProAccess())) {
+    return <ProLockedScreen title="Rapid Recognition Drill" />
+  }
+
   // Word Flash is the entry point of Flash Intelligence Pack™ (Stage 3) —
   // it additionally requires Reading Preparation™ (Stage 2) to be fully
   // complete, mirroring the Visual Activation™ → Reading Preparation™ gate.

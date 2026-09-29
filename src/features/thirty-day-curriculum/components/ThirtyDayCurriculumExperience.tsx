@@ -5,10 +5,11 @@ import { useSearchParams } from 'next/navigation'
 import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
 import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
 import { MasterclassPaywallModal } from './MasterclassPaywallModal'
+import { FinishPreviousDayModal } from './FinishPreviousDayModal'
 import { ThirtyDayCurriculumDayDetail } from './ThirtyDayCurriculumDayDetail'
 import { ThirtyDayCurriculumOverview } from './ThirtyDayCurriculumOverview'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
-import { isCurriculumDayUnlocked, loadCurriculumProgress, recordCurriculumCheckpoint, type CurriculumCheckpointResult } from '../curriculumProgress'
+import { curriculumDayAccess, isCurriculumDayUnlocked, loadCurriculumProgress, recordCurriculumCheckpoint, type CurriculumCheckpointResult } from '../curriculumProgress'
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
 import { getCurriculumDayCompletions } from '../actions/getCurriculumDayCompletions'
 
@@ -88,7 +89,14 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   const [view, setView] = useState<CurriculumView>(initialDayIsUnlocked ? 'day-detail' : 'overview')
   const [selectedDay, setSelectedDay] = useState<number | null>(initialDayIsUnlocked ? initialDay : null)
   const [justCompletedDay, setJustCompletedDay] = useState(initialDayIsUnlocked && searchParams.get('dayComplete') === '1')
-  const [paywallDay, setPaywallDay] = useState<number | null>(initialDay !== null && !initialDayIsUnlocked ? initialDay : null)
+  // A day that is closed opens the right message: the enroll popup only for
+  // a learner without the program; "finish the previous day" for one who has it.
+  // `locked` comes from the server redirect when a closed day is opened by URL.
+  const lockedParam = Number(searchParams.get('locked'))
+  const closedDay = initialDay !== null && !initialDayIsUnlocked ? initialDay : Number.isInteger(lockedParam) && lockedParam >= 1 && lockedParam <= 30 ? lockedParam : null
+  const closedAccess = closedDay === null ? 'open' : curriculumDayAccess(closedDay, initialServerCompletedDays, isPro)
+  const [paywallDay, setPaywallDay] = useState<number | null>(closedAccess === 'needs_enrolment' ? closedDay : null)
+  const [finishPreviousDay, setFinishPreviousDay] = useState<number | null>(closedAccess === 'finish_previous' ? closedDay : null)
   const [refreshKey, setRefreshKey] = useState(0)
 
   // Re-reads both the local optimistic cache (streaks/checkpoints/brain
@@ -104,8 +112,13 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     setServerCompletedDays(records.map((record) => record.day))
   }
 
-  function openPaywall(day: number): void {
-    setPaywallDay(day)
+  function handleClosedDay(day: number): void {
+    if (curriculumDayAccess(day, serverCompletedDays, isPro) === 'finish_previous') setFinishPreviousDay(day)
+    else setPaywallDay(day)
+  }
+
+  function openProgramOffer(): void {
+    setPaywallDay(0)
   }
 
   // The one real gate every entry into a day's content passes through —
@@ -115,7 +128,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // gate itself was built to enforce.
   function handleSelectDay(day: number): void {
     if (!isCurriculumDayUnlocked(day, serverCompletedDays, isPro)) {
-      openPaywall(day)
+      handleClosedDay(day)
       return
     }
     setSelectedDay(day)
@@ -196,12 +209,21 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     <>
       <ThirtyDayCurriculumOverview
         onSelectDay={handleSelectDay}
-        onLockedDayClick={openPaywall}
+        onLockedDayClick={handleClosedDay}
+        onStartProgram={openProgramOffer}
         isPro={isPro}
         serverCompletedDays={serverCompletedDays}
         refreshKey={refreshKey}
       />
-      <MasterclassPaywallModal open={paywallDay !== null} onOpenChange={(open) => { if (!open) setPaywallDay(null) }} day={paywallDay} />
+      <MasterclassPaywallModal open={paywallDay !== null} onOpenChange={(open) => { if (!open) setPaywallDay(null) }} day={paywallDay === 0 ? null : paywallDay} />
+      <FinishPreviousDayModal
+        day={finishPreviousDay}
+        onOpenChange={(open) => { if (!open) setFinishPreviousDay(null) }}
+        onGoToDay={(day) => {
+          setFinishPreviousDay(null)
+          handleSelectDay(day)
+        }}
+      />
       {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
     </>
   )
