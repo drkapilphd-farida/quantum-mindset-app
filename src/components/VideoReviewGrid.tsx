@@ -16,6 +16,8 @@ type VideoReviewItem = {
   // priority over the uniform `cardLabel` prop below when present. See
   // qsrVideoReviews.ts for where this is actually set.
   label?: string;
+  // Descriptive thumbnail alt text; falls back to the caption.
+  alt?: string;
 };
 
 type VideoReviewGridProps = {
@@ -61,6 +63,7 @@ export default function VideoReviewGrid({
   gridClassName = "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3",
 }: VideoReviewGridProps): React.JSX.Element {
   const [openVideoId, setOpenVideoId] = useState<string | null>(null);
+  const openCaption = videos.find((video) => video.videoId === openVideoId)?.label ?? cardLabel;
   const isVertical = aspectRatioClassName !== "aspect-video";
 
   useEffect(() => {
@@ -95,7 +98,7 @@ export default function VideoReviewGrid({
                 {video.thumbnailSrc !== undefined ? (
                   <Image
                     src={video.thumbnailSrc}
-                    alt={caption ?? "Real student video review"}
+                    alt={video.alt ?? caption ?? "Real student video review"}
                     fill
                     sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -138,7 +141,7 @@ export default function VideoReviewGrid({
             <div className={`${aspectRatioClassName} w-full overflow-hidden rounded-sm border border-line-strong bg-void`}>
               <iframe
                 src={buildEmbedUrl(openVideoId)}
-                title="Video review"
+                title={openCaption ?? "Video review"}
                 className="h-full w-full"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

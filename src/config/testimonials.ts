@@ -1,3 +1,4 @@
+import { QSR_ADULT_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from './qsrVideoReviews'
 import { programs, verifiedTestimonialNames, type ProgramId } from './site.config'
 
 // Every named testimonial on the site lives here (site-rebuild Phase 3).
@@ -258,4 +259,126 @@ export function localizeTestimonial(item: Testimonial, lang: 'en' | 'hi'): Local
     videoUrl: item.videoUrl,
     photo: item.photo,
   }
+}
+
+// Video reviews for the homepage "Proof → Learning" tab.
+//
+// Rules:
+// - `caption` is a neutral description of what the video is (workshop,
+//   retreat). Never a name, city, quote or result: none was supplied.
+// - `youtubeTitle` is the real title from YouTube oEmbed, kept for
+//   reference only. Several contain banned words ("Telepathy") or claims
+//   ("100% Results! Money Back Guarantee!"), so they are never rendered.
+// - `program: 'workshops'` marks the older live workshops and retreats.
+//   They are not Sharp Brain reviews, so they must not appear on
+//   /programs/sharp-brain.
+// - `hidden: true` keeps an entry as data without showing it. The earlier
+//   Learning-tab videos are kept that way; qsrVideoReviews.ts still feeds
+//   the Sharp Brain page.
+// - Thumbnails for l_3qAC_pgPI and s87Pxs0EP58 are real frames from the
+//   video (YouTube's own mid-video frame), not the uploaded thumbnail,
+//   which carries a "Telepathy" banner.
+export type VideoTestimonial = {
+  id: string
+  videoId: string
+  videoUrl: string
+  caption: string
+  captionHi: string
+  youtubeTitle: string | null
+  channel: string | null
+  thumbnailSrc: string
+  program: ProgramId | 'workshops'
+  source: 'YouTube'
+  verified: boolean
+  hidden: boolean
+}
+
+function youtubeVideo(
+  videoId: string,
+  fields: Pick<VideoTestimonial, 'caption' | 'captionHi' | 'youtubeTitle' | 'channel' | 'program' | 'hidden'>,
+): VideoTestimonial {
+  return {
+    id: `yt-${videoId}`,
+    videoId,
+    videoUrl: `https://youtu.be/${videoId}`,
+    thumbnailSrc: `/learner-videos/${videoId}-thumb.jpg`,
+    source: 'YouTube',
+    verified: true,
+    ...fields,
+  }
+}
+
+const CHANNEL = 'MindUrMind | Dr Kapil Dev Sharma'
+
+export const HOME_LEARNING_VIDEO_REVIEWS: readonly VideoTestimonial[] = [
+  youtubeVideo('uNWLFqACpDU', {
+    caption: 'Workshop review',
+    captionHi: 'वर्कशॉप रिव्यू',
+    youtubeTitle: "Unlock Your Mind's Potential: Workshop with Dr. Kapil - 100% Results! Money Back Guarantee! Review",
+    channel: CHANNEL,
+    program: 'workshops',
+    hidden: false,
+  }),
+  youtubeVideo('WZMSSuRTr78', {
+    caption: 'Two-day workshop review',
+    captionHi: 'दो दिन की वर्कशॉप का रिव्यू',
+    youtubeTitle: 'EXPERIENCE THE POWER OF COSMIC FUSION/ TWO DAY WORKSHOP REVIEW',
+    channel: CHANNEL,
+    program: 'workshops',
+    hidden: false,
+  }),
+  youtubeVideo('pRG3sdsXiHM', {
+    caption: 'Colombo workshop',
+    captionHi: 'कोलंबो वर्कशॉप',
+    youtubeTitle: 'TELEPATHY & MIND READING | HOW TO DO TELEPATHY | COLOMBO WORKSHOP |',
+    channel: CHANNEL,
+    program: 'workshops',
+    hidden: false,
+  }),
+  youtubeVideo('l_3qAC_pgPI', {
+    caption: 'Online workshop review',
+    captionHi: 'ऑनलाइन वर्कशॉप रिव्यू',
+    youtubeTitle: 'Online Telepathy | Mind Reading Workshop | Review',
+    channel: CHANNEL,
+    program: 'workshops',
+    hidden: false,
+  }),
+  youtubeVideo('s87Pxs0EP58', {
+    caption: 'Workshop review',
+    captionHi: 'वर्कशॉप रिव्यू',
+    youtubeTitle: 'DHYAN KAISE KARE | TELEPATHY KAISE KARE |How to meditate |',
+    channel: CHANNEL,
+    program: 'workshops',
+    hidden: false,
+  }),
+  youtubeVideo('ZyD_iQTOR60', {
+    caption: '7-day retreat reviews',
+    captionHi: '7 दिन की रिट्रीट के रिव्यू',
+    youtubeTitle: "DON'T MISS IT !/ 7 Days Retreat Reviews",
+    channel: CHANNEL,
+    program: 'workshops',
+    hidden: false,
+  }),
+  // Earlier Learning-tab videos (Quantum Speed Reading batches), hidden on the homepage.
+  ...[...QSR_YOUNG_LEARNER_VIDEO_REVIEWS, ...QSR_ADULT_VIDEO_REVIEWS].map((video) => ({
+    ...youtubeVideo(video.videoId, {
+      caption: video.label,
+      captionHi: video.label,
+      youtubeTitle: null,
+      channel: null,
+      program: 'sharpBrain' as const,
+      hidden: true,
+    }),
+    thumbnailSrc: video.thumbnailSrc ?? `/learner-videos/${video.videoId}-thumb.jpg`,
+  })),
+]
+
+/** Visible, verified video reviews for one program's own page. */
+export function videoTestimonialsForProgram(program: ProgramId | 'workshops'): readonly VideoTestimonial[] {
+  return HOME_LEARNING_VIDEO_REVIEWS.filter((item) => item.verified && !item.hidden && item.program === program)
+}
+
+/** A title that names the old program needs the "earlier batches" label. */
+export function isEarlierBatchTitle(title: string | null): boolean {
+  return title !== null && /quantum|\bqsr\b/i.test(title)
 }
