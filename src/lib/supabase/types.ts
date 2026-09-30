@@ -2495,6 +2495,45 @@ export type Database = {
           },
         ]
       }
+      speed_test_results: {
+        Row: {
+          comprehension_percent: number
+          created_at: string
+          effective_wpm: number
+          first_name: string | null
+          id: string
+          lang: string
+          passage_id: string
+          status: string
+          whatsapp_number: string
+          wpm: number
+        }
+        Insert: {
+          comprehension_percent: number
+          created_at?: string
+          effective_wpm: number
+          first_name?: string | null
+          id?: string
+          lang: string
+          passage_id: string
+          status: string
+          whatsapp_number: string
+          wpm: number
+        }
+        Update: {
+          comprehension_percent?: number
+          created_at?: string
+          effective_wpm?: number
+          first_name?: string | null
+          id?: string
+          lang?: string
+          passage_id?: string
+          status?: string
+          whatsapp_number?: string
+          wpm?: number
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           canceled_at: string | null

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { programs, trainer, primaryCheckoutHref, SHARP_BRAIN_FREE_LIVE_SESSION_HREF } from "@/config/site.config";
+import { programs, trainer, primaryCheckoutHref } from "@/config/site.config";
 import { FREE_TEST_LINKS, ORGANISATIONS_HREF, SCHOOLS_HREF } from "@/config/navigation";
 import { QSR_ADULT_VIDEO_REVIEWS, QSR_MORE_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
@@ -33,6 +33,41 @@ function inr(amount: number): string {
 
 const sectionClass = "border-b border-line px-4 py-16 sm:px-8 sm:py-20";
 
+// The two Sharp Brain calls to action (hero and final CTA): enrol, or take
+// the free Reading Speed Test. The Razorpay link also fires InitiateCheckout
+// through the site-wide ConversionTracker.
+function EnrolAndTestButtons({
+  enrol,
+  speedTest,
+  location,
+  className = "",
+}: {
+  enrol: string;
+  speedTest: string;
+  location: string;
+  className?: string;
+}): React.JSX.Element {
+  return (
+    <div className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${className}`}>
+      <a
+        href={PROGRAM_CHECKOUT}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackGaEvent("razorpay_checkout_click", { location })}
+        className="inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
+      >
+        {enrol}
+      </a>
+      <Link
+        href={FREE_TEST_LINKS.speedTest}
+        className="inline-flex items-center justify-center rounded-sm border border-line-strong px-7 py-[15px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
+      >
+        {speedTest}
+      </Link>
+    </div>
+  );
+}
+
 export function SharpBrainHero(): React.JSX.Element {
   const c = useCopy().hero;
   return (
@@ -43,23 +78,10 @@ export function SharpBrainHero(): React.JSX.Element {
           <h1 className="mt-4 text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px] lg:text-[50px]">{c.h1}</h1>
           <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-ink-dim">{c.positioning}</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a
-              href="#formats"
-              className="inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
-            >
-              {c.ctaPrimary} ↓
-            </a>
-            <a
-              href={SHARP_BRAIN_FREE_LIVE_SESSION_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackGaEvent("whatsapp_click", { location: "sharp_brain_hero_live_session" })}
-              className="inline-flex items-center justify-center rounded-sm border border-line-strong px-7 py-[15px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
-            >
-              {c.ctaSecondary}
-            </a>
-          </div>
+          <EnrolAndTestButtons enrol={c.enrol} speedTest={c.speedTest} location="sharp_brain_hero" className="mt-8" />
+          <a href="#formats" className="mt-4 inline-block text-[14px] font-semibold text-ink-dim underline-offset-4 hover:text-ink hover:underline">
+            {c.formatsLink}
+          </a>
         </div>
         <div className="relative mx-auto w-full max-w-[480px]">
           <div className="relative aspect-[1374/1145] w-full overflow-hidden rounded-sm border border-line-strong bg-panel2">
@@ -381,33 +403,7 @@ export function SharpBrainFinal(): React.JSX.Element {
     <section className={sectionClass}>
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-[26px] font-extrabold leading-tight sm:text-[32px]">{c.title}</h2>
-        <a
-          href={PROGRAM_CHECKOUT}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackGaEvent("razorpay_checkout_click", { location: "sharp_brain_final" })}
-          className="mt-7 inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
-        >
-          {c.cta} →
-        </a>
-        <div className="mt-10 rounded-sm border border-line bg-panel p-6">
-          <p className="text-[16px] font-bold text-ink">{c.freeTitle}</p>
-          <p className="mt-1 text-[14px] text-ink-dim">{c.freeDesc}</p>
-          <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap sm:gap-6">
-            <Link href={FREE_TEST_LINKS.speedTest} className="text-[14px] font-semibold text-teal hover:underline">
-              {c.speedTest} →
-            </Link>
-            <a
-              href={SHARP_BRAIN_FREE_LIVE_SESSION_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackGaEvent("whatsapp_click", { location: "sharp_brain_live_session" })}
-              className="text-[14px] font-semibold text-teal hover:underline"
-            >
-              {c.liveSession} →
-            </a>
-          </div>
-        </div>
+        <EnrolAndTestButtons enrol={c.enrol} speedTest={c.speedTest} location="sharp_brain_final" className="mt-7 justify-center" />
       </div>
     </section>
   );

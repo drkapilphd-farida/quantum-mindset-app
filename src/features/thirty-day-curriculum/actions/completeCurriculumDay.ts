@@ -67,14 +67,11 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
     const alreadyCompleted = completedDaysBefore.includes(input.day)
 
     if (!alreadyCompleted) {
-      // Day 1 is a free preview (see isCurriculumDayUnlocked).
-      if (input.day !== 1) {
-        const isPro = await getIsPaidUser(user.id)
-        if (!isPro) return { ok: false, reason: 'not_pro' }
+      const isPro = await getIsPaidUser(user.id)
+      if (!isPro) return { ok: false, reason: 'not_pro' }
 
-        if (!completedDaysBefore.includes(input.day - 1)) {
-          return { ok: false, reason: 'previous_day_incomplete' }
-        }
+      if (input.day !== 1 && !completedDaysBefore.includes(input.day - 1)) {
+        return { ok: false, reason: 'previous_day_incomplete' }
       }
     }
 

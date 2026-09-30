@@ -165,9 +165,9 @@ function saveCurriculumProgress(progress: CurriculumProgress): void {
 export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readonly number[], isPro: boolean): boolean {
   if (isDevUnlockEnabled()) return true
   if (serverCompletedDays.includes(day)) return true
-  // Day 1 is a free preview for everyone; every later day needs the program.
-  if (day === 1) return true
+  // No free days: app practice is for enrolled learners only.
   if (!isPro) return false
+  if (day === 1) return true
   return serverCompletedDays.includes(day - 1)
 }
 

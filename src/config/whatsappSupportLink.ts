@@ -13,14 +13,6 @@ export const WHATSAPP_MASTERCLASS_INQUIRY_LINK =
 export const WHATSAPP_ENROLLMENT_INQUIRY_LINK =
   waLink(`Hi Dr. Kapil, I want to enroll in the ${programs.sharpBrain.name}`)
 
-// Same number, Free Live Intro Session-specific message — for the
-// QsrLiveIntroSession section on the QSR landing page. There's no
-// booking/calendar backend for this session yet (see that component's
-// own doc comment for exactly where to wire one in later) — WhatsApp is
-// the real interim registration path, not a placeholder standing in for
-// a missing form.
-export const WHATSAPP_FREE_INTRO_SESSION_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20want%20to%20join%20the%20free%2045-minute%20live%20intro%20session'
 
 // Same number, per-city Offline QSR + EEG Workshop message (see the
 // "Homepage, QSR & Multi-City EEG Rewrite" task) — replaces the old

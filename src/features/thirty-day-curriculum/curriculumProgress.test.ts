@@ -84,8 +84,8 @@ describe('markCurriculumDayComplete', () => {
 })
 
 describe('isCurriculumDayUnlocked / getHighestUnlockedDay', () => {
-  it('Day 1 is a free preview; every other new day is locked for a non-Pro user', () => {
-    expect(isCurriculumDayUnlocked(1, [], false)).toBe(true)
+  it('no free days: every new day, Day 1 included, is locked for a non-Pro user', () => {
+    expect(isCurriculumDayUnlocked(1, [], false)).toBe(false)
     expect(isCurriculumDayUnlocked(2, [], false)).toBe(false)
     expect(isCurriculumDayUnlocked(2, [1], false)).toBe(false)
   })

@@ -15,8 +15,9 @@ export type SharpBrainCopy = {
     sub: string
     positioning: string
     parentLine: string
-    ctaPrimary: string
-    ctaSecondary: string
+    enrol: string
+    speedTest: string
+    formatsLink: string
   }
   audiences: { eyebrow: string; title: string; tabs: AudienceTab[] }
   skills: { eyebrow: string; title: string; items: { title: string; desc: string }[] }
@@ -35,11 +36,12 @@ export type SharpBrainCopy = {
   trainer: { eyebrow: string; readStory: string }
   guarantee: { title: string; statement: string; request: string; policy: string }
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] }
-  final: { title: string; cta: string; freeTitle: string; freeDesc: string; speedTest: string; liveSession: string }
+  final: { title: string; enrol: string; speedTest: string }
   sticky: { cta: string }
 }
 
 const p = programs
+const PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 const en: SharpBrainCopy = {
   hero: {
@@ -48,8 +50,9 @@ const en: SharpBrainCopy = {
     positioning:
       'A cognitive skills program for focus, memory, smart reading and mobile discipline — with improvement measured from your own Day 1 to Day 30.',
     parentLine: 'From screen time to focus time',
-    ctaPrimary: 'See formats & prices',
-    ctaSecondary: 'Book a free live session',
+    enrol: `Enrol now · ${PRICE}`,
+    speedTest: 'Take the free Reading Speed Test →',
+    formatsLink: 'See formats & prices ↓',
   },
   audiences: {
     eyebrow: 'Who it’s for',
@@ -185,11 +188,8 @@ const en: SharpBrainCopy = {
   },
   final: {
     title: 'Start your 30 days',
-    cta: 'Enrol in the 30-Day Program',
-    freeTitle: 'Not ready yet? Start free.',
-    freeDesc: 'No payment needed.',
-    speedTest: 'Take the free Reading Speed Test',
-    liveSession: 'Book a free live session',
+    enrol: `Enrol now · ${PRICE}`,
+    speedTest: 'Take the free Reading Speed Test →',
   },
   sticky: { cta: 'Enrol' },
 }
@@ -200,8 +200,9 @@ const hi: SharpBrainCopy = {
     sub: 'पढ़ता है पर याद नहीं रहता? ध्यान मोबाइल में रहता है? 30 दिन में focus, memory और reading की skills — Day 1 से आपकी प्रगति ट्रैक होती है।',
     positioning: 'Focus, Memory, Smart Reading और Mobile Discipline का cognitive skills program — Day 1 से Day 30 तक नापा हुआ सुधार।',
     parentLine: 'Screen से Focus तक',
-    ctaPrimary: 'फॉर्मेट और कीमत देखें',
-    ctaSecondary: 'फ्री लाइव सेशन बुक करें',
+    enrol: `अभी जुड़ें · ${PRICE}`,
+    speedTest: 'मुफ़्त Reading Speed Test दें →',
+    formatsLink: 'फॉर्मेट और कीमत देखें ↓',
   },
   audiences: {
     eyebrow: 'यह किसके लिए है',
@@ -315,11 +316,8 @@ const hi: SharpBrainCopy = {
   },
   final: {
     title: 'अपने 30 दिन शुरू करें',
-    cta: '30-दिवसीय प्रोग्राम में नामांकन करें',
-    freeTitle: 'अभी तैयार नहीं? फ्री में शुरू करें।',
-    freeDesc: 'कोई भुगतान नहीं।',
-    speedTest: 'फ्री रीडिंग स्पीड टेस्ट दें',
-    liveSession: 'फ्री लाइव सेशन बुक करें',
+    enrol: `अभी जुड़ें · ${PRICE}`,
+    speedTest: 'मुफ़्त Reading Speed Test दें →',
   },
   sticky: { cta: 'नामांकन' },
 }

@@ -9,7 +9,10 @@ import { cn } from '@/lib/utils'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { AIPresenceLogo } from './AIPresenceLogo'
 import { GatewayAuthModal } from './GatewayAuthModal'
-import { brand, programs, SHARP_BRAIN_APP_CURRICULUM_URL } from '@/config/site.config'
+import { brand, primaryCheckoutHref, programs } from '@/config/site.config'
+import { trackInitiateCheckout } from '@/lib/analytics/conversions'
+
+const PROGRAM_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
 // Domain Split™ — this is the universal front door for BOTH
 // habit.mindurmind.org.in and app.mindurmind.org.in (never gated by
@@ -146,7 +149,7 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
           <div>
             <h1 className={TYPOGRAPHY.display}>{programs.sharpBrain.name}</h1>
             <p className="mt-6 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl">
-              Day 1 is a free preview. The full program is {PROGRAM_PRICE}.
+              {programs.sharpBrain.format}
             </p>
           </div>
         ) : (
@@ -178,9 +181,12 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
                 emoji="⚡"
                 title={programs.sharpBrain.name}
                 description={programs.sharpBrain.outcome}
-                points={[programs.sharpBrain.format, `Day 1 free · full program ${PROGRAM_PRICE}`]}
-                ctaLabel="Try Day 1 free →"
-                onSelect={() => window.location.assign(SHARP_BRAIN_APP_CURRICULUM_URL)}
+                points={[programs.sharpBrain.format, `One-time enrolment · ${PROGRAM_PRICE}`]}
+                ctaLabel={`Enrol now · ${PROGRAM_PRICE}`}
+                onSelect={() => {
+                  trackInitiateCheckout(programs.sharpBrain.name)
+                  window.open(PROGRAM_CHECKOUT_HREF, '_blank', 'noopener,noreferrer')
+                }}
               />
             </div>
           ) : (

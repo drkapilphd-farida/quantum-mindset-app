@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useHomeCopy } from "./useHomeCopy";
 import { Eyebrow } from "../ui";
 
-// 3. Start free — the three no-cost first steps in one strip.
+// 3. Start free — the two free tests in one strip.
 export default function HomeStartFree(): React.JSX.Element {
   const c = useHomeCopy().startFree;
 
@@ -13,7 +13,7 @@ export default function HomeStartFree(): React.JSX.Element {
       <div className="mx-auto max-w-content">
         <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
         <h2 className="mt-4 text-[24px] font-extrabold leading-tight sm:text-[30px]">{c.title}</h2>
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {c.items.map((item) => (
             <Link
               key={item.href}

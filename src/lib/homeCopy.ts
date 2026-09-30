@@ -1,4 +1,4 @@
-import { brand, programs, qsrGuarantee, SHARP_BRAIN_FREE_LIVE_SESSION_HREF, trainer } from '@/config/site.config'
+import { brand, programs, qsrGuarantee, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
 // Copy for the problem-first homepage (site-rebuild Phase 4), EN + HI.
@@ -68,7 +68,10 @@ const en: HomeCopy = {
         audience: 'For students, exam aspirants, professionals — and parents of children aged about 10–17',
         programs: [{ name: programs.sharpBrain.name, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} one-time` }],
         cta: { label: 'See Sharp Brain™', href: programs.sharpBrain.url },
-        extras: [{ label: 'For my child →', href: `${programs.sharpBrain.url}#parents` }],
+        extras: [
+          { label: 'Take the free Reading Speed Test →', href: '/programs/sharp-brain/speed-test' },
+          { label: 'For my child →', href: `${programs.sharpBrain.url}#parents` },
+        ],
         note: 'Focus · Memory · Smart Reading · Mobile Discipline — measured from your own Day 1 to Day 30.',
       },
       {
@@ -128,7 +131,6 @@ const en: HomeCopy = {
     items: [
       { title: 'Reading Speed Test', desc: '2 minutes · your real reading speed and comprehension', href: '/programs/sharp-brain/speed-test', cta: 'Take the test' },
       { title: 'Overthinking Test', desc: '2 minutes · a self-awareness check, not a diagnosis', href: '/mind-assessment', cta: 'Take the test' },
-      { title: 'Free live session', desc: 'Meet Dr. Kapil live and ask about the Sharp Brain program', href: SHARP_BRAIN_FREE_LIVE_SESSION_HREF, cta: 'Book on WhatsApp' },
     ],
   },
   proof: {
@@ -212,7 +214,10 @@ const hi: HomeCopy = {
         audience: 'विद्यार्थियों, परीक्षा उम्मीदवारों, पेशेवरों — और लगभग 10–17 साल के बच्चों के अभिभावकों के लिए',
         programs: [{ name: programs.sharpBrain.nameHi, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} एकमुश्त` }],
         cta: { label: 'Sharp Brain™ देखें', href: programs.sharpBrain.url },
-        extras: [{ label: 'मेरे बच्चे के लिए →', href: `${programs.sharpBrain.url}#parents` }],
+        extras: [
+          { label: 'मुफ़्त Reading Speed Test दें →', href: '/programs/sharp-brain/speed-test' },
+          { label: 'मेरे बच्चे के लिए →', href: `${programs.sharpBrain.url}#parents` },
+        ],
         note: 'Focus · Memory · Smart Reading · Mobile Discipline — Day 1 से Day 30 तक नापा हुआ सुधार।',
       },
       {
@@ -272,7 +277,6 @@ const hi: HomeCopy = {
     items: [
       { title: 'रीडिंग स्पीड टेस्ट', desc: '2 मिनट · आपकी असली रीडिंग स्पीड और समझ', href: '/programs/sharp-brain/speed-test', cta: 'टेस्ट दें' },
       { title: 'ओवरथिंकिंग टेस्ट', desc: '2 मिनट · एक सेल्फ-अवेयरनेस चेक, निदान नहीं', href: '/mind-assessment', cta: 'टेस्ट दें' },
-      { title: 'फ्री लाइव सेशन', desc: 'डॉ. कपिल से लाइव मिलें और Sharp Brain प्रोग्राम के बारे में पूछें', href: SHARP_BRAIN_FREE_LIVE_SESSION_HREF, cta: 'WhatsApp पर बुक करें' },
     ],
   },
   proof: {

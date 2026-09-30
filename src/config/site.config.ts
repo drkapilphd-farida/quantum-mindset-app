@@ -41,12 +41,6 @@ export function waLink(message: string): string {
   return `https://wa.me/${SITE_CONFIG_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
 
-/** The free next step for Sharp Brain leads (the ₹99 Starter is closed). */
-export const SHARP_BRAIN_FREE_LIVE_SESSION_HREF = waLink('I want to join the free Sharp Brain live session')
-
-/** The 30-day curriculum on the app host — Day 1 is a free preview there. */
-export const SHARP_BRAIN_APP_CURRICULUM_URL = 'https://app.mindurmind.org.in/labs/sharp-brain/thirty-day-curriculum'
-
 const brandData = {
   name: 'Mind Ur Mind',
   positioning: 'Brain, Mind & Meditation Coach',

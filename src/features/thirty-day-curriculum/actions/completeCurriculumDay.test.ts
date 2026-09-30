@@ -84,22 +84,12 @@ describe('completeCurriculumDay', () => {
     expect(result).toEqual({ ok: false, reason: 'previous_day_incomplete' })
   })
 
-  it('rejects completing a new day after the free Day 1 for a non-Pro user', async () => {
-    const client = makeClient({ existingDays: [1] })
-    const { completeCurriculumDay } = await importAction(client, false)
-
-    const result = await completeCurriculumDay({ day: 2 })
-
-    expect(result).toEqual({ ok: false, reason: 'not_pro' })
-  })
-
-  it('lets a non-Pro user complete the free Day 1 preview', async () => {
+  it('rejects completing any new day, Day 1 included, for a non-Pro user', async () => {
     const client = makeClient({ existingDays: [] })
     const { completeCurriculumDay } = await importAction(client, false)
 
-    const result = await completeCurriculumDay({ day: 1 })
-
-    expect(result.ok).toBe(true)
+    expect(await completeCurriculumDay({ day: 1 })).toEqual({ ok: false, reason: 'not_pro' })
+    expect(await completeCurriculumDay({ day: 2 })).toEqual({ ok: false, reason: 'not_pro' })
   })
 
   it('allows day N once day N-1 is already recorded, for a Pro user', async () => {
