@@ -129,7 +129,7 @@ const en: HomeCopy = {
     eyebrow: 'Start free',
     title: 'Not sure yet? Start with a free step.',
     items: [
-      { title: 'Reading Speed Test', desc: '2 minutes · your real reading speed and comprehension', href: '/programs/sharp-brain/speed-test', cta: 'Take the test' },
+      { title: 'Reading Speed Test', desc: 'About 3 minutes · your real reading speed and comprehension', href: '/programs/sharp-brain/speed-test', cta: 'Take the test' },
       { title: 'Overthinking Test', desc: '2 minutes · a self-awareness check, not a diagnosis', href: '/mind-assessment', cta: 'Take the test' },
     ],
   },
@@ -275,7 +275,7 @@ const hi: HomeCopy = {
     eyebrow: 'फ्री में शुरू करें',
     title: 'अभी तय नहीं? एक फ्री कदम से शुरू करें।',
     items: [
-      { title: 'रीडिंग स्पीड टेस्ट', desc: '2 मिनट · आपकी असली रीडिंग स्पीड और समझ', href: '/programs/sharp-brain/speed-test', cta: 'टेस्ट दें' },
+      { title: 'रीडिंग स्पीड टेस्ट', desc: 'लगभग 3 मिनट · आपकी असली रीडिंग स्पीड और समझ', href: '/programs/sharp-brain/speed-test', cta: 'टेस्ट दें' },
       { title: 'ओवरथिंकिंग टेस्ट', desc: '2 मिनट · एक सेल्फ-अवेयरनेस चेक, निदान नहीं', href: '/mind-assessment', cta: 'टेस्ट दें' },
     ],
   },
