@@ -488,15 +488,19 @@ function SaveResult({ c, resultToken }: { c: SpeedTestCopy; resultToken: string 
 
 function PracticeRun({ words, pace, onFinish }: { words: string[]; pace: number; onFinish: () => void }): React.JSX.Element {
   const [index, setIndex] = useState(0);
+  // Kept in a ref so a parent re-render (a new onFinish function) never
+  // restarts the word timer.
+  const onFinishRef = useRef(onFinish);
+  onFinishRef.current = onFinish;
 
   useEffect(() => {
     if (index >= words.length) {
-      onFinish();
+      onFinishRef.current();
       return undefined;
     }
     const timer = window.setTimeout(() => setIndex((i) => i + 1), 60_000 / pace);
     return () => window.clearTimeout(timer);
-  }, [index, words.length, pace, onFinish]);
+  }, [index, words.length, pace]);
 
   return (
     <div className="flex min-h-[220px] flex-col items-center justify-center" data-practice-run>
