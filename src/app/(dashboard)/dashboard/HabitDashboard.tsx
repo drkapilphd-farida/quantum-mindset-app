@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { currentProgramPriceLabel } from '@/features/sharp-brain-enrol/server'
 import { hasHabitBuilderAccess } from '@/lib/subscription/hasHabitBuilderAccess'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { GreetingHeading } from '@/components/dashboard/GreetingHeading'
@@ -10,7 +11,6 @@ import { getNextJourneyDay } from '@/features/quantum-journey/streakMotivation'
 import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/hasStartedPracticeJourney'
 import { primaryCheckoutHref, programs } from '@/config/site.config'
 
-const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 const PROGRAM_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
 // Domain Split™ — habit.mindurmind.org.in's entire dashboard: the 21-Day
@@ -78,7 +78,7 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
             rel="noopener noreferrer"
             className="mt-4 inline-flex rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-500 hover:to-indigo-400"
           >
-            Enrol now · {PROGRAM_PRICE}
+            Enrol now · {currentProgramPriceLabel()}
           </a>
         </div>
       )}

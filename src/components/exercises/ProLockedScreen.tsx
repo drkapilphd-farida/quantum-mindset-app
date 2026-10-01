@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { currentProgramPriceLabel } from '@/features/sharp-brain-enrol/server'
 import { Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -16,7 +17,6 @@ type ProLockedScreenProps = {
 // different (upgrade, not "finish the previous exercise"), and keeping
 // them separate means a mastery lock can never accidentally read as a
 // paywall or vice versa.
-const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 // Name, price and links from the programs registry (site.config.ts).
 export function ProLockedScreen({ title }: ProLockedScreenProps): React.JSX.Element {
@@ -28,11 +28,11 @@ export function ProLockedScreen({ title }: ProLockedScreenProps): React.JSX.Elem
         </div>
         <h1 className={EXERCISE_TITLE_CLASSNAME}>{title} is part of the {programs.sharpBrain.name}</h1>
         <p className={cn('mt-4', EXERCISE_BODY_CLASSNAME)}>
-          Enroll once ({PROGRAM_PRICE}, one-time) to unlock this exercise and all 30 days of the curriculum, with 7 live classes with Dr. Kapil Dev Sharma.
+          Enroll once ({currentProgramPriceLabel()}, one-time) to unlock this exercise and all 30 days of the curriculum, with 7 live classes with Dr. Kapil Dev Sharma.
         </p>
         <Button asChild size="lg" className="mt-10 min-w-[200px] rounded-full shadow-sm">
           <a href={primaryCheckoutHref('sharpBrain')} target="_blank" rel="noopener noreferrer">
-            Enroll for {PROGRAM_PRICE}
+            Enroll for {currentProgramPriceLabel()}
           </a>
         </Button>
         <p className="mt-4">

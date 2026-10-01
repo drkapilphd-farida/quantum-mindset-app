@@ -73,6 +73,12 @@ export function pricingSnapshot(now: number, testOfferExpiresAtMs: number | null
   return { serverNowMs: now, batches, seatsPerBatch: sharpBrainEnrolment.seatsPerBatch }
 }
 
+/** "₹8,999" / "₹9,999" — what enrolling in the next batch costs right now (server components). */
+export function currentProgramPriceLabel(now: number = Date.now()): string {
+  const next = pricingSnapshot(now).batches[0]
+  return `₹${(next?.amountInr ?? sharpBrainEnrolment.regularInr).toLocaleString('en-IN')}`
+}
+
 // ── Reading Speed Test offer ────────────────────────────────────────────
 
 export type TestOffer = { id: string; whatsappNumber: string; expiresAtMs: number; redeemed: boolean }
