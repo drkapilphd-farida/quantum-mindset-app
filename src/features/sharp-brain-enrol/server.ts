@@ -52,6 +52,8 @@ export type PricingSnapshot = {
   serverNowMs: number
   batches: PricedBatch[]
   seatsPerBatch: number | null
+  /** The signed-in visitor's email, to prefill checkout (only from the server action, never cached in a page). */
+  viewerEmail?: string | null
 }
 
 export function pricingSnapshot(now: number, testOfferExpiresAtMs: number | null = null): PricingSnapshot {

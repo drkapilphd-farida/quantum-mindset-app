@@ -148,7 +148,14 @@ export function BatchCheckout({
   const { snapshot, simulateNow, offerId } = useSharpBrainPricing();
   const c = enrolCopy[lang];
   const [chosen, setChosen] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [pending, setPending] = useState(false);
+  // Prefill with the signed-in learner's email once the server has said who they are.
+  const viewerEmail = snapshot?.viewerEmail ?? null;
+  useEffect(() => {
+    if (viewerEmail !== null) setEmail((current) => (current === "" ? viewerEmail : current));
+  }, [viewerEmail]);
   const [error, setError] = useState<Exclude<CheckoutResult, { ok: true }>["reason"] | null>(null);
   const batches = snapshot?.batches ?? [];
   const batch = batches.find((b) => b.start === chosen) ?? batches[0] ?? null;
@@ -161,7 +168,7 @@ export function BatchCheckout({
     setError(null);
     trackInitiateCheckout("Sharp Brain 30-Day Program");
     trackGaEvent("razorpay_checkout_click", { location, offer: selected.offer, batch: selected.start });
-    const result = await startSharpBrainCheckout({ batch: selected.start, offerId, simulateNow });
+    const result = await startSharpBrainCheckout({ batch: selected.start, email, name, offerId, simulateNow });
     if (result.ok) {
       window.location.assign(result.url);
       return;
@@ -175,6 +182,9 @@ export function BatchCheckout({
   const optionOn = app ? "border-emerald-500 bg-emerald-500/10 text-foreground" : "border-gold bg-gold-soft text-ink";
   const optionOff = app ? "border-border text-foreground hover:border-emerald-500/60" : "border-line-strong text-ink hover:border-gold/60";
   const faint = app ? "text-muted-foreground" : "text-ink-faint";
+  const input = app
+    ? "w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground"
+    : "w-full rounded-sm border border-line-strong bg-void px-4 py-3 text-[15px] text-ink";
   const button = app
     ? "inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:from-emerald-500 hover:to-emerald-400 disabled:opacity-60"
     : "inline-flex w-full items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44] disabled:opacity-60 sm:w-auto";
@@ -206,7 +216,42 @@ export function BatchCheckout({
         })}
       </div>
       {snapshot.seatsPerBatch !== null && <p className={`mt-2 text-[12.5px] ${faint}`}>{c.seatsLeft(snapshot.seatsPerBatch)}</p>}
-      <button type="button" onClick={() => void pay(batch)} disabled={pending} className={`${button} mt-5`} data-enrol-button>
+      <form
+        className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2"
+        onSubmit={(event) => {
+          event.preventDefault();
+          void pay(batch);
+        }}
+        id={`enrol-form-${location}`}
+      >
+        <label className="block">
+          <span className={`text-[12.5px] font-semibold ${faint}`}>{c.emailLabel}</span>
+          <input
+            type="email"
+            required
+            autoComplete="email"
+            maxLength={254}
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className={`${input} mt-1`}
+            data-enrol-email
+          />
+        </label>
+        <label className="block">
+          <span className={`text-[12.5px] font-semibold ${faint}`}>{c.nameLabel}</span>
+          <input
+            type="text"
+            autoComplete="name"
+            maxLength={80}
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            className={`${input} mt-1`}
+            data-enrol-name
+          />
+        </label>
+        <p className={`text-[12px] sm:col-span-2 ${faint}`}>{c.emailHint}</p>
+      </form>
+      <button type="submit" form={`enrol-form-${location}`} disabled={pending} className={`${button} mt-4`} data-enrol-button>
         {pending ? c.redirecting : c.enrolNow(inr(batch.amountInr))}
       </button>
       <p className={`mt-2 text-[12.5px] ${faint}`}>

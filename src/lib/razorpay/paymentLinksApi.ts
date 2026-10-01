@@ -20,6 +20,13 @@ export type CreatePaymentLinkInput = {
   expireAtMs: number
   /** Prefilled on the Razorpay page, e.g. the test-offer WhatsApp number ("91XXXXXXXXXX"). */
   customerContact?: string
+  /**
+   * The buyer's email — sent so the payment carries it. Razorpay's link page
+   * asks only for a phone number; without this the payment's email is the
+   * placeholder "void@razorpay.com" and no account can be matched by email.
+   */
+  customerEmail?: string
+  customerName?: string
   referenceId?: string
 }
 
@@ -41,7 +48,11 @@ export function buildPaymentLinkBody(input: CreatePaymentLinkInput, now: number)
     notify: { sms: false, email: false },
     notes: input.notes,
     ...(input.referenceId !== undefined ? { reference_id: input.referenceId } : {}),
-    ...(input.customerContact !== undefined ? { customer: { contact: `+${input.customerContact}` } } : {}),
+    customer: {
+      ...(input.customerName !== undefined ? { name: input.customerName } : {}),
+      ...(input.customerEmail !== undefined ? { email: input.customerEmail } : {}),
+      ...(input.customerContact !== undefined ? { contact: `+${input.customerContact}` } : {}),
+    },
   }
 }
 

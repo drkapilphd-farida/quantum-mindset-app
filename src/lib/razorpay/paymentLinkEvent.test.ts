@@ -40,3 +40,24 @@ describe('paymentForLink', () => {
     expect(normaliseShortUrl('rzp.io/rzp/ydvyaanf')).not.toBe(normaliseShortUrl(PROGRAM))
   })
 })
+
+describe('placeholder emails', () => {
+  const paid = (paymentEmail: string | null, customerEmail: string | null): unknown => ({
+    event: 'payment_link.paid',
+    payload: {
+      payment_link: { entity: { id: 'plink_B', short_url: 'https://rzp.io/rzp/ydVYaANF', notes: [], customer: { email: customerEmail } } },
+      payment: { entity: { id: 'pay_2', amount: 899900, currency: 'INR', email: paymentEmail, contact: '+919000000011' } },
+    },
+  })
+
+  it("treats Razorpay's void@razorpay.com as no email", () => {
+    const result = paymentForLink(paid('void@razorpay.com', null), 'https://rzp.io/rzp/ydVYaANF')
+    expect(result.ok && result.payment.email).toBeNull()
+  })
+
+  it("falls back to the link's customer email, lower-cased", () => {
+    const result = paymentForLink(paid('void@razorpay.com', 'Buyer@Example.com'), 'https://rzp.io/rzp/ydVYaANF')
+    expect(result.ok && result.payment.email).toBe('buyer@example.com')
+  })
+})
+

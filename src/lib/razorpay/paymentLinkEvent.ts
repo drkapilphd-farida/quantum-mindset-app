@@ -20,7 +20,7 @@ const PaymentLinkPaidSchema = z.object({
           .nullable()
           .optional()
           .transform((v): Record<string, unknown> => (v !== null && v !== undefined && !Array.isArray(v) ? v : {})),
-        customer: z.object({ name: z.string().nullable().optional() }).nullable().optional(),
+        customer: z.object({ name: z.string().nullable().optional(), email: z.string().nullable().optional() }).nullable().optional(),
       }),
     }),
     payment: z.object({
@@ -34,6 +34,14 @@ const PaymentLinkPaidSchema = z.object({
     }),
   }),
 })
+
+/** Razorpay's stand-in when no email was collected — never a real buyer. */
+const PLACEHOLDER_EMAILS = new Set(['void@razorpay.com'])
+
+function realEmail(value: string | null | undefined): string | null {
+  const email = value?.trim().toLowerCase() ?? ''
+  return email === '' || PLACEHOLDER_EMAILS.has(email) ? null : email
+}
 
 export type LinkPayment = {
   id: string
@@ -91,7 +99,7 @@ export function parsePaymentLinkPaid(
       id: p.id,
       amount: p.amount,
       currency: p.currency,
-      email: p.email ?? null,
+      email: realEmail(p.email) ?? realEmail(link.customer?.email),
       contact: p.contact ?? null,
       paymentLinkId: link.id,
       notes: link.notes,

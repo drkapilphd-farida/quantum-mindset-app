@@ -5,6 +5,7 @@ import { sharpBrainEnrolment } from '@/config/site.config'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
 import { createPaymentLink, hasPaymentLinksApi } from '@/lib/razorpay/paymentLinksApi'
+import { createClient } from '@/lib/supabase/server'
 import { findUpcomingBatch, priceForBatch } from './batches'
 import { PROGRAM_NOTE, activeOffer, discountsChargeable, enrolConfig, getTestOffer, pricingSnapshot, resolveNow, type PricingSnapshot } from './server'
 
@@ -22,22 +23,39 @@ export async function getSharpBrainPricing(input: unknown): Promise<PricingSnaps
   const now = resolveNow(parsed.success ? parsed.data.simulateNow : undefined)
   const offerId = parsed.success ? parsed.data.offerId : undefined
   const offer = offerId === undefined ? null : activeOffer(await getTestOffer(offerId), now)
-  return pricingSnapshot(now, offer?.expiresAtMs ?? null)
+  return { ...pricingSnapshot(now, offer?.expiresAtMs ?? null), viewerEmail: await viewerEmail() }
+}
+
+async function viewerEmail(): Promise<string | null> {
+  try {
+    const { data } = await (await createClient()).auth.getUser()
+    return data.user?.email ?? null
+  } catch {
+    return null
+  }
 }
 
 const CheckoutInput = z.object({
   batch: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  // Sent to Razorpay so the payment can be matched to the learner's account.
+  email: z.string().trim().toLowerCase().email().max(254),
+  name: z
+    .string()
+    .trim()
+    .max(80)
+    .optional()
+    .transform((v) => (v === undefined || v === '' ? undefined : v)),
   offerId: OfferIdSchema,
   simulateNow: SimulateSchema,
 })
 
-export type CheckoutResult = { ok: true; url: string } | { ok: false; reason: 'batch_closed' | 'unavailable' | 'rate_limited' }
+export type CheckoutResult = { ok: true; url: string } | { ok: false; reason: 'invalid_email' | 'batch_closed' | 'unavailable' | 'rate_limited' }
 
 const CHECKOUT_RATE_LIMIT = { max: 10, windowMs: 60_000 }
 
 export async function startSharpBrainCheckout(input: unknown): Promise<CheckoutResult> {
   const parsed = CheckoutInput.safeParse(input)
-  if (!parsed.success) return { ok: false, reason: 'unavailable' }
+  if (!parsed.success) return { ok: false, reason: parsed.error.issues.some((i) => i.path[0] === 'email') ? 'invalid_email' : 'unavailable' }
   const ip = await getClientIp()
   if (!checkRateLimit(`sharp-brain-checkout:${ip}`, CHECKOUT_RATE_LIMIT).allowed) return { ok: false, reason: 'rate_limited' }
 
@@ -71,6 +89,8 @@ export async function startSharpBrainCheckout(input: unknown): Promise<CheckoutR
         ...(price.offer === 'test1000' && offer !== null ? { offer_id: offer.id } : {}),
       },
       expireAtMs,
+      customerEmail: parsed.data.email,
+      ...(parsed.data.name !== undefined ? { customerName: parsed.data.name } : {}),
       ...(price.offer === 'test1000' && offer !== null ? { customerContact: offer.whatsappNumber } : {}),
     },
     Date.now(),
