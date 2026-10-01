@@ -16,7 +16,7 @@ type AppTwoMilestoneBannerProps = {
 // dismissible mention rather than a hard sell.
 const MILESTONE_COPY: Record<7 | 14, string> = {
   7: 'One real week down. Whenever you’re ready to point that speed at your own documents and books, the Sharp Brain 30-Day Program is here.',
-  14: 'Two real weeks in. When you’re ready for the heavy-duty suite (Upload Documents, Neural Map Notes, Memory Techniques), App 2 is ₹9,999.',
+  14: 'Two real weeks in. When you’re ready for the full Sharp Brain 30-Day Program — 7 live classes and all 30 days of practice — it’s here.',
 }
 
 // App 1 → App 2 Soft Upsell™ — shown only on the two real mid-journey

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { LiveProgramPrice } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 import Link from 'next/link'
 import { Check, ExternalLink, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -228,12 +229,12 @@ export function PricingPlansGrid(): React.JSX.Element {
           <p className="text-lg font-semibold text-foreground">Sharp Brain 30-Day Program + Live Classes</p>
           <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
             The self-paced 30-day curriculum, paired with 7 live mentorship sessions from Dr. Kapil Dev Sharma — plus full access to Document Mastery
-            Studio (Upload & Learn). One-time enrollment — ₹9,999.
+            Studio (Upload & Learn). One-time enrollment — <LiveProgramPrice />.
           </p>
         </div>
         <Button asChild size="lg" className="w-full shrink-0 rounded-full sm:w-auto">
           <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
-            Enroll Now for ₹9,999
+            Enroll Now for <LiveProgramPrice />
             <ExternalLink className="size-4" aria-hidden="true" />
           </a>
         </Button>

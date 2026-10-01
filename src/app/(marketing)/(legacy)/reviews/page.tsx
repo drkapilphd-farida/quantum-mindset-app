@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { currentProgramPriceLabel } from '@/features/sharp-brain-enrol/server'
 import Link from 'next/link'
 import { GraduationCap, MessageCircle, PlayCircle, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -21,6 +22,10 @@ export const metadata: Metadata = {
 // fabricated.
 // Entirely static markup (no client state needed), so this stays a
 // Server Component end to end.
+
+// Re-rendered every minute so the program price follows the batch/early-bird logic.
+export const revalidate = 60
+
 export default function ReviewsPage(): React.JSX.Element {
   return (
     <>
@@ -33,7 +38,7 @@ export default function ReviewsPage(): React.JSX.Element {
           <Button asChild size="sm" className="brand-gradient w-full rounded-full text-white shadow-md hover:opacity-90 sm:w-auto">
             <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
-              Enroll Now for ₹9,999 →
+              Enroll Now for {currentProgramPriceLabel()} →
             </a>
           </Button>
         </div>
@@ -65,7 +70,7 @@ export default function ReviewsPage(): React.JSX.Element {
           >
             <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
               <Sparkles className="size-4" aria-hidden="true" />
-              Enroll Now for ₹9,999 →
+              Enroll Now for {currentProgramPriceLabel()} →
             </a>
           </Button>
           <Button
@@ -133,14 +138,14 @@ export default function ReviewsPage(): React.JSX.Element {
           <div>
             <p className="text-lg font-semibold text-foreground">Convinced? Your transformation starts on Day 1.</p>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              30-day structured curriculum, 7 live mentorship sessions, real WPM checkpoints. One-time enrollment — ₹9,999.
+              30-day structured curriculum, 7 live mentorship sessions, real WPM checkpoints. One-time enrollment — {currentProgramPriceLabel()}.
             </p>
           </div>
           <div className="flex w-full flex-col gap-2.5 sm:w-fit sm:flex-row">
             <Button asChild size="lg" className="brand-gradient w-full rounded-full text-white shadow-lg hover:opacity-90 sm:w-auto">
               <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
                 <Sparkles className="size-4" aria-hidden="true" />
-                Enroll Now for ₹9,999 →
+                Enroll Now for {currentProgramPriceLabel()} →
               </a>
             </Button>
             <Button asChild size="lg" className="w-full rounded-full bg-[#25D366] text-white shadow-lg hover:bg-[#1EBE5B] sm:w-auto">

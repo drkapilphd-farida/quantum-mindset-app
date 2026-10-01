@@ -74,5 +74,5 @@ export default function TestOfferPage({
 
 function OfferPrice({ text }: { text: (price: string, regular: string) => string }): React.JSX.Element {
   const next = useNextBatch();
-  return <p className="mt-3 text-[17px] leading-relaxed text-ink">{text(inr(next?.amountInr ?? 8999), inr(next?.regularInr ?? 9999))}</p>;
+  return <p className="mt-3 text-[17px] leading-relaxed text-ink">{text(inr(next?.amountInr ?? sharpBrainEnrolment.floorInr), inr(next?.regularInr ?? sharpBrainEnrolment.regularInr))}</p>;
 }

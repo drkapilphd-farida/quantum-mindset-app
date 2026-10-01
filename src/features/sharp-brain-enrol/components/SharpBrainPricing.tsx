@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { waLink } from "@/config/site.config";
+import { sharpBrainEnrolment, waLink } from "@/config/site.config";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 import { trackInitiateCheckout } from "@/lib/analytics/conversions";
 import { getSharpBrainPricing, startSharpBrainCheckout, type CheckoutResult } from "../actions";
@@ -93,7 +93,7 @@ export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; clas
 export function useEnrolLabel(): string {
   const { lang } = useLanguage();
   const next = useNextBatch();
-  return enrolCopy[lang].enrolNow(inr(next?.amountInr ?? 9999));
+  return enrolCopy[lang].enrolNow(inr(next?.amountInr ?? sharpBrainEnrolment.regularInr));
 }
 
 /**
@@ -267,5 +267,23 @@ export function BatchCheckout({
         </p>
       )}
     </div>
+  );
+}
+
+function LivePriceAmount(): React.JSX.Element {
+  const next = useNextBatch();
+  return <>{next === null ? "" : inr(next.amountInr)}</>;
+}
+
+/**
+ * The current program price ("₹8,999" during early-bird, else "₹9,999") for
+ * client components outside a pricing page. Fetched from the server; empty
+ * until it arrives, so no wrong price ever flashes.
+ */
+export function LiveProgramPrice(): React.JSX.Element {
+  return (
+    <SharpBrainPricingProvider initial={null}>
+      <LivePriceAmount />
+    </SharpBrainPricingProvider>
   );
 }

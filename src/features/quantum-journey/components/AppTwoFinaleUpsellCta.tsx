@@ -1,4 +1,7 @@
+'use client'
+
 import { primaryCheckoutHref } from '@/config/site.config'
+import { LiveProgramPrice } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 import { Sparkles } from 'lucide-react'
 
 // Paid button link — read from the programs registry (site.config.ts).
@@ -31,7 +34,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
       </div>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed font-medium text-foreground sm:text-base">
         अब अपनी इस नई स्पीड को अपने खुद के डॉक्यूमेंट्स और किताबों पर आजमाएं — Get 30-Day Sharp Brain Pro Suite (App 2) with Upload Documents, Spider
-        Notes, &amp; Memory Techniques at ₹9,999.
+        Notes, &amp; Memory Techniques at <LiveProgramPrice />.
       </p>
       <a
         href={SHARP_BRAIN_CHECKOUT_HREF}
@@ -41,7 +44,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
         data-enroll-button="true"
       >
         <Sparkles className="size-4" aria-hidden="true" />
-        Enroll Now for ₹9,999 →
+        Enroll Now for <LiveProgramPrice /> →
       </a>
     </div>
   )

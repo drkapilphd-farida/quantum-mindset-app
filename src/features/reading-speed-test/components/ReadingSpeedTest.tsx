@@ -5,7 +5,7 @@ import { RotateCcw } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "@/components/ui";
 import GuaranteeBadge from "@/components/sharp-brain/GuaranteeBadge";
-import { waLink } from "@/config/site.config";
+import { sharpBrainEnrolment, waLink } from "@/config/site.config";
 import { trackLead } from "@/lib/analytics/conversions";
 import { inr } from "@/features/sharp-brain-enrol/copy";
 import {
@@ -467,7 +467,7 @@ function TestOfferHeadline({ c, expiresAtMs }: { c: SpeedTestCopy; expiresAtMs: 
   const next = useNextBatch();
   return (
     <>
-      <p className="text-[18px] font-bold leading-snug text-ink">{c.offerUnlocked(inr(next?.amountInr ?? 8999), inr(next?.regularInr ?? 9999))}</p>
+      <p className="text-[18px] font-bold leading-snug text-ink">{c.offerUnlocked(inr(next?.amountInr ?? sharpBrainEnrolment.floorInr), inr(next?.regularInr ?? sharpBrainEnrolment.regularInr))}</p>
       <p className="mt-1 text-[14px] text-ink-dim">
         {c.offerValid} <Countdown endsAtMs={expiresAtMs} className="font-semibold text-ink" />
       </p>
