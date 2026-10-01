@@ -3,6 +3,8 @@ import { createClient } from '@/lib/supabase/server'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { ChooseLearningMethodExperience } from '@/components/welcome/ChooseLearningMethodExperience'
 import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/hasStartedPracticeJourney'
+import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
+import { istDayMonth } from '@/features/sharp-brain-enrol/copy'
 
 // Belt-and-suspenders against edge/CDN caching serving the wrong
 // domain's card — same reasoning and same fix as
@@ -42,5 +44,20 @@ export default async function ChooseLearningMethodPage(): Promise<React.JSX.Elem
   const appDomain = await getAppDomain()
   const hasStartedJourney = user !== null && appDomain === 'habit' ? await hasStartedPracticeJourney(user.id) : false
 
-  return <ChooseLearningMethodExperience isAuthenticated={user !== null} appDomain={appDomain} hasStartedJourney={hasStartedJourney} />
+  const next = pricingSnapshot(Date.now()).batches[0]
+  const programPrice = {
+    amountInr: next?.amountInr ?? 9999,
+    regularInr: next?.regularInr ?? 9999,
+    earlyBird: next?.offer === 'earlybird',
+    batchLabel: next === undefined ? '' : istDayMonth(next.startsAtMs, 'en'),
+  }
+
+  return (
+    <ChooseLearningMethodExperience
+      isAuthenticated={user !== null}
+      appDomain={appDomain}
+      hasStartedJourney={hasStartedJourney}
+      programPrice={programPrice}
+    />
+  )
 }

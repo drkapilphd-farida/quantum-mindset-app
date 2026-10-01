@@ -51,9 +51,14 @@ type ChooseLearningMethodExperienceProps = {
   // habit host only: the Practice Journey is shown only to learners who
   // already started it; everyone else is offered the Sharp Brain program.
   hasStartedJourney: boolean
+  /**
+   * The Sharp Brain price right now, decided on the server (early-bird /
+   * regular, next batch) — the same logic as the program page and checkout.
+   */
+  programPrice: { amountInr: number; regularInr: number; earlyBird: boolean; batchLabel: string }
 }
 
-const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
+const inr = (amount: number): string => `₹${amount.toLocaleString('en-IN')}`
 
 type PathCardProps = {
   emoji: string
@@ -94,7 +99,10 @@ function PathCard({ emoji, title, description, points, ctaLabel, onSelect }: Pat
   )
 }
 
-export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, hasStartedJourney }: ChooseLearningMethodExperienceProps): React.JSX.Element {
+export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, hasStartedJourney, programPrice }: ChooseLearningMethodExperienceProps): React.JSX.Element {
+  const programPriceLine = programPrice.earlyBird
+    ? `Early-bird for the ${programPrice.batchLabel} batch · ${inr(programPrice.amountInr)} (regular ${inr(programPrice.regularInr)})`
+    : `One-time enrolment · ${inr(programPrice.amountInr)} · next batch ${programPrice.batchLabel}`
   const router = useRouter()
   const showJourney = appDomain === 'habit' && hasStartedJourney
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -181,8 +189,8 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
                 emoji="⚡"
                 title={programs.sharpBrain.name}
                 description={programs.sharpBrain.outcome}
-                points={[programs.sharpBrain.format, `One-time enrolment · ${PROGRAM_PRICE}`]}
-                ctaLabel={`Enrol now · ${PROGRAM_PRICE}`}
+                points={[programs.sharpBrain.format, programPriceLine]}
+                ctaLabel={`Enrol now · ${inr(programPrice.amountInr)}`}
                 onSelect={() => {
                   trackInitiateCheckout(programs.sharpBrain.name)
                   window.open(PROGRAM_CHECKOUT_HREF, '_blank', 'noopener,noreferrer')
