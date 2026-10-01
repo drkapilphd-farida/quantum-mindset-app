@@ -30,9 +30,9 @@ export function EspZenerTelepathySettings({ onStart }: EspZenerTelepathySettings
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Zener Card Attention Sprint</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Zener Card Sprint</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          A hidden symbol is drawn each round. Don&apos;t think it through — tap the symbol your gut feels is right.
+          A guessing game with a shuffled 25-card deck — 5 symbols, 5 cards each. Each round one card is hidden: pick a symbol and build a streak.
         </p>
       </div>
 

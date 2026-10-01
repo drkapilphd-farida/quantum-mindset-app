@@ -57,7 +57,7 @@ const WEEK_2_POOL: readonly JourneyStepExercise[] = [
 // Visualisation exercises are strategically placed across both Week 2
 // and Week 3, never confined to just one week.
 const WEEK_3_POOL: readonly JourneyStepExercise[] = [
-  { exerciseId: 'esp-zener-telepathy', title: 'Zener Card Attention Sprint', domain: 'intuition' },
+  { exerciseId: 'esp-zener-telepathy', title: 'Zener Card Sprint', domain: 'intuition' },
   { exerciseId: 'hemispheric-color-sync', title: 'Color-Word Sync Grid', domain: 'right_brain' },
   { exerciseId: 'quantum-mental-rotation', title: 'Mental Object Rotation', domain: 'visualisation' },
 ]
@@ -192,8 +192,8 @@ export function getReadingLengthTier(day: number): JourneyLengthTier {
 export type ExerciseLabelVariant = 'productivity' | 'spiritual'
 
 const ZENER_LABEL_BY_VARIANT: Record<ExerciseLabelVariant, string> = {
-  productivity: 'Pattern Intuition Sprint™',
-  spiritual: 'Zener Card Attention',
+  productivity: 'Zener Card Sprint',
+  spiritual: 'Zener Card Sprint',
 }
 
 export function resolveExerciseDisplayTitle(exercise: JourneyStepExercise, variant: ExerciseLabelVariant): string {

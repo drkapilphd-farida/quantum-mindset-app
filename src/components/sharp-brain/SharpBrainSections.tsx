@@ -18,7 +18,6 @@ import { BatchCheckout, PriceLine, useEnrolLabel, useNextBatch } from "@/feature
 import { Eyebrow } from "../ui";
 import TrainerBio from "../TrainerBio";
 import VideoReviewGrid from "../VideoReviewGrid";
-import SiteTodo from "../site/SiteTodo";
 
 // Sections of /programs/sharp-brain (rewritten 1 Oct 2026), in page order:
 // hero → sound familiar? → why it happens / what we train → outcomes →
@@ -214,7 +213,6 @@ export function SharpBrainClasses(): React.JSX.Element {
       <div className="mx-auto max-w-content">
         <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
         <h2 className={h2Class}>{c.title}</h2>
-        <SiteTodo>the 7-class outline is a draft from the brief — Dr. Kapil to confirm titles and lines (sharpBrainCopy.ts → classes).</SiteTodo>
         <ol className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {c.items.map((item, index) => (
             <li key={item.title} className="rounded-sm border border-line bg-void p-5">

@@ -160,7 +160,7 @@ export function EspZenerTelepathyCanvas({ onComplete, onExitRequested }: EspZene
   return (
     <ReadingLayout maxWidthClassName="max-w-2xl" onExit={() => onExitRequested(elapsedMs)}>
       <div className="flex w-full items-center justify-between">
-        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Zener Card Attention Sprint</p>
+        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Zener Card Sprint</p>
         <button
           type="button"
           onClick={handleToggleSound}
@@ -195,7 +195,7 @@ export function EspZenerTelepathyCanvas({ onComplete, onExitRequested }: EspZene
           {lastOutcome.isCorrect ? `Correct! +${lastOutcome.pointsEarned} points` : `Not quite — it was ${targetLabel}.`}
         </p>
       ) : (
-        <p className="mt-8 text-center text-sm text-muted-foreground">Trust your first instinct. Which symbol is it?</p>
+        <p className="mt-8 text-center text-sm text-muted-foreground">Which symbol is on the hidden card? Pick one.</p>
       )}
 
       <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4">

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { EspZenerTelepathyExperience } from '@/features/esp-zener-telepathy/components/EspZenerTelepathyExperience'
 
 export const metadata: Metadata = {
-  title: 'Zener Card Attention Sprint — Sharp Brain Lab',
+  title: 'Zener Card Sprint — Sharp Brain Lab',
   robots: { index: false, follow: false },
 }
 

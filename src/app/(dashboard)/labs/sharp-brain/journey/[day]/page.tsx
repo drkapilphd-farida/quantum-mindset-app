@@ -28,7 +28,7 @@ const FREE_JOURNEY_DAYS = 7
 
 export const metadata: Metadata = {
   title: programs.focusStarter.appName,
-  description: 'An adaptive, week-by-week guided daily session across Reading, Intuition, Visual Focus, and Visualisation.',
+  description: 'An adaptive, week-by-week guided daily session across Reading, Visual Focus, Memory and Visualisation.',
   robots: { index: false, follow: false },
 }
 

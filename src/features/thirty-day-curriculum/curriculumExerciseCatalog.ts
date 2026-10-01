@@ -23,7 +23,7 @@ export const CURRICULUM_EXERCISE_CATEGORIES: readonly CurriculumExerciseCategory
 
 export const CURRICULUM_CATEGORY_LABELS: Record<CurriculumExerciseCategory, string> = {
   'brain-gym': 'Brain Gym',
-  'right-brain-intuition': 'Visual Focus / Intuition',
+  'right-brain-intuition': 'Visual Focus & Memory',
   visualization: 'Visualization',
   'reading-intelligence': 'Reading Intelligence',
 }
@@ -114,7 +114,7 @@ const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   { id: 'image-flash-grid', title: 'Image Flash Grid™', href: '/labs/sharp-brain/image-flash-grid', category: 'right-brain-intuition' },
   {
     id: 'esp-zener-telepathy-sprint',
-    title: 'Zener Card Attention Sprint',
+    title: 'Zener Card Sprint',
     href: '/labs/sharp-brain/zener-intuition',
     category: 'right-brain-intuition',
   },

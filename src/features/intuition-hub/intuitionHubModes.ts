@@ -18,8 +18,8 @@ export type IntuitionHubMode = {
 export const INTUITION_HUB_MODES: readonly IntuitionHubMode[] = [
   {
     id: 'esp-zener-telepathy-sprint',
-    title: 'Zener Card Attention Sprint',
-    purpose: 'Keep your attention on a shuffled 25-card Zener deck and build streak multipliers.',
+    title: 'Zener Card Sprint',
+    purpose: 'A guessing game with a shuffled 25-card Zener deck — build streak multipliers.',
     status: 'available',
     href: '/labs/sharp-brain/zener-intuition',
     exerciseId: 'esp-zener-telepathy-sprint',
