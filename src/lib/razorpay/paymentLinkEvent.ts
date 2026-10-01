@@ -14,6 +14,13 @@ const PaymentLinkPaidSchema = z.object({
       entity: z.object({
         id: z.string(),
         short_url: z.string().nullable().optional(),
+        // Razorpay sends an empty array, not an object, when there are no notes.
+        notes: z
+          .union([z.record(z.string(), z.unknown()), z.array(z.unknown())])
+          .nullable()
+          .optional()
+          .transform((v): Record<string, unknown> => (v !== null && v !== undefined && !Array.isArray(v) ? v : {})),
+        customer: z.object({ name: z.string().nullable().optional() }).nullable().optional(),
       }),
     }),
     payment: z.object({
@@ -28,7 +35,17 @@ const PaymentLinkPaidSchema = z.object({
   }),
 })
 
-export type LinkPayment = { id: string; amount: number; currency: string; email: string | null; contact: string | null; paymentLinkId: string }
+export type LinkPayment = {
+  id: string
+  amount: number
+  currency: string
+  email: string | null
+  contact: string | null
+  paymentLinkId: string
+  /** The payment link's notes (set by our server when it created the link). */
+  notes: Record<string, unknown>
+  customerName: string | null
+}
 
 export type LinkPaymentResult = { ok: true; payment: LinkPayment } | { ok: false; reason: 'not_payment_link_paid' | 'invalid_payload' | 'other_link' }
 
@@ -46,6 +63,18 @@ export function normaliseShortUrl(url: string): string {
  * `expectedShortUrl` (or a link whose id is in `extraLinkIds`).
  */
 export function paymentForLink(json: unknown, expectedShortUrl: string, extraLinkIds: readonly string[] = []): LinkPaymentResult {
+  const parsed = parsePaymentLinkPaid(json)
+  if (!parsed.ok) return parsed
+  const { payment, shortUrl } = parsed
+  const matchesUrl = shortUrl !== null && normaliseShortUrl(shortUrl) === normaliseShortUrl(expectedShortUrl)
+  if (!matchesUrl && !extraLinkIds.includes(payment.paymentLinkId)) return { ok: false, reason: 'other_link' }
+  return { ok: true, payment }
+}
+
+/** Any `payment_link.paid` event, whichever link it came from. */
+export function parsePaymentLinkPaid(
+  json: unknown,
+): { ok: true; payment: LinkPayment; shortUrl: string | null } | { ok: false; reason: 'not_payment_link_paid' | 'invalid_payload' } {
   const envelope = z.object({ event: z.string() }).safeParse(json)
   if (!envelope.success) return { ok: false, reason: 'invalid_payload' }
   if (envelope.data.event !== 'payment_link.paid') return { ok: false, reason: 'not_payment_link_paid' }
@@ -54,11 +83,21 @@ export function paymentForLink(json: unknown, expectedShortUrl: string, extraLin
   if (!parsed.success) return { ok: false, reason: 'invalid_payload' }
 
   const link = parsed.data.payload.payment_link.entity
-  const matchesUrl = typeof link.short_url === 'string' && normaliseShortUrl(link.short_url) === normaliseShortUrl(expectedShortUrl)
-  if (!matchesUrl && !extraLinkIds.includes(link.id)) return { ok: false, reason: 'other_link' }
-
   const p = parsed.data.payload.payment.entity
-  return { ok: true, payment: { id: p.id, amount: p.amount, currency: p.currency, email: p.email ?? null, contact: p.contact ?? null, paymentLinkId: link.id } }
+  return {
+    ok: true,
+    shortUrl: typeof link.short_url === 'string' ? link.short_url : null,
+    payment: {
+      id: p.id,
+      amount: p.amount,
+      currency: p.currency,
+      email: p.email ?? null,
+      contact: p.contact ?? null,
+      paymentLinkId: link.id,
+      notes: link.notes,
+      customerName: link.customer?.name ?? null,
+    },
+  }
 }
 
 /** Optional comma-separated extra link ids from an env var (e.g. a test-mode link). */

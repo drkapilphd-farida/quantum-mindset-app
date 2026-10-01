@@ -1,60 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { programs, trainer, primaryCheckoutHref } from "@/config/site.config";
-import { FREE_TEST_LINKS, ORGANISATIONS_HREF, SCHOOLS_HREF } from "@/config/navigation";
+import { programs, trainer } from "@/config/site.config";
+import { FREE_TEST_LINKS } from "@/config/navigation";
+import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { QSR_ADULT_VIDEO_REVIEWS, QSR_MORE_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { trackGaEvent } from "@/lib/analytics/ga4";
-import { sharpBrainCopy, type AudienceTab } from "@/lib/sharpBrainCopy";
+import { sharpBrainCopy, type ExerciseGroup } from "@/lib/sharpBrainCopy";
+import { istDayMonth } from "@/features/sharp-brain-enrol/copy";
+import { BatchCheckout, PriceLine, useEnrolLabel, useNextBatch } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import { Eyebrow } from "../ui";
 import TrainerBio from "../TrainerBio";
 import VideoReviewGrid from "../VideoReviewGrid";
+import SiteTodo from "../site/SiteTodo";
 
-// Sections of /programs/sharp-brain (site-rebuild Phase 5B), in page order:
-// hero → audiences (tabs) → 5 skills → how it works → formats & prices →
-// parents → proof → trainer → guarantee → FAQ → final CTA.
+// Sections of /programs/sharp-brain (rewritten 1 Oct 2026), in page order:
+// hero → sound familiar? → why it happens / what we train → outcomes →
+// inside the app → 7 live classes → who it's for → how it works → proof →
+// trainer → the offer (#enrol: value stack, batch, price, guarantee) →
+// FAQ → final CTA. Prices and batch dates come from SharpBrainPricingProvider.
 
 function useCopy(): (typeof sharpBrainCopy)["en"] {
   const { lang } = useLanguage();
   return sharpBrainCopy[lang];
 }
 
-const PROGRAM_CHECKOUT = primaryCheckoutHref("sharpBrain");
-
-function inr(amount: number): string {
-  return `₹${amount.toLocaleString("en-IN")}`;
-}
-
 const sectionClass = "border-b border-line px-4 py-16 sm:px-8 sm:py-20";
+const h2Class = "mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]";
+const ENROL_HREF = "#enrol";
 
-// The two Sharp Brain calls to action (hero and final CTA): enrol, or take
-// the free Reading Speed Test. The Razorpay link also fires InitiateCheckout
-// through the site-wide ConversionTracker.
-function EnrolAndTestButtons({
-  enrol,
-  speedTest,
-  location,
-  className = "",
-}: {
-  enrol: string;
-  speedTest: string;
-  location: string;
-  className?: string;
-}): React.JSX.Element {
+// The two calls to action (hero and final): enrol (→ batch picker in the
+// offer section), or take the free Reading Speed Test.
+function EnrolAndTestButtons({ speedTest, location, className = "" }: { speedTest: string; location: string; className?: string }): React.JSX.Element {
+  const enrol = useEnrolLabel();
   return (
     <div className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${className}`}>
       <a
-        href={PROGRAM_CHECKOUT}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => trackGaEvent("razorpay_checkout_click", { location })}
+        href={ENROL_HREF}
+        onClick={() => trackGaEvent("sharp_brain_enrol_click", { location })}
         className="inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
+        data-enrol-link
       >
         {enrol}
       </a>
@@ -70,18 +61,18 @@ function EnrolAndTestButtons({
 
 export function SharpBrainHero(): React.JSX.Element {
   const c = useCopy().hero;
+  const { lang } = useLanguage();
+  const next = useNextBatch();
   return (
     <section id="top" className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
       <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         <div>
-          <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-gold">{c.parentLine}</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-gold">{c.eyebrow}</p>
           <h1 className="mt-4 text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px] lg:text-[50px]">{c.h1}</h1>
           <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
-          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-ink-dim">{c.positioning}</p>
-          <EnrolAndTestButtons enrol={c.enrol} speedTest={c.speedTest} location="sharp_brain_hero" className="mt-8" />
-          <a href="#formats" className="mt-4 inline-block text-[14px] font-semibold text-ink-dim underline-offset-4 hover:text-ink hover:underline">
-            {c.formatsLink}
-          </a>
+          <EnrolAndTestButtons speedTest={c.speedTest} location="sharp_brain_hero" className="mt-8" />
+          <PriceLine className="mt-4" />
+          {next !== null && <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint">{c.trust(istDayMonth(next.startsAtMs, lang))}</p>}
         </div>
         <div className="relative mx-auto w-full max-w-[480px]">
           <div className="relative aspect-[1374/1145] w-full overflow-hidden rounded-sm border border-line-strong bg-panel2">
@@ -93,78 +84,168 @@ export function SharpBrainHero(): React.JSX.Element {
   );
 }
 
-export function SharpBrainAudiences(): React.JSX.Element {
-  const c = useCopy().audiences;
-  const [active, setActive] = useState<AudienceTab["id"]>("parents");
-  // #parents / #students / #professionals links (hero, nav, other pages) open that tab.
-  useEffect(() => {
-    function fromHash(): void {
-      const id = window.location.hash.replace("#", "");
-      if (id === "parents" || id === "students" || id === "professionals") setActive(id);
-    }
-    fromHash();
-    window.addEventListener("hashchange", fromHash);
-    return () => window.removeEventListener("hashchange", fromHash);
-  }, []);
-  const tab = c.tabs.find((item) => item.id === active) ?? c.tabs[0];
-
+export function SharpBrainProblems(): React.JSX.Element {
+  const c = useCopy().problems;
   return (
-    <section id="who-its-for" className={`${sectionClass} bg-panel`}>
+    <section id="sound-familiar" className={`${sectionClass} bg-panel`}>
       <div className="mx-auto max-w-content">
         <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.title}</h2>
-        <div role="tablist" aria-label={c.title} className="mt-8 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          {c.tabs.map((item) => (
-            <button
-              key={item.id}
-              id={item.id}
-              type="button"
-              role="tab"
-              aria-selected={active === item.id}
-              aria-controls="audience-panel"
-              onClick={() => setActive(item.id)}
-              className={`scroll-mt-24 rounded-sm border px-4 py-2.5 text-left text-[14px] font-semibold transition-colors ${
-                active === item.id ? "border-gold bg-gold text-[#1B1508]" : "border-line-strong text-ink-dim hover:text-ink"
-              }`}
-            >
-              {item.label}
-            </button>
+        <h2 className={h2Class}>{c.title}</h2>
+        <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {c.cards.map((card) => (
+            <li key={card} className="rounded-sm border border-line bg-void p-5 text-[16px] font-semibold leading-snug text-ink">
+              “{card}”
+            </li>
           ))}
-        </div>
-        {tab !== undefined && (
-          <div id="audience-panel" role="tabpanel" aria-labelledby={tab.id} className="mt-6 rounded-sm border border-line bg-void p-6 sm:p-7">
-            <h3 className="text-[19px] font-bold text-ink">{tab.title}</h3>
-            <ul className="mt-4 space-y-3">
-              {tab.points.map((point) => (
-                <li key={point} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink-dim">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        </ul>
+        <p className="mt-8 max-w-2xl text-[17px] leading-relaxed text-ink">{c.line}</p>
       </div>
     </section>
   );
 }
 
-export function SharpBrainSkills(): React.JSX.Element {
-  const c = useCopy().skills;
+export function SharpBrainWhy(): React.JSX.Element {
+  const c = useCopy().why;
   return (
     <section id="skills" className={sectionClass}>
       <div className="mx-auto max-w-content">
         <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.title}</h2>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {c.items.map((item, index) => (
-            <div key={item.title} className="rounded-sm border border-line bg-panel p-5">
-              <span className="font-mono text-[12px] font-semibold text-gold">0{index + 1}</span>
-              <h3 className="mt-2 text-[17px] font-bold text-ink">{item.title}</h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-ink-dim">{item.desc}</p>
-            </div>
+        <h2 className={h2Class}>{c.title}</h2>
+        <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-ink-dim">{c.intro}</p>
+        <div className="mt-10 hidden grid-cols-[0.7fr_1fr_1.2fr_1fr] gap-4 border-b border-line-strong pb-3 font-mono text-[11.5px] uppercase tracking-[0.08em] text-ink-faint lg:grid">
+          <span>{c.headings.skill}</span>
+          <span>{c.headings.wrong}</span>
+          <span>{c.headings.train}</span>
+          <span>{c.headings.change}</span>
+        </div>
+        <ol className="mt-6 space-y-4 lg:mt-0 lg:space-y-0">
+          {c.rows.map((row, index) => (
+            <li
+              key={row.skill}
+              className="grid grid-cols-1 gap-3 rounded-sm border border-line bg-panel p-5 lg:grid-cols-[0.7fr_1fr_1.2fr_1fr] lg:gap-4 lg:rounded-none lg:border-0 lg:border-b lg:bg-transparent lg:px-0 lg:py-5"
+            >
+              <h3 className="text-[17px] font-bold text-ink">
+                <span className="mr-2 font-mono text-[12px] font-semibold text-gold">0{index + 1}</span>
+                {row.skill}
+              </h3>
+              <WhyCell label={c.headings.wrong} text={row.wrong} />
+              <WhyCell label={c.headings.train} text={row.train} strong />
+              <WhyCell label={c.headings.change} text={row.change} accent />
+            </li>
+          ))}
+        </ol>
+        <p className="mt-8 max-w-3xl text-[15px] leading-relaxed text-ink-dim">{c.footer}</p>
+      </div>
+    </section>
+  );
+}
+
+function WhyCell({ label, text, strong = false, accent = false }: { label: string; text: string; strong?: boolean; accent?: boolean }): React.JSX.Element {
+  return (
+    <div>
+      <p className="font-mono text-[10.5px] uppercase tracking-[0.08em] text-ink-faint lg:hidden">{label}</p>
+      <p className={`mt-1 text-[14.5px] leading-relaxed lg:mt-0 ${accent ? "font-semibold text-teal" : strong ? "text-ink" : "text-ink-dim"}`}>{text}</p>
+    </div>
+  );
+}
+
+export function SharpBrainOutcomes(): React.JSX.Element {
+  const c = useCopy().outcomes;
+  return (
+    <section id="outcomes" className={`${sectionClass} bg-panel`}>
+      <div className="mx-auto max-w-content">
+        <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
+        <h2 className={h2Class}>{c.title}</h2>
+        <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {c.items.map((item) => (
+            <li key={item} className="flex items-start gap-3 rounded-sm border border-line bg-void p-5 text-[15px] leading-relaxed text-ink">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+const APP_SHOTS: Record<ExerciseGroup["id"], string> = {
+  focus: "/assets/sharp-brain/app/focus-color-word-sync.webp",
+  reading: "/assets/sharp-brain/app/reading-phrase-reading.webp",
+  memory: "/assets/sharp-brain/app/memory-dot-memory-grid.webp",
+  visual: "/assets/sharp-brain/app/visual-sensory-imagery-builder.webp",
+  calm: "/assets/sharp-brain/app/calm-breath-balance.webp",
+};
+
+export function SharpBrainApp(): React.JSX.Element {
+  const c = useCopy().app;
+  return (
+    <section id="inside-the-app" className={sectionClass}>
+      <div className="mx-auto max-w-content">
+        <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
+        <h2 className={h2Class}>{c.title}</h2>
+        <p className="mt-3 text-[16px] text-ink-dim">{c.note}</p>
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {c.groups.map((group) => (
+            <article key={group.id} className="flex flex-col overflow-hidden rounded-sm border border-line bg-panel">
+              <div className="relative aspect-[9/16] w-full border-b border-line bg-panel2 sm:aspect-[3/4] lg:aspect-[9/16]">
+                <Image src={APP_SHOTS[group.id]} alt={c.shotAlt[group.id]} fill sizes="(min-width: 1024px) 220px, (min-width: 640px) 45vw, 92vw" className="object-cover object-top" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-[16px] font-bold text-ink">{group.skill}</h3>
+                <ul className="mt-2 space-y-1 text-[13.5px] leading-relaxed text-ink-dim">
+                  {group.exercises.map((exercise) => (
+                    <li key={exercise}>{exercise}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function SharpBrainClasses(): React.JSX.Element {
+  const c = useCopy().classes;
+  return (
+    <section id="live-classes" className={`${sectionClass} bg-panel`}>
+      <div className="mx-auto max-w-content">
+        <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
+        <h2 className={h2Class}>{c.title}</h2>
+        <SiteTodo>the 7-class outline is a draft from the brief — Dr. Kapil to confirm titles and lines (sharpBrainCopy.ts → classes).</SiteTodo>
+        <ol className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {c.items.map((item, index) => (
+            <li key={item.title} className="rounded-sm border border-line bg-void p-5">
+              <span className="font-mono text-[12px] font-semibold text-teal">{index + 1}</span>
+              <h3 className="mt-1 text-[16.5px] font-bold leading-snug text-ink">{item.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-ink-dim">{item.desc}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6 text-[15px] font-semibold text-ink">{c.note}</p>
+      </div>
+    </section>
+  );
+}
+
+export function SharpBrainAudiences(): React.JSX.Element {
+  const c = useCopy().audiences;
+  return (
+    <section id="who-its-for" className={sectionClass}>
+      <div className="mx-auto max-w-content">
+        <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
+        <h2 className={h2Class}>{c.title}</h2>
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {c.cards.map((card) => (
+            <article key={card.title} className="rounded-sm border border-line bg-panel p-6">
+              <h3 className="text-[17px] font-bold leading-snug text-ink">{card.title}</h3>
+              <p className="mt-2 text-[14.5px] leading-relaxed text-ink-dim">{card.desc}</p>
+            </article>
+          ))}
+        </div>
+        <p className="mt-8 text-[17px] font-semibold text-ink">{c.line}</p>
       </div>
     </section>
   );
@@ -176,7 +257,7 @@ export function SharpBrainHow(): React.JSX.Element {
     <section id="how-it-works" className={`${sectionClass} bg-panel`}>
       <div className="mx-auto max-w-content">
         <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.title}</h2>
+        <h2 className={h2Class}>{c.title}</h2>
         <ol className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {c.steps.map((step, index) => (
             <li key={step.title} className="rounded-sm border border-line bg-void p-6">
@@ -186,116 +267,6 @@ export function SharpBrainHow(): React.JSX.Element {
             </li>
           ))}
         </ol>
-        <p className="mt-6 text-[13.5px] leading-relaxed text-ink-faint">{c.eegLine}</p>
-      </div>
-    </section>
-  );
-}
-
-function GuaranteeBox(): React.JSX.Element {
-  const c = useCopy().guarantee;
-  return (
-    <div className="flex items-start gap-3 rounded-sm border border-gold/40 bg-gold-soft px-5 py-4">
-      <ShieldCheck className="mt-0.5 h-5 w-5 flex-none text-gold" aria-hidden="true" />
-      <div>
-        <p className="text-[14px] font-bold text-ink">{c.title}</p>
-        <p className="mt-1 text-[13px] leading-relaxed text-ink-dim">
-          {c.statement} {c.request}{" "}
-          <Link href="/refund-policy" className="underline underline-offset-2 hover:text-ink">
-            {c.policy}
-          </Link>
-        </p>
-      </div>
-    </div>
-  );
-}
-
-export function SharpBrainFormats(): React.JSX.Element {
-  const c = useCopy().formats;
-  const { lang } = useLanguage();
-  const byId = {
-    workshop: programs.sharpBrainWorkshop,
-    program: programs.sharpBrain,
-    self: programs.sharpBrainSelfLearning,
-  } as const;
-
-  return (
-    <section id="formats" className={`scroll-mt-20 ${sectionClass}`}>
-      <div className="mx-auto max-w-content">
-        <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.title}</h2>
-        <p className="mt-3 text-[15px] text-ink-dim">{c.batchLine}</p>
-        <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">
-          {c.items.map((item) => {
-            const program = byId[item.id];
-            const amounts = program.prices.map((price) => price.amountInr).filter((amount) => amount > 0);
-            const price = amounts.length > 0 ? inr(Math.min(...amounts)) : null;
-            const isPaid = item.id === "program";
-            const href = isPaid ? PROGRAM_CHECKOUT : (program.checkout[0]?.href ?? "#");
-            return (
-              <article
-                key={item.id}
-                className={`flex flex-col rounded-sm border p-6 sm:p-7 ${item.recommended === true ? "border-gold bg-panel" : "border-line-strong bg-panel"}`}
-              >
-                <h3 className="text-[19px] font-bold text-ink">{item.name}</h3>
-                <p className="mt-2 flex-1 text-[14.5px] leading-relaxed text-ink-dim">{item.desc}</p>
-                <p className="mt-5 text-[26px] font-extrabold text-ink">
-                  {price ?? <span className="text-[14px] font-semibold text-ink-faint">{c.priceOnRequest}</span>}
-                  {price !== null && <span className="ml-2 text-[13px] font-semibold uppercase tracking-[0.04em] text-ink-faint">{c.oneTime}</span>}
-                </p>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackGaEvent(isPaid ? "razorpay_checkout_click" : "whatsapp_click", { location: `sharp_brain_format_${item.id}` })
-                  }
-                  className={`mt-5 inline-flex items-center justify-center rounded-sm px-5 py-3 text-[14.5px] font-semibold transition-transform hover:-translate-y-0.5 ${
-                    isPaid ? "bg-gold text-[#1B1508] hover:bg-[#cb9a44]" : "border border-line-strong text-ink hover:bg-panel2"
-                  }`}
-                >
-                  {item.cta} →
-                </a>
-              </article>
-            );
-          })}
-        </div>
-        <div className="mt-6 max-w-2xl">
-          <GuaranteeBox />
-        </div>
-        <p className="mt-4 text-[12.5px] text-ink-faint">
-          {lang === "hi" ? "Razorpay के ज़रिए सुरक्षित चेकआउट" : "Secure checkout via Razorpay"}
-        </p>
-        <p className="mt-6 text-[14px] text-ink-dim">
-          {c.orgLine.lead}{" "}
-          <Link href={SCHOOLS_HREF} className="font-semibold text-gold hover:underline">
-            {c.orgLine.schools} →
-          </Link>
-          <span className="mx-2 text-ink-faint">·</span>
-          <Link href={ORGANISATIONS_HREF} className="font-semibold text-gold hover:underline">
-            {c.orgLine.corporate} →
-          </Link>
-        </p>
-      </div>
-    </section>
-  );
-}
-
-export function SharpBrainParents(): React.JSX.Element {
-  const c = useCopy().parents;
-  return (
-    <section id="for-parents" className={`${sectionClass} bg-panel`}>
-      <div className="mx-auto max-w-content">
-        <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.title}</h2>
-        <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {c.points.map((point) => (
-            <li key={point} className="flex items-start gap-3 rounded-sm border border-line bg-void p-5 text-[15px] leading-relaxed text-ink">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
-              {point}
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );
@@ -311,7 +282,7 @@ export function SharpBrainProof(): React.JSX.Element {
     <section id="testimonials" className={sectionClass}>
       <div className="mx-auto max-w-content">
         <Eyebrow>{c.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.title}</h2>
+        <h2 className={h2Class}>{c.title}</h2>
 
         {testimonials.length > 0 && (
           <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
@@ -369,13 +340,73 @@ export function SharpBrainTrainer(): React.JSX.Element {
   );
 }
 
+function GuaranteeBox(): React.JSX.Element {
+  const c = useCopy().guarantee;
+  return (
+    <div className="flex items-start gap-3 rounded-sm border border-gold/40 bg-gold-soft px-5 py-4">
+      <ShieldCheck className="mt-0.5 h-5 w-5 flex-none text-gold" aria-hidden="true" />
+      <div>
+        <p className="text-[14px] font-bold text-ink">{c.title}</p>
+        <p className="mt-1 text-[13px] leading-relaxed text-ink-dim">
+          {c.statement} {c.request}{" "}
+          <Link href="/refund-policy" className="underline underline-offset-2 hover:text-ink">
+            {c.policy}
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function SharpBrainOffer(): React.JSX.Element {
+  const c = useCopy().offer;
+  const { lang } = useLanguage();
+  return (
+    <section id="enrol" className={`scroll-mt-20 ${sectionClass}`}>
+      <div className="mx-auto max-w-content">
+        <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
+        <h2 className={h2Class}>{c.title}</h2>
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
+          <ul className="space-y-3">
+            {c.items.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-[16px] leading-relaxed text-ink">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div className="rounded-sm border border-gold bg-panel p-6 sm:p-7">
+            <p className="text-[19px] font-bold text-ink">{lang === "hi" ? programs.sharpBrain.nameHi : programs.sharpBrain.name}</p>
+            <PriceLine className="mt-2" />
+            <div className="mt-6">
+              <BatchCheckout location="sharp_brain_offer" showPerDay />
+            </div>
+            <a
+              href={WHATSAPP_MASTERCLASS_INQUIRY_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackGaEvent("whatsapp_click", { location: "sharp_brain_offer" })}
+              className="mt-4 inline-flex w-full items-center justify-center rounded-sm border border-line-strong px-7 py-3.5 text-[14.5px] font-semibold text-ink transition-colors hover:bg-panel2 sm:w-auto"
+            >
+              {c.questions}
+            </a>
+          </div>
+        </div>
+        <div className="mt-8 max-w-3xl">
+          <GuaranteeBox />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function SharpBrainFaq(): React.JSX.Element {
   const c = useCopy().faq;
   return (
-    <section id="faq" className={sectionClass}>
+    <section id="faq" className={`${sectionClass} bg-panel`}>
       <div className="mx-auto max-w-3xl">
         <Eyebrow>{c.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.title}</h2>
+        <h2 className={h2Class}>{c.title}</h2>
         <div className="mt-8 divide-y divide-line border-y border-line">
           {c.items.map((item) => (
             <details key={item.question} className="group py-5">
@@ -392,6 +423,7 @@ export function SharpBrainFaq(): React.JSX.Element {
             </details>
           ))}
         </div>
+        <SiteTodo>FAQ answers for “Hindi or English?” and “missed live class” are drafts — Dr. Kapil to confirm.</SiteTodo>
       </div>
     </section>
   );
@@ -401,9 +433,10 @@ export function SharpBrainFinal(): React.JSX.Element {
   const c = useCopy().final;
   return (
     <section className={sectionClass}>
-      <div className="mx-auto max-w-2xl text-center">
+      <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
         <h2 className="text-[26px] font-extrabold leading-tight sm:text-[32px]">{c.title}</h2>
-        <EnrolAndTestButtons enrol={c.enrol} speedTest={c.speedTest} location="sharp_brain_final" className="mt-7 justify-center" />
+        <EnrolAndTestButtons speedTest={c.speedTest} location="sharp_brain_final" className="mt-7 justify-center" />
+        <PriceLine className="mt-4" />
       </div>
     </section>
   );
@@ -412,19 +445,22 @@ export function SharpBrainFinal(): React.JSX.Element {
 export function SharpBrainStickyBar(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = useCopy().sticky;
-  const amount = programs.sharpBrain.prices[0]?.amountInr;
+  const next = useNextBatch();
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line-strong bg-void/95 backdrop-blur-md sm:hidden">
       <div className="mx-auto flex max-w-content items-center justify-between gap-3 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="min-w-0">
           <p className="truncate text-[13.5px] font-semibold text-ink">{lang === "hi" ? programs.sharpBrain.nameHi : programs.sharpBrain.name}</p>
-          {amount !== undefined && <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{inr(amount)}</p>}
+          {next !== null && (
+            <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
+              {next.offer !== "regular" && <s className="mr-1">₹{next.regularInr.toLocaleString("en-IN")}</s>}₹{next.amountInr.toLocaleString("en-IN")} ·{" "}
+              {istDayMonth(next.startsAtMs, lang)}
+            </p>
+          )}
         </div>
         <a
-          href={PROGRAM_CHECKOUT}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackGaEvent("razorpay_checkout_click", { location: "sharp_brain_sticky" })}
+          href={ENROL_HREF}
+          onClick={() => trackGaEvent("sharp_brain_enrol_click", { location: "sharp_brain_sticky" })}
           className="inline-flex flex-none items-center rounded-sm bg-gold px-5 py-2.5 text-[13.5px] font-semibold text-[#1B1508]"
         >
           {c.cta}

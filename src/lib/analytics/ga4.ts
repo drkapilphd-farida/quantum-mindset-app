@@ -29,6 +29,8 @@ declare global {
 export type GaEventName =
   | 'whatsapp_click'
   | 'razorpay_checkout_click'
+  // Sharp Brain "Enrol" buttons that lead to the batch picker (#enrol).
+  | 'sharp_brain_enrol_click'
   | 'video_testimonial_click'
   | 'classplus_click'
   | 'signup_cta_click'

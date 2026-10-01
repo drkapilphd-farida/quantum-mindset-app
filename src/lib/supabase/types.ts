@@ -1483,6 +1483,11 @@ export type Database = {
       masterclass_payments: {
         Row: {
           amount_cents: number | null
+          batch_start: string | null
+          customer_name: string | null
+          offer: string | null
+          payment_link_id: string | null
+          sharp_brain_offer_id: string | null
           created_at: string
           currency: string | null
           email: string | null
@@ -1494,6 +1499,11 @@ export type Database = {
         }
         Insert: {
           amount_cents?: number | null
+          batch_start?: string | null
+          customer_name?: string | null
+          offer?: string | null
+          payment_link_id?: string | null
+          sharp_brain_offer_id?: string | null
           created_at?: string
           currency?: string | null
           email?: string | null
@@ -1505,6 +1515,11 @@ export type Database = {
         }
         Update: {
           amount_cents?: number | null
+          batch_start?: string | null
+          customer_name?: string | null
+          offer?: string | null
+          payment_link_id?: string | null
+          sharp_brain_offer_id?: string | null
           created_at?: string
           currency?: string | null
           email?: string | null
@@ -2494,6 +2509,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      sharp_brain_offers: {
+        Row: {
+          created_at: string
+          discount_inr: number
+          expires_at: string
+          id: string
+          kind: string
+          razorpay_payment_id: string | null
+          redeemed_at: string | null
+          speed_test_result_id: string | null
+          whatsapp_number: string
+        }
+        Insert: {
+          created_at?: string
+          discount_inr: number
+          expires_at: string
+          id?: string
+          kind?: string
+          razorpay_payment_id?: string | null
+          redeemed_at?: string | null
+          speed_test_result_id?: string | null
+          whatsapp_number: string
+        }
+        Update: {
+          created_at?: string
+          discount_inr?: number
+          expires_at?: string
+          id?: string
+          kind?: string
+          razorpay_payment_id?: string | null
+          redeemed_at?: string | null
+          speed_test_result_id?: string | null
+          whatsapp_number?: string
+        }
+        Relationships: []
       }
       speed_test_results: {
         Row: {

@@ -5,8 +5,16 @@ import { RotateCcw } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "@/components/ui";
 import GuaranteeBadge from "@/components/sharp-brain/GuaranteeBadge";
-import { primaryCheckoutHref, waLink } from "@/config/site.config";
+import { waLink } from "@/config/site.config";
 import { trackLead } from "@/lib/analytics/conversions";
+import { inr } from "@/features/sharp-brain-enrol/copy";
+import {
+  BatchCheckout,
+  Countdown,
+  SharpBrainPricingProvider,
+  useEnrolLabel,
+  useNextBatch,
+} from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import {
   finishReading,
   saveSpeedTestResult,
@@ -15,6 +23,7 @@ import {
   submitPracticeAnswers,
   submitReadingAnswers,
   type ReadingTestResult,
+  type SpeedTestOffer,
 } from "../actions";
 import { speedTestCopy, type SpeedTestCopy } from "../copy";
 import { hasReachedEnd } from "../scoring";
@@ -26,7 +35,7 @@ import { hasReachedEnd } from "../scoring";
 // pace set by the server from the Step 1 result — never called "your
 // reading speed".
 
-const CHECKOUT_HREF = primaryCheckoutHref("sharpBrain");
+const ENROL_HREF = "/programs/sharp-brain#enrol";
 const SEEN_KEY = "reading-speed-test-seen";
 
 type Shown = { question: string; options: string[] };
@@ -357,6 +366,8 @@ function ResultStage({
   onPractice: () => void;
 }): React.JSX.Element {
   const valid = result.status === "valid";
+  // Set once a WhatsApp number is saved after a valid test (₹1,000 off, 48 h).
+  const [offer, setOffer] = useState<SpeedTestOffer | null>(null);
 
   return (
     <div data-result-status={result.status}>
@@ -388,8 +399,12 @@ function ResultStage({
         </button>
       )}
 
-      <NextStep c={c} effectiveWpm={valid ? result.effectiveWpm : null} />
-      {result.status !== "too_fast" && <SaveResult c={c} resultToken={resultToken} />}
+      {offer !== null ? (
+        <TestOffer c={c} offer={offer} effectiveWpm={valid ? result.effectiveWpm : null} />
+      ) : (
+        <NextStep c={c} effectiveWpm={valid ? result.effectiveWpm : null} />
+      )}
+      {result.status !== "too_fast" && <SaveResult c={c} resultToken={resultToken} offerEligible={valid} onOffer={setOffer} />}
       {valid && (
         <button type="button" onClick={onRetry} className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal hover:text-teal-light">
           <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" /> {c.retry}
@@ -409,11 +424,12 @@ function Stat({ label, value }: { label: string; value: string }): React.JSX.Ele
 }
 
 function NextStep({ c, effectiveWpm }: { c: SpeedTestCopy; effectiveWpm: number | null }): React.JSX.Element {
+  const enrol = useEnrolLabel();
   return (
     <div className="mt-8 border-t border-line-strong pt-6">
       <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-faint">{c.nextStep}</p>
-      <a href={CHECKOUT_HREF} target="_blank" rel="noopener noreferrer" className={primaryBtn}>
-        {c.enrol}
+      <a href={ENROL_HREF} className={primaryBtn}>
+        {enrol}
       </a>
       <a href={waLink(c.whatsappMessage(effectiveWpm))} target="_blank" rel="noopener noreferrer" className={`${secondaryBtn} mt-3`}>
         {c.whatsapp}
@@ -423,7 +439,53 @@ function NextStep({ c, effectiveWpm }: { c: SpeedTestCopy; effectiveWpm: number 
   );
 }
 
-function SaveResult({ c, resultToken }: { c: SpeedTestCopy; resultToken: string }): React.JSX.Element {
+// The Reading Speed Test offer: ₹1,000 off for 48 hours, tied to the
+// WhatsApp number. The countdown and prices come from the server; the
+// WhatsApp message carries the offer page link so the team can resend it.
+function TestOffer({ c, offer, effectiveWpm }: { c: SpeedTestCopy; offer: SpeedTestOffer; effectiveWpm: number | null }): React.JSX.Element {
+  const offerUrl = `${window.location.origin}/programs/sharp-brain/offer/${offer.id}`;
+  return (
+    <div className="mt-8 rounded-sm border border-gold bg-gold-soft p-5 sm:p-6" data-test-offer>
+      <SharpBrainPricingProvider initial={offer.pricing} offerId={offer.id}>
+        <TestOfferHeadline c={c} expiresAtMs={offer.expiresAtMs} />
+        <div className="mt-5">
+          <BatchCheckout location="speed_test_offer" />
+        </div>
+      </SharpBrainPricingProvider>
+      <a href={waLink(c.offerWhatsappMessage(effectiveWpm, offerUrl))} target="_blank" rel="noopener noreferrer" className={`${secondaryBtn} mt-4 bg-void`}>
+        {c.offerWhatsapp}
+      </a>
+      <a href="/programs/sharp-brain" className="mt-3 inline-block text-[13px] font-semibold text-ink-dim hover:text-ink">
+        {c.seeProgram}
+      </a>
+      <GuaranteeBadge className="mt-4" />
+    </div>
+  );
+}
+
+function TestOfferHeadline({ c, expiresAtMs }: { c: SpeedTestCopy; expiresAtMs: number }): React.JSX.Element {
+  const next = useNextBatch();
+  return (
+    <>
+      <p className="text-[18px] font-bold leading-snug text-ink">{c.offerUnlocked(inr(next?.amountInr ?? 8999), inr(next?.regularInr ?? 9999))}</p>
+      <p className="mt-1 text-[14px] text-ink-dim">
+        {c.offerValid} <Countdown endsAtMs={expiresAtMs} className="font-semibold text-ink" />
+      </p>
+    </>
+  );
+}
+
+function SaveResult({
+  c,
+  resultToken,
+  offerEligible,
+  onOffer,
+}: {
+  c: SpeedTestCopy;
+  resultToken: string;
+  offerEligible: boolean;
+  onOffer: (offer: SpeedTestOffer) => void;
+}): React.JSX.Element {
   const [phone, setPhone] = useState("");
   const [firstName, setFirstName] = useState("");
   const [state, setState] = useState<"idle" | "saving" | "saved">("idle");
@@ -432,8 +494,12 @@ function SaveResult({ c, resultToken }: { c: SpeedTestCopy; resultToken: string 
   async function save(): Promise<void> {
     setState("saving");
     setError(null);
-    const res = await saveSpeedTestResult({ resultToken, phone, firstName });
-    if (res.ok) return setState("saved");
+    const simulateNow = new URLSearchParams(window.location.search).get("now") ?? undefined;
+    const res = await saveSpeedTestResult({ resultToken, phone, firstName, simulateNow });
+    if (res.ok) {
+      if (res.offer !== null) onOffer(res.offer);
+      return setState("saved");
+    }
     setState("idle");
     setError(res.error);
   }
@@ -448,7 +514,7 @@ function SaveResult({ c, resultToken }: { c: SpeedTestCopy; resultToken: string 
         void save();
       }}
     >
-      <p className="text-[13.5px] font-semibold text-ink">{c.phoneLabel}</p>
+      <p className="text-[13.5px] font-semibold text-ink">{offerEligible ? c.phoneLabelOffer : c.phoneLabel}</p>
       <label htmlFor="speed-test-name" className="sr-only">
         {c.nameLabel}
       </label>
@@ -480,7 +546,10 @@ function SaveResult({ c, resultToken }: { c: SpeedTestCopy; resultToken: string 
           {state === "saving" ? c.loading : c.phoneSubmit}
         </button>
       </div>
-      <p className="mt-1.5 text-[12px] text-ink-faint">{c.phoneNote}</p>
+      <p className="mt-1.5 text-[12px] text-ink-faint">
+        {c.phoneNote}
+        {offerEligible && ` ${c.offerLinked}`}
+      </p>
       {error !== null && <p role="alert" className="mt-1 text-[13px] text-red-700">{error}</p>}
     </form>
   );

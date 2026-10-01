@@ -6,6 +6,8 @@ import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from '@/config/whatsappSupportLink'
 import ReadingSpeedTest from '@/features/reading-speed-test/components/ReadingSpeedTest'
 import QsrSpeedTestLiveExperience from '@/components/qsr/speed-test/QsrSpeedTestLiveExperience'
 import { buildPageMetadata } from '@/lib/seo/metadata'
+import { pricingSnapshot, resolveNow } from '@/features/sharp-brain-enrol/server'
+import { SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/programs/sharp-brain/speed-test',
@@ -15,7 +17,7 @@ export const metadata: Metadata = buildPageMetadata({
 })
 
 type QsrSpeedTestPageProps = {
-  searchParams: Promise<{ mode?: string | undefined }>
+  searchParams: Promise<{ mode?: string | undefined; now?: string | undefined }>
 }
 
 // Dedicated route (not a modal) — a multi-step flow (measured test, then
@@ -40,7 +42,15 @@ export default async function QsrSpeedTestPage({ searchParams }: QsrSpeedTestPag
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
       <SharpBrainNav />
-      <main>{isLiveMode ? <QsrSpeedTestLiveExperience /> : <ReadingSpeedTest />}</main>
+      <main>
+        {isLiveMode ? (
+          <QsrSpeedTestLiveExperience />
+        ) : (
+          <SharpBrainPricingProvider initial={pricingSnapshot(resolveNow(params.now))}>
+            <ReadingSpeedTest />
+          </SharpBrainPricingProvider>
+        )}
+      </main>
       <Footer />
       <WhatsAppWidget href={WHATSAPP_MASTERCLASS_INQUIRY_LINK} analyticsLocation="speed_test_widget" />
     </div>

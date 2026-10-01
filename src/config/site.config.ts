@@ -117,7 +117,8 @@ const trainerData = {
 
 export const trainer: Widen<typeof trainerData> = trainerData
 
-export type ProgramStatus = 'active' | 'upcoming' | 'closed'
+/** `hidden` = kept in the registry but not sold or shown on any page. */
+export type ProgramStatus = 'active' | 'upcoming' | 'closed' | 'hidden'
 export type ProgramPillar = 'brain' | 'mind' | 'meditation' | 'business'
 
 type ProgramPrice = { label: string; amountInr: number }
@@ -173,13 +174,15 @@ const programsData = {
     nameHi: 'Sharp Brain 30-दिवसीय प्रोग्राम',
     shortName: 'Sharp Brain',
     shortNameHi: 'Sharp Brain',
-    outcome: 'Focus, memory, smart reading and mobile discipline — improvement measured from your own Day 1 to Day 30.',
-    audience: 'Parents (for children ~10–17), students and exam aspirants, working professionals',
+    outcome: 'Read faster with understanding, focus longer, remember more — measured from your own Day 1 to Day 30.',
+    audience: 'School and college students, competitive-exam aspirants, working professionals — and parents enrolling their child',
     format: 'Online · 7 live classes + 30 days of app practice',
     prices: [{ label: 'One-time enrolment', amountInr: 9999 }],
-    // TODO(business): the Razorpay product behind this link may still be named
-    // "Quantum Speed Reading" / "30-Day Masterclass" — rename it in Razorpay.
-    checkout: [{ label: 'Razorpay', href: RAZORPAY_MASTERCLASS_PAYMENT_LINK }],
+    // Every "Enrol" button leads to the batch picker on the program page;
+    // the price (early-bird / regular / test offer) and the Razorpay link
+    // are decided on the server there — see sharpBrainEnrolment below and
+    // src/features/sharp-brain-enrol.
+    checkout: [{ label: 'Choose your batch', href: '/programs/sharp-brain#enrol' }],
     url: '/programs/sharp-brain',
     status: 'active',
     pillar: 'brain',
@@ -194,8 +197,9 @@ const programsData = {
     // TODO(content): workshop price not published — shown once added here.
     prices: [] as ProgramPrice[],
     checkout: [{ label: 'Join the waitlist on WhatsApp', href: waLink('Hi Dr. Kapil, I want to know about the next Sharp Brain Workshop.') }],
-    url: '/programs/sharp-brain#formats',
-    status: 'active',
+    url: '/programs/sharp-brain',
+    // Hidden (2026-10-01): the Sharp Brain page sells one offer, the 30-Day Program.
+    status: 'hidden',
     pillar: 'brain',
   },
   sharpBrainSelfLearning: {
@@ -208,8 +212,9 @@ const programsData = {
     // TODO(content): self-learning price and checkout link not provided yet.
     prices: [] as ProgramPrice[],
     checkout: [{ label: 'Ask on WhatsApp', href: waLink('Hi Dr. Kapil, I want to know about Sharp Brain Self-Learning.') }],
-    url: '/programs/sharp-brain#formats',
-    status: 'active',
+    url: '/programs/sharp-brain',
+    // Hidden (2026-10-01): the Sharp Brain page sells one offer, the 30-Day Program.
+    status: 'hidden',
     pillar: 'brain',
   },
   sharpBrainSchools: {
@@ -500,6 +505,8 @@ export const franchisePartnerFormats: readonly string[] | null = null
 const qsrGuaranteeData = {
   en: {
     title: '100% Results Guarantee',
+    /** Title on sales pages (Sharp Brain page, test result), which carry no "100%" claims. */
+    label: 'Results Guarantee',
     statement:
       "If you complete the full 30-day protocol as instructed — every daily app session, and all 7 live masterclass sessions with Dr. Kapil Dev Sharma — and your reading speed (WPM) and comprehension haven't measurably improved between your Day 1 baseline and your Day 30 checkpoint, we'll issue a full refund of your ₹9,999 enrollment fee.",
     short:
@@ -508,6 +515,7 @@ const qsrGuaranteeData = {
   },
   hi: {
     title: '100% रिज़ल्ट गारंटी',
+    label: 'रिज़ल्ट गारंटी',
     statement:
       'अगर आप पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करते हैं — हर दैनिक ऐप सेशन, और डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव मास्टरक्लास सेशन — और आपके दिन 1 के बेसलाइन और दिन 30 के चेकपॉइंट के बीच आपकी रीडिंग स्पीड (WPM) और समझ में मापने योग्य सुधार नहीं होता, तो हम आपकी ₹9,999 की नामांकन फीस का पूरा रिफंड देंगे।',
     short:
@@ -517,6 +525,47 @@ const qsrGuaranteeData = {
 } as const
 
 export const qsrGuarantee: Widen<typeof qsrGuaranteeData> = qsrGuaranteeData
+
+/**
+ * Sharp Brain 30-Day Program — batches, early-bird and the Reading Speed
+ * Test offer. All dates are IST and every price is decided on the server
+ * (src/features/sharp-brain-enrol), never from the visitor's clock.
+ *
+ * - Two batches a month, starting on each day in `batchStartDays`.
+ * - Early-bird for a batch ends `earlyBirdEndsDaysBefore` days before it
+ *   starts, at 23:59 IST (15th → 10th, 25th → 20th).
+ * - Test offer: `testOffer.discountInr` off the regular price for
+ *   `testOffer.validHours`, one per WhatsApp number, ever.
+ * - Offers never stack: the buyer pays the lowest available price, never
+ *   below `floorInr`.
+ * - `seatsPerBatch: null` = no seat limit is shown anywhere. Only set a
+ *   real number.
+ *
+ * Checkout: with RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET set, each checkout
+ * creates its own Razorpay Payment Link (amount, batch and offer in its
+ * notes). Without them the fixed links below are used; a discounted price
+ * is only offered on production once its fixed link is set.
+ */
+const sharpBrainEnrolmentData = {
+  batchStartDays: [15, 25],
+  earlyBirdEndsDaysBefore: 5,
+  regularInr: 9999,
+  earlyBirdInr: 8999,
+  floorInr: 8999,
+  testOffer: { discountInr: 1000, validHours: 48 },
+  seatsPerBatch: null as number | null,
+  fallbackLinks: {
+    regular: RAZORPAY_MASTERCLASS_PAYMENT_LINK,
+    // TODO(business): Dr. Kapil to create a fixed ₹8,999 Razorpay link
+    // (used for early-bird and the test offer while the API keys are missing).
+    discounted: null as string | null,
+  },
+} as const
+
+export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
+  readonly seatsPerBatch: number | null
+  readonly fallbackLinks: { readonly regular: string; readonly discounted: string | null }
+} = sharpBrainEnrolmentData
 
 export type UpcomingEvent = {
   id: string

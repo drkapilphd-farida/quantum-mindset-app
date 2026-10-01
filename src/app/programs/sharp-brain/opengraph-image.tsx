@@ -1,12 +1,12 @@
 import { buildOgImageResponse, OG_IMAGE_SIZE } from '@/lib/seo/ogImage'
 
-export const alt = 'Sharp Brain™ — Focus · Memory · Smart Reading'
+export const alt = 'Sharp Brain™ — Read faster. Focus longer. Remember more.'
 export const size = OG_IMAGE_SIZE
 export const contentType = 'image/png'
 
 export default async function Image(): Promise<ReturnType<typeof buildOgImageResponse>> {
   return buildOgImageResponse({
     eyebrow: 'Mind Ur Mind',
-    heading: 'Sharp Brain™ — Focus · Memory · Smart Reading',
+    heading: 'Sharp Brain™ — Read faster. Focus longer. Remember more.',
   })
 }

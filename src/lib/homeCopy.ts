@@ -30,7 +30,8 @@ export type ProblemCard = {
   pillar: string
   pain: string
   audience: string
-  programs: { name: string; href: string; priceLine: string | null }[]
+  /** `livePrice`: the price line is the server-decided Sharp Brain price (early-bird / regular + next batch). */
+  programs: { name: string; href: string; priceLine: string | null; livePrice?: boolean }[]
   cta: { label: string; href: string }
   extras: { label: string; href: string }[]
   note: string | null
@@ -64,15 +65,12 @@ const en: HomeCopy = {
       {
         id: 'learning',
         pillar: 'Brain',
-        pain: '“I study for hours but can’t remember.” / “My child is lost in the phone.”',
-        audience: 'For students, exam aspirants, professionals — and parents of children aged about 10–17',
-        programs: [{ name: programs.sharpBrain.name, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} one-time` }],
+        pain: '“I read a page and can’t recall it.” / “My focus breaks in minutes.”',
+        audience: 'For school & college students, exam aspirants and working professionals — parents can enrol their child',
+        programs: [{ name: programs.sharpBrain.name, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} one-time`, livePrice: true }],
         cta: { label: 'See Sharp Brain™', href: programs.sharpBrain.url },
-        extras: [
-          { label: 'Take the free Reading Speed Test →', href: '/programs/sharp-brain/speed-test' },
-          { label: 'For my child →', href: `${programs.sharpBrain.url}#parents` },
-        ],
-        note: 'Focus · Memory · Smart Reading · Mobile Discipline — measured from your own Day 1 to Day 30.',
+        extras: [{ label: 'Take the free Reading Speed Test →', href: '/programs/sharp-brain/speed-test' }],
+        note: 'Read faster with understanding. Focus longer. Remember more. — 7 live classes + daily app practice, measured from your own Day 1 to Day 30.',
       },
       {
         id: 'work',
@@ -210,15 +208,12 @@ const hi: HomeCopy = {
       {
         id: 'learning',
         pillar: 'ब्रेन',
-        pain: '“घंटों पढ़ता हूं, पर याद नहीं रहता।” / “मेरा बच्चा फ़ोन में खोया रहता है।”',
-        audience: 'विद्यार्थियों, परीक्षा उम्मीदवारों, पेशेवरों — और लगभग 10–17 साल के बच्चों के अभिभावकों के लिए',
-        programs: [{ name: programs.sharpBrain.nameHi, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} एकमुश्त` }],
+        pain: '“पूरा पेज पढ़ता हूं, पर याद नहीं रहता।” / “कुछ ही मिनटों में ध्यान भटक जाता है।”',
+        audience: 'स्कूल-कॉलेज के विद्यार्थियों, परीक्षा की तैयारी करने वालों और कामकाजी लोगों के लिए — अभिभावक अपने बच्चे का नामांकन कर सकते हैं',
+        programs: [{ name: programs.sharpBrain.nameHi, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} एकमुश्त`, livePrice: true }],
         cta: { label: 'Sharp Brain™ देखें', href: programs.sharpBrain.url },
-        extras: [
-          { label: 'मुफ़्त Reading Speed Test दें →', href: '/programs/sharp-brain/speed-test' },
-          { label: 'मेरे बच्चे के लिए →', href: `${programs.sharpBrain.url}#parents` },
-        ],
-        note: 'Focus · Memory · Smart Reading · Mobile Discipline — Day 1 से Day 30 तक नापा हुआ सुधार।',
+        extras: [{ label: 'मुफ़्त Reading Speed Test दें →', href: '/programs/sharp-brain/speed-test' }],
+        note: 'तेज़ पढ़ें, समझ के साथ। ज़्यादा देर फोकस करें। ज़्यादा याद रखें। — 7 लाइव क्लासेस + रोज़ ऐप अभ्यास, Day 1 से Day 30 तक नापा हुआ।',
       },
       {
         id: 'work',

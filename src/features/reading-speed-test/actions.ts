@@ -8,6 +8,8 @@ import { logger } from '@/lib/logger'
 import { MEASURED_PASSAGES, PRACTICE_PASSAGES, type TestLang, type TestPassage } from './passages'
 import { countWords, practiceStartingPace, scoreReadingTest, type ReadingTestStatus } from './scoring'
 import { signTestToken, verifyTestToken } from './testToken'
+import { activeOffer, discountsChargeable, getOrCreateTestOffer, pricingSnapshot, resolveNow } from '@/features/sharp-brain-enrol/server'
+import type { PricingSnapshot } from '@/features/sharp-brain-enrol/server'
 
 // Free Reading Speed Test — every number in a result is computed here.
 // Reading time = the server's own clock between "Start" and "Done"; answers
@@ -173,9 +175,18 @@ const SaveSchema = z.object({
     .max(60)
     .optional()
     .transform((v) => (v === undefined || v.trim() === '' ? null : v.trim())),
+  // Preview only: simulate the clock (ignored on production, see resolveNow).
+  simulateNow: z.string().max(40).optional(),
 })
 
-export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true } | Fail> {
+/**
+ * The Reading Speed Test offer, as the result screen shows it. `pricing`
+ * carries the server clock and the prices with the offer applied, so the
+ * countdown is the same on every device.
+ */
+export type SpeedTestOffer = { id: string; expiresAtMs: number; pricing: PricingSnapshot }
+
+export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; offer: SpeedTestOffer | null } | Fail> {
   const parsed = SaveSchema.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Enter a valid WhatsApp number.' }
   const ip = await getClientIp()
@@ -186,21 +197,30 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true } 
     const result = verifyTestToken(parsed.data.resultToken, 'result')
     // A 10-digit number is an Indian mobile — store it with the country code.
     const phone = parsed.data.phone.length === 10 ? `91${parsed.data.phone}` : parsed.data.phone
-    const { error } = await createServiceClient().from('speed_test_results').insert({
-      whatsapp_number: phone,
-      first_name: parsed.data.firstName,
-      passage_id: result.pid,
-      lang: result.lang,
-      wpm: result.wpm,
-      comprehension_percent: result.comp,
-      effective_wpm: result.eff,
-      status: result.status,
-    })
+    const { data: saved, error } = await createServiceClient()
+      .from('speed_test_results')
+      .insert({
+        whatsapp_number: phone,
+        first_name: parsed.data.firstName,
+        passage_id: result.pid,
+        lang: result.lang,
+        wpm: result.wpm,
+        comprehension_percent: result.comp,
+        effective_wpm: result.eff,
+        status: result.status,
+      })
+      .select('id')
+      .single()
     if (error) {
       logger.error('saveSpeedTestResult: insert failed', { code: error.code })
       return { ok: false, error: GENERIC_ERROR }
     }
-    return { ok: true }
+    // ₹1,000 off for 48 hours — only after a VALID test, one per number ever.
+    if (result.status !== 'valid' || !discountsChargeable()) return { ok: true, offer: null }
+    const now = resolveNow(parsed.data.simulateNow)
+    const offer = activeOffer(await getOrCreateTestOffer(phone, saved.id), now)
+    if (offer === null) return { ok: true, offer: null }
+    return { ok: true, offer: { id: offer.id, expiresAtMs: offer.expiresAtMs, pricing: pricingSnapshot(now, offer.expiresAtMs) } }
   } catch {
     return { ok: false, error: GENERIC_ERROR }
   }

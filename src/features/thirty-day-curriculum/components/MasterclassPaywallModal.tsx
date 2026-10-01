@@ -1,15 +1,11 @@
 'use client'
 
-import { primaryCheckoutHref, programs } from '@/config/site.config'
-import { Lock, Sparkles } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { programs } from '@/config/site.config'
+import { Lock } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
+import { BatchCheckout, PriceLine, SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 
-// Paid button link — read from the programs registry (site.config.ts).
-// Name, price and link all from the programs registry (site.config.ts).
-const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 const PROGRAM_NAME = programs.sharpBrain.name
-const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 type MasterclassPaywallModalProps = {
   open: boolean
@@ -23,12 +19,9 @@ type MasterclassPaywallModalProps = {
 // 30-Day Masterclass Paywall™ — every locked day cell opens this instead
 // of navigating anywhere (see ThirtyDayCurriculumOverview.tsx /
 // ThirtyDayCurriculumExperience.tsx). Same real, hosted Razorpay
-// Payment Link the dashboard hero card's own "Enroll Now" button already
-// uses (SHARP_BRAIN_CHECKOUT_HREF) — one real checkout URL, not
-// a second one that could drift. Completing that checkout takes real
-// payment but does not automatically grant in-app access yet (no
-// entitlement is wired to it today — see getIsPaidUser.ts's own doc
-// comment); this modal doesn't claim otherwise.
+// Same price logic as the website (1 Oct 2026): the server decides the
+// early-bird / regular price and creates the Razorpay link for the batch
+// the learner picks here (BatchCheckout). Fetched only while open.
 export function MasterclassPaywallModal({ open, onOpenChange, day }: MasterclassPaywallModalProps): React.JSX.Element {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -48,22 +41,16 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
             </DialogDescription>
           </div>
 
-          <div className="w-full rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4">
-            <p className="font-heading text-3xl font-bold tabular-nums text-foreground">{PROGRAM_PRICE}</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">One-time enrollment · full 30-day curriculum + live classes</p>
-          </div>
-
-          <Button
-            asChild
-            size="lg"
-            className="w-full rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-md transition-all duration-300 hover:from-emerald-500 hover:to-emerald-400 active:scale-95"
-            data-enroll-button="true"
-          >
-            <a href={SHARP_BRAIN_CHECKOUT_HREF} target="_blank" rel="noopener noreferrer">
-              <Sparkles className="size-4" aria-hidden="true" />
-              Enroll Now for {PROGRAM_PRICE} →
-            </a>
-          </Button>
+          {open && (
+            <SharpBrainPricingProvider initial={null}>
+              <div className="w-full rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-left">
+                <PriceLine tone="app" />
+                <div className="mt-4" data-enroll-button="true">
+                  <BatchCheckout location="app_paywall_modal" tone="app" />
+                </div>
+              </div>
+            </SharpBrainPricingProvider>
+          )}
 
           <button
             type="button"

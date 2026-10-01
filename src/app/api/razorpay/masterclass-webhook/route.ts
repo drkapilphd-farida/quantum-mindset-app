@@ -4,8 +4,9 @@ import { verifyRazorpayWebhookSignature } from '@/lib/razorpay/verifyWebhookSign
 import { createServiceClient } from '@/lib/supabase/service'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
-import { linkIdsFromEnv, paymentForLink, type LinkPayment } from '@/lib/razorpay/paymentLinkEvent'
+import { sharpBrainEnrolment } from '@/config/site.config'
+import { linkIdsFromEnv } from '@/lib/razorpay/paymentLinkEvent'
+import { SHARP_BRAIN_PROGRAM_NOTE, programPaymentFromEvent, type FixedProgramLink, type ProgramPayment } from '@/features/sharp-brain-enrol/programPayment'
 import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 
 // Automated Masterclass Access™ — sibling to /api/razorpay/webhook, not an
@@ -40,6 +41,13 @@ import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 // "payment.captured" is acknowledged and ignored — it doesn't say which link
 // was paid. An already-active subscription (e.g. granted by hand) is never
 // overwritten; the payment is still recorded against that learner.
+//
+// Batches and offers (1 Oct 2026): the program is now also sold through
+// links our server creates per checkout (Razorpay Payment Links API) —
+// recognised by notes.program = "sharp_brain_30" — and an optional fixed
+// ₹8,999 link. The buyer name, offer (earlybird | regular | test1000) and
+// chosen batch are saved with the payment, and a redeemed Reading Speed
+// Test offer is marked used. See src/features/sharp-brain-enrol.
 const WEBHOOK_RATE_LIMIT = { max: 60, windowMs: 60_000 }
 
 // Razorpay's documented refund.processed shape — the refund entity
@@ -165,8 +173,17 @@ async function handleRefundProcessed(json: unknown): Promise<NextResponse> {
   return NextResponse.json({ received: true })
 }
 
+function fixedProgramLinks(): FixedProgramLink[] {
+  const { regular, discounted } = sharpBrainEnrolment.fallbackLinks
+  return [{ url: regular, offer: 'regular' }, ...(discounted !== null ? [{ url: discounted, offer: 'earlybird' as const }] : [])]
+}
+
 async function handlePaymentLinkPaid(json: unknown): Promise<NextResponse> {
-  const result = paymentForLink(json, RAZORPAY_MASTERCLASS_PAYMENT_LINK, linkIdsFromEnv(process.env.RAZORPAY_MASTERCLASS_EXTRA_LINK_IDS))
+  const result = programPaymentFromEvent(json, {
+    programNote: SHARP_BRAIN_PROGRAM_NOTE,
+    fixedLinks: fixedProgramLinks(),
+    extraLinkIds: linkIdsFromEnv(process.env.RAZORPAY_MASTERCLASS_EXTRA_LINK_IDS),
+  })
   if (!result.ok) {
     if (result.reason === 'invalid_payload') {
       logger.warn('[razorpay-masterclass-webhook] payment_link.paid payload failed validation')
@@ -178,7 +195,7 @@ async function handlePaymentLinkPaid(json: unknown): Promise<NextResponse> {
   return recordAndGrant(result.payment)
 }
 
-async function recordAndGrant(payment: LinkPayment): Promise<NextResponse> {
+async function recordAndGrant(payment: ProgramPayment): Promise<NextResponse> {
   const { id: razorpayPaymentId, amount, currency, email, contact } = payment
   const supabase = createServiceClient()
 
@@ -204,6 +221,11 @@ async function recordAndGrant(payment: LinkPayment): Promise<NextResponse> {
       phone: contact,
       amount_cents: amount,
       currency,
+      customer_name: payment.customerName,
+      offer: payment.offer,
+      batch_start: payment.batchStart,
+      payment_link_id: payment.paymentLinkId,
+      sharp_brain_offer_id: payment.offerId,
     })
     .select('id')
     .single()
@@ -220,6 +242,15 @@ async function recordAndGrant(payment: LinkPayment): Promise<NextResponse> {
       error: insertError?.message,
     })
     return NextResponse.json({ error: 'Failed to record payment.' }, { status: 500 })
+  }
+
+  // A Reading Speed Test offer can be used once.
+  if (payment.offerId !== null) {
+    await supabase
+      .from('sharp_brain_offers')
+      .update({ redeemed_at: new Date().toISOString(), razorpay_payment_id: razorpayPaymentId })
+      .eq('id', payment.offerId)
+      .is('redeemed_at', null)
   }
 
   // Try to match an existing account immediately (signup-before-payment

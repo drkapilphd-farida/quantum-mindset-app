@@ -1,6 +1,8 @@
-import { programs } from '@/config/site.config'
+import { sharpBrainEnrolment } from '@/config/site.config'
 
-const PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
+const inr = (amount: number): string => `₹${amount.toLocaleString('en-IN')}`
+const DISCOUNT = inr(sharpBrainEnrolment.testOffer.discountInr)
+const HOURS = sharpBrainEnrolment.testOffer.validHours
 
 export type SpeedTestCopy = {
   eyebrow: string
@@ -28,10 +30,16 @@ export type SpeedTestCopy = {
   practiceQuestionsTitle: string
   practiceResult: (pace: number, percent: number) => string
   nextStep: string
-  enrol: string
+  seeProgram: string
   whatsapp: string
   whatsappMessage: (effectiveWpm: number | null) => string
   phoneLabel: string
+  phoneLabelOffer: string
+  offerLinked: string
+  offerUnlocked: (price: string, regular: string) => string
+  offerValid: string
+  offerWhatsapp: string
+  offerWhatsappMessage: (effectiveWpm: number | null, offerUrl: string) => string
   phonePlaceholder: string
   phoneSubmit: string
   phoneSaved: string
@@ -69,13 +77,20 @@ export const speedTestCopy: Record<'en' | 'hi', SpeedTestCopy> = {
     practiceResult: (pace, percent) =>
       `With guided practice you read at ${pace} WPM and understood ${percent}%. The 30-day program trains your own reading speed with this kind of practice.`,
     nextStep: 'Your next step',
-    enrol: `Enrol now · ${PRICE}`,
+    seeProgram: 'See the Sharp Brain 30-Day Program →',
     whatsapp: 'Questions? Chat on WhatsApp',
     whatsappMessage: (eff) =>
       eff === null
         ? 'I took the Reading Speed Test. I want to know about Sharp Brain.'
         : `I took the Reading Speed Test — my Effective Speed is ${eff}. I want to know about Sharp Brain.`,
     phoneLabel: 'Get your result on WhatsApp (optional)',
+    phoneLabelOffer: `Get your result on WhatsApp — and unlock ${DISCOUNT} off the 30-Day Program (optional)`,
+    offerLinked: 'Your offer is linked to this number.',
+    offerUnlocked: (price, regular) => `Your test unlocked ${DISCOUNT} off — ${price} instead of ${regular}.`,
+    offerValid: `Valid for ${HOURS} hours:`,
+    offerWhatsapp: 'Send my offer link to WhatsApp',
+    offerWhatsappMessage: (eff, url) =>
+      `I took the Reading Speed Test${eff === null ? '' : ` — my Effective Speed is ${eff}`}. My ${DISCOUNT} Sharp Brain offer: ${url}`,
     phonePlaceholder: 'WhatsApp number',
     phoneSubmit: 'Send me my result',
     phoneSaved: "Saved. Dr. Kapil's team will send your result on WhatsApp.",
@@ -111,13 +126,20 @@ export const speedTestCopy: Record<'en' | 'hi', SpeedTestCopy> = {
     practiceResult: (pace, percent) =>
       `गाइडेड अभ्यास में आपने ${pace} WPM पर पढ़ा और ${percent}% समझा। 30-दिन का प्रोग्राम इसी तरह के अभ्यास से आपकी अपनी रीडिंग स्पीड को ट्रेन करता है।`,
     nextStep: 'आपका अगला कदम',
-    enrol: `अभी जुड़ें · ${PRICE}`,
+    seeProgram: 'Sharp Brain 30-दिवसीय प्रोग्राम देखें →',
     whatsapp: 'सवाल हैं? WhatsApp पर बात करें',
     whatsappMessage: (eff) =>
       eff === null
         ? 'मैंने Reading Speed Test दिया। मुझे Sharp Brain के बारे में जानना है।'
         : `मैंने Reading Speed Test दिया — मेरी Effective Speed ${eff} है। मुझे Sharp Brain के बारे में जानना है।`,
     phoneLabel: 'अपना नतीजा WhatsApp पर पाएँ (वैकल्पिक)',
+    phoneLabelOffer: `अपना नतीजा WhatsApp पर पाएँ — और 30-दिवसीय प्रोग्राम पर ${DISCOUNT} की छूट पाएँ (वैकल्पिक)`,
+    offerLinked: 'आपका ऑफ़र इसी नंबर से जुड़ा है।',
+    offerUnlocked: (price, regular) => `आपके टेस्ट से ${DISCOUNT} की छूट मिली — ${regular} की जगह ${price}।`,
+    offerValid: `${HOURS} घंटे के लिए मान्य:`,
+    offerWhatsapp: 'मेरा ऑफ़र लिंक WhatsApp पर भेजें',
+    offerWhatsappMessage: (eff, url) =>
+      `मैंने Reading Speed Test दिया${eff === null ? '' : ` — मेरी Effective Speed ${eff} है`}। मेरा ${DISCOUNT} वाला Sharp Brain ऑफ़र: ${url}`,
     phonePlaceholder: 'WhatsApp नंबर',
     phoneSubmit: 'मुझे नतीजा भेजें',
     phoneSaved: 'सेव हो गया। डॉ. कपिल की टीम आपका नतीजा WhatsApp पर भेजेगी।',

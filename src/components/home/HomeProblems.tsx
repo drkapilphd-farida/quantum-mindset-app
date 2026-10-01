@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useHomeCopy } from "./useHomeCopy";
 import { Eyebrow } from "../ui";
 import type { ProblemCard } from "@/lib/homeCopy";
+import { PriceLine } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 
 const ACCENT: Record<ProblemCard["id"], { text: string; border: string; button: string }> = {
   learning: { text: "text-gold", border: "border-gold/40", button: "bg-gold text-[#1B1508] hover:bg-[#cb9a44]" },
@@ -38,8 +39,10 @@ export default function HomeProblems(): React.JSX.Element {
                       <Link href={program.href} className="text-[15.5px] font-semibold text-ink hover:underline">
                         {program.name}
                       </Link>
-                      {program.priceLine !== null && (
-                        <span className="font-mono text-[13px] text-ink-dim">{program.priceLine}</span>
+                      {program.livePrice === true ? (
+                        <PriceLine className="w-full" />
+                      ) : (
+                        program.priceLine !== null && <span className="font-mono text-[13px] text-ink-dim">{program.priceLine}</span>
                       )}
                     </li>
                   ))}

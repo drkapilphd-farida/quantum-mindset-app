@@ -15,7 +15,7 @@ export default function GuaranteeBadge({ className = "" }: { className?: string 
     <div className={`flex items-start gap-3 rounded-sm border border-gold/40 bg-gold-soft px-5 py-4 ${className}`}>
       <ShieldCheck className="mt-0.5 h-5 w-5 flex-none text-gold" aria-hidden="true" />
       <div>
-        <div className="text-[13.5px] font-bold text-ink">{g.title}</div>
+        <div className="text-[13.5px] font-bold text-ink">{g.label}</div>
         <p className="mt-1 text-[12.5px] leading-relaxed text-ink-dim">
           {g.statement} {g.requestWindow}{" "}
           <Link href="/refund-policy" className="underline decoration-ink-faint/50 underline-offset-2 hover:text-ink">

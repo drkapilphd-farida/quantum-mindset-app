@@ -13,7 +13,7 @@ const event = (shortUrl: string | null, linkId = 'plink_A'): unknown => ({
 describe('paymentForLink', () => {
   it('accepts a payment made through the expected link', () => {
     const result = paymentForLink(event('https://rzp.io/rzp/ydVYaANF'), PROGRAM)
-    expect(result).toEqual({ ok: true, payment: { id: 'pay_1', amount: 999900, currency: 'INR', email: 'a@b.com', contact: '+919999999999', paymentLinkId: 'plink_A' } })
+    expect(result).toEqual({ ok: true, payment: { id: 'pay_1', amount: 999900, currency: 'INR', email: 'a@b.com', contact: '+919999999999', paymentLinkId: 'plink_A', notes: {}, customerName: null } })
   })
 
   it('ignores payments from any other link (retreat, Starter, workshop…)', () => {

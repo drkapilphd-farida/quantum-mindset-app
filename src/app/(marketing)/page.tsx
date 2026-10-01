@@ -19,6 +19,8 @@ import HomeFaq from '@/components/home/HomeFaq'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 import { trainer, upcomingEvents } from '@/config/site.config'
+import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
+import { SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 
 // Site-rebuild Phase 1 — homepage now leads with the founder/brand
 // identity (per explicit brief) rather than the QSR-flagship-only
@@ -99,7 +101,9 @@ export default function HomePage(): React.JSX.Element {
       <SiteNav />
       <main>
         <HomeHero />
-        <HomeProblems />
+        <SharpBrainPricingProvider initial={pricingSnapshot(Date.now())}>
+          <HomeProblems />
+        </SharpBrainPricingProvider>
         <HomeStartFree />
         <HomeProof />
         <HomeHowWeWork />

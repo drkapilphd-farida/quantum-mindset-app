@@ -17,7 +17,7 @@ import { absoluteUrl } from '@/lib/seo/siteUrl'
 
 // Locked days go to the Sharp Brain 30-Day Program page — the ₹99 Starter
 // unlock is closed to new buyers (existing holders keep their access).
-const PROGRAM_OFFER_HREF = absoluteUrl(`${programs.sharpBrain.url}#formats`)
+const PROGRAM_OFFER_HREF = absoluteUrl(`${programs.sharpBrain.url}#enrol`)
 
 // 21-Day Journey Paywall™ — Days 1 through 7 (the full first week) are
 // free for every user (the real "try it for real, not a demo" window);

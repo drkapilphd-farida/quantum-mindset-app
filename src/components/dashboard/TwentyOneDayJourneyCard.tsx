@@ -6,7 +6,7 @@ import { absoluteUrl } from '@/lib/seo/siteUrl'
 
 // Locked days lead to the Sharp Brain 30-Day Program (the ₹99 Starter
 // unlock is closed to new buyers; existing holders already have access).
-const PROGRAM_OFFER_HREF = absoluteUrl(`${programs.sharpBrain.url}#formats`)
+const PROGRAM_OFFER_HREF = absoluteUrl(`${programs.sharpBrain.url}#enrol`)
 const PROGRAM_PRICE = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
 type TwentyOneDayJourneyCardProps = {

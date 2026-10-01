@@ -20,6 +20,7 @@ function fakeService(existing: Existing): { calls: Call[]; client: { from: (t: s
     const b: Record<string, unknown> = {
       select: () => b,
       eq: () => b,
+      is: () => b,
       insert: (v: unknown) => ((call.op = 'insert'), (call.values = v), b),
       update: (v: unknown) => ((call.op = 'update'), (call.values = v), b),
       single: () => Promise.resolve(result()),
@@ -48,10 +49,10 @@ async function post(body: unknown, existing: Existing = {}): Promise<{ status: n
   return { status: response.status, calls }
 }
 
-const linkPaid = (shortUrl: string): unknown => ({
+const linkPaid = (shortUrl: string, notes: unknown = [], customer: unknown = null): unknown => ({
   event: 'payment_link.paid',
   payload: {
-    payment_link: { entity: { id: 'plink_1', short_url: shortUrl } },
+    payment_link: { entity: { id: 'plink_1', short_url: shortUrl, notes, customer } },
     payment: { entity: { id: 'pay_1', amount: 999900, currency: 'INR', email: 'buyer@example.com', contact: null } },
   },
 })
@@ -105,5 +106,53 @@ describe('masterclass webhook — program payments only, manual grants preserved
   it('does nothing on a repeated delivery of the same payment', async () => {
     const { calls } = await post(linkPaid(PROGRAM), { payment: { id: 'row-1' } })
     expect(calls.filter((c) => c.op !== 'select')).toHaveLength(0)
+  })
+})
+
+describe('masterclass webhook — batches and offers (payment links created by our server)', () => {
+  beforeEach(() => {
+    vi.restoreAllMocks()
+    vi.unstubAllEnvs()
+  })
+
+  const OFFER_ID = '7f0c2f5e-9a51-4c43-9d8a-2a9c4b1f0e11'
+  const apiLink = (notes: Record<string, string>): unknown => linkPaid('https://rzp.io/rzp/AbC123xy', notes, { name: 'Asha', contact: '+919999999999' })
+
+  it('grants for any link with notes.program = sharp_brain_30 and saves offer, batch, name and link id', async () => {
+    const { status, calls } = await post(apiLink({ program: 'sharp_brain_30', batch: '2026-10-15', offer: 'earlybird' }), { profile: { id: 'user-3' }, subscription: null })
+    expect(status).toBe(200)
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({
+      offer: 'earlybird',
+      batch_start: '2026-10-15',
+      customer_name: 'Asha',
+      payment_link_id: 'plink_1',
+      sharp_brain_offer_id: null,
+    })
+    expect(writes(calls, 'subscriptions')).toHaveLength(1)
+  })
+
+  it('marks a test offer used when it is paid', async () => {
+    const { calls } = await post(apiLink({ program: 'sharp_brain_30', batch: '2026-10-25', offer: 'test1000', offer_id: OFFER_ID }), { profile: null })
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ offer: 'test1000', sharp_brain_offer_id: OFFER_ID })
+    expect(writes(calls, 'sharp_brain_offers')).toEqual([
+      { table: 'sharp_brain_offers', op: 'update', values: expect.objectContaining({ razorpay_payment_id: 'pay_1' }) },
+    ])
+  })
+
+  it('ignores links with other notes (another product created through the API)', async () => {
+    const { status, calls } = await post(apiLink({ program: 'retreat_11_day' }))
+    expect(status).toBe(200)
+    expect(calls).toHaveLength(0)
+  })
+
+  it('drops note values that are not a known offer, a date or an offer id', async () => {
+    const { calls } = await post(apiLink({ program: 'sharp_brain_30', batch: 'soon', offer: 'free', offer_id: 'x' }), { profile: null })
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ offer: null, batch_start: null, sharp_brain_offer_id: null })
+    expect(writes(calls, 'sharp_brain_offers')).toHaveLength(0)
+  })
+
+  it('still grants for the fixed ₹9,999 link, saved as a regular payment without a batch', async () => {
+    const { calls } = await post(linkPaid(PROGRAM), { profile: null })
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ offer: 'regular', batch_start: null })
   })
 })
