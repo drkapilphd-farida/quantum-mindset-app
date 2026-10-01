@@ -32,8 +32,8 @@ export function QuantumHiddenTargetGridSettings({ onStart }: QuantumHiddenTarget
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Hidden Target Grid</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          A grid of hidden boxes holds one secret target each round. Don&apos;t think it through — tap the box your
-          gut feels is right.
+          A grid of hidden boxes holds one target each round. Pick a box — every box is the target exactly once per
+          sprint.
         </p>
       </div>
 

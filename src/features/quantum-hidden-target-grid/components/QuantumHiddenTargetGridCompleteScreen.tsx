@@ -39,13 +39,13 @@ export function QuantumHiddenTargetGridCompleteScreen({
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sprint Complete</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Nice intuition.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Sprint complete.</p>
       </div>
 
       <div className="grid w-full grid-cols-2 gap-4">
         <ReadingStatTile variant="card" label="Total Rounds" value={String(GRID_SIZE)} />
         <ReadingStatTile variant="card" label="Correct Hits" value={String(correctCount)} />
-        <ReadingStatTile variant="card" label="Intuition Accuracy" value={`${accuracyPercent}%`} />
+        <ReadingStatTile variant="card" label="Hit Rate" value={`${accuracyPercent}%`} />
         <ReadingStatTile variant="card" label="Total Energy" value={String(totalEnergy)} />
         <ReadingStatTile variant="card" label="Best Streak" value={String(bestStreak)} />
         <ReadingStatTile variant="card" label="Time" value={formatElapsedTime(elapsedMs)} />

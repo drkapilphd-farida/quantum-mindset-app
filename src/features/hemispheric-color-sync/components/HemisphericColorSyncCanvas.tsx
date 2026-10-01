@@ -189,7 +189,7 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
           canvas renders (transformed option swatches, reveal glows) can
           ever visually escape to the right on narrow mobile viewports. */}
       <div className="w-full overflow-x-hidden">
-        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Color-Word Sync Grid</p>
+        <p className="text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Color-Word Sync Grid</p>
 
         <div className="mt-4 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
           <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${ROUNDS_PER_SESSION}`} />

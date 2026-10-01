@@ -156,7 +156,7 @@ export function QuantumHiddenTargetGridCanvas({ onComplete, onExitRequested }: Q
           {lastOutcome.isCorrect ? `Direct hit! +${lastOutcome.energyEarned} energy` : 'Not quite — the target is glowing below.'}
         </p>
       ) : (
-        <p className="mt-8 text-center text-sm text-muted-foreground">Trust your first instinct. Which box holds it?</p>
+        <p className="mt-8 text-center text-sm text-muted-foreground">Which box holds the target? Pick one.</p>
       )}
 
       <div

@@ -423,7 +423,6 @@ export function SharpBrainFaq(): React.JSX.Element {
             </details>
           ))}
         </div>
-        <SiteTodo>FAQ answers for “Hindi or English?” and “missed live class” are drafts — Dr. Kapil to confirm.</SiteTodo>
       </div>
     </section>
   );

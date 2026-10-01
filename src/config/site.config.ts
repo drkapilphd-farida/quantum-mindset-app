@@ -508,7 +508,7 @@ const qsrGuaranteeData = {
     /** Title on sales pages (Sharp Brain page, test result), which carry no "100%" claims. */
     label: 'Results Guarantee',
     statement:
-      "If you complete the full 30-day protocol as instructed — every daily app session, and all 7 live masterclass sessions with Dr. Kapil Dev Sharma — and your reading speed (WPM) and comprehension haven't measurably improved between your Day 1 baseline and your Day 30 checkpoint, we'll issue a full refund of your ₹9,999 enrollment fee.",
+      "If you complete the full 30-day protocol as instructed — every daily app session, and all 7 live masterclass sessions with Dr. Kapil Dev Sharma — and your reading speed (WPM) and comprehension haven't measurably improved between your Day 1 baseline and your Day 30 checkpoint, we'll issue a full refund of your enrolment fee.",
     short:
       "100% Results Guarantee — a full refund if your WPM and comprehension haven't measurably improved after the complete 30-day protocol.",
     requestWindow: 'Request it within 7 days of completing Day 30.',
@@ -517,7 +517,7 @@ const qsrGuaranteeData = {
     title: '100% रिज़ल्ट गारंटी',
     label: 'रिज़ल्ट गारंटी',
     statement:
-      'अगर आप पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करते हैं — हर दैनिक ऐप सेशन, और डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव मास्टरक्लास सेशन — और आपके दिन 1 के बेसलाइन और दिन 30 के चेकपॉइंट के बीच आपकी रीडिंग स्पीड (WPM) और समझ में मापने योग्य सुधार नहीं होता, तो हम आपकी ₹9,999 की नामांकन फीस का पूरा रिफंड देंगे।',
+      'अगर आप पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करते हैं — हर दैनिक ऐप सेशन, और डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव मास्टरक्लास सेशन — और आपके दिन 1 के बेसलाइन और दिन 30 के चेकपॉइंट के बीच आपकी रीडिंग स्पीड (WPM) और समझ में मापने योग्य सुधार नहीं होता, तो हम आपकी नामांकन फीस का पूरा रिफंड देंगे।',
     short:
       '100% रिज़ल्ट गारंटी — पूरा 30-दिवसीय प्रोटोकॉल पूरा करने के बाद भी अगर आपकी WPM और समझ में मापने योग्य सुधार नहीं होता, तो पूरा रिफंड।',
     requestWindow: 'दिन 30 पूरा करने के 7 दिनों के भीतर अनुरोध करें।',

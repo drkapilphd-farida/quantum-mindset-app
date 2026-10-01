@@ -1,4 +1,4 @@
-import { programs, qsrGuarantee, trainer } from '@/config/site.config'
+import { programs, qsrGuarantee, sharpBrainEnrolment, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
 // Copy for /programs/sharp-brain, EN + HI (rewritten 1 Oct 2026: one
@@ -37,6 +37,11 @@ export type SharpBrainCopy = {
   final: { title: string; speedTest: string }
   sticky: { cta: string }
 }
+
+// "15th and 25th" — from the batch schedule in site.config.
+const ord = (d: number): string => `${d}${d % 10 === 1 && d !== 11 ? 'st' : d % 10 === 2 && d !== 12 ? 'nd' : d % 10 === 3 && d !== 13 ? 'rd' : 'th'}`
+const batchDaysEn = sharpBrainEnrolment.batchStartDays.map(ord).join(' and ')
+const batchDaysHi = sharpBrainEnrolment.batchStartDays.join(' और ')
 
 const regular = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
 
@@ -108,7 +113,7 @@ const en: SharpBrainCopy = {
       'Use 4–5 memory techniques for formulas, facts, names and presentations.',
       'Revise in a way that makes information stay.',
       'Control phone distraction with simple daily habits.',
-      'See your own Day 1 vs Day 30 numbers.',
+      'Compare your own reading numbers from Class 1 and Class 7.',
     ],
   },
   app: {
@@ -116,7 +121,7 @@ const en: SharpBrainCopy = {
     title: 'Your daily practice in the Mind Ur Mind App',
     note: '10–15 minutes a day. Progress tracked automatically.',
     groups: [
-      { id: 'focus', skill: 'Focus', exercises: ['Color-Word Sync Grid', 'Hidden Target Grid', 'Zener Card Attention Sprint'] },
+      { id: 'focus', skill: 'Focus', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
       { id: 'reading', skill: 'Smart Reading', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Regression Control', 'Guided-pace (RSVP) practice'] },
       { id: 'memory', skill: 'Memory', exercises: ['Dot Memory Grid', 'Word Flash Grid', 'Visual Memory Reading', 'Mental Object Rotation'] },
       { id: 'visual', skill: 'Visualisation', exercises: ['Sensory Imagery Builder', 'Deep Visualisation Recall'] },
@@ -135,13 +140,13 @@ const en: SharpBrainCopy = {
     title: 'The 7 live classes',
     // TODO(content): draft outline — Dr. Kapil to confirm titles and lines.
     items: [
-      { title: 'Brain & learning basics', desc: 'How attention, reading and memory work — and your Day 1 assessment.' },
+      { title: 'Brain & learning basics', desc: 'How attention, reading and memory work — and your reading assessment.' },
       { title: 'Focus training', desc: 'Attention drills, distraction control and your daily focus routine.' },
       { title: 'Smart Reading methods', desc: 'Reading in phrases, inner-voice control and fewer re-reads — without losing understanding.' },
       { title: 'Memory techniques I', desc: 'Visual images, association and the memory palace.' },
       { title: 'Memory techniques II + revision system', desc: 'Peg system, acronyms, mind maps, active recall and spaced revision.' },
       { title: 'Exam & work application', desc: 'Using the methods on your own syllabus, books, reports and presentations.' },
-      { title: 'Day 30 review & plan', desc: 'Your Day 30 assessment, Day 1 vs Day 30 comparison, and a plan to keep going.' },
+      { title: 'Review & plan', desc: 'Your reading assessment again, compared with Class 1 — and a plan to keep going.' },
     ],
     note: `Live on Zoom with ${trainer.name} — not recordings. Doubts answered in class.`,
   },
@@ -160,10 +165,10 @@ const en: SharpBrainCopy = {
     eyebrow: 'How it works',
     title: 'Measure, train, practise, re-measure',
     steps: [
-      { title: 'Day 1 assessment', desc: 'Your reading speed and comprehension — your own starting point.' },
+      { title: 'Reading assessment in Class 1', desc: 'Your reading speed and comprehension — your own starting point.' },
       { title: '7 live classes', desc: `Live on Zoom with ${trainer.name} across the 30 days.` },
       { title: 'Daily app practice', desc: '10–15 minutes a day in the Mind Ur Mind App, tracked automatically.' },
-      { title: 'Day 30 re-assessment', desc: 'The same measures again, compared with your Day 1.' },
+      { title: 'Reading assessment in Class 7', desc: 'The same measures again, compared with Class 1.' },
     ],
   },
   proof: {
@@ -179,7 +184,7 @@ const en: SharpBrainCopy = {
     items: [
       `7 live classes with ${trainer.name}`,
       '30 days of guided app practice (all exercises)',
-      'Day 1 and Day 30 assessments with your progress report',
+      'Reading assessment in Class 1 and Class 7',
       'Memory & revision methods for exams and work',
       'Certificate of completion',
       'WhatsApp support during the program',
@@ -212,18 +217,15 @@ const en: SharpBrainCopy = {
       },
       {
         question: 'Is it in Hindi or English?',
-        // TODO(content): confirm the live-class language with Dr. Kapil.
-        answer: 'Live classes are taught in simple Hindi and English. This website and the free Reading Speed Test are available in both languages.',
+        answer: 'Classes are taught in simple Hindi with English terms; the app is available in English and Hindi.',
       },
       {
         question: 'What if I miss a live class?',
-        // TODO(content): confirm the missed-class policy with Dr. Kapil.
-        answer:
-          'Tell us on WhatsApp. Your daily app practice continues as usual, and the team helps you catch up on what was covered. Note that the results guarantee needs all 7 live classes.',
+        answer: `Join the same class free in the next batch — batches start on the ${batchDaysEn} of every month.`,
       },
       {
         question: `What do I get for ${regular}?`,
-        answer: `7 live classes with ${trainer.name}, 30 days of guided app practice with all exercises, Day 1 and Day 30 assessments with your progress report, memory and revision methods for exams and work, a certificate of completion and WhatsApp support during the program. One-time payment — no subscription, no instalments.`,
+        answer: `7 live classes with ${trainer.name}, 30 days of guided app practice with all exercises, a reading assessment in Class 1 and Class 7, memory and revision methods for exams and work, a certificate of completion and WhatsApp support during the program. One-time payment — no subscription, no instalments.`,
       },
       {
         question: 'What if it doesn’t work for me?',
@@ -306,7 +308,7 @@ const hi: SharpBrainCopy = {
       'फ़ॉर्मूले, तथ्य, नाम और प्रेज़ेंटेशन याद रखने के लिए 4–5 मेमोरी तकनीकों का इस्तेमाल।',
       'ऐसे दोहराना कि जानकारी याद रहे।',
       'आसान रोज़ की आदतों से फ़ोन के भटकाव पर काबू।',
-      'अपने Day 1 और Day 30 के आँकड़े खुद देखना।',
+      'Class 1 और Class 7 के अपने रीडिंग आँकड़ों की तुलना करना।',
     ],
   },
   app: {
@@ -314,7 +316,7 @@ const hi: SharpBrainCopy = {
     title: 'Mind Ur Mind App में आपका रोज़ का अभ्यास',
     note: 'रोज़ 10–15 मिनट। प्रगति अपने-आप ट्रैक होती है।',
     groups: [
-      { id: 'focus', skill: 'फोकस', exercises: ['Color-Word Sync Grid', 'Hidden Target Grid', 'Zener Card Attention Sprint'] },
+      { id: 'focus', skill: 'फोकस', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
       { id: 'reading', skill: 'स्मार्ट रीडिंग', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Regression Control', 'तय गति पर अभ्यास (RSVP)'] },
       { id: 'memory', skill: 'याददाश्त', exercises: ['Dot Memory Grid', 'Word Flash Grid', 'Visual Memory Reading', 'Mental Object Rotation'] },
       { id: 'visual', skill: 'विज़ुअलाइज़ेशन', exercises: ['Sensory Imagery Builder', 'Deep Visualisation Recall'] },
@@ -332,13 +334,13 @@ const hi: SharpBrainCopy = {
     eyebrow: 'प्रोग्राम की असली ताक़त',
     title: '7 लाइव क्लासेस',
     items: [
-      { title: 'दिमाग़ और सीखने की बुनियाद', desc: 'ध्यान, पढ़ना और याददाश्त कैसे काम करते हैं — और आपका Day 1 असेसमेंट।' },
+      { title: 'दिमाग़ और सीखने की बुनियाद', desc: 'ध्यान, पढ़ना और याददाश्त कैसे काम करते हैं — और आपका रीडिंग असेसमेंट।' },
       { title: 'फोकस ट्रेनिंग', desc: 'ध्यान के अभ्यास, भटकाव पर काबू और आपकी रोज़ की फोकस दिनचर्या।' },
       { title: 'स्मार्ट रीडिंग के तरीके', desc: 'वाक्यांशों में पढ़ना, मन की आवाज़ पर नियंत्रण, कम दोहराव — समझ खोए बिना।' },
       { title: 'मेमोरी तकनीकें I', desc: 'विज़ुअल इमेज, एसोसिएशन और मेमोरी पैलेस।' },
       { title: 'मेमोरी तकनीकें II + दोहराने का सिस्टम', desc: 'पेग सिस्टम, एक्रोनिम, माइंड मैप, एक्टिव रिकॉल और अंतराल पर दोहराव।' },
       { title: 'परीक्षा और काम में इस्तेमाल', desc: 'अपने सिलेबस, किताबों, रिपोर्ट्स और प्रेज़ेंटेशन पर इन तरीकों का इस्तेमाल।' },
-      { title: 'Day 30 समीक्षा और आगे की योजना', desc: 'आपका Day 30 असेसमेंट, Day 1 बनाम Day 30 तुलना, और आगे जारी रखने की योजना।' },
+      { title: 'समीक्षा और आगे की योजना', desc: 'आपका रीडिंग असेसमेंट दोबारा, Class 1 से तुलना के साथ — और आगे जारी रखने की योजना।' },
     ],
     note: `${trainer.nameHi} के साथ Zoom पर लाइव — रिकॉर्डिंग नहीं। सवालों के जवाब क्लास में ही।`,
   },
@@ -357,10 +359,10 @@ const hi: SharpBrainCopy = {
     eyebrow: 'यह कैसे काम करता है',
     title: 'नापें, सीखें, अभ्यास करें, फिर नापें',
     steps: [
-      { title: 'Day 1 असेसमेंट', desc: 'आपकी रीडिंग स्पीड और समझ — आपकी अपनी शुरुआत।' },
+      { title: 'Class 1 में रीडिंग असेसमेंट', desc: 'आपकी रीडिंग स्पीड और समझ — आपकी अपनी शुरुआत।' },
       { title: '7 लाइव क्लासेस', desc: `30 दिनों में ${trainer.nameHi} के साथ Zoom पर लाइव।` },
       { title: 'रोज़ ऐप पर अभ्यास', desc: 'Mind Ur Mind App में रोज़ 10–15 मिनट, अपने-आप ट्रैक।' },
-      { title: 'Day 30 दोबारा असेसमेंट', desc: 'वही माप दोबारा, आपके Day 1 से तुलना के साथ।' },
+      { title: 'Class 7 में रीडिंग असेसमेंट', desc: 'वही माप दोबारा, Class 1 से तुलना के साथ।' },
     ],
   },
   proof: {
@@ -376,7 +378,7 @@ const hi: SharpBrainCopy = {
     items: [
       `${trainer.nameHi} के साथ 7 लाइव क्लासेस`,
       '30 दिन का गाइडेड ऐप अभ्यास (सभी एक्सरसाइज़)',
-      'Day 1 और Day 30 असेसमेंट, आपकी प्रगति रिपोर्ट के साथ',
+      'Class 1 और Class 7 में रीडिंग असेसमेंट',
       'परीक्षा और काम के लिए याद रखने और दोहराने के तरीके',
       'कोर्स पूरा करने का सर्टिफ़िकेट',
       'प्रोग्राम के दौरान WhatsApp सपोर्ट',
@@ -409,16 +411,15 @@ const hi: SharpBrainCopy = {
       },
       {
         question: 'यह हिंदी में है या अंग्रेज़ी में?',
-        answer: 'लाइव क्लासेस आसान हिंदी और अंग्रेज़ी में होती हैं। यह वेबसाइट और मुफ़्त Reading Speed Test दोनों भाषाओं में उपलब्ध हैं।',
+        answer: 'क्लासेस आसान हिंदी में होती हैं, ज़रूरी अंग्रेज़ी शब्दों के साथ; ऐप अंग्रेज़ी और हिंदी दोनों में उपलब्ध है।',
       },
       {
         question: 'अगर कोई लाइव क्लास छूट जाए तो?',
-        answer:
-          'हमें WhatsApp पर बताएँ। आपका रोज़ का ऐप अभ्यास पहले की तरह चलता रहता है, और टीम क्लास में जो हुआ उसे कवर करने में मदद करती है। ध्यान दें: रिज़ल्ट गारंटी के लिए सभी 7 लाइव क्लासेस ज़रूरी हैं।',
+        answer: `वही क्लास अगले बैच में मुफ़्त में जॉइन करें — बैच हर महीने की ${batchDaysHi} तारीख़ को शुरू होते हैं।`,
       },
       {
         question: `${regular} में क्या मिलता है?`,
-        answer: `${trainer.nameHi} के साथ 7 लाइव क्लासेस, सभी एक्सरसाइज़ के साथ 30 दिन का गाइडेड ऐप अभ्यास, प्रगति रिपोर्ट के साथ Day 1 और Day 30 असेसमेंट, परीक्षा और काम के लिए याद रखने व दोहराने के तरीके, सर्टिफ़िकेट और प्रोग्राम के दौरान WhatsApp सपोर्ट। एकमुश्त भुगतान — न सब्सक्रिप्शन, न किश्तें।`,
+        answer: `${trainer.nameHi} के साथ 7 लाइव क्लासेस, सभी एक्सरसाइज़ के साथ 30 दिन का गाइडेड ऐप अभ्यास, Class 1 और Class 7 में रीडिंग असेसमेंट, परीक्षा और काम के लिए याद रखने व दोहराने के तरीके, सर्टिफ़िकेट और प्रोग्राम के दौरान WhatsApp सपोर्ट। एकमुश्त भुगतान — न सब्सक्रिप्शन, न किश्तें।`,
       },
       { question: 'अगर यह मेरे लिए काम न करे तो?', answer: `${qsrGuarantee.hi.statement} ${qsrGuarantee.hi.requestWindow}` },
       { question: 'Quantum Speed Reading का क्या हुआ?', answer: 'अब इसका नाम Sharp Brain है — वही मूल प्रशिक्षण, साफ़ नाम, और फोकस व याददाश्त पर ज़्यादा ज़ोर।' },
