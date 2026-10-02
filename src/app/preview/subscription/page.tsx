@@ -54,7 +54,7 @@ export default async function SubscriptionPage(): Promise<React.JSX.Element> {
         </p>
 
         <Button asChild className="mt-5 w-full rounded-full sm:w-auto">
-          <Link href="/pricing">{isPaidUser ? 'View all plans' : 'Upgrade your plan'}</Link>
+          <Link href="/programs/sharp-brain">See the Sharp Brain program</Link>
         </Button>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from './masterclassPaymentLink'
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from './overthinkingCoursePaymentLink'
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from './retreatPaymentLink'
-import { STARTER_MONTHLY_399, FAMILY_PRO_MONTHLY_699 } from './pricingLinks'
 
 // Single source of truth for everything public-facing that used to be
 // retyped by hand across pages: brand name and tagline, the trainer's
@@ -393,17 +392,14 @@ const programsData = {
     nameHi: 'Mind Ur Mind App',
     outcome: 'Daily reading, focus and memory practice with progress tracking.',
     audience: 'Program participants and families',
-    format: 'Web app · subscription plans (parked — /pricing is noindex since site-rebuild Phase 1)',
-    prices: [
-      { label: 'Starter (monthly)', amountInr: 399 },
-      { label: 'Family Pro (monthly)', amountInr: 699 },
-    ],
-    checkout: [
-      { label: 'Starter monthly', href: STARTER_MONTHLY_399 },
-      { label: 'Family Pro monthly', href: FAMILY_PRO_MONTHLY_699 },
-    ],
-    url: '/pricing',
-    status: 'active',
+    format: 'Web app — included with the Sharp Brain 30-Day Program',
+    // App subscription plans (Starter / Family Pro) are not sold (2 Oct 2026);
+    // /pricing 301-redirects to /programs/sharp-brain. Existing subscriptions
+    // are untouched.
+    prices: [] as ProgramPrice[],
+    checkout: [] as ProgramCheckout[],
+    url: '/programs/sharp-brain',
+    status: 'hidden',
     pillar: 'brain',
   },
 } as const satisfies Record<string, Program>

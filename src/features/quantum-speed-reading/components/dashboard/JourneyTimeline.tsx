@@ -85,13 +85,13 @@ export function JourneyTimeline({ stages, currentStageId }: JourneyTimelineProps
 
         // Quantum Speed Reading Paywall™ — a Pro-locked stage is the one
         // "locked" state that's still a real, clickable entry point (to
-        // /pricing), not just a status readout — matches every other
+        // the Sharp Brain program's batch picker), not just a status readout — matches every other
         // locked-day/locked-exercise treatment in this pass, where
         // locking is never a dead end.
         return isProLocked ? (
           <li key={stage.id}>
             <Link
-              href="/pricing#family-pro"
+              href="/programs/sharp-brain#enrol"
               className="flex items-center gap-4 px-6 py-4 transition-colors hover:bg-primary/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
             >
               {rowContent}

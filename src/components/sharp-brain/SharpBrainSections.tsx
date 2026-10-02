@@ -32,7 +32,9 @@ function useCopy(): (typeof sharpBrainCopy)["en"] {
 
 const sectionClass = "border-b border-line px-4 py-16 sm:px-8 sm:py-20";
 const h2Class = "mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]";
-const ENROL_HREF = "#enrol";
+// Path + hash, so the same buttons work on /reviews; on the program page itself
+// it is a same-page jump to the batch picker.
+const ENROL_HREF = "/programs/sharp-brain#enrol";
 
 // The two calls to action (hero and final): enrol (→ batch picker in the
 // offer section), or take the free Reading Speed Test.
@@ -464,5 +466,24 @@ export function SharpBrainStickyBar(): React.JSX.Element {
         </a>
       </div>
     </div>
+  );
+}
+
+// /reviews hero: same look as the program page, one H1, live price.
+export function SharpBrainReviewsHero(): React.JSX.Element {
+  const c = useCopy();
+  return (
+    <section id="top" className="border-b border-line px-4 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-16">
+      <div className="mx-auto max-w-content">
+        <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-gold">{c.reviews.eyebrow}</p>
+        <h1 className="mt-4 max-w-3xl text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px]">{c.reviews.h1}</h1>
+        <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-ink">{c.reviews.sub}</p>
+        <EnrolAndTestButtons speedTest={c.hero.speedTest} location="reviews_hero" className="mt-8" />
+        <PriceLine className="mt-4" />
+        <Link href={programs.sharpBrain.url} className="mt-5 inline-block text-[14px] font-semibold text-gold hover:underline">
+          {c.reviews.programLink}
+        </Link>
+      </div>
+    </section>
   );
 }

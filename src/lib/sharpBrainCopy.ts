@@ -36,6 +36,7 @@ export type SharpBrainCopy = {
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] }
   final: { title: string; speedTest: string }
   sticky: { cta: string }
+  reviews: { metaTitle: string; eyebrow: string; h1: string; sub: string; programLink: string }
 }
 
 // "15th and 25th" — from the batch schedule in site.config.
@@ -238,6 +239,13 @@ const en: SharpBrainCopy = {
   },
   final: { title: 'Your brain can learn better. Start in the next batch.', speedTest: 'Take the free Reading Speed Test →' },
   sticky: { cta: 'Enrol' },
+  reviews: {
+    metaTitle: 'Video Reviews — Sharp Brain™ | Mind Ur Mind',
+    eyebrow: 'Real learners',
+    h1: 'Sharp Brain™ video reviews',
+    sub: 'Learners from earlier batches talk about their experience in their own words. Watch them here or on our YouTube channel.',
+    programLink: 'See what’s in the 30-Day Program →',
+  },
 }
 
 const hi: SharpBrainCopy = {
@@ -426,6 +434,13 @@ const hi: SharpBrainCopy = {
   },
   final: { title: 'आपका दिमाग़ बेहतर सीख सकता है। अगले बैच से शुरू करें।', speedTest: 'मुफ़्त Reading Speed Test दें →' },
   sticky: { cta: 'नामांकन' },
+  reviews: {
+    metaTitle: 'Video Reviews — Sharp Brain™ | Mind Ur Mind',
+    eyebrow: 'असली विद्यार्थी',
+    h1: 'Sharp Brain™ वीडियो रिव्यूज़',
+    sub: 'पहले के बैचों के विद्यार्थी अपने शब्दों में अपना अनुभव बताते हैं। यहाँ देखें या हमारे YouTube चैनल पर।',
+    programLink: '30-दिवसीय प्रोग्राम में क्या है, देखें →',
+  },
 }
 
 export const sharpBrainCopy: Record<Lang, SharpBrainCopy> = { en, hi }

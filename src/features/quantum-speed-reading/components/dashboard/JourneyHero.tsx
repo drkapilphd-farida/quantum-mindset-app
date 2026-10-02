@@ -89,8 +89,8 @@ export function JourneyHero({
           </div>
 
           <Button asChild size="lg" className="mt-8 min-w-[220px] rounded-full shadow-sm">
-            <Link href={currentStageRequiresPro ? '/pricing#family-pro' : continueHref}>
-              {currentStageRequiresPro ? 'Upgrade to Pro' : 'Continue Your Journey™'}
+            <Link href={currentStageRequiresPro ? '/programs/sharp-brain#enrol' : continueHref}>
+              {currentStageRequiresPro ? 'Join the Sharp Brain Program' : 'Continue Your Journey™'}
             </Link>
           </Button>
 

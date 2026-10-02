@@ -43,6 +43,8 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: '/programs/habit-builder', destination: '/programs/sharp-brain', statusCode: 301 },
   { source: '/programs/habit-builder/:path*', destination: '/programs/sharp-brain', statusCode: 301 },
   // Marketing: the program page (and its sub-pages such as the speed test)
+  // /pricing retired (2 Oct 2026): app subscription plans (Starter / Family Pro) are not sold.
+  { source: '/pricing', destination: '/programs/sharp-brain', statusCode: 301 },
   { source: '/programs/quantum-speed-reading-mumbai', destination: '/programs/sharp-brain', statusCode: 301 },
   { source: '/programs/quantum-speed-reading', destination: '/programs/sharp-brain', statusCode: 301 },
   { source: '/programs/quantum-speed-reading/:path*', destination: '/programs/sharp-brain/:path*', statusCode: 301 },

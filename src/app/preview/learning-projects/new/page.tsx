@@ -5,7 +5,6 @@ import { createClient } from '@/lib/supabase/server'
 import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
 import { getQuantumDocumentCount } from '@/features/quantum-document-transformer/getQuantumDocumentCount'
 import { FREE_TIER_DOCUMENT_LIMIT } from '@/features/quantum-document-transformer/freeTierLimit'
-import { UpgradeToProBanner } from '@/features/quantum-document-transformer/components/UpgradeToProBanner'
 
 export const metadata: Metadata = {
   title: 'New Learning Project',
@@ -37,7 +36,6 @@ export default async function NewLearningProjectPage(): Promise<React.JSX.Elemen
     return (
       <div className="relative min-h-dvh overflow-hidden px-6 py-12">
         <div className="relative mx-auto max-w-2xl">
-          <UpgradeToProBanner documentLimit={FREE_TIER_DOCUMENT_LIMIT} />
         </div>
       </div>
     )

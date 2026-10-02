@@ -14,7 +14,6 @@ import { ConsistencyCard } from './ConsistencyCard'
 import { CurriculumProgressCard } from './CurriculumProgressCard'
 import { CurriculumSessionHistoryCard } from './CurriculumSessionHistoryCard'
 import { DocumentMasteryCard } from './DocumentMasteryCard'
-import { PremiumUpsellCard } from './PremiumUpsellCard'
 
 type ParentDashboardProps = {
   userId: string
@@ -85,7 +84,6 @@ export async function ParentDashboard({ userId }: ParentDashboardProps): Promise
 
         <ChapterScoresCard chapters={chapterScores} />
 
-        <PremiumUpsellCard href="/pricing#family-pro" />
       </div>
     </div>
   )
