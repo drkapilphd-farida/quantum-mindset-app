@@ -15,6 +15,8 @@ type CurriculumAssessmentCanvasProps = {
   day: number
   mostRecentTrueWpm: number | null
   onComplete: (result: CurriculumCheckpointResult) => void
+  /** Replaying a completed checkpoint day: practice only, the official result stays. */
+  practice?: boolean
 }
 
 // Own-copy paper-card + frosted-glass constant — same recipe every other
@@ -48,7 +50,7 @@ function targetWpmWeekForDay(day: number): 1 | 2 | 3 {
 // starting pace anchors to the learner's own most recent real checkpoint
 // WPM rather than a generic constant, mirroring computeDefaultTargetWpm's
 // own "anchor to the user's real number" convention.
-export function CurriculumAssessmentCanvas({ day, mostRecentTrueWpm, onComplete }: CurriculumAssessmentCanvasProps): React.JSX.Element {
+export function CurriculumAssessmentCanvas({ day, mostRecentTrueWpm, onComplete, practice = false }: CurriculumAssessmentCanvasProps): React.JSX.Element {
   const t = useAppT()
   const [result, setResult] = useState<CurriculumCheckpointResult | null>(null)
 
@@ -75,8 +77,11 @@ export function CurriculumAssessmentCanvas({ day, mostRecentTrueWpm, onComplete 
         />
       ) : (
         <div className="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center gap-6 px-6 py-12 text-center">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('curriculum.assessment.eyebrow')}</p>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">
+            {practice ? t('curriculum.practice.complete') : t('curriculum.assessment.eyebrow')}
+          </p>
           <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('curriculum.assessment.title', { day })}</h2>
+          {practice && <p className="max-w-sm text-xs text-muted-foreground" data-practice-only="true">{t('curriculum.practice.originalKept', { day })}</p>}
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 via-violet-500/5 to-teal-500/10 p-4">

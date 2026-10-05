@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { authErrorKey } from '../authErrorKey'
 import { getAppT } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
+import { claimActiveSessionOnSignIn } from '@/lib/activeSessions/claimOnSignIn'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { getRequestOrigin } from '@/lib/domains/appDomain'
 import { SignUpSchema } from '../types'
@@ -62,6 +63,7 @@ export async function signUp(
   // which the emailRedirectTo above routes to the same destination via
   // /auth/callback.
   if (data.session !== null) {
+    if (data.user) await claimActiveSessionOnSignIn(supabase, data.user.id)
     redirect(next)
   }
 

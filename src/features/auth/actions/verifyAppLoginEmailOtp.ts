@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { claimActiveSessionOnSignIn } from '@/lib/activeSessions/claimOnSignIn'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
 import { AppLoginVerifyOtpSchema, type AuthActionResult } from '../types'
@@ -31,7 +32,7 @@ export async function verifyAppLoginEmailOtp(input: unknown): Promise<AuthAction
   }
 
   const supabase = await createClient()
-  const { error: verifyError } = await supabase.auth.verifyOtp({
+  const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
     email: parsed.data.email,
     token: parsed.data.token,
     type: 'email',
@@ -47,6 +48,8 @@ export async function verifyAppLoginEmailOtp(input: unknown): Promise<AuthAction
     // either way, so this is logged, not surfaced as a login failure.
     logger.warn('[verifyAppLoginEmailOtp] failed to invalidate other sessions', { error: signOutOthersError.message })
   }
+
+  if (verifyData.user) await claimActiveSessionOnSignIn(supabase, verifyData.user.id)
 
   return { success: true }
 }

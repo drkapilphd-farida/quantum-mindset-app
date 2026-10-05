@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { dayFocus, dayTitle } from '@/lib/app-i18n/curriculumText'
-import { useAppT } from '@/lib/app-i18n/client'
+import { useAppI18n } from '@/lib/app-i18n/client'
+import { LANGUAGES } from '@/lib/app-i18n/languages'
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle2, FileText, RotateCcw, Sparkles } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
@@ -10,6 +11,7 @@ import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { buildCurriculumDayPlan, getCurriculumPhase, getPhaseJustCompleted, isCheckpointDay } from '../curriculumDatabase'
 import { computeCheckpointDelta, markCurriculumDayUploadStarted, type CurriculumProgress } from '../curriculumProgress'
 import { DayMasterPlayer } from './DayMasterPlayer'
+import { getCurriculumDayPractice, type CurriculumDayPracticeAttempt } from '../actions/curriculumDayPractice'
 import { PhaseCompleteCelebration } from './PhaseCompleteCelebration'
 
 const CARD_CLASS_NAME = 'relative rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
@@ -18,8 +20,16 @@ type ThirtyDayCurriculumDayDetailProps = {
   day: number
   progress: CurriculumProgress
   justCompletedDay?: boolean
+  /** Completed according to the server (the browser's own record may be missing on a new device). */
+  completedOnServer?: boolean
+  /** Reopen straight into a replay (returning from an exercise that has its own page). */
+  initialReplay?: boolean
+  /** A replay was just saved — show the practice notice. */
+  justPractised?: boolean
+  /** Practising again is for enrolled learners only (the server checks this too). */
+  canPractise?: boolean
   onBack: () => void
-  onLaunchAssessment: (day: number) => void
+  onLaunchAssessment: (day: number, practice: boolean) => void
 }
 
 // Day Detail™ — now just a thin frame (theme header + celebration
@@ -48,14 +58,31 @@ export function ThirtyDayCurriculumDayDetail({
   day,
   progress,
   justCompletedDay = false,
+  completedOnServer = false,
+  initialReplay = false,
+  justPractised = false,
+  canPractise = false,
   onBack,
   onLaunchAssessment,
 }: ThirtyDayCurriculumDayDetailProps): React.JSX.Element {
-  const t = useAppT()
-  const [isReplaying, setIsReplaying] = useState(false)
+  const { lang, t } = useAppI18n()
+  const [isReplaying, setIsReplaying] = useState(initialReplay && canPractise)
+  const [practice, setPractice] = useState<CurriculumDayPracticeAttempt | null>(null)
+
+  // Latest "Practised again" for this day — re-read whenever a replay ends.
+  useEffect(() => {
+    if (isReplaying) return
+    let cancelled = false
+    void getCurriculumDayPractice(day).then((attempt) => {
+      if (!cancelled) setPractice(attempt)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [day, isReplaying, justPractised])
   const plan = buildCurriculumDayPlan(day)
   const phase = getCurriculumPhase(plan.phase)
-  const isCompleted = progress.completedDays.includes(day)
+  const isCompleted = completedOnServer || progress.completedDays.includes(day)
   const checkpoint = progress.checkpoints[day]
   const requiresCheckpoint = isCheckpointDay(day)
   // Phase-Complete Celebration Screens™ — non-null only on Days 7/14/21,
@@ -82,7 +109,8 @@ export function ThirtyDayCurriculumDayDetail({
         day={day}
         onExitToRoadmap={isReplaying ? () => setIsReplaying(false) : onBack}
         onDayComplete={isReplaying ? () => setIsReplaying(false) : onBack}
-        onReadyForCheckpoint={() => onLaunchAssessment(day)}
+        onReadyForCheckpoint={() => onLaunchAssessment(day, isReplaying)}
+        isReplay={isReplaying}
       />
     )
   }
@@ -105,6 +133,16 @@ export function ThirtyDayCurriculumDayDetail({
         >
           <CheckCircle2 className="size-4 shrink-0" aria-hidden="true" />
           {t('curriculum.detail.dayCompleteUnlocked', { day, next: day + 1 })}
+        </div>
+      )}
+
+      {justPractised && (
+        <div
+          className="flex items-center gap-2 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-3 text-sm font-semibold text-indigo-700 dark:text-indigo-300"
+          data-practice-saved="true"
+        >
+          <RotateCcw className="size-4 shrink-0" aria-hidden="true" />
+          {t('curriculum.practice.saved', { day })}
         </div>
       )}
 
@@ -172,6 +210,7 @@ export function ThirtyDayCurriculumDayDetail({
         ) : (
           <p className="text-center text-sm font-medium text-emerald-600 dark:text-emerald-400">{t('curriculum.detail.dayDone', { day })}</p>
         )}
+        {canPractise && (
         <button
           type="button"
           onClick={() => setIsReplaying(true)}
@@ -180,6 +219,23 @@ export function ThirtyDayCurriculumDayDetail({
           <RotateCcw className="size-3.5" aria-hidden="true" />
           {t('curriculum.detail.practiceAgain')}
         </button>
+        )}
+        {practice !== null && (
+          <div className="mt-4 rounded-2xl border border-border/60 bg-card/60 px-4 py-3 text-center" data-practised-again="true">
+            <p className="text-xs font-semibold text-foreground">
+              {t('curriculum.practice.practisedOn', {
+                date: new Date(practice.practisedAt).toLocaleDateString(LANGUAGES[lang].htmlLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+              })}
+              {practice.count > 1 ? ` · ${t('curriculum.practice.times', { n: practice.count })}` : ''}
+            </p>
+            {practice.trueWpm !== null && practice.comprehensionAccuracyPercent !== null && (
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                {t('curriculum.practice.latestResult', { wpm: practice.trueWpm, percent: practice.comprehensionAccuracyPercent })}
+              </p>
+            )}
+            <p className="mt-0.5 text-[11px] text-muted-foreground">{t('curriculum.practice.originalKept', { day })}</p>
+          </div>
+        )}
       </div>
 
       {/* Upload & Learn Masterclass Integration™ — weaves the AI Document

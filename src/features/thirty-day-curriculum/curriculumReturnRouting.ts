@@ -26,12 +26,18 @@ import { advanceCurriculumSession, clearActiveCurriculumSession, isSessionOnFina
 import { markCurriculumDayComplete } from './curriculumProgress'
 import { isCheckpointDay } from './curriculumDatabase'
 import { completeCurriculumDay } from './actions/completeCurriculumDay'
+import { recordCurriculumDayPractice } from './actions/curriculumDayPractice'
 
 const CURRICULUM_ROUTE = '/labs/sharp-brain/thirty-day-curriculum'
 
-function buildDayReturnUrl(day: number, dayComplete: boolean): string {
+type DayReturnFlags = { dayComplete?: boolean; replay?: boolean; practised?: boolean; practiceCheckpoint?: boolean }
+
+function buildDayReturnUrl(day: number, flags: DayReturnFlags = {}): string {
   const params = new URLSearchParams({ view: 'day', day: String(day) })
-  if (dayComplete) params.set('dayComplete', '1')
+  if (flags.dayComplete === true) params.set('dayComplete', '1')
+  if (flags.replay === true) params.set('replay', '1')
+  if (flags.practised === true) params.set('practised', '1')
+  if (flags.practiceCheckpoint === true) params.set('practiceCheckpoint', '1')
   return `${CURRICULUM_ROUTE}?${params.toString()}`
 }
 
@@ -89,10 +95,10 @@ export function isCurriculumSessionCurrentExercise(exerciseId: string): boolean 
 // a gated exercise (the persisted session) cases — falls back to
 // `fallbackHref` unchanged outside both.
 export function getWizardAwareBackHref(exerciseId: string, fallbackHref: string): string {
-  if (activeWizardDay !== null) return buildDayReturnUrl(activeWizardDay, false)
+  if (activeWizardDay !== null) return buildDayReturnUrl(activeWizardDay)
   const session = loadActiveCurriculumSession()
   if (session !== null && session.exerciseIds[session.currentIndex] === exerciseId) {
-    return buildDayReturnUrl(session.day, false)
+    return buildDayReturnUrl(session.day)
   }
   return fallbackHref
 }
@@ -101,13 +107,13 @@ export function getWizardAwareBackHref(exerciseId: string, fallbackHref: string)
 // to the day view. Falls back to `fallbackHref` unchanged outside an
 // active matching session.
 export function getCurriculumSmartExitHref(exerciseId: string, fallbackHref: string): string {
-  if (activeWizardDay !== null) return buildDayReturnUrl(activeWizardDay, false)
+  if (activeWizardDay !== null) return buildDayReturnUrl(activeWizardDay)
 
   const session = loadActiveCurriculumSession()
   if (session === null || session.exerciseIds[session.currentIndex] !== exerciseId) return fallbackHref
   const { day } = session
   clearActiveCurriculumSession()
-  return buildDayReturnUrl(day, false)
+  return buildDayReturnUrl(day)
 }
 
 // Natural completion — this is only ever reached by one of the 16
@@ -130,9 +136,11 @@ export function getCurriculumSmartCompleteHref(exerciseId: string, fallbackHref:
   if (session === null) return fallbackHref
   const { day } = session
 
+  const replay = session.replay === true
+
   if (!isSessionOnFinalExercise(session)) {
     advanceCurriculumSession()
-    return buildDayReturnUrl(day, false)
+    return buildDayReturnUrl(day, { replay })
   }
 
   // Final exercise (or the queue otherwise ran out) — the playlist itself
@@ -142,10 +150,17 @@ export function getCurriculumSmartCompleteHref(exerciseId: string, fallbackHref:
   // (see recordCurriculumCheckpoint), never bypassable by just clicking
   // through exercises. Every other day marks complete right here.
   clearActiveCurriculumSession()
+  // Practising a completed day again: saved as practice only; never marks
+  // the day complete again or changes its original result.
+  if (replay) {
+    if (isCheckpointDay(day)) return buildDayReturnUrl(day, { practiceCheckpoint: true })
+    void recordCurriculumDayPractice({ day })
+    return buildDayReturnUrl(day, { practised: true })
+  }
   if (isCheckpointDay(day)) {
-    return buildDayReturnUrl(day, false)
+    return buildDayReturnUrl(day)
   }
   markCurriculumDayComplete(day)
   void completeCurriculumDay({ day })
-  return buildDayReturnUrl(day, true)
+  return buildDayReturnUrl(day, { dayComplete: true })
 }

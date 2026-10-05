@@ -10,10 +10,11 @@ type MockConfig = {
   user?: { id: string } | null
   existingDays?: readonly number[]
   readError?: { message: string } | null
-  writeError?: { message: string } | null
+  writeError?: { message: string; code?: string } | null
+  writes?: unknown[]
 }
 
-function makeClient({ user = { id: 'user-1' }, existingDays = [], readError = null, writeError = null }: MockConfig = {}): {
+function makeClient({ user = { id: 'user-1' }, existingDays = [], readError = null, writeError = null, writes = [] }: MockConfig = {}): {
   auth: { getUser: () => Promise<{ data: { user: { id: string } | null } }> }
   from: (table: string) => unknown
 } {
@@ -25,7 +26,14 @@ function makeClient({ user = { id: 'user-1' }, existingDays = [], readError = nu
         select: () => ({
           eq: () => Promise.resolve({ data: existingDays.map((day) => ({ day })), error: readError }),
         }),
-        upsert: () => Promise.resolve({ error: writeError }),
+        insert: (row: unknown) => {
+          writes.push({ insert: row })
+          return Promise.resolve({ error: writeError })
+        },
+        upsert: (row: unknown) => {
+          writes.push({ upsert: row })
+          return Promise.resolve({ error: writeError })
+        },
       }
     },
   }
@@ -130,5 +138,48 @@ describe('completeCurriculumDay', () => {
     const result = await completeCurriculumDay({ day: 1 })
 
     expect(result).toEqual({ ok: false, reason: 'db_error' })
+  })
+
+  describe('a completion is written once and never changed', () => {
+    it('replaying an already-completed day returns ok without any write (original date and scores stay)', async () => {
+      const writes: unknown[] = []
+      const client = makeClient({ existingDays: [1, 2, 3, 4], writes })
+      const { completeCurriculumDay } = await importAction(client, true)
+
+      const result = await completeCurriculumDay({ day: 4, trueWpm: 999, comprehensionAccuracyPercent: 10 })
+
+      expect(result).toEqual({ ok: true, completedDays: [1, 2, 3, 4] })
+      expect(writes).toEqual([])
+    })
+
+    it('a checkpoint day (Day 1 baseline, Day 30 result) is never overwritten', async () => {
+      const writes: unknown[] = []
+      const all = Array.from({ length: 30 }, (_, i) => i + 1)
+      const client = makeClient({ existingDays: all, writes })
+      const { completeCurriculumDay } = await importAction(client, true)
+
+      await completeCurriculumDay({ day: 1, trueWpm: 50 })
+      await completeCurriculumDay({ day: 30, trueWpm: 50 })
+
+      expect(writes).toEqual([])
+    })
+
+    it('a first completion is inserted, never upserted', async () => {
+      const writes: unknown[] = []
+      const client = makeClient({ existingDays: [], writes })
+      const { completeCurriculumDay } = await importAction(client, true)
+
+      await completeCurriculumDay({ day: 1 })
+
+      expect(writes).toHaveLength(1)
+      expect(writes[0]).toHaveProperty('insert')
+    })
+
+    it('the same day completed a moment ago in another tab (unique conflict) still succeeds', async () => {
+      const client = makeClient({ existingDays: [], writeError: { message: 'duplicate', code: '23505' } })
+      const { completeCurriculumDay } = await importAction(client, true)
+
+      expect(await completeCurriculumDay({ day: 1 })).toEqual({ ok: true, completedDays: [1] })
+    })
   })
 })

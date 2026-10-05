@@ -14,6 +14,7 @@ import { ThirtyDayCurriculumOverview } from './ThirtyDayCurriculumOverview'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
 import { curriculumDayAccess, isCurriculumDayUnlocked, loadCurriculumProgress, recordCurriculumCheckpoint, type CurriculumCheckpointResult } from '../curriculumProgress'
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
+import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
 import { getCurriculumDayCompletions } from '../actions/getCurriculumDayCompletions'
 
 type CurriculumView = 'overview' | 'day-detail' | 'assessment'
@@ -92,7 +93,15 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // open instead.
   const initialDayIsUnlocked = initialDay !== null && isCurriculumDayUnlocked(initialDay, serverCompletedDays, isPro)
 
-  const [view, setView] = useState<CurriculumView>(initialDayIsUnlocked ? 'day-detail' : 'overview')
+  // Practising a completed day again (see curriculumReturnRouting.ts): only
+  // ever for a day the server already counts as completed.
+  const initialDayCompleted = initialDay !== null && initialServerCompletedDays.includes(initialDay)
+  const initialPracticeCheckpoint = isPro && initialDayIsUnlocked && initialDayCompleted && searchParams.get('practiceCheckpoint') === '1'
+  const initialReplay = initialDayIsUnlocked && initialDayCompleted && searchParams.get('replay') === '1'
+  const [practiceAssessment, setPracticeAssessment] = useState(initialPracticeCheckpoint)
+  const [justPractised, setJustPractised] = useState(initialDayIsUnlocked && initialDayCompleted && searchParams.get('practised') === '1')
+
+  const [view, setView] = useState<CurriculumView>(initialPracticeCheckpoint ? 'assessment' : initialDayIsUnlocked ? 'day-detail' : 'overview')
   const [selectedDay, setSelectedDay] = useState<number | null>(initialDayIsUnlocked ? initialDay : null)
   const [justCompletedDay, setJustCompletedDay] = useState(initialDayIsUnlocked && searchParams.get('dayComplete') === '1')
   // A day that is closed opens the right message: the enroll popup only for
@@ -139,6 +148,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     }
     setSelectedDay(day)
     setJustCompletedDay(false)
+    setJustPractised(false)
     setView('day-detail')
   }
 
@@ -149,8 +159,9 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     setJustCompletedDay(false)
   }
 
-  function handleLaunchAssessment(day: number): void {
+  function handleLaunchAssessment(day: number, practice: boolean): void {
     setSelectedDay(day)
+    setPracticeAssessment(practice)
     setView('assessment')
   }
 
@@ -162,6 +173,20 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // with no round-trip gap before the learner can move on.
   async function handleAssessmentComplete(measured: CurriculumCheckpointResult): Promise<void> {
     const result: CurriculumCheckpointResult = { ...measured, contentLang }
+    if (practiceAssessment) {
+      // Practice only: the original checkpoint (Day 1 baseline, official
+      // Day 30 result) is never replaced — locally or on the server.
+      await recordCurriculumDayPractice({
+        day: result.day,
+        rawWpm: Math.round(result.rawWpm),
+        trueWpm: Math.round(result.trueWpm),
+        comprehensionAccuracyPercent: Math.round(result.comprehensionAccuracyPercent),
+      })
+      setPracticeAssessment(false)
+      setJustPractised(true)
+      setView('day-detail')
+      return
+    }
     recordCurriculumCheckpoint(result)
     const outcome = await completeCurriculumDay({
       day: result.day,
@@ -181,7 +206,12 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     return (
       <>
         <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
-          <CurriculumAssessmentCanvas day={selectedDay} mostRecentTrueWpm={getMostRecentTrueWpm(selectedDay, contentLang)} onComplete={handleAssessmentComplete} />
+          <CurriculumAssessmentCanvas
+            day={selectedDay}
+            mostRecentTrueWpm={getMostRecentTrueWpm(selectedDay, contentLang)}
+            onComplete={handleAssessmentComplete}
+            practice={practiceAssessment}
+          />
         </div>
         {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
       </>
@@ -195,6 +225,10 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
           day={selectedDay}
           progress={progress}
           justCompletedDay={justCompletedDay}
+          completedOnServer={serverCompletedDays.includes(selectedDay)}
+          initialReplay={initialReplay && selectedDay === initialDay}
+          justPractised={justPractised}
+          canPractise={isPro}
           onBack={handleBackToOverview}
           onLaunchAssessment={handleLaunchAssessment}
         />

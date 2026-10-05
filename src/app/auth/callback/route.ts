@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { claimActiveSessionOnSignIn } from '@/lib/activeSessions/claimOnSignIn'
 import { resolvePostSignInPath } from '@/features/school-dashboard/queries/resolvePostSignInPath'
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -10,8 +11,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   if (code !== null) {
     const supabase = await createClient()
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
+      // Google sign-in and email links: claim the one-device session before the redirect (see claimOnSignIn.ts).
+      if (data.user) await claimActiveSessionOnSignIn(supabase, data.user.id)
       // Same rule as signIn.ts: an explicit `next` deep link always wins;
       // no explicit request gets the role-based portal redirect instead
       // of the default student dashboard.

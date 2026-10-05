@@ -14,6 +14,7 @@ import { isCurriculumExerciseGated } from '../curriculumGatedExercises'
 import { getEmbeddableComponent } from '../curriculumExerciseComponentRegistry'
 import { markCurriculumDayComplete } from '../curriculumProgress'
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
+import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
 import { EmbeddedExerciseProvider } from '../embeddedExerciseContext'
 import { useImmersiveExerciseLock } from '@/hooks/exercises/useImmersiveExerciseLock'
 
@@ -26,6 +27,8 @@ type DayMasterPlayerProps = {
   onExitToRoadmap: () => void
   onDayComplete: () => void
   onReadyForCheckpoint: () => void
+  /** Practising a completed day again: saved as practice, never as the day's completion. */
+  isReplay?: boolean
 }
 
 // In-Page Step-by-Step Master Player™ — the guided wizard that replaced
@@ -57,7 +60,7 @@ type DayMasterPlayerProps = {
 // directly — a skip and a real completion advance the wizard identically
 // (including correctly triggering finishDay() if skipping happens to be
 // the final step), the only difference is which UI element triggered it.
-export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyForCheckpoint }: DayMasterPlayerProps): React.JSX.Element {
+export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyForCheckpoint, isReplay = false }: DayMasterPlayerProps): React.JSX.Element {
   const t = useAppT()
   const router = useRouter()
   const plan = useMemo(() => buildCurriculumDayPlan(day), [day])
@@ -102,8 +105,13 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       setMode('ready-for-checkpoint')
       return
     }
-    markCurriculumDayComplete(day)
-    void completeCurriculumDay({ day })
+    if (isReplay) {
+      // A replay is practice only — the original completion stays as it was.
+      void recordCurriculumDayPractice({ day })
+    } else {
+      markCurriculumDayComplete(day)
+      void completeCurriculumDay({ day })
+    }
     setMode('celebrating')
   }
 
@@ -133,12 +141,12 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   }
 
   function handleGatedHandoff(exercise: CurriculumCatalogExercise, index: number): void {
-    startCurriculumSessionAtStep(day, index)
+    startCurriculumSessionAtStep(day, index, isReplay)
     router.push(exercise.href)
   }
 
   if (stepIndex === null) {
-    return <div className={`${CARD_CLASS_NAME} flex min-h-[40vh] items-center justify-center p-6 text-sm text-muted-foreground`}>Loading today&apos;s session…</div>
+    return <div className={`${CARD_CLASS_NAME} flex min-h-[40vh] items-center justify-center p-6 text-sm text-muted-foreground`}>{t('curriculum.player.loading')}</div>
   }
 
   if (mode === 'celebrating') {
@@ -149,10 +157,14 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           <PartyPopper className="size-8" aria-hidden="true" />
         </div>
         <div className="relative">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Day {day} Complete</p>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">
+            {isReplay ? t('curriculum.practice.complete') : t('curriculum.player.dayCompleteEyebrow', { day })}
+          </p>
           <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{t('curriculum.player.dayDone', { title: dayTitle(t, day) })}</h2>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-            {t('curriculum.player.allExercisesDone', { count: queueIds.length, next: day + 1 })}
+            {isReplay
+              ? t('curriculum.practice.saved', { day })
+              : t('curriculum.player.allExercisesDone', { count: queueIds.length, next: day + 1 })}
           </p>
         </div>
         <Button onClick={onDayComplete} size="lg" className="relative rounded-full" data-continue-to-roadmap="true">
@@ -173,7 +185,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('curriculum.player.oneMoreStep')}</p>
           <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{t('curriculum.player.niceWork')}</h2>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-            {t('curriculum.player.checkpointIntro', { day })}
+            {isReplay ? t('curriculum.practice.checkpointIntro', { day }) : t('curriculum.player.checkpointIntro', { day })}
           </p>
         </div>
         <Button onClick={onReadyForCheckpoint} size="lg" className="rounded-full" data-start-checkpoint="true">
@@ -188,7 +200,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   const exercise = currentExerciseId !== undefined ? getCurriculumExerciseById(currentExerciseId) : undefined
 
   if (currentExerciseId === undefined || exercise === undefined) {
-    return <div className={`${CARD_CLASS_NAME} flex min-h-[40vh] items-center justify-center p-6 text-sm text-muted-foreground`}>Loading today&apos;s session…</div>
+    return <div className={`${CARD_CLASS_NAME} flex min-h-[40vh] items-center justify-center p-6 text-sm text-muted-foreground`}>{t('curriculum.player.loading')}</div>
   }
 
   const isGated = isCurriculumExerciseGated(currentExerciseId)

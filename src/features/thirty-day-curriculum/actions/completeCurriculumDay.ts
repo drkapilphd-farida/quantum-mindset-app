@@ -67,34 +67,36 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
     const completedDaysBefore = (existingRows ?? []).map((row) => row.day)
     const alreadyCompleted = completedDaysBefore.includes(input.day)
 
-    if (!alreadyCompleted) {
-      const isPro = await getIsPaidUser(user.id)
-      if (!isPro) return { ok: false, reason: 'not_pro' }
+    // A completion is written once and never changed: replaying a completed
+    // day is saved separately (recordCurriculumDayPractice), so the original
+    // date, scores, Day 1 baseline and official Day 30 result stay intact.
+    if (alreadyCompleted) return { ok: true, completedDays: completedDaysBefore }
 
-      if (input.day !== 1 && !completedDaysBefore.includes(input.day - 1)) {
-        return { ok: false, reason: 'previous_day_incomplete' }
-      }
+    const isPro = await getIsPaidUser(user.id)
+    if (!isPro) return { ok: false, reason: 'not_pro' }
+
+    if (input.day !== 1 && !completedDaysBefore.includes(input.day - 1)) {
+      return { ok: false, reason: 'previous_day_incomplete' }
     }
 
-    const { error: writeError } = await supabase.from('curriculum_day_completions').upsert(
-      {
-        user_id: user.id,
-        day: input.day,
-        content_lang: await getPracticeContentLang('reading'),
-        raw_wpm: input.rawWpm ?? null,
-        true_wpm: input.trueWpm ?? null,
-        comprehension_accuracy_percent: input.comprehensionAccuracyPercent ?? null,
-        completed_at: new Date().toISOString(),
-      },
-      { onConflict: 'user_id,day' },
-    )
+    const { error: writeError } = await supabase.from('curriculum_day_completions').insert({
+      user_id: user.id,
+      day: input.day,
+      content_lang: await getPracticeContentLang('reading'),
+      raw_wpm: input.rawWpm ?? null,
+      true_wpm: input.trueWpm ?? null,
+      comprehension_accuracy_percent: input.comprehensionAccuracyPercent ?? null,
+      completed_at: new Date().toISOString(),
+    })
 
-    if (writeError) {
+    // 23505: the same day was completed a moment ago in another tab — the
+    // first completion stands.
+    if (writeError && writeError.code !== '23505') {
       logger.error('completeCurriculumDay: failed to write completion', { error: writeError, userId: user.id, day: input.day })
       return { ok: false, reason: 'db_error' }
     }
 
-    const completedDays = alreadyCompleted ? completedDaysBefore : [...completedDaysBefore, input.day].sort((a, b) => a - b)
+    const completedDays = [...completedDaysBefore, input.day].sort((a, b) => a - b)
     return { ok: true, completedDays }
   } catch (error) {
     logger.error('completeCurriculumDay: unexpected failure', { error, day: input.day })

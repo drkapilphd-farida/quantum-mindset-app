@@ -33,7 +33,7 @@
     "comprehension": "Comprehension",
     "vsBaseline": "vs. your Day 1 baseline",
     "dayDone": "Day {day} complete — nice work.",
-    "practiceAgain": "Practice this day again",
+    "practiceAgain": "Practice again",
     "uploadStarted": "Chapter upload started for Day {day}",
     "uploadStartedHint": "Go back to Upload & Learn any time to pick up where you left off.",
     "uploadToday": "Upload today’s chapter",
@@ -54,7 +54,9 @@
     "exitToRoadmap": "Exit to roadmap",
     "skipStep": "Skip this step",
     "continueGuided": "Continue in its own guided view",
-    "gatedIntro": "This exercise has its own guided flow with progress tracking — it opens in its own focused view, then brings you straight back here."
+    "gatedIntro": "This exercise has its own guided flow with progress tracking — it opens in its own focused view, then brings you straight back here.",
+    "dayCompleteEyebrow": "Day {day} complete",
+    "loading": "Loading today’s session…"
   },
   "phaseComplete": {
     "title": "Phase {phase} complete!",
@@ -73,5 +75,14 @@
     "dayTitle": "Day {day} is part of the {program}",
     "startTitle": "Start the {program}",
     "body": "All 30 days of the curriculum — real WPM and comprehension checkpoints, and 7 live classes with Dr. Kapil Dev Sharma — open when you enrol. Days you have already completed stay open."
+  },
+  "practice": {
+    "complete": "Practice complete",
+    "saved": "Practice saved. Your original Day {day} result stays the same.",
+    "checkpointIntro": "Practice check-in: read and answer again to see how you do today. Your official Day {day} result won’t change.",
+    "practisedOn": "Practised again · {date}",
+    "times": "{n} times",
+    "latestResult": "Latest: {wpm} WPM · {percent}% comprehension",
+    "originalKept": "Practice only — your official Day {day} result stays the same."
   }
 }

@@ -25,6 +25,8 @@ export type ActiveCurriculumSession = {
   day: number
   exerciseIds: readonly string[]
   currentIndex: number
+  /** Practising a completed day again — saved as practice, never as the day's completion. */
+  replay?: boolean
 }
 
 // Exported so DayMasterPlayer.tsx can build the exact same flattened,
@@ -47,7 +49,8 @@ function isValidSession(value: unknown): value is ActiveCurriculumSession {
     typeof record.day === 'number' &&
     Array.isArray(record.exerciseIds) &&
     record.exerciseIds.every((id) => typeof id === 'string') &&
-    typeof record.currentIndex === 'number'
+    typeof record.currentIndex === 'number' &&
+    (record.replay === undefined || typeof record.replay === 'boolean')
   )
 }
 
@@ -77,11 +80,11 @@ export function startCurriculumSession(day: number): ActiveCurriculumSession {
 // exit/complete wiring (unchanged since it was built) knows exactly which
 // step of the day it's standing in for, without needing to have replayed
 // every step before it.
-export function startCurriculumSessionAtStep(day: number, stepIndex: number): ActiveCurriculumSession {
+export function startCurriculumSessionAtStep(day: number, stepIndex: number, replay = false): ActiveCurriculumSession {
   const plan = buildCurriculumDayPlan(day)
   const exerciseIds = buildSessionQueue(plan.exercises)
   const clampedIndex = Math.min(Math.max(stepIndex, 0), Math.max(exerciseIds.length - 1, 0))
-  const session: ActiveCurriculumSession = { day, exerciseIds, currentIndex: clampedIndex }
+  const session: ActiveCurriculumSession = replay ? { day, exerciseIds, currentIndex: clampedIndex, replay } : { day, exerciseIds, currentIndex: clampedIndex }
   saveSession(session)
   return session
 }

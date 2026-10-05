@@ -8,6 +8,11 @@ import {
 } from './curriculumReturnRouting'
 import { startCurriculumSession, loadActiveCurriculumSession, type ActiveCurriculumSession } from './curriculumSessionRunner'
 import { loadCurriculumProgress } from './curriculumProgress'
+import { completeCurriculumDay } from './actions/completeCurriculumDay'
+import { recordCurriculumDayPractice } from './actions/curriculumDayPractice'
+
+vi.mock('./actions/completeCurriculumDay', () => ({ completeCurriculumDay: vi.fn(() => Promise.resolve({ ok: true, completedDays: [] })) }))
+vi.mock('./actions/curriculumDayPractice', () => ({ recordCurriculumDayPractice: vi.fn(() => Promise.resolve({ ok: true })) }))
 
 let sessionStore: Record<string, string>
 let localStore: Record<string, string>
@@ -171,5 +176,50 @@ describe('getWizardAwareBackHref', () => {
   it('falls back to the given href when a real session exists but points at a different exercise', () => {
     firstExerciseIdForDay(6)
     expect(getWizardAwareBackHref('not-the-current-one', '/labs/sharp-brain')).toBe('/labs/sharp-brain')
+  })
+})
+
+describe('practising a completed day again (replay)', () => {
+  function startReplayOnFinalStep(day: number): string {
+    startCurriculumSession(day)
+    const session = loadActiveCurriculumSession()!
+    const lastIndex = session.exerciseIds.length - 1
+    const replay: ActiveCurriculumSession = { ...session, currentIndex: lastIndex, replay: true }
+    sessionStorage.setItem('qsr-active-curriculum-session', JSON.stringify(replay))
+    return session.exerciseIds[lastIndex]!
+  }
+
+  beforeEach(() => {
+    vi.mocked(completeCurriculumDay).mockClear()
+    vi.mocked(recordCurriculumDayPractice).mockClear()
+  })
+
+  it('a replayed normal day saves practice and never re-completes the day', () => {
+    const lastId = startReplayOnFinalStep(4)
+    const href = getCurriculumSmartCompleteHref(lastId, '/labs/sharp-brain')
+
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=4&practised=1')
+    expect(recordCurriculumDayPractice).toHaveBeenCalledWith({ day: 4 })
+    expect(completeCurriculumDay).not.toHaveBeenCalled()
+    expect(loadCurriculumProgress().completedDays).not.toContain(4)
+  })
+
+  it('a replayed checkpoint day goes to a practice-only check, not the official one', () => {
+    const lastId = startReplayOnFinalStep(7)
+    const href = getCurriculumSmartCompleteHref(lastId, '/labs/sharp-brain')
+
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=7&practiceCheckpoint=1')
+    expect(completeCurriculumDay).not.toHaveBeenCalled()
+    expect(recordCurriculumDayPractice).not.toHaveBeenCalled()
+  })
+
+  it('mid-replay steps keep the replay flag on the way back', () => {
+    startCurriculumSession(4)
+    const session = loadActiveCurriculumSession()!
+    sessionStorage.setItem('qsr-active-curriculum-session', JSON.stringify({ ...session, replay: true }))
+    const href = getCurriculumSmartCompleteHref(session.exerciseIds[0]!, '/labs/sharp-brain')
+
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=4&replay=1')
+    expect(completeCurriculumDay).not.toHaveBeenCalled()
   })
 })

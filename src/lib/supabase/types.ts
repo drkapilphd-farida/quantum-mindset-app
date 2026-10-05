@@ -448,6 +448,39 @@ export type Database = {
         }
         Relationships: []
       }
+      curriculum_day_practice_attempts: {
+        Row: {
+          comprehension_accuracy_percent: number | null
+          content_lang: string
+          day: number
+          id: string
+          practised_at: string
+          raw_wpm: number | null
+          true_wpm: number | null
+          user_id: string
+        }
+        Insert: {
+          comprehension_accuracy_percent?: number | null
+          content_lang?: string
+          day: number
+          id?: string
+          practised_at?: string
+          raw_wpm?: number | null
+          true_wpm?: number | null
+          user_id: string
+        }
+        Update: {
+          comprehension_accuracy_percent?: number | null
+          content_lang?: string
+          day?: number
+          id?: string
+          practised_at?: string
+          raw_wpm?: number | null
+          true_wpm?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       daily_quantum_sessions: {
         Row: {
           content_lang: string
