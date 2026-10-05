@@ -48,7 +48,7 @@ export function DeviceConflictPrompt({ next, otherDeviceLabel }: DeviceConflictP
         <p className="text-muted-foreground text-center text-sm">
           {t('auth.device.explain')}
         </p>
-        <Button onClick={handleContinueHere} disabled={isPending} className="w-full">
+        <Button onClick={handleContinueHere} disabled={isPending} className="h-auto min-h-9 w-full whitespace-normal py-2 leading-snug">
           {isPending ? t('auth.device.wait') : t('auth.device.continue')}
         </Button>
         <Button onClick={handleCancel} disabled={isPending} variant="outline" className="w-full">
