@@ -2,7 +2,8 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { brand } from '@/config/site.config'
 import { LANGUAGES, type AppLang } from '@/lib/app-i18n/languages'
-import type { Translator } from '@/lib/app-i18n/translate'
+import { createTranslator, type Translator } from '@/lib/app-i18n/translate'
+import { ENGLISH } from '@/lib/app-i18n/catalog'
 
 export type MentorMessageInput = {
   studentName: string
@@ -19,8 +20,8 @@ export type MentorMessageInput = {
 // never shows a blank or error state to the student.
 // Written-out fallback when the AI call is unavailable, in the learner's language.
 function fallbackMessage(input: MentorMessageInput, t: Translator): string {
-  const { studentName, currentStreak, completedCount, totalCount, todaySessionCount } = input
-  const name = studentName.split(' ')[0] ?? studentName
+  const { currentStreak, completedCount, totalCount, todaySessionCount } = input
+  const name = firstName(input.studentName)
 
   if (completedCount === 0) return t('mentor.fallback.firstSession', { name })
   if (todaySessionCount > 0) {
@@ -31,6 +32,20 @@ function fallbackMessage(input: MentorMessageInput, t: Translator): string {
   if (totalCount - completedCount === 1) return t('mentor.fallback.oneLeft', { name })
   return t('mentor.fallback.progress', { name, done: completedCount, total: totalCount })
 }
+
+/** The learner's first name, exactly as stored on their profile (never transliterated). */
+function firstName(studentName: string): string {
+  return studentName.trim().split(/\s+/)[0] || studentName
+}
+
+// Which languages Dr. Kapil's Note is written in. Until native reviewers
+// approve the wording, Kannada, Tamil, Telugu, Marathi and Gujarati
+// learners get the note in English; Hindi gets it in Hindi.
+export function mentorNoteLang(lang: AppLang): AppLang {
+  return lang === 'hi' ? 'hi' : 'en'
+}
+
+const ENGLISH_T = createTranslator(ENGLISH, ENGLISH)
 
 // The main script of each app language (Hindi and Marathi share Devanagari).
 const SCRIPT: Record<Exclude<AppLang, 'en'>, RegExp> = {
@@ -58,9 +73,12 @@ const RESPECTFUL_YOU: Record<Exclude<AppLang, 'en'>, string> = {
  * Anything else (a refusal, a question back, English instead of Telugu)
  * falls back to the translated deterministic note.
  */
-export function isUsableMentorNote(note: string, lang: AppLang): boolean {
+export function isUsableMentorNote(note: string, lang: AppLang, name: string): boolean {
   if (note === '' || note.length > 280 || /[\n*#]/.test(note)) return false
-  if (lang === 'en') return true
+  // The learner's name exactly as stored — a transliterated or missing name falls back.
+  if (name !== '' && !note.includes(name)) return false
+  // Never guess the learner's gender.
+  if (lang === 'en') return !/\b(he|she|him|her|his|hers|himself|herself)\b/i.test(note)
   const letters = note.match(/\p{L}/gu)?.length ?? 0
   const inScript = note.match(SCRIPT[lang])?.length ?? 0
   return letters > 0 && inScript / letters >= 0.6
@@ -75,7 +93,9 @@ export function isUsableMentorNote(note: string, lang: AppLang): boolean {
 // Calls the Anthropic API to generate a personalized, transformation-focused
 // mentor message. Falls back to a smart deterministic message on any failure —
 // the UI should never show an error state for a missing AI response.
-export async function generateMentorMessage(input: MentorMessageInput, lang: AppLang, t: Translator): Promise<string> {
+export async function generateMentorMessage(input: MentorMessageInput, appLang: AppLang, appT: Translator): Promise<string> {
+  const lang = mentorNoteLang(appLang)
+  const t = lang === appLang ? appT : ENGLISH_T
   const apiKey = process.env.ANTHROPIC_API_KEY
 
   if (!apiKey || apiKey.includes('stub') || apiKey.includes('placeholder')) {
@@ -86,7 +106,7 @@ export async function generateMentorMessage(input: MentorMessageInput, lang: App
     const client = new Anthropic({ apiKey })
 
     const { studentName, currentStreak, bestStreak, completedCount, totalCount, todaySessionCount, totalCompletedSessions } = input
-    const first = studentName.split(' ')[0]
+    const first = firstName(studentName)
 
     const languageName = LANGUAGES[lang].englishName
     const system = `You write short notes for ${brand.name}'s learning app, in the voice of its founder and lead mentor, Dr. Kapil Dev Sharma. He has asked for these notes and they are shown to his students as "Dr. Kapil's Note".
@@ -95,7 +115,7 @@ Write exactly ONE sentence of no more than 20 words, in ${languageName}${lang ==
 Be specific about the student's actual numbers. Focus on transformation, growth, momentum and consistency — never content or lessons. Never use: course, lesson, chapter, curriculum, content, module completion, video.
 No emojis. No exclamation marks. No corporate language. Calm and direct.
 Write the student's first name exactly as given, in the same letters — never transliterate it. Keep "Sharp Brain" and "Mind Session" in English.
-Address the student respectfully${lang === 'en' ? '' : ` (${RESPECTFUL_YOU[lang]})`}. Never assume the student's gender — use wording that fits any student.
+Address the student respectfully${lang === 'en' ? '' : ` (${RESPECTFUL_YOU[lang as Exclude<AppLang, 'en'>]})`}. Never assume the student's gender — use wording that fits any student${lang === 'en' ? ' (no he, she, his or her)' : ''}.
 Reply with the sentence only — no preamble, no quotation marks, no translation notes, no questions.`
 
     const prompt = `Student: ${first}
@@ -118,7 +138,7 @@ Total sessions ever: ${totalCompletedSessions}`
     // Indian scripts: compose characters (NFC) and drop invisible zero-width
     // characters, which can otherwise render as a dotted circle.
     const note = text.text.normalize('NFC').replace(/[\u200B\uFEFF]/g, '').trim()
-    return isUsableMentorNote(note, lang) ? note : fallbackMessage(input, t)
+    return isUsableMentorNote(note, lang, first) ? note : fallbackMessage(input, t)
   } catch {
     return fallbackMessage(input, t)
   }
