@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { Translator } from '@/lib/app-i18n/translate'
+import { useAppT } from '@/lib/app-i18n/client'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
 import { ReadingProgressBar } from '@/features/reading-engine/components/ReadingProgressBar'
@@ -74,10 +76,10 @@ function createBowlResonanceImpulse(audioContext: AudioContext): AudioBuffer {
   return impulse
 }
 
-function phaseInstruction(phase: RoundPhase, hasActiveCell: boolean): string {
-  if (phase === 'flash') return 'Memorize the words and their cells.'
-  if (phase === 'reveal') return 'Here is what you missed.'
-  return hasActiveCell ? 'Pick the word you remember for that cell.' : 'Tap a cell you remember, then pick its word.'
+function phaseInstruction(phase: RoundPhase, hasActiveCell: boolean, t: Translator): string {
+  if (phase === 'flash') return t('exercises.wordFlash.memorize')
+  if (phase === 'reveal') return t('exercises.common.missed')
+  return hasActiveCell ? t('exercises.wordFlash.pickWord') : t('exercises.wordFlash.tapCell')
 }
 
 // Word Flash Grid™ — deliberately NOT built on useReadingRuntime: that
@@ -94,6 +96,7 @@ function phaseInstruction(phase: RoundPhase, hasActiveCell: boolean): string {
 // see buildWordPickerOptions), recomputed fresh every round alongside the
 // target cells themselves.
 export function WordFlashGridCanvas({ gridSize, onComplete, onExitRequested }: WordFlashGridCanvasProps): React.JSX.Element {
+  const t = useAppT()
   const totalCells = totalCellsForGridSize(gridSize)
 
   const [roundIndex, setRoundIndex] = useState(0)
@@ -317,10 +320,10 @@ export function WordFlashGridCanvas({ gridSize, onComplete, onExitRequested }: W
       <div className="w-full max-w-md">
         <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Word Flash Grid™</p>
         <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-4 sm:gap-4">
-          <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${WORD_FLASH_GRID_ROUNDS_PER_SESSION}`} />
-          <ReadingStatTile label="Score" value={scoreLabel} />
-          <ReadingStatTile label="Streak" value={String(currentStreak)} />
-          <ReadingStatTile label="Time" value={formatElapsedTime(elapsedMs)} />
+          <ReadingStatTile label={t('exercises.stats.round')} value={`${roundIndex + 1} / ${WORD_FLASH_GRID_ROUNDS_PER_SESSION}`} />
+          <ReadingStatTile label={t('exercises.stats.score')} value={scoreLabel} />
+          <ReadingStatTile label={t('exercises.stats.streak')} value={String(currentStreak)} />
+          <ReadingStatTile label={t('exercises.stats.time')} value={formatElapsedTime(elapsedMs)} />
         </div>
         <div className="mt-4">
           <ReadingProgressBar progressPercent={progressPercent} />
@@ -328,7 +331,7 @@ export function WordFlashGridCanvas({ gridSize, onComplete, onExitRequested }: W
       </div>
 
       <p className="mt-6 text-sm font-medium text-foreground" data-round-phase={roundPhase}>
-        {phaseInstruction(roundPhase, activeInputCellIndex !== null)}
+        {phaseInstruction(roundPhase, activeInputCellIndex !== null, t)}
       </p>
 
       {/* The frosted-glass focus frame around the grid itself. */}
@@ -350,7 +353,7 @@ export function WordFlashGridCanvas({ gridSize, onComplete, onExitRequested }: W
                 data-cell-state={state}
                 disabled={isDisabled}
                 onClick={() => handleCellTap(cellIndex)}
-                aria-label={`Grid cell ${cellIndex + 1}`}
+                aria-label={t('exercises.common.gridCell', { n: cellIndex + 1 })}
                 className={`flex aspect-square items-center justify-center overflow-hidden rounded-xl border p-0.5 text-center text-[9px] leading-none font-bold uppercase transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 sm:p-1 sm:text-[11px] ${cellBorderClassName(state, roundPhase)}`}
               >
                 {state === 'flash-target' && wordLabel !== null && (
@@ -373,7 +376,7 @@ export function WordFlashGridCanvas({ gridSize, onComplete, onExitRequested }: W
       {roundPhase === 'recall' && activeInputCellIndex !== null && (
         <div className="mt-6 w-full max-w-md" data-word-picker-for={activeInputCellIndex}>
           <p className="mb-2 text-center text-xs font-medium text-muted-foreground">
-            Cell {activeInputCellIndex + 1}: which word was there?
+            {t('exercises.wordFlash.whichWord', { n: activeInputCellIndex + 1 })}
           </p>
           <div className="flex flex-wrap justify-center gap-2">
             {pickerOptions.map((word) => (

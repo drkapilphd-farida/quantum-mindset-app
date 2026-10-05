@@ -1,0 +1,22 @@
+{
+  "dashboard": "டாஷ்போர்டு",
+  "history": "வரலாறு",
+  "settings": "அமைப்புகள்",
+  "documentStudio": "Document Studio",
+  "mainNavigation": "முதன்மை மெனு",
+  "openNavigation": "மெனுவைத் திற",
+  "account": "கணக்கு",
+  "openAccountMenu": "கணக்கு மெனுவைத் திற",
+  "profileSettings": "சுயவிவரம் & அமைப்புகள்",
+  "subscription": "சந்தா",
+  "support": "உதவி",
+  "privacy": "தனியுரிமைக் கொள்கை",
+  "terms": "சேவை விதிமுறைகள்",
+  "refund": "பணத்திருப்பம் & ரத்து கொள்கை",
+  "signOut": "வெளியேறு",
+  "signingOut": "வெளியேறுகிறது…",
+  "installApp": "ஆப்பை நிறுவு",
+  "toggleTheme": "தீம் மாற்று",
+  "lightMode": "லைட் மோடுக்கு மாற்று",
+  "darkMode": "டார்க் மோடுக்கு மாற்று"
+}

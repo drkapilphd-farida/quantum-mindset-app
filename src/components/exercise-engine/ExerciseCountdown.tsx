@@ -8,6 +8,7 @@
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
+import { useLabelT } from '@/lib/app-i18n/client'
 
 type ExerciseCountdownProps = {
   from?: number            // default 3
@@ -60,7 +61,8 @@ export function ExerciseCountdown({
     return () => clearTimeout(timer)
   }, [phase, value, onComplete, goLabel])
 
-  const displayText = phase === 'ready' ? readyLabel : phase === 'go' ? goLabel : String(value)
+  const tl = useLabelT()
+  const displayText = phase === 'ready' ? tl(readyLabel ?? '') : phase === 'go' ? tl(goLabel ?? '') : String(value)
   const isWordPhase = phase === 'ready' || phase === 'go'
 
   return (

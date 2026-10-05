@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import type { Translator } from '@/lib/app-i18n/translate'
+import { useAppT } from '@/lib/app-i18n/client'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
 import { ReadingProgressBar } from '@/features/reading-engine/components/ReadingProgressBar'
@@ -83,10 +85,10 @@ function createBowlResonanceImpulse(audioContext: AudioContext): AudioBuffer {
   return impulse
 }
 
-function guidanceLabel(direction: BalanceDirection): string {
-  if (direction === -1) return 'Hold Ground It to correct'
-  if (direction === 1) return 'Hold Lift It to correct'
-  return 'Perfectly balanced'
+function guidanceLabel(direction: BalanceDirection, t: Translator): string {
+  if (direction === -1) return t('exercises.calmBalance.holdGround')
+  if (direction === 1) return t('exercises.calmBalance.holdLift')
+  return t('exercises.calmBalance.balanced')
 }
 
 // Fluid Energy Balancer™ — deliberately NOT built on useReadingRuntime:
@@ -103,6 +105,7 @@ function guidanceLabel(direction: BalanceDirection): string {
 // from the start, since held-button input can fire far faster than a
 // single 100ms tick boundary.
 export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: FluidEnergyBalancerCanvasProps): React.JSX.Element {
+  const t = useAppT()
   const [roundIndex, setRoundIndex] = useState(0)
   const [roundPhase, setRoundPhase] = useState<RoundPhase>('active')
   const [roundElapsedMs, setRoundElapsedMs] = useState(0)
@@ -384,9 +387,9 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
       <div className="w-full max-w-md">
         <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Calm Breath Balance</p>
         <div className="grid grid-cols-3 gap-3 text-center">
-          <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${FLUID_ENERGY_ROUNDS_PER_SESSION}`} />
-          <ReadingStatTile label="Stability" value={`${liveStabilityPercent}%`} />
-          <ReadingStatTile label="Time" value={formatElapsedTime(elapsedMs)} />
+          <ReadingStatTile label={t('exercises.stats.round')} value={`${roundIndex + 1} / ${FLUID_ENERGY_ROUNDS_PER_SESSION}`} />
+          <ReadingStatTile label={t('exercises.stats.stability')} value={`${liveStabilityPercent}%`} />
+          <ReadingStatTile label={t('exercises.stats.time')} value={formatElapsedTime(elapsedMs)} />
         </div>
         <div className="mt-4">
           <ReadingProgressBar progressPercent={sessionProgressPercent} />
@@ -397,7 +400,7 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
         className={`mt-6 text-sm font-medium transition-colors ${inHarmony ? 'text-emerald-600 dark:text-emerald-400' : 'text-foreground'}`}
         data-guidance={neededDirection}
       >
-        {guidanceLabel(neededDirection)}
+        {guidanceLabel(neededDirection, t)}
       </p>
 
       {/* The dual-scale stage — frosted-glass framing, an instant green/
@@ -417,7 +420,7 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
       >
         <div className="flex items-end justify-center gap-6">
           <div className="flex flex-col items-center gap-2">
-            <p className="text-[10px] font-medium tracking-widest text-amber-700 uppercase dark:text-amber-400">Earth &amp; Gold</p>
+            <p className="text-[10px] font-medium tracking-widest text-amber-700 uppercase dark:text-amber-400">{t('exercises.calmBalance.earthGold')}</p>
             <div className="relative h-40 w-16 overflow-hidden rounded-2xl border border-black/10 bg-black/5 dark:border-white/10 dark:bg-white/5">
               <div
                 className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-amber-600 to-yellow-400 transition-[height] duration-150 ease-out"
@@ -443,11 +446,11 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
                 style={{ left: `${markerLeftPercent}%` }}
               />
             </div>
-            <p className="text-[10px] tracking-widest text-muted-foreground uppercase">Energy Beam</p>
+            <p className="text-[10px] tracking-widest text-muted-foreground uppercase">{t('exercises.calmBalance.energyBeam')}</p>
           </div>
 
           <div className="flex flex-col items-center gap-2">
-            <p className="text-[10px] font-medium tracking-widest text-cyan-700 uppercase dark:text-cyan-400">Air &amp; Water</p>
+            <p className="text-[10px] font-medium tracking-widest text-cyan-700 uppercase dark:text-cyan-400">{t('exercises.calmBalance.airWater')}</p>
             <div className="relative h-40 w-16 overflow-hidden rounded-2xl border border-black/10 bg-black/5 dark:border-white/10 dark:bg-white/5">
               <div
                 className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-cyan-600 to-blue-300 transition-[height] duration-150 ease-out"
@@ -472,7 +475,7 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
             inputDirection === -1 ? 'border-amber-500 bg-amber-500/15 text-amber-700 dark:text-amber-300' : 'border-border bg-background text-foreground'
           }`}
         >
-          ⬇ Ground It
+          {t('exercises.calmBalance.groundIt')}
         </button>
         <button
           type="button"
@@ -486,7 +489,7 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
             inputDirection === 1 ? 'border-cyan-500 bg-cyan-500/15 text-cyan-700 dark:text-cyan-300' : 'border-border bg-background text-foreground'
           }`}
         >
-          ⬆ Lift It
+          {t('exercises.calmBalance.liftIt')}
         </button>
       </div>
 
@@ -501,19 +504,19 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
             isSoundscapeEnabled ? 'border-foreground bg-foreground text-background' : 'border-border bg-background text-foreground'
           }`}
         >
-          Soundscape {isSoundscapeEnabled ? 'On' : 'Off'}
+          {isSoundscapeEnabled ? t('exercises.sound.soundscapeOn') : t('exercises.sound.soundscapeOff')}
         </button>
         <button
           type="button"
           onClick={() => setIsMuted((muted) => !muted)}
           data-is-muted={isMuted}
-          aria-label={isMuted ? 'Unmute' : 'Mute'}
+          aria-label={isMuted ? t('exercises.sound.unmute') : t('exercises.sound.mute')}
           className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
         >
-          {isMuted ? 'Unmute' : 'Mute'}
+          {isMuted ? t('exercises.sound.unmute') : t('exercises.sound.mute')}
         </button>
         <label className="flex items-center gap-2 text-xs text-muted-foreground">
-          Volume
+          {t('exercises.sound.volume')}
           <input
             type="range"
             min={0}
@@ -522,7 +525,7 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
             data-volume-percent={Math.round(volume * 100)}
             onChange={(event) => setVolume(Number(event.target.value) / 100)}
             className="w-24 accent-foreground"
-            aria-label="Ambient soundscape volume"
+            aria-label={t('exercises.sound.volumeLabel')}
           />
         </label>
       </div>
@@ -530,15 +533,15 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
       <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
         {isPaused ? (
           <button onClick={() => setIsPaused(false)} className={PRIMARY_TEXT_BUTTON_CLASSES}>
-            Resume
+            {t('exercises.sound.resume')}
           </button>
         ) : (
           <button onClick={handlePause} className={PRIMARY_TEXT_BUTTON_CLASSES}>
-            Pause
+            {t('exercises.sound.pause')}
           </button>
         )}
         <button onClick={handleRestart} className={SECONDARY_TEXT_BUTTON_CLASSES}>
-          Restart
+          {t('exercises.sound.restart')}
         </button>
       </div>
     </ReadingLayout>

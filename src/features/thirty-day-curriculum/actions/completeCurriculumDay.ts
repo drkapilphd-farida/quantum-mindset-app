@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getPracticeContentLang } from '@/lib/app-i18n/server'
 import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
 import { logger } from '@/lib/logger'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
@@ -79,6 +80,7 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
       {
         user_id: user.id,
         day: input.day,
+        content_lang: await getPracticeContentLang('reading'),
         raw_wpm: input.rawWpm ?? null,
         true_wpm: input.trueWpm ?? null,
         comprehension_accuracy_percent: input.comprehensionAccuracyPercent ?? null,

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useAppT } from '@/lib/app-i18n/client'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
 import { WhyThisDrillWorks } from '@/components/exercises/WhyThisDrillWorks'
@@ -16,6 +17,7 @@ type SchulteGridDrillSettingsProps = {
 // other mode's own Settings screen (centered column, min-h-[70vh], Exit
 // top-right), just with nothing to actually configure.
 export function SchulteGridDrillSettings({ onStart }: SchulteGridDrillSettingsProps): React.JSX.Element {
+  const t = useAppT()
   const isEmbedded = useIsEmbeddedExercise()
   return (
     <div className={`relative mx-auto flex ${isEmbedded ? 'h-full' : 'min-h-[100dvh]'} max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center`}>
@@ -25,24 +27,24 @@ export function SchulteGridDrillSettings({ onStart }: SchulteGridDrillSettingsPr
           href="/dashboard"
           className="absolute top-4 right-6 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
         >
-          Exit
+          {t('exercises.exit')}
         </Link>
       )}
 
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Peripheral Vision Activator™</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          A 5×5 grid of shuffled numbers. Find and tap 1 through 25 in order, as fast as you can.
+          {t('exercises.schulte.desc')}
         </p>
       </div>
 
-      <WhyThisDrillWorks>A quick warmup for visual focus and peripheral search before a reading session.</WhyThisDrillWorks>
+      <WhyThisDrillWorks>{t('exercises.schulte.why')}</WhyThisDrillWorks>
 
       <button
         onClick={onStart}
         className="rounded-full bg-foreground px-10 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        Start
+        {t('exercises.start')}
       </button>
     </div>
   )

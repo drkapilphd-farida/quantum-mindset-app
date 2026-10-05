@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import Link from 'next/link'
 import { FileText, Loader2 } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet'
@@ -25,6 +26,7 @@ function firstLine(text: string | null): string | null {
 // (getQuantumDocumentById), the same Server Component data flow every
 // other detail route in this app already uses.
 export function DocumentHistorySidebar({ open, onOpenChange }: DocumentHistorySidebarProps): React.JSX.Element {
+  const t = useAppT()
   const [items, setItems] = useState<readonly QuantumDocumentHistoryItem[] | null>(null)
 
   useEffect(() => {
@@ -36,8 +38,8 @@ export function DocumentHistorySidebar({ open, onOpenChange }: DocumentHistorySi
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="flex flex-col gap-0 p-0 sm:max-w-md">
         <SheetHeader className="border-b border-border/60">
-          <SheetTitle>Document History™</SheetTitle>
-          <SheetDescription>Reopen a past upload — no new AI call, no extra cost.</SheetDescription>
+          <SheetTitle>{t('docWidget.historyTitle')}</SheetTitle>
+          <SheetDescription>{t('docWidget.historyDesc')}</SheetDescription>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto p-4">
@@ -48,7 +50,7 @@ export function DocumentHistorySidebar({ open, onOpenChange }: DocumentHistorySi
           ) : items.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-12 text-center">
               <FileText className="size-8 text-muted-foreground/40" aria-hidden="true" />
-              <p className="text-sm text-muted-foreground">No documents yet — transform your first one to see it here.</p>
+              <p className="text-sm text-muted-foreground">{t('docWidget.historyEmpty')}</p>
             </div>
           ) : (
             <ul className="space-y-2">

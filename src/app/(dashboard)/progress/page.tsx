@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { getAppT } from '@/lib/app-i18n/server'
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { getModuleProgress } from '@/lib/exercises/queries/getModuleProgress'
@@ -68,6 +69,7 @@ function growthPercentToTrend(percent: number | null): 'up' | 'down' | 'stable' 
 }
 
 export default async function MindScorePage(): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return <div />
@@ -188,7 +190,7 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Mind Score™</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Your living intelligence score — updated with every session.
+          {t('progress.subtitle')}
         </p>
       </div>
 

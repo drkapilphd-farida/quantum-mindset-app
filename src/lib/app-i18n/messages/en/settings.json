@@ -1,0 +1,55 @@
+{
+  "title": "Settings",
+  "subtitle": "Manage your account details.",
+  "language": {
+    "title": "Language",
+    "desc": "The language of the app. Website pages stay in English or Hindi."
+  },
+  "profile": {
+    "title": "Profile",
+    "desc": "Update your public display name.",
+    "fullName": "Full name",
+    "placeholder": "Your full name",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "updated": "Profile updated.",
+    "nameTooShort": "Name must be at least 2 characters",
+    "nameTooLong": "Name must be 100 characters or fewer",
+    "failed": "Could not update your profile. Please try again."
+  },
+  "password": {
+    "title": "Password",
+    "desc": "Choose a new password for your account.",
+    "newPassword": "New password",
+    "confirm": "Confirm new password",
+    "minPlaceholder": "Min 8 characters",
+    "repeatPlaceholder": "Repeat password",
+    "update": "Update password",
+    "updating": "Updating…",
+    "updated": "Password updated.",
+    "tooShort": "Password must be at least 8 characters",
+    "confirmRequired": "Please confirm your password",
+    "mismatch": "Passwords do not match",
+    "failed": "Could not update your password. Please try again."
+  },
+  "sound": {
+    "title": "Sound",
+    "desc": "Control audio during exercises.",
+    "effects": "Exercise sound effects",
+    "effectsDesc": "Tap chimes, right/wrong cues and calm focus tones during exercises."
+  },
+  "assessment": {
+    "title": "Reading Assessment",
+    "desc": "Retake your Smart Reading assessment for a document to re-measure how you read it.",
+    "retake": "Retake assessment",
+    "retakeDone": "You’ll be asked to reassess next time you open this document."
+  },
+  "account": {
+    "title": "Account",
+    "email": "Email:"
+  },
+  "errors": {
+    "invalidInput": "Please check what you entered.",
+    "notSignedIn": "Please sign in again."
+  }
+}

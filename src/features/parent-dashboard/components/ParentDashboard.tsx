@@ -1,4 +1,5 @@
 import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
+import { getAppT } from '@/lib/app-i18n/server'
 import { computeDailyStreak, computeTodaysProgress } from '@/lib/exercises/practiceHistory'
 import { getDailyQuantumSessionHistory } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import { getQuantumDocumentSessionHistory } from '@/features/quantum-document-transformer/actions/getQuantumDocumentSessionHistory'
@@ -34,6 +35,7 @@ type ParentDashboardProps = {
 // left is the 7/14/30-day toggle inside ReadingSpeedTrendCard, which is
 // its own small client island.
 export async function ParentDashboard({ userId }: ParentDashboardProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   const [practiceSessions, dailyQuantumSessions, documentSessions, documentCount, chapterScores, curriculumCompletions] = await Promise.all([
     getPracticeSessions('quantum-speed-reading'),
     getDailyQuantumSessionHistory(90),
@@ -52,8 +54,8 @@ export async function ParentDashboard({ userId }: ParentDashboardProps): Promise
     <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
         <div>
-          <p className="text-2xl font-bold tracking-tight text-foreground">Your Progress</p>
-          <p className="mt-1 text-sm font-medium text-muted-foreground">A weekly view of reading practice, comprehension, and consistency.</p>
+          <p className="text-2xl font-bold tracking-tight text-foreground">{t('progress.parent.yourProgress')}</p>
+          <p className="mt-1 text-sm font-medium text-muted-foreground">{t('progress.parent.weeklyView')}</p>
         </div>
 
         {/* Strict order per spec — only adjacent items (comprehension and

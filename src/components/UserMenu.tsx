@@ -1,6 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { ChevronsUpDown, CreditCard, FileText, LifeBuoy, LogOut, Settings, ShieldCheck, Undo2 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -45,6 +46,7 @@ export function UserMenu({
   email,
   variant = 'compact',
 }: UserMenuProps): React.JSX.Element {
+  const t = useAppT()
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -68,18 +70,18 @@ export function UserMenu({
           <Button
             variant="ghost"
             disabled={isPending}
-            aria-label="Open account menu"
+            aria-label={t('nav.openAccountMenu')}
             className="h-auto w-full justify-start gap-2.5 rounded-lg px-2.5 py-2"
           >
             {avatar}
             <span className="min-w-0 flex-1 text-left">
-              <span className="block truncate text-sm font-medium text-foreground">{fullName ?? 'Account'}</span>
+              <span className="block truncate text-sm font-medium text-foreground">{fullName ?? t('nav.account')}</span>
               <span className="block truncate text-xs text-muted-foreground">{email}</span>
             </span>
             <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
           </Button>
         ) : (
-          <Button variant="ghost" size="icon" className="rounded-full" disabled={isPending} aria-label="Open account menu">
+          <Button variant="ghost" size="icon" className="rounded-full" disabled={isPending} aria-label={t('nav.openAccountMenu')}>
             {avatar}
           </Button>
         )}
@@ -87,7 +89,7 @@ export function UserMenu({
 
       <DropdownMenuContent align="end" side={variant === 'row' ? 'top' : 'bottom'} className="w-56">
         <DropdownMenuLabel>
-          <p className="text-sm font-medium text-foreground">{fullName ?? 'Account'}</p>
+          <p className="text-sm font-medium text-foreground">{fullName ?? t('nav.account')}</p>
           <p className="text-muted-foreground truncate text-xs">{email}</p>
         </DropdownMenuLabel>
 
@@ -95,17 +97,17 @@ export function UserMenu({
 
         <DropdownMenuItem onClick={() => router.push('/settings')}>
           <Settings className="size-4" />
-          Profile & Settings
+          {t('nav.profileSettings')}
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => router.push('/preview/subscription')}>
           <CreditCard className="size-4" />
-          Subscription
+          {t('nav.subscription')}
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => router.push('/preview/support')}>
           <LifeBuoy className="size-4" />
-          Support
+          {t('nav.support')}
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
@@ -117,24 +119,24 @@ export function UserMenu({
             needing a separate dashboard footer. */}
         <DropdownMenuItem onClick={() => router.push('/privacy')}>
           <ShieldCheck className="size-4" />
-          Privacy Policy
+          {t('nav.privacy')}
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => router.push('/terms')}>
           <FileText className="size-4" />
-          Terms of Service
+          {t('nav.terms')}
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => router.push('/refund-policy')}>
           <Undo2 className="size-4" />
-          Refund & Cancellation Policy
+          {t('nav.refund')}
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem variant="destructive" onClick={handleSignOut} disabled={isPending}>
           <LogOut className="size-4" />
-          {isPending ? 'Signing out…' : 'Sign out'}
+          {isPending ? t('nav.signingOut') : t('nav.signOut')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

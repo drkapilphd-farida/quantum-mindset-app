@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { Button } from '@/components/ui/button'
 import { resetReadingAssessment } from '../actions/resetReadingAssessment'
 
@@ -16,8 +17,9 @@ type RetakeAssessmentButtonProps = {
 export function RetakeAssessmentButton({ documentId }: RetakeAssessmentButtonProps): React.JSX.Element {
   const [pending, startTransition] = useTransition()
   const [done, setDone] = useState(false)
+  const t = useAppT()
 
-  if (done) return <p className="text-sm text-muted-foreground">You&rsquo;ll be asked to reassess next time you open this document.</p>
+  if (done) return <p className="text-sm text-muted-foreground">{t('settings.assessment.retakeDone')}</p>
 
   return (
     <Button
@@ -31,7 +33,7 @@ export function RetakeAssessmentButton({ documentId }: RetakeAssessmentButtonPro
         })
       }
     >
-      Retake Assessment
+      {t('settings.assessment.retake')}
     </Button>
   )
 }

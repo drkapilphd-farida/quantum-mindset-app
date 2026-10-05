@@ -1,0 +1,77 @@
+{
+  "eyebrow": "Sharp Brain 30-రోజుల కోర్సు",
+  "title": "మీ రోజువారీ రోడ్‌మ్యాప్",
+  "intro": "4 దశల్లో 30 రోజులు — Brain Gym, దృశ్య జ్ఞాపకం మరియు శ్రద్ధ, ఊహ, చదువు ప్రాక్టీస్ అన్నీ ఒకే సమతుల్య సర్క్యూట్‌లో — మధ్యలో నిజమైన WPM మరియు అవగాహన పరీక్షలతో.",
+  "metrics": {
+    "brainScore": "మెదడు స్కోర్",
+    "readingGrowth": "చదువులో పెరుగుదల",
+    "comprehension": "అవగాహన",
+    "consistency": "క్రమం తప్పకపోవడం",
+    "visualizationDepth": "ఊహ లోతు"
+  },
+  "allDays": "మొత్తం 30 రోజులు",
+  "allDaysHintPro": "రోజు N-1 పూర్తయ్యాకే రోజు N తెరుచుకుంటుంది. నక్షత్రం ఉన్న రోజులు నిజమైన WPM + అవగాహన పరీక్ష రోజులు.",
+  "allDaysHintFree": "పూర్తి 30-రోజుల కోర్సు తెరవడానికి చేరండి. మీరు పూర్తి చేసిన రోజులు తెరిచే ఉంటాయి. నక్షత్రం ఉన్న రోజులు నిజమైన WPM + అవగాహన పరీక్ష రోజులు.",
+  "startProgram": "{program} మొదలుపెట్టండి",
+  "phaseLabel": "దశ {phase} · రోజు {start}–{end}",
+  "dayShort": "రోజు {day}",
+  "dayLockedTitle": "రోజు {day} — తెరవడానికి చేరండి",
+  "categories": {
+    "brainGym": "Brain Gym",
+    "visualFocusMemory": "దృశ్య ఫోకస్ & జ్ఞాపకం",
+    "visualization": "ఊహ",
+    "readingIntelligence": "చదువు మేధస్సు"
+  },
+  "detail": {
+    "backToAll": "మొత్తం 30 రోజులు",
+    "dayCompleteUnlocked": "రోజు {day} పూర్తయింది! ఇప్పుడు రోజు {next} తెరుచుకుంది.",
+    "phaseDay": "దశ {phase} · రోజు {day}",
+    "checkpointDay": "పరీక్ష రోజు",
+    "completed": "పూర్తయింది",
+    "checkpointRecorded": "పరీక్ష నమోదైంది",
+    "trueWpm": "నిజమైన WPM",
+    "comprehension": "అవగాహన",
+    "vsBaseline": "మీ రోజు 1 తో పోలిస్తే",
+    "dayDone": "రోజు {day} పూర్తయింది — బాగా చేశారు.",
+    "practiceAgain": "ఈ రోజును మళ్లీ ప్రాక్టీస్ చేయండి",
+    "uploadStarted": "రోజు {day} కోసం అధ్యాయం అప్‌లోడ్ మొదలైంది",
+    "uploadStartedHint": "ఆపిన చోటు నుంచి కొనసాగడానికి ఎప్పుడైనా Upload & Learn కు తిరిగి రండి.",
+    "uploadToday": "ఈరోజు అధ్యాయం అప్‌లోడ్ చేయండి",
+    "uploadTodayHint": "“{title}” కోసం నిజమైన చదువు విషయం తెచ్చి, నిజమైన పాఠంపై Sharp Brain ప్రాక్టీస్ చేయండి.",
+    "uploadLink": "Upload & Learn →"
+  },
+  "player": {
+    "dayDone": "{title} — పూర్తయింది!",
+    "allExercisesDone": "మొత్తం {count} వ్యాయామాలు పూర్తయ్యాయి. ఇప్పుడు రోజు {next} తెరుచుకుంది.",
+    "backToRoadmap": "రోడ్‌మ్యాప్‌కు తిరిగి వెళ్లండి",
+    "oneMoreStep": "ఇంకో అడుగు",
+    "niceWork": "ఈరోజు బాగా చేశారు.",
+    "checkpointIntro": "ఇది పరీక్ష రోజు — రోజు {day} పూర్తి చేయడానికి చివర్లో చిన్న WPM మరియు అవగాహన పరీక్ష చేయండి.",
+    "startCheckIn": "పరీక్ష మొదలుపెట్టండి",
+    "stepOf": "{total} లో అడుగు {step} · {category}",
+    "skipExercise": "వ్యాయామం దాటవేయండి",
+    "skip": "దాటవేయండి",
+    "exitToRoadmap": "రోడ్‌మ్యాప్‌కు వెళ్లండి",
+    "skipStep": "ఈ అడుగు దాటవేయండి",
+    "continueGuided": "దాని సొంత గైడెడ్ వ్యూలో కొనసాగండి",
+    "gatedIntro": "ఈ వ్యాయామానికి పురోగతిని నమోదు చేసే సొంత గైడెడ్ ప్రవాహం ఉంది — ఇది వేరే వ్యూలో తెరుచుకుని, తర్వాత మిమ్మల్ని నేరుగా ఇక్కడికే తీసుకొస్తుంది."
+  },
+  "phaseComplete": {
+    "title": "దశ {phase} పూర్తయింది!",
+    "upNext": "తర్వాత — దశ {phase}: {title}."
+  },
+  "finishPrevious": {
+    "title": "రోజు {previous} తర్వాత రోజు {day} తెరుచుకుంటుంది",
+    "body": "30 రోజులు ఒకదాని తర్వాత ఒకటి తెరుచుకుంటాయి. రోజు {previous} పూర్తి చేయండి, రోజు {day} వెంటనే తెరుచుకుంటుంది.",
+    "goTo": "రోజు {previous} కు వెళ్లండి"
+  },
+  "assessment": {
+    "eyebrow": "పరీక్ష పూర్తయింది",
+    "title": "రోజు {day} అంచనా"
+  },
+  "paywall": {
+    "dayTitle": "రోజు {day}, {program} లో భాగం",
+    "startTitle": "{program} మొదలుపెట్టండి",
+    "body": "కోర్సులోని 30 రోజులూ — నిజమైన WPM మరియు అవగాహన పరీక్షలు, Dr. Kapil Dev Sharma గారితో 7 లైవ్ క్లాసులు — చేరిన వెంటనే తెరుచుకుంటాయి. మీరు పూర్తి చేసిన రోజులు తెరిచే ఉంటాయి."
+  }
+}

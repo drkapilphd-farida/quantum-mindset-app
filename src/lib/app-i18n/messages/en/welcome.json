@@ -1,0 +1,40 @@
+{
+  "journey": {
+    "line1": "Rewire your brain.",
+    "line2": "Build lasting habits.",
+    "line3": "Grow your potential in just 10 minutes a day.",
+    "cardDesc": "Daily focus drills, visualisation and habit-building exercises.",
+    "point1": "Daily mindset & focus drills",
+    "point2": "Guided breathing & visualisation",
+    "point3": "21-day step-by-step habit loop",
+    "start": "Start training →"
+  },
+  "program": {
+    "format": "Online · 7 live classes + 30 days of app practice",
+    "outcome": "Read faster with understanding, focus longer, remember more — measured from your own Day 1 to Day 30.",
+    "earlyBirdLine": "Early-bird for the {date} batch · {price} (regular {regular})",
+    "regularLine": "One-time payment · {price} · next batch {date}"
+  },
+  "app": {
+    "title": "Read faster. Remember more.",
+    "line1": "Master any book — guided live by Dr. Kapil Dev Sharma.",
+    "line2": "7 live classes. One mentor.",
+    "line3": "Real progress.",
+    "sharpBrainDesc": "A structured 30-day program — guided live by Dr. Kapil Dev Sharma.",
+    "sharpBrainPoint1": "Peripheral Vision Activator, Rapid Recognition Drill, Chunk Reading",
+    "sharpBrainPoint2": "7 live classes with Dr. Kapil Dev Sharma",
+    "start": "Start training →",
+    "uploadTitle": "Upload & Learn",
+    "uploadDesc": "Turn any PDF or textbook into speed-reading drills, mind maps and smart summaries.",
+    "uploadPoint1": "AI-made speed-reading drills",
+    "uploadPoint2": "Mind maps & smart summaries",
+    "uploadPoint3": "Works with any PDF or textbook",
+    "uploadCta": "Upload & Learn →"
+  },
+  "lock": {
+    "partOf": "{title} is part of the {program}",
+    "enrolOnce": "Enrol once ({price}, one-time) to open this exercise and all 30 days of the curriculum, with 7 live classes with Dr. Kapil Dev Sharma.",
+    "enrolFor": "Enrol for {price}",
+    "seeProgram": "See the program"
+  }
+}

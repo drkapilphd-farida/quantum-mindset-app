@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { dayTitle } from '@/lib/app-i18n/curriculumText'
+import { useAppT } from '@/lib/app-i18n/client'
 import Link from 'next/link'
 import { Flame, GraduationCap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { getCurriculumDayTheme } from '@/features/thirty-day-curriculum/curriculumDatabase'
 import {
   computeConsistencyPercent,
   computeDailyCurriculumStreak,
@@ -27,6 +28,7 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
   const [hasStarted, setHasStarted] = useState(false)
   const [consistencyPercent, setConsistencyPercent] = useState(0)
   const [currentStreak, setCurrentStreak] = useState(0)
+  const t = useAppT()
 
   useEffect(() => {
     const progress = loadCurriculumProgress()
@@ -36,7 +38,7 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
     setCurrentStreak(computeDailyCurriculumStreak(progress))
   }, [])
 
-  const theme = nextDay !== null ? getCurriculumDayTheme(nextDay) : null
+  const themeTitle = nextDay !== null ? dayTitle(t, nextDay) : null
 
   return (
     <div
@@ -62,7 +64,7 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
                   data-streak-badge="true"
                 >
                   <Flame className="size-2.5" aria-hidden="true" />
-                  Current Streak: {currentStreak} {currentStreak === 1 ? 'Day' : 'Days'}
+                  {t(currentStreak === 1 ? 'dashboard.streak.one' : 'dashboard.streak.many', { count: currentStreak })}
                 </span>
               )}
             </div>
@@ -72,18 +74,30 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex-1">
-            <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Your Curriculum Progress</p>
+            <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t('dashboard.curriculumCard.progress')}</p>
             <p className="mt-0.5 text-sm font-medium text-foreground" data-curriculum-status={hasStarted ? 'in-progress' : 'not-started'}>
-              {nextDay === null ? 'Loading…' : hasStarted && theme !== null ? `Day ${nextDay} — ${theme.title}` : 'Ready to begin Day 1'}
+              {nextDay === null
+                ? t('common.actions.loading')
+                : hasStarted && themeTitle !== null
+                  ? t('dashboard.curriculumCard.dayTheme', { day: nextDay, title: themeTitle })
+                  : t('dashboard.curriculumCard.readyDay1')}
             </p>
-            {hasStarted && <p className="text-xs text-muted-foreground">{consistencyPercent}% of the 30 days complete</p>}
+            {hasStarted && (
+              <p className="text-xs text-muted-foreground">{t('dashboard.curriculumCard.percentComplete', { percent: consistencyPercent })}</p>
+            )}
           </div>
           <Button
             asChild
             size="lg"
             className="w-full rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-md transition-all duration-300 hover:from-emerald-500 hover:to-emerald-400 active:scale-95 sm:w-auto"
           >
-            <Link href={CURRICULUM_ROUTE}>{nextDay === null ? 'Open Curriculum' : hasStarted ? `Continue Day ${nextDay}` : 'Start Day 1'}</Link>
+            <Link href={CURRICULUM_ROUTE}>
+              {nextDay === null
+                ? t('dashboard.curriculumCard.openCurriculum')
+                : hasStarted
+                  ? t('dashboard.curriculumCard.continueDay', { day: nextDay })
+                  : t('dashboard.curriculumCard.startDay1')}
+            </Link>
           </Button>
         </div>
       </div>

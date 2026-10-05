@@ -1,6 +1,7 @@
 'use server'
 
 import { z } from 'zod'
+import { getPracticeContentLang } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 import { logger } from '@/lib/logger'
 
@@ -55,6 +56,7 @@ export async function saveReadingIntelligenceSession(input: unknown): Promise<Re
 
   const { error } = await supabase.from('reading_intelligence_sessions').insert({
     user_id: user.id,
+    content_lang: await getPracticeContentLang('reading'),
     passage_id: parsed.data.passageId,
     category: parsed.data.category,
     difficulty: parsed.data.difficulty,

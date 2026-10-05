@@ -1,6 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { phaseDescription, phaseTitle } from '@/lib/app-i18n/curriculumText'
+import { useAppT } from '@/lib/app-i18n/client'
 import { Trophy } from 'lucide-react'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import type { CurriculumPhase } from '../curriculumDatabase'
@@ -20,6 +22,7 @@ type PhaseCompleteCelebrationProps = {
 // asked. Purely presentational — the real phase transition already
 // happened the moment this day's checkpoint was recorded.
 export function PhaseCompleteCelebration({ completedPhase, nextPhase }: PhaseCompleteCelebrationProps): React.JSX.Element {
+  const t = useAppT()
   const prefersReducedMotion = usePrefersReducedMotion()
 
   return (
@@ -36,11 +39,14 @@ export function PhaseCompleteCelebration({ completedPhase, nextPhase }: PhaseCom
           <Trophy className="size-6" aria-hidden="true" />
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-widest text-emerald-600 uppercase dark:text-emerald-400">Phase {completedPhase.id} Complete!</p>
-          <h2 className="mt-1 font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl">{completedPhase.title}</h2>
+          <p className="text-xs font-semibold tracking-widest text-emerald-600 uppercase dark:text-emerald-400">{t('curriculum.phaseComplete.title', { phase: completedPhase.id })}</p>
+          <h2 className="mt-1 font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl">{phaseTitle(t, completedPhase.id)}</h2>
         </div>
         <p className="max-w-sm text-sm text-muted-foreground">
-          Up next — <span className="font-semibold text-foreground">Phase {nextPhase.id}: {nextPhase.title}</span>. {nextPhase.description}
+          <span className="font-semibold text-foreground">
+            {t('curriculum.phaseComplete.upNext', { phase: nextPhase.id, title: phaseTitle(t, nextPhase.id) })}
+          </span>{' '}
+          {phaseDescription(t, nextPhase.id)}
         </p>
       </div>
     </motion.div>

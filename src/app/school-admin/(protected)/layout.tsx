@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import AppI18nRoot from '@/lib/app-i18n/AppI18nRoot'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
@@ -45,18 +46,20 @@ export default async function SchoolAdminLayout({
 
   return (
     <div className={`school-corporate ${playfairDisplay.variable} ${interCorporate.variable}`}>
-      <AppShell
-        brandLabel={membership.school.name}
-        brandLogoUrl={membership.school.logoUrl}
-        brandHref="/school-admin"
-        navItems={SCHOOL_ADMIN_NAV_ITEMS}
-        fullName={profile?.fullName ?? null}
-        avatarUrl={profile?.avatarUrl ?? null}
-        email={user.email ?? ''}
-        contentMaxWidth="wide"
-      >
-        {children}
-      </AppShell>
+      <AppI18nRoot>
+        <AppShell
+          brandLabel={membership.school.name}
+          brandLogoUrl={membership.school.logoUrl}
+          brandHref="/school-admin"
+          navItems={SCHOOL_ADMIN_NAV_ITEMS}
+          fullName={profile?.fullName ?? null}
+          avatarUrl={profile?.avatarUrl ?? null}
+          email={user.email ?? ''}
+          contentMaxWidth="wide"
+        >
+          {children}
+        </AppShell>
+      </AppI18nRoot>
     </div>
   )
 }

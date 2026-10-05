@@ -1,6 +1,7 @@
 'use client'
 
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useCountUp } from '@/hooks/exercises/useCountUp'
 import { Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -55,11 +56,12 @@ function SmallRing({ value, size = 40 }: { value: number | null; size?: number }
 export function MindScoreCard({ mindScore, readingScore, memoryScore, focusScore }: MindScoreCardProps): React.JSX.Element {
   const prefersReducedMotion = usePrefersReducedMotion()
   const animatedScore = useCountUp(mindScore, 900, prefersReducedMotion)
+  const t = useAppT()
 
   const subScores: SubScore[] = [
-    { label: 'Reading', value: readingScore },
-    { label: 'Memory', value: memoryScore },
-    { label: 'Focus', value: focusScore },
+    { label: t('dashboard.mindScore.reading'), value: readingScore },
+    { label: t('dashboard.mindScore.memory'), value: memoryScore },
+    { label: t('dashboard.mindScore.focus'), value: focusScore },
   ]
 
   const STROKE = 10
@@ -114,7 +116,7 @@ export function MindScoreCard({ mindScore, readingScore, memoryScore, focusScore
         <div
           className="mt-5 grid grid-cols-3 gap-4 w-full"
           role="list"
-          aria-label="Mind score breakdown"
+          aria-label={t('dashboard.mindScore.breakdown')}
         >
           {subScores.map((sub) => (
             <div key={sub.label} className="flex flex-col items-center gap-1.5" role="listitem">

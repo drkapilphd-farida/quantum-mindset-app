@@ -21,6 +21,8 @@
 // same-length item" distractor rule every other mission uses.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
+import { useAppT, useLabelT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { ExerciseCountdown } from '@/components/exercise-engine/ExerciseCountdown'
 import { ChoiceGrid } from '@/components/exercise-engine/ChoiceGrid'
@@ -222,9 +224,10 @@ function PhrasePracticeBlock({
 // ── Level Map — always shown: ✔────●────○────○────○ / L1..L5
 
 function LevelMap({ currentLevel }: { currentLevel: PhraseReadingLevel }): React.JSX.Element {
+  const t = useAppT()
   const levels: PhraseReadingLevel[] = [1, 2, 3, 4, 5]
   return (
-    <div className="flex flex-col items-center gap-1" aria-label={`Level map: currently on Level ${currentLevel} of 5`}>
+    <div className="flex flex-col items-center gap-1" aria-label={t('exercises.phrase.levelMap', { level: currentLevel })}>
       <div className="flex items-center">
         {levels.map((level, i) => (
           <div key={level} className="flex items-center">
@@ -259,14 +262,16 @@ function LevelHud({
   missionNumber: number
   level: PhraseReadingLevel
 }): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   return (
     <div className="absolute top-4 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1.5 text-center">
       <p className="text-xs font-medium tabular-nums text-muted-foreground">
-        Mission {missionNumber} • Level {level}
+        {t('exercises.phrase.missionHud', { mission: missionNumber, level })}
       </p>
       <LevelMap currentLevel={level} />
       <p className="text-[10px] text-muted-foreground/70">
-        Phrase Length: <span className="font-medium text-foreground/80">{PHRASE_READING_LENGTH_LABEL[level]}</span>
+        {t('exercises.phrase.phraseLengthHud', { length: tl(PHRASE_READING_LENGTH_LABEL[level]) })}
       </p>
       <ReadingJourney currentStage="phrase" compact />
     </div>
@@ -309,6 +314,8 @@ function PhraseReadingSession({
   exitHref?: string
   onComplete?: (result: RuntimeResult) => void
 }): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const router = useRouter()
   const curriculumSession = useCurriculumSessionCompletion('phrase-reading', LAB_HREF)
@@ -701,10 +708,10 @@ function PhraseReadingSession({
 
     extraContent = (
       <div className="space-y-1 text-xs text-muted-foreground">
-        <p>Today&apos;s Achievement: <span className="font-medium text-foreground">{completedSummary.todaysAchievement}</span></p>
-        <p>Estimated Reading Gain: <span className="font-medium text-foreground">{completedSummary.wpmImprovement === null ? 'Establishing baseline' : `${completedSummary.wpmImprovement >= 0 ? '+' : ''}${completedSummary.wpmImprovement} WPM`}</span></p>
-        <p>Reading Readiness: <span className="font-medium text-foreground">{completedSummary.readiness}</span></p>
-        <p>Next Mission: <span className="font-medium text-foreground">{NEXT_MISSION_NAME}</span></p>
+        <p>{t('exercises.phrase.todaysAchievement')} <span className="font-medium text-foreground">{tl(completedSummary.todaysAchievement)}</span></p>
+        <p>{t('exercises.phrase.readingGain')} <span className="font-medium text-foreground">{completedSummary.wpmImprovement === null ? t('exercises.phrase.establishing') : t('exercises.phrase.gainWpm', { sign: completedSummary.wpmImprovement >= 0 ? '+' : '', n: completedSummary.wpmImprovement })}</span></p>
+        <p>{t('exercises.phrase.readiness')} <span className="font-medium text-foreground">{tl(completedSummary.readiness)}</span></p>
+        <p>{t('exercises.phrase.nextMission')} <span className="font-medium text-foreground">{NEXT_MISSION_NAME}</span></p>
       </div>
     )
   }
@@ -741,24 +748,24 @@ function PhraseReadingSession({
         className="absolute top-4 right-6 text-xs text-muted-foreground transition-colors hover:text-foreground"
         aria-label="Exit exercise"
       >
-        Exit
+        {t('exercises.exit')}
       </button>
       {runtime.phase === 'playing' && (
         <button
           onClick={runtime.pause}
           className="absolute top-4 right-20 text-xs text-muted-foreground transition-colors hover:text-foreground"
-          aria-label="Pause exercise"
+          aria-label={t('exercises.pauseExercise')}
         >
-          Pause
+          {t('exercises.pause')}
         </button>
       )}
       {runtime.phase === 'paused' && (
         <button
           onClick={runtime.resume}
           className="absolute top-4 right-20 text-xs text-muted-foreground transition-colors hover:text-foreground"
-          aria-label="Resume exercise"
+          aria-label={t('exercises.resumeExercise')}
         >
-          Resume
+          {t('exercises.resume')}
         </button>
       )}
 
@@ -768,42 +775,43 @@ function PhraseReadingSession({
             <ReadingJourney currentStage="phrase" />
             <div className="flex flex-col items-center gap-1.5">
               <h1 className="text-2xl font-bold tracking-tight text-foreground">Phrase Reading™</h1>
-              <p className="text-sm font-medium text-muted-foreground">Read Ideas, Not Words</p>
+              <p className="text-sm font-medium text-muted-foreground">{t('exercises.phrase.tagline')}</p>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Recognise complete ideas instead of reading word-by-word.
+              {t('exercises.phrase.intro')}
             </p>
+            <PracticeTextNote kind="phraseList" />
             <dl className="grid w-full grid-cols-2 gap-x-4 gap-y-2 text-left text-xs">
-              <dt className="text-muted-foreground">Today&apos;s Goal</dt>
-              <dd className="font-medium text-foreground">Meaning Recognition</dd>
-              <dt className="text-muted-foreground">Current Level</dt>
-              <dd className="font-medium text-foreground">{startingLevel} · {PHRASE_READING_LEVEL_NAME[startingLevel]}</dd>
-              <dt className="text-muted-foreground">Phrase Length</dt>
-              <dd className="font-medium text-foreground">{PHRASE_READING_LENGTH_LABEL[startingLevel]}</dd>
-              <dt className="text-muted-foreground">Mission</dt>
+              <dt className="text-muted-foreground">{t('exercises.phrase.todaysGoal')}</dt>
+              <dd className="font-medium text-foreground">{tl('Meaning Recognition')}</dd>
+              <dt className="text-muted-foreground">{t('exercises.phrase.currentLevel')}</dt>
+              <dd className="font-medium text-foreground">{startingLevel} · {tl(PHRASE_READING_LEVEL_NAME[startingLevel])}</dd>
+              <dt className="text-muted-foreground">{t('exercises.phrase.phraseLength')}</dt>
+              <dd className="font-medium text-foreground">{tl(PHRASE_READING_LENGTH_LABEL[startingLevel])}</dd>
+              <dt className="text-muted-foreground">{t('exercises.phrase.mission')}</dt>
               <dd className="font-medium text-foreground">
                 {startingLevel === 5
-                  ? `${PHRASE_READING_ADVANCED_LEVEL_REQUIREMENT.itemsPerAttempt} Advanced Phrases`
-                  : `${phraseReadingTotalPhrasesForLevel(startingLevel)} Meaningful Phrases`}
+                  ? t('exercises.phrase.advancedPhrases', { n: PHRASE_READING_ADVANCED_LEVEL_REQUIREMENT.itemsPerAttempt })
+                  : t('exercises.phrase.meaningfulPhrases', { n: phraseReadingTotalPhrasesForLevel(startingLevel) })}
               </dd>
-              <dt className="text-muted-foreground">Estimated Time</dt>
-              <dd className="font-medium text-foreground">About 3 Minutes</dd>
-              <dt className="text-muted-foreground">Brain Skill</dt>
-              <dd className="font-medium text-foreground">Language Processing</dd>
-              <dt className="text-muted-foreground">Reading Benefit</dt>
-              <dd className="font-medium text-foreground">Recognise complete ideas, not word-by-word.</dd>
+              <dt className="text-muted-foreground">{t('exercises.phrase.estimatedTime')}</dt>
+              <dd className="font-medium text-foreground">{t('exercises.phrase.about3')}</dd>
+              <dt className="text-muted-foreground">{t('exercises.phrase.brainSkill')}</dt>
+              <dd className="font-medium text-foreground">{tl('Language Processing')}</dd>
+              <dt className="text-muted-foreground">{t('exercises.phrase.readingBenefit')}</dt>
+              <dd className="font-medium text-foreground">{t('exercises.phrase.intro')}</dd>
             </dl>
             <p className="text-xs text-muted-foreground/70">
               {startingLevel === 5
-                ? `Level 5 needs ${PHRASE_READING_ADVANCED_LEVEL_REQUIREMENT.requiredPercent}% correct`
-                : `Level ${startingLevel} needs ${getPhraseReadingLevelRequirement(startingLevel).passCount} of ${getPhraseReadingLevelRequirement(startingLevel).challengesRequired} Brain Challenges correct`}
-              {analytics.totalSessions > 0 ? ` · Mission ${analytics.totalSessions + 1}` : ''}
+                ? t('exercises.phrase.level5Needs', { percent: PHRASE_READING_ADVANCED_LEVEL_REQUIREMENT.requiredPercent })
+                : t('exercises.phrase.levelNeeds', { level: startingLevel, pass: getPhraseReadingLevelRequirement(startingLevel).passCount, total: getPhraseReadingLevelRequirement(startingLevel).challengesRequired })}
+              {analytics.totalSessions > 0 ? t('exercises.phrase.missionN', { n: analytics.totalSessions + 1 }) : ''}
             </p>
             <button
               onClick={runtime.startSession}
               className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
             >
-              Start Mission
+              {t('exercises.phrase.startMission')}
             </button>
           </div>
         )}
@@ -816,7 +824,7 @@ function PhraseReadingSession({
           <>
             {subPhase === 'passScreen' && evalData && !isVictoryRevealed && (
               <div className="flex min-h-[280px] flex-col items-center justify-center">
-                <MicroVictoryMoment progressLabel={`Level ${evalData.level} of 5`} />
+                <MicroVictoryMoment progressLabel={t('exercises.phrase.levelOf5', { level: evalData.level })} />
               </div>
             )}
             {subPhase === 'passScreen' && evalData && isVictoryRevealed && (
@@ -824,18 +832,18 @@ function PhraseReadingSession({
                 className={cn('flex min-h-[280px] flex-col items-center justify-center gap-3 text-center', !prefersReducedMotion && 'animate-in fade-in duration-300')}
                 role="status"
               >
-                <h2 className="text-xl font-bold text-foreground">Level {evalData.level} Complete</h2>
+                <h2 className="text-xl font-bold text-foreground">{t('exercises.phrase.levelComplete', { level: evalData.level })}</h2>
                 <p className="text-2xl font-bold tabular-nums text-foreground">{Math.round(animatedCorrectCount)} / {evalData.totalCount}</p>
                 <p className="text-sm tabular-nums text-success">{Math.round(animatedPercent)}%</p>
-                <p className="text-sm font-medium text-muted-foreground">{computeLevelCoachLine(evalData.percent)}</p>
+                <p className="text-sm font-medium text-muted-foreground">{tl(computeLevelCoachLine(evalData.percent))}</p>
                 <p className="mt-2 text-sm font-medium text-foreground">
-                  {evalData.level < 5 ? `🔓 Level ${evalData.level + 1}` : '🏆 All Levels Complete'}
+                  {evalData.level < 5 ? t('exercises.phrase.unlockNext', { level: evalData.level + 1 }) : t('exercises.phrase.allLevels')}
                 </p>
                 <button
                   onClick={handleContinue}
                   className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
                 >
-                  {evalData.level < 5 ? 'Continue to Next Level' : 'View Results'}
+                  {evalData.level < 5 ? t('exercises.phrase.continueNextLevel') : t('exercises.phrase.viewResults')}
                 </button>
               </div>
             )}
@@ -844,19 +852,19 @@ function PhraseReadingSession({
                 className={cn('flex min-h-[280px] flex-col items-center justify-center gap-3 text-center', !prefersReducedMotion && 'animate-in fade-in duration-300')}
                 role="status"
               >
-                <h2 className="text-xl font-bold text-foreground">Level {evalData.level}</h2>
+                <h2 className="text-xl font-bold text-foreground">{t('exercises.phrase.levelN', { level: evalData.level })}</h2>
                 <p className="text-2xl font-bold tabular-nums text-foreground">{Math.round(animatedCorrectCount)} / {evalData.totalCount}</p>
                 <p className="text-sm tabular-nums text-muted-foreground">{Math.round(animatedPercent)}%</p>
-                <p className="text-xs text-muted-foreground/70">Need {evalData.requiredPercent}%</p>
-                <p className="text-xs text-muted-foreground">{computeLevelCoachLine(evalData.percent)}</p>
+                <p className="text-xs text-muted-foreground/70">{t('exercises.phrase.need', { percent: evalData.requiredPercent })}</p>
+                <p className="text-xs text-muted-foreground">{tl(computeLevelCoachLine(evalData.percent))}</p>
                 {evalData.level < 5 && (
-                  <p className="mt-2 text-sm font-medium text-muted-foreground">🔒 Level {evalData.level + 1}</p>
+                  <p className="mt-2 text-sm font-medium text-muted-foreground">{t('exercises.phrase.lockedNext', { level: evalData.level + 1 })}</p>
                 )}
                 <button
                   onClick={handleTryAgain}
                   className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
                 >
-                  Try Again
+                  {t('exercises.quiz.tryAgain')}
                 </button>
               </div>
             )}
@@ -872,7 +880,7 @@ function PhraseReadingSession({
             )}
             {subPhase === 'question' && currentItem && currentBlock && (
               <div className="flex w-full flex-col items-center gap-4">
-                <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase" aria-hidden="true">Brain Challenge</p>
+                <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase" aria-hidden="true">{t('exercises.phrase.brainChallenge')}</p>
                 {(currentBlock.kind === 'standard'
                   ? challengeTypeShowsContext(currentBlock.challengeType)
                   : currentChallenge !== null && advancedPhraseChallengeShowsContext(currentChallenge.type)) && (
@@ -889,7 +897,7 @@ function PhraseReadingSession({
                   selectedIndex={questionSelectedIndex}
                   isFeedback={questionSubPhase === 'feedback'}
                   disabled={questionSubPhase !== 'response'}
-                  promptLabel={currentBlock.kind === 'standard' ? PHRASE_CHALLENGE_PROMPTS[currentBlock.challengeType] : (currentChallenge?.prompt ?? advancedPhraseChallengePrompt('main-idea'))}
+                  promptLabel={tl(currentBlock.kind === 'standard' ? PHRASE_CHALLENGE_PROMPTS[currentBlock.challengeType] : (currentChallenge?.prompt ?? advancedPhraseChallengePrompt('main-idea')))}
                 />
               </div>
             )}
@@ -898,15 +906,15 @@ function PhraseReadingSession({
 
         {runtime.phase === 'paused' && (
           <div className="flex flex-col items-center gap-5 text-center w-full">
-            <p className="text-lg font-semibold text-foreground">Mission Paused</p>
+            <p className="text-lg font-semibold text-foreground">{t('exercises.phrase.paused')}</p>
             <p className="text-sm text-muted-foreground">
-              Level {currentLevel} of 5 · {runtime.runningAccuracy > 0 && `${runtime.runningAccuracy}% accuracy`}
+              {t('exercises.phrase.levelOf5', { level: currentLevel })} · {runtime.runningAccuracy > 0 && t('exercises.phrase.pausedAccuracy', { percent: runtime.runningAccuracy })}
             </p>
             <button
               onClick={runtime.resume}
               className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background"
             >
-              Resume
+              {t('exercises.resume')}
             </button>
           </div>
         )}

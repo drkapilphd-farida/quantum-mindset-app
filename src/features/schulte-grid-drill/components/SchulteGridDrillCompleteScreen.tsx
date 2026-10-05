@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useAppT } from '@/lib/app-i18n/client'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { SCHULTE_GRID_TOTAL_CELLS } from '../schulteGridDataset'
@@ -27,18 +28,19 @@ export function SchulteGridDrillCompleteScreen({
   onPlayAgain,
   backHref = '/labs/sharp-brain',
 }: SchulteGridDrillCompleteScreenProps): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Grid Complete</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Nice, focused search.</p>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('exercises.schulte.complete')}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t('exercises.schulte.nice')}</p>
       </div>
 
       <div className="grid w-full grid-cols-2 gap-4">
-        <ReadingStatTile variant="card" label="Total Time" value={formatElapsedTime(elapsedMs)} />
-        <ReadingStatTile variant="card" label="Best Time" value={formatElapsedTime(bestTimeMs)} />
-        <ReadingStatTile variant="card" label="Mistakes" value={String(mistakeCount)} />
-        <ReadingStatTile variant="card" label="Numbers Found" value={`${SCHULTE_GRID_TOTAL_CELLS} / ${SCHULTE_GRID_TOTAL_CELLS}`} />
+        <ReadingStatTile variant="card" label={t('exercises.schulte.totalTime')} value={formatElapsedTime(elapsedMs)} />
+        <ReadingStatTile variant="card" label={t('exercises.schulte.bestTime')} value={formatElapsedTime(bestTimeMs)} />
+        <ReadingStatTile variant="card" label={t('exercises.schulte.mistakes')} value={String(mistakeCount)} />
+        <ReadingStatTile variant="card" label={t('exercises.schulte.numbersFound')} value={`${SCHULTE_GRID_TOTAL_CELLS} / ${SCHULTE_GRID_TOTAL_CELLS}`} />
       </div>
 
       <div className="flex items-center gap-6">
@@ -46,13 +48,13 @@ export function SchulteGridDrillCompleteScreen({
           onClick={onPlayAgain}
           className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          Play Again
+          {t('exercises.complete.playAgain')}
         </button>
         <Link
           href={backHref}
           className="rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
         >
-          Back to Lab
+          {t('exercises.complete.backToLab')}
         </Link>
       </div>
     </div>

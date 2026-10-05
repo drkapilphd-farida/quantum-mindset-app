@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import type { ComprehensionOption, ComprehensionQuestion } from '../comprehensionTypes'
 
 type ComprehensionCheckpointProps = {
@@ -64,6 +65,7 @@ export function ComprehensionCheckpoint({
   onPassContinue,
   onExit,
 }: ComprehensionCheckpointProps): React.JSX.Element {
+  const t = useAppT()
   const [questionIndex, setQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
@@ -119,18 +121,18 @@ export function ComprehensionCheckpoint({
         <button
           onClick={onExit}
           className="absolute top-4 right-6 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
-          aria-label="Exit exercise"
+          aria-label={t('exercises.exitExercise')}
         >
-          Exit
+          {t('exercises.exit')}
         </button>
 
         <div>
           <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">{blockLabel}</p>
           <h1 className="font-heading mt-2 text-2xl font-bold tracking-tight text-foreground">
-            {passed ? 'Nice work.' : 'Almost there.'}
+            {passed ? t('exercises.quiz.niceWork') : t('exercises.quiz.almostThere')}
           </h1>
           <p className={`mt-3 text-sm font-medium ${passed ? 'text-emerald-600' : 'text-muted-foreground'}`}>
-            {correctCount} of {questions.length} correct{passed ? '' : ` — need ${passThreshold} to continue.`}
+            {passed ? t('exercises.quiz.correctOf', { correct: correctCount, total: questions.length }) : t('exercises.quiz.needToContinue', { correct: correctCount, total: questions.length, need: passThreshold })}
           </p>
         </div>
 
@@ -140,7 +142,7 @@ export function ComprehensionCheckpoint({
             onClick={onPassContinue}
             className="w-full max-w-xs rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            {isLastBlock ? 'Finish' : `Next — ${nextTargetWpm} WPM`}
+            {isLastBlock ? t('exercises.common.finish') : t('exercises.quiz.nextAt', { wpm: nextTargetWpm })}
           </button>
         ) : (
           <button
@@ -148,7 +150,7 @@ export function ComprehensionCheckpoint({
             onClick={handleTryAgain}
             className="w-full max-w-xs rounded-full border border-border px-8 py-3 text-sm font-medium text-foreground transition-all duration-150 hover:bg-accent/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
           >
-            Try Again
+            {t('exercises.quiz.tryAgain')}
           </button>
         )}
       </div>
@@ -162,16 +164,16 @@ export function ComprehensionCheckpoint({
       <button
         onClick={onExit}
         className="absolute top-4 right-6 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
-        aria-label="Exit exercise"
+        aria-label={t('exercises.exitExercise')}
       >
-        Exit
+        {t('exercises.exit')}
       </button>
 
       <div className="text-center">
         <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">{blockLabel}</p>
-        <h1 className="font-heading mt-2 text-2xl font-bold tracking-tight text-foreground">Check Your Understanding</h1>
+        <h1 className="font-heading mt-2 text-2xl font-bold tracking-tight text-foreground">{t('exercises.quiz.checkUnderstanding')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Question {questionIndex + 1} of {questions.length}
+          {t('exercises.quiz.questionN', { n: questionIndex + 1, total: questions.length })}
         </p>
         <div className="mx-auto mt-4 flex max-w-xs items-center gap-1.5">
           {questions.map((question, index) => (

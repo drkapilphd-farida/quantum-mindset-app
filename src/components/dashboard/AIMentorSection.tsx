@@ -1,4 +1,5 @@
 import { Sparkles } from 'lucide-react'
+import { getAppT } from '@/lib/app-i18n/server'
 import { generateMentorMessage, type MentorMessageInput } from '@/lib/ai/generateMentorMessage'
 
 // Value Shift™ (Phase 2) — this used to be labeled "AI Mentor™". Same
@@ -11,13 +12,14 @@ import { generateMentorMessage, type MentorMessageInput } from '@/lib/ai/generat
 // renders instantly while the note is generated (~500ms–2s in production,
 // near-instant when falling back to the deterministic path).
 export async function AIMentorSection(props: MentorMessageInput): Promise<React.JSX.Element> {
-  const message = await generateMentorMessage(props)
+  const { lang, t } = await getAppT()
+  const message = await generateMentorMessage(props, lang, t)
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-sm">
       <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden="true" />
-        Dr. Kapil&rsquo;s Note™
+        {t('mentor.title')}
       </div>
       <p className="mt-3 text-base leading-relaxed text-foreground">{message}</p>
     </div>
@@ -26,11 +28,11 @@ export async function AIMentorSection(props: MentorMessageInput): Promise<React.
 
 // Skeleton shown by <Suspense> while the note is being generated.
 export function AIMentorSkeleton(): React.JSX.Element {
+  // Loading placeholder only — the heading is an icon so it needs no translation.
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-sm">
       <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden="true" />
-        Dr. Kapil&rsquo;s Note™
       </div>
       <div className="mt-3 space-y-2">
         <div className="h-4 w-full animate-pulse rounded bg-muted" />

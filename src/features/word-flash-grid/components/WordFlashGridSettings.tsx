@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
+import { useAppT } from '@/lib/app-i18n/client'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
 import { Button } from '@/components/ui/button'
@@ -14,6 +16,7 @@ type WordFlashGridSettingsProps = {
 }
 
 export function WordFlashGridSettings({ gridSize, onSelectGridSize, onStart }: WordFlashGridSettingsProps): React.JSX.Element {
+  const t = useAppT()
   const isEmbedded = useIsEmbeddedExercise()
   return (
     <div className={`relative mx-auto flex ${isEmbedded ? 'h-full' : 'min-h-[100dvh]'} max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center`}>
@@ -23,20 +26,20 @@ export function WordFlashGridSettings({ gridSize, onSelectGridSize, onStart }: W
           href="/dashboard"
           className="absolute top-4 right-6 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
         >
-          Exit
+          {t('exercises.exit')}
         </Link>
       )}
 
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Word Flash Grid™</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Short, punchy words flash briefly across the grid. Memorize where they were and what they said, then pick
-          each one.
+          {t('exercises.wordFlash.desc')}
         </p>
+        <PracticeTextNote kind="wordList" className="mx-auto mt-3 inline-block" />
       </div>
 
       <div className="w-full">
-        <p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">Grid Size</p>
+        <p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.common.gridSize')}</p>
         <div className="flex flex-wrap justify-center gap-2">
           {WORD_FLASH_GRID_SIZES.map((size) => (
             <Button key={size} variant={size === gridSize ? 'default' : 'outline'} size="sm" onClick={() => onSelectGridSize(size)}>
@@ -52,7 +55,7 @@ export function WordFlashGridSettings({ gridSize, onSelectGridSize, onStart }: W
         onClick={onStart}
         className="rounded-full bg-foreground px-10 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        Start
+        {t('exercises.start')}
       </button>
     </div>
   )

@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { enrolT } from '@/lib/app-i18n/enrol'
+import { LanguagePicker } from '@/lib/app-i18n/LanguagePicker'
+import { useAppI18n, useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { Check } from 'lucide-react'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
@@ -100,9 +103,11 @@ function PathCard({ emoji, title, description, points, ctaLabel, onSelect }: Pat
 }
 
 export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, hasStartedJourney, programPrice }: ChooseLearningMethodExperienceProps): React.JSX.Element {
+  const t = useAppT()
+  const { lang } = useAppI18n()
   const programPriceLine = programPrice.earlyBird
-    ? `Early-bird for the ${programPrice.batchLabel} batch · ${inr(programPrice.amountInr)} (regular ${inr(programPrice.regularInr)})`
-    : `One-time enrolment · ${inr(programPrice.amountInr)} · next batch ${programPrice.batchLabel}`
+    ? t('welcome.program.earlyBirdLine', { date: programPrice.batchLabel, price: inr(programPrice.amountInr), regular: inr(programPrice.regularInr) })
+    : t('welcome.program.regularLine', { price: inr(programPrice.amountInr), date: programPrice.batchLabel })
   const router = useRouter()
   const showJourney = appDomain === 'habit' && hasStartedJourney
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -148,25 +153,25 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
           <div>
             <h1 className={TYPOGRAPHY.display}>{programs.focusStarter.appName}</h1>
             <p className="mt-6 flex flex-col gap-1 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl md:text-4xl">
-              <span>Rewire your brain.</span>
-              <span>Build unbreakable habits.</span>
-              <span>Unlock your true potential in just 10 minutes a day.</span>
+              <span>{t('welcome.journey.line1')}</span>
+              <span>{t('welcome.journey.line2')}</span>
+              <span>{t('welcome.journey.line3')}</span>
             </p>
           </div>
         ) : appDomain === 'habit' ? (
           <div>
             <h1 className={TYPOGRAPHY.display}>{programs.sharpBrain.name}</h1>
             <p className="mt-6 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl">
-              {programs.sharpBrain.format}
+              {t('welcome.program.format')}
             </p>
           </div>
         ) : (
           <div>
-            <h1 className={TYPOGRAPHY.display}>Read Faster. Remember More.</h1>
+            <h1 className={TYPOGRAPHY.display}>{t('welcome.app.title')}</h1>
             <p className="mt-6 flex flex-col gap-1 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl md:text-4xl">
-              <span>Master Any Book — Guided Live by Dr. Kapil Dev Sharma.</span>
-              <span>7 Live Masterclasses. One Mentor.</span>
-              <span>Real Transformation.</span>
+              <span>{t('welcome.app.line1')}</span>
+              <span>{t('welcome.app.line2')}</span>
+              <span>{t('welcome.app.line3')}</span>
             </p>
           </div>
         )}
@@ -177,9 +182,9 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
               <PathCard
                 emoji="🎯"
                 title={programs.focusStarter.appName}
-                description="Transform your mindset with daily cognitive drills, visualization, and habit-building exercises."
-                points={['Daily Mindset & Focus Drills', 'Guided Breathing & Visualization', '21-Day Progressive Habit Loop']}
-                ctaLabel="Start Training →"
+                description={t('welcome.journey.cardDesc')}
+                points={[t('welcome.journey.point1'), t('welcome.journey.point2'), t('welcome.journey.point3')]}
+                ctaLabel={t('welcome.journey.start')}
                 onSelect={() => handleSelect('/labs/sharp-brain/journey/1')}
               />
             </div>
@@ -188,9 +193,9 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
               <PathCard
                 emoji="⚡"
                 title={programs.sharpBrain.name}
-                description={programs.sharpBrain.outcome}
-                points={[programs.sharpBrain.format, programPriceLine]}
-                ctaLabel={`Enrol now · ${inr(programPrice.amountInr)}`}
+                description={t('welcome.program.outcome')}
+                points={[t('welcome.program.format'), programPriceLine]}
+                ctaLabel={enrolT(lang)('enrolNow', { price: inr(programPrice.amountInr) })}
                 onSelect={() => {
                   trackInitiateCheckout(programs.sharpBrain.name)
                   window.open(PROGRAM_CHECKOUT_HREF, '_blank', 'noopener,noreferrer')
@@ -202,22 +207,24 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
               <PathCard
                 emoji="⚡"
                 title="Sharp Brain"
-                description="A real, structured 30-day mastery program — guided live by Dr. Kapil Dev Sharma."
-                points={['Peripheral Vision Activator, Rapid Recognition Drill, Chunk Reading', '7 Live Masterclasses with Dr. Kapil Dev Sharma']}
-                ctaLabel="Start Training →"
+                description={t('welcome.app.sharpBrainDesc')}
+                points={[t('welcome.app.sharpBrainPoint1'), t('welcome.app.sharpBrainPoint2')]}
+                ctaLabel={t('welcome.app.start')}
                 onSelect={() => handleSelect('/labs/sharp-brain/thirty-day-curriculum')}
               />
               <PathCard
                 emoji="📄"
-                title="Upload & Learn"
-                description="Turn any PDF or textbook into instant speed-reading drills, mind maps, and smart summaries."
-                points={['AI-Generated Speed Reading Drills', 'Neural Mind Maps & Smart Summaries', 'Works With Any PDF or Textbook']}
-                ctaLabel="Upload & Learn →"
+                title={t('welcome.app.uploadTitle')}
+                description={t('welcome.app.uploadDesc')}
+                points={[t('welcome.app.uploadPoint1'), t('welcome.app.uploadPoint2'), t('welcome.app.uploadPoint3')]}
+                ctaLabel={t('welcome.app.uploadCta')}
                 onSelect={() => handleSelect('/document-studio')}
               />
             </div>
           )}
         </div>
+
+        <LanguagePicker className="w-full max-w-xl text-left" />
       </div>
 
       <GatewayAuthModal

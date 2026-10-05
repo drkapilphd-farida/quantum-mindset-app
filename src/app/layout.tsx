@@ -1,5 +1,16 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono, Inter, Instrument_Serif, IBM_Plex_Mono, Noto_Sans_Devanagari } from 'next/font/google'
+import {
+  Geist,
+  Geist_Mono,
+  Inter,
+  Instrument_Serif,
+  IBM_Plex_Mono,
+  Noto_Sans_Devanagari,
+  Noto_Sans_Kannada,
+  Noto_Sans_Tamil,
+  Noto_Sans_Telugu,
+  Noto_Sans_Gujarati,
+} from 'next/font/google'
 import { Providers } from '@/components/Providers'
 import { Toaster } from '@/components/ui/sonner'
 import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration'
@@ -49,6 +60,15 @@ const homepageDevanagari = Noto_Sans_Devanagari({
   display: 'swap',
   preload: false,
 })
+
+// App languages (Kannada, Tamil, Telugu, Gujarati; Marathi uses the
+// Devanagari font above). Not preloaded, and each @font-face carries its
+// script's unicode-range, so a browser downloads a file only when the page
+// actually shows that script — i.e. only for the language that is selected.
+const notoKannada = Noto_Sans_Kannada({ subsets: ['kannada'], weight: ['400', '600', '700'], variable: '--font-noto-kannada', display: 'swap', preload: false })
+const notoTamil = Noto_Sans_Tamil({ subsets: ['tamil'], weight: ['400', '600', '700'], variable: '--font-noto-tamil', display: 'swap', preload: false })
+const notoTelugu = Noto_Sans_Telugu({ subsets: ['telugu'], weight: ['400', '600', '700'], variable: '--font-noto-telugu', display: 'swap', preload: false })
+const notoGujarati = Noto_Sans_Gujarati({ subsets: ['gujarati'], weight: ['400', '600', '700'], variable: '--font-noto-gujarati', display: 'swap', preload: false })
 
 const homepageDisplay = Instrument_Serif({
   subsets: ['latin'],
@@ -147,7 +167,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${homepageSans.variable} ${homepageDevanagari.variable} ${homepageDisplay.variable} ${homepageMono.variable} scroll-smooth`}
+      className={`${geistSans.variable} ${geistMono.variable} ${homepageSans.variable} ${homepageDevanagari.variable} ${homepageDisplay.variable} ${homepageMono.variable} ${notoKannada.variable} ${notoTamil.variable} ${notoTelugu.variable} ${notoGujarati.variable} scroll-smooth`}
     >
       <body className="antialiased">
         <LanguageProvider>

@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getPracticeContentLang } from '@/lib/app-i18n/server'
 
 export type DailyQuantumSessionRecord = {
   readingWpm: number
@@ -28,6 +29,8 @@ export async function getDailyQuantumSessionHistory(limit: number = DEFAULT_HIST
     .from('daily_quantum_sessions')
     .select('reading_wpm, accuracy_percent, reading_score, xp_earned, occurred_at')
     .eq('user_id', user.id)
+    // WPM is compared only within the same practice-text language.
+    .eq('content_lang', await getPracticeContentLang('reading'))
     .order('occurred_at', { ascending: false })
     .limit(limit)
 

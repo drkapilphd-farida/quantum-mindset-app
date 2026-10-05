@@ -1,6 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { claimActiveSession } from '@/lib/activeSessions/claimActiveSession'
 import { signOut } from '../actions/signOut'
 import { AuthCard } from './AuthCard'
@@ -19,6 +20,7 @@ type DeviceConflictPromptProps = {
 // one out on its own next request; "Cancel" backs out of this device's
 // own sign-in instead.
 export function DeviceConflictPrompt({ next, otherDeviceLabel }: DeviceConflictPromptProps): React.JSX.Element {
+  const t = useAppT()
   const [isPending, startTransition] = useTransition()
 
   function handleContinueHere(): void {
@@ -35,22 +37,22 @@ export function DeviceConflictPrompt({ next, otherDeviceLabel }: DeviceConflictP
 
   return (
     <AuthCard
-      title="Continue here?"
+      title={t('auth.device.title')}
       description={
         otherDeviceLabel
-          ? `Your account is currently active on ${otherDeviceLabel}.`
-          : 'Your account is currently active on another device.'
+          ? t('auth.device.activeOn', { device: otherDeviceLabel })
+          : t('auth.device.activeElsewhere')
       }
     >
       <div className="space-y-3">
         <p className="text-muted-foreground text-center text-sm">
-          Continue here and log out there? You can only be actively signed in on one device at a time.
+          {t('auth.device.explain')}
         </p>
         <Button onClick={handleContinueHere} disabled={isPending} className="w-full">
-          {isPending ? 'Please wait…' : 'Continue here and log out there'}
+          {isPending ? t('auth.device.wait') : t('auth.device.continue')}
         </Button>
         <Button onClick={handleCancel} disabled={isPending} variant="outline" className="w-full">
-          Cancel
+          {t('common.actions.cancel')}
         </Button>
       </div>
     </AuthCard>

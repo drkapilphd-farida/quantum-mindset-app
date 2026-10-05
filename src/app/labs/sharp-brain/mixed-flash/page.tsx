@@ -26,7 +26,7 @@ export default async function MixedFlashPage(): Promise<React.JSX.Element> {
       <ExerciseLockedScreen
         title="Mixed Flash"
         unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
-        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+        unlockTarget={access.nextExercise?.title ?? null}
       />
     )
   }

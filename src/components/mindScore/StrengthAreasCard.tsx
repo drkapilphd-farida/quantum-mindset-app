@@ -1,4 +1,6 @@
 import { TrendingUp, AlertCircle, Zap, Target } from 'lucide-react'
+import { translateLabel } from '@/lib/app-i18n/translate'
+import { getAppT } from '@/lib/app-i18n/server'
 import { cn } from '@/lib/utils'
 import type { StrengthSummary } from '@/lib/exercises/mindScore'
 
@@ -14,39 +16,41 @@ type StrengthItem = {
 
 // Shows what the real data can support. When only one Lab is active the
 // "Needs Improvement" slot remains empty rather than fabricate a comparison.
-export function StrengthAreasCard({
+export async function StrengthAreasCard({
   greatestStrength,
   needsImprovement,
   fastestGrowing,
   mostConsistent,
-}: StrengthAreasCardProps): React.JSX.Element {
+}: StrengthAreasCardProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
+  const tl = (english: string | null): string | null => (english === null ? null : translateLabel(t, english))
   const items: StrengthItem[] = [
     {
       icon: TrendingUp,
-      title: 'Greatest Strength',
-      value: greatestStrength,
-      empty: 'Complete your first session',
+      title: t('progress.greatestStrength'),
+      value: tl(greatestStrength),
+      empty: t('progress.emptyFirst'),
       color: 'text-foreground',
     },
     {
       icon: AlertCircle,
-      title: 'Needs Improvement',
-      value: needsImprovement,
-      empty: 'Unlock more Labs to compare',
+      title: t('progress.needsImprovement'),
+      value: tl(needsImprovement),
+      empty: t('progress.emptyUnlock'),
       color: 'text-muted-foreground',
     },
     {
       icon: Zap,
-      title: 'Fastest Growing',
-      value: fastestGrowing,
-      empty: 'Keep practising to see trends',
+      title: t('progress.fastestGrowing'),
+      value: tl(fastestGrowing),
+      empty: t('progress.emptyKeep'),
       color: 'text-foreground',
     },
     {
       icon: Target,
-      title: 'Most Consistent',
-      value: mostConsistent,
-      empty: '3-day streak unlocks this',
+      title: t('progress.mostConsistent'),
+      value: tl(mostConsistent),
+      empty: t('progress.emptyStreak'),
       color: 'text-foreground',
     },
   ]

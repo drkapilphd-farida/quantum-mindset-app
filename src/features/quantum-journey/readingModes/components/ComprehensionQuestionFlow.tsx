@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { motion } from 'framer-motion'
 import { playClickChime, playCorrectChime, playGentleMissChime } from '@/app/unified-session-preview/components/soundEngine'
 import type { JourneyReadingSet } from '../../readingContent'
@@ -33,6 +34,7 @@ type ComprehensionQuestionFlowProps = {
 // used by the two new players — JourneyReadingModePlayer's own inline
 // copy is left untouched to avoid destabilizing already-shipped code.
 export function ComprehensionQuestionFlow({ selectedSet, onFinish }: ComprehensionQuestionFlowProps): React.JSX.Element | null {
+  const t = useAppT()
   const [questionIndex, setQuestionIndex] = useState(0)
   const [currentOptions, setCurrentOptions] = useState<readonly string[]>(() => shuffle(selectedSet.comprehensionQuestions[0].options))
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
@@ -107,7 +109,9 @@ export function ComprehensionQuestionFlow({ selectedSet, onFinish }: Comprehensi
 
       {phase === 'revealing' && lastOutcome !== null && (
         <p className={`text-sm font-medium ${lastOutcome.isCorrect ? 'text-emerald-600' : 'text-muted-foreground'}`}>
-          {lastOutcome.isCorrect ? 'Correct!' : `Not quite — it was "${currentQuestion.options[currentQuestion.correctIndex]}".`}
+          {lastOutcome.isCorrect
+            ? t('exercises.questions.correct')
+            : t('exercises.questions.notQuite', { answer: currentQuestion.options[currentQuestion.correctIndex] ?? '' })}
         </p>
       )}
 

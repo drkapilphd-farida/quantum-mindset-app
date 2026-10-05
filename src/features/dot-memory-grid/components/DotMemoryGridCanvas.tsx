@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { Translator } from '@/lib/app-i18n/translate'
+import { useAppT } from '@/lib/app-i18n/client'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
 import { ReadingProgressBar } from '@/features/reading-engine/components/ReadingProgressBar'
@@ -69,10 +71,10 @@ function createBowlResonanceImpulse(audioContext: AudioContext): AudioBuffer {
   return impulse
 }
 
-function phaseInstruction(phase: RoundPhase): string {
-  if (phase === 'flash') return 'Memorize the glowing dots.'
-  if (phase === 'recall') return 'Tap the cells you remember.'
-  return 'Here is what you missed.'
+function phaseInstruction(phase: RoundPhase, t: Translator): string {
+  if (phase === 'flash') return t('exercises.dotMemory.memorize')
+  if (phase === 'recall') return t('exercises.dotMemory.recall')
+  return t('exercises.common.missed')
 }
 
 // Dot Memory Grid™ — deliberately NOT built on useReadingRuntime: that
@@ -83,6 +85,7 @@ function phaseInstruction(phase: RoundPhase): string {
 // two genuinely generic shell atoms (ReadingProgressBar, ReadingStatTile)
 // reused directly rather than fabricating WPM-shaped numbers.
 export function DotMemoryGridCanvas({ gridSize, onComplete, onExitRequested }: DotMemoryGridCanvasProps): React.JSX.Element {
+  const t = useAppT()
   const totalCells = totalCellsForGridSize(gridSize)
 
   const [roundIndex, setRoundIndex] = useState(0)
@@ -293,10 +296,10 @@ export function DotMemoryGridCanvas({ gridSize, onComplete, onExitRequested }: D
       <div className="w-full max-w-md">
         <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Dot Memory Grid™</p>
         <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-4 sm:gap-4">
-          <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${DOT_MEMORY_GRID_ROUNDS_PER_SESSION}`} />
-          <ReadingStatTile label="Score" value={scoreLabel} />
-          <ReadingStatTile label="Streak" value={String(currentStreak)} />
-          <ReadingStatTile label="Time" value={formatElapsedTime(elapsedMs)} />
+          <ReadingStatTile label={t('exercises.stats.round')} value={`${roundIndex + 1} / ${DOT_MEMORY_GRID_ROUNDS_PER_SESSION}`} />
+          <ReadingStatTile label={t('exercises.stats.score')} value={scoreLabel} />
+          <ReadingStatTile label={t('exercises.stats.streak')} value={String(currentStreak)} />
+          <ReadingStatTile label={t('exercises.stats.time')} value={formatElapsedTime(elapsedMs)} />
         </div>
         <div className="mt-4">
           <ReadingProgressBar progressPercent={progressPercent} />
@@ -304,7 +307,7 @@ export function DotMemoryGridCanvas({ gridSize, onComplete, onExitRequested }: D
       </div>
 
       <p className="mt-6 text-sm font-medium text-foreground" data-round-phase={roundPhase}>
-        {phaseInstruction(roundPhase)}
+        {phaseInstruction(roundPhase, t)}
       </p>
 
       {/* The frosted-glass focus frame around the grid itself. */}
@@ -325,7 +328,7 @@ export function DotMemoryGridCanvas({ gridSize, onComplete, onExitRequested }: D
                 data-cell-state={state}
                 disabled={isDisabled}
                 onClick={() => handleCellClick(cellIndex)}
-                aria-label={`Grid cell ${cellIndex + 1}`}
+                aria-label={t('exercises.common.gridCell', { n: cellIndex + 1 })}
                 className={`flex aspect-square items-center justify-center rounded-xl border transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 ${cellBorderClassName(state, roundPhase)}`}
               >
                 {state === 'flash-target' && (

@@ -1,6 +1,8 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { authErrorKey } from '../authErrorKey'
+import { getAppT } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { getRequestOrigin } from '@/lib/domains/appDomain'
@@ -16,15 +18,16 @@ export async function signUp(
   input: unknown,
   next: string = ONBOARDING_ENTRY_PATH,
 ): Promise<{ success: false; error: string }> {
+  const { t } = await getAppT()
   const parsed = SignUpSchema.safeParse(input)
   if (!parsed.success) {
     const firstIssue = parsed.error.issues[0]
-    return { success: false, error: firstIssue?.message ?? 'Invalid input.' }
+    return { success: false, error: firstIssue?.message ?? t('auth.errors.invalidInput') }
   }
 
   const clientIp = await getClientIp()
   if (!checkRateLimit(`sign-up:${clientIp}`, SIGN_UP_RATE_LIMIT).allowed) {
-    return { success: false, error: 'Too many sign-up attempts. Please wait a moment and try again.' }
+    return { success: false, error: t('auth.errors.tooMany') }
   }
 
   // Domain Split™ — the confirmation link must return the user to
@@ -48,7 +51,7 @@ export async function signUp(
   })
 
   if (error) {
-    return { success: false, error: error.message }
+    return { success: false, error: t(authErrorKey(error.code)) }
   }
 
   // Projects with email confirmation OFF get a session back immediately —

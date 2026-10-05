@@ -1,4 +1,9 @@
+'use client'
+
 import Link from 'next/link'
+import { useAppT } from '@/lib/app-i18n/client'
+import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
+import type { PracticeKind } from '@/lib/app-i18n/practiceContent'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,6 +22,7 @@ type ExerciseIntroScreenProps = {
   previousHref?: string
   previousLabel?: string
   labHref?: string
+  practiceText?: PracticeKind
 }
 
 export function ExerciseIntroScreen({
@@ -28,7 +34,9 @@ export function ExerciseIntroScreen({
   previousHref,
   previousLabel,
   labHref,
+  practiceText,
 }: ExerciseIntroScreenProps): React.JSX.Element {
+  const t = useAppT()
   const hasSecondaryNav = previousHref !== undefined || labHref !== undefined
 
   return (
@@ -39,21 +47,22 @@ export function ExerciseIntroScreen({
 
         <p className={cn('mt-8', EXERCISE_CAPTION_CLASSNAME)}>{durationLabel}</p>
         <p className={cn('mt-2', EXERCISE_CAPTION_CLASSNAME)}>{postureNote}</p>
+        {practiceText !== undefined && <PracticeTextNote kind={practiceText} className="mx-auto mt-4 inline-block" />}
 
         <Button size="lg" className="mt-10 min-w-[200px] rounded-full shadow-sm" onClick={onStart}>
-          Start
+          {t('exercises.start')}
         </Button>
 
         {hasSecondaryNav && (
           <div className="mt-6 flex items-center justify-center gap-4">
             {previousHref !== undefined && (
               <Link href={previousHref} className={cn('hover:text-foreground', EXERCISE_CAPTION_CLASSNAME)}>
-                ← {previousLabel ?? 'Previous'}
+                ← {previousLabel ?? t('exercises.runner.previous')}
               </Link>
             )}
             {labHref !== undefined && (
               <Link href={labHref} className={cn('hover:text-foreground', EXERCISE_CAPTION_CLASSNAME)}>
-                Exit to Lab
+                {t('exercises.runner.exitToLab')}
               </Link>
             )}
           </div>

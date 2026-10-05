@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Menu } from 'lucide-react'
@@ -17,6 +18,7 @@ import { UserMenu } from '@/components/UserMenu'
 import { MobileSignOutButton } from '@/components/MobileSignOutButton'
 import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { LanguageSwitcher } from '@/lib/app-i18n/LanguagePicker'
 import { InstallButton } from '@/components/InstallButton'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
@@ -43,6 +45,7 @@ export function Topbar({
   appDomain,
   showPracticeJourney,
 }: TopbarProps): React.JSX.Element {
+  const t = useAppT()
   const [open, setOpen] = useState(false)
 
   return (
@@ -54,7 +57,7 @@ export function Topbar({
           size="icon"
           className="md:hidden"
           onClick={() => setOpen(true)}
-          aria-label="Open navigation"
+          aria-label={t('nav.openNavigation')}
         >
           <Menu className="size-5" />
         </Button>
@@ -103,12 +106,14 @@ export function Topbar({
         {/* Mobile Viewport Fix™ — the wordmark text is the single widest
             item in this header; below 360px (older/smaller phones like an
             iPhone SE 1st-gen at 320px) it's the difference between fitting
-            and overflowing, so it drops first, leaving just the logo. */}
-        <span className="brand-gradient-text hidden min-[360px]:inline text-base font-bold tracking-tight">{brandName ?? brand.appName}</span>
+            and overflowing, so it drops first, leaving just the logo. The
+            language switcher needs room too, so it now drops below 430px. */}
+        <span className="brand-gradient-text hidden min-[430px]:inline text-base font-bold tracking-tight">{brandName ?? brand.appName}</span>
       </Link>
 
       <div className="flex-1" />
 
+      <LanguageSwitcher />
       <ThemeToggle />
       <InstallButton />
       {/* Global Account Dropdown™ (Phase 4) — desktop now shows the fuller

@@ -27,7 +27,7 @@ export default async function EyeWarmupPage(): Promise<React.JSX.Element> {
       <ExerciseLockedScreen
         title="Eye Warm-up"
         unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
-        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+        unlockTarget={access.nextExercise?.title ?? null}
       />
     )
   }

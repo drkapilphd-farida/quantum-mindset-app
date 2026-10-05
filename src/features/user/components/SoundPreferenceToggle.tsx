@@ -1,6 +1,7 @@
 'use client'
 
 import { Volume2, VolumeX } from 'lucide-react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { Switch } from '@/components/ui/switch'
 import { useSoundPreference } from '@/hooks/exercises/useSoundPreference'
 
@@ -12,6 +13,7 @@ import { useSoundPreference } from '@/hooks/exercises/useSoundPreference'
 // another tab.
 export function SoundPreferenceToggle(): React.JSX.Element {
   const [enabled, setEnabled] = useSoundPreference()
+  const t = useAppT()
 
   return (
     <div className="flex items-center justify-between gap-4 rounded-xl border border-border/60 px-4 py-3">
@@ -22,11 +24,11 @@ export function SoundPreferenceToggle(): React.JSX.Element {
           <VolumeX className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
         )}
         <div>
-          <p className="text-sm font-medium text-foreground">Exercise Sound Effects</p>
-          <p className="text-xs text-muted-foreground">Tap chimes, correct/incorrect cues, and ambient focus tones during exercises.</p>
+          <p className="text-sm font-medium text-foreground">{t('settings.sound.effects')}</p>
+          <p className="text-xs text-muted-foreground">{t('settings.sound.effectsDesc')}</p>
         </div>
       </div>
-      <Switch checked={enabled} onCheckedChange={setEnabled} aria-label="Exercise sound effects" />
+      <Switch checked={enabled} onCheckedChange={setEnabled} aria-label={t('settings.sound.effects')} />
     </div>
   )
 }

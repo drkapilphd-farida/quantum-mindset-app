@@ -5,6 +5,8 @@ import { useExerciseSession } from '@/hooks/exercises/useExerciseSession'
 import type { ExerciseDefinition } from '@/lib/exercises/types'
 import { getCurriculumSmartCompleteHref, getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 import { ExerciseIntroScreen } from './ExerciseIntroScreen'
+import { useAppT } from '@/lib/app-i18n/client'
+import type { MessageKey } from '@/lib/app-i18n/translate'
 import { ExerciseCompletionScreen } from './ExerciseCompletionScreen'
 
 type ExerciseCanvasComponent = (props: {
@@ -46,6 +48,11 @@ export function ExerciseRunner({
   completionActionLabel,
 }: ExerciseRunnerProps): React.JSX.Element {
   const router = useRouter()
+  const t = useAppT()
+  // Intro/completion text per exercise lives in the catalog under
+  // exercises.defs.<exerciseId>; the definition's English is the fallback
+  // for any exercise not in the catalog yet. Titles are product names.
+  const defText = (field: string, english: string): string => t(`exercises.defs.${definition.exerciseId}.${field}` as MessageKey) || english
   const { stage, start, recordCompletion, recordExit, awaitPendingSave } = useExerciseSession({
     labId: definition.labId,
     exerciseId: definition.exerciseId,
@@ -101,10 +108,11 @@ export function ExerciseRunner({
     return (
       <ExerciseIntroScreen
         title={definition.intro.title}
-        description={definition.intro.description}
-        durationLabel={definition.intro.durationLabel}
-        postureNote={definition.intro.postureNote}
+        description={defText('description', definition.intro.description)}
+        durationLabel={defText('duration', definition.intro.durationLabel)}
+        postureNote={defText('posture', definition.intro.postureNote)}
         onStart={start}
+        {...(definition.practiceText !== undefined ? { practiceText: definition.practiceText } : {})}
         {...(previousExercise ? { previousHref: previousExercise.href, previousLabel: previousExercise.title } : {})}
         {...(resolvedLabHref !== undefined ? { labHref: resolvedLabHref } : {})}
       />
@@ -117,12 +125,12 @@ export function ExerciseRunner({
 
   return (
     <ExerciseCompletionScreen
-      title={definition.completion.title}
-      mentorLine={definition.completion.mentorLine}
-      primaryActionLabel={completionActionLabel ?? (nextExercise ? `Continue Evolution: ${nextExercise.title}` : 'Back to Dashboard')}
+      title={defText('doneTitle', definition.completion.title)}
+      mentorLine={defText('doneLine', definition.completion.mentorLine)}
+      primaryActionLabel={completionActionLabel ?? (nextExercise ? t('exercises.runner.continueTo', { name: nextExercise.title }) : t('exercises.runner.backToDashboard'))}
       onPrimaryAction={handleDone}
       {...(nextExercise && resolvedLabHref !== undefined && onComplete === undefined
-        ? { secondaryActionLabel: 'Back to Dashboard', secondaryActionHref: resolvedLabHref }
+        ? { secondaryActionLabel: t('exercises.runner.backToDashboard'), secondaryActionHref: resolvedLabHref }
         : {})}
     />
   )

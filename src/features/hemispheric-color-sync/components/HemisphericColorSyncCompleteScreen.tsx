@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useAppT } from '@/lib/app-i18n/client'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ROUNDS_PER_SESSION, PERFECT_SESSION_BONUS } from '../hemisphericColorSyncDataset'
@@ -36,32 +37,33 @@ export function HemisphericColorSyncCompleteScreen({
   onPlayAgain,
   backHref = '/labs/sharp-brain',
 }: HemisphericColorSyncCompleteScreenProps): React.JSX.Element {
+  const t = useAppT()
   const accuracyPercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
   const isPerfectSprint = correctCount === ROUNDS_PER_SESSION
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sync Complete</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Nice colour-word control.</p>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('exercises.colorSync.complete')}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t('exercises.colorSync.nice')}</p>
         {isPerfectSprint && (
-          <p className="mt-2 text-sm font-semibold text-emerald-600">Flawless sync! +{PERFECT_SESSION_BONUS} bonus included.</p>
+          <p className="mt-2 text-sm font-semibold text-emerald-600">{t('exercises.colorSync.flawless', { bonus: PERFECT_SESSION_BONUS })}</p>
         )}
       </div>
 
       <div className="grid w-full grid-cols-2 gap-4">
-        <ReadingStatTile variant="card" label="Sync Accuracy" value={`${accuracyPercent}%`} />
-        <ReadingStatTile variant="card" label="Correct Matches" value={`${correctCount} / ${ROUNDS_PER_SESSION}`} />
-        <ReadingStatTile variant="card" label="Total Points" value={String(totalScore)} />
-        <ReadingStatTile variant="card" label="Best Streak" value={String(bestStreak)} />
+        <ReadingStatTile variant="card" label={t('exercises.colorSync.syncAccuracy')} value={`${accuracyPercent}%`} />
+        <ReadingStatTile variant="card" label={t('exercises.colorSync.correctMatches')} value={`${correctCount} / ${ROUNDS_PER_SESSION}`} />
+        <ReadingStatTile variant="card" label={t('exercises.colorSync.totalPoints')} value={String(totalScore)} />
+        <ReadingStatTile variant="card" label={t('exercises.colorSync.bestStreak')} value={String(bestStreak)} />
         <ReadingStatTile
           variant="card"
-          label="Fastest Reaction"
+          label={t('exercises.colorSync.fastestReaction')}
           value={fastestReactionMs === null ? '—' : `${(fastestReactionMs / 1000).toFixed(1)}s`}
         />
-        <ReadingStatTile variant="card" label="Time" value={formatElapsedTime(elapsedMs)} />
-        <ReadingStatTile variant="card" label="Best Accuracy (All-Time)" value={`${bestAccuracyPercentAllTime}%`} />
-        <ReadingStatTile variant="card" label="Best Streak (All-Time)" value={String(bestStreakAllTime)} />
+        <ReadingStatTile variant="card" label={t('exercises.stats.time')} value={formatElapsedTime(elapsedMs)} />
+        <ReadingStatTile variant="card" label={t('exercises.colorSync.bestAccuracyAllTime')} value={`${bestAccuracyPercentAllTime}%`} />
+        <ReadingStatTile variant="card" label={t('exercises.colorSync.bestStreakAllTime')} value={String(bestStreakAllTime)} />
       </div>
 
       <div className="flex items-center gap-6">
@@ -69,13 +71,13 @@ export function HemisphericColorSyncCompleteScreen({
           onClick={onPlayAgain}
           className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          Play Again
+          {t('exercises.complete.playAgain')}
         </button>
         <Link
           href={backHref}
           className="rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
         >
-          Back to Lab
+          {t('exercises.complete.backToLab')}
         </Link>
       </div>
     </div>

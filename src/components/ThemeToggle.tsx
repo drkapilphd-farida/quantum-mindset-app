@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -19,6 +20,7 @@ import { Button } from '@/components/ui/button'
 // the resolved icon before mount would be a real hydration mismatch —
 // render a neutral, non-flipping placeholder until then instead.
 export function ThemeToggle(): React.JSX.Element {
+  const t = useAppT()
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -32,7 +34,7 @@ export function ThemeToggle(): React.JSX.Element {
     <Button
       variant="ghost"
       size="icon"
-      aria-label={mounted ? (isDark ? 'Switch to light mode' : 'Switch to dark mode') : 'Toggle theme'}
+      aria-label={mounted ? (isDark ? t('nav.lightMode') : t('nav.darkMode')) : t('nav.toggleTheme')}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >
       {mounted ? isDark ? <Sun className="size-4" aria-hidden="true" /> : <Moon className="size-4" aria-hidden="true" /> : <Moon className="size-4 opacity-0" aria-hidden="true" />}

@@ -1,0 +1,33 @@
+{
+  "enrolNow": "Enrol now · {price}",
+  "earlyBirdFor": "Early-bird for the {date} batch",
+  "endsIn": "ends in",
+  "endsOn": "Ends {deadline}",
+  "regularLine": "Next batch starts {date}",
+  "oneTime": "One-time payment",
+  "perDay": "≈ {price} a day for 30 days",
+  "chooseBatch": "Choose your batch",
+  "batchOption": "Starts {date}",
+  "earlyBirdTag": "Early-bird",
+  "offerTag": "Your test offer",
+  "seatsLeft": "{n} seats per batch",
+  "redirecting": "Opening secure checkout…",
+  "emailLabel": "Your email",
+  "emailHint": "Use the email you will sign in to the app with — your access is linked to it.",
+  "nameLabel": "Name (optional)",
+  "secure": "Secure checkout via Razorpay",
+  "errors": {
+    "invalid_email": "Please enter a valid email address.",
+    "batch_closed": "That batch has just closed for enrolment. Please choose the next one.",
+    "unavailable": "Online checkout is not available for this price right now. Please message us on WhatsApp and we will send your payment link.",
+    "rate_limited": "Too many attempts. Please wait a minute and try again."
+  },
+  "whatsappEnrol": "Hi, I want to enrol in the Sharp Brain 30-Day Program (batch starting {date}, {price}). Please send me the payment link.",
+  "chatOnWhatsapp": "Chat on WhatsApp",
+  "units": {
+    "d": "d",
+    "h": "h",
+    "m": "m",
+    "s": "s"
+  }
+}

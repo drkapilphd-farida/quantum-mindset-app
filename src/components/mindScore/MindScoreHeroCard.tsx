@@ -1,6 +1,7 @@
 'use client'
 
 import { useCountUp } from '@/hooks/exercises/useCountUp'
+import { useAppT, useLabelT } from '@/lib/app-i18n/client'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { cn } from '@/lib/utils'
 import type { MindScoreLabel } from '@/lib/exercises/mindScore'
@@ -16,6 +17,8 @@ export function MindScoreHeroCard({
   scoreMeta,
   readingScore,
 }: MindScoreHeroCardProps): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const animatedScore = useCountUp(score, 1000, prefersReducedMotion)
 
@@ -34,7 +37,7 @@ export function MindScoreHeroCard({
         <div
           className="relative inline-flex shrink-0 items-center justify-center"
           style={{ width: SIZE, height: SIZE }}
-          aria-label={`Mind Score ${score} out of 1000, Reading Intelligence ${readingScore} percent`}
+          aria-label={t('progress.scoreAria', { score, reading: readingScore })}
           role="img"
         >
           <svg width={SIZE} height={SIZE} className="-rotate-90" aria-hidden="true">
@@ -67,13 +70,13 @@ export function MindScoreHeroCard({
         {/* Text */}
         <div className="text-center sm:text-left">
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Overall Intelligence
+            {t('progress.overall')}
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            {scoreMeta.label}
+            {tl(scoreMeta.label)}
           </h1>
           <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed max-w-xs">
-            {scoreMeta.description}
+            {tl(scoreMeta.description)}
           </p>
 
           {/* Score bar */}
@@ -94,7 +97,7 @@ export function MindScoreHeroCard({
                 aria-valuenow={score}
                 aria-valuemin={0}
                 aria-valuemax={1000}
-                aria-label="Mind Score progress"
+                aria-label={t('progress.scoreProgress')}
               />
             </div>
           </div>

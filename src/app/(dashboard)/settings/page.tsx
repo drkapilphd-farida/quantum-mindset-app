@@ -6,6 +6,8 @@ import { UpdatePasswordForm } from '@/features/user/components/UpdatePasswordFor
 import { SoundPreferenceToggle } from '@/features/user/components/SoundPreferenceToggle'
 import { listRetakeableAssessments } from '@/features/quantum-speed-reading-runtime/assessment/actions/listRetakeableAssessments'
 import { RetakeAssessmentButton } from '@/features/quantum-speed-reading-runtime/assessment/components/RetakeAssessmentButton'
+import { getAppT } from '@/lib/app-i18n/server'
+import { LanguagePicker } from '@/lib/app-i18n/LanguagePicker'
 
 export const metadata: Metadata = {
   title: 'Settings',
@@ -19,6 +21,7 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
   } = await supabase.auth.getUser()
 
   if (!user) return <div />
+  const { t } = await getAppT()
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -32,20 +35,30 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Settings</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{t('settings.title')}</h1>
         <p className="text-muted-foreground mt-1 text-sm">
-          Manage your account details.
+          {t('settings.subtitle')}
         </p>
       </div>
 
       <Separator />
 
       <div className="max-w-md space-y-8">
+        <section className="space-y-4" id="language">
+          <div>
+            <h2 className="text-base font-medium">{t('settings.language.title')}</h2>
+            <p className="text-muted-foreground mt-1 text-sm">{t('settings.language.desc')}</p>
+          </div>
+          <LanguagePicker />
+        </section>
+
+        <Separator />
+
         <section className="space-y-4">
           <div>
-            <h2 className="text-base font-medium">Profile</h2>
+            <h2 className="text-base font-medium">{t('settings.profile.title')}</h2>
             <p className="text-muted-foreground mt-1 text-sm">
-              Update your public display name.
+              {t('settings.profile.desc')}
             </p>
           </div>
           <UpdateProfileForm defaultFullName={fullName} />
@@ -55,9 +68,9 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
 
         <section className="space-y-4">
           <div>
-            <h2 className="text-base font-medium">Password</h2>
+            <h2 className="text-base font-medium">{t('settings.password.title')}</h2>
             <p className="text-muted-foreground mt-1 text-sm">
-              Choose a new password for your account.
+              {t('settings.password.desc')}
             </p>
           </div>
           <UpdatePasswordForm />
@@ -67,9 +80,9 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
 
         <section className="space-y-4">
           <div>
-            <h2 className="text-base font-medium">Sound</h2>
+            <h2 className="text-base font-medium">{t('settings.sound.title')}</h2>
             <p className="text-muted-foreground mt-1 text-sm">
-              Control audio during exercises.
+              {t('settings.sound.desc')}
             </p>
           </div>
           <SoundPreferenceToggle />
@@ -81,9 +94,9 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
 
             <section className="space-y-4">
               <div>
-                <h2 className="text-base font-medium">Reading Assessment</h2>
+                <h2 className="text-base font-medium">{t('settings.assessment.title')}</h2>
                 <p className="text-muted-foreground mt-1 text-sm">
-                  Retake your Smart Reading assessment for a document to re-measure how you read it.
+                  {t('settings.assessment.desc')}
                 </p>
               </div>
               <ul className="space-y-3">
@@ -101,9 +114,9 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
         <Separator />
 
         <section className="space-y-2">
-          <h2 className="text-base font-medium">Account</h2>
+          <h2 className="text-base font-medium">{t('settings.account.title')}</h2>
           <p className="text-muted-foreground text-sm">
-            Email:{' '}
+            {t('settings.account.email')}{' '}
             <span className="text-foreground font-medium">{user.email}</span>
           </p>
         </section>

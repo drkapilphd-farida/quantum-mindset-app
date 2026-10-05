@@ -34,7 +34,7 @@ export default async function ProgressiveChunkReadingPage(): Promise<React.JSX.E
       <ExerciseLockedScreen
         title="Core Reading Journey™"
         unlockHref="/labs/sharp-brain/word-flash"
-        unlockLabel="Go to Flash Intelligence Pack™"
+        unlockTarget="Flash Intelligence Pack™"
       />
     )
   }
@@ -46,7 +46,7 @@ export default async function ProgressiveChunkReadingPage(): Promise<React.JSX.E
       <ExerciseLockedScreen
         title="Progressive Chunk Reading"
         unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
-        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+        unlockTarget={access.nextExercise?.title ?? null}
       />
     )
   }

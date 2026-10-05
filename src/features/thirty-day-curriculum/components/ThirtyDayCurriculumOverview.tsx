@@ -1,12 +1,14 @@
 'use client'
 
 import { programs } from '@/config/site.config'
+import { dayTitle, phaseDescription, phaseTitle } from '@/lib/app-i18n/curriculumText'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useEffect, useState } from 'react'
 import { CheckCircle2, Lock, Sparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
-import { CHECKPOINT_DAYS, CURRICULUM_PHASES, TOTAL_CURRICULUM_DAYS, getCurriculumDayTheme, type CurriculumPhaseId } from '../curriculumDatabase'
+import { CHECKPOINT_DAYS, CURRICULUM_PHASES, TOTAL_CURRICULUM_DAYS, type CurriculumPhaseId } from '../curriculumDatabase'
 import {
   computeBrainDevelopmentScore,
   computeConsistencyPercent,
@@ -46,6 +48,7 @@ export function ThirtyDayCurriculumOverview({
   serverCompletedDays,
   refreshKey,
 }: ThirtyDayCurriculumOverviewProps): React.JSX.Element {
+  const t = useAppT()
   // Client-only load — same SSR-hydration-mismatch reasoning every other
   // localStorage-backed exercise in this project already follows.
   const [progress, setProgress] = useState<CurriculumProgress | null>(null)
@@ -66,20 +69,17 @@ export function ThirtyDayCurriculumOverview({
       <div className="relative rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 p-6 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95">
         <BrandWatermark className="absolute top-4 left-6" />
         <div className="mt-8 flex flex-col gap-2 sm:mt-6">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Sharp Brain 30-Day Curriculum</p>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Your Daily Roadmap</h1>
-          <p className="max-w-2xl text-sm text-muted-foreground">
-            30 sequential days across 4 phases, blending Brain Gym, Visual Memory & Attention, Visualization, and Core Reading Intelligence into one
-            balanced circuit — with real WPM and comprehension checkpoints along the way.
-          </p>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('curriculum.eyebrow')}</p>
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{t('curriculum.title')}</h1>
+          <p className="max-w-2xl text-sm text-muted-foreground">{t('curriculum.intro')}</p>
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
-          <MetricTile label="Brain Score" value={brainScore === null ? '—' : String(brainScore.score)} />
-          <MetricTile label="Reading Growth" value={metricLabel(brainScore?.readingGrowthPercent ?? null, '%')} />
-          <MetricTile label="Comprehension" value={metricLabel(brainScore?.comprehensionAveragePercent ?? null, '%')} />
-          <MetricTile label="Consistency" value={`${consistencyPercent}%`} />
-          <MetricTile label="Visualization Depth" value={metricLabel(visualizationDepthPercent, '%')} />
+          <MetricTile label={t('curriculum.metrics.brainScore')} value={brainScore === null ? '—' : String(brainScore.score)} />
+          <MetricTile label={t('curriculum.metrics.readingGrowth')} value={metricLabel(brainScore?.readingGrowthPercent ?? null, '%')} />
+          <MetricTile label={t('curriculum.metrics.comprehension')} value={metricLabel(brainScore?.comprehensionAveragePercent ?? null, '%')} />
+          <MetricTile label={t('curriculum.metrics.consistency')} value={`${consistencyPercent}%`} />
+          <MetricTile label={t('curriculum.metrics.visualizationDepth')} value={metricLabel(visualizationDepthPercent, '%')} />
         </div>
       </div>
 
@@ -90,11 +90,9 @@ export function ThirtyDayCurriculumOverview({
       </div>
 
       <div className={`${CARD_CLASS_NAME} p-6`}>
-        <h2 className="font-heading text-lg font-bold tracking-tight text-foreground">All 30 Days</h2>
+        <h2 className="font-heading text-lg font-bold tracking-tight text-foreground">{t('curriculum.allDays')}</h2>
         <p className="mt-1 text-xs text-muted-foreground">
-          {isPro
-            ? 'Day N unlocks once Day N-1 is complete. Star days are real WPM + comprehension checkpoints.'
-            : 'Enroll to unlock the full 30-day curriculum. Days you have already completed stay open. Star days are real WPM + comprehension checkpoints.'}
+          {isPro ? t('curriculum.allDaysHintPro') : t('curriculum.allDaysHintFree')}
         </p>
         {!isPro && (
           <button
@@ -103,7 +101,7 @@ export function ThirtyDayCurriculumOverview({
             className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground"
             data-enroll-button="true"
           >
-            Start the {programs.sharpBrain.name}
+            {t('curriculum.startProgram', { program: programs.sharpBrain.name })}
           </button>
         )}
         <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-6 md:grid-cols-10">
@@ -133,6 +131,7 @@ function MetricTile({ label, value }: { label: string; value: string }): React.J
 }
 
 function PhaseCard({ phaseId, serverCompletedDays }: { phaseId: CurriculumPhaseId; serverCompletedDays: readonly number[] }): React.JSX.Element {
+  const t = useAppT()
   const phase = CURRICULUM_PHASES.find((candidate) => candidate.id === phaseId)!
   const [start, end] = phase.dayRange
   const totalDaysInPhase = end - start + 1
@@ -144,14 +143,14 @@ function PhaseCard({ phaseId, serverCompletedDays }: { phaseId: CurriculumPhaseI
       <CardContent className="flex flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
-            Phase {phase.id} · Days {start}-{end}
+            {t('curriculum.phaseLabel', { phase: phase.id, start, end })}
           </p>
           <Badge variant="secondary" className="shrink-0 tabular-nums">
             {completedDaysInPhase}/{totalDaysInPhase}
           </Badge>
         </div>
-        <h3 className="font-heading text-base font-bold tracking-tight text-foreground">{phase.title}</h3>
-        <p className="text-sm text-muted-foreground">{phase.description}</p>
+        <h3 className="font-heading text-base font-bold tracking-tight text-foreground">{phaseTitle(t, phase.id)}</h3>
+        <p className="text-sm text-muted-foreground">{phaseDescription(t, phase.id)}</p>
       </CardContent>
     </Card>
   )
@@ -170,10 +169,10 @@ function DayCell({
   onSelectDay: (day: number) => void
   onLockedDayClick: (day: number) => void
 }): React.JSX.Element {
+  const t = useAppT()
   const unlocked = isCurriculumDayUnlocked(day, serverCompletedDays, isPro)
   const completed = serverCompletedDays.includes(day)
   const isCheckpoint = CHECKPOINT_DAYS.includes(day)
-  const theme = getCurriculumDayTheme(day)
 
   // 30-Day Masterclass Paywall™ — a locked cell is never `disabled`
   // anymore: every one of the 30 days is a real, clickable entry point
@@ -183,7 +182,7 @@ function DayCell({
     <button
       type="button"
       onClick={() => (unlocked ? onSelectDay(day) : onLockedDayClick(day))}
-      title={unlocked ? theme.title : `Day ${day} — enroll to unlock`}
+      title={unlocked ? dayTitle(t, day) : t('curriculum.dayLockedTitle', { day })}
       data-day={day}
       data-day-unlocked={unlocked}
       data-day-completed={completed}
@@ -204,7 +203,7 @@ function DayCell({
       ) : (
         <Lock className="size-3.5" aria-hidden="true" />
       )}
-      {(completed || unlocked) && <span className="text-[9px] font-normal opacity-70">Day {day}</span>}
+      {(completed || unlocked) && <span className="text-[9px] font-normal opacity-70">{t('curriculum.dayShort', { day })}</span>}
     </button>
   )
 }

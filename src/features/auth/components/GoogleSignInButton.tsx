@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { toast } from 'sonner'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -26,6 +27,7 @@ type GoogleSignInButtonProps = {
 // so a first-time Google sign-in needs no extra explicit profile-init
 // step here.
 export function GoogleSignInButton({ next }: GoogleSignInButtonProps): React.JSX.Element {
+  const t = useAppT()
   const [isPending, setIsPending] = useState(false)
 
   async function handleClick(): Promise<void> {
@@ -58,7 +60,7 @@ export function GoogleSignInButton({ next }: GoogleSignInButtonProps): React.JSX
       onClick={() => void handleClick()}
     >
       {!isPending && <GoogleIcon className="size-4" />}
-      Continue with Google
+      {t('auth.google')}
     </Button>
   )
 }

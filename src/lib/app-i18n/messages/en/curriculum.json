@@ -1,0 +1,77 @@
+{
+  "eyebrow": "Sharp Brain 30-Day Curriculum",
+  "title": "Your daily roadmap",
+  "intro": "30 days in 4 phases, mixing Brain Gym, visual memory and attention, visualisation and reading practice into one balanced circuit — with real WPM and comprehension checkpoints along the way.",
+  "metrics": {
+    "brainScore": "Brain Score",
+    "readingGrowth": "Reading growth",
+    "comprehension": "Comprehension",
+    "consistency": "Consistency",
+    "visualizationDepth": "Visualisation depth"
+  },
+  "allDays": "All 30 days",
+  "allDaysHintPro": "Day N opens once Day N-1 is complete. Star days are real WPM + comprehension checkpoints.",
+  "allDaysHintFree": "Enrol to open the full 30-day curriculum. Days you have already completed stay open. Star days are real WPM + comprehension checkpoints.",
+  "startProgram": "Start the {program}",
+  "phaseLabel": "Phase {phase} · Days {start}–{end}",
+  "dayShort": "Day {day}",
+  "dayLockedTitle": "Day {day} — enrol to unlock",
+  "categories": {
+    "brainGym": "Brain Gym",
+    "visualFocusMemory": "Visual Focus & Memory",
+    "visualization": "Visualisation",
+    "readingIntelligence": "Reading Intelligence"
+  },
+  "detail": {
+    "backToAll": "All 30 days",
+    "dayCompleteUnlocked": "Day {day} complete! Day {next} is now unlocked.",
+    "phaseDay": "Phase {phase} · Day {day}",
+    "checkpointDay": "Checkpoint day",
+    "completed": "Completed",
+    "checkpointRecorded": "Checkpoint recorded",
+    "trueWpm": "True WPM",
+    "comprehension": "Comprehension",
+    "vsBaseline": "vs. your Day 1 baseline",
+    "dayDone": "Day {day} complete — nice work.",
+    "practiceAgain": "Practice this day again",
+    "uploadStarted": "Chapter upload started for Day {day}",
+    "uploadStartedHint": "Go back to Upload & Learn any time to pick up where you left off.",
+    "uploadToday": "Upload today’s chapter",
+    "uploadTodayHint": "Bring real reading material for “{title}” and practise Sharp Brain on the real thing.",
+    "uploadLink": "Upload & Learn →"
+  },
+  "player": {
+    "dayDone": "{title} — done!",
+    "allExercisesDone": "All {count} exercises complete. Day {next} is now unlocked.",
+    "backToRoadmap": "Back to roadmap",
+    "oneMoreStep": "One more step",
+    "niceWork": "Nice work today.",
+    "checkpointIntro": "This is a checkpoint day — finish with a short WPM and comprehension check-in to complete Day {day}.",
+    "startCheckIn": "Start check-in",
+    "stepOf": "Step {step} of {total} · {category}",
+    "skipExercise": "Skip exercise",
+    "skip": "Skip",
+    "exitToRoadmap": "Exit to roadmap",
+    "skipStep": "Skip this step",
+    "continueGuided": "Continue in its own guided view",
+    "gatedIntro": "This exercise has its own guided flow with progress tracking — it opens in its own focused view, then brings you straight back here."
+  },
+  "phaseComplete": {
+    "title": "Phase {phase} complete!",
+    "upNext": "Up next — Phase {phase}: {title}."
+  },
+  "finishPrevious": {
+    "title": "Day {day} opens after Day {previous}",
+    "body": "The 30 days open one after another. Finish Day {previous} and Day {day} opens straight away.",
+    "goTo": "Go to Day {previous}"
+  },
+  "assessment": {
+    "eyebrow": "Checkpoint complete",
+    "title": "Day {day} assessment"
+  },
+  "paywall": {
+    "dayTitle": "Day {day} is part of the {program}",
+    "startTitle": "Start the {program}",
+    "body": "All 30 days of the curriculum — real WPM and comprehension checkpoints, and 7 live classes with Dr. Kapil Dev Sharma — open when you enrol. Days you have already completed stay open."
+  }
+}

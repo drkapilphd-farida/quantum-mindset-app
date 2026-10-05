@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
@@ -42,6 +43,7 @@ type FluidEnergyBalancerExperienceProps = {
 }
 
 export function FluidEnergyBalancerExperience({ onComplete }: FluidEnergyBalancerExperienceProps = {}): React.JSX.Element {
+  const t = useAppT()
   const curriculumSession = useCurriculumSessionCompletion('fluid-energy-balancer', LAB_HREF)
   const router = useRouter()
   const session = useExerciseSession({ labId: 'quantum-speed-reading', exerciseId: 'fluid-energy-balancer' })
@@ -108,7 +110,7 @@ export function FluidEnergyBalancerExperience({ onComplete }: FluidEnergyBalance
               className="w-full rounded-full"
               onClick={() => (curriculumSession.isActiveStep ? curriculumSession.advance() : onComplete?.(completedResult.overallStabilityPercent))}
             >
-              Continue Session →
+              {t('exercises.complete.continueSession')}
             </Button>
           </div>
         )}

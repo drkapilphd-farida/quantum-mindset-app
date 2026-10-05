@@ -1,0 +1,22 @@
+{
+  "dashboard": "డాష్‌బోర్డ్",
+  "history": "చరిత్ర",
+  "settings": "సెట్టింగ్‌లు",
+  "documentStudio": "Document Studio",
+  "mainNavigation": "ప్రధాన మెనూ",
+  "openNavigation": "మెనూ తెరవండి",
+  "account": "ఖాతా",
+  "openAccountMenu": "ఖాతా మెనూ తెరవండి",
+  "profileSettings": "ప్రొఫైల్ & సెట్టింగ్‌లు",
+  "subscription": "సబ్‌స్క్రిప్షన్",
+  "support": "సహాయం",
+  "privacy": "గోప్యతా విధానం",
+  "terms": "సేవా నిబంధనలు",
+  "refund": "రీఫండ్ & రద్దు విధానం",
+  "signOut": "సైన్ అవుట్",
+  "signingOut": "సైన్ అవుట్ అవుతోంది…",
+  "installApp": "యాప్ ఇన్‌స్టాల్ చేయండి",
+  "toggleTheme": "థీమ్ మార్చండి",
+  "lightMode": "లైట్ మోడ్‌కు మార్చండి",
+  "darkMode": "డార్క్ మోడ్‌కు మార్చండి"
+}

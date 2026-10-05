@@ -1,6 +1,7 @@
 'use client'
 
 import { useCountUp } from '@/hooks/exercises/useCountUp'
+import { useAppT, useLabelT } from '@/lib/app-i18n/client'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { cn } from '@/lib/utils'
 import type { JourneyStatusMeta } from '@/lib/exercises/mindScore'
@@ -56,6 +57,8 @@ export function MindJourneyCard({
   completedCount,
   totalCount,
 }: MindJourneyCardProps): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const animatedStreak = useCountUp(currentStreak, 700, prefersReducedMotion)
   const animatedSessions = useCountUp(totalSessions, 700, prefersReducedMotion)
@@ -69,37 +72,37 @@ export function MindJourneyCard({
       {/* Status */}
       <div className="mt-4 flex items-baseline gap-3">
         <span className={cn('text-3xl font-bold tracking-tight', STATUS_COLORS[label])}>
-          {label}
+          {tl(label)}
         </span>
       </div>
-      <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+      <p className="mt-1 text-sm text-muted-foreground">{tl(description)}</p>
 
       {/* Stats row */}
       <div className="mt-5 grid grid-cols-3 gap-3">
         <div className="rounded-xl bg-muted/30 px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-foreground">{Math.round(animatedStreak)}</p>
-          <p className="mt-0.5 text-[10px] text-muted-foreground">Day streak</p>
+          <p className="mt-0.5 text-[10px] text-muted-foreground">{t('progress.dayStreak')}</p>
           {bestStreak > 0 && (
-            <p className="text-[9px] text-muted-foreground/60">Best: {bestStreak}</p>
+            <p className="text-[9px] text-muted-foreground/60">{t('progress.bestN', { n: bestStreak })}</p>
           )}
         </div>
         <div className="rounded-xl bg-muted/30 px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-foreground">{Math.round(animatedSessions)}</p>
-          <p className="mt-0.5 text-[10px] text-muted-foreground">Sessions</p>
+          <p className="mt-0.5 text-[10px] text-muted-foreground">{t('progress.sessions')}</p>
         </div>
         <div className="rounded-xl bg-muted/30 px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-foreground">
             {completedCount}
             <span className="text-sm font-normal text-muted-foreground">/{totalCount}</span>
           </p>
-          <p className="mt-0.5 text-[10px] text-muted-foreground">Exercises</p>
+          <p className="mt-0.5 text-[10px] text-muted-foreground">{t('progress.exercises')}</p>
         </div>
       </div>
 
       {/* Meters */}
       <div className="mt-5 space-y-3">
-        <MeterBar value={momentumPercent} label="Momentum" />
-        <MeterBar value={consistencyPercent} label="Consistency" />
+        <MeterBar value={momentumPercent} label={t('progress.momentum')} />
+        <MeterBar value={consistencyPercent} label={t('progress.consistency')} />
       </div>
     </div>
   )

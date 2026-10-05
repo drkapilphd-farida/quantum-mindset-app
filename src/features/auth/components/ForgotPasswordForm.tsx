@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useMemo } from 'react'
+import { z } from 'zod'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import Link from 'next/link'
-import { ForgotPasswordSchema, type ForgotPasswordInput } from '../types'
+import { type ForgotPasswordInput } from '../types'
 import { resetPassword } from '../actions/resetPassword'
 import {
   Form,
@@ -21,9 +23,11 @@ import { Button } from '@/components/ui/button'
 export function ForgotPasswordForm(): React.JSX.Element {
   const [sent, setSent] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const t = useAppT()
+  const schema = useMemo(() => z.object({ email: z.string().email(t('auth.validation.email')) }), [t])
 
   const form = useForm<ForgotPasswordInput>({
-    resolver: zodResolver(ForgotPasswordSchema),
+    resolver: zodResolver(schema),
     defaultValues: { email: '' },
   })
 
@@ -42,13 +46,13 @@ export function ForgotPasswordForm(): React.JSX.Element {
     return (
       <div className="space-y-4 text-center">
         <p className="text-sm">
-          Check your email — a reset link is on its way.
+          {t('auth.resetSent')}
         </p>
         <Link
           href="/login"
           className="text-muted-foreground hover:text-foreground text-sm hover:underline"
         >
-          Back to sign in
+          {t('auth.backToSignIn')}
         </Link>
       </div>
     )
@@ -62,11 +66,11 @@ export function ForgotPasswordForm(): React.JSX.Element {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('auth.email')}</FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   autoComplete="email"
                   {...field}
                 />
@@ -77,16 +81,16 @@ export function ForgotPasswordForm(): React.JSX.Element {
         />
 
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? 'Sending…' : 'Send reset link'}
+          {isPending ? t('auth.sending') : t('auth.sendReset')}
         </Button>
 
         <p className="text-muted-foreground text-center text-sm">
-          Remembered it?{' '}
+          {t('auth.remembered')}{' '}
           <Link
             href="/login"
             className="text-foreground font-medium hover:underline"
           >
-            Sign in
+            {t('auth.signIn')}
           </Link>
         </p>
       </form>

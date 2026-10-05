@@ -1,0 +1,22 @@
+{
+  "dashboard": "ડેશબોર્ડ",
+  "history": "ઇતિહાસ",
+  "settings": "સેટિંગ્સ",
+  "documentStudio": "Document Studio",
+  "mainNavigation": "મુખ્ય મેનુ",
+  "openNavigation": "મેનુ ખોલો",
+  "account": "એકાઉન્ટ",
+  "openAccountMenu": "એકાઉન્ટ મેનુ ખોલો",
+  "profileSettings": "પ્રોફાઇલ અને સેટિંગ્સ",
+  "subscription": "સબ્સ્ક્રિપ્શન",
+  "support": "મદદ",
+  "privacy": "પ્રાઇવસી પોલિસી",
+  "terms": "સેવાની શરતો",
+  "refund": "રિફંડ અને કેન્સલેશન પોલિસી",
+  "signOut": "સાઇન આઉટ",
+  "signingOut": "સાઇન આઉટ થઈ રહ્યું છે…",
+  "installApp": "એપ ઇન્સ્ટોલ કરો",
+  "toggleTheme": "થીમ બદલો",
+  "lightMode": "લાઇટ મોડ પર જાઓ",
+  "darkMode": "ડાર્ક મોડ પર જાઓ"
+}

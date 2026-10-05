@@ -1,6 +1,7 @@
 'use client'
 
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
 import { useImmersiveExerciseLock } from '@/hooks/exercises/useImmersiveExerciseLock'
 
@@ -38,6 +39,7 @@ const SAFE_TOP = 'top-[max(1rem,env(safe-area-inset-top))]'
 // made the whole page taller than one screen and scroll. Embedded mode
 // fills its parent instead of the viewport, and renders only children.
 export function ReadingLayout({ maxWidthClassName = 'max-w-md', onExit, children }: ReadingLayoutProps): React.JSX.Element {
+  const t = useAppT()
   const isEmbedded = useIsEmbeddedExercise()
   // Embedded: DayMasterPlayer.tsx locks the body itself once per wizard
   // session — a second lock here (remounting per step) would fight it.
@@ -52,8 +54,8 @@ export function ReadingLayout({ maxWidthClassName = 'max-w-md', onExit, children
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-background">
       <BrandWatermark className={`absolute left-4 sm:left-6 ${SAFE_TOP}`} />
-      <button onClick={onExit} className={`absolute right-4 sm:right-6 ${SAFE_TOP} ${SECONDARY_TEXT_BUTTON_CLASSES}`} aria-label="Exit exercise">
-        Exit
+      <button onClick={onExit} className={`absolute right-4 sm:right-6 ${SAFE_TOP} ${SECONDARY_TEXT_BUTTON_CLASSES}`} aria-label={t('exercises.exitExercise')}>
+        {t('exercises.exit')}
       </button>
       <div className={`mx-auto flex min-h-full ${maxWidthClassName} flex-col items-center px-4 py-4 sm:px-6 sm:py-16`}>{children}</div>
     </div>

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
+import type { MessageKey } from '@/lib/app-i18n/translate'
 import { LoginForm } from '@/features/auth/components/LoginForm'
 import { SignUpForm } from '@/features/auth/components/SignUpForm'
 import {
@@ -26,9 +28,9 @@ type GatewayAuthModalProps = {
   initialMode?: AuthMode
 }
 
-const COPY: Record<AuthMode, { title: string; description: string }> = {
-  login: { title: 'Sign in', description: 'Sign in to continue.' },
-  signup: { title: 'Create your account', description: 'Free to start — no credit card required.' },
+const COPY: Record<AuthMode, { title: MessageKey; description: MessageKey }> = {
+  login: { title: 'auth.gateway.loginTitle', description: 'auth.gateway.loginDesc' },
+  signup: { title: 'auth.gateway.signupTitle', description: 'auth.gateway.signupDesc' },
 }
 
 // Gateway Auth Modal™ — the auth gate for Choose Your Path™'s two direct
@@ -41,6 +43,7 @@ const COPY: Record<AuthMode, { title: string; description: string }> = {
 // self-contained, page-independent components) rather than duplicating
 // auth logic.
 export function GatewayAuthModal({ open, onOpenChange, next, initialMode = 'signup' }: GatewayAuthModalProps): React.JSX.Element {
+  const t = useAppT()
   const [mode, setMode] = useState<AuthMode>(initialMode)
 
   return (
@@ -53,8 +56,8 @@ export function GatewayAuthModal({ open, onOpenChange, next, initialMode = 'sign
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{COPY[mode].title}</DialogTitle>
-          <DialogDescription>{COPY[mode].description}</DialogDescription>
+          <DialogTitle>{t(COPY[mode].title)}</DialogTitle>
+          <DialogDescription>{t(COPY[mode].description)}</DialogDescription>
         </DialogHeader>
 
         {mode === 'login' ? (

@@ -1,4 +1,5 @@
 import { TrendingDown, TrendingUp } from 'lucide-react'
+import { getAppT } from '@/lib/app-i18n/server'
 import { cn } from '@/lib/utils'
 
 type ComprehensionScoreCardProps = {
@@ -9,15 +10,16 @@ type ComprehensionScoreCardProps = {
 // Section 3 — Comprehension Score: average % across every completed
 // AI Document Transformer quiz (quantum_document_sessions), with a
 // recent-half-vs-earlier-half trend rather than a single-session delta.
-export function ComprehensionScoreCard({ averagePercent, trendDelta }: ComprehensionScoreCardProps): React.JSX.Element {
+export async function ComprehensionScoreCard({ averagePercent, trendDelta }: ComprehensionScoreCardProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   const hasTrend = trendDelta !== null && trendDelta !== 0
   const isImproving = trendDelta !== null && trendDelta > 0
 
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Comprehension Score</p>
+      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">{t('progress.parent.comprehensionScore')}</p>
       {averagePercent === null ? (
-        <p className="mt-4 text-sm text-muted-foreground">Complete a quiz on an uploaded document to see your comprehension score here.</p>
+        <p className="mt-4 text-sm text-muted-foreground">{t('progress.parent.comprehensionEmpty')}</p>
       ) : (
         <div className="mt-4 flex items-center gap-4">
           <p className="text-4xl font-bold tabular-nums text-foreground">{averagePercent}%</p>
@@ -35,7 +37,7 @@ export function ComprehensionScoreCard({ averagePercent, trendDelta }: Comprehen
           )}
         </div>
       )}
-      <p className="mt-1 text-xs text-muted-foreground">Average across all quiz attempts</p>
+      <p className="mt-1 text-xs text-muted-foreground">{t('progress.parent.averageAll')}</p>
     </div>
   )
 }

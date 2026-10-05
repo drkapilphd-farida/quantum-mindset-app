@@ -417,6 +417,7 @@ export type Database = {
       }
       curriculum_day_completions: {
         Row: {
+          content_lang: string
           comprehension_accuracy_percent: number | null
           completed_at: string
           day: number
@@ -426,6 +427,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          content_lang?: string
           comprehension_accuracy_percent?: number | null
           completed_at?: string
           day: number
@@ -435,6 +437,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          content_lang?: string
           comprehension_accuracy_percent?: number | null
           completed_at?: string
           day?: number
@@ -447,6 +450,7 @@ export type Database = {
       }
       daily_quantum_sessions: {
         Row: {
+          content_lang: string
           accuracy_percent: number
           id: string
           occurred_at: string
@@ -456,6 +460,7 @@ export type Database = {
           xp_earned: number
         }
         Insert: {
+          content_lang?: string
           accuracy_percent: number
           id?: string
           occurred_at?: string
@@ -465,6 +470,7 @@ export type Database = {
           xp_earned: number
         }
         Update: {
+          content_lang?: string
           accuracy_percent?: number
           id?: string
           occurred_at?: string
@@ -1018,6 +1024,7 @@ export type Database = {
       }
       journey_baseline_diagnostics: {
         Row: {
+          content_lang: string
           accuracy_percent: number
           id: string
           occurred_at: string
@@ -1026,6 +1033,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          content_lang?: string
           accuracy_percent: number
           id?: string
           occurred_at?: string
@@ -1034,6 +1042,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          content_lang?: string
           accuracy_percent?: number
           id?: string
           occurred_at?: string
@@ -1861,6 +1870,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          preferred_language: string | null
           avatar_url: string | null
           created_at: string
           email: string | null
@@ -1871,6 +1881,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          preferred_language?: string | null
           avatar_url?: string | null
           created_at?: string
           email?: string | null
@@ -1881,6 +1892,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          preferred_language?: string | null
           avatar_url?: string | null
           created_at?: string
           email?: string | null
@@ -1894,6 +1906,7 @@ export type Database = {
       }
       qsr_reading_assessments: {
         Row: {
+          content_lang: string
           completed_at: string
           document_id: string
           id: string
@@ -1905,6 +1918,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          content_lang?: string
           completed_at?: string
           document_id: string
           id?: string
@@ -1916,6 +1930,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          content_lang?: string
           completed_at?: string
           document_id?: string
           id?: string
@@ -1938,6 +1953,7 @@ export type Database = {
       }
       qsr_reading_speed_samples: {
         Row: {
+          content_lang: string
           document_id: string
           id: string
           mode: string
@@ -1946,6 +1962,7 @@ export type Database = {
           wpm: number | null
         }
         Insert: {
+          content_lang?: string
           document_id: string
           id?: string
           mode: string
@@ -1954,6 +1971,7 @@ export type Database = {
           wpm?: number | null
         }
         Update: {
+          content_lang?: string
           document_id?: string
           id?: string
           mode?: string
@@ -2167,6 +2185,7 @@ export type Database = {
       }
       reading_intelligence_sessions: {
         Row: {
+          content_lang: string
           accuracy_percent: number
           attention_level: string | null
           attention_score: number
@@ -2189,6 +2208,7 @@ export type Database = {
           wpm: number
         }
         Insert: {
+          content_lang?: string
           accuracy_percent: number
           attention_level?: string | null
           attention_score?: number
@@ -2211,6 +2231,7 @@ export type Database = {
           wpm: number
         }
         Update: {
+          content_lang?: string
           accuracy_percent?: number
           attention_level?: string | null
           attention_score?: number

@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { dayTitle, categoryLabel } from '@/lib/app-i18n/curriculumText'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, PartyPopper, SkipForward, Sparkles, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { CURRICULUM_CATEGORY_LABELS, getCurriculumExerciseById, type CurriculumCatalogExercise } from '../curriculumExerciseCatalog'
+import { getCurriculumExerciseById, type CurriculumCatalogExercise } from '../curriculumExerciseCatalog'
 import { buildCurriculumDayPlan, isCheckpointDay } from '../curriculumDatabase'
 import { buildSessionQueue, clearActiveCurriculumSession, loadActiveCurriculumSession, startCurriculumSessionAtStep } from '../curriculumSessionRunner'
 import { setActiveWizardDay } from '../curriculumReturnRouting'
@@ -56,6 +58,7 @@ type DayMasterPlayerProps = {
 // (including correctly triggering finishDay() if skipping happens to be
 // the final step), the only difference is which UI element triggered it.
 export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyForCheckpoint }: DayMasterPlayerProps): React.JSX.Element {
+  const t = useAppT()
   const router = useRouter()
   const plan = useMemo(() => buildCurriculumDayPlan(day), [day])
   const queueIds = useMemo(() => buildSessionQueue(plan.exercises), [plan])
@@ -147,13 +150,13 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
         </div>
         <div className="relative">
           <p className="text-xs font-semibold tracking-widest text-primary uppercase">Day {day} Complete</p>
-          <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{plan.theme.title} — done!</h2>
+          <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{t('curriculum.player.dayDone', { title: dayTitle(t, day) })}</h2>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-            All {queueIds.length} exercises complete. Day {day + 1} is now unlocked.
+            {t('curriculum.player.allExercisesDone', { count: queueIds.length, next: day + 1 })}
           </p>
         </div>
         <Button onClick={onDayComplete} size="lg" className="relative rounded-full" data-continue-to-roadmap="true">
-          Back to Roadmap
+          {t('curriculum.player.backToRoadmap')}
           <ArrowRight className="size-4" aria-hidden="true" />
         </Button>
       </div>
@@ -167,14 +170,14 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           <Sparkles className="size-8" aria-hidden="true" />
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">One More Step</p>
-          <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Nice work today.</h2>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('curriculum.player.oneMoreStep')}</p>
+          <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{t('curriculum.player.niceWork')}</h2>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-            This is a checkpoint day — finish with a short, real WPM and comprehension check-in to complete Day {day}.
+            {t('curriculum.player.checkpointIntro', { day })}
           </p>
         </div>
         <Button onClick={onReadyForCheckpoint} size="lg" className="rounded-full" data-start-checkpoint="true">
-          Start Check-In
+          {t('curriculum.player.startCheckIn')}
           <ArrowRight className="size-4" aria-hidden="true" />
         </Button>
       </div>
@@ -212,7 +215,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       <div className="flex shrink-0 items-center justify-between gap-2 border-b border-border/60 px-3 py-2 pt-[max(0.5rem,env(safe-area-inset-top))] sm:px-6 sm:py-4">
         <div className="min-w-0">
           <p className="text-[9px] font-semibold tracking-widest text-muted-foreground uppercase sm:text-[10px]">
-            Step {stepIndex + 1} of {queueIds.length} · {CURRICULUM_CATEGORY_LABELS[exercise.category]}
+            {t('curriculum.player.stepOf', { step: stepIndex + 1, total: queueIds.length, category: categoryLabel(t, exercise.category) })}
           </p>
           <p className="truncate text-xs font-semibold text-foreground sm:text-sm">{exercise.title}</p>
         </div>
@@ -223,8 +226,8 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
             className="flex items-center gap-1 rounded-full px-2 py-1.5 text-xs font-medium text-muted-foreground transition-[color,transform] active:scale-95 hover:text-foreground sm:px-3"
             data-skip-exercise="true"
           >
-            <span className="hidden sm:inline">Skip Exercise</span>
-            <span className="sm:hidden">Skip</span>
+            <span className="hidden sm:inline">{t('curriculum.player.skipExercise')}</span>
+            <span className="sm:hidden">{t('curriculum.player.skip')}</span>
             <SkipForward className="size-3.5" aria-hidden="true" />
           </button>
           <button
@@ -232,10 +235,10 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
             onClick={handleExitWizard}
             className="flex items-center gap-1 rounded-full border border-border/60 px-2 py-1.5 text-xs font-medium text-muted-foreground transition-[color,transform] active:scale-95 hover:text-foreground sm:px-3"
             data-exit-wizard="true"
-            aria-label="Exit to Roadmap"
+            aria-label={t('curriculum.player.exitToRoadmap')}
           >
             <X className="size-3.5" aria-hidden="true" />
-            <span className="hidden sm:inline">Exit to Roadmap</span>
+            <span className="hidden sm:inline">{t('curriculum.player.exitToRoadmap')}</span>
           </button>
         </div>
       </div>
@@ -256,7 +259,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           ) : EmbeddedComponent !== undefined ? (
             <EmbeddedComponent key={`${currentExerciseId}-${stepIndex}`} onComplete={handleStepComplete} onExit={handleExitWizard} />
           ) : (
-            <GatedStepHandoff exercise={exercise} onContinue={handleStepComplete} skipLabel="Skip this step" />
+            <GatedStepHandoff exercise={exercise} onContinue={handleStepComplete} skipLabel={t('curriculum.player.skipStep')} />
           )}
         </EmbeddedExerciseProvider>
       </div>
@@ -271,12 +274,13 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
 function GatedStepHandoff({
   exercise,
   onContinue,
-  skipLabel = 'Continue in its own guided view',
+  skipLabel,
 }: {
   exercise: CurriculumCatalogExercise
   onContinue: () => void
   skipLabel?: string
 }): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className="flex min-h-[55vh] flex-col items-center justify-center gap-4 px-6 py-16 text-center">
       <div className="flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -285,11 +289,11 @@ function GatedStepHandoff({
       <div>
         <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">{exercise.title}</h3>
         <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-          This mission has its own guided flow with real progress tracking — it opens in its own focused view, then brings you straight back here.
+          {t('curriculum.player.gatedIntro')}
         </p>
       </div>
       <Button onClick={onContinue} size="lg" className="rounded-full" data-gated-continue="true">
-        {skipLabel}
+        {skipLabel ?? t('curriculum.player.continueGuided')}
         <ArrowRight className="size-4" aria-hidden="true" />
       </Button>
     </div>

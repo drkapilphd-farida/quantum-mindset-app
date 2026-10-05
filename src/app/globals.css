@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans), var(--font-indic);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -369,7 +369,7 @@
      (Geist) wherever this file's --font-plus-jakarta/--font-inter aren't
      defined (e.g. /welcome/choose-method, which also uses .glass-premium
      but sits outside the dashboard route group) — never a broken font. */
-  font-family: var(--font-plus-jakarta, var(--font-inter, var(--font-sans)));
+  font-family: var(--font-plus-jakarta, var(--font-inter, var(--font-sans))), var(--font-indic);
   --glass-bg: oklch(1 0 0 / 55%);
   --glass-border: oklch(1 0 0 / 75%);
   --glass-inset: oklch(0.75 0.03 75 / 35%);
@@ -1150,3 +1150,12 @@
   --school-sage: oklch(0.701 0.043 144);
   --school-sage-foreground: oklch(0.19 0.02 257.7);
 }
+
+/* App languages: Indian-script fallbacks appended to every font stack. The
+   browser picks them per character, and downloads a script's font file only
+   when that script is on the page (see the Noto fonts in app/layout.tsx). */
+:root {
+  --font-indic: var(--font-homepage-devanagari, sans-serif), var(--font-noto-kannada, sans-serif), var(--font-noto-tamil, sans-serif),
+    var(--font-noto-telugu, sans-serif), var(--font-noto-gujarati, sans-serif);
+}
+

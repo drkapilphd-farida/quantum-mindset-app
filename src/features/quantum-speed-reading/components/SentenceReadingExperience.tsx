@@ -27,6 +27,8 @@
 // within a single attempt.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
+import { useAppT, useLabelT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { ExerciseCountdown } from '@/components/exercise-engine/ExerciseCountdown'
 import { ChoiceGrid } from '@/components/exercise-engine/ChoiceGrid'
@@ -125,8 +127,8 @@ const RESULT_LABELS: RuntimeResultLabels = {
 // rotate through three lines (seeded, not flickering-random); an
 // incorrect answer always shows "Keep Building" — encouraging, never
 // punitive.
-const POSITIVE_FEEDBACK_LINES = ['Idea Recognized', 'Great Processing', 'Strong Understanding'] as const
-const KEEP_BUILDING_LINE = 'Keep Building'
+const POSITIVE_FEEDBACK_LINES = ['exercises.sentence.feedback1', 'exercises.sentence.feedback2', 'exercises.sentence.feedback3'] as const
+const KEEP_BUILDING_LINE = 'exercises.sentence.keepBuilding'
 
 const THEME_EMOJI: Record<SentenceReadingTheme, string> = {
   nature: '🌿', science: '🔬', health: '❤️', technology: '💻', psychology: '🧠',
@@ -243,6 +245,7 @@ function ChapterReadingBlock({
 //    already exists, not a schema change.
 
 function TopicIntroCard({ chapter, prefersReducedMotion }: { chapter: SentenceChapter; prefersReducedMotion: boolean }): React.JSX.Element {
+  const t = useAppT()
   return (
     <div
       className={cn(
@@ -251,14 +254,14 @@ function TopicIntroCard({ chapter, prefersReducedMotion }: { chapter: SentenceCh
       )}
     >
       <div className="w-full max-w-sm rounded-2xl border border-border/60 bg-card/60 px-8 py-10 shadow-sm">
-        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Today&apos;s Topic</p>
+        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.sentence.todaysTopic')}</p>
         <p className="mt-3 text-3xl font-bold tracking-tight text-foreground">
-          {chapter.theme && `${THEME_EMOJI[chapter.theme]} `}{chapter.chapterTitle ?? 'This Chapter'}
+          {chapter.theme && `${THEME_EMOJI[chapter.theme]} `}{chapter.chapterTitle ?? t('exercises.sentence.thisChapter')}
         </p>
         <div className="mx-auto mt-6 h-px w-10 bg-border" aria-hidden="true" />
-        <p className="mt-6 text-xs font-medium tracking-widest text-muted-foreground uppercase">Reading Goal</p>
+        <p className="mt-6 text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.sentence.readingGoal')}</p>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          {chapter.mainIdea?.correctIdea ?? 'Read carefully — real questions about this chapter follow.'}
+          {chapter.mainIdea?.correctIdea ?? t('exercises.sentence.readCarefully')}
         </p>
       </div>
     </div>
@@ -268,9 +271,10 @@ function TopicIntroCard({ chapter, prefersReducedMotion }: { chapter: SentenceCh
 // ── Level Map — always shown: ✔────●────○────○────○ / L1..L5
 
 function LevelMap({ currentLevel }: { currentLevel: SentenceReadingLevel }): React.JSX.Element {
+  const t = useAppT()
   const levels: SentenceReadingLevel[] = [1, 2, 3, 4, 5]
   return (
-    <div className="flex flex-col items-center gap-1" aria-label={`Level map: currently on Level ${currentLevel} of 5`}>
+    <div className="flex flex-col items-center gap-1" aria-label={t('exercises.phrase.levelMap', { level: currentLevel })}>
       <div className="flex items-center">
         {levels.map((level, i) => (
           <div key={level} className="flex items-center">
@@ -302,10 +306,11 @@ function LevelMap({ currentLevel }: { currentLevel: SentenceReadingLevel }): Rea
 //    change to what "level" means or how it's computed.
 
 function ChapterProgressBar({ level }: { level: SentenceReadingLevel }): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className="flex w-32 flex-col items-center gap-1">
-      <p className="text-[10px] font-medium tracking-wide text-muted-foreground">Chapter {level} of 5</p>
-      <div className="h-1 w-full overflow-hidden rounded-full bg-muted-foreground/15" role="progressbar" aria-valuenow={level} aria-valuemin={1} aria-valuemax={5} aria-label={`Chapter ${level} of 5`}>
+      <p className="text-[10px] font-medium tracking-wide text-muted-foreground">{t('exercises.sentence.chapterOf5', { level })}</p>
+      <div className="h-1 w-full overflow-hidden rounded-full bg-muted-foreground/15" role="progressbar" aria-valuenow={level} aria-valuemin={1} aria-valuemax={5} aria-label={t('exercises.sentence.chapterOf5', { level })}>
         <div
           className="h-full rounded-full bg-foreground/70 transition-[width] duration-500 ease-out"
           style={{ width: `${(level / 5) * 100}%` }}
@@ -318,14 +323,16 @@ function ChapterProgressBar({ level }: { level: SentenceReadingLevel }): React.J
 // ── Persistent HUD — always visible during 'playing'.
 
 function LevelHud({ level }: { level: SentenceReadingLevel }): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   const theme = SENTENCE_THEME_BY_LEVEL[level]
   return (
     <div className="absolute top-4 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-center">
-      <p className="text-xs font-medium tabular-nums text-muted-foreground">Level {level} · {SENTENCE_THEME_NAME[theme]}</p>
+      <p className="text-xs font-medium tabular-nums text-muted-foreground">{t('exercises.sentence.levelTheme', { level, theme: tl(SENTENCE_THEME_NAME[theme]) })}</p>
       <LevelMap currentLevel={level} />
       <ChapterProgressBar level={level} />
       <p className="text-[10px] text-muted-foreground/70">
-        Sentence Length: <span className="font-medium text-foreground/80">{SENTENCE_READING_LENGTH_LABEL[level]}</span>
+        {t('exercises.sentence.sentenceLengthHud', { length: tl(SENTENCE_READING_LENGTH_LABEL[level]) })}
       </p>
       <ReadingJourney currentStage="sentence" compact />
     </div>
@@ -337,13 +344,15 @@ function LevelHud({ level }: { level: SentenceReadingLevel }): React.JSX.Element
 //    exact per-level words (Simple/Connected/Intermediate/Advanced/Expert).
 
 function SentenceComplexityIndicator({ level }: { level: SentenceReadingLevel }): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   const levels: SentenceReadingLevel[] = [1, 2, 3, 4, 5]
   return (
     <div
       className="absolute top-16 right-6 flex flex-col items-end gap-1"
-      aria-label={`Sentence complexity: ${SENTENCE_COMPLEXITY_LABEL[level]}`}
+      aria-label={t('exercises.sentence.complexityLabel', { label: tl(SENTENCE_COMPLEXITY_LABEL[level]) })}
     >
-      <p className="text-[9px] font-medium uppercase tracking-wide text-muted-foreground/70">Sentence Complexity</p>
+      <p className="text-[9px] font-medium uppercase tracking-wide text-muted-foreground/70">{t('exercises.sentence.complexity')}</p>
       <div className="flex items-center gap-0.5" aria-hidden="true">
         {levels.map((l) => (
           <span key={l} className={cn('text-xs', l <= level ? 'text-foreground' : 'text-muted-foreground/40')}>
@@ -390,6 +399,8 @@ function SentenceReadingSession({
   exitHref?: string
   onComplete?: (result: RuntimeResult) => void
 }): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const router = useRouter()
   const curriculumSession = useCurriculumSessionCompletion('sentence-reading', LAB_HREF)
@@ -700,17 +711,17 @@ function SentenceReadingSession({
       { label: 'Brain Performance', value: completedSummary.brainPerformance, hint: 'How reliably you recognised each chapter\'s central idea.' },
       { label: 'Idea Recognition', value: `${result.metrics.accuracyPercent}%`, hint: 'The share of Brain Challenges answered correctly.' },
       { label: 'Best Streak', value: `${completedSummary.bestStreak}`, hint: 'Your longest run of consecutive correct answers this session.' },
-      { label: 'Current Level', value: `${completedSummary.levelsCompleted} · ${SENTENCE_READING_LEVEL_NAME[completedSummary.levelsCompleted]}`, hint: 'The highest level you reached this session.' },
-      { label: 'Theme Mastery', value: completedSummary.themeMastery, hint: "This session's theme and whether it was fully cleared." },
+      { label: 'Current Level', value: `${completedSummary.levelsCompleted} · ${tl(SENTENCE_READING_LEVEL_NAME[completedSummary.levelsCompleted])}`, hint: 'The highest level you reached this session.' },
+      { label: 'Theme Mastery', value: t(passedAnyLevelThisSessionRef.current ? 'exercises.sentence.themeMastered' : 'exercises.sentence.themeInProgress', { theme: tl(SENTENCE_THEME_NAME[SENTENCE_THEME_BY_LEVEL[completedSummary.levelsCompleted]]) }), hint: "This session's theme and whether it was fully cleared." },
     ]
 
     extraContent = (
       <div className="space-y-2 text-xs text-muted-foreground">
-        <p className="text-base tracking-widest text-foreground" aria-label={`${completedSummary.levelsCompleted} out of 5 stars`}>
+        <p className="text-base tracking-widest text-foreground" aria-label={t('exercises.sentence.stars', { n: completedSummary.levelsCompleted })}>
           {starRatingFromAccuracy(result.metrics.accuracyPercent)}
         </p>
-        <p>{completedSummary.achievement}</p>
-        <p>Next Recommendation: <span className="font-medium text-foreground">{SENTENCE_READING_LEVEL_NAME[completedSummary.nextLevel]}</span></p>
+        <p>{tl(completedSummary.achievement)}</p>
+        <p>{t('exercises.sentence.nextRecommendation')} <span className="font-medium text-foreground">{tl(SENTENCE_READING_LEVEL_NAME[completedSummary.nextLevel])}</span></p>
       </div>
     )
   }
@@ -735,24 +746,24 @@ function SentenceReadingSession({
         className="absolute top-4 right-6 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
         aria-label="Exit exercise"
       >
-        Exit
+        {t('exercises.exit')}
       </button>
       {runtime.phase === 'playing' && (
         <button
           onClick={runtime.pause}
           className="absolute top-4 right-20 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
-          aria-label="Pause exercise"
+          aria-label={t('exercises.pauseExercise')}
         >
-          Pause
+          {t('exercises.pause')}
         </button>
       )}
       {runtime.phase === 'paused' && (
         <button
           onClick={runtime.resume}
           className="absolute top-4 right-20 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
-          aria-label="Resume exercise"
+          aria-label={t('exercises.resumeExercise')}
         >
-          Resume
+          {t('exercises.resume')}
         </button>
       )}
 
@@ -762,30 +773,31 @@ function SentenceReadingSession({
             <ReadingJourney currentStage="sentence" />
             <h1 className="text-2xl font-bold tracking-tight text-foreground">Sentence Reading™</h1>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Read a themed chapter of complete sentences, then recognise the whole idea — a premium reading lesson, not a flash card.
+              {t('exercises.sentence.intro')}
             </p>
+            <PracticeTextNote kind="reading" />
             <dl className="grid w-full grid-cols-2 gap-x-4 gap-y-2 text-left text-xs">
-              <dt className="text-muted-foreground">Today&apos;s Goal</dt>
-              <dd className="font-medium text-foreground">Understand Complete Ideas</dd>
-              <dt className="text-muted-foreground">Level</dt>
-              <dd className="font-medium text-foreground">{startingLevel} · {SENTENCE_READING_LEVEL_NAME[startingLevel]}</dd>
-              <dt className="text-muted-foreground">Today&apos;s Topic</dt>
-              <dd className="font-medium text-foreground">{THEME_EMOJI[SENTENCE_THEME_BY_LEVEL[startingLevel]]} {SENTENCE_THEME_NAME[SENTENCE_THEME_BY_LEVEL[startingLevel]]}</dd>
-              <dt className="text-muted-foreground">Sentence Length</dt>
-              <dd className="font-medium text-foreground">{SENTENCE_READING_LENGTH_LABEL[startingLevel]}</dd>
-              <dt className="text-muted-foreground">Mission</dt>
-              <dd className="font-medium text-foreground">1 Chapter · 5 Sentences</dd>
-              <dt className="text-muted-foreground">Brain Target</dt>
-              <dd className="font-medium text-foreground">Idea Processing</dd>
+              <dt className="text-muted-foreground">{t('exercises.sentence.todaysGoal')}</dt>
+              <dd className="font-medium text-foreground">{t('exercises.sentence.goalValue')}</dd>
+              <dt className="text-muted-foreground">{t('exercises.sentence.level')}</dt>
+              <dd className="font-medium text-foreground">{startingLevel} · {tl(SENTENCE_READING_LEVEL_NAME[startingLevel])}</dd>
+              <dt className="text-muted-foreground">{t('exercises.sentence.todaysTopic')}</dt>
+              <dd className="font-medium text-foreground">{THEME_EMOJI[SENTENCE_THEME_BY_LEVEL[startingLevel]]} {tl(SENTENCE_THEME_NAME[SENTENCE_THEME_BY_LEVEL[startingLevel]])}</dd>
+              <dt className="text-muted-foreground">{t('exercises.sentence.sentenceLength')}</dt>
+              <dd className="font-medium text-foreground">{tl(SENTENCE_READING_LENGTH_LABEL[startingLevel])}</dd>
+              <dt className="text-muted-foreground">{t('exercises.sentence.mission')}</dt>
+              <dd className="font-medium text-foreground">{t('exercises.sentence.missionValue')}</dd>
+              <dt className="text-muted-foreground">{t('exercises.sentence.brainTarget')}</dt>
+              <dd className="font-medium text-foreground">{t('exercises.sentence.brainTargetValue')}</dd>
             </dl>
             <p className="text-xs text-muted-foreground/70">
-              Level {startingLevel} needs {getSentenceLevelRequirement(startingLevel).requiredPercent}% correct{totalSessions > 0 ? ` · Mission ${totalSessions + 1}` : ''}
+              {t('exercises.sentence.levelNeeds', { level: startingLevel, percent: getSentenceLevelRequirement(startingLevel).requiredPercent })}{totalSessions > 0 ? t('exercises.phrase.missionN', { n: totalSessions + 1 }) : ''}
             </p>
             <button
               onClick={runtime.startSession}
               className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              Start Mission
+              {t('exercises.phrase.startMission')}
             </button>
           </div>
         )}
@@ -798,7 +810,7 @@ function SentenceReadingSession({
           <>
             {subPhase === 'passScreen' && evalData && !isVictoryRevealed && (
               <div className="flex min-h-[280px] flex-col items-center justify-center">
-                <MicroVictoryMoment progressLabel={`Level ${evalData.level} of 5`} />
+                <MicroVictoryMoment progressLabel={t('exercises.phrase.levelOf5', { level: evalData.level })} />
               </div>
             )}
             {subPhase === 'passScreen' && evalData && isVictoryRevealed && (
@@ -809,16 +821,16 @@ function SentenceReadingSession({
                 <div className="flex size-20 items-center justify-center rounded-full bg-success/10" aria-hidden="true">
                   <span className="text-2xl font-bold tabular-nums text-success">{Math.round(animatedPercent)}%</span>
                 </div>
-                <h2 className="mt-1 text-xl font-bold tracking-tight text-foreground">Chapter {evalData.level} Complete</h2>
-                <p className="text-sm font-medium text-muted-foreground">{computeLevelCoachLine(evalData.percent)}</p>
+                <h2 className="mt-1 text-xl font-bold tracking-tight text-foreground">{t('exercises.sentence.chapterComplete', { level: evalData.level })}</h2>
+                <p className="text-sm font-medium text-muted-foreground">{tl(computeLevelCoachLine(evalData.percent))}</p>
                 <p className="mt-1 text-sm font-medium text-foreground">
-                  {evalData.level < 5 ? `🔓 Level ${evalData.level + 1}` : '🏆 All Levels Cleared'}
+                  {evalData.level < 5 ? t('exercises.phrase.unlockNext', { level: evalData.level + 1 }) : t('exercises.sentence.allCleared')}
                 </p>
                 <button
                   onClick={handleContinue}
                   className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  {evalData.level < 5 ? 'Continue →' : 'View Results →'}
+                  {evalData.level < 5 ? t('exercises.sentence.continue') : t('exercises.sentence.viewResults')}
                 </button>
               </div>
             )}
@@ -828,14 +840,14 @@ function SentenceReadingSession({
                 role="status"
               >
                 <p className="text-2xl font-bold tabular-nums text-foreground">{Math.round(animatedPercent)}%</p>
-                <p className="text-xs text-muted-foreground/70">Need {evalData.requiredPercent}%</p>
-                <p className="mt-2 text-base font-semibold text-foreground">Read Once More</p>
-                <p className="text-xs text-muted-foreground">{computeLevelCoachLine(evalData.percent)}</p>
+                <p className="text-xs text-muted-foreground/70">{t('exercises.phrase.need', { percent: evalData.requiredPercent })}</p>
+                <p className="mt-2 text-base font-semibold text-foreground">{t('exercises.sentence.readOnceMore')}</p>
+                <p className="text-xs text-muted-foreground">{tl(computeLevelCoachLine(evalData.percent))}</p>
                 <button
                   onClick={handleTryAgain}
                   className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  Retry →
+                  {t('exercises.sentence.retry')}
                 </button>
               </div>
             )}
@@ -865,13 +877,13 @@ function SentenceReadingSession({
                 )}
                 aria-live="polite"
               >
-                <p className="text-lg font-semibold tracking-tight text-foreground">Brain Challenge</p>
-                <p className="text-xs text-muted-foreground">Let&apos;s see what you understood.</p>
+                <p className="text-lg font-semibold tracking-tight text-foreground">{t('exercises.phrase.brainChallenge')}</p>
+                <p className="text-xs text-muted-foreground">{t('exercises.sentence.letsSee')}</p>
               </div>
             )}
             {subPhase === 'question' && currentItem && currentChallenge && (
               <div className={cn('flex w-full flex-col items-center gap-4', !prefersReducedMotion && 'animate-in fade-in duration-300')}>
-                <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Brain Challenge</p>
+                <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.phrase.brainChallenge')}</p>
                 <ChoiceGrid
                   options={currentItem.options}
                   correctIndex={currentItem.correctIndex}
@@ -879,7 +891,7 @@ function SentenceReadingSession({
                   selectedIndex={questionSelectedIndex}
                   isFeedback={questionSubPhase === 'feedback'}
                   disabled={questionSubPhase !== 'response'}
-                  promptLabel={currentChallenge.prompt}
+                  promptLabel={tl(currentChallenge.prompt)}
                 />
                 {/* Positive-only feedback microcopy — never "Wrong" or
                     "Incorrect" anywhere in this mission. */}
@@ -890,8 +902,8 @@ function SentenceReadingSession({
                       questionSelectedIndex === currentItem.correctIndex ? 'text-success' : 'text-muted-foreground',
                     )}>
                       {questionSelectedIndex === currentItem.correctIndex
-                        ? POSITIVE_FEEDBACK_LINES[runtime.currentIndex % POSITIVE_FEEDBACK_LINES.length]
-                        : KEEP_BUILDING_LINE}
+                        ? t(POSITIVE_FEEDBACK_LINES[runtime.currentIndex % POSITIVE_FEEDBACK_LINES.length] ?? KEEP_BUILDING_LINE)
+                        : t(KEEP_BUILDING_LINE)}
                     </p>
                   )}
                 </div>
@@ -902,15 +914,15 @@ function SentenceReadingSession({
 
         {runtime.phase === 'paused' && (
           <div className="flex flex-col items-center gap-5 text-center w-full">
-            <p className="text-lg font-semibold text-foreground">Mission Paused</p>
+            <p className="text-lg font-semibold text-foreground">{t('exercises.phrase.paused')}</p>
             <p className="text-sm text-muted-foreground">
-              Level {currentLevel} of 5 · {runtime.runningAccuracy > 0 && `${runtime.runningAccuracy}% accuracy`}
+              {t('exercises.phrase.levelOf5', { level: currentLevel })} · {runtime.runningAccuracy > 0 && t('exercises.phrase.pausedAccuracy', { percent: runtime.runningAccuracy })}
             </p>
             <button
               onClick={runtime.resume}
               className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              Resume
+              {t('exercises.resume')}
             </button>
           </div>
         )}

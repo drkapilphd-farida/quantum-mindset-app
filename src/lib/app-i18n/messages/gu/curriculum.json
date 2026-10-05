@@ -1,0 +1,77 @@
+{
+  "eyebrow": "Sharp Brain 30-દિવસનો કોર્સ",
+  "title": "તમારો રોજનો રોડમેપ",
+  "intro": "4 તબક્કામાં 30 દિવસ — Brain Gym, દૃશ્ય યાદશક્તિ અને ધ્યાન, કલ્પના અને વાંચનની પ્રેક્ટિસ એક જ સંતુલિત સર્કિટમાં — વચ્ચે-વચ્ચે સાચા WPM અને સમજણની તપાસ સાથે.",
+  "metrics": {
+    "brainScore": "મગજ સ્કોર",
+    "readingGrowth": "વાંચનમાં વધારો",
+    "comprehension": "સમજણ",
+    "consistency": "નિયમિતતા",
+    "visualizationDepth": "કલ્પનાની ઊંડાઈ"
+  },
+  "allDays": "બધા 30 દિવસ",
+  "allDaysHintPro": "દિવસ N-1 પૂરો થાય પછી જ દિવસ N ખૂલે છે. તારાવાળા દિવસો સાચા WPM + સમજણ તપાસના દિવસો છે.",
+  "allDaysHintFree": "આખો 30-દિવસનો કોર્સ ખોલવા નોંધણી કરો. તમે પૂરા કરેલા દિવસો ખુલ્લા જ રહેશે. તારાવાળા દિવસો સાચા WPM + સમજણ તપાસના દિવસો છે.",
+  "startProgram": "{program} શરૂ કરો",
+  "phaseLabel": "તબક્કો {phase} · દિવસ {start}–{end}",
+  "dayShort": "દિવસ {day}",
+  "dayLockedTitle": "દિવસ {day} — ખોલવા નોંધણી કરો",
+  "categories": {
+    "brainGym": "Brain Gym",
+    "visualFocusMemory": "દૃશ્ય ફોકસ અને યાદશક્તિ",
+    "visualization": "કલ્પના",
+    "readingIntelligence": "વાંચન બુદ્ધિ"
+  },
+  "detail": {
+    "backToAll": "બધા 30 દિવસ",
+    "dayCompleteUnlocked": "દિવસ {day} પૂરો! હવે દિવસ {next} ખૂલી ગયો છે.",
+    "phaseDay": "તબક્કો {phase} · દિવસ {day}",
+    "checkpointDay": "તપાસનો દિવસ",
+    "completed": "પૂરું",
+    "checkpointRecorded": "તપાસ નોંધાઈ ગઈ",
+    "trueWpm": "સાચો WPM",
+    "comprehension": "સમજણ",
+    "vsBaseline": "તમારા દિવસ 1 ની સરખામણીએ",
+    "dayDone": "દિવસ {day} પૂરો — સરસ કામ.",
+    "practiceAgain": "આ દિવસ ફરી પ્રેક્ટિસ કરો",
+    "uploadStarted": "દિવસ {day} માટે પ્રકરણ અપલોડ શરૂ થયું",
+    "uploadStartedHint": "જ્યાંથી છોડ્યું ત્યાંથી આગળ વધવા ગમે ત્યારે Upload & Learn પર પાછા આવો.",
+    "uploadToday": "આજનું પ્રકરણ અપલોડ કરો",
+    "uploadTodayHint": "“{title}” માટે સાચી વાંચન સામગ્રી લાવો અને સાચા લખાણ પર Sharp Brain ની પ્રેક્ટિસ કરો.",
+    "uploadLink": "Upload & Learn →"
+  },
+  "player": {
+    "dayDone": "{title} — પૂરું!",
+    "allExercisesDone": "બધી {count} કસરત પૂરી. હવે દિવસ {next} ખૂલી ગયો છે.",
+    "backToRoadmap": "રોડમેપ પર પાછા",
+    "oneMoreStep": "બસ એક પગલું વધુ",
+    "niceWork": "આજે સરસ કામ કર્યું.",
+    "checkpointIntro": "આજે તપાસનો દિવસ છે — દિવસ {day} પૂરો કરવા અંતમાં નાની WPM અને સમજણ તપાસ કરો.",
+    "startCheckIn": "તપાસ શરૂ કરો",
+    "stepOf": "{total} માંથી પગલું {step} · {category}",
+    "skipExercise": "કસરત છોડો",
+    "skip": "છોડો",
+    "exitToRoadmap": "રોડમેપ પર જાઓ",
+    "skipStep": "આ પગલું છોડો",
+    "continueGuided": "તેના પોતાના માર્ગદર્શિત દૃશ્યમાં ચાલુ રાખો",
+    "gatedIntro": "આ કસરતનો પ્રગતિ નોંધતો પોતાનો માર્ગદર્શિત પ્રવાહ છે — તે અલગ દૃશ્યમાં ખૂલશે, પછી તમને સીધા અહીં પાછા લાવશે."
+  },
+  "phaseComplete": {
+    "title": "તબક્કો {phase} પૂરો!",
+    "upNext": "આગળ — તબક્કો {phase}: {title}."
+  },
+  "finishPrevious": {
+    "title": "દિવસ {previous} પછી દિવસ {day} ખૂલશે",
+    "body": "30 દિવસ એક પછી એક ખૂલે છે. દિવસ {previous} પૂરો કરો, દિવસ {day} તરત ખૂલી જશે.",
+    "goTo": "દિવસ {previous} પર જાઓ"
+  },
+  "assessment": {
+    "eyebrow": "તપાસ પૂરી",
+    "title": "દિવસ {day} નું મૂલ્યાંકન"
+  },
+  "paywall": {
+    "dayTitle": "દિવસ {day}, {program} નો ભાગ છે",
+    "startTitle": "{program} શરૂ કરો",
+    "body": "કોર્સના બધા 30 દિવસ — સાચા WPM અને સમજણની તપાસ, અને Dr. Kapil Dev Sharma સાથે 7 લાઇવ ક્લાસ — નોંધણી કરતાં જ ખૂલી જાય છે. તમે પૂરા કરેલા દિવસો ખુલ્લા જ રહેશે."
+  }
+}

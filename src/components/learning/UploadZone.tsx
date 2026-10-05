@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { UploadCloud } from 'lucide-react'
 import { ICON_SIZE } from '@/lib/designSystem/icons'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
@@ -39,10 +40,13 @@ export function UploadZone({
   accept = 'application/pdf',
   disabled = false,
   errorMessage = null,
-  title = 'Bring your knowledge here',
-  subtitle = 'or click to browse',
+  title,
+  subtitle,
   helperText,
 }: UploadZoneProps): React.JSX.Element {
+  const t = useAppT()
+  const heading = title ?? t('docWidget.dropDefaultTitle')
+  const subheading = subtitle ?? t('docWidget.dropSubtitle')
   const [isDragging, setIsDragging] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -96,8 +100,8 @@ export function UploadZone({
         <div aria-hidden="true" className="mb-4 flex size-14 items-center justify-center rounded-full bg-primary/10">
           <UploadCloud className={cn(ICON_SIZE.xl, 'text-primary')} />
         </div>
-        <p className={TYPOGRAPHY.h3}>{title}</p>
-        <p className={cn(TYPOGRAPHY.caption, 'mt-1')}>{subtitle}</p>
+        <p className={TYPOGRAPHY.h3}>{heading}</p>
+        <p className={cn(TYPOGRAPHY.caption, 'mt-1')}>{subheading}</p>
         <input ref={inputRef} type="file" accept={accept} multiple={multiple} className="sr-only" onChange={handleBrowseChange} disabled={disabled} />
       </div>
       {helperText && <p className={cn(TYPOGRAPHY.caption, 'mt-3 text-center')}>{helperText}</p>}

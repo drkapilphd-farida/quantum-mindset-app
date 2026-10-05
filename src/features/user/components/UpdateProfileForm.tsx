@@ -1,6 +1,7 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useMemo, useTransition } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -17,14 +18,7 @@ import {
 } from '@/components/ui/form'
 import { updateProfile } from '../actions/updateProfile'
 
-const schema = z.object({
-  fullName: z
-    .string()
-    .min(2, 'Name must be at least 2 characters')
-    .max(100, 'Name must be 100 characters or fewer'),
-})
-
-type FormValues = z.infer<typeof schema>
+type FormValues = { fullName: string }
 
 type UpdateProfileFormProps = {
   defaultFullName: string
@@ -34,6 +28,11 @@ export function UpdateProfileForm({
   defaultFullName,
 }: UpdateProfileFormProps): React.JSX.Element {
   const [isPending, startTransition] = useTransition()
+  const t = useAppT()
+  const schema = useMemo(
+    () => z.object({ fullName: z.string().min(2, t('settings.profile.nameTooShort')).max(100, t('settings.profile.nameTooLong')) }),
+    [t],
+  )
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -47,7 +46,7 @@ export function UpdateProfileForm({
         toast.error(result.error)
         return
       }
-      toast.success('Profile updated.')
+      toast.success(t('settings.profile.updated'))
     })
   }
 
@@ -59,16 +58,16 @@ export function UpdateProfileForm({
           name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full name</FormLabel>
+              <FormLabel>{t('settings.profile.fullName')}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Your full name" />
+                <Input {...field} placeholder={t('settings.profile.placeholder')} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" disabled={isPending}>
-          {isPending ? 'Saving…' : 'Save changes'}
+          {isPending ? t('settings.profile.saving') : t('settings.profile.save')}
         </Button>
       </form>
     </Form>

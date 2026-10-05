@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { isAppLang, type AppLang } from '@/lib/app-i18n/languages'
 
 export type CurriculumDayCompletionRecord = {
   day: number
@@ -8,6 +9,8 @@ export type CurriculumDayCompletionRecord = {
   trueWpm: number | null
   comprehensionAccuracyPercent: number | null
   completedAt: string
+  /** Language of the practice text that was read (WPM is only comparable within one language). */
+  contentLang: AppLang
 }
 
 // Two-Pillar Simplification™ — real, server-side completions for the
@@ -25,7 +28,7 @@ export async function getCurriculumDayCompletions(): Promise<readonly Curriculum
 
   const { data } = await supabase
     .from('curriculum_day_completions')
-    .select('day, raw_wpm, true_wpm, comprehension_accuracy_percent, completed_at')
+    .select('day, raw_wpm, true_wpm, comprehension_accuracy_percent, completed_at, content_lang')
     .eq('user_id', user.id)
     .order('day', { ascending: false })
 
@@ -37,5 +40,6 @@ export async function getCurriculumDayCompletions(): Promise<readonly Curriculum
     trueWpm: row.true_wpm,
     comprehensionAccuracyPercent: row.comprehension_accuracy_percent,
     completedAt: row.completed_at,
+    contentLang: isAppLang(row.content_lang) ? row.content_lang : 'en',
   }))
 }

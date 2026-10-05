@@ -1,0 +1,29 @@
+{
+  "language": {
+    "label": "Language",
+    "choose": "Choose your language",
+    "saved": "Saved",
+    "reviewNote": "This language is new — a native speaker is still reviewing the translation."
+  },
+  "practiceNote": "Practice text in English — {language} practice text coming soon.",
+  "actions": {
+    "start": "Start",
+    "begin": "Begin",
+    "continue": "Continue",
+    "back": "Back",
+    "exit": "Exit",
+    "done": "Done",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "retry": "Try again",
+    "maybeLater": "Maybe later",
+    "pause": "Pause",
+    "resume": "Resume",
+    "restart": "Restart",
+    "next": "Next",
+    "finish": "Finish",
+    "seeResults": "See results",
+    "loading": "Loading…"
+  }
+}

@@ -1,6 +1,8 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { authErrorKey } from '../authErrorKey'
+import { getAppT } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 import { resolvePostSignInPath } from '@/features/school-dashboard/queries/resolvePostSignInPath'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
@@ -15,14 +17,15 @@ export async function signIn(
   input: unknown,
   next: string = '/dashboard',
 ): Promise<{ success: false; error: string }> {
+  const { t } = await getAppT()
   const parsed = SignInSchema.safeParse(input)
   if (!parsed.success) {
-    return { success: false, error: 'Please enter a valid email and password.' }
+    return { success: false, error: t('auth.errors.invalidCredentials') }
   }
 
   const clientIp = await getClientIp()
   if (!checkRateLimit(`sign-in:${clientIp}`, SIGN_IN_RATE_LIMIT).allowed) {
-    return { success: false, error: 'Too many sign-in attempts. Please wait a moment and try again.' }
+    return { success: false, error: t('auth.errors.tooMany') }
   }
 
   const supabase = await createClient()
@@ -32,7 +35,7 @@ export async function signIn(
   })
 
   if (error) {
-    return { success: false, error: error.message }
+    return { success: false, error: t(authErrorKey(error.code)) }
   }
 
   // A caller-specified `next` (e.g. middleware bounced someone here with a

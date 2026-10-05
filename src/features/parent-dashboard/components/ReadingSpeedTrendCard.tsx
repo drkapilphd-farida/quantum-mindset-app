@@ -1,6 +1,8 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { LANGUAGES } from '@/lib/app-i18n/languages'
+import { useAppI18n } from '@/lib/app-i18n/client'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import type { DailyQuantumSessionRecord } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import { buildReadingSpeedTrendPoints, computeAverageWpm, type ReadingSpeedWindowDays } from '../readingSpeedTrend'
@@ -23,6 +25,10 @@ const WINDOW_OPTIONS: readonly ReadingSpeedWindowDays[] = [7, 14, 30]
 // in this codebase — no charting library exists or is warranted for one
 // more line chart).
 export function ReadingSpeedTrendCard({ sessions }: ReadingSpeedTrendCardProps): React.JSX.Element {
+  const { lang, t } = useAppI18n()
+  // Axis dates in the learner's language (the trend builder labels them in English).
+  const dateLabel = (dateKey: string): string =>
+    new Date(`${dateKey}T00:00:00.000Z`).toLocaleDateString(LANGUAGES[lang].htmlLang, { month: 'short', day: 'numeric', timeZone: 'UTC' })
   const [windowDays, setWindowDays] = useState<ReadingSpeedWindowDays>(7)
 
   const points = useMemo(() => buildReadingSpeedTrendPoints(sessions, windowDays), [sessions, windowDays])
@@ -56,14 +62,14 @@ export function ReadingSpeedTrendCard({ sessions }: ReadingSpeedTrendCardProps):
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Reading Speed Trend</p>
-          <p className="mt-1 text-sm text-muted-foreground">{averageWpm !== null ? `${averageWpm} WPM average` : 'No sessions in this window yet'}</p>
+          <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">{t('progress.parent.speedTrend')}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{averageWpm !== null ? t('progress.parent.wpmAverage', { wpm: averageWpm }) : t('progress.parent.noSessionsWindow')}</p>
         </div>
         <Tabs value={String(windowDays)} onValueChange={(value) => setWindowDays(Number(value) as ReadingSpeedWindowDays)}>
           <TabsList>
             {WINDOW_OPTIONS.map((option) => (
               <TabsTrigger key={option} value={String(option)}>
-                {option}d
+                {t('progress.parent.days', { n: option })}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -71,9 +77,9 @@ export function ReadingSpeedTrendCard({ sessions }: ReadingSpeedTrendCardProps):
       </div>
 
       {points.length === 0 ? (
-        <p className="mt-8 text-sm text-muted-foreground">Complete a reading session to start tracking speed here.</p>
+        <p className="mt-8 text-sm text-muted-foreground">{t('progress.parent.speedEmpty')}</p>
       ) : (
-        <div className="mt-5" role="img" aria-label={`Reading speed from ${points[0]!.label} to ${points[points.length - 1]!.label}, averaging ${averageWpm} words per minute.`}>
+        <div className="mt-5" role="img" aria-label={t('progress.parent.speedAria', { from: dateLabel(points[0]!.dateKey), to: dateLabel(points[points.length - 1]!.dateKey), wpm: averageWpm ?? 0 })}>
           <svg viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`} className="h-auto w-full" aria-hidden="true">
             <defs>
               <linearGradient id="parent-wpm-chart-fill" x1="0" y1="0" x2="0" y2="1">
@@ -93,7 +99,7 @@ export function ReadingSpeedTrendCard({ sessions }: ReadingSpeedTrendCardProps):
               (point, index) =>
                 isLabeled(index) && (
                   <text key={`label-${point.dateKey}`} x={xFor(index)} y={CHART_HEIGHT - 4} textAnchor="middle" className="fill-muted-foreground text-[10px]">
-                    {point.label}
+                    {dateLabel(point.dateKey)}
                   </text>
                 ),
             )}

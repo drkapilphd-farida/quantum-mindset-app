@@ -35,7 +35,7 @@ export default async function WordFlashPage(): Promise<React.JSX.Element> {
       <ExerciseLockedScreen
         title="Flash Intelligence Pack™"
         unlockHref="/labs/sharp-brain/preparation"
-        unlockLabel="Go to Reading Preparation™"
+        unlockTarget="Reading Preparation™"
       />
     )
   }
@@ -47,7 +47,7 @@ export default async function WordFlashPage(): Promise<React.JSX.Element> {
       <ExerciseLockedScreen
         title="Rapid Recognition Drill"
         unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
-        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+        unlockTarget={access.nextExercise?.title ?? null}
       />
     )
   }

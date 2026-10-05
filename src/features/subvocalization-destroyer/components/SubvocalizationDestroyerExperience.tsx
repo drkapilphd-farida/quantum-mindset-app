@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { useExerciseSession } from '@/hooks/exercises/useExerciseSession'
 import { useReadingRuntime } from '@/hooks/reading-engine/useReadingRuntime'
@@ -44,6 +45,7 @@ type SubvocalizationDestroyerExperienceProps = {
 // interruptions, and a single post-session 3-question quiz gating the
 // completion screen.
 export function SubvocalizationDestroyerExperience({ onComplete }: SubvocalizationDestroyerExperienceProps = {}): React.JSX.Element {
+  const t = useAppT()
   const router = useRouter()
   const curriculumSession = useCurriculumSessionCompletion('subvocalization-destroyer', LAB_HREF)
 
@@ -158,7 +160,7 @@ export function SubvocalizationDestroyerExperience({ onComplete }: Subvocalizati
     return (
       <ReadingSessionCompleteScreen
         backHref={getWizardAwareBackHref('subvocalization-destroyer', LAB_HREF)}
-        subtitle={quizScore !== null ? `Ultra-high-speed stream complete — retention: ${quizScore}/${sessionCategory?.questions.length ?? 3}.` : 'Ultra-high-speed stream complete.'}
+        subtitle={quizScore !== null ? t('exercises.innerVoice.streamCompleteScore', { score: quizScore, total: sessionCategory?.questions.length ?? 3 }) : t('exercises.innerVoice.streamComplete')}
         result={completedResult}
         bestWpm={bestWpm}
         onReadAgain={handleReadAgain}

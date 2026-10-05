@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { getAppT } from '@/lib/app-i18n/server'
 import { AuthCard } from '@/features/auth/components/AuthCard'
 import { SignUpForm } from '@/features/auth/components/SignUpForm'
 
@@ -19,12 +20,13 @@ type SignUpPageProps = {
 // brand-new user straight into Day 1 of the real journey after signup,
 // not the generic dashboard.
 export default async function SignUpPage({ searchParams }: SignUpPageProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   const params = await searchParams
 
   return (
     <AuthCard
-      title="Create your account"
-      description="Start learning with AI-powered courses"
+      title={t('auth.pages.signupTitle')}
+      description={t('auth.pages.signupDesc')}
     >
       <SignUpForm next={params.next} />
     </AuthCard>

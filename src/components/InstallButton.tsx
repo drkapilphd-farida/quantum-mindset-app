@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { Download, Share } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -41,6 +42,7 @@ function isIOSDevice(): boolean {
 // one exists, and otherwise opens a clear manual guide instead of doing
 // nothing.
 export function InstallButton(): React.JSX.Element | null {
+  const t = useAppT()
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const [isInstalled, setIsInstalled] = useState(false)
   const [isIOS, setIsIOS] = useState(false)
@@ -98,9 +100,9 @@ export function InstallButton(): React.JSX.Element | null {
           split already uses elsewhere) so it can never push the header's
           theme-toggle/account cluster past the screen edge on a phone.
           aria-label keeps the accessible name intact either way. */}
-      <Button variant="ghost" size="sm" className="gap-1.5" aria-label="Install app" onClick={() => void handleClick()}>
+      <Button variant="ghost" size="sm" className="gap-1.5" aria-label={t('nav.installApp')} onClick={() => void handleClick()}>
         <Download className="size-4" aria-hidden="true" />
-        <span className="hidden sm:inline">Install App</span>
+        <span className="hidden sm:inline">{t('nav.installApp')}</span>
       </Button>
 
       <Dialog open={showGuide} onOpenChange={setShowGuide}>

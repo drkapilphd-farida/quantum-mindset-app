@@ -20,6 +20,8 @@
 // relative position, just with one more locked ○ dot after it now).
 
 import { cn } from '@/lib/utils'
+import { useAppT } from '@/lib/app-i18n/client'
+import type { MessageKey } from '@/lib/app-i18n/translate'
 
 export type ReadingJourneyStage = 'word' | 'chunk' | 'phrase' | 'multi-line' | 'sentence' | 'paragraph' | 'page'
 
@@ -40,15 +42,17 @@ export function ReadingJourney({
   currentStage: ReadingJourneyStage
   compact?: boolean
 }): React.JSX.Element {
+  const t = useAppT()
+  const stageLabel = (id: ReadingJourneyStage): string => t(`exercises.journey.${id}` as MessageKey)
   const currentIndex = STAGES.findIndex((s) => s.id === currentStage)
 
   return (
     <div
       className={cn('flex flex-col items-center', compact ? 'gap-1' : 'gap-1.5')}
-      aria-label={`Reading Journey: currently on ${STAGES[currentIndex]?.label ?? currentStage}`}
+      aria-label={t('exercises.journey.current', { stage: stageLabel(currentStage) })}
     >
-      <p className={cn('font-medium text-muted-foreground', compact ? 'text-[10px]' : 'text-xs')}>Reading Journey</p>
-      <div className="flex items-center gap-1.5">
+      <p className={cn('font-medium text-muted-foreground', compact ? 'text-[10px]' : 'text-xs')}>{t('exercises.journey.title')}</p>
+      <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5">
         {STAGES.map((stage, i) => (
           <span
             key={stage.id}
@@ -58,7 +62,7 @@ export function ReadingJourney({
             )}
           >
             <span aria-hidden="true">{i < currentIndex ? '●' : i === currentIndex ? '🟢' : '○'}</span>
-            {!compact && <span className="text-[11px]">{stage.label}</span>}
+            {!compact && <span className="text-[11px]">{stageLabel(stage.id)}</span>}
           </span>
         ))}
       </div>

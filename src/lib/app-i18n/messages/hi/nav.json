@@ -1,0 +1,22 @@
+{
+  "dashboard": "डैशबोर्ड",
+  "history": "इतिहास",
+  "settings": "सेटिंग्स",
+  "documentStudio": "Document Studio",
+  "mainNavigation": "मुख्य नेविगेशन",
+  "openNavigation": "मेन्यू खोलें",
+  "account": "अकाउंट",
+  "openAccountMenu": "अकाउंट मेन्यू खोलें",
+  "profileSettings": "प्रोफ़ाइल और सेटिंग्स",
+  "subscription": "सब्सक्रिप्शन",
+  "support": "सहायता",
+  "privacy": "प्राइवेसी पॉलिसी",
+  "terms": "सेवा की शर्तें",
+  "refund": "रिफ़ंड और कैंसलेशन पॉलिसी",
+  "signOut": "साइन आउट",
+  "signingOut": "साइन आउट हो रहा है…",
+  "installApp": "ऐप इंस्टॉल करें",
+  "toggleTheme": "थीम बदलें",
+  "lightMode": "लाइट मोड पर जाएँ",
+  "darkMode": "डार्क मोड पर जाएँ"
+}

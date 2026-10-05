@@ -1,0 +1,58 @@
+{
+  "greeting": {
+    "morning": "सुप्रभात",
+    "afternoon": "नमस्कार",
+    "evening": "शुभ संध्याकाळ",
+    "welcomeBack": "पुन्हा स्वागत आहे",
+    "line": "{greeting}, {name}",
+    "fallbackName": "मित्रा"
+  },
+  "eyeFoundation": {
+    "complete": "Eye Foundation मॉड्यूल पूर्ण — हाच वेग चालू ठेवा.",
+    "progress": "Eye Foundation मॉड्यूलचे {percent}% पूर्ण."
+  },
+  "documentStudio": {
+    "eyebrow": "स्तर 1 · उपयुक्त केंद्र",
+    "description": "कोणतेही PDF, पाठ्यपुस्तक किंवा संशोधन लेख टाका. आमचे AI ते Smart Reading ड्रिल, Mind Maps आणि Neural Map Notes मध्ये बदलते."
+  },
+  "flagship": {
+    "eyebrow": "स्तर 3 · मुख्य कार्यक्रम",
+    "description": "लाइव्ह वर्गांसह 30 दिवसांचा ठराविक मार्ग."
+  },
+  "mindScore": {
+    "breakdown": "Mind Score तपशील",
+    "reading": "वाचन",
+    "memory": "स्मरणशक्ती",
+    "focus": "फोकस"
+  },
+  "streak": {
+    "one": "सलग दिवस: {count} दिवस",
+    "many": "सलग दिवस: {count} दिवस"
+  },
+  "curriculumCard": {
+    "progress": "तुमची कोर्स प्रगती",
+    "dayTheme": "दिवस {day} — {title}",
+    "readyDay1": "दिवस 1 सुरू करण्यास तयार",
+    "percentComplete": "30 पैकी {percent}% दिवस पूर्ण",
+    "openCurriculum": "कोर्स उघडा",
+    "continueDay": "दिवस {day} चालू ठेवा",
+    "startDay1": "दिवस 1 सुरू करा"
+  },
+  "viewToggle": {
+    "student": "विद्यार्थी दृश्य",
+    "parent": "पालक विश्लेषण"
+  },
+  "habit": {
+    "journeyDay": "तुमच्या {program} चा दिवस {day}.",
+    "programOutcome": "समजून वेगाने वाचा, जास्त वेळ लक्ष केंद्रित करा, जास्त लक्षात ठेवा — तुमच्या स्वतःच्या दिवस 1 ते दिवस 30 पर्यंत मोजले जाते.",
+    "programFormat": "ऑनलाइन · 7 लाइव्ह वर्ग + 30 दिवस ॲप सराव."
+  },
+  "journeyCard": {
+    "skills": "वाचन · झटपट निवड · दृष्टी फोकस · कल्पना",
+    "continue": "पुढे चला →",
+    "begin": "सुरू करा →",
+    "dayCompleted": "दिवस {day}, पूर्ण",
+    "dayUnlocked": "दिवस {day}, उघडलेला",
+    "dayLocked": "दिवस {day}, बंद, {program} चा भाग"
+  }
+}

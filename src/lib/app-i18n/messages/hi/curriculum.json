@@ -1,0 +1,77 @@
+{
+  "eyebrow": "Sharp Brain 30-दिन का कोर्स",
+  "title": "आपका रोज़ का रोडमैप",
+  "intro": "4 चरणों में 30 दिन — Brain Gym, विज़ुअल मेमोरी और ध्यान, कल्पना और पढ़ने की प्रैक्टिस एक संतुलित सर्किट में — बीच-बीच में असली WPM और समझ की जाँच के साथ।",
+  "metrics": {
+    "brainScore": "ब्रेन स्कोर",
+    "readingGrowth": "पढ़ने में बढ़त",
+    "comprehension": "समझ",
+    "consistency": "नियमितता",
+    "visualizationDepth": "कल्पना की गहराई"
+  },
+  "allDays": "सभी 30 दिन",
+  "allDaysHintPro": "दिन N तभी खुलता है जब दिन N-1 पूरा हो। स्टार वाले दिन असली WPM + समझ की जाँच के दिन हैं।",
+  "allDaysHintFree": "पूरा 30-दिन का कोर्स खोलने के लिए नामांकन करें। जो दिन आप पूरे कर चुके हैं वे खुले रहेंगे। स्टार वाले दिन असली WPM + समझ की जाँच के दिन हैं।",
+  "startProgram": "{program} शुरू करें",
+  "phaseLabel": "चरण {phase} · दिन {start}–{end}",
+  "dayShort": "दिन {day}",
+  "dayLockedTitle": "दिन {day} — खोलने के लिए नामांकन करें",
+  "categories": {
+    "brainGym": "Brain Gym",
+    "visualFocusMemory": "विज़ुअल फ़ोकस और मेमोरी",
+    "visualization": "कल्पना",
+    "readingIntelligence": "रीडिंग इंटेलिजेंस"
+  },
+  "detail": {
+    "backToAll": "सभी 30 दिन",
+    "dayCompleteUnlocked": "दिन {day} पूरा! अब दिन {next} खुल गया है।",
+    "phaseDay": "चरण {phase} · दिन {day}",
+    "checkpointDay": "जाँच का दिन",
+    "completed": "पूरा",
+    "checkpointRecorded": "जाँच दर्ज हो गई",
+    "trueWpm": "असली WPM",
+    "comprehension": "समझ",
+    "vsBaseline": "आपके दिन 1 की तुलना में",
+    "dayDone": "दिन {day} पूरा — बढ़िया काम।",
+    "practiceAgain": "यह दिन फिर से प्रैक्टिस करें",
+    "uploadStarted": "दिन {day} के लिए अध्याय अपलोड शुरू हो गया",
+    "uploadStartedHint": "जहाँ छोड़ा था वहीं से जारी रखने के लिए कभी भी Upload & Learn पर लौटें।",
+    "uploadToday": "आज का अध्याय अपलोड करें",
+    "uploadTodayHint": "“{title}” के लिए असली पढ़ने की सामग्री लाएँ और असली चीज़ पर Sharp Brain की प्रैक्टिस करें।",
+    "uploadLink": "Upload & Learn →"
+  },
+  "player": {
+    "dayDone": "{title} — पूरा!",
+    "allExercisesDone": "सभी {count} एक्सरसाइज़ पूरी। अब दिन {next} खुल गया है।",
+    "backToRoadmap": "रोडमैप पर वापस",
+    "oneMoreStep": "बस एक कदम और",
+    "niceWork": "आज बढ़िया काम किया।",
+    "checkpointIntro": "आज जाँच का दिन है — दिन {day} पूरा करने के लिए आखिर में एक छोटी WPM और समझ की जाँच करें।",
+    "startCheckIn": "जाँच शुरू करें",
+    "stepOf": "{total} में से कदम {step} · {category}",
+    "skipExercise": "एक्सरसाइज़ छोड़ें",
+    "skip": "छोड़ें",
+    "exitToRoadmap": "रोडमैप पर जाएँ",
+    "skipStep": "यह कदम छोड़ें",
+    "continueGuided": "इसके अपने गाइडेड व्यू में जारी रखें",
+    "gatedIntro": "इस एक्सरसाइज़ का अपना गाइडेड तरीका है जिसमें प्रगति दर्ज होती है — यह अलग व्यू में खुलेगी, फिर आपको सीधे यहीं वापस ले आएगी।"
+  },
+  "phaseComplete": {
+    "title": "चरण {phase} पूरा!",
+    "upNext": "आगे — चरण {phase}: {title}।"
+  },
+  "finishPrevious": {
+    "title": "दिन {day}, दिन {previous} के बाद खुलेगा",
+    "body": "30 दिन एक के बाद एक खुलते हैं। दिन {previous} पूरा करें, दिन {day} तुरंत खुल जाएगा।",
+    "goTo": "दिन {previous} पर जाएँ"
+  },
+  "assessment": {
+    "eyebrow": "जाँच पूरी",
+    "title": "दिन {day} का मूल्यांकन"
+  },
+  "paywall": {
+    "dayTitle": "दिन {day}, {program} का हिस्सा है",
+    "startTitle": "{program} शुरू करें",
+    "body": "कोर्स के सभी 30 दिन — असली WPM और समझ की जाँच, और Dr. Kapil Dev Sharma के साथ 7 लाइव क्लास — नामांकन करते ही खुल जाते हैं। जो दिन आप पूरे कर चुके हैं वे खुले रहेंगे।"
+  }
+}

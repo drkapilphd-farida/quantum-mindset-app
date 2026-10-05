@@ -12,6 +12,9 @@ import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMoti
 import { useCountUp } from '@/hooks/exercises/useCountUp'
 import { cn } from '@/lib/utils'
 import { getSpeedLabel } from '@/lib/exercise-engine/speedEngine'
+import type { SpeedMs } from '@/types/exercise-engine'
+import { useAppI18n, useLabelT } from '@/lib/app-i18n/client'
+import type { Translator } from '@/lib/app-i18n/translate'
 import type { RuntimeResult } from '@/hooks/exercise-engine/useUniversalExerciseRuntime'
 
 // Optional extra stat tile — additive, backward-compatible extension point
@@ -66,6 +69,30 @@ type RuntimeResultScreenProps = {
   onNext?: () => void
 }
 
+function coachLine(t: Translator, accuracy: number, reactionMs: number): string {
+  if (accuracy >= 90 && reactionMs < 1500) return t('exercises.result.coach.top')
+  if (accuracy >= 90) return t('exercises.result.coach.great')
+  if (accuracy >= 75) return t('exercises.result.coach.strong')
+  if (accuracy >= 60) return t('exercises.result.coach.good')
+  return t('exercises.result.coach.keepGoing')
+}
+
+function recommendationLine(
+  t: Translator,
+  tl: (english: string) => string,
+  action: RuntimeResult['recommendation']['action'],
+  nextMs: SpeedMs,
+  ms: SpeedMs,
+  accuracy: number,
+): { message: string; detail: string | null } {
+  if (action === 'increase-speed')
+    return { message: t('exercises.result.rec.increase', { ms: nextMs }), detail: t('exercises.result.rec.increaseDetail', { level: tl(getSpeedLabel(nextMs)) }) }
+  if (action === 'decrease-speed') return { message: t('exercises.result.rec.decrease', { ms: nextMs }), detail: t('exercises.result.rec.decreaseDetail') }
+  if (action === 'practice-again') return { message: t('exercises.result.rec.again', { ms }), detail: t('exercises.result.rec.againDetail') }
+  if (action === 'try-different-exercise') return { message: t('exercises.result.rec.different'), detail: null }
+  return { message: t('exercises.result.rec.maintain'), detail: t('exercises.result.rec.maintainDetail', { accuracy, ms }) }
+}
+
 function formatMs(ms: number): string {
   if (ms === 0) return '—'
   if (ms < 1000) return `${ms}ms`
@@ -90,7 +117,16 @@ export function RuntimeResultScreen({
     accuracyPercent, correctCount, totalCount, speedMs,
     performanceScore, averageReactionTimeMs, fastestReactionTimeMs,
   } = metrics
-  const displayMessage = coachMessage ?? accuracyMessage
+  const { lang, t } = useAppI18n()
+  const tl = useLabelT()
+  // The coach and recommendation sentences are assembled in English by the
+  // engines; in other languages a short translated line for the same
+  // outcome is shown instead.
+  const isEnglish = lang === 'en'
+  const displayMessage = isEnglish ? (coachMessage ?? accuracyMessage) : coachLine(t, accuracyPercent, averageReactionTimeMs)
+  const recommendationText = isEnglish
+    ? { message: recommendation.message, detail: recommendation.detail }
+    : recommendationLine(t, tl, recommendation.action, recommendation.nextSpeedMs ?? speedMs, speedMs, accuracyPercent)
 
   // Sprint-16 — Delight Layer™. Every result number here used to snap to
   // its final value the instant its fade-in revealed it. Reuses the same
@@ -131,32 +167,32 @@ export function RuntimeResultScreen({
 
       {/* Title */}
       <h1 className={cn('mt-6 text-2xl font-bold tracking-tight text-foreground', fadeIn)} style={anim(150)}>
-        {exerciseName} · {labels?.completeSuffix ?? 'Training Complete™'}
+        {exerciseName} · {labels?.completeSuffix !== undefined ? tl(labels.completeSuffix) : t('exercises.result.trainingComplete')}
       </h1>
 
       {/* AI Coach Message */}
       <p className={cn('mx-auto mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground', fadeIn)} style={anim(200)}>
         {displayMessage}
       </p>
-      <p className="mt-1 text-xs text-muted-foreground/60">{trainsAbility} activated.</p>
+      <p className="mt-1 text-xs text-muted-foreground/60">{t('exercises.result.activated', { ability: tl(trainsAbility) })}</p>
 
       {/* Stats grid */}
       <div className={cn('mx-auto mt-6 grid max-w-xs grid-cols-2 gap-3 sm:grid-cols-4', fadeIn)} style={anim(300)}>
         <div className="rounded-xl bg-muted/40 px-3 py-3">
           <p className="text-xl font-bold tabular-nums text-foreground">{Math.round(animatedCorrectCount)}/{totalCount}</p>
-          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.correctLabel ?? 'Correct'}</p>
+          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.correctLabel !== undefined ? tl(labels.correctLabel) : t('exercises.result.correct')}</p>
         </div>
         <div className="rounded-xl bg-muted/40 px-3 py-3">
           <p className="text-xl font-bold tabular-nums text-foreground">{Math.round(animatedSpeedMs)}<span className="text-xs font-normal">ms</span></p>
-          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.speedLabel ?? 'Speed'}</p>
+          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.speedLabel !== undefined ? tl(labels.speedLabel) : t('exercises.result.speed')}</p>
         </div>
         <div className="rounded-xl bg-muted/40 px-3 py-3">
           <p className="text-xl font-bold tabular-nums text-foreground">{Math.round(animatedPerformanceScore)}</p>
-          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.scoreLabel ?? 'Score'}</p>
+          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.scoreLabel !== undefined ? tl(labels.scoreLabel) : t('exercises.result.score')}</p>
         </div>
         <div className="rounded-xl bg-muted/40 px-3 py-3">
           <p className="text-xl font-bold tabular-nums text-foreground">{formatMs(Math.round(animatedAverageReactionTimeMs))}</p>
-          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.reactionLabel ?? 'Avg reaction'}</p>
+          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{labels?.reactionLabel !== undefined ? tl(labels.reactionLabel) : t('exercises.result.avgReaction')}</p>
         </div>
       </div>
 
@@ -171,11 +207,11 @@ export function RuntimeResultScreen({
             <div
               key={stat.label}
               className="rounded-xl bg-muted/40 px-3 py-3"
-              {...(stat.hint !== undefined ? { title: stat.hint } : {})}
-              aria-label={stat.hint !== undefined ? `${stat.label}: ${stat.value} — ${stat.hint}` : undefined}
+              {...(stat.hint !== undefined ? { title: tl(stat.hint) } : {})}
+              aria-label={stat.hint !== undefined ? `${tl(stat.label)}: ${tl(stat.value)} — ${tl(stat.hint)}` : undefined}
             >
-              <p className="text-xl font-bold tabular-nums text-foreground">{stat.value}</p>
-              <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{stat.label}</p>
+              <p className="text-xl font-bold tabular-nums text-foreground">{tl(stat.value)}</p>
+              <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{tl(stat.label)}</p>
             </div>
           ))}
         </div>
@@ -193,19 +229,19 @@ export function RuntimeResultScreen({
       {fastestReactionTimeMs > 0 && (
         <p className={cn('mt-3 flex items-center gap-1 text-xs text-muted-foreground', fadeIn)} style={anim(350)}>
           <Timer className="size-3" aria-hidden="true" />
-          Fastest response: {formatMs(Math.round(animatedFastestReactionTimeMs))}
+          {t('exercises.result.fastest', { time: formatMs(Math.round(animatedFastestReactionTimeMs)) })}
         </p>
       )}
 
       {/* Recommendation */}
       <div className={cn('mx-auto mt-5 max-w-xs rounded-xl border bg-card p-4', fadeIn)} style={anim(400)}>
-        <p className="text-xs font-medium text-foreground">{recommendation.message}</p>
-        {recommendation.detail !== null && (
-          <p className="mt-1 text-xs text-muted-foreground">{recommendation.detail}</p>
+        <p className="text-xs font-medium text-foreground">{recommendationText.message}</p>
+        {recommendationText.detail !== null && (
+          <p className="mt-1 text-xs text-muted-foreground">{recommendationText.detail}</p>
         )}
         {nextSpeed !== null && nextSpeed !== speedMs && (
           <p className={cn('mt-2 text-[10px] font-medium', speedImproved ? 'text-success' : 'text-muted-foreground')}>
-            {speedImproved ? '↑' : '↓'} Next session: {nextSpeed}ms · {getSpeedLabel(nextSpeed)}
+            {speedImproved ? '↑' : '↓'} {t('exercises.result.nextSession', { ms: nextSpeed, level: tl(getSpeedLabel(nextSpeed)) })}
           </p>
         )}
       </div>
@@ -214,24 +250,24 @@ export function RuntimeResultScreen({
       <div className={cn('mt-8 flex flex-col items-center gap-3', fadeIn)} style={anim(500)}>
         <Button size="lg" onClick={onPracticeAgain} className="min-w-[200px] gap-2 rounded-full">
           <RotateCcw className="size-4" />
-          {labels?.practiceAgainLabel ?? 'Train Again'}
+          {labels?.practiceAgainLabel !== undefined ? tl(labels.practiceAgainLabel) : t('exercises.result.trainAgain')}
         </Button>
         {onNext !== undefined && (
           <Button variant="outline" size="sm" className="gap-1.5 rounded-full" onClick={onNext}>
-            {labels?.nextLabel ?? 'Continue to Next Step'}
+            {labels?.nextLabel !== undefined ? tl(labels.nextLabel) : t('exercises.result.continueNext')}
             <ArrowRight className="size-3.5" />
           </Button>
         )}
         {onNext === undefined && recommendation.nextExerciseHref !== null && (
           <Button asChild variant="outline" size="sm" className="gap-1.5 rounded-full">
             <Link href={recommendation.nextExerciseHref}>
-              {labels?.nextLabel ?? 'Continue to Next Step'}
+              {labels?.nextLabel !== undefined ? tl(labels.nextLabel) : t('exercises.result.continueNext')}
               <ArrowRight className="size-3.5" />
             </Link>
           </Button>
         )}
         <Button asChild variant="ghost" size="sm">
-          <Link href={labHref}>Back to Dashboard</Link>
+          <Link href={labHref}>{t('exercises.result.backToDashboard')}</Link>
         </Button>
       </div>
     </div>

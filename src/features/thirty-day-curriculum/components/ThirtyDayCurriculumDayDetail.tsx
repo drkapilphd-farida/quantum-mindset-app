@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { dayFocus, dayTitle } from '@/lib/app-i18n/curriculumText'
+import { useAppT } from '@/lib/app-i18n/client'
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle2, FileText, RotateCcw, Sparkles } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
@@ -49,6 +51,7 @@ export function ThirtyDayCurriculumDayDetail({
   onBack,
   onLaunchAssessment,
 }: ThirtyDayCurriculumDayDetailProps): React.JSX.Element {
+  const t = useAppT()
   const [isReplaying, setIsReplaying] = useState(false)
   const plan = buildCurriculumDayPlan(day)
   const phase = getCurriculumPhase(plan.phase)
@@ -92,7 +95,7 @@ export function ThirtyDayCurriculumDayDetail({
         className="flex w-fit items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="size-3.5" aria-hidden="true" />
-        All 30 Days
+        {t('curriculum.detail.backToAll')}
       </button>
 
       {justCompletedDay && (
@@ -101,7 +104,7 @@ export function ThirtyDayCurriculumDayDetail({
           data-day-complete-celebration="true"
         >
           <CheckCircle2 className="size-4 shrink-0" aria-hidden="true" />
-          Day {day} complete! Day {day + 1} is now unlocked.
+          {t('curriculum.detail.dayCompleteUnlocked', { day, next: day + 1 })}
         </div>
       )}
 
@@ -112,33 +115,33 @@ export function ThirtyDayCurriculumDayDetail({
         <div className="mt-8 flex flex-col gap-2 sm:mt-6">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">
-              Phase {phase.id} · Day {day}
+              {t('curriculum.detail.phaseDay', { phase: phase.id, day })}
             </Badge>
             {requiresCheckpoint && (
               <Badge variant="outline" className="gap-1 border-amber-500/40 text-amber-600 dark:text-amber-400">
                 <Sparkles className="size-3" aria-hidden="true" />
-                Checkpoint Day
+                {t('curriculum.detail.checkpointDay')}
               </Badge>
             )}
             {isCompleted && (
               <Badge variant="outline" className="gap-1 border-emerald-500/40 text-emerald-600 dark:text-emerald-400">
                 <CheckCircle2 className="size-3" aria-hidden="true" />
-                Completed
+                {t('curriculum.detail.completed')}
               </Badge>
             )}
           </div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{plan.theme.title}</h1>
-          <p className="text-sm text-muted-foreground">{plan.theme.focus}</p>
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{dayTitle(t, day)}</h1>
+          <p className="text-sm text-muted-foreground">{dayFocus(t, day)}</p>
         </div>
       </div>
 
       <div className={`${CARD_CLASS_NAME} p-6`}>
         {requiresCheckpoint && checkpoint !== undefined ? (
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-semibold tracking-widest text-primary uppercase">Checkpoint Recorded</p>
+            <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('curriculum.detail.checkpointRecorded')}</p>
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 via-violet-500/5 to-teal-500/10 p-4">
-                <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">True WPM</p>
+                <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">{t('curriculum.detail.trueWpm')}</p>
                 <p className="font-heading text-xl font-bold tabular-nums text-foreground">
                   {checkpoint.trueWpm} WPM
                   {checkpointDelta !== null && (
@@ -150,7 +153,7 @@ export function ThirtyDayCurriculumDayDetail({
                 </p>
               </div>
               <div className="rounded-2xl border border-border/60 bg-card/60 p-4">
-                <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Comprehension</p>
+                <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">{t('curriculum.detail.comprehension')}</p>
                 <p className="font-heading text-xl font-bold tabular-nums text-foreground">
                   {checkpoint.comprehensionAccuracyPercent}%
                   {checkpointDelta !== null && (
@@ -164,10 +167,10 @@ export function ThirtyDayCurriculumDayDetail({
                 </p>
               </div>
             </div>
-            {checkpointDelta !== null && <p className="text-center text-xs text-muted-foreground">vs. your Day 1 baseline</p>}
+            {checkpointDelta !== null && <p className="text-center text-xs text-muted-foreground">{t('curriculum.detail.vsBaseline')}</p>}
           </div>
         ) : (
-          <p className="text-center text-sm font-medium text-emerald-600 dark:text-emerald-400">Day {day} complete — nice work.</p>
+          <p className="text-center text-sm font-medium text-emerald-600 dark:text-emerald-400">{t('curriculum.detail.dayDone', { day })}</p>
         )}
         <button
           type="button"
@@ -175,7 +178,7 @@ export function ThirtyDayCurriculumDayDetail({
           className="mx-auto mt-4 flex items-center gap-1.5 text-xs font-semibold text-primary transition-colors hover:text-primary/80"
         >
           <RotateCcw className="size-3.5" aria-hidden="true" />
-          Practice Day Again
+          {t('curriculum.detail.practiceAgain')}
         </button>
       </div>
 
@@ -196,8 +199,8 @@ export function ThirtyDayCurriculumDayDetail({
           <div className="flex items-center gap-3">
             <CheckCircle2 className="size-5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
             <div>
-              <p className="text-sm font-semibold text-foreground">Chapter upload started for Day {day}</p>
-              <p className="text-xs text-muted-foreground">Head back to Upload &amp; Learn any time to pick up where you left off.</p>
+              <p className="text-sm font-semibold text-foreground">{t('curriculum.detail.uploadStarted', { day })}</p>
+              <p className="text-xs text-muted-foreground">{t('curriculum.detail.uploadStartedHint')}</p>
             </div>
           </div>
         ) : (
@@ -205,9 +208,9 @@ export function ThirtyDayCurriculumDayDetail({
             <div className="flex items-center gap-3">
               <FileText className="size-8 shrink-0 text-primary" aria-hidden="true" />
               <div>
-                <p className="text-sm font-semibold text-foreground">Upload Today&rsquo;s Chapter</p>
+                <p className="text-sm font-semibold text-foreground">{t('curriculum.detail.uploadToday')}</p>
                 <p className="text-xs text-muted-foreground">
-                  Bring real reading material for &ldquo;{plan.theme.title}&rdquo; and practice Sharp Brain on the real thing.
+                  {t('curriculum.detail.uploadTodayHint', { title: dayTitle(t, day) })}
                 </p>
               </div>
             </div>
@@ -216,7 +219,7 @@ export function ThirtyDayCurriculumDayDetail({
               onClick={() => markCurriculumDayUploadStarted(day)}
               className="brand-gradient-text shrink-0 text-sm font-semibold whitespace-nowrap"
             >
-              Upload &amp; Learn →
+              {t('curriculum.detail.uploadLink')}
             </Link>
           </div>
         )}

@@ -1,0 +1,77 @@
+{
+  "eyebrow": "Sharp Brain 30-दिवसांचा कोर्स",
+  "title": "तुमचा रोजचा रोडमॅप",
+  "intro": "4 टप्प्यांत 30 दिवस — Brain Gym, दृश्य स्मरण आणि लक्ष, कल्पना आणि वाचनाचा सराव एकाच संतुलित सर्किटमध्ये — मधूनमधून खऱ्या WPM आणि आकलन तपासण्यांसह.",
+  "metrics": {
+    "brainScore": "मेंदू स्कोअर",
+    "readingGrowth": "वाचनातील वाढ",
+    "comprehension": "आकलन",
+    "consistency": "नियमितता",
+    "visualizationDepth": "कल्पनेची खोली"
+  },
+  "allDays": "सर्व 30 दिवस",
+  "allDaysHintPro": "दिवस N-1 पूर्ण झाल्यावरच दिवस N उघडतो. तारा असलेले दिवस हे खऱ्या WPM + आकलन तपासणीचे दिवस आहेत.",
+  "allDaysHintFree": "पूर्ण 30-दिवसांचा कोर्स उघडण्यासाठी नोंदणी करा. तुम्ही पूर्ण केलेले दिवस उघडेच राहतील. तारा असलेले दिवस हे खऱ्या WPM + आकलन तपासणीचे दिवस आहेत.",
+  "startProgram": "{program} सुरू करा",
+  "phaseLabel": "टप्पा {phase} · दिवस {start}–{end}",
+  "dayShort": "दिवस {day}",
+  "dayLockedTitle": "दिवस {day} — उघडण्यासाठी नोंदणी करा",
+  "categories": {
+    "brainGym": "Brain Gym",
+    "visualFocusMemory": "दृश्य फोकस आणि स्मरण",
+    "visualization": "कल्पना",
+    "readingIntelligence": "वाचन बुद्धिमत्ता"
+  },
+  "detail": {
+    "backToAll": "सर्व 30 दिवस",
+    "dayCompleteUnlocked": "दिवस {day} पूर्ण! आता दिवस {next} उघडला आहे.",
+    "phaseDay": "टप्पा {phase} · दिवस {day}",
+    "checkpointDay": "तपासणीचा दिवस",
+    "completed": "पूर्ण",
+    "checkpointRecorded": "तपासणी नोंदवली",
+    "trueWpm": "खरा WPM",
+    "comprehension": "आकलन",
+    "vsBaseline": "तुमच्या दिवस 1 च्या तुलनेत",
+    "dayDone": "दिवस {day} पूर्ण — छान काम.",
+    "practiceAgain": "हा दिवस पुन्हा सराव करा",
+    "uploadStarted": "दिवस {day} साठी प्रकरण अपलोड सुरू झाले",
+    "uploadStartedHint": "जिथे थांबलात तिथून पुढे जाण्यासाठी कधीही Upload & Learn वर परत या.",
+    "uploadToday": "आजचे प्रकरण अपलोड करा",
+    "uploadTodayHint": "“{title}” साठी खरे वाचन साहित्य आणा आणि खऱ्या मजकुरावर Sharp Brain चा सराव करा.",
+    "uploadLink": "Upload & Learn →"
+  },
+  "player": {
+    "dayDone": "{title} — पूर्ण!",
+    "allExercisesDone": "सर्व {count} व्यायाम पूर्ण. आता दिवस {next} उघडला आहे.",
+    "backToRoadmap": "रोडमॅपवर परत",
+    "oneMoreStep": "अजून एक पाऊल",
+    "niceWork": "आज छान काम केलेत.",
+    "checkpointIntro": "आज तपासणीचा दिवस आहे — दिवस {day} पूर्ण करण्यासाठी शेवटी एक छोटी WPM आणि आकलन तपासणी करा.",
+    "startCheckIn": "तपासणी सुरू करा",
+    "stepOf": "{total} पैकी पाऊल {step} · {category}",
+    "skipExercise": "व्यायाम वगळा",
+    "skip": "वगळा",
+    "exitToRoadmap": "रोडमॅपवर जा",
+    "skipStep": "हे पाऊल वगळा",
+    "continueGuided": "त्याच्या स्वतःच्या मार्गदर्शित दृश्यात पुढे चला",
+    "gatedIntro": "या व्यायामाचा प्रगती नोंदवणारा स्वतःचा मार्गदर्शित प्रवाह आहे — तो वेगळ्या दृश्यात उघडेल आणि मग तुम्हाला थेट इथे परत आणेल."
+  },
+  "phaseComplete": {
+    "title": "टप्पा {phase} पूर्ण!",
+    "upNext": "पुढे — टप्पा {phase}: {title}."
+  },
+  "finishPrevious": {
+    "title": "दिवस {previous} नंतर दिवस {day} उघडेल",
+    "body": "30 दिवस एकामागून एक उघडतात. दिवस {previous} पूर्ण करा, दिवस {day} लगेच उघडेल.",
+    "goTo": "दिवस {previous} वर जा"
+  },
+  "assessment": {
+    "eyebrow": "तपासणी पूर्ण",
+    "title": "दिवस {day} चे मूल्यमापन"
+  },
+  "paywall": {
+    "dayTitle": "दिवस {day}, {program} चा भाग आहे",
+    "startTitle": "{program} सुरू करा",
+    "body": "कोर्सचे सर्व 30 दिवस — खऱ्या WPM आणि आकलन तपासण्या, आणि Dr. Kapil Dev Sharma यांच्यासोबत 7 लाइव्ह वर्ग — नोंदणी करताच उघडतात. तुम्ही पूर्ण केलेले दिवस उघडेच राहतील."
+  }
+}

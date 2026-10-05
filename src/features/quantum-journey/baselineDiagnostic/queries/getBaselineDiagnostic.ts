@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getPracticeContentLang } from '@/lib/app-i18n/server'
 
 export type BaselineDiagnosticRecord = {
   rawWpm: number
@@ -26,6 +27,8 @@ export async function getBaselineDiagnostic(): Promise<BaselineDiagnosticRecord 
     .from('journey_baseline_diagnostics')
     .select('raw_wpm, accuracy_percent, true_baseline_wpm, occurred_at')
     .eq('user_id', user.id)
+    // The baseline counts only for results in the same practice-text language.
+    .eq('content_lang', await getPracticeContentLang('reading'))
     .maybeSingle()
 
   if (error || data === null) return null

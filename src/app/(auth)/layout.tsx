@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
 import { brand } from '@/config/site.config'
+import AppI18nRoot from '@/lib/app-i18n/AppI18nRoot'
+import { LanguageSwitcher } from '@/lib/app-i18n/LanguagePicker'
 
 // Consistent Branding™ — /login, /signup, /forgot-password, etc. all live
 // under this route group, outside (dashboard)/layout.tsx, so they never
@@ -18,16 +20,21 @@ export default async function AuthLayout({
   const appDomain = await getAppDomain()
 
   return (
-    <div className="bg-muted/40 flex min-h-screen flex-col">
-      <header className="bg-background flex h-14 items-center justify-between border-b px-6">
-        <Link href="/" className="font-semibold tracking-tight">
-          {brand.appName}
-        </Link>
-        <span className="hidden text-xs font-medium text-muted-foreground sm:inline">{getDomainTagline(appDomain)}</span>
-      </header>
-      <main className="flex flex-1 items-center justify-center p-6">
-        <div className="w-full max-w-sm">{children}</div>
-      </main>
-    </div>
+    <AppI18nRoot>
+      <div className="bg-muted/40 flex min-h-screen flex-col">
+        <header className="bg-background flex h-14 items-center justify-between gap-3 border-b px-4 sm:px-6">
+          <Link href="/" className="font-semibold tracking-tight">
+            {brand.appName}
+          </Link>
+          <div className="flex items-center gap-3">
+            <span className="hidden text-xs font-medium text-muted-foreground sm:inline">{getDomainTagline(appDomain)}</span>
+            <LanguageSwitcher />
+          </div>
+        </header>
+        <main className="flex flex-1 items-center justify-center p-6">
+          <div className="w-full max-w-sm">{children}</div>
+        </main>
+      </div>
+    </AppI18nRoot>
   )
 }

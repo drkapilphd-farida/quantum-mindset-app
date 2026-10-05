@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { getAppT } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
@@ -97,7 +98,8 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
   const focusScore = fixationStats.completedSessionCount > 0 ? fixationStats.focusScore : null
 
   const studentName = profile?.fullName ?? 'there'
-  const studentFirstName = studentName.trim().split(' ').at(0) ?? 'there'
+  const { t } = await getAppT()
+  const studentFirstName = studentName.trim().split(' ').at(0) ?? t('dashboard.greeting.fallbackName')
 
   return (
     <div className="glass-premium relative -m-6 space-y-4 p-6 sm:-m-8 sm:space-y-6 sm:p-8">
@@ -118,7 +120,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
       <div className="glass-premium-card glass-premium-lift p-6 sm:p-8">
         <GreetingHeading studentName={studentFirstName} />
         <p className="mt-1 text-sm text-muted-foreground">
-          {labSummary.isComplete ? 'Eye Foundation Module complete — keep the momentum going.' : `${completionPercent}% through the Eye Foundation Module.`}
+          {labSummary.isComplete ? t('dashboard.eyeFoundation.complete') : t('dashboard.eyeFoundation.progress', { percent: completionPercent })}
         </p>
 
         <div className="mt-5">
@@ -150,9 +152,9 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
       <section aria-labelledby="document-tools-heading">
         <DashboardSectionHeader
           id="document-tools-heading"
-          eyebrow="Tier 1 · Utility Hub"
+          eyebrow={t('dashboard.documentStudio.eyebrow')}
           title="📄 Document Mastery Studio™"
-          description="Drop any PDF, textbook, or research paper. Our AI instantly converts it into Smart Reading drills, Mind Maps, and Neural Map Notes."
+          description={t('dashboard.documentStudio.description')}
         />
         <div id="upload-document">
           <AIDocumentTransformerWidget isPro={isPaidUser} recentDocuments={recentQuantumDocuments.slice(0, 1)} />
@@ -166,9 +168,9 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
       <section aria-labelledby="programs-heading" className="space-y-4 sm:space-y-6">
         <DashboardSectionHeader
           id="programs-heading"
-          eyebrow="Tier 3 · Flagship Program"
+          eyebrow={t('dashboard.flagship.eyebrow')}
           title={programs.sharpBrain.name}
-          description="A flagship, structured 30-day mastery path with live mentorship."
+          description={t('dashboard.flagship.description')}
         />
         <ThirtyDayMasterclassHeroCard />
       </section>

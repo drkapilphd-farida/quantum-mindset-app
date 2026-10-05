@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useCountUp } from '@/hooks/exercises/useCountUp'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
@@ -129,6 +130,7 @@ export function SubvocalizationDestroyerCanvas({
   onFinish,
   onExit,
 }: SubvocalizationDestroyerCanvasProps): React.JSX.Element {
+  const t = useAppT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const animatedWpm = useCountUp(liveWpm, 400, prefersReducedMotion)
 
@@ -269,12 +271,12 @@ export function SubvocalizationDestroyerCanvas({
     <ReadingLayout maxWidthClassName="max-w-2xl" onExit={onExit}>
       <div className="w-full max-w-md">
         <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Inner Voice Control™</p>
-        {categoryLabel && <p className="mb-3 text-center text-xs text-muted-foreground">Reading: {categoryLabel}</p>}
+        {categoryLabel && <p className="mb-3 text-center text-xs text-muted-foreground">{t('exercises.innerVoice.reading', { topic: categoryLabel })}</p>}
 
         <div className="grid grid-cols-3 gap-x-4 text-center">
-          <ReadingStatTile label="Reading Pace" value={isWarmingUp ? 'Warming up…' : `${Math.round(animatedWpm)} wpm`} />
-          <ReadingStatTile label="Target WPM" value={String(targetWpm)} />
-          <ReadingStatTile label="Elapsed" value={formatElapsedTime(elapsedMs)} />
+          <ReadingStatTile label={t('exercises.stats.readingPace')} value={isWarmingUp ? t('exercises.stats.warmingUp') : t('exercises.stats.wpmValue', { wpm: Math.round(animatedWpm) })} />
+          <ReadingStatTile label={t('exercises.stats.targetWpm')} value={String(targetWpm)} />
+          <ReadingStatTile label={t('exercises.stats.time')} value={formatElapsedTime(elapsedMs)} />
         </div>
 
         <div className="mt-4">
@@ -333,18 +335,18 @@ export function SubvocalizationDestroyerCanvas({
       <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
         {isPaused ? (
           <button onClick={onResume} className={PRIMARY_TEXT_BUTTON_CLASSES}>
-            Resume
+            {t('exercises.sound.resume')}
           </button>
         ) : (
           <button onClick={onPause} className={PRIMARY_TEXT_BUTTON_CLASSES}>
-            Pause
+            {t('exercises.sound.pause')}
           </button>
         )}
         <button onClick={onRestart} className={SECONDARY_TEXT_BUTTON_CLASSES}>
-          Restart
+          {t('exercises.sound.restart')}
         </button>
         <button onClick={onFinish} className={SECONDARY_TEXT_BUTTON_CLASSES}>
-          Finish
+          {t('exercises.common.finish')}
         </button>
       </div>
     </ReadingLayout>

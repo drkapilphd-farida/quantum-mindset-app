@@ -1,6 +1,7 @@
 'use server'
 
 import { z } from 'zod'
+import { getDocumentContentLang } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 
 const RecordReadingSpeedSampleInputSchema = z.object({
@@ -41,6 +42,7 @@ export async function recordReadingSpeedSample(input: unknown): Promise<RecordRe
   const { error } = await supabase.from('qsr_reading_speed_samples').insert({
     document_id: parsed.data.documentId,
     user_id: user.id,
+    content_lang: await getDocumentContentLang(parsed.data.documentId),
     mode: parsed.data.mode,
     wpm: parsed.data.wpm,
   })

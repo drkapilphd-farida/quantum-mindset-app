@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
+import type { Translator } from '@/lib/app-i18n/translate'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
@@ -42,8 +44,8 @@ function getMultiplierBadgeClassName(multiplier: number): string {
   return 'border-border text-muted-foreground'
 }
 
-function promptCopy(round: StroopRound): string {
-  return round.promptMode === 'word' ? 'Match the WORD it spells' : 'Match the INK it is painted in'
+function promptCopy(round: StroopRound, t: Translator): string {
+  return round.promptMode === 'word' ? t('exercises.colorSync.matchWord') : t('exercises.colorSync.matchInk')
 }
 
 // Hemispheric Color-Word Sync Grid™ (third Right Brain Activation
@@ -59,6 +61,7 @@ function promptCopy(round: StroopRound): string {
 // construction) and the session always runs the full 16 rounds
 // regardless of performance, exactly as the task brief specifies.
 export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: HemisphericColorSyncCanvasProps): React.JSX.Element {
+  const t = useAppT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const [rounds] = useState<readonly StroopRound[]>(() => buildSessionRounds())
   const [roundIndex, setRoundIndex] = useState(0)
@@ -192,10 +195,10 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
         <p className="text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Color-Word Sync Grid</p>
 
         <div className="mt-4 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
-          <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${ROUNDS_PER_SESSION}`} />
-          <ReadingStatTile label="Score" value={String(totalScore)} />
-          <ReadingStatTile label="Streak" value={String(streak)} />
-          <ReadingStatTile label="Accuracy" value={`${accuracySoFar}%`} />
+          <ReadingStatTile label={t('exercises.stats.round')} value={`${roundIndex + 1} / ${ROUNDS_PER_SESSION}`} />
+          <ReadingStatTile label={t('exercises.stats.score')} value={String(totalScore)} />
+          <ReadingStatTile label={t('exercises.stats.streak')} value={String(streak)} />
+          <ReadingStatTile label={t('exercises.stats.accuracy')} value={`${accuracySoFar}%`} />
         </div>
 
         <div className="mt-4 w-full">
@@ -206,13 +209,13 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
           <span
             className={`rounded-full border px-3 py-1 text-xs font-semibold tracking-wide uppercase ${getMultiplierBadgeClassName(multiplier)}`}
           >
-            Streak Multiplier ×{multiplier}
+            {t('exercises.stats.streakMultiplier', { n: multiplier })}
           </span>
         </div>
 
         <div className="mt-6 flex justify-center">
           <span className="rounded-full border border-border bg-accent/20 px-4 py-1.5 text-xs font-semibold tracking-wide text-foreground uppercase">
-            {promptCopy(currentRound)}
+            {promptCopy(currentRound, t)}
           </span>
         </div>
 
@@ -220,7 +223,7 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
           <p
             className="text-center text-5xl font-black tracking-tight break-all sm:text-6xl"
             style={{ color: inkSwatch.hex }}
-            aria-label={`the word ${wordSwatch.label} painted in ${inkSwatch.label} ink`}
+            aria-label={t('exercises.colorSync.stimulusLabel', { word: wordSwatch.label, ink: inkSwatch.label })}
           >
             {wordSwatch.label}
           </p>
@@ -228,8 +231,8 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
           {phase === 'revealing' && lastOutcome !== null ? (
             <p className={`text-center text-sm font-medium ${lastOutcome.isCorrect ? 'text-emerald-600' : 'text-muted-foreground'}`}>
               {lastOutcome.isCorrect
-                ? `Correct! +${lastOutcome.pointsEarned} points${lastOutcome.wasFast ? ' (fast bonus!)' : ''}`
-                : `Not quite — it was ${getColorSwatch(currentRound.correctColorName).label}.`}
+                ? t(lastOutcome.wasFast ? 'exercises.colorSync.correctPointsFast' : 'exercises.colorSync.correctPoints', { points: lastOutcome.pointsEarned })
+                : t('exercises.colorSync.notQuite', { answer: getColorSwatch(currentRound.correctColorName).label })}
             </p>
           ) : (
             <div className="w-32">
@@ -273,7 +276,7 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
                 type="button"
                 disabled={phase !== 'active'}
                 onClick={() => handleGuess(colorName)}
-                aria-label={`Answer: ${swatch.label}`}
+                aria-label={t('exercises.colorSync.answer', { answer: swatch.label })}
                 className={`flex aspect-square items-center justify-center rounded-2xl border-2 p-3 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 ${ringClassName}`}
                 style={{ backgroundColor: `${swatch.hex}` }}
               />

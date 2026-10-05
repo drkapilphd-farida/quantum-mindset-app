@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { Button } from '@/components/ui/button'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { RsvpModePlayer, type RsvpModeResult } from '@/features/quantum-journey/readingModes/components/RsvpModePlayer'
@@ -48,6 +49,7 @@ function targetWpmWeekForDay(day: number): 1 | 2 | 3 {
 // WPM rather than a generic constant, mirroring computeDefaultTargetWpm's
 // own "anchor to the user's real number" convention.
 export function CurriculumAssessmentCanvas({ day, mostRecentTrueWpm, onComplete }: CurriculumAssessmentCanvasProps): React.JSX.Element {
+  const t = useAppT()
   const [result, setResult] = useState<CurriculumCheckpointResult | null>(null)
 
   function handleRsvpComplete({ wpm, accuracyPercent }: RsvpModeResult): void {
@@ -73,24 +75,24 @@ export function CurriculumAssessmentCanvas({ day, mostRecentTrueWpm, onComplete 
         />
       ) : (
         <div className="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center gap-6 px-6 py-12 text-center">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Checkpoint Complete™</p>
-          <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground">Day {day} Assessment</h2>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('curriculum.assessment.eyebrow')}</p>
+          <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('curriculum.assessment.title', { day })}</h2>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 via-violet-500/5 to-teal-500/10 p-4">
-              <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">True WPM</p>
+              <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">{t('curriculum.detail.trueWpm')}</p>
               <p className="font-heading text-xl font-bold tabular-nums text-foreground" data-true-wpm={result.trueWpm}>
                 {result.trueWpm} WPM
               </p>
             </div>
             <div className="rounded-2xl border border-border/60 bg-card/60 p-4">
-              <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Comprehension</p>
+              <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">{t('curriculum.detail.comprehension')}</p>
               <p className="font-heading text-xl font-bold tabular-nums text-foreground">{result.comprehensionAccuracyPercent}%</p>
             </div>
           </div>
 
           <Button onClick={() => onComplete(result)} size="lg" className="rounded-full" data-continue-button="true">
-            Continue →
+            {t('common.actions.continue')} →
           </Button>
         </div>
       )}

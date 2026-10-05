@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { useExerciseSession } from '@/hooks/exercises/useExerciseSession'
 import { Button } from '@/components/ui/button'
@@ -43,6 +44,7 @@ type SchulteGridDrillExperienceProps = {
 }
 
 export function SchulteGridDrillExperience({ onComplete }: SchulteGridDrillExperienceProps = {}): React.JSX.Element {
+  const t = useAppT()
   const router = useRouter()
   const session = useExerciseSession({ labId: 'quantum-speed-reading', exerciseId: 'schulte-grid-drill' })
 
@@ -100,7 +102,7 @@ export function SchulteGridDrillExperience({ onComplete }: SchulteGridDrillExper
         {onComplete && (
           <div className="mx-auto mt-4 max-w-sm px-4">
             <Button type="button" size="lg" className="w-full rounded-full" onClick={onComplete}>
-              Continue Session →
+              {t('exercises.complete.continueSession')}
             </Button>
           </div>
         )}

@@ -1,13 +1,16 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { authErrorKey } from '../authErrorKey'
+import { getAppT } from '@/lib/app-i18n/server'
 import { getRequestOrigin } from '@/lib/domains/appDomain'
 import { ForgotPasswordSchema, type AuthActionResult } from '../types'
 
 export async function resetPassword(input: unknown): Promise<AuthActionResult> {
+  const { t } = await getAppT()
   const parsed = ForgotPasswordSchema.safeParse(input)
   if (!parsed.success) {
-    return { success: false, error: 'Please enter a valid email address.' }
+    return { success: false, error: t('auth.validation.email') }
   }
 
   // Domain Split™ — the reset link must return the user to whichever
@@ -22,7 +25,7 @@ export async function resetPassword(input: unknown): Promise<AuthActionResult> {
   })
 
   if (error) {
-    return { success: false, error: error.message }
+    return { success: false, error: t(authErrorKey(error.code)) }
   }
 
   return { success: true }

@@ -1,6 +1,7 @@
 'use server'
 
 import { z } from 'zod'
+import { getDocumentContentLang } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 import { recommendQsrMode } from '../../presentation/recommendQsrMode'
 import { resolveReadingStyle } from '../resolveReadingStyle'
@@ -63,6 +64,7 @@ export async function saveReadingAssessment(input: unknown): Promise<SaveReading
     {
       document_id: parsed.data.documentId,
       user_id: user.id,
+      content_lang: await getDocumentContentLang(parsed.data.documentId),
       stage_results: stageResults,
       overall_wpm: overallWpm,
       reading_style: readingStyle,

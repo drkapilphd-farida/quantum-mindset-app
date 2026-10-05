@@ -1,0 +1,58 @@
+{
+  "greeting": {
+    "morning": "శుభోదయం",
+    "afternoon": "శుభ మధ్యాహ్నం",
+    "evening": "శుభ సాయంత్రం",
+    "welcomeBack": "మళ్లీ స్వాగతం",
+    "line": "{greeting}, {name}",
+    "fallbackName": "మిత్రమా"
+  },
+  "eyeFoundation": {
+    "complete": "Eye Foundation మాడ్యూల్ పూర్తయింది — ఇదే వేగం కొనసాగించండి.",
+    "progress": "Eye Foundation మాడ్యూల్‌లో {percent}% పూర్తయింది."
+  },
+  "documentStudio": {
+    "eyebrow": "స్థాయి 1 · ఉపయోగ కేంద్రం",
+    "description": "ఏ PDF, పాఠ్యపుస్తకం లేదా పరిశోధన పత్రాన్నైనా వేయండి. మా AI దాన్ని Smart Reading డ్రిల్స్, Mind Maps మరియు Neural Map Notes గా మారుస్తుంది."
+  },
+  "flagship": {
+    "eyebrow": "స్థాయి 3 · ప్రధాన ప్రోగ్రామ్",
+    "description": "లైవ్ క్లాసులతో 30 రోజుల క్రమబద్ధమైన దారి."
+  },
+  "mindScore": {
+    "breakdown": "Mind Score వివరాలు",
+    "reading": "చదువు",
+    "memory": "జ్ఞాపకశక్తి",
+    "focus": "ఫోకస్"
+  },
+  "streak": {
+    "one": "వరుస రోజులు: {count} రోజు",
+    "many": "వరుస రోజులు: {count} రోజులు"
+  },
+  "curriculumCard": {
+    "progress": "మీ కోర్సు పురోగతి",
+    "dayTheme": "రోజు {day} — {title}",
+    "readyDay1": "రోజు 1 మొదలుపెట్టడానికి సిద్ధం",
+    "percentComplete": "30 రోజుల్లో {percent}% పూర్తి",
+    "openCurriculum": "కోర్సు తెరవండి",
+    "continueDay": "రోజు {day} కొనసాగించండి",
+    "startDay1": "రోజు 1 మొదలుపెట్టండి"
+  },
+  "viewToggle": {
+    "student": "విద్యార్థి వీక్షణ",
+    "parent": "తల్లిదండ్రుల విశ్లేషణ"
+  },
+  "habit": {
+    "journeyDay": "మీ {program} లో రోజు {day}.",
+    "programOutcome": "అర్థం చేసుకుంటూ వేగంగా చదవండి, ఎక్కువసేపు ఫోకస్ చేయండి, ఎక్కువ గుర్తుంచుకోండి — మీ సొంత రోజు 1 నుంచి రోజు 30 వరకు కొలుస్తాము.",
+    "programFormat": "ఆన్‌లైన్ · 7 లైవ్ క్లాసులు + 30 రోజుల యాప్ ప్రాక్టీస్."
+  },
+  "journeyCard": {
+    "skills": "చదువు · త్వరిత ఎంపిక · దృష్టి ఫోకస్ · ఊహ",
+    "continue": "కొనసాగించండి →",
+    "begin": "మొదలుపెట్టండి →",
+    "dayCompleted": "రోజు {day}, పూర్తయింది",
+    "dayUnlocked": "రోజు {day}, తెరిచి ఉంది",
+    "dayLocked": "రోజు {day}, లాక్ అయింది, {program} లో భాగం"
+  }
+}

@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getPracticeContentLang } from '@/lib/app-i18n/server'
 import { logger } from '@/lib/logger'
 import { BaselineDiagnosticInputSchema } from './baselineDiagnosticSchema'
 
@@ -32,6 +33,7 @@ export async function saveBaselineDiagnostic(input: unknown): Promise<SaveBaseli
 
   const { error } = await supabase.from('journey_baseline_diagnostics').insert({
     user_id: user.id,
+    content_lang: await getPracticeContentLang('reading'),
     raw_wpm: rawWpm,
     accuracy_percent: accuracyPercent,
     true_baseline_wpm: trueBaselineWpm,

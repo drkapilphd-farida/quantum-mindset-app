@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import type { AppLang } from '@/lib/app-i18n/languages'
+import { practiceContentLang, sameContentLang } from '@/lib/app-i18n/practiceContent'
+import { useUiLang } from '@/lib/app-i18n/client'
 import { useSearchParams } from 'next/navigation'
 import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
 import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
@@ -15,10 +18,11 @@ import { getCurriculumDayCompletions } from '../actions/getCurriculumDayCompleti
 
 type CurriculumView = 'overview' | 'day-detail' | 'assessment'
 
-function getMostRecentTrueWpm(day: number): number | null {
+function getMostRecentTrueWpm(day: number, contentLang: AppLang): number | null {
   const progress = loadCurriculumProgress()
+  // Only an earlier checkpoint read in the same language is comparable.
   const priorCheckpoints = Object.values(progress.checkpoints)
-    .filter((checkpoint) => checkpoint.day < day)
+    .filter((checkpoint) => checkpoint.day < day && sameContentLang(checkpoint, { contentLang }))
     .sort((a, b) => b.day - a.day)
   return priorCheckpoints[0]?.trueWpm ?? null
 }
@@ -72,6 +76,8 @@ type ThirtyDayCurriculumExperienceProps = {
 
 export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
+  // Practice text is English until a language gets its own passages; WPM is compared only within one language.
+  const contentLang = practiceContentLang(useUiLang(), 'reading')
   const initialDay = searchParams.get('view') === 'day' ? parseValidDay(searchParams.get('day')) : null
 
   const [progress, setProgress] = useState(() => loadCurriculumProgress())
@@ -154,7 +160,8 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // shortly after) — so the server's own freshly-validated
   // `completedDays` becomes this component's gate state immediately,
   // with no round-trip gap before the learner can move on.
-  async function handleAssessmentComplete(result: CurriculumCheckpointResult): Promise<void> {
+  async function handleAssessmentComplete(measured: CurriculumCheckpointResult): Promise<void> {
+    const result: CurriculumCheckpointResult = { ...measured, contentLang }
     recordCurriculumCheckpoint(result)
     const outcome = await completeCurriculumDay({
       day: result.day,
@@ -174,7 +181,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     return (
       <>
         <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
-          <CurriculumAssessmentCanvas day={selectedDay} mostRecentTrueWpm={getMostRecentTrueWpm(selectedDay)} onComplete={handleAssessmentComplete} />
+          <CurriculumAssessmentCanvas day={selectedDay} mostRecentTrueWpm={getMostRecentTrueWpm(selectedDay, contentLang)} onComplete={handleAssessmentComplete} />
         </div>
         {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
       </>

@@ -1,13 +1,14 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useLanguage } from "@/context/LanguageContext";
 import { sharpBrainEnrolment, waLink } from "@/config/site.config";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 import { trackInitiateCheckout } from "@/lib/analytics/conversions";
 import { getSharpBrainPricing, startSharpBrainCheckout, type CheckoutResult } from "../actions";
 import type { PricedBatch, PricingSnapshot } from "../server";
-import { countdownParts, enrolCopy, inr, istDayMonth, istDeadline } from "../copy";
+import { countdownParts, inr, istDayMonth, istDeadline } from "../copy";
+import { enrolT } from "@/lib/app-i18n/enrol";
+import { useUiLang } from "@/lib/app-i18n/client";
 
 // Sharp Brain prices on the page. The server renders a first snapshot;
 // on mount it is refreshed from the server, and the countdown runs on the
@@ -66,7 +67,7 @@ export function useNextBatch(): PricedBatch | null {
 
 export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; className?: string }): React.JSX.Element | null {
   const { offsetMs } = useSharpBrainPricing();
-  const { lang } = useLanguage();
+  const lang = useUiLang();
   const [tick, setTick] = useState(0);
   useEffect(() => {
     const timer = window.setInterval(() => setTick((t) => t + 1), 1000);
@@ -76,7 +77,8 @@ export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; clas
   if (offsetMs === null) return null;
   void tick;
   const { d, h, m, s } = countdownParts(endsAtMs - (Date.now() + offsetMs));
-  const u = enrolCopy[lang].units;
+  const t = enrolT(lang);
+  const u = { d: t("units.d"), h: t("units.h"), m: t("units.m"), s: t("units.s") };
   const pad = (n: number): string => String(n).padStart(2, "0");
   return (
     <span className={`font-mono tabular-nums ${className}`} data-countdown suppressHydrationWarning>
@@ -91,9 +93,9 @@ export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; clas
 
 /** "Enrol now · ₹8,999" — the price of the next batch. */
 export function useEnrolLabel(): string {
-  const { lang } = useLanguage();
+  const lang = useUiLang();
   const next = useNextBatch();
-  return enrolCopy[lang].enrolNow(inr(next?.amountInr ?? sharpBrainEnrolment.regularInr));
+  return enrolT(lang)("enrolNow", { price: inr(next?.amountInr ?? sharpBrainEnrolment.regularInr) });
 }
 
 /**
@@ -101,10 +103,10 @@ export function useEnrolLabel(): string {
  * countdown, or the regular price with the next batch date.
  */
 export function PriceLine({ className = "", tone = "light" }: { className?: string; tone?: "light" | "app" }): React.JSX.Element | null {
-  const { lang } = useLanguage();
+  const lang = useUiLang();
   const next = useNextBatch();
   if (next === null) return null;
-  const c = enrolCopy[lang];
+  const t = enrolT(lang);
   const date = istDayMonth(next.startsAtMs, lang);
   const strike = tone === "app" ? "text-muted-foreground" : "text-ink-faint";
   const strong = tone === "app" ? "text-foreground" : "text-ink";
@@ -113,19 +115,19 @@ export function PriceLine({ className = "", tone = "light" }: { className?: stri
   if (next.offer === "regular" || next.endsAtMs === null) {
     return (
       <p className={`text-[14px] ${strike} ${className}`} data-price-state="regular">
-        <span className={`font-semibold ${strong}`}>{inr(next.amountInr)}</span> · {c.oneTime} · {c.regularLine(date)}
+        <span className={`font-semibold ${strong}`}>{inr(next.amountInr)}</span> · {t("oneTime")} · {t("regularLine", { date: date })}
       </p>
     );
   }
   return (
     <div className={`text-[14px] leading-relaxed ${className}`} data-price-state={next.offer}>
       <p className={strong}>
-        <span className={`font-semibold ${accent}`}>{next.offer === "test1000" ? c.offerTag : c.earlyBirdFor(date)}:</span>{" "}
+        <span className={`font-semibold ${accent}`}>{next.offer === "test1000" ? t("offerTag") : t("earlyBirdFor", { date: date })}:</span>{" "}
         <s className={strike}>{inr(next.regularInr)}</s> <span className="font-bold">{inr(next.amountInr)}</span>
       </p>
       <p className={strike}>
-        {c.endsIn} <Countdown endsAtMs={next.endsAtMs} className={`font-semibold ${strong}`} />
-        <span className="ml-1">({c.endsOn(istDeadline(next.endsAtMs, lang))})</span>
+        {t("endsIn")} <Countdown endsAtMs={next.endsAtMs} className={`font-semibold ${strong}`} />
+        <span className="ml-1">({t("endsOn", { deadline: istDeadline(next.endsAtMs, lang) })})</span>
       </p>
     </div>
   );
@@ -144,9 +146,9 @@ export function BatchCheckout({
   tone?: "light" | "app";
   showPerDay?: boolean;
 }): React.JSX.Element {
-  const { lang } = useLanguage();
+  const lang = useUiLang();
   const { snapshot, simulateNow, offerId } = useSharpBrainPricing();
-  const c = enrolCopy[lang];
+  const t = enrolT(lang);
   const [chosen, setChosen] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -191,8 +193,8 @@ export function BatchCheckout({
 
   return (
     <div data-batch-checkout>
-      <p className={`font-mono text-[11.5px] uppercase tracking-[0.08em] ${faint}`}>{c.chooseBatch}</p>
-      <div role="radiogroup" aria-label={c.chooseBatch} className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <p className={`font-mono text-[11.5px] uppercase tracking-[0.08em] ${faint}`}>{t("chooseBatch")}</p>
+      <div role="radiogroup" aria-label={t("chooseBatch")} className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {batches.map((option) => {
           const on = option.start === batch.start;
           return (
@@ -204,18 +206,18 @@ export function BatchCheckout({
               onClick={() => setChosen(option.start)}
               className={`${optionBase} ${on ? optionOn : optionOff}`}
             >
-              <span className="block font-semibold">{c.batchOption(istDayMonth(option.startsAtMs, lang))}</span>
+              <span className="block font-semibold">{t("batchOption", { date: istDayMonth(option.startsAtMs, lang) })}</span>
               <span className={`mt-0.5 block text-[13px] ${faint}`}>
                 {option.offer !== "regular" && <s className="mr-1.5">{inr(option.regularInr)}</s>}
                 <span className="font-semibold">{inr(option.amountInr)}</span>
-                {option.offer === "earlybird" && ` · ${c.earlyBirdTag}`}
-                {option.offer === "test1000" && ` · ${c.offerTag}`}
+                {option.offer === "earlybird" && ` · ${t("earlyBirdTag")}`}
+                {option.offer === "test1000" && ` · ${t("offerTag")}`}
               </span>
             </button>
           );
         })}
       </div>
-      {snapshot.seatsPerBatch !== null && <p className={`mt-2 text-[12.5px] ${faint}`}>{c.seatsLeft(snapshot.seatsPerBatch)}</p>}
+      {snapshot.seatsPerBatch !== null && <p className={`mt-2 text-[12.5px] ${faint}`}>{t("seatsLeft", { n: snapshot.seatsPerBatch })}</p>}
       <form
         className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2"
         onSubmit={(event) => {
@@ -225,7 +227,7 @@ export function BatchCheckout({
         id={`enrol-form-${location}`}
       >
         <label className="block">
-          <span className={`text-[12.5px] font-semibold ${faint}`}>{c.emailLabel}</span>
+          <span className={`text-[12.5px] font-semibold ${faint}`}>{t("emailLabel")}</span>
           <input
             type="email"
             required
@@ -238,7 +240,7 @@ export function BatchCheckout({
           />
         </label>
         <label className="block">
-          <span className={`text-[12.5px] font-semibold ${faint}`}>{c.nameLabel}</span>
+          <span className={`text-[12.5px] font-semibold ${faint}`}>{t("nameLabel")}</span>
           <input
             type="text"
             autoComplete="name"
@@ -249,20 +251,20 @@ export function BatchCheckout({
             data-enrol-name
           />
         </label>
-        <p className={`text-[12px] sm:col-span-2 ${faint}`}>{c.emailHint}</p>
+        <p className={`text-[12px] sm:col-span-2 ${faint}`}>{t("emailHint")}</p>
       </form>
       <button type="submit" form={`enrol-form-${location}`} disabled={pending} className={`${button} mt-4`} data-enrol-button>
-        {pending ? c.redirecting : c.enrolNow(inr(batch.amountInr))}
+        {pending ? t("redirecting") : t("enrolNow", { price: inr(batch.amountInr) })}
       </button>
       <p className={`mt-2 text-[12.5px] ${faint}`}>
-        {c.oneTime}
-        {showPerDay && ` · ${c.perDay(inr(Math.round(batch.amountInr / 30)))}`} · {c.secure}
+        {t("oneTime")}
+        {showPerDay && ` · ${t("perDay", { price: inr(Math.round(batch.amountInr / 30)) })}`} · {t("secure")}
       </p>
       {error !== null && (
         <p role="alert" className="mt-3 text-[13.5px] text-red-700">
-          {c.errors[error]}{" "}
-          <a href={waLink(c.whatsappEnrol(date, inr(batch.amountInr)))} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
-            {c.chatOnWhatsapp} →
+          {t(`errors.${error}`)}{" "}
+          <a href={waLink(t("whatsappEnrol", { date, price: inr(batch.amountInr) }))} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+            {t("chatOnWhatsapp")} →
           </a>
         </p>
       )}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useAppT, useLabelT } from '@/lib/app-i18n/client'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
 import { useCountUp } from '@/hooks/exercises/useCountUp'
@@ -96,6 +97,8 @@ export function DimensionScoreGrid({
   consistencyScore,
   neuralRetrainingIndex,
 }: DimensionScoreGridProps): React.JSX.Element {
+  const t = useAppT()
+  const tl = useLabelT()
   // QSR/Holographic Recall is the one dimension whose real signal (the
   // Sensory Hologram Builder's self-reported immersion score) lives in
   // localStorage, not Supabase — this component is already 'use client',
@@ -154,14 +157,14 @@ export function DimensionScoreGrid({
 
   return (
     <div className="glass-premium-card p-6">
-      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Intelligence Dimensions</p>
+      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('progress.dimensions')}</p>
 
-      <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6" role="list" aria-label="Mind intelligence dimensions">
+      <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6" role="list" aria-label={t('progress.dimensionsAria')}>
         {dimensions.map((dim) => (
-          <div key={dim.id} className="flex flex-col items-center gap-2" role="listitem" aria-label={`${dim.label}${dim.score !== null ? `: ${dim.score} out of 100` : ': not yet attempted'}`}>
+          <div key={dim.id} className="flex flex-col items-center gap-2" role="listitem" aria-label={dim.score !== null ? t('progress.outOf100', { label: tl(dim.label), score: dim.score }) : t('progress.notAttempted', { label: tl(dim.label) })}>
             <DimensionRing score={dim.score} />
             <div className="text-center">
-              <p className="text-[10px] leading-tight font-medium text-muted-foreground">{dim.label}</p>
+              <p className="text-[10px] leading-tight font-medium text-muted-foreground">{tl(dim.label)}</p>
               {dim.score !== null ? (
                 <div className="mt-0.5 flex items-center justify-center">
                   <TrendBadge trend={dim.trend} />
@@ -169,10 +172,10 @@ export function DimensionScoreGrid({
               ) : dim.startHref !== null ? (
                 <Link href={dim.startHref} className="mt-0.5 inline-flex items-center gap-0.5 text-[9px] font-semibold text-primary hover:underline">
                   <Sparkles className="size-2.5" aria-hidden="true" />
-                  Start Now
+                  {t('progress.startNow')}
                 </Link>
               ) : (
-                <p className="mt-0.5 text-[9px] text-muted-foreground/60">Not started yet</p>
+                <p className="mt-0.5 text-[9px] text-muted-foreground/60">{t('progress.notStarted')}</p>
               )}
             </div>
           </div>

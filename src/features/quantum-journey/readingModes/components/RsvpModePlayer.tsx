@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
+import { useAppT } from '@/lib/app-i18n/client'
 import { Pause, Play } from 'lucide-react'
 import { computeReadingPowerScore } from '@/app/unified-session-preview/components/quantumReadingSprintDataset'
 import { pickJourneyReadingSet, type JourneyReadingSet, type JourneyLengthTier } from '../../readingContent'
@@ -43,6 +45,7 @@ type Phase = 'reading' | 'question'
 // word so the eye can stay fixed on one screen position rather than
 // scanning, the mechanism this technique uses to reduce sub-vocalization.
 export function RsvpModePlayer({ lengthTier, initialTargetWpm, onComplete, selectedSetOverride }: RsvpModePlayerProps): React.JSX.Element | null {
+  const t = useAppT()
   // Client-only pick — picking during SSR would render one passage on the
   // server and a different random one on the client, a real hydration
   // mismatch (the same class of bug fixed in JourneyReadingModePlayer).
@@ -97,7 +100,8 @@ export function RsvpModePlayer({ lengthTier, initialTargetWpm, onComplete, selec
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center gap-6 px-6 py-12 text-center">
-      <p className="text-xs font-semibold tracking-widest text-primary uppercase">RSVP Mode™</p>
+      <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('exercises.rsvp.mode')}</p>
+      <PracticeTextNote kind="rsvp" />
 
       {phase === 'reading' && currentWord !== undefined && (
         <div className="flex w-full flex-1 flex-col items-center justify-center gap-8">
@@ -134,13 +138,13 @@ export function RsvpModePlayer({ lengthTier, initialTargetWpm, onComplete, selec
               className="flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent/20"
             >
               {isPaused ? <Play className="size-3.5" aria-hidden="true" /> : <Pause className="size-3.5" aria-hidden="true" />}
-              {isPaused ? 'Resume' : 'Pause'}
+              {isPaused ? t('common.actions.resume') : t('common.actions.pause')}
             </button>
           </div>
 
           <div className="flex w-full max-w-xs flex-col items-center gap-1.5">
             <label htmlFor="rsvp-wpm-slider" className="text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
-              Speed: {targetWpm} WPM
+              {t('exercises.rsvp.speed', { wpm: targetWpm })}
             </label>
             <input
               id="rsvp-wpm-slider"

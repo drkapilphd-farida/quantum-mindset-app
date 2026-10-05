@@ -32,7 +32,7 @@ export default async function PhraseReadingPage(): Promise<React.JSX.Element> {
       <ExerciseLockedScreen
         title="Phrase Reading"
         unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
-        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+        unlockTarget={access.nextExercise?.title ?? null}
       />
     )
   }

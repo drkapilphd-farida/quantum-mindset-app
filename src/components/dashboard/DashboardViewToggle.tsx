@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getAppT } from '@/lib/app-i18n/server'
 import { cn } from '@/lib/utils'
 
 type DashboardViewToggleProps = {
@@ -12,7 +13,8 @@ type DashboardViewToggleProps = {
 // default; /dashboard?view=parent switches to the same real
 // ParentDashboard already embedded as a tab on the Masterclasses hub —
 // this is just a second, more direct entry point to it, not a copy.
-export function DashboardViewToggle({ activeView }: DashboardViewToggleProps): React.JSX.Element {
+export async function DashboardViewToggle({ activeView }: DashboardViewToggleProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   return (
     <div className="inline-flex items-center gap-0.5 rounded-full border border-border/60 bg-card/60 p-1 text-xs font-medium">
       <Link
@@ -22,7 +24,7 @@ export function DashboardViewToggle({ activeView }: DashboardViewToggleProps): R
           activeView === 'student' ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',
         )}
       >
-        Student View
+        {t('dashboard.viewToggle.student')}
       </Link>
       <Link
         href="/dashboard?view=parent"
@@ -31,7 +33,7 @@ export function DashboardViewToggle({ activeView }: DashboardViewToggleProps): R
           activeView === 'parent' ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',
         )}
       >
-        Parent Analytics
+        {t('dashboard.viewToggle.parent')}
       </Link>
     </div>
   )

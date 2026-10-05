@@ -1,0 +1,58 @@
+{
+  "greeting": {
+    "morning": "காலை வணக்கம்",
+    "afternoon": "மதிய வணக்கம்",
+    "evening": "மாலை வணக்கம்",
+    "welcomeBack": "மீண்டும் வருக",
+    "line": "{greeting}, {name}",
+    "fallbackName": "நண்பரே"
+  },
+  "eyeFoundation": {
+    "complete": "Eye Foundation பகுதி முடிந்தது — இதே வேகத்தைத் தொடருங்கள்.",
+    "progress": "Eye Foundation பகுதியில் {percent}% முடிந்தது."
+  },
+  "documentStudio": {
+    "eyebrow": "நிலை 1 · பயன்பாட்டு மையம்",
+    "description": "எந்த PDF, பாடநூல் அல்லது ஆய்வுக் கட்டுரையையும் சேர்க்கவும். எங்கள் AI அதை Smart Reading பயிற்சிகள், Mind Maps மற்றும் Neural Map Notes ஆக மாற்றும்."
+  },
+  "flagship": {
+    "eyebrow": "நிலை 3 · முதன்மைத் திட்டம்",
+    "description": "நேரலை வகுப்புகளுடன் 30 நாள் ஒழுங்கான பாதை."
+  },
+  "mindScore": {
+    "breakdown": "Mind Score விவரம்",
+    "reading": "வாசிப்பு",
+    "memory": "நினைவாற்றல்",
+    "focus": "கவனம்"
+  },
+  "streak": {
+    "one": "தொடர் நாட்கள்: {count} நாள்",
+    "many": "தொடர் நாட்கள்: {count} நாட்கள்"
+  },
+  "curriculumCard": {
+    "progress": "உங்கள் பாடத்திட்ட முன்னேற்றம்",
+    "dayTheme": "நாள் {day} — {title}",
+    "readyDay1": "நாள் 1 தொடங்கத் தயார்",
+    "percentComplete": "30 நாட்களில் {percent}% முடிந்தது",
+    "openCurriculum": "பாடத்திட்டத்தைத் திற",
+    "continueDay": "நாள் {day} தொடரவும்",
+    "startDay1": "நாள் 1 தொடங்கு"
+  },
+  "viewToggle": {
+    "student": "மாணவர் பார்வை",
+    "parent": "பெற்றோர் பகுப்பாய்வு"
+  },
+  "habit": {
+    "journeyDay": "உங்கள் {program} இன் நாள் {day}.",
+    "programOutcome": "புரிதலுடன் வேகமாகப் படியுங்கள், நீண்ட நேரம் கவனம் செலுத்துங்கள், அதிகம் நினைவில் வையுங்கள் — உங்கள் சொந்த நாள் 1 முதல் நாள் 30 வரை அளவிடப்படும்.",
+    "programFormat": "ஆன்லைன் · 7 நேரலை வகுப்புகள் + 30 நாள் ஆப் பயிற்சி."
+  },
+  "journeyCard": {
+    "skills": "வாசிப்பு · விரைவுத் தேர்வு · பார்வைக் கவனம் · கற்பனை",
+    "continue": "தொடரவும் →",
+    "begin": "தொடங்கு →",
+    "dayCompleted": "நாள் {day}, முடிந்தது",
+    "dayUnlocked": "நாள் {day}, திறந்துள்ளது",
+    "dayLocked": "நாள் {day}, பூட்டப்பட்டுள்ளது, {program} இன் பகுதி"
+  }
+}

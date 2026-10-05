@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { PracticeKind } from '@/lib/app-i18n/practiceContent'
 
 export const LabIdSchema = z.enum(['quantum-speed-reading', 'memory-intelligence', 'focus-intelligence', 'visual-intelligence'])
 
@@ -34,4 +35,7 @@ export type ExerciseDefinition = {
     title: string
     mentorLine: string
   }
+  // Set when the exercise shows built-in practice text (words/sentences),
+  // so the intro can say when that text isn't in the learner's language yet.
+  practiceText?: PracticeKind
 }

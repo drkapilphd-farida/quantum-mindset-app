@@ -1,11 +1,13 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useMemo, useTransition } from 'react'
+import { z } from 'zod'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import Link from 'next/link'
-import { SignUpSchema, type SignUpInput } from '../types'
+import { type SignUpInput } from '../types'
 import { signUp } from '../actions/signUp'
 import {
   Form,
@@ -31,9 +33,19 @@ type SignUpFormProps = {
 
 export function SignUpForm({ next, onSwitchToLogin }: SignUpFormProps): React.JSX.Element {
   const [isPending, startTransition] = useTransition()
+  const t = useAppT()
+  const schema = useMemo(
+    () =>
+      z.object({
+        fullName: z.string().min(2, t('auth.validation.nameShort')),
+        email: z.string().email(t('auth.validation.email')),
+        password: z.string().min(8, t('auth.validation.passwordShort')),
+      }),
+    [t],
+  )
 
   const form = useForm<SignUpInput>({
-    resolver: zodResolver(SignUpSchema),
+    resolver: zodResolver(schema),
     defaultValues: { fullName: '', email: '', password: '' },
   })
 
@@ -47,7 +59,7 @@ export function SignUpForm({ next, onSwitchToLogin }: SignUpFormProps): React.JS
   return (
     <div className="space-y-4">
       <GoogleSignInButton next={next} />
-      <AuthDivider label="or continue with email" />
+      <AuthDivider label={t('auth.orEmail')} />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -56,10 +68,10 @@ export function SignUpForm({ next, onSwitchToLogin }: SignUpFormProps): React.JS
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full name</FormLabel>
+                <FormLabel>{t('auth.fullName')}</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Jane Smith"
+                    placeholder={t('auth.namePlaceholder')}
                     autoComplete="name"
                     {...field}
                   />
@@ -74,11 +86,11 @@ export function SignUpForm({ next, onSwitchToLogin }: SignUpFormProps): React.JS
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t('auth.email')}</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder={t('auth.emailPlaceholder')}
                     autoComplete="email"
                     {...field}
                   />
@@ -93,12 +105,12 @@ export function SignUpForm({ next, onSwitchToLogin }: SignUpFormProps): React.JS
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t('auth.password')}</FormLabel>
                 <FormControl>
                   <Input
                     type="password"
                     autoComplete="new-password"
-                    placeholder="At least 8 characters"
+                    placeholder={t('auth.passwordPlaceholder')}
                     {...field}
                   />
                 </FormControl>
@@ -108,37 +120,37 @@ export function SignUpForm({ next, onSwitchToLogin }: SignUpFormProps): React.JS
           />
 
           <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? 'Creating account…' : 'Create account'}
+            {isPending ? t('auth.creatingAccount') : t('auth.createAccount')}
           </Button>
 
           <p className="text-muted-foreground text-center text-xs leading-relaxed">
-            By creating an account, you agree to our{' '}
+            {t('auth.agreePrefix')}{' '}
             <Link href="/terms" className="text-foreground hover:underline">
-              Terms of Service
+              {t('auth.terms')}
             </Link>{' '}
-            and{' '}
+            {t('auth.and')}{' '}
             <Link href="/privacy" className="text-foreground hover:underline">
-              Privacy Policy
+              {t('auth.privacy')}
             </Link>
             .
           </p>
 
           <p className="text-muted-foreground text-center text-sm">
-            Already have an account?{' '}
+            {t('auth.haveAccount')}{' '}
             {onSwitchToLogin ? (
               <button
                 type="button"
                 onClick={onSwitchToLogin}
                 className="text-foreground font-medium hover:underline"
               >
-                Sign in
+                {t('auth.signIn')}
               </button>
             ) : (
               <Link
                 href="/login"
                 className="text-foreground font-medium hover:underline"
               >
-                Sign in
+                {t('auth.signIn')}
               </Link>
             )}
           </p>

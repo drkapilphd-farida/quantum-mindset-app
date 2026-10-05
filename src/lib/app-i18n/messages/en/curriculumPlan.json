@@ -1,0 +1,142 @@
+{
+  "days": {
+    "d1": {
+      "title": "Baseline & Visual Warm-Up",
+      "focus": "Establish your true baseline WPM and comprehension score, then begin waking up your visual system."
+    },
+    "d2": {
+      "title": "Eye Foundation Ignition",
+      "focus": "Build the ocular strength and control every later gain depends on."
+    },
+    "d3": {
+      "title": "First Visual Focus Session",
+      "focus": "Introduce visual, non-verbal recall alongside your reading warm-ups."
+    },
+    "d4": {
+      "title": "Rhythm & Chunk Awareness",
+      "focus": "Start noticing word groups instead of single words."
+    },
+    "d5": {
+      "title": "Visualization Opens",
+      "focus": "Begin training the mental screen behind your eyes."
+    },
+    "d6": {
+      "title": "Foundation Consolidation",
+      "focus": "Reinforce the week's gains with a full balanced circuit."
+    },
+    "d7": {
+      "title": "Checkpoint — Foundation Review",
+      "focus": "Re-measure WPM and comprehension to confirm real week-one growth."
+    },
+    "d8": {
+      "title": "Visual Focus Expansion Begins",
+      "focus": "Deepen visual and intuitive recall training."
+    },
+    "d9": {
+      "title": "Inner Voice Awareness",
+      "focus": "Start noticing and interrupting your inner voice while reading."
+    },
+    "d10": {
+      "title": "Flash Intelligence Warm-Up",
+      "focus": "Sharpen instant recognition speed with flash-based drills."
+    },
+    "d11": {
+      "title": "Deeper Visual Focus Practice",
+      "focus": "Extend non-verbal recall span and grid complexity."
+    },
+    "d12": {
+      "title": "Inner Voice Control",
+      "focus": "Push further into silent, voice-free reading."
+    },
+    "d13": {
+      "title": "Integration Circuit",
+      "focus": "Combine visual-focus and reading gains in one balanced session."
+    },
+    "d14": {
+      "title": "Checkpoint — Visual Focus Review",
+      "focus": "Re-measure WPM and comprehension to confirm real week-two growth."
+    },
+    "d15": {
+      "title": "Multi-Sensory Visualisation Begins",
+      "focus": "Enter the Sensory Imagery Builder to train vivid, multi-sensory mental imagery."
+    },
+    "d16": {
+      "title": "Energy & Focus Balancing",
+      "focus": "Train sustained, stable mental focus with the Calm Breath Balance."
+    },
+    "d17": {
+      "title": "Mental Mastery Deepens",
+      "focus": "Layer visualization work on top of your reading gains."
+    },
+    "d18": {
+      "title": "Full Sensory Immersion",
+      "focus": "Return to the Hologram Builder with a more ambitious goal."
+    },
+    "d19": {
+      "title": "Balance Under Pressure",
+      "focus": "Hold equilibrium against tighter tolerances in the Energy Balancer."
+    },
+    "d20": {
+      "title": "Integrated Focus Circuit",
+      "focus": "Combine visualization, balance, and reading in one advanced session."
+    },
+    "d21": {
+      "title": "Checkpoint — Mental Mastery Review",
+      "focus": "Re-measure WPM and comprehension to confirm real week-three growth."
+    },
+    "d22": {
+      "title": "Peak Mastery — Eye Control",
+      "focus": "Revisit eye-foundation training at true peak intensity."
+    },
+    "d23": {
+      "title": "Peak Mastery — Stretch & Span",
+      "focus": "Push oculomotor stretch and span further than week one."
+    },
+    "d24": {
+      "title": "Peak Mastery — Regression Elimination",
+      "focus": "Reduce backward eye movements while reading."
+    },
+    "d25": {
+      "title": "Peak Mastery — Speed Ceiling",
+      "focus": "Raise your reading speed ceiling with focused RSVP training."
+    },
+    "d26": {
+      "title": "Peak Mastery — Phrase Fluency",
+      "focus": "Read in idea-sized phrases, not single words."
+    },
+    "d27": {
+      "title": "Peak Mastery — Multi-Line Flow",
+      "focus": "Extend fluency across multiple lines at once."
+    },
+    "d28": {
+      "title": "Peak Mastery — Sentence Mastery",
+      "focus": "Recognize whole sentences as single ideas."
+    },
+    "d29": {
+      "title": "Peak Mastery — Paragraph Mastery",
+      "focus": "Recognize whole paragraphs as single meaning blocks."
+    },
+    "d30": {
+      "title": "Final Certification",
+      "focus": "Complete your final WPM and comprehension assessment and claim your Sharp Brain certification."
+    }
+  },
+  "phases": {
+    "p1": {
+      "title": "Foundation & Visual Warm-Up",
+      "description": "Establish a true baseline, build core eye control, and wake up the visual reading system."
+    },
+    "p2": {
+      "title": "Visual Focus & Inner Voice Control",
+      "description": "Deepen visual, non-verbal recall and break the habit of silently voicing every word."
+    },
+    "p3": {
+      "title": "Multi-Sensory Visualisation & Mental Mastery",
+      "description": "Train vivid multi-sensory visualization and sustained focus."
+    },
+    "p4": {
+      "title": "Peak Smart Reading Mastery & Final Certification",
+      "description": "Push every skill to its ceiling and complete the final mastery certification."
+    }
+  }
+}

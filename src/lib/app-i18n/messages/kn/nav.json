@@ -1,0 +1,22 @@
+{
+  "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  "history": "ಇತಿಹಾಸ",
+  "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+  "documentStudio": "Document Studio",
+  "mainNavigation": "ಮುಖ್ಯ ಮೆನು",
+  "openNavigation": "ಮೆನು ತೆರೆಯಿರಿ",
+  "account": "ಖಾತೆ",
+  "openAccountMenu": "ಖಾತೆ ಮೆನು ತೆರೆಯಿರಿ",
+  "profileSettings": "ಪ್ರೊಫೈಲ್ ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+  "subscription": "ಚಂದಾದಾರಿಕೆ",
+  "support": "ಸಹಾಯ",
+  "privacy": "ಗೌಪ್ಯತಾ ನೀತಿ",
+  "terms": "ಸೇವಾ ನಿಯಮಗಳು",
+  "refund": "ಮರುಪಾವತಿ ಮತ್ತು ರದ್ದತಿ ನೀತಿ",
+  "signOut": "ಸೈನ್ ಔಟ್",
+  "signingOut": "ಸೈನ್ ಔಟ್ ಆಗುತ್ತಿದೆ…",
+  "installApp": "ಆ್ಯಪ್ ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿ",
+  "toggleTheme": "ಥೀಮ್ ಬದಲಿಸಿ",
+  "lightMode": "ಲೈಟ್ ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ",
+  "darkMode": "ಡಾರ್ಕ್ ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ"
+}

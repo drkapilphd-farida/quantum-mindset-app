@@ -1,4 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
+import { enrolT } from '@/lib/app-i18n/enrol'
+import { getAppT } from '@/lib/app-i18n/server'
 import { currentProgramPriceLabel } from '@/features/sharp-brain-enrol/server'
 import { hasHabitBuilderAccess } from '@/lib/subscription/hasHabitBuilderAccess'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
@@ -20,6 +22,7 @@ const PROGRAM_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 // middleware level (see src/middleware.ts's DOMAIN_ROUTES), not just
 // omitted from this page.
 export async function HabitDashboard(): Promise<React.JSX.Element> {
+  const { t, lang } = await getAppT()
   const supabase = await createClient()
   const {
     data: { user },
@@ -60,7 +63,9 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
       <div className="glass-premium-card glass-premium-lift p-6 sm:p-8">
         <GreetingHeading studentName={studentFirstName} />
         {hasStartedJourney && (
-          <p className="mt-1 text-sm text-muted-foreground">Day {nextJourneyDay} of your {programs.focusStarter.appName}.</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t('dashboard.habit.journeyDay', { day: nextJourneyDay, program: programs.focusStarter.appName })}
+          </p>
         )}
       </div>
 
@@ -70,15 +75,15 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
         // The Practice Journey is closed to new learners — offer the program.
         <div className="glass-premium-card glass-premium-lift p-6 sm:p-8">
           <h2 className="font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl">{programs.sharpBrain.name}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">{programs.sharpBrain.outcome}</p>
-          <p className="mt-2 text-sm text-foreground">{programs.sharpBrain.format}.</p>
+          <p className="mt-2 text-sm text-muted-foreground">{t('dashboard.habit.programOutcome')}</p>
+          <p className="mt-2 text-sm text-foreground">{t('dashboard.habit.programFormat')}</p>
           <a
             href={PROGRAM_CHECKOUT_HREF}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 inline-flex rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-500 hover:to-indigo-400"
           >
-            Enrol now · {currentProgramPriceLabel()}
+            {enrolT(lang)('enrolNow', { price: currentProgramPriceLabel() })}
           </a>
         </div>
       )}

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getAppT } from '@/lib/app-i18n/server'
 import { currentProgramPriceLabel } from '@/features/sharp-brain-enrol/server'
 import { Check, Flame, FlaskConical, Lock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
@@ -51,7 +52,13 @@ function journeyDayHref(day: number): string {
 // exact exercises per day is QuantumJourneySession's own, real, deterministic
 // day-parity rotation — never fabricated). Locked days (Day 8+ without
 // Starter access) link to the Sharp Brain 30-Day Program page in a new tab.
-export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay, currentStreak }: TwentyOneDayJourneyCardProps): React.JSX.Element {
+export async function TwentyOneDayJourneyCard({
+  isPaidUser,
+  isDevUnlocked,
+  currentDay,
+  currentStreak,
+}: TwentyOneDayJourneyCardProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   const otherDays = Array.from({ length: TOTAL_DAYS }, (_, i) => i + 1).filter((day) => day !== currentDay)
   const hasProAccess = isPaidUser || isDevUnlocked
   const isDayUnlocked = (day: number): boolean => day <= FREE_JOURNEY_DAYS || hasProAccess
@@ -73,7 +80,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
           {currentStreak > 0 && (
             <Badge variant="secondary" className="gap-1 border-orange-500/20 bg-orange-500/10 text-orange-700 dark:text-orange-400">
               <Flame className="size-2.5" aria-hidden="true" />
-              Current Streak: {currentStreak} {currentStreak === 1 ? 'Day' : 'Days'}
+              {t(currentStreak === 1 ? 'dashboard.streak.one' : 'dashboard.streak.many', { count: currentStreak })}
             </Badge>
           )}
           {!hasProAccess && (
@@ -101,10 +108,10 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-foreground">Day {currentDay}</p>
-            <p className="truncate text-xs text-slate-700 dark:text-slate-300">Reading · Intuition · Visual Focus · Visualisation</p>
+            <p className="truncate text-xs text-slate-700 dark:text-slate-300">{t('dashboard.journeyCard.skills')}</p>
           </div>
           <span className="shrink-0 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:from-indigo-500 hover:to-indigo-400 active:scale-95">
-            {isReplay ? 'Continue →' : 'Begin →'}
+            {isReplay ? t('dashboard.journeyCard.continue') : t('dashboard.journeyCard.begin')}
           </span>
         </Link>
       ) : (
@@ -139,7 +146,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
               <Link
                 key={day}
                 href={journeyDayHref(day)}
-                aria-label={`Day ${day}, completed`}
+                aria-label={t('dashboard.journeyCard.dayCompleted', { day })}
                 className="flex aspect-square flex-col items-center justify-center gap-0.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-[11px] font-semibold text-emerald-600 shadow-[0_0_8px_-3px_rgba(16,185,129,0.5)] transition-colors duration-200 hover:bg-emerald-500/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:text-emerald-400"
               >
                 <Check className="size-2.5" aria-hidden="true" />
@@ -151,7 +158,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
             <Link
               key={day}
               href={journeyDayHref(day)}
-              aria-label={`Day ${day}, unlocked`}
+              aria-label={t('dashboard.journeyCard.dayUnlocked', { day })}
               className="flex aspect-square flex-col items-center justify-center gap-0.5 rounded-lg border border-slate-200/80 bg-foreground/[0.02] text-[11px] font-medium text-muted-foreground transition-colors hover:border-indigo-500/30 hover:bg-indigo-500/[0.05] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-slate-800/80"
             >
               {day}
@@ -164,7 +171,7 @@ export function TwentyOneDayJourneyCard({ isPaidUser, isDevUnlocked, currentDay,
               href={PROGRAM_OFFER_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Day ${day}, locked, part of the ${programs.sharpBrain.name}`}
+              aria-label={t('dashboard.journeyCard.dayLocked', { day, program: programs.sharpBrain.name })}
               className="flex aspect-square flex-col items-center justify-center gap-0.5 rounded-lg border border-slate-200/60 bg-muted/40 text-[11px] font-medium text-muted-foreground/50 transition-colors hover:bg-muted/60 hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-slate-800/60"
             >
               <Lock className="size-2.5" aria-hidden="true" />

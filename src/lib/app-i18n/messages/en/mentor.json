@@ -1,0 +1,11 @@
+{
+  "title": "Dr. Kapil’s Note™",
+  "fallback": {
+    "firstSession": "{name}, your first Mind Session is ready — every expert was once a beginner.",
+    "streakToday": "{name}, your {streak}-day streak is real commitment — keep building on this momentum.",
+    "doneToday": "You’ve already shown up today, {name} — that’s how transformation happens.",
+    "streakReady": "{name}, your {streak}-day streak is proof — your mind is ready for today’s practice.",
+    "oneLeft": "{name}, you’re one exercise away from finishing — today is the day.",
+    "progress": "{name}, you’ve completed {done} of {total} exercises — today’s session matters."
+  }
+}

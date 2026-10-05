@@ -1,0 +1,22 @@
+{
+  "dashboard": "Dashboard",
+  "history": "History",
+  "settings": "Settings",
+  "documentStudio": "Document Studio",
+  "mainNavigation": "Main navigation",
+  "openNavigation": "Open navigation",
+  "account": "Account",
+  "openAccountMenu": "Open account menu",
+  "profileSettings": "Profile & Settings",
+  "subscription": "Subscription",
+  "support": "Support",
+  "privacy": "Privacy Policy",
+  "terms": "Terms of Service",
+  "refund": "Refund & Cancellation Policy",
+  "signOut": "Sign out",
+  "signingOut": "Signing out…",
+  "installApp": "Install App",
+  "toggleTheme": "Toggle theme",
+  "lightMode": "Switch to light mode",
+  "darkMode": "Switch to dark mode"
+}

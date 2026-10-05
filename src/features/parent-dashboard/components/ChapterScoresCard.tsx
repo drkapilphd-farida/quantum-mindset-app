@@ -1,4 +1,6 @@
 import type { ChapterScoreSummary } from '@/features/quantum-document-transformer/actions/getQuantumDocumentChapterScores'
+import type { Translator } from '@/lib/app-i18n/translate'
+import { getAppT } from '@/lib/app-i18n/server'
 import { cn } from '@/lib/utils'
 
 type ChapterScoresCardProps = {
@@ -12,27 +14,28 @@ type ChapterScoresCardProps = {
 // as scored, see getQuantumDocumentChapterScores.ts). Colors are purely
 // informational, never a gate — a low score never blocks anything, it
 // just tells a parent which chapter is worth guiding a re-read on.
-function scoreTone(scorePercent: number): { chip: string; label: string } {
-  if (scorePercent >= 80) return { chip: 'bg-success/10 text-success', label: 'Strong' }
-  if (scorePercent >= 50) return { chip: 'bg-amber-500/10 text-amber-600 dark:text-amber-400', label: 'Needs review' }
-  return { chip: 'bg-destructive/10 text-destructive', label: 'Re-read recommended' }
+function scoreTone(scorePercent: number, t: Translator): { chip: string; label: string } {
+  if (scorePercent >= 80) return { chip: 'bg-success/10 text-success', label: t('progress.parent.strong') }
+  if (scorePercent >= 50) return { chip: 'bg-amber-500/10 text-amber-600 dark:text-amber-400', label: t('progress.parent.needsReview') }
+  return { chip: 'bg-destructive/10 text-destructive', label: t('progress.parent.reread') }
 }
 
 function formatScore(scorePercent: number): string {
   return Number.isInteger(scorePercent) ? `${scorePercent}%` : `${scorePercent.toFixed(1)}%`
 }
 
-export function ChapterScoresCard({ chapters }: ChapterScoresCardProps): React.JSX.Element {
+export async function ChapterScoresCard({ chapters }: ChapterScoresCardProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Chapter Scores</p>
+      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">{t('progress.parent.chapterScores')}</p>
 
       {chapters.length === 0 ? (
-        <p className="mt-4 text-sm text-muted-foreground">Complete a Chapter Comprehension Check to see exact, per-chapter scores here.</p>
+        <p className="mt-4 text-sm text-muted-foreground">{t('progress.parent.chapterEmpty')}</p>
       ) : (
         <ul className="mt-4 space-y-3">
           {chapters.map((chapter) => {
-            const tone = scoreTone(chapter.latestScorePercent)
+            const tone = scoreTone(chapter.latestScorePercent, t)
             const hasImproved = chapter.attemptsCount > 1 && chapter.bestScorePercent > chapter.latestScorePercent
             return (
               <li key={chapter.quantumDocumentId} className="flex items-center justify-between gap-4 border-b border-border/60 pb-3 last:border-0 last:pb-0">

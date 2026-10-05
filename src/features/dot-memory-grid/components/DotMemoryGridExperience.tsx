@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
@@ -45,6 +46,7 @@ type DotMemoryGridExperienceProps = {
 }
 
 export function DotMemoryGridExperience({ onComplete }: DotMemoryGridExperienceProps = {}): React.JSX.Element {
+  const t = useAppT()
   const curriculumSession = useCurriculumSessionCompletion('dot-memory-grid', LAB_HREF)
   const router = useRouter()
   const session = useExerciseSession({ labId: 'quantum-speed-reading', exerciseId: 'dot-memory-grid' })
@@ -109,7 +111,7 @@ export function DotMemoryGridExperience({ onComplete }: DotMemoryGridExperienceP
         {(curriculumSession.isActiveStep || onComplete) && (
           <div className="mx-auto mt-4 max-w-sm px-4">
             <Button type="button" size="lg" className="w-full rounded-full" onClick={() => (curriculumSession.isActiveStep ? curriculumSession.advance() : onComplete?.(completedResult.accuracyPercent))}>
-              Continue Session →
+              {t('exercises.complete.continueSession')}
             </Button>
           </div>
         )}

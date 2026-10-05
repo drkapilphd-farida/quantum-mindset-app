@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import type { Translator } from '@/lib/app-i18n/translate'
+import { useAppT } from '@/lib/app-i18n/client'
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
 import type { FlashRecallSprintQuizQuestion } from '../subvocalizationDestroyerDataset'
 
@@ -17,10 +19,10 @@ type SubvocalizationDestroyerQuizProps = {
   onExit: () => void
 }
 
-function scoreMessage(score: number, total: number): string {
-  if (score === total) return 'Perfect recall — your eyes caught every key idea, no inner voice required.'
-  if (score >= Math.ceil(total / 2)) return 'Solid comprehension — most of it stuck even at high speed.'
-  return 'Worth another pass — a few key ideas slipped by at this pace.'
+function scoreMessage(score: number, total: number, t: Translator): string {
+  if (score === total) return t('exercises.innerVoice.perfect')
+  if (score >= Math.ceil(total / 2)) return t('exercises.innerVoice.solid')
+  return t('exercises.innerVoice.again')
 }
 
 // Post-session MCQ comprehension quiz — appears only after the ultra-high-
@@ -31,6 +33,7 @@ function scoreMessage(score: number, total: number): string {
 // phase inside the locked useReadingRuntime.ts, which stays untouched and
 // shared by every other exercise.
 export function SubvocalizationDestroyerQuiz({ questions, categoryLabel, onComplete, onExit }: SubvocalizationDestroyerQuizProps): React.JSX.Element {
+  const t = useAppT()
   const [questionIndex, setQuestionIndex] = useState(0)
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null)
   const [score, setScore] = useState(0)
@@ -61,16 +64,16 @@ export function SubvocalizationDestroyerQuiz({ questions, categoryLabel, onCompl
       <ReadingLayout maxWidthClassName="max-w-xl" onExit={onExit}>
         <div className="flex w-full flex-col items-center gap-8 text-center">
           <div>
-            <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Retention Check</p>
+            <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.quiz.retentionCheck')}</p>
             <p className="mb-3 text-center text-xs text-muted-foreground">{categoryLabel}</p>
-            <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">You scored {score} / {totalQuestions}</h1>
-            <p className="mt-2 text-sm text-muted-foreground">{scoreMessage(score, totalQuestions)}</p>
+            <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('exercises.quiz.youScored', { score, total: totalQuestions })}</h1>
+            <p className="mt-2 text-sm text-muted-foreground">{scoreMessage(score, totalQuestions, t)}</p>
           </div>
           <button
             onClick={() => onComplete(score)}
             className="rounded-full bg-foreground px-10 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            Continue
+            {t('exercises.quiz.continue')}
           </button>
         </div>
       </ReadingLayout>
@@ -83,9 +86,9 @@ export function SubvocalizationDestroyerQuiz({ questions, categoryLabel, onCompl
     <ReadingLayout maxWidthClassName="max-w-xl" onExit={onExit}>
       <div className="flex w-full flex-col items-center gap-6">
         <div className="w-full text-center">
-          <p className="mb-1 text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Retention Check</p>
+          <p className="mb-1 text-[10px] font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.quiz.retentionCheck')}</p>
           <p className="text-xs text-muted-foreground">
-            {categoryLabel} · Question {questionIndex + 1} of {totalQuestions}
+            {t('exercises.quiz.questionOf', { topic: categoryLabel, n: questionIndex + 1, total: totalQuestions })}
           </p>
         </div>
 
@@ -125,7 +128,7 @@ export function SubvocalizationDestroyerQuiz({ questions, categoryLabel, onCompl
 
           {selectedOptionIndex !== null && (
             <p className="mt-4 text-sm font-medium text-muted-foreground">
-              {selectedOptionIndex === currentQuestion.correctOptionIndex ? 'Correct!' : 'Not quite — the correct answer is highlighted above.'}
+              {selectedOptionIndex === currentQuestion.correctOptionIndex ? t('exercises.quiz.correct') : t('exercises.quiz.notQuite')}
             </p>
           )}
         </div>
@@ -135,7 +138,7 @@ export function SubvocalizationDestroyerQuiz({ questions, categoryLabel, onCompl
             onClick={handleAdvance}
             className="rounded-full bg-foreground px-10 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            {isLastQuestion ? 'See Results' : 'Next Question'}
+            {isLastQuestion ? t('exercises.quiz.seeResults') : t('exercises.quiz.nextQuestion')}
           </button>
         )}
       </div>

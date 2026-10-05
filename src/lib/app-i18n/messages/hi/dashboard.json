@@ -1,0 +1,58 @@
+{
+  "greeting": {
+    "morning": "सुप्रभात",
+    "afternoon": "नमस्ते",
+    "evening": "शुभ संध्या",
+    "welcomeBack": "फिर से स्वागत है",
+    "line": "{greeting}, {name}",
+    "fallbackName": "दोस्त"
+  },
+  "eyeFoundation": {
+    "complete": "Eye Foundation मॉड्यूल पूरा — यही रफ़्तार बनाए रखें।",
+    "progress": "Eye Foundation मॉड्यूल का {percent}% पूरा।"
+  },
+  "documentStudio": {
+    "eyebrow": "टियर 1 · यूटिलिटी हब",
+    "description": "कोई भी PDF, किताब या रिसर्च पेपर डालें। हमारा AI उसे Smart Reading ड्रिल, Mind Maps और Neural Map Notes में बदल देगा।"
+  },
+  "flagship": {
+    "eyebrow": "टियर 3 · मुख्य प्रोग्राम",
+    "description": "लाइव क्लास के साथ 30 दिन का तय रास्ता।"
+  },
+  "mindScore": {
+    "breakdown": "Mind Score का ब्योरा",
+    "reading": "पढ़ना",
+    "memory": "याददाश्त",
+    "focus": "फ़ोकस"
+  },
+  "streak": {
+    "one": "लगातार दिन: {count} दिन",
+    "many": "लगातार दिन: {count} दिन"
+  },
+  "curriculumCard": {
+    "progress": "आपकी कोर्स प्रगति",
+    "dayTheme": "दिन {day} — {title}",
+    "readyDay1": "दिन 1 शुरू करने के लिए तैयार",
+    "percentComplete": "30 में से {percent}% दिन पूरे",
+    "openCurriculum": "कोर्स खोलें",
+    "continueDay": "दिन {day} जारी रखें",
+    "startDay1": "दिन 1 शुरू करें"
+  },
+  "viewToggle": {
+    "student": "स्टूडेंट व्यू",
+    "parent": "पेरेंट एनालिटिक्स"
+  },
+  "habit": {
+    "journeyDay": "आपके {program} का दिन {day}।",
+    "programOutcome": "समझ के साथ तेज़ पढ़ें, ज़्यादा देर फ़ोकस करें, ज़्यादा याद रखें — आपके अपने दिन 1 से दिन 30 तक मापा गया।",
+    "programFormat": "ऑनलाइन · 7 लाइव क्लास + 30 दिन ऐप प्रैक्टिस।"
+  },
+  "journeyCard": {
+    "skills": "पढ़ना · तुरंत चुनाव · विज़ुअल फ़ोकस · कल्पना",
+    "continue": "जारी रखें →",
+    "begin": "शुरू करें →",
+    "dayCompleted": "दिन {day}, पूरा",
+    "dayUnlocked": "दिन {day}, खुला हुआ",
+    "dayLocked": "दिन {day}, बंद, {program} का हिस्सा"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "greeting": {
+    "morning": "ಶುಭೋದಯ",
+    "afternoon": "ಶುಭ ಮಧ್ಯಾಹ್ನ",
+    "evening": "ಶುಭ ಸಂಜೆ",
+    "welcomeBack": "ಮತ್ತೆ ಸ್ವಾಗತ",
+    "line": "{greeting}, {name}",
+    "fallbackName": "ಸ್ನೇಹಿತರೇ"
+  },
+  "eyeFoundation": {
+    "complete": "Eye Foundation ಮಾಡ್ಯೂಲ್ ಪೂರ್ಣ — ಇದೇ ವೇಗ ಮುಂದುವರಿಸಿ.",
+    "progress": "Eye Foundation ಮಾಡ್ಯೂಲ್‌ನ {percent}% ಪೂರ್ಣ."
+  },
+  "documentStudio": {
+    "eyebrow": "ಹಂತ 1 · ಉಪಯುಕ್ತ ಕೇಂದ್ರ",
+    "description": "ಯಾವುದೇ PDF, ಪಠ್ಯಪುಸ್ತಕ ಅಥವಾ ಸಂಶೋಧನಾ ಲೇಖನ ಹಾಕಿ. ನಮ್ಮ AI ಅದನ್ನು Smart Reading ಡ್ರಿಲ್, Mind Maps ಮತ್ತು Neural Map Notes ಆಗಿ ಮಾಡುತ್ತದೆ."
+  },
+  "flagship": {
+    "eyebrow": "ಹಂತ 3 · ಮುಖ್ಯ ಕಾರ್ಯಕ್ರಮ",
+    "description": "ಲೈವ್ ತರಗತಿಗಳೊಂದಿಗೆ 30 ದಿನಗಳ ಕ್ರಮಬದ್ಧ ದಾರಿ."
+  },
+  "mindScore": {
+    "breakdown": "Mind Score ವಿವರ",
+    "reading": "ಓದು",
+    "memory": "ನೆನಪು",
+    "focus": "ಫೋಕಸ್"
+  },
+  "streak": {
+    "one": "ಸತತ ದಿನಗಳು: {count} ದಿನ",
+    "many": "ಸತತ ದಿನಗಳು: {count} ದಿನಗಳು"
+  },
+  "curriculumCard": {
+    "progress": "ನಿಮ್ಮ ಕೋರ್ಸ್ ಪ್ರಗತಿ",
+    "dayTheme": "ದಿನ {day} — {title}",
+    "readyDay1": "ದಿನ 1 ಆರಂಭಿಸಲು ಸಿದ್ಧ",
+    "percentComplete": "30 ದಿನಗಳಲ್ಲಿ {percent}% ಪೂರ್ಣ",
+    "openCurriculum": "ಕೋರ್ಸ್ ತೆರೆಯಿರಿ",
+    "continueDay": "ದಿನ {day} ಮುಂದುವರಿಸಿ",
+    "startDay1": "ದಿನ 1 ಆರಂಭಿಸಿ"
+  },
+  "viewToggle": {
+    "student": "ವಿದ್ಯಾರ್ಥಿ ನೋಟ",
+    "parent": "ಪೋಷಕರ ವಿಶ್ಲೇಷಣೆ"
+  },
+  "habit": {
+    "journeyDay": "ನಿಮ್ಮ {program} ನ ದಿನ {day}.",
+    "programOutcome": "ಅರ್ಥದೊಂದಿಗೆ ವೇಗವಾಗಿ ಓದಿ, ಹೆಚ್ಚು ಹೊತ್ತು ಫೋಕಸ್ ಮಾಡಿ, ಹೆಚ್ಚು ನೆನಪಿಡಿ — ನಿಮ್ಮದೇ ದಿನ 1 ರಿಂದ ದಿನ 30 ರವರೆಗೆ ಅಳೆಯಲಾಗುತ್ತದೆ.",
+    "programFormat": "ಆನ್‌ಲೈನ್ · 7 ಲೈವ್ ತರಗತಿಗಳು + 30 ದಿನ ಆ್ಯಪ್ ಅಭ್ಯಾಸ."
+  },
+  "journeyCard": {
+    "skills": "ಓದು · ತ್ವರಿತ ಆಯ್ಕೆ · ದೃಷ್ಟಿ ಫೋಕಸ್ · ಕಲ್ಪನೆ",
+    "continue": "ಮುಂದುವರಿಸಿ →",
+    "begin": "ಆರಂಭಿಸಿ →",
+    "dayCompleted": "ದಿನ {day}, ಪೂರ್ಣ",
+    "dayUnlocked": "ದಿನ {day}, ತೆರೆದಿದೆ",
+    "dayLocked": "ದಿನ {day}, ಲಾಕ್ ಆಗಿದೆ, {program} ನ ಭಾಗ"
+  }
+}

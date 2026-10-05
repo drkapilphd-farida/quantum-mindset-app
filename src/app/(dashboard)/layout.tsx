@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import AppI18nRoot from '@/lib/app-i18n/AppI18nRoot'
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
@@ -37,35 +38,37 @@ export default async function DashboardLayout({
   const showPracticeJourney = appDomain === 'habit' && (await hasStartedPracticeJourney(user.id))
 
   return (
-    <div className={`bg-muted/30 flex h-screen overflow-hidden ${plusJakartaSans.variable} ${inter.variable}`}>
-      {/* Desktop sidebar — hidden on mobile */}
-      <div className="hidden md:flex">
-        <AppSidebar
-          brandName={tenantBranding?.name ?? null}
-          brandLogoUrl={tenantBranding?.logoUrl ?? null}
-          appDomain={appDomain}
-          showPracticeJourney={showPracticeJourney}
-          fullName={profile?.fullName ?? null}
-          avatarUrl={profile?.avatarUrl ?? null}
-          email={user.email ?? ''}
-        />
-      </div>
+    <AppI18nRoot>
+      <div className={`bg-muted/30 flex h-screen overflow-hidden ${plusJakartaSans.variable} ${inter.variable}`}>
+        {/* Desktop sidebar — hidden on mobile */}
+        <div className="hidden md:flex">
+          <AppSidebar
+            brandName={tenantBranding?.name ?? null}
+            brandLogoUrl={tenantBranding?.logoUrl ?? null}
+            appDomain={appDomain}
+            showPracticeJourney={showPracticeJourney}
+            fullName={profile?.fullName ?? null}
+            avatarUrl={profile?.avatarUrl ?? null}
+            email={user.email ?? ''}
+          />
+        </div>
 
-      {/* Main column */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <Topbar
-          fullName={profile?.fullName ?? null}
-          avatarUrl={profile?.avatarUrl ?? null}
-          email={user.email ?? ''}
-          brandName={tenantBranding?.name ?? null}
-          brandLogoUrl={tenantBranding?.logoUrl ?? null}
-          appDomain={appDomain}
-          showPracticeJourney={showPracticeJourney}
-        />
-        <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-4xl px-6 py-8 sm:px-8">{children}</div>
-        </main>
+        {/* Main column */}
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <Topbar
+            fullName={profile?.fullName ?? null}
+            avatarUrl={profile?.avatarUrl ?? null}
+            email={user.email ?? ''}
+            brandName={tenantBranding?.name ?? null}
+            brandLogoUrl={tenantBranding?.logoUrl ?? null}
+            appDomain={appDomain}
+            showPracticeJourney={showPracticeJourney}
+          />
+          <main className="flex-1 overflow-y-auto">
+            <div className="mx-auto max-w-4xl px-6 py-8 sm:px-8">{children}</div>
+          </main>
+        </div>
       </div>
-    </div>
+    </AppI18nRoot>
   )
 }

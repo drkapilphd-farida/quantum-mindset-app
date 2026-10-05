@@ -16,7 +16,6 @@ import { universalUploadParser } from '@/core/universal-learning-engine/upload'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
 import { cn } from '@/lib/utils'
 import type { QuantumDocument } from '@/features/quantum-document-transformer/types'
-import { getLanguageName } from '@/features/quantum-document-transformer/supportedLanguages'
 import { type QuantumDocumentHistoryItem } from '@/features/quantum-document-transformer/actions/getQuantumDocumentHistory'
 import { importQuantumDocumentFromUrl } from '@/features/quantum-document-transformer/actions/importQuantumDocumentFromUrl'
 import { MAX_SYNCHRONOUS_UPLOAD_BYTES } from '@/features/quantum-document-transformer/maxSynchronousUploadSize'
@@ -25,6 +24,9 @@ import { DocumentHistorySidebar } from '@/features/quantum-document-transformer/
 import { MasterclassPaywallModal } from '@/features/thirty-day-curriculum/components/MasterclassPaywallModal'
 import { logger } from '@/lib/logger'
 import { programs } from '@/config/site.config'
+import { useAppT } from '@/lib/app-i18n/client'
+import { LANGUAGES, isAppLang } from '@/lib/app-i18n/languages'
+import type { MessageKey, Translator } from '@/lib/app-i18n/translate'
 
 // A UI-only, best-effort check (just for choosing which processing-step
 // copy to show, e.g. "Fetching transcript…" vs "Fetching article
@@ -51,30 +53,32 @@ const ACCEPT = [
 // fake-but-honest progress ticker already used elsewhere in this app
 // (e.g. NewLearningProjectWizard's own upload progress) — the thresholds
 // just decide which real *stage name* is shown, not a fabricated byte count.
-const PROCESSING_STEPS = [
-  { threshold: 0, message: 'Reading document content...' },
-  { threshold: 35, message: 'Building Neural Map Notes & AI Summary...' },
-  { threshold: 75, message: 'Preparing your session...' },
-] as const
+type ProcessingStep = { threshold: number; message: MessageKey }
 
-const URL_PROCESSING_STEPS_WEBSITE = [
-  { threshold: 0, message: 'Fetching article content...' },
-  { threshold: 35, message: 'Building Neural Map Notes & AI Summary...' },
-  { threshold: 75, message: 'Generating mind maps...' },
-] as const
+const PROCESSING_STEPS: readonly ProcessingStep[] = [
+  { threshold: 0, message: 'docWidget.steps.readingDocument' },
+  { threshold: 35, message: 'docWidget.steps.buildingNotes' },
+  { threshold: 75, message: 'docWidget.steps.preparingSession' },
+]
 
-const URL_PROCESSING_STEPS_YOUTUBE = [
-  { threshold: 0, message: 'Fetching transcript...' },
-  { threshold: 35, message: 'Building Neural Map Notes & AI Summary...' },
-  { threshold: 75, message: 'Generating mind maps...' },
-] as const
+const URL_PROCESSING_STEPS_WEBSITE: readonly ProcessingStep[] = [
+  { threshold: 0, message: 'docWidget.steps.fetchingArticle' },
+  { threshold: 35, message: 'docWidget.steps.buildingNotes' },
+  { threshold: 75, message: 'docWidget.steps.generatingMaps' },
+]
 
-function getProcessingMessage(progress: number, steps: readonly { threshold: number; message: string }[] = PROCESSING_STEPS): string {
-  let message: string = steps[0]!.message
+const URL_PROCESSING_STEPS_YOUTUBE: readonly ProcessingStep[] = [
+  { threshold: 0, message: 'docWidget.steps.fetchingTranscript' },
+  { threshold: 35, message: 'docWidget.steps.buildingNotes' },
+  { threshold: 75, message: 'docWidget.steps.generatingMaps' },
+]
+
+function getProcessingMessage(t: Translator, progress: number, steps: readonly ProcessingStep[] = PROCESSING_STEPS): string {
+  let message: MessageKey = steps[0]!.message
   for (const step of steps) {
     if (progress >= step.threshold) message = step.message
   }
-  return message
+  return t(message)
 }
 
 type UploadState = {
@@ -106,6 +110,7 @@ function stripExtension(fileName: string): string {
 // and a name/size chip for everything else, since PDFs/DOCX/TXT have no
 // meaningful visual preview to show.
 function FilePreview({ file, onReplace, onRemove }: { file: File; onReplace: () => void; onRemove: () => void }): React.JSX.Element {
+  const t = useAppT()
   const isImage = file.type.startsWith('image/')
   const [objectUrl, setObjectUrl] = useState<string | null>(null)
 
@@ -120,7 +125,7 @@ function FilePreview({ file, onReplace, onRemove }: { file: File; onReplace: () 
     <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 p-4 dark:border-slate-800/80">
       {isImage && objectUrl ? (
         // eslint-disable-next-line @next/next/no-img-element -- a real, local, temporary object URL preview; next/image's remote-optimization pipeline doesn't apply here.
-        <img src={objectUrl} alt={`Preview of ${file.name}`} className="size-10 shrink-0 rounded-lg object-cover" />
+        <img src={objectUrl} alt={t('docWidget.previewOf', { name: file.name })} className="size-10 shrink-0 rounded-lg object-cover" />
       ) : (
         <div aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
           <FileText className="size-5 text-primary" />
@@ -130,10 +135,10 @@ function FilePreview({ file, onReplace, onRemove }: { file: File; onReplace: () 
         <p className="truncate text-sm font-medium text-foreground">{file.name}</p>
         <p className="text-xs text-muted-foreground">{formatFileSize(file.size)}</p>
       </div>
-      <Button type="button" size="icon-sm" variant="ghost" onClick={onReplace} aria-label={`Replace ${file.name}`}>
+      <Button type="button" size="icon-sm" variant="ghost" onClick={onReplace} aria-label={t('docWidget.replaceFile', { name: file.name })}>
         <RotateCcw className="size-4" aria-hidden="true" />
       </Button>
-      <Button type="button" size="icon-sm" variant="ghost" onClick={onRemove} aria-label={`Remove ${file.name}`}>
+      <Button type="button" size="icon-sm" variant="ghost" onClick={onRemove} aria-label={t('docWidget.removeFile', { name: file.name })}>
         <X className="size-4" aria-hidden="true" />
       </Button>
     </div>
@@ -145,16 +150,19 @@ function FilePreview({ file, onReplace, onRemove }: { file: File; onReplace: () 
 // choice only matters once, at upload time, so it doesn't need its own
 // card or explanation beyond the label.
 function LanguageSelector({ value, onChange, disabled }: { value: SupportedLanguage; onChange: (language: SupportedLanguage) => void; disabled: boolean }): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className="mb-3 flex items-center justify-between gap-3">
-      <p className="text-xs font-medium text-muted-foreground">Generate in</p>
+      <p className="text-xs font-medium text-muted-foreground">{t('docWidget.generateIn')}</p>
       <Select value={value} onValueChange={(next) => onChange(next as SupportedLanguage)} disabled={disabled}>
-        <SelectTrigger size="sm" aria-label="Language for generated study material">
+        <SelectTrigger size="sm" aria-label={t('docWidget.generateInLabel')}>
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {SUPPORTED_LANGUAGES.map((language) => (
-            <SelectItem key={language.code} value={language.code}>{language.name}</SelectItem>
+            <SelectItem key={language.code} value={language.code}>
+              {isAppLang(language.code) ? LANGUAGES[language.code].nativeName : language.name}
+            </SelectItem>
           ))}
         </SelectContent>
       </Select>
@@ -166,6 +174,7 @@ function LanguageSelector({ value, onChange, disabled }: { value: SupportedLangu
 // "Uploading… X%" copy with the three named stages this feature was
 // asked to surface, driven by the same underlying progress number.
 function TransformingProgress({ fileName, sizeBytes, progress }: { fileName: string; sizeBytes: number; progress: number }): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className="rounded-xl border border-slate-200/80 p-5 dark:border-slate-800/80">
       <div className="flex items-center gap-3">
@@ -178,7 +187,7 @@ function TransformingProgress({ fileName, sizeBytes, progress }: { fileName: str
         </div>
       </div>
       <Progress value={progress} className="mt-4" />
-      <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300" aria-live="polite">{getProcessingMessage(progress)}</p>
+      <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300" aria-live="polite">{getProcessingMessage(t, progress)}</p>
     </div>
   )
 }
@@ -196,8 +205,9 @@ function InputMethodTabs({
   onChange: (tab: 'upload' | 'url') => void
   disabled: boolean
 }): React.JSX.Element {
+  const t = useAppT()
   return (
-    <div role="tablist" aria-label="Choose input method" className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-muted/60 p-1">
+    <div role="tablist" aria-label={t('docWidget.inputMethod')} className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-muted/60 p-1">
       <button
         type="button"
         role="tab"
@@ -209,7 +219,7 @@ function InputMethodTabs({
           activeTab === 'upload' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
         )}
       >
-        Upload File
+        {t('docWidget.uploadFile')}
       </button>
       <button
         type="button"
@@ -222,7 +232,7 @@ function InputMethodTabs({
           activeTab === 'url' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
         )}
       >
-        Paste URL / YouTube
+        {t('docWidget.pasteUrl')}
       </button>
     </div>
   )
@@ -240,6 +250,7 @@ function UrlInputForm({
   onChange: (value: string) => void
   onSubmit: () => void
 }): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-card px-4 py-3 transition-colors focus-within:border-cyan-500/60 dark:border-slate-800/80">
@@ -258,8 +269,8 @@ function UrlInputForm({
               onSubmit()
             }
           }}
-          placeholder="Paste YouTube video, article, or web link..."
-          aria-label="YouTube video, article, or web link"
+          placeholder={t('docWidget.urlPlaceholder')}
+          aria-label={t('docWidget.urlLabel')}
           className="w-full min-w-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
         />
       </div>
@@ -270,7 +281,7 @@ function UrlInputForm({
         className="w-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-500 text-white shadow-sm transition-all duration-300 hover:from-cyan-500 hover:to-cyan-400 hover:shadow-md active:scale-95 disabled:pointer-events-none disabled:opacity-50"
         onClick={onSubmit}
       >
-        Transform URL
+        {t('docWidget.transformUrl')}
       </Button>
     </div>
   )
@@ -295,18 +306,19 @@ function UrlTransformStatusCard({
   onRetry: () => void
   onCancel: () => void
 }): React.JSX.Element {
+  const t = useAppT()
   if (status === 'error') {
     return (
       <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-5">
         <p className="text-sm font-medium text-destructive" role="alert">
-          {errorMessage ?? 'Something went wrong. Please try again.'}
+          {errorMessage ?? t('docWidget.somethingWrong')}
         </p>
         <div className="mt-4 flex gap-2">
           <Button type="button" variant="outline" size="sm" className="flex-1 rounded-full" onClick={onCancel}>
-            Cancel
+            {t('common.actions.cancel')}
           </Button>
           <Button type="button" size="sm" className="flex-1 rounded-full" onClick={onRetry}>
-            Try Again
+            {t('common.actions.retry')}
           </Button>
         </div>
       </div>
@@ -319,11 +331,11 @@ function UrlTransformStatusCard({
         <div aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
           <Sparkles className="size-5 animate-pulse text-primary" />
         </div>
-        <p className="truncate text-sm font-medium text-foreground">{isYouTube ? 'YouTube Video' : 'Web Article'}</p>
+        <p className="truncate text-sm font-medium text-foreground">{isYouTube ? t('docWidget.youtubeVideo') : t('docWidget.webArticle')}</p>
       </div>
       <Progress value={progress} className="mt-4" />
       <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300" aria-live="polite">
-        {getProcessingMessage(progress, isYouTube ? URL_PROCESSING_STEPS_YOUTUBE : URL_PROCESSING_STEPS_WEBSITE)}
+        {getProcessingMessage(t, progress, isYouTube ? URL_PROCESSING_STEPS_YOUTUBE : URL_PROCESSING_STEPS_WEBSITE)}
       </p>
     </div>
   )
@@ -338,6 +350,7 @@ function UrlTransformStatusCard({
 // NewLearningProjectWizard. Keeps the exact same click-to-browse +
 // drag-and-drop mechanics as UploadZone, just in a compact shell.
 function CompactUploadTrigger({ onFileSelected, errorMessage }: { onFileSelected: (file: File) => void; errorMessage: string | null }): React.JSX.Element {
+  const t = useAppT()
   const [isDragging, setIsDragging] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -377,8 +390,8 @@ function CompactUploadTrigger({ onFileSelected, errorMessage }: { onFileSelected
           <UploadCloud className="size-4 text-primary" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-foreground">Upload a document</p>
-          <p className="truncate text-xs text-muted-foreground">PDF · Word · Text · Image — tap or drop</p>
+          <p className="text-sm font-semibold text-foreground">{t('docWidget.uploadDocument')}</p>
+          <p className="truncate text-xs text-muted-foreground">{t('docWidget.uploadHint')}</p>
         </div>
         <input ref={inputRef} type="file" accept={ACCEPT} className="sr-only" onChange={(event) => { handleFiles(event.target.files); event.target.value = '' }} />
       </div>
@@ -395,9 +408,10 @@ function CompactUploadTrigger({ onFileSelected, errorMessage }: { onFileSelected
 // vertical space; "My Library" (Document History™) is still the way to
 // browse everything.
 function RecentDocuments({ documents }: { documents: readonly QuantumDocumentHistoryItem[] }): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className="mb-4">
-      <p className={TYPOGRAPHY.label}>Recent Document</p>
+      <p className={TYPOGRAPHY.label}>{t('docWidget.recentDocument')}</p>
       <ul className="mt-2 space-y-2">
         {documents.slice(0, 1).map((document) => (
           <li key={document.id}>
@@ -412,7 +426,7 @@ function RecentDocuments({ documents }: { documents: readonly QuantumDocumentHis
                 <div className="flex items-center gap-1.5">
                   <p className="truncate text-sm font-medium text-foreground">{document.title}</p>
                   {document.targetLanguage !== 'en' && (
-                    <Badge variant="outline" className="shrink-0 text-[10px]">{getLanguageName(document.targetLanguage)}</Badge>
+                    <Badge variant="outline" className="shrink-0 text-[10px]">{LANGUAGES[document.targetLanguage].nativeName}</Badge>
                   )}
                 </div>
                 <p className="mt-0.5 text-xs text-muted-foreground">{formatRelativeDate(document.createdAt)}</p>
@@ -442,6 +456,7 @@ type AIDocumentTransformerWidgetProps = {
 }
 
 export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocumentTransformerWidgetProps): React.JSX.Element {
+  const t = useAppT()
   const router = useRouter()
   const [zoneError, setZoneError] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -538,7 +553,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
     } catch (error) {
       stopProgressTimer()
       logger.error('[QuantumDocumentTransformer] Transform request threw', { error: error instanceof Error ? error.message : 'Unknown error.' })
-      setUpload((current) => (current ? { ...current, status: 'error', progress: 0, errorMessage: 'Something went wrong. Please try again.' } : current))
+      setUpload((current) => (current ? { ...current, status: 'error', progress: 0, errorMessage: t('docWidget.somethingWrong') } : current))
     }
   }
 
@@ -559,7 +574,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
     // failing with a generic "Something went wrong" late in processing)
     // into an honest, immediate, actionable message.
     if (file.size > MAX_SYNCHRONOUS_UPLOAD_BYTES) {
-      setZoneError(`This file is too large for instant processing. Please choose a file up to ${formatFileSize(MAX_SYNCHRONOUS_UPLOAD_BYTES)}.`)
+      setZoneError(t('docWidget.fileTooLarge', { size: formatFileSize(MAX_SYNCHRONOUS_UPLOAD_BYTES) }))
       return
     }
     setSelectedFile(file)
@@ -617,7 +632,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
     } catch (error) {
       stopUrlProgressTimer()
       logger.error('[QuantumDocumentTransformer] URL transform threw', { error: error instanceof Error ? error.message : 'Unknown error.' })
-      setUrlTransform((current) => (current ? { ...current, status: 'error', progress: 0, errorMessage: 'Something went wrong. Please try again.' } : current))
+      setUrlTransform((current) => (current ? { ...current, status: 'error', progress: 0, errorMessage: t('docWidget.somethingWrong') } : current))
     }
   }
 
@@ -652,12 +667,12 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
       <div className="flex items-center justify-between gap-3">
         <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-cyan-500/10 px-2.5 py-1 text-xs font-semibold tracking-wider text-cyan-700 uppercase dark:text-cyan-400">
           <Sparkles className="size-3.5" aria-hidden="true" />
-          Document Mastery Studio
+          {t('docWidget.badge')}
         </span>
         {!isPro && (
           <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400">
             <Lock className="size-3" aria-hidden="true" />
-            Included with the {programs.sharpBrain.shortName}
+            {t('docWidget.includedWith', { program: programs.sharpBrain.shortName })}
           </span>
         )}
       </div>
@@ -677,10 +692,9 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
               <Lock className="size-5" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-foreground">Unlock Document Mastery Studio</p>
+              <p className="text-sm font-semibold text-foreground">{t('docWidget.unlockTitle')}</p>
               <p className="mt-1 max-w-xs text-xs text-muted-foreground">
-                Included with the {programs.sharpBrain.name} — turn any PDF, textbook, or article into speed-reading drills, mind maps, and
-                smart summaries.
+                {t('docWidget.unlockDesc', { program: programs.sharpBrain.name })}
               </p>
             </div>
           </button>
@@ -713,7 +727,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
                     className="w-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-500 text-white shadow-sm transition-all duration-300 hover:from-cyan-500 hover:to-cyan-400 hover:shadow-md active:scale-95"
                     onClick={() => void submitDocument(selectedFile)}
                   >
-                    Transform into study material
+                    {t('docWidget.transformFile')}
                   </Button>
                 </div>
               ) : (
@@ -731,9 +745,9 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
                     <UploadZone
                       onFileSelected={(file) => void handleFileSelected(file)}
                       accept={ACCEPT}
-                      title="Drop PDFs, Word Docs, Text files, or Images/Notes here"
-                      subtitle="or click to browse"
-                      helperText="PDF · Word (.docx) · Text · PNG/JPEG"
+                      title={t('docWidget.dropTitle')}
+                      subtitle={t('docWidget.dropSubtitle')}
+                      helperText={t('docWidget.dropHelper')}
                       errorMessage={zoneError}
                     />
                   </div>

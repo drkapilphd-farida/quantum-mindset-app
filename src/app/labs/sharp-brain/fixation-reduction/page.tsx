@@ -18,7 +18,7 @@ export default async function FixationReductionPage(): Promise<React.JSX.Element
       <ExerciseLockedScreen
         title="Fixation Reduction"
         unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
-        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+        unlockTarget={access.nextExercise?.title ?? null}
       />
     )
   }

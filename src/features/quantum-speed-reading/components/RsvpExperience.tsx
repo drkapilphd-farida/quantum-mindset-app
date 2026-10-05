@@ -19,6 +19,7 @@ const RSVP_DEFINITION: ExerciseDefinition = {
     title: 'You stayed calm and steady.',
     mentorLine: "That's the skill — recognizing words without anxiety about catching every one.",
   },
+  practiceText: 'rsvp',
 }
 
 const { previous, next } = getAdjacentExercises(EYE_FOUNDATION_MODULE, 'rsvp')

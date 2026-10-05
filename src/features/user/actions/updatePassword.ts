@@ -1,25 +1,26 @@
 'use server'
 
 import { z } from 'zod'
+import { getAppT } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 import type { AuthActionResult } from '@/features/auth/types'
 
-const UpdatePasswordSchema = z
-  .object({
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string().min(1, 'Please confirm your password'),
-  })
-  .refine((d) => d.password === d.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
-
 export async function updatePassword(input: unknown): Promise<AuthActionResult> {
+  const { t } = await getAppT()
+  const UpdatePasswordSchema = z
+    .object({
+      password: z.string().min(8, t('settings.password.tooShort')),
+      confirmPassword: z.string().min(1, t('settings.password.confirmRequired')),
+    })
+    .refine((d) => d.password === d.confirmPassword, {
+      message: t('settings.password.mismatch'),
+      path: ['confirmPassword'],
+    })
   const parsed = UpdatePasswordSchema.safeParse(input)
   if (!parsed.success) {
     return {
       success: false,
-      error: parsed.error.issues[0]?.message ?? 'Invalid input.',
+      error: parsed.error.issues[0]?.message ?? t('settings.errors.invalidInput'),
     }
   }
 
@@ -28,7 +29,7 @@ export async function updatePassword(input: unknown): Promise<AuthActionResult> 
     password: parsed.data.password,
   })
 
-  if (error) return { success: false, error: error.message }
+  if (error) return { success: false, error: t('settings.password.failed') }
 
   return { success: true }
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { getAppT } from '@/lib/app-i18n/server'
 import { AuthCard } from '@/features/auth/components/AuthCard'
 import { ForgotPasswordForm } from '@/features/auth/components/ForgotPasswordForm'
 
@@ -7,11 +8,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function ForgotPasswordPage(): React.JSX.Element {
+export default async function ForgotPasswordPage(): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   return (
     <AuthCard
-      title="Reset your password"
-      description="Enter your email and we'll send you a reset link"
+      title={t('auth.pages.resetTitle')}
+      description={t('auth.pages.resetDesc')}
     >
       <ForgotPasswordForm />
     </AuthCard>

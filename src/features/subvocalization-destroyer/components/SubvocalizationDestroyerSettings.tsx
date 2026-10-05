@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
+import { useAppT } from '@/lib/app-i18n/client'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
 import { Button } from '@/components/ui/button'
@@ -31,6 +33,7 @@ export function SubvocalizationDestroyerSettings({
   onStart,
   categoryLabel,
 }: SubvocalizationDestroyerSettingsProps): React.JSX.Element {
+  const t = useAppT()
   const isEmbedded = useIsEmbeddedExercise()
   return (
     <div className={`relative mx-auto flex ${isEmbedded ? 'h-full' : 'min-h-[100dvh]'} max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center`}>
@@ -40,26 +43,26 @@ export function SubvocalizationDestroyerSettings({
           href="/dashboard"
           className="absolute top-4 right-6 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50"
         >
-          Exit
+          {t('exercises.exit')}
         </Link>
       )}
 
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Inner Voice Control™</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          An ultra-high-speed word stream, faster than your inner voice can keep up with. 3 quick questions check
-          what stuck.
+          {t('exercises.innerVoice.desc')}
         </p>
         {/* Deliberately rendered as null on both the server and the
             client's first paint (only ever set from a useEffect in the
             Experience orchestrator, never a lazy state initializer) — see
             subvocalizationDestroyerDataset.ts's pickSessionCategory doc
             comment for why, to avoid a hydration mismatch. */}
-        {categoryLabel && <p className="mt-2 text-xs font-medium text-muted-foreground">Today&rsquo;s reading: {categoryLabel}</p>}
+        {categoryLabel && <p className="mt-2 text-xs font-medium text-muted-foreground">{t('exercises.innerVoice.todaysReading', { topic: categoryLabel })}</p>}
+        <PracticeTextNote kind="rsvp" className="mx-auto mt-3 inline-block" />
       </div>
 
       <div className="w-full">
-        <p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">Target WPM</p>
+        <p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.stats.targetWpm')}</p>
         <div className="flex flex-wrap justify-center gap-2">
           {TARGET_WPM_OPTIONS.map((wpm) => (
             <Button key={wpm} variant={wpm === targetWpm ? 'default' : 'outline'} size="sm" onClick={() => onSelectTargetWpm(wpm)}>
@@ -79,7 +82,7 @@ export function SubvocalizationDestroyerSettings({
         disabled={categoryLabel === null}
         className="rounded-full bg-foreground px-10 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        {categoryLabel === null ? 'Preparing…' : 'Start'}
+        {categoryLabel === null ? t('exercises.common.preparing') : t('exercises.start')}
       </button>
     </div>
   )

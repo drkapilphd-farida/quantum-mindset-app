@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import AppI18nRoot from '@/lib/app-i18n/AppI18nRoot'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { AppShell } from '@/components/shell/AppShell'
@@ -27,15 +28,17 @@ export default async function PreviewLayout({
   const profile = await getCurrentUserProfile(user.id)
 
   return (
-    <AppShell
-      brandLabel={brand.appName}
-      brandHref="/preview/dashboard"
-      navItems={PREVIEW_NAV_ITEMS}
-      fullName={profile?.fullName ?? null}
-      avatarUrl={profile?.avatarUrl ?? null}
-      email={user.email ?? ''}
-    >
-      {children}
-    </AppShell>
+    <AppI18nRoot>
+      <AppShell
+        brandLabel={brand.appName}
+        brandHref="/preview/dashboard"
+        navItems={PREVIEW_NAV_ITEMS}
+        fullName={profile?.fullName ?? null}
+        avatarUrl={profile?.avatarUrl ?? null}
+        email={user.email ?? ''}
+      >
+        {children}
+      </AppShell>
+    </AppI18nRoot>
   )
 }

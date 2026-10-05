@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getPracticeContentLang } from '@/lib/app-i18n/server'
 import { logger } from '@/lib/logger'
 import { DailyQuantumSessionInputSchema } from './dailyQuantumSessionSchema'
 
@@ -32,6 +33,7 @@ export async function saveDailyQuantumSession(input: unknown): Promise<SaveDaily
 
   const { error } = await supabase.from('daily_quantum_sessions').insert({
     user_id: user.id,
+    content_lang: await getPracticeContentLang('reading'),
     reading_wpm: readingWpm,
     accuracy_percent: accuracyPercent,
     reading_score: readingScore,

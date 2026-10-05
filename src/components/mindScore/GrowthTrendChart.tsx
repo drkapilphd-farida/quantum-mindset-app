@@ -1,6 +1,9 @@
 'use client'
 
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
+import type { Translator } from '@/lib/app-i18n/translate'
+import { LANGUAGES } from '@/lib/app-i18n/languages'
+import { useAppI18n } from '@/lib/app-i18n/client'
 import { cn } from '@/lib/utils'
 import { formatDurationLabel, type DayActivity } from '@/lib/exercises/practiceHistory'
 import type { WpmGrowth } from '@/lib/exercises/mindScore'
@@ -16,10 +19,15 @@ type GrowthTrendChartProps = {
 const MAX_HEIGHT = 80
 const MIN_HEIGHT = 3
 
-function buildAriaLabel(days: DayActivity[], trend: number | null): string {
+function buildAriaLabel(days: DayActivity[], trend: number | null, t: Translator): string {
   const active = days.filter((d) => d.sessionCount > 0)
-  const trendText = trend === null ? '' : ` Practice is ${trend >= 0 ? 'up' : 'down'} ${Math.abs(trend)}% versus last period.`
-  return `Weekly activity: ${active.length} of 7 days active.${trendText}`
+  const trendText = trend === null ? '' : t(trend >= 0 ? 'progress.weekTrendUp' : 'progress.weekTrendDown', { n: Math.abs(trend) })
+  return t('progress.weekAria', { n: active.length }) + trendText
+}
+
+// Weekday names in the learner's language (the engine labels them in English).
+function weekdayLabel(dateKey: string, locale: string): string {
+  return new Date(`${dateKey}T00:00:00.000Z`).toLocaleDateString(locale, { weekday: 'short', timeZone: 'UTC' })
 }
 
 export function GrowthTrendChart({
@@ -29,6 +37,8 @@ export function GrowthTrendChart({
   totalSessions,
   wpmGrowth,
 }: GrowthTrendChartProps): React.JSX.Element {
+  const { lang, t } = useAppI18n()
+  const locale = LANGUAGES[lang].htmlLang
   const prefersReducedMotion = usePrefersReducedMotion()
   const maxDuration = Math.max(...days.map((d) => d.durationMs), 1)
   const hasTrend = weeklyTrend !== null
@@ -46,19 +56,19 @@ export function GrowthTrendChart({
               'mt-1 text-sm font-medium',
               weeklyTrend! >= 0 ? 'text-success' : 'text-destructive',
             )}>
-              {weeklyTrend! >= 0 ? '↑' : '↓'} {Math.abs(weeklyTrend!)}% vs prior period
+              {t('progress.vsPrior', { arrow: weeklyTrend! >= 0 ? '↑' : '↓', n: Math.abs(weeklyTrend!) })}
             </p>
           )}
         </div>
         <div className="flex gap-5 text-right">
           <div>
             <p className="text-lg font-bold tabular-nums text-foreground">{totalSessions}</p>
-            <p className="text-[10px] text-muted-foreground">Total sessions</p>
+            <p className="text-[10px] text-muted-foreground">{t('progress.totalSessions')}</p>
           </div>
           {personalBestMs > 0 && (
             <div>
               <p className="text-lg font-bold tabular-nums text-foreground">{formatDurationLabel(personalBestMs)}</p>
-              <p className="text-[10px] text-muted-foreground">Personal best</p>
+              <p className="text-[10px] text-muted-foreground">{t('progress.personalBest')}</p>
             </div>
           )}
         </div>
@@ -70,7 +80,7 @@ export function GrowthTrendChart({
       {wpmGrowth && (
         <div className="mt-5 flex items-center justify-center gap-4 rounded-2xl border border-border/50 bg-foreground/[0.02] px-4 py-4 sm:gap-6">
           <div className="text-center">
-            <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Baseline</p>
+            <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">{t('progress.baseline')}</p>
             <p className="mt-0.5 text-2xl font-extrabold tabular-nums text-foreground/70">{wpmGrowth.baselineWpm}</p>
             <p className="text-[10px] text-muted-foreground">WPM</p>
           </div>
@@ -87,7 +97,7 @@ export function GrowthTrendChart({
             </span>
           </div>
           <div className="text-center">
-            <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Current</p>
+            <p className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">{t('progress.current')}</p>
             <p className="mt-0.5 text-3xl font-extrabold tabular-nums text-primary">{wpmGrowth.currentWpm}</p>
             <p className="text-[10px] text-muted-foreground">WPM</p>
           </div>
@@ -98,7 +108,7 @@ export function GrowthTrendChart({
       <div
         className="mt-6 border-t border-border/40 pt-4"
         role="img"
-        aria-label={buildAriaLabel(days, weeklyTrend)}
+        aria-label={buildAriaLabel(days, weeklyTrend, t)}
       >
         <div className="flex items-end justify-between gap-1.5" aria-hidden="true">
           {days.map((day) => {
@@ -111,7 +121,7 @@ export function GrowthTrendChart({
             return (
               <div key={day.dateKey} className="flex flex-1 flex-col items-center gap-2">
                 {isPersonalBest && (
-                  <span className="text-[9px] font-semibold text-success">Best</span>
+                  <span className="text-[9px] font-semibold text-success">{t('progress.best')}</span>
                 )}
                 <div
                   className={cn(
@@ -120,13 +130,13 @@ export function GrowthTrendChart({
                     !prefersReducedMotion && 'transition-[height] duration-500 ease-out',
                   )}
                   style={{ height: `${heightPx}px` }}
-                  title={hasActivity ? `${day.label}: ${day.sessionCount} session${day.sessionCount !== 1 ? 's' : ''}, ${formatDurationLabel(day.durationMs)}` : `${day.label}: no activity`}
+                  title={hasActivity ? t(day.sessionCount !== 1 ? 'progress.daySessions' : 'progress.daySession', { day: weekdayLabel(day.dateKey, locale), n: day.sessionCount, time: formatDurationLabel(day.durationMs) }) : t('progress.dayNone', { day: weekdayLabel(day.dateKey, locale) })}
                 />
                 <span className={cn(
                   'text-[10px]',
                   hasActivity ? 'font-medium text-foreground/60' : 'text-muted-foreground',
                 )}>
-                  {day.label}
+                  {weekdayLabel(day.dateKey, locale)}
                 </span>
               </div>
             )

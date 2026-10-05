@@ -1,6 +1,7 @@
 'use client'
 
 import { useCountUp } from '@/hooks/exercises/useCountUp'
+import { useAppT } from '@/lib/app-i18n/client'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ReadingStatTile } from './ReadingStatTile'
@@ -26,6 +27,7 @@ type ReadingHeaderProps = {
 // ReadingSessionCompleteScreen — to keep the header uncluttered while
 // reading is actually happening).
 export function ReadingHeader({ modeLabel, liveWpm, targetWpm, elapsedMs, progressPercent }: ReadingHeaderProps): React.JSX.Element {
+  const t = useAppT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const animatedWpm = useCountUp(liveWpm, 400, prefersReducedMotion)
   const isWarmingUp = elapsedMs < WARM_UP_THRESHOLD_MS
@@ -35,9 +37,9 @@ export function ReadingHeader({ modeLabel, liveWpm, targetWpm, elapsedMs, progre
       <p className="mb-3 text-center text-[10px] font-medium uppercase tracking-widest text-muted-foreground">{modeLabel}</p>
 
       <div className="grid grid-cols-3 gap-x-4 text-center">
-        <ReadingStatTile label="Reading Pace" value={isWarmingUp ? 'Warming up…' : `${Math.round(animatedWpm)} wpm`} />
-        <ReadingStatTile label="Target WPM" value={String(targetWpm)} />
-        <ReadingStatTile label="Elapsed" value={formatElapsedTime(elapsedMs)} />
+        <ReadingStatTile label={t('exercises.stats.readingPace')} value={isWarmingUp ? t('exercises.stats.warmingUp') : t('exercises.stats.wpmValue', { wpm: Math.round(animatedWpm) })} />
+        <ReadingStatTile label={t('exercises.stats.targetWpm')} value={String(targetWpm)} />
+        <ReadingStatTile label={t('exercises.stats.time')} value={formatElapsedTime(elapsedMs)} />
       </div>
 
       <div className="mt-4">

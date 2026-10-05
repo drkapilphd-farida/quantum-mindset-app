@@ -1,0 +1,44 @@
+[
+  {
+    "lang": "hi",
+    "keys": 999,
+    "pending": 972,
+    "missing": 0,
+    "reviewed": 27
+  },
+  {
+    "lang": "kn",
+    "keys": 999,
+    "pending": 999,
+    "missing": 0,
+    "reviewed": 0
+  },
+  {
+    "lang": "ta",
+    "keys": 999,
+    "pending": 999,
+    "missing": 0,
+    "reviewed": 0
+  },
+  {
+    "lang": "te",
+    "keys": 999,
+    "pending": 999,
+    "missing": 0,
+    "reviewed": 0
+  },
+  {
+    "lang": "mr",
+    "keys": 999,
+    "pending": 999,
+    "missing": 0,
+    "reviewed": 0
+  },
+  {
+    "lang": "gu",
+    "keys": 999,
+    "pending": 999,
+    "missing": 0,
+    "reviewed": 0
+  }
+]

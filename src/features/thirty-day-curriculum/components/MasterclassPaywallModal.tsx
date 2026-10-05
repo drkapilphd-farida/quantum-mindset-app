@@ -1,6 +1,7 @@
 'use client'
 
 import { programs } from '@/config/site.config'
+import { useAppT } from '@/lib/app-i18n/client'
 import { Lock } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { BatchCheckout, PriceLine, SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
@@ -23,6 +24,7 @@ type MasterclassPaywallModalProps = {
 // early-bird / regular price and creates the Razorpay link for the batch
 // the learner picks here (BatchCheckout). Fetched only while open.
 export function MasterclassPaywallModal({ open, onOpenChange, day }: MasterclassPaywallModalProps): React.JSX.Element {
+  const t = useAppT()
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
@@ -33,11 +35,10 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
 
           <div>
             <DialogTitle className="font-heading text-xl font-bold tracking-tight text-foreground">
-              {day !== null ? `Day ${day} is part of the ${PROGRAM_NAME}` : `Start the ${PROGRAM_NAME}`}
+              {day !== null ? t('curriculum.paywall.dayTitle', { day, program: PROGRAM_NAME }) : t('curriculum.paywall.startTitle', { program: PROGRAM_NAME })}
             </DialogTitle>
             <DialogDescription className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              All 30 days of the curriculum — real WPM + comprehension checkpoints, and 7 live classes with Dr. Kapil Dev Sharma — unlock
-              with enrollment. Days you have already completed stay open.
+              {t('curriculum.paywall.body')}
             </DialogDescription>
           </div>
 
@@ -57,7 +58,7 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
             onClick={() => onOpenChange(false)}
             className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            Maybe later
+            {t('common.actions.maybeLater')}
           </button>
         </div>
       </DialogContent>

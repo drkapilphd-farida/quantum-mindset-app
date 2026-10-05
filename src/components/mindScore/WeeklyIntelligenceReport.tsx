@@ -1,4 +1,6 @@
 import { cn } from '@/lib/utils'
+import { translateLabel } from '@/lib/app-i18n/translate'
+import { getAppT } from '@/lib/app-i18n/server'
 
 export type WeeklyDimensionEntry = {
   id: string
@@ -24,7 +26,8 @@ const TREND_COLOR: Record<'up' | 'down' | 'stable' | 'inactive', string> = {
 // shows above, just as a compact weekly-trend strip. A dimension with no
 // score yet reads as an honest "—" (not yet attempted), never a
 // greyed-out "Coming soon" placeholder.
-export function WeeklyIntelligenceReport({ dimensions, overallGrowth }: WeeklyIntelligenceReportProps): React.JSX.Element {
+export async function WeeklyIntelligenceReport({ dimensions, overallGrowth }: WeeklyIntelligenceReportProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   return (
     <div className="glass-premium-card p-6">
       <div className="flex items-center justify-between">
@@ -36,7 +39,7 @@ export function WeeklyIntelligenceReport({ dimensions, overallGrowth }: WeeklyIn
           overallGrowth === 'Excellent' || overallGrowth === 'Good' ? 'text-success' :
           overallGrowth === 'Recovering' ? 'text-destructive' : 'text-muted-foreground',
         )}>
-          Overall: {overallGrowth}
+          {t('progress.overallGrowth', { label: translateLabel(t, overallGrowth) })}
         </span>
       </div>
 
@@ -50,12 +53,12 @@ export function WeeklyIntelligenceReport({ dimensions, overallGrowth }: WeeklyIn
                 'flex flex-col items-center rounded-xl px-2 py-3',
                 dim.score !== null ? 'bg-foreground/[0.03] ring-1 ring-border' : 'bg-muted/20',
               )}
-              aria-label={`${dim.label}: ${dim.score !== null ? `${dim.score} out of 100, ${trendKey}` : 'not yet attempted'}`}
+              aria-label={dim.score !== null ? t('progress.weeklyAria', { label: translateLabel(t, dim.label), score: dim.score, trend: t(`progress.trend.${trendKey}`) }) : t('progress.notAttempted', { label: translateLabel(t, dim.label) })}
             >
               <span className={cn('text-xl font-bold', TREND_COLOR[trendKey])} aria-hidden="true">
                 {TREND_ICON[trendKey]}
               </span>
-              <span className="mt-1 text-center text-[10px] leading-tight font-medium text-muted-foreground">{dim.label}</span>
+              <span className="mt-1 text-center text-[10px] leading-tight font-medium text-muted-foreground">{translateLabel(t, dim.label)}</span>
               {dim.score !== null && <span className="text-[10px] tabular-nums text-foreground/60">{dim.score}</span>}
             </div>
           )

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import AppI18nRoot from '@/lib/app-i18n/AppI18nRoot'
 import { createClient } from '@/lib/supabase/server'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { ChooseLearningMethodExperience } from '@/components/welcome/ChooseLearningMethodExperience'
@@ -54,11 +55,13 @@ export default async function ChooseLearningMethodPage(): Promise<React.JSX.Elem
   }
 
   return (
-    <ChooseLearningMethodExperience
-      isAuthenticated={user !== null}
-      appDomain={appDomain}
-      hasStartedJourney={hasStartedJourney}
-      programPrice={programPrice}
-    />
+    <AppI18nRoot>
+      <ChooseLearningMethodExperience
+        isAuthenticated={user !== null}
+        appDomain={appDomain}
+        hasStartedJourney={hasStartedJourney}
+        programPrice={programPrice}
+      />
+    </AppI18nRoot>
   )
 }

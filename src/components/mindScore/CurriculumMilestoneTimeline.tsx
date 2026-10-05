@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { phaseTitle } from '@/lib/app-i18n/curriculumText'
+import { useAppT } from '@/lib/app-i18n/client'
 import Link from 'next/link'
 import { useCountUp } from '@/hooks/exercises/useCountUp'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
@@ -59,6 +61,7 @@ function PhaseRing({ percent, accent }: { percent: number; accent: string }): Re
 // (localStorage — same client-only data source and mount-time read
 // pattern already established by ThirtyDayMasterclassHeroCard.tsx).
 export function CurriculumMilestoneTimeline(): React.JSX.Element {
+  const t = useAppT()
   const [completedDays, setCompletedDays] = useState<readonly number[]>([])
   const [hydrated, setHydrated] = useState(false)
 
@@ -72,7 +75,7 @@ export function CurriculumMilestoneTimeline(): React.JSX.Element {
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">30-Day Milestone Timeline™</p>
         <Link href={CURRICULUM_ROUTE} className="text-xs font-medium text-primary hover:underline">
-          View roadmap →
+          {t('progress.viewRoadmap')}
         </Link>
       </div>
 
@@ -90,13 +93,13 @@ export function CurriculumMilestoneTimeline(): React.JSX.Element {
               className="glass-premium-lift flex flex-col items-center gap-3 rounded-2xl border border-border/60 bg-card/60 p-4 text-center transition-opacity hover:opacity-90"
             >
               <p className="text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
-                Days {start}–{end}
+                {t('progress.daysRange', { start, end })}
               </p>
               <PhaseRing percent={percent} accent={PHASE_ACCENTS[phase.id]} />
               <div>
-                <p className="text-xs font-semibold text-foreground">{phase.title}</p>
+                <p className="text-xs font-semibold text-foreground">{phaseTitle(t, phase.id)}</p>
                 <p className="mt-0.5 text-[10px] tabular-nums text-muted-foreground">
-                  {completedInPhase} / {totalDays} days
+                  {t('progress.daysOf', { done: completedInPhase, total: totalDays })}
                 </p>
               </div>
             </Link>

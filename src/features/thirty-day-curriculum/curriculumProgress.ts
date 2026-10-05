@@ -15,6 +15,8 @@
 // deliberately opts in via NEXT_PUBLIC_DEV_UNLOCK; production users keep
 // the real sequential gate.
 import { loadBestColorSceneTransformationStats } from '@/features/color-scene-transformation/colorSceneTransformationLocalHistory'
+import type { AppLang } from '@/lib/app-i18n/languages'
+import { sameContentLang } from '@/lib/app-i18n/practiceContent'
 import { loadBestFluidEnergyBalancerStats } from '@/features/fluid-energy-balancer/fluidEnergyBalancerLocalHistory'
 import { loadBestQuantumMentalRotationStats } from '@/features/quantum-mental-rotation/quantumMentalRotationLocalHistory'
 import { loadBestSensoryHologramBuilderStats } from '@/features/sensory-hologram-builder/sensoryHologramBuilderLocalHistory'
@@ -29,6 +31,11 @@ export type CurriculumCheckpointResult = {
   trueWpm: number
   comprehensionAccuracyPercent: number
   completedAt: string
+  /**
+   * Language of the practice text that was read. WPM is only compared
+   * between checkpoints in the same language. Missing (older records) = English.
+   */
+  contentLang?: AppLang
 }
 
 export type CurriculumProgress = {
@@ -293,10 +300,13 @@ export function computeComprehensionAveragePercent(progress: CurriculumProgress)
 // to mean anything — null until then, clamped at 0 so a temporary dip
 // never shows as a nonsensical negative "growth" percent.
 export function computeReadingGrowthPercent(progress: CurriculumProgress): number | null {
-  const checkpoints = getOrderedCheckpoints(progress)
+  const all = getOrderedCheckpoints(progress)
+  const latest = all[all.length - 1]
+  if (latest === undefined) return null
+  // Only checkpoints read in the same language as the latest one are comparable.
+  const checkpoints = all.filter((checkpoint) => sameContentLang(checkpoint, latest))
   if (checkpoints.length < 2) return null
   const baseline = checkpoints[0]!
-  const latest = checkpoints[checkpoints.length - 1]!
   if (baseline.trueWpm <= 0) return null
   const growth = Math.round(((latest.trueWpm - baseline.trueWpm) / baseline.trueWpm) * 100)
   return Math.max(0, growth)
@@ -323,6 +333,8 @@ export function computeCheckpointDelta(progress: CurriculumProgress, day: number
   const baseline = progress.checkpoints[1]
   const current = progress.checkpoints[day]
   if (baseline === undefined || current === undefined || baseline.trueWpm <= 0) return null
+  // WPM in different languages is not comparable — no delta across languages.
+  if (!sameContentLang(baseline, current)) return null
   const wpmGrowthPercent = Math.round(((current.trueWpm - baseline.trueWpm) / baseline.trueWpm) * 100)
   const comprehensionDeltaPercent = current.comprehensionAccuracyPercent - baseline.comprehensionAccuracyPercent
   return { wpmGrowthPercent, comprehensionDeltaPercent }

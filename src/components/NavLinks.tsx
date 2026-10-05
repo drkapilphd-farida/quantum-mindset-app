@@ -1,13 +1,15 @@
 'use client'
 
 import Link from 'next/link'
+import type { MessageKey } from '@/lib/app-i18n/translate'
+import { useAppT } from '@/lib/app-i18n/client'
 import { usePathname } from 'next/navigation'
 import { BarChart3, BookOpen, LayoutDashboard, Radio, Settings, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { programs } from '@/config/site.config'
 
-type NavItem = { href: string; label: string; icon: LucideIcon }
+type NavItem = { href: string; labelKey: MessageKey | null; label?: string; icon: LucideIcon }
 
 // Domain Split™ — habit.mindurmind.org.in shows ONLY the 21-Day Habit
 // Builder (its journey + own streak tracker) and Settings; every other
@@ -18,7 +20,7 @@ type NavItem = { href: string; label: string; icon: LucideIcon }
 // middleware level (src/middleware.ts's DOMAIN_ROUTES) — this split
 // keeps the nav honest with that enforcement, it isn't the enforcement
 // itself.
-const SHARED_LEADING_NAV_ITEMS = [{ href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }] as const
+const SHARED_LEADING_NAV_ITEMS = [{ href: '/dashboard', labelKey: 'nav.dashboard', icon: LayoutDashboard }] as const
 
 // journey/analytics already existed (built for the dashboard-page journey
 // card's own "view analytics" link) but had no nav entry anywhere — the
@@ -30,8 +32,8 @@ const SHARED_LEADING_NAV_ITEMS = [{ href: '/dashboard', label: 'Dashboard', icon
 // pointing at the same /settings page the account dropdown already links
 // to, just also reachable from the main nav on this domain.
 const HABIT_NAV_ITEMS = [
-  { href: '/labs/sharp-brain/journey/analytics', label: 'History', icon: BarChart3 },
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: '/labs/sharp-brain/journey/analytics', labelKey: 'nav.history', icon: BarChart3 },
+  { href: '/settings', labelKey: 'nav.settings', icon: Settings },
 ] as const
 
 // Two-Pillar Simplification™ — the app domain now stands on exactly two
@@ -42,8 +44,9 @@ const HABIT_NAV_ITEMS = [
 // a separate browsable catalog. Parents Dashboard stays reachable as a
 // tab inside Pillar 1 (/masterclasses), not a separate top-level item.
 const QSR_NAV_ITEMS = [
-  { href: '/masterclasses', label: programs.sharpBrain.shortName, icon: Radio },
-  { href: '/document-studio', label: 'Document Studio', icon: BookOpen },
+  // Brand name — stays in English in every language.
+  { href: '/masterclasses', labelKey: null, label: programs.sharpBrain.shortName, icon: Radio },
+  { href: '/document-studio', labelKey: 'nav.documentStudio', icon: BookOpen },
 ] as const
 
 // "History" belongs to the Practice Journey, shown only to learners who
@@ -62,11 +65,12 @@ type NavLinksProps = {
 
 export function NavLinks({ onSelect, appDomain, showPracticeJourney }: NavLinksProps): React.JSX.Element {
   const pathname = usePathname()
+  const t = useAppT()
   const navItems = navItemsFor(appDomain, showPracticeJourney)
 
   return (
-    <nav className="flex flex-col gap-0.5 px-2" aria-label="Main navigation">
-      {navItems.map(({ href, label, icon: Icon }) => {
+    <nav className="flex flex-col gap-0.5 px-2" aria-label={t('nav.mainNavigation')}>
+      {navItems.map(({ href, labelKey, label, icon: Icon }) => {
         const isActive = pathname === href || pathname.startsWith(`${href}/`)
 
         return (
@@ -90,7 +94,7 @@ export function NavLinks({ onSelect, appDomain, showPracticeJourney }: NavLinksP
               )}
               aria-hidden="true"
             />
-            {label}
+            {labelKey !== null ? t(labelKey) : label}
           </Link>
         )
       })}

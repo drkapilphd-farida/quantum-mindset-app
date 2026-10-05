@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useAppT } from '@/lib/app-i18n/client'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { EXERCISE_CAPTION_CLASSNAME, EXERCISE_QUIET_TITLE_CLASSNAME, EXERCISE_SCREEN_CLASSNAME } from './exerciseStyles'
@@ -20,6 +23,7 @@ export function ExerciseCompletionScreen({
   secondaryActionLabel,
   secondaryActionHref,
 }: ExerciseCompletionScreenProps): React.JSX.Element {
+  const t = useAppT()
   return (
     <div className={EXERCISE_SCREEN_CLASSNAME}>
       <div
@@ -38,7 +42,7 @@ export function ExerciseCompletionScreen({
 
       {secondaryActionHref !== undefined && (
         <Link href={secondaryActionHref} className={cn('mt-6 hover:text-foreground', EXERCISE_CAPTION_CLASSNAME)}>
-          {secondaryActionLabel ?? 'Back to Dashboard'}
+          {secondaryActionLabel ?? t('exercises.runner.backToDashboard')}
         </Link>
       )}
     </div>

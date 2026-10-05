@@ -26,7 +26,7 @@ export default async function RegressionControlPage(): Promise<React.JSX.Element
       <ExerciseLockedScreen
         title="Regression Control"
         unlockHref={access.nextExercise?.href ?? '/labs/sharp-brain'}
-        unlockLabel={access.nextExercise ? `Go to ${access.nextExercise.title}` : 'Back to Lab'}
+        unlockTarget={access.nextExercise?.title ?? null}
       />
     )
   }

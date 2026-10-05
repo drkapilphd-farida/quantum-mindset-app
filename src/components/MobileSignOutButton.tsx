@@ -1,6 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { LogOut } from 'lucide-react'
 import { signOut } from '@/features/auth/actions/signOut'
 
@@ -11,6 +12,7 @@ import { signOut } from '@/features/auth/actions/signOut'
 // (UserMenu.tsx) in whichever header happens to render one. All three
 // stay wired to the exact same signOut() server action.
 export function MobileSignOutButton(): React.JSX.Element {
+  const t = useAppT()
   const [isPending, startTransition] = useTransition()
 
   function handleSignOut(): void {
@@ -27,7 +29,7 @@ export function MobileSignOutButton(): React.JSX.Element {
       className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-destructive transition-colors duration-150 hover:bg-destructive/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:opacity-60"
     >
       <LogOut className="size-4 shrink-0" aria-hidden="true" />
-      {isPending ? 'Signing out…' : 'Sign out'}
+      {isPending ? t('nav.signingOut') : t('nav.signOut')}
     </button>
   )
 }

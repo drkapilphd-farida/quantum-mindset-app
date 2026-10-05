@@ -1,0 +1,58 @@
+{
+  "greeting": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening",
+    "welcomeBack": "Welcome back",
+    "line": "{greeting}, {name}",
+    "fallbackName": "there"
+  },
+  "eyeFoundation": {
+    "complete": "Eye Foundation Module complete — keep the momentum going.",
+    "progress": "{percent}% through the Eye Foundation Module."
+  },
+  "documentStudio": {
+    "eyebrow": "Tier 1 · Utility Hub",
+    "description": "Drop any PDF, textbook or research paper. Our AI turns it into Smart Reading drills, Mind Maps and Neural Map Notes."
+  },
+  "flagship": {
+    "eyebrow": "Tier 3 · Flagship Program",
+    "description": "A structured 30-day path with live classes."
+  },
+  "mindScore": {
+    "breakdown": "Mind Score breakdown",
+    "reading": "Reading",
+    "memory": "Memory",
+    "focus": "Focus"
+  },
+  "streak": {
+    "one": "Current streak: {count} day",
+    "many": "Current streak: {count} days"
+  },
+  "curriculumCard": {
+    "progress": "Your curriculum progress",
+    "dayTheme": "Day {day} — {title}",
+    "readyDay1": "Ready to begin Day 1",
+    "percentComplete": "{percent}% of the 30 days complete",
+    "openCurriculum": "Open curriculum",
+    "continueDay": "Continue Day {day}",
+    "startDay1": "Start Day 1"
+  },
+  "viewToggle": {
+    "student": "Student view",
+    "parent": "Parent analytics"
+  },
+  "habit": {
+    "journeyDay": "Day {day} of your {program}.",
+    "programOutcome": "Read faster with understanding, focus longer, remember more — measured from your own Day 1 to Day 30.",
+    "programFormat": "Online · 7 live classes + 30 days of app practice."
+  },
+  "journeyCard": {
+    "skills": "Reading · Quick Choice · Visual Focus · Visualisation",
+    "continue": "Continue →",
+    "begin": "Begin →",
+    "dayCompleted": "Day {day}, completed",
+    "dayUnlocked": "Day {day}, unlocked",
+    "dayLocked": "Day {day}, locked, part of the {program}"
+  }
+}

@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { getPracticeContentLang } from '@/lib/app-i18n/server'
 import type { PassageCategory } from '../passageLibrary'
 import type { PassageDifficulty } from '../passageDifficulty'
 import type { ReadingSessionRecord, ReadingGoalId } from './readingIntelligenceTypes'
@@ -18,6 +19,8 @@ export async function getReadingIntelligenceSessions(limit = 1000): Promise<Read
     .from('reading_intelligence_sessions')
     .select('id, passage_id, category, difficulty, mode, wpm, reading_time_ms, comprehension_percent, accuracy_percent, reading_intelligence_score, focus_mode, hints_used, completed, occurred_at')
     .eq('user_id', user.id)
+    // WPM is compared only within the same practice-text language.
+    .eq('content_lang', await getPracticeContentLang('reading'))
     .order('occurred_at', { ascending: false })
     .limit(limit)
 

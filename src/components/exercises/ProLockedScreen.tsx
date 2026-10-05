@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getAppT } from '@/lib/app-i18n/server'
 import { currentProgramPriceLabel } from '@/features/sharp-brain-enrol/server'
 import { Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -19,25 +20,27 @@ type ProLockedScreenProps = {
 // paywall or vice versa.
 
 // Name, price and links from the programs registry (site.config.ts).
-export function ProLockedScreen({ title }: ProLockedScreenProps): React.JSX.Element {
+export async function ProLockedScreen({ title }: ProLockedScreenProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
+  const price = currentProgramPriceLabel()
   return (
     <div className={EXERCISE_SCREEN_CLASSNAME}>
       <div className="mx-auto max-w-sm">
         <div aria-hidden="true" className="mx-auto mb-6 flex size-14 items-center justify-center rounded-2xl bg-primary/10">
           <Lock className="size-6 text-primary" />
         </div>
-        <h1 className={EXERCISE_TITLE_CLASSNAME}>{title} is part of the {programs.sharpBrain.name}</h1>
+        <h1 className={EXERCISE_TITLE_CLASSNAME}>{t('welcome.lock.partOf', { title, program: programs.sharpBrain.name })}</h1>
         <p className={cn('mt-4', EXERCISE_BODY_CLASSNAME)}>
-          Enroll once ({currentProgramPriceLabel()}, one-time) to unlock this exercise and all 30 days of the curriculum, with 7 live classes with Dr. Kapil Dev Sharma.
+          {t('welcome.lock.enrolOnce', { price })}
         </p>
         <Button asChild size="lg" className="mt-10 min-w-[200px] rounded-full shadow-sm">
           <a href={primaryCheckoutHref('sharpBrain')} target="_blank" rel="noopener noreferrer">
-            Enroll for {currentProgramPriceLabel()}
+            {t('welcome.lock.enrolFor', { price })}
           </a>
         </Button>
         <p className="mt-4">
           <Link href={programs.sharpBrain.url} className="text-sm font-medium text-muted-foreground underline underline-offset-4">
-            See the program
+            {t('welcome.lock.seeProgram')}
           </Link>
         </p>
       </div>

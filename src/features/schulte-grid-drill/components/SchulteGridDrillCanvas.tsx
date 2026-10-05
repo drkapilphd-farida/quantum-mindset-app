@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAppT } from '@/lib/app-i18n/client'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayout'
 import { ReadingProgressBar } from '@/features/reading-engine/components/ReadingProgressBar'
@@ -29,6 +30,7 @@ type SchulteGridDrillCanvasProps = {
 // ReadingStatTile), matching the design system without fabricating a WPM
 // number just to satisfy that component's prop shape.
 export function SchulteGridDrillCanvas({ onComplete, onExitRequested }: SchulteGridDrillCanvasProps): React.JSX.Element {
+  const t = useAppT()
   const [grid] = useState<readonly number[]>(() => generateShuffledSchulteGrid())
   const [nextExpected, setNextExpected] = useState(1)
   const [mistakeCount, setMistakeCount] = useState(0)
@@ -76,9 +78,9 @@ export function SchulteGridDrillCanvas({ onComplete, onExitRequested }: SchulteG
           Peripheral Vision Activator™
         </p>
         <div className="grid grid-cols-3 gap-x-4 text-center">
-          <ReadingStatTile label="Time" value={formatElapsedTime(elapsedMs)} />
-          <ReadingStatTile label="Next" value={nextExpected <= SCHULTE_GRID_TOTAL_CELLS ? String(nextExpected) : '—'} />
-          <ReadingStatTile label="Mistakes" value={String(mistakeCount)} />
+          <ReadingStatTile label={t('exercises.stats.time')} value={formatElapsedTime(elapsedMs)} />
+          <ReadingStatTile label={t('exercises.schulte.next')} value={nextExpected <= SCHULTE_GRID_TOTAL_CELLS ? String(nextExpected) : '—'} />
+          <ReadingStatTile label={t('exercises.schulte.mistakes')} value={String(mistakeCount)} />
         </div>
         <div className="mt-4">
           <ReadingProgressBar progressPercent={progressPercent} />
@@ -95,7 +97,7 @@ export function SchulteGridDrillCanvas({ onComplete, onExitRequested }: SchulteG
               type="button"
               disabled={isFound}
               onClick={() => handleCellClick(cellIndex, value)}
-              aria-label={`Grid cell ${value}`}
+              aria-label={t('exercises.common.gridCell', { n: value })}
               className={`flex aspect-square items-center justify-center rounded-xl border text-lg font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 ${
                 isWrong
                   ? 'border-red-500/60 bg-red-500/10 text-red-700'
