@@ -44,9 +44,13 @@ type HemisphericColorSyncExperienceProps = {
   // EspZenerTelepathyExperience.tsx's identical prop for the full
   // rationale; standalone usage (this prop omitted) is unchanged.
   onComplete?: (accuracyPercent: number) => void
+  /** Easy level: a gentler 4-second answer window (journey week 1). */
+  easy?: boolean
 }
 
-export function HemisphericColorSyncExperience({ onComplete }: HemisphericColorSyncExperienceProps = {}): React.JSX.Element {
+const EASY_TIME_LIMIT_MS = 4000
+
+export function HemisphericColorSyncExperience({ onComplete, easy = false }: HemisphericColorSyncExperienceProps = {}): React.JSX.Element {
   const curriculumSession = useCurriculumSessionCompletion('hemispheric-color-sync', LAB_HREF)
   const router = useRouter()
   const session = useExerciseSession({ labId: 'quantum-speed-reading', exerciseId: 'hemispheric-color-sync' })
@@ -125,5 +129,5 @@ export function HemisphericColorSyncExperience({ onComplete }: HemisphericColorS
     )
   }
 
-  return <HemisphericColorSyncCanvas key={attemptNonce} onComplete={handleComplete} onExitRequested={handleExitRequested} />
+  return <HemisphericColorSyncCanvas key={attemptNonce} onComplete={handleComplete} onExitRequested={handleExitRequested} {...(easy ? { timeLimitMs: EASY_TIME_LIMIT_MS } : {})} />
 }

@@ -22,7 +22,7 @@ export const CURRICULUM_EXERCISE_CATEGORIES: readonly CurriculumExerciseCategory
 ]
 
 export const CURRICULUM_CATEGORY_LABELS: Record<CurriculumExerciseCategory, string> = {
-  'brain-gym': 'Brain Gym',
+  'brain-gym': 'Focus Warm-Up',
   'right-brain-intuition': 'Visual Focus & Memory',
   visualization: 'Visualization',
   'reading-intelligence': 'Reading Intelligence',
@@ -51,11 +51,11 @@ const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
   { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
   {
     id: 'quantum-tachistoscope-multi-word-blast',
-    title: 'Tachistoscope Multi-Word Blast',
+    title: 'Multi-Word Flash',
     href: '/labs/sharp-brain/brain-gym',
     category: 'brain-gym',
   },
-  { id: 'blink-trigger-micro-recall', title: 'Blink-Trigger Micro-Recall', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'blink-trigger-micro-recall', title: 'Blink Recall', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
 ]
 
 // ---- Right-Brain / Intuition (Right Brain Hub + Intuition Hub) ----

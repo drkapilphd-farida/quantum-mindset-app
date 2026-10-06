@@ -4,10 +4,9 @@ import type { JourneyLengthTier } from './readingContent'
 export const TOTAL_JOURNEY_DAYS = 21
 
 export type JourneyStepExerciseId =
-  | 'eye-warm-up'
+  | 'calm-breathing'
   | 'schulte-grid-drill'
   | 'word-flash'
-  | 'brain-gym-circuit'
   | 'dot-memory-grid'
   | 'photographic-memory'
   | 'hemispheric-color-sync'
@@ -27,20 +26,16 @@ export type ReadingMode = 'quantum-reading-sprint' | 'phrase' | 'vertical-word' 
 
 // 21-Day Transformation Journey™ — Clean 3-Week Phased Curriculum.
 //
-// Week 1 (Foundation & Brain Gym) — eye movements, foundational reading,
-// and one streamlined 2-Minute Brain Gym Circuit™ (Sprint 4™) that
-// bundles all 4 quick micro-drills — Saccadic Eye Jump, Peripheral
-// Expanding Circle, Fast Pattern Blinking, Cross-Lateral Tap — into one
-// fast, skippable session, rather than 4 separate full-length (16-round)
-// exercises tediously occupying 4 separate pool slots. 4 real items for
-// 7 days — every day still gets a genuinely distinct Step 1 and Step 2.
-// No Zener/Intuition content of any kind — not even via Smart Weakness
-// Targeting™ (see canInjectWeaknessDrill below).
+// Week 1 (Foundation & Focus) — calm, foundational practice. Calm Breathing
+// replaced Eye Warm-up, and the Color-Word grid (at an easy 4-second pace)
+// replaced the 2-Minute Circuit of eye drills (Oct 2026). 4 real items for 7
+// days, so every day still gets a distinct Step 1 and Step 2. No domain
+// injection of any kind in week 1 (see canInjectWeaknessDrill below).
 const WEEK_1_POOL: readonly JourneyStepExercise[] = [
-  { exerciseId: 'eye-warm-up', title: 'Eye Warm-up', domain: null },
+  { exerciseId: 'calm-breathing', title: 'Calm Breathing', domain: null },
   { exerciseId: 'schulte-grid-drill', title: 'Peripheral Vision Activator™', domain: null },
   { exerciseId: 'word-flash', title: 'Rapid Recognition Drill™', domain: null },
-  { exerciseId: 'brain-gym-circuit', title: '2-Minute Brain Gym Circuit™', domain: null },
+  { exerciseId: 'hemispheric-color-sync', title: 'Color-Word Sync Grid', domain: null },
 ]
 
 // Week 2 (Expansion & Visualisation) — Right Brain + Visualisation only;
@@ -91,7 +86,7 @@ export function getWeekNumber(day: number): 1 | 2 | 3 {
 
 export function getWeekTheme(day: number): string {
   const week = getWeekNumber(day)
-  if (week === 1) return 'Foundation & Brain Gym'
+  if (week === 1) return 'Foundation & Focus'
   if (week === 2) return 'Expansion & Visualisation'
   return 'Advanced Focus Flow & Attention'
 }

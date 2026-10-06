@@ -33,6 +33,8 @@ type GuessOutcome = {
 }
 
 type HemisphericColorSyncCanvasProps = {
+  /** Answer window per word; the 21-day journey's week 1 uses a gentler 4 s. */
+  timeLimitMs?: number
   onComplete: (elapsedMs: number, correctCount: number, totalScore: number, bestStreak: number, fastestReactionMs: number | null) => void
   onExitRequested: (elapsedMs: number) => void
 }
@@ -60,13 +62,13 @@ function promptCopy(round: StroopRound, t: Translator): string {
 // appear simultaneously the instant a round starts (immediate recall by
 // construction) and the session always runs the full 16 rounds
 // regardless of performance, exactly as the task brief specifies.
-export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: HemisphericColorSyncCanvasProps): React.JSX.Element {
+export function HemisphericColorSyncCanvas({ onComplete, onExitRequested, timeLimitMs = RECALL_TIME_LIMIT_MS }: HemisphericColorSyncCanvasProps): React.JSX.Element {
   const t = useAppT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const [rounds] = useState<readonly StroopRound[]>(() => buildSessionRounds())
   const [roundIndex, setRoundIndex] = useState(0)
   const [phase, setPhase] = useState<RoundPhase>('active')
-  const [recallRemainingMs, setRecallRemainingMs] = useState(RECALL_TIME_LIMIT_MS)
+  const [recallRemainingMs, setRecallRemainingMs] = useState(timeLimitMs)
   const [selectedColorName, setSelectedColorName] = useState<ColorName | null>(null)
   const [lastOutcome, setLastOutcome] = useState<GuessOutcome | null>(null)
   const [streak, setStreak] = useState(0)
@@ -130,7 +132,7 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
         setRoundIndex(nextRound)
         setSelectedColorName(null)
         setLastOutcome(null)
-        setRecallRemainingMs(RECALL_TIME_LIMIT_MS)
+        setRecallRemainingMs(timeLimitMs)
         setPhase('active')
       }
     }, REVEAL_DURATION_MS)
@@ -140,7 +142,7 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
 
   function handleGuess(colorName: ColorName): void {
     if (phase !== 'active' || currentRound === undefined) return
-    const reactionTimeMs = RECALL_TIME_LIMIT_MS - recallRemainingMs
+    const reactionTimeMs = timeLimitMs - recallRemainingMs
     const isCorrect = colorName === currentRound.correctColorName
     setSelectedColorName(colorName)
     setPhase('revealing')
@@ -239,7 +241,7 @@ export function HemisphericColorSyncCanvas({ onComplete, onExitRequested }: Hemi
               <div className="h-1 w-full overflow-hidden rounded-full bg-border">
                 <div
                   className={`h-full rounded-full bg-red-500 ${prefersReducedMotion ? '' : 'transition-[width] duration-100 ease-linear'}`}
-                  style={{ width: `${(recallRemainingMs / RECALL_TIME_LIMIT_MS) * 100}%` }}
+                  style={{ width: `${(recallRemainingMs / timeLimitMs) * 100}%` }}
                 />
               </div>
               <p className="mt-1 text-center text-[10px] text-muted-foreground tabular-nums">{recallRemainingSeconds}s to answer</p>

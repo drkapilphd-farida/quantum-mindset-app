@@ -239,5 +239,66 @@
     "summaryQ": "Which line sums up the passage best?",
     "scoreLabel": "effective words per minute",
     "levelHint": "This level: {chunk} word(s) at a time · {wpm} words a minute"
+  },
+  "eyeBreak": {
+    "optional": "Optional · 30 seconds",
+    "title": "Eye relaxation break",
+    "intro": "Before reading: look at something far away, then rest your eyes. Skip it any time.",
+    "start": "Start the 30-second break",
+    "skip": "Skip",
+    "lookFar": "Look far away",
+    "lookFarHint": "Look at something about 6 metres away — out of a window if you can. Blink gently.",
+    "palming": "Close your eyes",
+    "palmingHint": "Rest your cupped palms over your closed eyes. Breathe slowly."
+  },
+  "glimpse": {
+    "glimpseOf": "Glimpse {n} of {total}",
+    "lookAtDot": "Look at the dot",
+    "whatDidYouSee": "What did you see?",
+    "whichSeen": "Which one did you see?",
+    "whichOnSide": "Which one was on the {side}?",
+    "whichPhrase": "Which words did you see?",
+    "whichWord": "Which word did you see?",
+    "demo1": "Keep your eyes on the dot in the middle.",
+    "demo3": "Then pick what you saw from 4. Higher levels: more items, less time.",
+    "levelHint": "This level: shown for {ms} ms",
+    "sides": {
+      "left": "left",
+      "right": "right",
+      "top": "top",
+      "bottom": "bottom"
+    },
+    "symbols": {
+      "circle": "Circle",
+      "triangle": "Triangle",
+      "square": "Square",
+      "star": "Star",
+      "diamond": "Diamond",
+      "heart": "Heart",
+      "moon": "Moon",
+      "plus": "Plus",
+      "ring": "Ring",
+      "spade": "Spade"
+    },
+    "span": {
+      "title": "Rapid Visual Span",
+      "purpose": "Take in several things around one point at a glance.",
+      "demo2": "Symbols appear around the dot for a moment."
+    },
+    "peripheral": {
+      "title": "Peripheral Flash",
+      "purpose": "Notice what appears at the side while you look at the centre.",
+      "demo2": "A symbol appears near the edge for a moment."
+    },
+    "phrase": {
+      "title": "Multi-Word Flash",
+      "purpose": "Read a short group of words in one glance.",
+      "demo2": "A few words appear for a moment."
+    },
+    "blink": {
+      "title": "Blink Recall",
+      "purpose": "Catch a word that appears for just a blink.",
+      "demo2": "One word appears for a blink."
+    }
   }
 }

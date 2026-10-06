@@ -1,7 +1,7 @@
 {
   "eyebrow": "Sharp Brain 30-Day Curriculum",
   "title": "Your daily roadmap",
-  "intro": "30 days in 4 phases, mixing Brain Gym, visual memory and attention, visualisation and reading practice into one balanced circuit — with real WPM and comprehension checkpoints along the way.",
+  "intro": "30 days in 4 phases, mixing focus warm-ups, visual memory and attention, visualisation and reading practice into one balanced circuit — with real WPM and comprehension checkpoints along the way.",
   "metrics": {
     "brainScore": "Brain Score",
     "readingGrowth": "Reading growth",
@@ -17,7 +17,7 @@
   "dayShort": "Day {day}",
   "dayLockedTitle": "Day {day} — enrol to unlock",
   "categories": {
-    "brainGym": "Brain Gym",
+    "brainGym": "Focus Warm-Up",
     "visualFocusMemory": "Visual Focus & Memory",
     "visualization": "Visualisation",
     "readingIntelligence": "Reading Intelligence"

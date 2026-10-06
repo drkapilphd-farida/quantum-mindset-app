@@ -24,10 +24,10 @@ export const QUANTUM_MIND_PROGRAMS: readonly JourneyReadingSetDef[] = [
     id: 'mum-21-day-journey',
     category: 'quantum-mind-programs',
     lengthTier: 'medium',
-    text: `The ${programs.focusStarter.appName} is structured in three distinct weeks, each with its own focus. Week 1 concentrates on foundational eye movements and quick Brain Gym drills, building the basic habits needed before moving to harder skills. Week 2 expands into visual focus training and visualization exercises, layered alongside real reading sprints of growing length. Week 3 brings everything together at an advanced pace, introducing Intuition training for the first time and pushing reading speed further using an adaptive pacing system that adjusts to each person’s own real comprehension results, rather than a one-size-fits-all target.`,
+    text: `The ${programs.focusStarter.appName} is structured in three distinct weeks, each with its own focus. Week 1 concentrates on calm breathing and quick focus warm-ups, building the basic habits needed before moving to harder skills. Week 2 expands into visual focus training and visualization exercises, layered alongside real reading sprints of growing length. Week 3 brings everything together at an advanced pace, adding memory challenges and pushing reading speed further using an adaptive pacing system that adjusts to each person’s own real comprehension results, rather than a one-size-fits-all target.`,
     comprehensionQuestions: [
-      { question: 'What does Week 1 of the journey focus on?', options: ['Advanced intuition training', 'Foundational eye movements and Brain Gym', 'Only memory games', 'Public speaking'], correctAnswer: 'Foundational eye movements and Brain Gym' },
-      { question: 'What is introduced for the first time in Week 3?', options: ['Reading exercises', 'Intuition training', 'Brain Gym drills', 'Focus exercises'], correctAnswer: 'Intuition training' },
+      { question: 'What does Week 1 of the journey focus on?', options: ['Advanced memory training', 'Calm breathing and quick focus warm-ups', 'Only memory games', 'Public speaking'], correctAnswer: 'Calm breathing and quick focus warm-ups' },
+      { question: 'What does Week 3 add?', options: ['Reading exercises for the first time', 'Memory challenges', 'Breathing drills', 'Handwriting practice'], correctAnswer: 'Memory challenges' },
     ],
     retentionQuestions: [
       { question: 'What does the adaptive pacing system adjust to?', options: ['A fixed target for everyone', 'Each person’s own real comprehension results', 'Random chance', 'The time of day'], correctAnswer: 'Each person’s own real comprehension results' },

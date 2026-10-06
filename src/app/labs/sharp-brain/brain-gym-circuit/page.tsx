@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { BrainGymCircuitExperience } from '@/features/brain-gym/components/BrainGymCircuitExperience'
 
 export const metadata: Metadata = {
-  title: '2-Minute Brain Gym Circuit™ — Sharp Brain Lab',
+  title: '2-Minute Warm-up Circuit — Sharp Brain Lab',
   description: '4 quick micro-drills back to back — about 2 minutes total, real and scored but fast.',
   robots: { index: false, follow: false },
 }

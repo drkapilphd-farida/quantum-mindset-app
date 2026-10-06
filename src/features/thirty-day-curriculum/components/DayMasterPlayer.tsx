@@ -16,6 +16,7 @@ import { markCurriculumDayComplete } from '../curriculumProgress'
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
 import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
 import { CurriculumDayProvider, EmbeddedExerciseProvider } from '../embeddedExerciseContext'
+import { EyeRelaxationBreak } from './EyeRelaxationBreak'
 import { useImmersiveExerciseLock } from '@/hooks/exercises/useImmersiveExerciseLock'
 
 const CARD_CLASS_NAME = 'relative overflow-hidden rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
@@ -69,6 +70,8 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
 
   const [stepIndex, setStepIndex] = useState<number | null>(null)
   const [mode, setMode] = useState<WizardMode>('playing')
+  // The optional eye break is offered once before each reading step.
+  const [eyeBreakDoneFor, setEyeBreakDoneFor] = useState<number | null>(null)
 
   // True Full-Screen Viewport Lock™ — only while 'playing' (the fixed
   // inset-0 mode below); 'celebrating'/'ready-for-checkpoint' render as
@@ -85,7 +88,9 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
     const session = loadActiveCurriculumSession()
     if (session !== null && session.day === day) {
       clearActiveCurriculumSession()
-      setStepIndex(Math.min(session.currentIndex, queueIds.length - 1))
+      const resumeAt = Math.min(session.currentIndex, queueIds.length - 1)
+      setEyeBreakDoneFor(resumeAt)
+      setStepIndex(resumeAt)
     } else {
       setStepIndex(0)
     }
@@ -204,6 +209,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
     return <div className={`${CARD_CLASS_NAME} flex min-h-[40vh] items-center justify-center p-6 text-sm text-muted-foreground`}>{t('curriculum.player.loading')}</div>
   }
 
+  const offerEyeBreak = exercise.category === 'reading-intelligence' && stepIndex > 0 && eyeBreakDoneFor !== stepIndex
   const isGated = isCurriculumExerciseGated(currentExerciseId)
   const EmbeddedComponent = isGated ? undefined : getEmbeddableComponent(currentExerciseId)
 
@@ -268,7 +274,9 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       <div className="min-h-0 flex-1 overflow-y-auto">
         <EmbeddedExerciseProvider>
           <CurriculumDayProvider value={dayInfo}>
-          {isGated ? (
+          {offerEyeBreak ? (
+            <EyeRelaxationBreak key={`eye-break-${stepIndex}`} onDone={() => setEyeBreakDoneFor(stepIndex)} />
+          ) : isGated ? (
             <GatedStepHandoff exercise={exercise} onContinue={() => handleGatedHandoff(exercise, stepIndex)} />
           ) : EmbeddedComponent !== undefined ? (
             <EmbeddedComponent key={`${currentExerciseId}-${stepIndex}`} onComplete={handleStepComplete} onExit={handleExitWizard} />

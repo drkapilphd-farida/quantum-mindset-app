@@ -80,7 +80,7 @@ export function BrainGymCircuitExperience({ onComplete, onExit }: BrainGymCircui
           </Link>
         )}
         <div>
-          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">2-Minute Brain Gym Circuit™</h1>
+          <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">2-Minute Warm-up Circuit</h1>
           <p className="mt-3 text-sm text-muted-foreground">
             4 quick micro-drills back to back — Saccadic Eye Jump, Peripheral Expanding Circle, Fast Pattern Blinking, and
             Cross-Lateral Tap — about 2 minutes total. Real, scored, but fast.
@@ -99,7 +99,7 @@ export function BrainGymCircuitExperience({ onComplete, onExit }: BrainGymCircui
               onClick={onComplete}
               className="text-xs font-medium text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
             >
-              Skip Brain Gym →
+              Skip warm-up →
             </button>
           )}
         </div>

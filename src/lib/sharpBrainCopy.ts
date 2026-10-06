@@ -123,10 +123,10 @@ const en: SharpBrainCopy = {
     note: '10–15 minutes a day. Progress tracked automatically.',
     groups: [
       { id: 'focus', skill: 'Focus', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
-      { id: 'reading', skill: 'Smart Reading', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Regression Control', 'Guided-pace (RSVP) practice'] },
+      { id: 'reading', skill: 'Smart Reading', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Dynamic Chunk Sliding', 'Vertical Chunk Sliding'] },
       { id: 'memory', skill: 'Memory', exercises: ['Dot Memory Grid', 'Word Flash Grid', 'Visual Memory Reading', 'Mental Object Rotation'] },
       { id: 'visual', skill: 'Visualisation', exercises: ['Sensory Imagery Builder', 'Deep Visualisation Recall'] },
-      { id: 'calm', skill: 'Calm & Discipline', exercises: ['Calm Breath Balance', '2-Minute Brain Gym Circuit'] },
+      { id: 'calm', skill: 'Calm & Discipline', exercises: ['Calm Breathing', 'Eye relaxation break'] },
     ],
     shotAlt: {
       focus: 'Color-Word Sync Grid exercise in the Mind Ur Mind App',
@@ -324,10 +324,10 @@ const hi: SharpBrainCopy = {
     note: 'रोज़ 10–15 मिनट। प्रगति अपने-आप ट्रैक होती है।',
     groups: [
       { id: 'focus', skill: 'फोकस', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
-      { id: 'reading', skill: 'स्मार्ट रीडिंग', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Regression Control', 'तय गति पर अभ्यास (RSVP)'] },
+      { id: 'reading', skill: 'स्मार्ट रीडिंग', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Dynamic Chunk Sliding', 'Vertical Chunk Sliding'] },
       { id: 'memory', skill: 'याददाश्त', exercises: ['Dot Memory Grid', 'Word Flash Grid', 'Visual Memory Reading', 'Mental Object Rotation'] },
       { id: 'visual', skill: 'विज़ुअलाइज़ेशन', exercises: ['Sensory Imagery Builder', 'Deep Visualisation Recall'] },
-      { id: 'calm', skill: 'शांति और अनुशासन', exercises: ['Calm Breath Balance', '2-Minute Brain Gym Circuit'] },
+      { id: 'calm', skill: 'शांति और अनुशासन', exercises: ['Calm Breathing', 'आँखों को आराम का ब्रेक'] },
     ],
     shotAlt: {
       focus: 'Mind Ur Mind App में Color-Word Sync Grid अभ्यास',

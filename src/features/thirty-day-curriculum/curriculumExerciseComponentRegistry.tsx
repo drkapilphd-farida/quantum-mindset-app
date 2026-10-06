@@ -48,16 +48,14 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
   'theta-breathing-anchor': lazyNamed(() => import('@/components/qsr/visual-activation/ThetaBreathingAnchor'), 'ThetaBreathingAnchor'),
   'cardinal-oculomotor-stretches': lazyNamed(() => import('@/components/qsr/visual-activation/CardinalOculomotorStretches'), 'CardinalOculomotorStretches'),
   'infinity-figure-eight-gliding': lazyNamed(() => import('@/components/qsr/visual-activation/InfinityFigureEightGliding'), 'InfinityFigureEightGliding'),
-  'peripheral-flash-expander': lazyNamed(() => import('@/components/qsr/visual-activation/PeripheralFlashExpander'), 'PeripheralFlashExpander'),
-  'quantum-tachistoscope-multi-word-blast': lazyNamed(
-    () => import('@/components/qsr/visual-activation/QuantumTachistoscopeMultiWordBlast'),
-    'QuantumTachistoscopeMultiWordBlast',
-  ),
+  // The four former watch-only drills now end with an answer step (exercise-core glimpse trainer).
+  'peripheral-flash-expander': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'PeripheralFlashGlimpse'),
+  'quantum-tachistoscope-multi-word-blast': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'MultiWordFlashGlimpse'),
   'aura-edge-color-pulsing': lazyNamed(() => import('@/components/qsr/visual-activation/AuraEdgeColorPulsing'), 'AuraEdgeColorPulsing'),
-  'blink-trigger-micro-recall': lazyNamed(() => import('@/components/qsr/visual-activation/BlinkTriggerMicroRecall'), 'BlinkTriggerMicroRecall'),
+  'blink-trigger-micro-recall': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'BlinkRecallGlimpse'),
   'tratak-afterimage-stretches': lazyNamed(() => import('@/components/qsr/visual-activation/TratakAfterimageStretches'), 'TratakAfterimageStretches'),
   'schulte-grid-speed-drill': lazyNamed(() => import('@/components/qsr/visual-activation/SchulteGridSpeedDrill'), 'SchulteGridSpeedDrill'),
-  'rapid-visual-span-expander': lazyNamed(() => import('@/components/qsr/visual-activation/RapidVisualSpanExpander'), 'RapidVisualSpanExpander'),
+  'rapid-visual-span-expander': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'RapidVisualSpanGlimpse'),
 
   'saccadic-eye-jump': lazyNamed(() => import('@/features/brain-gym/components/SaccadicEyeJumpExperience'), 'SaccadicEyeJumpExperience'),
   'cross-lateral-tap': lazyNamed(() => import('@/features/brain-gym/components/CrossLateralTapExperience'), 'CrossLateralTapExperience'),

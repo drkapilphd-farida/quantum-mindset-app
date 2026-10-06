@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { VisualActivationSuiteExperience } from '@/components/qsr/visual-activation/VisualActivationSuiteExperience'
 
 export const metadata: Metadata = {
-  title: 'Brain Gym™ — Sharp Brain Lab',
-  description: 'A guided warm-up suite that activates your visual system and nervous system before high-speed reading.',
+  title: 'Focus Warm-ups — Sharp Brain Lab',
+  description: 'Short focus warm-ups before reading practice.',
   robots: { index: false, follow: false },
 }
 

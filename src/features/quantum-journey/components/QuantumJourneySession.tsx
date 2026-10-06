@@ -23,10 +23,9 @@ import { computeReadingXp, computeRetentionXp, computeReadingPowerScore } from '
 import { saveDailyQuantumSession } from '@/app/unified-session-preview/actions/saveDailyQuantumSession'
 import { ProgressiveChunkReadingExperience } from '@/features/progressive-chunk-reading/components/ProgressiveChunkReadingExperience'
 import type { RuntimeResult } from '@/hooks/exercise-engine/useUniversalExerciseRuntime'
-import { EyeWarmupExperience } from '@/features/quantum-speed-reading/components/EyeWarmupExperience'
+import { CalmBreathingExperience } from '@/features/calm-breathing/components/CalmBreathingExperience'
 import { SchulteGridDrillExperience } from '@/features/schulte-grid-drill/components/SchulteGridDrillExperience'
 import { WordFlashExperience } from '@/features/flash-intelligence/components/WordFlashExperience'
-import { BrainGymCircuitExperience } from '@/features/brain-gym/components/BrainGymCircuitExperience'
 import { DotMemoryGridExperience } from '@/features/dot-memory-grid/components/DotMemoryGridExperience'
 import { PhotographicMemoryExperience } from '@/features/photographic-memory/components/PhotographicMemoryExperience'
 import { HemisphericColorSyncExperience } from '@/features/hemispheric-color-sync/components/HemisphericColorSyncExperience'
@@ -547,20 +546,19 @@ export function QuantumJourneySession({
     const onAccuracyDone = (accuracyPercent: number): void => handleAuxiliaryComplete(exercise, accuracyPercent)
 
     switch (exercise.exerciseId) {
-      case 'eye-warm-up':
-        return <EyeWarmupExperience onComplete={onDone} completionActionLabel="Continue Session →" />
+      case 'calm-breathing':
+        return <CalmBreathingExperience onComplete={onDone} />
       case 'schulte-grid-drill':
         return <SchulteGridDrillExperience onComplete={onDone} />
       case 'word-flash':
         return <WordFlashExperience onComplete={onDone} />
-      case 'brain-gym-circuit':
-        return <BrainGymCircuitExperience onComplete={onDone} />
       case 'dot-memory-grid':
         return <DotMemoryGridExperience onComplete={onAccuracyDone} />
       case 'photographic-memory':
         return <PhotographicMemoryExperience onComplete={onAccuracyDone} />
       case 'hemispheric-color-sync':
-        return <HemisphericColorSyncExperience onComplete={onAccuracyDone} />
+        // Week 1 meets it as an easy warm-up; week 3 at the normal pace.
+        return <HemisphericColorSyncExperience onComplete={onAccuracyDone} easy={getWeekNumber(day) === 1} />
       case 'color-scene-transformation':
         return <ColorSceneTransformationExperience onComplete={onAccuracyDone} />
       case 'quantum-mental-rotation':
