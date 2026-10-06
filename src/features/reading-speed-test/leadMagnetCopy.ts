@@ -213,7 +213,7 @@ export const leadMagnetCopy: Record<'en' | 'hi', LeadMagnetCopy> = {
     shareNamePlaceholder: 'कार्ड पर पहला नाम (वैकल्पिक)',
     shareImage: 'रिज़ल्ट कार्ड शेयर करें',
     shareWhatsapp: 'WhatsApp पर शेयर करें',
-    shareCardLine: (eff) => `मेरी Effective Reading Speed: ${eff} WPM`,
+    shareCardLine: (eff) => `मैंने समझ के साथ ${eff} WPM पर पढ़ा।`,
     shareCardName: (name) => `${name} की Reading Profile`,
     shareCardAsk: 'आपकी कितनी है?',
     shareText: (eff, url) => `फ्री Reading Speed Test में मेरी Effective Speed ${eff} WPM आई। आपकी कितनी है? ${url}`,
