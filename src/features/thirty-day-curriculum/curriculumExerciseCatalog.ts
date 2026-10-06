@@ -46,16 +46,16 @@ export type CurriculumCatalogExercise = {
 const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
   { id: 'schulte-grid-speed-drill', title: 'Peripheral Vision Activator', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
   { id: 'cross-lateral-tap', title: 'Cross-Lateral Tap', href: '/labs/sharp-brain/cross-lateral-tap', category: 'brain-gym' },
-  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', href: '/labs/sharp-brain/visual-span', category: 'brain-gym' },
   { id: 'fast-pattern-blinking', title: 'Fast Pattern Blinking', href: '/labs/sharp-brain/fast-pattern-blinking', category: 'brain-gym' },
-  { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', href: '/labs/sharp-brain/peripheral-glimpse', category: 'brain-gym' },
   {
     id: 'quantum-tachistoscope-multi-word-blast',
     title: 'Multi-Word Flash',
-    href: '/labs/sharp-brain/brain-gym',
+    href: '/labs/sharp-brain/multi-word-flash',
     category: 'brain-gym',
   },
-  { id: 'blink-trigger-micro-recall', title: 'Blink Recall', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'blink-trigger-micro-recall', title: 'Blink Recall', href: '/labs/sharp-brain/blink-recall', category: 'brain-gym' },
 ]
 
 // ---- Right-Brain / Intuition (Right Brain Hub + Intuition Hub) ----
