@@ -56,3 +56,36 @@ export function practiceStartingPace(measuredWpm: number): number {
 export function hasReachedEnd(endMarkerTop: number, viewportHeight: number, tolerancePx = 4): boolean {
   return endMarkerTop <= viewportHeight + tolerancePx
 }
+
+// ── Reading Profile (shown only for a valid result) ─────────────────────────
+
+/** Where an Effective Reading Speed sits. Typical readers land in "average". */
+export type SpeedBand = 'developing' | 'average' | 'strong' | 'advanced'
+
+/** Band edges in effective WPM (WPM × comprehension). */
+export const SPEED_BAND_EDGES = { average: 150, strong: 250, advanced: 350 } as const
+
+export function speedBand(effectiveWpm: number): SpeedBand {
+  if (effectiveWpm >= SPEED_BAND_EDGES.advanced) return 'advanced'
+  if (effectiveWpm >= SPEED_BAND_EDGES.strong) return 'strong'
+  if (effectiveWpm >= SPEED_BAND_EDGES.average) return 'average'
+  return 'developing'
+}
+
+/**
+ * The reading pattern the result shows. Decided only from the measured WPM
+ * and comprehension — never a claim about the person:
+ * - careful re-reader: under 180 WPM (any passing comprehension)
+ * - inner-voice reader: 180–279 WPM, close to speaking pace
+ * - fast skimmer: 280+ WPM with comprehension under 80%
+ * - balanced reader: 280+ WPM with 80%+ comprehension
+ */
+export type ReadingProfileType = 'careful' | 'innerVoice' | 'skimmer' | 'balanced'
+
+export const PROFILE_EDGES = { innerVoiceWpm: 180, fastWpm: 280, strongComprehension: 80 } as const
+
+export function readingProfile(wpm: number, comprehensionPercent: number): ReadingProfileType {
+  if (wpm < PROFILE_EDGES.innerVoiceWpm) return 'careful'
+  if (wpm < PROFILE_EDGES.fastWpm) return 'innerVoice'
+  return comprehensionPercent >= PROFILE_EDGES.strongComprehension ? 'balanced' : 'skimmer'
+}

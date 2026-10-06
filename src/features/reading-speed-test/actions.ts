@@ -6,7 +6,7 @@ import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { MEASURED_PASSAGES, PRACTICE_PASSAGES, type TestLang, type TestPassage } from './passages'
-import { countWords, practiceStartingPace, scoreReadingTest, type ReadingTestStatus } from './scoring'
+import { countWords, practiceStartingPace, readingProfile, scoreReadingTest, speedBand, type ReadingProfileType, type ReadingTestStatus, type SpeedBand } from './scoring'
 import { signTestToken, verifyTestToken } from './testToken'
 import { activeOffer, discountsChargeable, getOrCreateTestOffer, pricingSnapshot, resolveNow } from '@/features/sharp-brain-enrol/server'
 import type { PricingSnapshot } from '@/features/sharp-brain-enrol/server'
@@ -101,6 +101,9 @@ export type ReadingTestResult = {
   effectiveWpm: number
   correct: number
   total: number
+  /** Valid results only: the reading pattern and where the speed sits. */
+  profile: ReadingProfileType | null
+  band: SpeedBand | null
 }
 
 export async function submitReadingAnswers(input: unknown): Promise<{ ok: true; result: ReadingTestResult; resultToken: string } | Fail> {
@@ -121,7 +124,15 @@ export async function submitReadingAnswers(input: unknown): Promise<{ ok: true; 
       eff: score.effectiveWpm,
       status: score.status,
     })
-    return { ok: true, result: { ...score, correct, total }, resultToken }
+    const valid = score.status === 'valid'
+    const result: ReadingTestResult = {
+      ...score,
+      correct,
+      total,
+      profile: valid ? readingProfile(score.wpm, score.comprehensionPercent) : null,
+      band: valid ? speedBand(score.effectiveWpm) : null,
+    }
+    return { ok: true, result, resultToken }
   } catch {
     return { ok: false, error: GENERIC_ERROR }
   }
@@ -177,6 +188,17 @@ const SaveSchema = z.object({
     .transform((v) => (v === undefined || v.trim() === '' ? null : v.trim())),
   // Preview only: simulate the clock (ignored on production, see resolveNow).
   simulateNow: z.string().max(40).optional(),
+  // Which video or ad brought the lead (captured site-wide, see lib/analytics/utm.ts).
+  utm: z
+    .object({
+      utm_source: z.string().max(120).optional(),
+      utm_medium: z.string().max(120).optional(),
+      utm_campaign: z.string().max(200).optional(),
+      utm_term: z.string().max(200).optional(),
+      utm_content: z.string().max(200).optional(),
+    })
+    .strict()
+    .optional(),
 })
 
 /**
@@ -197,22 +219,36 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; o
     const result = verifyTestToken(parsed.data.resultToken, 'result')
     // A 10-digit number is an Indian mobile — store it with the country code.
     const phone = parsed.data.phone.length === 10 ? `91${parsed.data.phone}` : parsed.data.phone
-    const { data: saved, error } = await createServiceClient()
-      .from('speed_test_results')
-      .insert({
-        whatsapp_number: phone,
-        first_name: parsed.data.firstName,
-        passage_id: result.pid,
-        lang: result.lang,
-        wpm: result.wpm,
-        comprehension_percent: result.comp,
-        effective_wpm: result.eff,
-        status: result.status,
-      })
-      .select('id')
-      .single()
-    if (error) {
-      logger.error('saveSpeedTestResult: insert failed', { code: error.code })
+    const base = {
+      whatsapp_number: phone,
+      first_name: parsed.data.firstName,
+      passage_id: result.pid,
+      lang: result.lang,
+      wpm: result.wpm,
+      comprehension_percent: result.comp,
+      effective_wpm: result.eff,
+      status: result.status,
+    }
+    const utm = parsed.data.utm ?? {}
+    const withLeadSource = {
+      ...base,
+      profile_type: result.status === 'valid' ? readingProfile(result.wpm, result.comp) : null,
+      utm_source: utm.utm_source ?? null,
+      utm_medium: utm.utm_medium ?? null,
+      utm_campaign: utm.utm_campaign ?? null,
+      utm_term: utm.utm_term ?? null,
+      utm_content: utm.utm_content ?? null,
+    }
+    const client = createServiceClient()
+    let { data: saved, error } = await client.from('speed_test_results').insert(withLeadSource).select('id').single()
+    // Until migration 20261006000001 is applied, the lead is still saved —
+    // just without the profile and UTM columns.
+    if (error && (error.code === 'PGRST204' || error.code === '42703')) {
+      logger.warn('saveSpeedTestResult: lead-source columns missing; saving without them')
+      ;({ data: saved, error } = await client.from('speed_test_results').insert(base).select('id').single())
+    }
+    if (error || saved === null) {
+      logger.error('saveSpeedTestResult: insert failed', { code: error?.code })
       return { ok: false, error: GENERIC_ERROR }
     }
     // ₹1,000 off for 48 hours — only after a VALID test, one per number ever.

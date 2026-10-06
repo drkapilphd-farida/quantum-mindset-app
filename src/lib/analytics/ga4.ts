@@ -41,6 +41,13 @@ export type GaEventName =
   | 'view_item'
   | 'begin_checkout'
   | 'generate_lead'
+  // Reading Speed Test funnel (features/reading-speed-test/tracking.ts)
+  | 'speed_test_started'
+  | 'speed_test_completed'
+  | 'speed_test_shared'
+  | 'speed_test_boost_played'
+  | 'speed_test_whatsapp_submitted'
+  | 'speed_test_offer_used'
 
 // No-ops when GA isn't configured (NEXT_PUBLIC_GA_MEASUREMENT_ID unset)
 // or gtag.js hasn't loaded yet — never throws, since a tracking call

@@ -2602,6 +2602,12 @@ export type Database = {
       }
       speed_test_results: {
         Row: {
+          profile_type: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
           comprehension_percent: number
           created_at: string
           effective_wpm: number
@@ -2614,6 +2620,12 @@ export type Database = {
           wpm: number
         }
         Insert: {
+          profile_type?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
           comprehension_percent: number
           created_at?: string
           effective_wpm: number
@@ -2626,6 +2638,12 @@ export type Database = {
           wpm: number
         }
         Update: {
+          profile_type?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
           comprehension_percent?: number
           created_at?: string
           effective_wpm?: number

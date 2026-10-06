@@ -75,3 +75,24 @@ describe('countWords', () => {
     expect(countWords('   ')).toBe(0)
   })
 })
+
+describe('Reading Profile', () => {
+  it('speed bands follow effective WPM', async () => {
+    const { speedBand } = await import('./scoring')
+    expect(speedBand(120)).toBe('developing')
+    expect(speedBand(150)).toBe('average')
+    expect(speedBand(249)).toBe('average')
+    expect(speedBand(250)).toBe('strong')
+    expect(speedBand(350)).toBe('advanced')
+  })
+
+  it('profile type comes only from the measured pattern', async () => {
+    const { readingProfile } = await import('./scoring')
+    expect(readingProfile(150, 100)).toBe('careful')
+    expect(readingProfile(150, 60)).toBe('careful')
+    expect(readingProfile(220, 80)).toBe('innerVoice')
+    expect(readingProfile(320, 60)).toBe('skimmer')
+    expect(readingProfile(320, 80)).toBe('balanced')
+    expect(readingProfile(280, 100)).toBe('balanced')
+  })
+})
