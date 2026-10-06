@@ -1,6 +1,6 @@
 # Sharp Brain exercises — Phase 1 report
 
-*Branch `feat/exercises-phase1` (commit a68570b). Nothing is live yet; waiting for approval.*
+*Branch `feat/exercises-phase1`. Migration applied to production on 6 Oct (approved); code not merged or deployed — waiting for “CONFIRM DEPLOY”.*
 
 ## What changed in Phase 1
 
@@ -135,6 +135,34 @@ The removed exercises' pages still exist in the lab (except Zener and Hidden Tar
 - The 21-day journey's week 1 still uses Eye Warm-up and the 2-Minute Brain Gym Circuit. Your instruction covered the 30-day programme and journey week 3. Shall I replace these too?
 - The visual-intelligence lab (Candle/Mandala Tratak etc.) is untouched and not linked from the programme.
 - Phase 2 (new exercises and the new 30-day plan) and Phase 3 (merging the reading variants, gamification) are not started.
+
+
+## Update after review (6 Oct)
+
+- **Migration applied to production** after an export of the learner-progress tables to `~/MindUrMind-db-backups/before-exercise-results-2026-10-06/`. The export includes `curriculum_day_completions`, `curriculum_day_practice_attempts`, `practice_sessions`, `exercise_progress` and the migration list, plus the rollback SQL. A schema dump needs Docker, which isn't installed. Row counts were unchanged afterwards, and anonymous writes are blocked.
+- **The four watch-only drills now have an answer step.** Each ends with "What did you see? Pick 1 of 4", with 10 levels and a saved score:
+  - Rapid Visual Span
+  - Peripheral Flash
+  - Multi-Word Flash (was Tachistoscope)
+  - Blink Recall
+
+  Level 1 shows things for 1.5 s (0.9 s for one word). They keep their ids, so history continues, and each has its own page.
+
+  New scores:
+
+  | Drill | Learning | Fit | UX | Difficulty | Gamification | Measurability | Safety |
+  |---|---|---|---|---|---|---|---|
+  | Rapid Visual Span | 5 → 6 | 5 → 7 | 6 → 9 | 6 → 10 | 5 → 9 | 3 → 9 | 8 → 10 |
+  | Peripheral Flash | 4 → 5 | 4 → 6 | 6 → 9 | 3 → 10 | 3 → 9 | 1 → 9 | 7 → 10 |
+  | Multi-Word Flash | 5 → 7 | 6 → 8 | 6 → 8 | 4 → 10 | 3 → 9 | 1 → 9 | 8 → 10 |
+  | Blink Recall | 5 → 6 | 6 → 7 | 6 → 8 | 3 → 10 | 3 → 9 | 1 → 9 | 8 → 10 |
+
+- **Optional 30-second eye relaxation break** (20-20-20: look about 6 m away for 20 s, then 10 s palming). It's offered before each reading step in the day player. Skippable, no score, no claims.
+- **21-day journey week 1:**
+  - Calm Breathing replaces Eye Warm-up.
+  - The Color-Word grid, at an easy 4-second pace, replaces the 2-Minute circuit.
+  - The week is now called "Foundation & Focus".
+- **"Brain Gym" is gone from every visible label**, now "Focus Warm-Up" in 7 languages. The website's skill list (EN/HI) now names only exercises that are actually in the programme.
 
 ## Tests and checks
 
