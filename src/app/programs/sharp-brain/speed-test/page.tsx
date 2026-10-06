@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import SharpBrainNav from '@/components/sharp-brain/SharpBrainNav'
 import Footer from '@/components/Footer'
-import WhatsAppWidget from '@/components/WhatsAppWidget'
-import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from '@/config/whatsappSupportLink'
 import ReadingSpeedTest from '@/features/reading-speed-test/components/ReadingSpeedTest'
 import QsrSpeedTestLiveExperience from '@/components/qsr/speed-test/QsrSpeedTestLiveExperience'
 import { buildPageMetadata } from '@/lib/seo/metadata'
@@ -24,7 +22,7 @@ type QsrSpeedTestPageProps = {
 // an optional app-practice demo; see ReadingSpeedTest.tsx), and a cramped
 // inline widget on the main landing page would fight the page's own
 // scroll/section rhythm. Reuses the QSR page's
-// exact minimal chrome (QsrNav + Footer + WhatsApp widget) so this
+// exact minimal chrome (QsrNav + Footer) so this
 // doesn't feel like an orphaned page — see QsrHero.tsx's secondary CTA
 // and HeroSection.tsx's secondary CTA for the two entry points.
 //
@@ -52,7 +50,8 @@ export default async function QsrSpeedTestPage({ searchParams }: QsrSpeedTestPag
         )}
       </main>
       <Footer />
-      <WhatsAppWidget href={WHATSAPP_MASTERCLASS_INQUIRY_LINK} analyticsLocation="speed_test_widget" />
+      {/* No floating WhatsApp bubble here: it covered the Reading Profile and
+          competed with the test's own WhatsApp capture. */}
     </div>
   )
 }

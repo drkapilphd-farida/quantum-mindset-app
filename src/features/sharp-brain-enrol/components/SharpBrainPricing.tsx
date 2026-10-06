@@ -80,13 +80,11 @@ export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; clas
   const t = enrolT(lang);
   const u = { d: t("units.d"), h: t("units.h"), m: t("units.m"), s: t("units.s") };
   const pad = (n: number): string => String(n).padStart(2, "0");
+  // "1d 23h" for one-letter units; "1 दिन 23 घं" when the unit is a word.
+  const unit = (n: string, label: string): string => (/^[a-z]$/i.test(label) ? `${n}${label}` : `${n} ${label}`);
   return (
     <span className={`font-mono tabular-nums ${className}`} data-countdown suppressHydrationWarning>
-      {d > 0 && `${d}${u.d} `}
-      {pad(h)}
-      {u.h} {pad(m)}
-      {u.m} {pad(s)}
-      {u.s}
+      {[...(d > 0 ? [unit(String(d), u.d)] : []), unit(pad(h), u.h), unit(pad(m), u.m), unit(pad(s), u.s)].join(" ")}
     </span>
   );
 }
