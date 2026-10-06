@@ -1,129 +1,74 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
-import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
-import { useExerciseSession } from '@/hooks/exercises/useExerciseSession'
-import { Button } from '@/components/ui/button'
-import { loadBestQuantumMentalRotationStats, recordBestQuantumMentalRotationStats } from '../quantumMentalRotationLocalHistory'
-import { ROUNDS_PER_SESSION } from '../quantumMentalRotationDataset'
-import { QuantumMentalRotationSettings } from './QuantumMentalRotationSettings'
-import { QuantumMentalRotationCanvas } from './QuantumMentalRotationCanvas'
-import { QuantumMentalRotationCompleteScreen } from './QuantumMentalRotationCompleteScreen'
+import { useAppT } from '@/lib/app-i18n/client'
+import { AdaptiveExerciseShell, type SessionSummary } from '@/features/exercise-core/components/AdaptiveExerciseShell'
+import type { DemoStep } from '@/features/exercise-core/components/DemoPlayer'
+import type { CubeState } from '../quantumMentalRotationDataset'
+import { rotationLevel, ROUNDS_PER_SESSION, SIMPLE_SHAPES } from '../rotationTraining'
+import { ColourCube, FlatShapeView } from './RotationVisuals'
+import { RotationRound } from './RotationRound'
 
-const LAB_HREF = '/labs/sharp-brain'
-const BEST_STATS_STORAGE_KEY = 'qsr-quantum-mental-rotation-best'
+const DEMO_SHAPE = SIMPLE_SHAPES[0]!
+const DEMO_CUBE: CubeState = { top: 'yellow', bottom: 'purple', front: 'blue', back: 'orange', left: 'green', right: 'red' }
 
-type ExperiencePhase = 'settings' | 'playing' | 'complete'
-
-type CompletedResult = {
-  elapsedMs: number
-  correctCount: number
-  totalScore: number
-  bestStreak: number
-  fastestReactionMs: number | null
-  accuracyPercent: number
-}
-
-// Top-level orchestrator for Quantum Mental Object Rotation™ — the
-// first Visualization Development exercise, registered under its own
-// dedicated Visualization Development Hub. Deliberately does NOT use
-// useReadingSession (its recordResult takes a ReadingSessionResult —
-// averageWpm/targetWpm/wordsRead/totalWords — none of which describe a
-// mental-rotation sprint honestly); instead this calls
-// useExerciseSession directly, matching every sibling gamified
-// exercise's own precedent for a non-WPM advanced exercise. There is
-// only one way this session ends (a full 16-round run — no lives/Game
-// Over branch), so recordCompletion is the only honest outcome once the
-// sprint finishes; an early Exit is still recorded via recordExit,
-// exactly like every other exercise in this project treats an
-// abandoned attempt.
+// Mental Object Rotation — rebuilt on the shared 10-level trainer
+// (exercise-core). Level 1: a flat shape, a quarter turn, 2 options, no timer;
+// later levels add more options, bigger shapes, mirror images, a gentle timer
+// and finally a colour cube turned in the mind. After every answer an
+// animation shows the turn that gives the right answer.
 type QuantumMentalRotationExperienceProps = {
-  // 21-Day Transformation Journey™ — additive, optional. See
-  // EspZenerTelepathyExperience.tsx's identical prop for the full
-  // rationale; standalone usage (this prop omitted) is unchanged.
-  onComplete?: (accuracyPercent: number) => void
+  /** Journey / circuit / wizard hand-off: receives this session's accuracy (0–100). */
+  onComplete?: (accuracyPercent: number, session: SessionSummary) => void
+  onExit?: () => void
 }
 
-export function QuantumMentalRotationExperience({ onComplete }: QuantumMentalRotationExperienceProps = {}): React.JSX.Element {
-  const curriculumSession = useCurriculumSessionCompletion('quantum-mental-rotation', LAB_HREF)
-  const router = useRouter()
-  const session = useExerciseSession({ labId: 'quantum-speed-reading', exerciseId: 'quantum-mental-rotation' })
+export function QuantumMentalRotationExperience({ onComplete, onExit }: QuantumMentalRotationExperienceProps = {}): React.JSX.Element {
+  const t = useAppT()
+  const demo: readonly DemoStep[] = [
+    {
+      caption: t('training.rotation.demo1'),
+      visual: (
+        <div className="motion-safe:animate-[mum-demo-turn_5s_ease-in-out_infinite]" style={{ ['--mum-turn' as string]: '90deg' }}>
+          <FlatShapeView shape={DEMO_SHAPE} view={{ angle: 0, mirrored: false }} size={110} />
+        </div>
+      ),
+    },
+    {
+      caption: t('training.rotation.demo2'),
+      visual: (
+        <div className="flex gap-3">
+          <span className="rounded-2xl border-2 border-emerald-500 bg-emerald-500/10 p-1">
+            <FlatShapeView shape={DEMO_SHAPE} view={{ angle: 90, mirrored: false }} size={80} />
+          </span>
+          <span className="rounded-2xl border-2 border-border p-1 opacity-60">
+            <FlatShapeView shape={DEMO_SHAPE} view={{ angle: -90, mirrored: false }} size={80} />
+          </span>
+        </div>
+      ),
+    },
+    { caption: t('training.rotation.demo3'), visual: <ColourCube state={DEMO_CUBE} size={56} /> },
+  ]
 
-  const [phase, setPhase] = useState<ExperiencePhase>('settings')
-  const [attemptNonce, setAttemptNonce] = useState(0)
-  const [bestStats, setBestStats] = useState({ bestAccuracyPercent: 0, bestStreak: 0 })
-  const [completedResult, setCompletedResult] = useState<CompletedResult | null>(null)
-  const hasRecordedRef = useRef(false)
-
-  useEffect(() => {
-    setBestStats(loadBestQuantumMentalRotationStats(BEST_STATS_STORAGE_KEY))
-  }, [])
-
-  function handleStart(): void {
-    hasRecordedRef.current = false
-    session.start()
-    setPhase('playing')
-  }
-
-  function handleComplete(
-    elapsedMs: number,
-    correctCount: number,
-    totalScore: number,
-    bestStreak: number,
-    fastestReactionMs: number | null,
-  ): void {
-    if (hasRecordedRef.current) return
-    hasRecordedRef.current = true
-    const accuracyPercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
-    setCompletedResult({ elapsedMs, correctCount, totalScore, bestStreak, fastestReactionMs, accuracyPercent })
-    setBestStats(recordBestQuantumMentalRotationStats(BEST_STATS_STORAGE_KEY, { bestAccuracyPercent: accuracyPercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
-    setPhase('complete')
-  }
-
-  function handleExitRequested(elapsedMs: number): void {
-    void session.recordExit(elapsedMs)
-    router.push(getCurriculumSmartExitHref('quantum-mental-rotation', LAB_HREF))
-  }
-
-  function handlePlayAgain(): void {
-    hasRecordedRef.current = false
-    setCompletedResult(null)
-    setAttemptNonce((nonce) => nonce + 1)
-    session.start()
-    setPhase('playing')
-  }
-
-  if (phase === 'settings') {
-    return <QuantumMentalRotationSettings onStart={handleStart} />
-  }
-
-  if (phase === 'complete' && completedResult !== null) {
-    return (
-      <>
-        <QuantumMentalRotationCompleteScreen
-          backHref={getWizardAwareBackHref('quantum-mental-rotation', LAB_HREF)}
-          elapsedMs={completedResult.elapsedMs}
-          correctCount={completedResult.correctCount}
-          totalScore={completedResult.totalScore}
-          bestStreak={completedResult.bestStreak}
-          fastestReactionMs={completedResult.fastestReactionMs}
-          bestAccuracyPercentAllTime={bestStats.bestAccuracyPercent}
-          bestStreakAllTime={bestStats.bestStreak}
-          onPlayAgain={handlePlayAgain}
-        />
-        {(curriculumSession.isActiveStep || onComplete) && (
-          <div className="mx-auto mt-4 max-w-sm px-4">
-            <Button type="button" size="lg" className="w-full rounded-full" onClick={() => (curriculumSession.isActiveStep ? curriculumSession.advance() : onComplete?.(completedResult.accuracyPercent))}>
-              Continue Session →
-            </Button>
-          </div>
-        )}
-      </>
-    )
-  }
-
-  return <QuantumMentalRotationCanvas key={attemptNonce} onComplete={handleComplete} onExitRequested={handleExitRequested} />
+  return (
+    <AdaptiveExerciseShell
+      exerciseId="quantum-mental-rotation"
+      title={t('training.rotation.title')}
+      skill={t('training.skills.memory')}
+      purpose={t('training.rotation.purpose')}
+      minutes={3}
+      demo={demo}
+      roundsPerSession={ROUNDS_PER_SESSION}
+      scoreLabel={t('training.shell.points')}
+      describeLevel={(level) => {
+        const c = rotationLevel(level)
+        const kind = c.family === 'cube' ? t('training.rotation.levelCube') : c.family === 'match' ? t('training.rotation.levelMatch') : t('training.rotation.levelTurn')
+        return c.timeLimitMs === null
+          ? t('training.rotation.levelHintNoTimer', { kind, options: c.options })
+          : t('training.rotation.levelHint', { kind, options: c.options, seconds: c.timeLimitMs / 1000 })
+      }}
+      renderRound={({ level, isPractice, onDone }) => <RotationRound level={level} isPractice={isPractice} onDone={onDone} />}
+      {...(onComplete ? { onComplete } : {})}
+      {...(onExit ? { onExit } : {})}
+    />
+  )
 }

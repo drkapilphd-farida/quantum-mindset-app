@@ -1159,3 +1159,22 @@
     var(--font-noto-telugu, sans-serif), var(--font-noto-gujarati, sans-serif);
 }
 
+
+/* Training demos (src/features/exercise-core) — gentle, no flashing. Every
+   use is wrapped in motion-safe or checks prefers-reduced-motion. */
+@keyframes mum-demo-breathe {
+  0%, 100% { transform: scale(0.6); }
+  50% { transform: scale(1); }
+}
+@keyframes mum-demo-turn {
+  0%, 15% { transform: rotate(0deg); }
+  55%, 100% { transform: rotate(var(--mum-turn, 90deg)); }
+}
+@keyframes mum-demo-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(var(--mum-slide, -50%)); }
+}
+@keyframes mum-demo-rise {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(var(--mum-rise, -50%)); }
+}

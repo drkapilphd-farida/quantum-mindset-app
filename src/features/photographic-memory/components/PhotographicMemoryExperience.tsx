@@ -70,7 +70,7 @@ export function PhotographicMemoryExperience({ onComplete }: PhotographicMemoryE
     const scorePercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
     setCompletedResult({ elapsedMs, correctCount, totalScore, bestStreak, accuracyPercent: scorePercent })
     setBestStats(recordBestPhotographicMemoryStats(BEST_STATS_STORAGE_KEY, { bestScorePercent: scorePercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
+    void session.recordCompletion(elapsedMs, { score: totalScore, accuracyPercent: scorePercent, extra: { bestStreak } })
     setPhase('complete')
   }
 

@@ -1,140 +1,52 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useExerciseSession } from '@/hooks/exercises/useExerciseSession'
-import { useReadingRuntime } from '@/hooks/reading-engine/useReadingRuntime'
-import { useReadingSession } from '@/hooks/reading-engine/useReadingSession'
-import { loadBestWpm, recordBestWpmSession } from '@/features/reading-engine/readingLocalHistory'
-import { ReadingSessionCompleteScreen } from '@/features/reading-engine/components/ReadingSessionCompleteScreen'
-import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
-import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
-import type { ReadingSessionResult } from '@/features/reading-engine/types'
-import { DYNAMIC_CHUNK_SLIDING_UNITS } from '../dynamicChunkSlidingDataset'
-import { DynamicChunkSlidingSettings } from './DynamicChunkSlidingSettings'
-import { DynamicChunkSlidingCanvas } from './DynamicChunkSlidingCanvas'
+import { useAppI18n } from '@/lib/app-i18n/client'
+import { practiceContentLang } from '@/lib/app-i18n/practiceContent'
+import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
+import { AdaptiveExerciseShell, type RoundOutcome, type SessionSummary } from '@/features/exercise-core/components/AdaptiveExerciseShell'
+import { ChunkReadingRound } from '@/features/exercise-core/components/ChunkReadingRound'
+import { ChunkDemo } from '@/features/exercise-core/components/ChunkDemo'
+import { chunkLevel, DYNAMIC_CHUNK_LEVELS, ROUNDS_PER_SESSION } from '@/features/exercise-core/chunkReading'
+import type { PassageLang } from '@/features/exercise-core/readingPassages'
 
-const LAB_HREF = '/labs/sharp-brain'
-const BEST_WPM_STORAGE_KEY = 'qsr-dynamic-chunk-sliding-best'
+const mean = (rounds: readonly RoundOutcome[]): number => (rounds.length === 0 ? 0 : rounds.reduce((s, r) => s + r.score, 0) / rounds.length)
 
-const UNIT_TEXTS = DYNAMIC_CHUNK_SLIDING_UNITS.map((unit) => unit.text)
+// Dynamic Chunk Sliding — rebuilt on the shared 10-level trainer. A short
+// passage slides past a few words at a time (the current chunk highlighted,
+// a progress bar on top). Then 2–3 recall questions and a one-line summary.
+// Score = reading pace × comprehension ("effective WPM"). Chunk size grows
+// 1 → 2 → 3 words with level.
+type Props = { onComplete?: (accuracyPercent: number, session: SessionSummary) => void; onExit?: () => void }
 
-type DynamicChunkSlidingExperienceProps = {
-  // QSR Pro Circuit™ — additive, optional. See
-  // SchulteGridDrillExperience.tsx's identical seam for the full
-  // rationale. Standalone usage (this prop omitted) is unchanged.
-  onComplete?: (result: ReadingSessionResult) => void
-}
-
-// Top-level orchestrator for Dynamic Chunk Sliding™ — the third advanced
-// training exercise. Structurally mirrors PhraseReadingModeExperience.tsx
-// (same UNCHANGED Master Reading Engine, same session pipeline, same
-// local-history pattern): one continuous useReadingRuntime instance over
-// the whole chunked dataset, no comprehension/MCQ phase at all — purely a
-// continuous sliding read-through, exactly as this exercise's own spec
-// calls for (pure speed-and-flow training, not a recall check).
-export function DynamicChunkSlidingExperience({ onComplete }: DynamicChunkSlidingExperienceProps = {}): React.JSX.Element {
-  const router = useRouter()
-  const curriculumSession = useCurriculumSessionCompletion('dynamic-chunk-sliding', LAB_HREF)
-  const runtime = useReadingRuntime(UNIT_TEXTS)
-  const session = useExerciseSession({ labId: 'quantum-speed-reading', exerciseId: 'dynamic-chunk-sliding' })
-  const readingSession = useReadingSession(session)
-
-  const [bestWpm, setBestWpm] = useState(0)
-  const [completedResult, setCompletedResult] = useState<ReadingSessionResult | null>(null)
-
-  useEffect(() => {
-    setBestWpm(loadBestWpm(BEST_WPM_STORAGE_KEY))
-  }, [])
-
-  useEffect(() => {
-    if (runtime.phase !== 'complete' || completedResult !== null) return
-
-    const result: ReadingSessionResult = {
-      averageWpm: runtime.liveWpm,
-      targetWpm: runtime.targetWpm,
-      elapsedMs: runtime.elapsedMs,
-      wordsRead: runtime.wordsRead,
-      totalWords: runtime.totalWords,
-      completionPercent: runtime.progressPercent,
-      wasFinishedEarly: runtime.wasFinishedEarly,
-    }
-    setCompletedResult(result)
-    setBestWpm(recordBestWpmSession(BEST_WPM_STORAGE_KEY, result.averageWpm))
-    readingSession.recordResult(result)
-  }, [
-    runtime.phase,
-    runtime.liveWpm,
-    runtime.targetWpm,
-    runtime.elapsedMs,
-    runtime.wordsRead,
-    runtime.totalWords,
-    runtime.progressPercent,
-    runtime.wasFinishedEarly,
-    completedResult,
-    readingSession,
-  ])
-
-  function handleStart(): void {
-    session.start()
-    runtime.start()
-  }
-
-  function handleReadAgain(): void {
-    readingSession.reset()
-    setCompletedResult(null)
-    session.start()
-    runtime.restart()
-  }
-
-  function handleRestart(): void {
-    readingSession.reset()
-    setCompletedResult(null)
-    runtime.restart()
-  }
-
-  async function handleExit(): Promise<void> {
-    if (runtime.phase === 'reading' || runtime.phase === 'paused') {
-      await session.recordExit(runtime.elapsedMs)
-    }
-    router.push(getCurriculumSmartExitHref('dynamic-chunk-sliding', LAB_HREF))
-  }
-
-  if (runtime.phase === 'settings') {
-    return <DynamicChunkSlidingSettings targetWpm={runtime.targetWpm} onSelectTargetWpm={runtime.setTargetWpm} onStart={handleStart} />
-  }
-
-  if (runtime.phase === 'complete' && completedResult !== null) {
-    return (
-      <ReadingSessionCompleteScreen
-        backHref={getWizardAwareBackHref('dynamic-chunk-sliding', LAB_HREF)}
-        subtitle="Nice, fluid chunk reading."
-        result={completedResult}
-        bestWpm={bestWpm}
-        onReadAgain={handleReadAgain}
-        {...(curriculumSession.isActiveStep
-          ? { onContinue: curriculumSession.advance }
-          : onComplete
-            ? { onContinue: () => onComplete(completedResult) }
-            : {})}
-      />
-    )
-  }
-
+export function DynamicChunkSlidingExperience({ onComplete, onExit }: Props = {}): React.JSX.Element {
+  const { t, lang } = useAppI18n()
+  const contentLang = practiceContentLang(lang, 'chunkPassages') as PassageLang
   return (
-    <DynamicChunkSlidingCanvas
-      units={DYNAMIC_CHUNK_SLIDING_UNITS}
-      currentUnitIndex={runtime.currentUnitIndex}
-      isPaused={runtime.phase === 'paused'}
-      liveWpm={runtime.liveWpm}
-      targetWpm={runtime.targetWpm}
-      elapsedMs={runtime.elapsedMs}
-      progressPercent={runtime.progressPercent}
-      onPause={runtime.pause}
-      onResume={runtime.resume}
-      onRestart={handleRestart}
-      onFinish={runtime.finish}
-      onExit={() => void handleExit()}
+    <AdaptiveExerciseShell
+      exerciseId="dynamic-chunk-sliding"
+      title={t('training.chunks.dynamicTitle')}
+      skill={t('training.skills.smartReading')}
+      purpose={t('training.chunks.dynamicPurpose')}
+      minutes={3}
+      demo={[
+        { caption: t('training.chunks.demo1'), visual: <ChunkDemo layout="horizontal" lang={contentLang} /> },
+        { caption: t('training.chunks.demo2'), visual: <ChunkDemo layout="horizontal" lang={contentLang} step="question" /> },
+        { caption: t('training.chunks.demo3Dynamic'), visual: <ChunkDemo layout="horizontal" lang={contentLang} step="score" /> },
+      ]}
+      roundsPerSession={ROUNDS_PER_SESSION}
+      scoreLabel={t('training.chunks.scoreLabel')}
+      combineScore={mean}
+      contentLang={contentLang}
+      introNote={<PracticeTextNote kind="chunkPassages" />}
+      describeLevel={(level) => {
+        const c = chunkLevel(DYNAMIC_CHUNK_LEVELS, level)
+        return t('training.chunks.levelHint', { chunk: c.chunkWords, wpm: c.wpm })
+      }}
+      renderRound={({ level, isPractice, onDone }) => (
+        <ChunkReadingRound layout="horizontal" levels={DYNAMIC_CHUNK_LEVELS} level={level} isPractice={isPractice} lang={contentLang} withSummary onDone={onDone} />
+      )}
+      {...(onComplete ? { onComplete } : {})}
+      {...(onExit ? { onExit } : {})}
     />
   )
 }

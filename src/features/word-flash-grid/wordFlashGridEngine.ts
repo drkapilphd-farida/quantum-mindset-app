@@ -24,7 +24,11 @@ export type WordFlashTargetCell = { cellIndex: number; word: string }
 // shape to numberFlashGridEngine.ts's own progression, by design — the
 // three Right Brain flash-grid exercises share one difficulty language.
 const WORD_COUNTS_BY_ROUND: readonly number[] = [3, 4, 5, 6, 6]
-const FLASH_DURATION_MS_BY_ROUND: readonly number[] = [1000, 850, 700, 600, 500]
+// Easy start (exercise rebuild, Phase 1): flash time scales with how many
+// items are shown — round 1 gives every item 900 ms, so nothing
+// disappears before a beginner can see it; later rounds get quicker per item.
+const FLASH_MS_PER_ITEM_BY_ROUND: readonly number[] = [900, 750, 600, 500, 450]
+const FLASH_DURATION_MS_BY_ROUND: readonly number[] = FLASH_MS_PER_ITEM_BY_ROUND.map((ms, i) => ms * (WORD_COUNTS_BY_ROUND[i] ?? 1))
 
 // Short, high-impact cognitive/brain-training words — real, hand-picked
 // vocabulary (no lorem, no filler, no AI/API call), uppercase for visual

@@ -18,7 +18,11 @@ export type NumberFlashTargetCell = { cellIndex: number; digit: number }
 // shrinking every round, including after digit count has already capped —
 // so round 5 is still measurably harder than round 4.
 const DIGIT_COUNTS_BY_ROUND: readonly number[] = [3, 4, 5, 6, 6]
-const FLASH_DURATION_MS_BY_ROUND: readonly number[] = [1000, 850, 700, 600, 500]
+// Easy start (exercise rebuild, Phase 1): flash time scales with how many
+// items are shown — round 1 gives every item 800 ms, so nothing
+// disappears before a beginner can see it; later rounds get quicker per item.
+const FLASH_MS_PER_ITEM_BY_ROUND: readonly number[] = [800, 650, 550, 450, 400]
+const FLASH_DURATION_MS_BY_ROUND: readonly number[] = FLASH_MS_PER_ITEM_BY_ROUND.map((ms, i) => ms * (DIGIT_COUNTS_BY_ROUND[i] ?? 1))
 
 export function totalCellsForGridSize(gridSize: NumberFlashGridSize): number {
   return gridSize * gridSize

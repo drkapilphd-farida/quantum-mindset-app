@@ -25,7 +25,8 @@ export const FAST_PATTERN_BLINKING_CONFIG: BrainGymDrillConfig = {
   title: 'Fast Pattern Blinking™',
   instructions: 'A symbol blinks on screen for a split second, then vanishes. Catch it before it’s gone, then pick what you saw.',
   roundCount: 16,
-  stimulusDurationMs: 220,
+  // Easy start: long enough for a beginner to see the symbol clearly.
+  stimulusDurationMs: 400,
   hidePromptDuringResponse: true,
   storageKey: 'qsr-fast-pattern-blinking-best',
   completeHeading: 'Fast Eyes!',

@@ -32,3 +32,8 @@ export function categoryLabel(t: Translator, category: string): string {
   const key = CATEGORY_KEYS[category]
   return key === undefined ? category : t(key)
 }
+
+/** Translated name of a curriculum exercise (falls back to its English catalog title). */
+export function exerciseTitle(t: Translator, exercise: { id: string; title: string }): string {
+  return t(`curriculumPlan.exercises.${exercise.id}` as MessageKey) || exercise.title
+}

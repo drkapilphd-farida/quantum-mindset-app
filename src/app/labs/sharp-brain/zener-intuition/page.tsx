@@ -1,16 +1,7 @@
-import type { Metadata } from 'next'
-import { EspZenerTelepathyExperience } from '@/features/esp-zener-telepathy/components/EspZenerTelepathyExperience'
+import { permanentRedirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'Zener Card Sprint — Sharp Brain Lab',
-  robots: { index: false, follow: false },
-}
-
-// ESP Zener Card Telepathy Sprint™ — the first Intuition Development
-// exercise, distinct from every Reading Mode and every other advanced
-// training exercise (a gamified gut-feeling guessing sprint, not paced
-// reading or a click-search drill). Deliberately its own route/folder, no
-// collision with any existing V1 or V2 route.
-export default function EspZenerTelepathyPage(): React.JSX.Element {
-  return <EspZenerTelepathyExperience />
+// Guessing games were removed from Sharp Brain (Oct 2026): a chance score can
+// never improve, so it can't show real progress.
+export default function RemovedGuessingGamePage(): never {
+  permanentRedirect('/labs/sharp-brain')
 }

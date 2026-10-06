@@ -37,7 +37,12 @@ export function useReadingSession(session: ExerciseSession): UseReadingSessionRe
     if (result.wasFinishedEarly) {
       void session.recordExit(result.elapsedMs)
     } else {
-      void session.recordCompletion(result.elapsedMs)
+      // Score = the pace actually read at; accuracy is measured separately by the quiz exercises.
+      void session.recordCompletion(result.elapsedMs, {
+        score: result.averageWpm,
+        accuracyPercent: null,
+        extra: { wpm: result.averageWpm, targetWpm: result.targetWpm, completionPercent: result.completionPercent },
+      })
     }
   }
 

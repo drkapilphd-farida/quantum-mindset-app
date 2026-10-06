@@ -35,17 +35,19 @@ export type CurriculumCatalogExercise = {
   category: CurriculumExerciseCategory
 }
 
-// ---- Brain Gym (Visual Activation Suite + standalone Brain Gym configs
-// + Eye Foundation Module) ----
+// ---- Brain Gym → focus warm-ups (Visual Activation Suite + standalone
+// Brain Gym configs). Phase 1 of the exercise rebuild (Oct 2026) removed the
+// eye-movement, staring and afterimage drills from the programme (Cardinal
+// Oculomotor Stretches, Figure-8 Gliding, Aura Edge Pulsing, Tratak
+// Afterimage, Saccadic Eye Jump, Expanding Circle, the 2-Minute Circuit that
+// bundled them, Theta Breathing, and the Eye Foundation module): eye-muscle
+// training does not improve reading, and long no-blink staring is
+// uncomfortable. Their routes still exist; they are just no longer scheduled.
 const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'theta-breathing-anchor', title: 'Theta Breathing & Focal Anchor', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
-  {
-    id: 'cardinal-oculomotor-stretches',
-    title: 'Cardinal Oculomotor Stretches',
-    href: '/labs/sharp-brain/brain-gym',
-    category: 'brain-gym',
-  },
-  { id: 'infinity-figure-eight-gliding', title: 'Infinity Figure-8 Gliding', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'schulte-grid-speed-drill', title: 'Peripheral Vision Activator', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'cross-lateral-tap', title: 'Cross-Lateral Tap', href: '/labs/sharp-brain/cross-lateral-tap', category: 'brain-gym' },
+  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'fast-pattern-blinking', title: 'Fast Pattern Blinking', href: '/labs/sharp-brain/fast-pattern-blinking', category: 'brain-gym' },
   { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
   {
     id: 'quantum-tachistoscope-multi-word-blast',
@@ -53,38 +55,7 @@ const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
     href: '/labs/sharp-brain/brain-gym',
     category: 'brain-gym',
   },
-  { id: 'aura-edge-color-pulsing', title: 'Aura Edge Color Pulsing', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
   { id: 'blink-trigger-micro-recall', title: 'Blink-Trigger Micro-Recall', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
-  { id: 'tratak-afterimage-stretches', title: 'Tratak Afterimage Stretches', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
-  { id: 'schulte-grid-speed-drill', title: 'Peripheral Vision Activator', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
-  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
-  { id: 'saccadic-eye-jump', title: 'Saccadic Eye Jump', href: '/labs/sharp-brain/saccadic-eye-jump', category: 'brain-gym' },
-  { id: 'cross-lateral-tap', title: 'Cross-Lateral Tap', href: '/labs/sharp-brain/cross-lateral-tap', category: 'brain-gym' },
-  { id: 'fast-pattern-blinking', title: 'Fast Pattern Blinking', href: '/labs/sharp-brain/fast-pattern-blinking', category: 'brain-gym' },
-  {
-    id: 'peripheral-expanding-circle',
-    title: 'Peripheral Expanding Circle',
-    href: '/labs/sharp-brain/peripheral-expanding-circle',
-    category: 'brain-gym',
-  },
-  { id: 'brain-gym-circuit', title: '2-Minute Brain Gym Circuit™', href: '/labs/sharp-brain/brain-gym-circuit', category: 'brain-gym' },
-]
-
-// Eye Foundation Module™ — a real, server-enforced sequential-locking
-// module (see src/features/quantum-speed-reading/eyeFoundationModule.ts):
-// eye-warm-up → eye-stretch → eye-span → regression-control →
-// reading-speed → rsvp, each gated behind the one before it. Listed here
-// in that exact order — buildCurriculumDayPlan only ever advances through
-// a phase pool in day order, so preserving this array's order is what
-// keeps a learner who follows the curriculum day by day from ever hitting
-// a locked screen for a prerequisite they haven't reached yet.
-const EYE_FOUNDATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'eye-warm-up', title: 'Eye Warm-up', href: '/labs/sharp-brain/eye-warm-up', category: 'brain-gym' },
-  { id: 'eye-stretch', title: 'Eye Stretch', href: '/labs/sharp-brain/eye-stretch', category: 'brain-gym' },
-  { id: 'eye-span', title: 'Eye Span', href: '/labs/sharp-brain/eye-span', category: 'brain-gym' },
-  { id: 'regression-control', title: 'Regression Control', href: '/labs/sharp-brain/regression-control', category: 'brain-gym' },
-  { id: 'reading-speed', title: 'Reading Speed', href: '/labs/sharp-brain/reading-speed', category: 'brain-gym' },
-  { id: 'rsvp', title: 'RSVP', href: '/labs/sharp-brain/rsvp', category: 'brain-gym' },
 ]
 
 // ---- Right-Brain / Intuition (Right Brain Hub + Intuition Hub) ----
@@ -92,7 +63,7 @@ const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   { id: 'photographic-memory', title: 'Deep Visualisation Recall™', href: '/labs/sharp-brain/visual-memory', category: 'right-brain-intuition' },
   {
     id: 'pictorial-essence-sprint',
-    title: 'High-Speed Pictorial Essence Sprint™',
+    title: 'Picture Memory Sprint',
     href: '/labs/sharp-brain/pictorial-essence-sprint',
     category: 'right-brain-intuition',
   },
@@ -102,28 +73,10 @@ const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
     href: '/labs/sharp-brain/color-word-sync',
     category: 'right-brain-intuition',
   },
-  {
-    id: 'after-image-gazing',
-    title: 'After-Image / Complementary Color Gazing™',
-    href: '/labs/sharp-brain/after-image-gazing',
-    category: 'right-brain-intuition',
-  },
   { id: 'dot-memory-grid', title: 'Dot Memory Grid™', href: '/labs/sharp-brain/dot-memory-grid', category: 'right-brain-intuition' },
   { id: 'number-flash-grid', title: 'Number Flash Grid™', href: '/labs/sharp-brain/number-flash-grid', category: 'right-brain-intuition' },
   { id: 'word-flash-grid', title: 'Word Flash Grid™', href: '/labs/sharp-brain/word-flash-grid', category: 'right-brain-intuition' },
   { id: 'image-flash-grid', title: 'Image Flash Grid™', href: '/labs/sharp-brain/image-flash-grid', category: 'right-brain-intuition' },
-  {
-    id: 'esp-zener-telepathy-sprint',
-    title: 'Zener Card Sprint',
-    href: '/labs/sharp-brain/zener-intuition',
-    category: 'right-brain-intuition',
-  },
-  {
-    id: 'quantum-hidden-target-grid',
-    title: 'Hidden Target Grid',
-    href: '/labs/sharp-brain/hidden-target-grid',
-    category: 'right-brain-intuition',
-  },
 ]
 
 // ---- Visualization (Visualization Hub) ----
@@ -146,20 +99,21 @@ const VISUALIZATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
     href: '/labs/sharp-brain/sensory-hologram-builder',
     category: 'visualization',
   },
-  { id: 'fluid-energy-balancer', title: 'Calm Breath Balance', href: '/labs/sharp-brain/fluid-energy-balancer', category: 'visualization' },
+  // Real guided breathing; replaced the "Calm Breath Balance" game (fluid-energy-balancer).
+  { id: 'calm-breathing', title: 'Calm Breathing', href: '/labs/sharp-brain/calm-breathing', category: 'visualization' },
 ]
 
 // ---- Core Reading Intelligence (Reading Hub + orphaned standalone) ----
 const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
   {
     id: 'dynamic-chunk-sliding',
-    title: 'Dynamic Chunk Sliding™',
+    title: 'Dynamic Chunk Sliding',
     href: '/labs/sharp-brain/dynamic-chunk-sliding',
     category: 'reading-intelligence',
   },
   {
     id: 'vertical-chunk-sliding',
-    title: 'Vertical Chunk Sliding™',
+    title: 'Vertical Chunk Sliding',
     href: '/labs/sharp-brain/vertical-chunk-sliding',
     category: 'reading-intelligence',
   },
@@ -223,7 +177,7 @@ const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
 // Reading Expansion Module™ — real, server-enforced sequential order:
 // phrase-reading → multi-line-reading → sentence-reading →
 // paragraph-reading (see readingExpansionModule.ts). Listed in that exact
-// order for the same reason as EYE_FOUNDATION_EXERCISES above.
+// order so a learner following the plan meets them in prerequisite order.
 const READING_EXPANSION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   { id: 'phrase-reading', title: 'Phrase Reading (Idea Recognition)', href: '/labs/sharp-brain/phrase-reading', category: 'reading-intelligence' },
   { id: 'multi-line-reading', title: 'Multi-Line Reading', href: '/labs/sharp-brain/multi-line-reading', category: 'reading-intelligence' },
@@ -257,7 +211,6 @@ const PROGRESSIVE_CHUNK_READING: CurriculumCatalogExercise = {
 
 export const CURRICULUM_EXERCISE_CATALOG: readonly CurriculumCatalogExercise[] = [
   ...BRAIN_GYM_EXERCISES,
-  ...EYE_FOUNDATION_EXERCISES,
   ...RIGHT_BRAIN_INTUITION_EXERCISES,
   ...VISUALIZATION_EXERCISES,
   ...READING_HUB_EXERCISES,
@@ -280,7 +233,6 @@ export function getCurriculumExerciseById(id: string): CurriculumCatalogExercise
 // gated module exercise, leaving Phase 4 as the guaranteed completion
 // pass across the whole catalog.
 export const BRAIN_GYM_FREE_POOL = BRAIN_GYM_EXERCISES
-export const EYE_FOUNDATION_POOL = EYE_FOUNDATION_EXERCISES
 export const RIGHT_BRAIN_INTUITION_POOL = RIGHT_BRAIN_INTUITION_EXERCISES
 export const VISUALIZATION_POOL = VISUALIZATION_EXERCISES
 export const READING_HUB_POOL = READING_HUB_EXERCISES

@@ -15,6 +15,7 @@ import en_mentor from './messages/en/mentor.json'
 import en_nav from './messages/en/nav.json'
 import en_progress from './messages/en/progress.json'
 import en_settings from './messages/en/settings.json'
+import en_training from './messages/en/training.json'
 import en_welcome from './messages/en/welcome.json'
 
 export const ENGLISH_MESSAGES: MessageDict = {
@@ -30,5 +31,6 @@ export const ENGLISH_MESSAGES: MessageDict = {
   "nav": en_nav as MessageDict,
   "progress": en_progress as MessageDict,
   "settings": en_settings as MessageDict,
+  "training": en_training as MessageDict,
   "welcome": en_welcome as MessageDict,
 }

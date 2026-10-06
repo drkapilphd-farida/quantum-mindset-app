@@ -57,12 +57,13 @@ describe('iconCountForRound', () => {
 })
 
 describe('flashDurationMsForRound', () => {
-  it('shrinks every round, including after the icon-count escalation has already capped', () => {
+  it('gives each item less time every round (easy start: round 1 is the most generous per item)', () => {
     const durations = Array.from({ length: IMAGE_FLASH_GRID_ROUNDS_PER_SESSION }, (_, roundIndex) => flashDurationMsForRound(roundIndex))
-    expect(durations).toEqual([1000, 850, 700, 600, 500])
-    for (let i = 1; i < durations.length; i++) {
-      expect(durations[i]).toBeLessThan(durations[i - 1]!)
-    }
+    expect(durations).toEqual([2400, 2600, 2750, 2700, 2400])
+    const counts = [3, 4, 5, 6, 6]
+    const perItem = durations.map((ms, i) => ms / counts[i]!)
+    for (let i = 1; i < perItem.length; i++) expect(perItem[i]).toBeLessThan(perItem[i - 1]!)
+    expect(perItem[0]).toBeGreaterThanOrEqual(800)
   })
 })
 

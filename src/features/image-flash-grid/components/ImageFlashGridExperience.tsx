@@ -73,7 +73,7 @@ export function ImageFlashGridExperience({ onComplete }: ImageFlashGridExperienc
     const accuracyPercent = computeAccuracyPercent(totalCorrect, totalIcons)
     setCompletedResult({ elapsedMs, totalCorrect, totalIcons, bestStreak, accuracyPercent })
     setBestStats(recordBestImageFlashGridStats(BEST_STATS_STORAGE_KEY, { bestScorePercent: accuracyPercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
+    void session.recordCompletion(elapsedMs, { score: totalCorrect, accuracyPercent, extra: { bestStreak } })
     setPhase('complete')
   }
 

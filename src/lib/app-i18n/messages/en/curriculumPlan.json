@@ -1,12 +1,12 @@
 {
   "days": {
     "d1": {
-      "title": "Baseline & Visual Warm-Up",
+      "title": "Baseline & Focus Warm-Up",
       "focus": "Establish your true baseline WPM and comprehension score, then begin waking up your visual system."
     },
     "d2": {
-      "title": "Eye Foundation Ignition",
-      "focus": "Build the ocular strength and control every later gain depends on."
+      "title": "Focus Foundation",
+      "focus": "Warm up your attention with a number hunt, then train picture memory and chunk reading."
     },
     "d3": {
       "title": "First Visual Focus Session",
@@ -18,7 +18,7 @@
     },
     "d5": {
       "title": "Visualization Opens",
-      "focus": "Begin training the mental screen behind your eyes."
+      "focus": "Begin practising clear pictures in your mind."
     },
     "d6": {
       "title": "Foundation Consolidation",
@@ -30,7 +30,7 @@
     },
     "d8": {
       "title": "Visual Focus Expansion Begins",
-      "focus": "Deepen visual and intuitive recall training."
+      "focus": "Deepen visual recall training."
     },
     "d9": {
       "title": "Inner Voice Awareness",
@@ -61,8 +61,8 @@
       "focus": "Enter the Sensory Imagery Builder to train vivid, multi-sensory mental imagery."
     },
     "d16": {
-      "title": "Energy & Focus Balancing",
-      "focus": "Train sustained, stable mental focus with the Calm Breath Balance."
+      "title": "Calm & Steady Focus",
+      "focus": "Settle your mind with guided slow breathing, then train focus and memory."
     },
     "d17": {
       "title": "Mental Mastery Deepens",
@@ -70,51 +70,51 @@
     },
     "d18": {
       "title": "Full Sensory Immersion",
-      "focus": "Return to the Hologram Builder with a more ambitious goal."
+      "focus": "Picture scenes vividly and recall their details."
     },
     "d19": {
-      "title": "Balance Under Pressure",
-      "focus": "Hold equilibrium against tighter tolerances in the Energy Balancer."
+      "title": "Steady Under Pressure",
+      "focus": "Keep your attention steady as the drills get quicker."
     },
     "d20": {
       "title": "Integrated Focus Circuit",
-      "focus": "Combine visualization, balance, and reading in one advanced session."
+      "focus": "Combine calm breathing, memory and reading in one advanced session."
     },
     "d21": {
       "title": "Checkpoint — Mental Mastery Review",
       "focus": "Re-measure WPM and comprehension to confirm real week-three growth."
     },
     "d22": {
-      "title": "Peak Mastery — Eye Control",
-      "focus": "Revisit eye-foundation training at true peak intensity."
-    },
-    "d23": {
-      "title": "Peak Mastery — Stretch & Span",
-      "focus": "Push oculomotor stretch and span further than week one."
-    },
-    "d24": {
-      "title": "Peak Mastery — Regression Elimination",
-      "focus": "Reduce backward eye movements while reading."
-    },
-    "d25": {
-      "title": "Peak Mastery — Speed Ceiling",
-      "focus": "Raise your reading speed ceiling with focused RSVP training."
-    },
-    "d26": {
       "title": "Peak Mastery — Phrase Fluency",
       "focus": "Read in idea-sized phrases, not single words."
     },
-    "d27": {
+    "d23": {
       "title": "Peak Mastery — Multi-Line Flow",
       "focus": "Extend fluency across multiple lines at once."
     },
-    "d28": {
+    "d24": {
       "title": "Peak Mastery — Sentence Mastery",
       "focus": "Recognize whole sentences as single ideas."
     },
-    "d29": {
+    "d25": {
       "title": "Peak Mastery — Paragraph Mastery",
       "focus": "Recognize whole paragraphs as single meaning blocks."
+    },
+    "d26": {
+      "title": "Peak Mastery — Rapid Recognition",
+      "focus": "Recognise words at a glance while keeping accuracy high."
+    },
+    "d27": {
+      "title": "Peak Mastery — Number Flash",
+      "focus": "Take in numbers at a glance and keep accuracy high."
+    },
+    "d28": {
+      "title": "Peak Mastery — Calm Precision",
+      "focus": "Breathe slowly, then recognise symbols quickly and accurately."
+    },
+    "d29": {
+      "title": "Peak Mastery — Mixed Recognition",
+      "focus": "Words, numbers and symbols at a glance — your sharpest round yet."
     },
     "d30": {
       "title": "Final Certification",
@@ -123,8 +123,8 @@
   },
   "phases": {
     "p1": {
-      "title": "Foundation & Visual Warm-Up",
-      "description": "Establish a true baseline, build core eye control, and wake up the visual reading system."
+      "title": "Foundation & Focus Warm-Up",
+      "description": "Establish a true baseline, build steady focus, and wake up visual memory and chunk reading."
     },
     "p2": {
       "title": "Visual Focus & Inner Voice Control",
@@ -138,5 +138,47 @@
       "title": "Peak Smart Reading Mastery & Final Certification",
       "description": "Push every skill to its ceiling and complete the final mastery certification."
     }
+  },
+  "exercises": {
+    "schulte-grid-speed-drill": "Peripheral Vision Activator",
+    "cross-lateral-tap": "Cross-Lateral Tap",
+    "rapid-visual-span-expander": "Rapid Visual Span Expander",
+    "fast-pattern-blinking": "Fast Pattern Blinking",
+    "peripheral-flash-expander": "Peripheral Flash Expander",
+    "quantum-tachistoscope-multi-word-blast": "Tachistoscope Multi-Word Blast",
+    "blink-trigger-micro-recall": "Blink-Trigger Micro-Recall",
+    "photographic-memory": "Deep Visualisation Recall",
+    "pictorial-essence-sprint": "Picture Memory Sprint",
+    "hemispheric-color-sync": "Color-Word Sync Grid",
+    "dot-memory-grid": "Dot Memory Grid",
+    "number-flash-grid": "Number Flash Grid",
+    "word-flash-grid": "Word Flash Grid",
+    "image-flash-grid": "Image Flash Grid",
+    "quantum-mental-rotation": "Mental Object Rotation",
+    "color-scene-transformation": "Color & Scene Transformation Journey",
+    "sensory-hologram-builder": "Sensory Imagery Builder",
+    "calm-breathing": "Calm Breathing",
+    "dynamic-chunk-sliding": "Dynamic Chunk Sliding",
+    "vertical-chunk-sliding": "Vertical Chunk Sliding",
+    "flash-recall-sprint": "Flash Recall & Retention Sprint",
+    "vertical-flash-recall": "Vertical Flash Recall & Retention Sprint",
+    "vertical-word-reading": "Vertical Word Reading",
+    "phrase-reading-mode": "Phrase Reading",
+    "sentence-reading-mode": "Sentence Reading",
+    "paragraph-reading-mode": "Paragraph Reading",
+    "guided-paragraph-reading-mode": "Guided Paragraph Reading",
+    "subvocalization-destroyer": "Inner Voice Control",
+    "photographic-reading": "Visual Memory Reading",
+    "dual-stream-split-reader": "Dual-Stream Split Reader",
+    "phrase-reading": "Phrase Reading (Idea Recognition)",
+    "multi-line-reading": "Multi-Line Reading",
+    "sentence-reading": "Sentence Reading (Idea Recognition)",
+    "paragraph-reading": "Paragraph Reading (Meaning Block Recognition)",
+    "word-flash": "Rapid Recognition Drill",
+    "number-flash": "Number Flash",
+    "symbol-flash": "Symbol Flash",
+    "mixed-flash": "Mixed Flash",
+    "peripheral-flash": "Peripheral Flash",
+    "progressive-chunk-reading": "Progressive Chunk Reading"
   }
 }

@@ -17,12 +17,10 @@
 export const PHASE_2_POOL_IDS = [
   'visual-activation',
   'schulte-grid-drill',
-  'esp-zener-telepathy',
   'photographic-memory',
   'color-scene-transformation',
   'hemispheric-color-sync',
   'quantum-mental-rotation',
-  'quantum-hidden-target-grid',
 ] as const
 
 export type Phase2PoolExerciseId = (typeof PHASE_2_POOL_IDS)[number]

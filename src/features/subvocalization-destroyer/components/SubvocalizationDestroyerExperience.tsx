@@ -24,7 +24,8 @@ const BEST_WPM_STORAGE_KEY = 'qsr-subvocalization-destroyer-best'
 // `initialTargetWpm` so the Settings screen's default selection and the
 // engine's own starting pace always agree, matching
 // SubvocalizationDestroyerSettings.tsx's own DEFAULT_TARGET_WPM exactly.
-const DEFAULT_TARGET_WPM = 800
+// Easy start: a comfortable pace first; learners can raise it in Settings.
+const DEFAULT_TARGET_WPM = 300
 
 type SubvocalizationDestroyerExperienceProps = {
   // QSR Pro Circuit™ seam — additive, optional, same pattern as every

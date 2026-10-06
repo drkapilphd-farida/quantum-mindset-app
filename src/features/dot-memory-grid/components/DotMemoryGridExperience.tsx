@@ -15,7 +15,7 @@ import { DotMemoryGridCompleteScreen } from './DotMemoryGridCompleteScreen'
 
 const LAB_HREF = '/labs/sharp-brain'
 const BEST_STATS_STORAGE_KEY = 'qsr-dot-memory-grid-best'
-const DEFAULT_GRID_SIZE: DotMemoryGridSize = 5
+const DEFAULT_GRID_SIZE: DotMemoryGridSize = 4
 
 type ExperiencePhase = 'settings' | 'playing' | 'complete'
 
@@ -74,7 +74,7 @@ export function DotMemoryGridExperience({ onComplete }: DotMemoryGridExperienceP
     const accuracyPercent = computeAccuracyPercent(totalCorrect, totalDots)
     setCompletedResult({ elapsedMs, totalCorrect, totalDots, bestStreak, accuracyPercent })
     setBestStats(recordBestDotMemoryGridStats(BEST_STATS_STORAGE_KEY, { bestScorePercent: accuracyPercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
+    void session.recordCompletion(elapsedMs, { score: totalCorrect, accuracyPercent, extra: { bestStreak } })
     setPhase('complete')
   }
 

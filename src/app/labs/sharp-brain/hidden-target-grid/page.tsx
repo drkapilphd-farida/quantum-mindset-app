@@ -1,14 +1,7 @@
-import type { Metadata } from 'next'
-import { QuantumHiddenTargetGridExperience } from '@/features/quantum-hidden-target-grid/components/QuantumHiddenTargetGridExperience'
+import { permanentRedirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'Hidden Target Grid — Sharp Brain Lab',
-  robots: { index: false, follow: false },
-}
-
-// Quantum Hidden Target Grid™ — the second Intuition Development exercise,
-// alongside ESP Zener Card Telepathy Sprint™. Deliberately its own
-// route/folder, no collision with any existing V1 or V2 route.
-export default function QuantumHiddenTargetGridPage(): React.JSX.Element {
-  return <QuantumHiddenTargetGridExperience />
+// Guessing games were removed from Sharp Brain (Oct 2026): a chance score can
+// never improve, so it can't show real progress.
+export default function RemovedGuessingGamePage(): never {
+  permanentRedirect('/labs/sharp-brain')
 }

@@ -8,7 +8,7 @@ import { ReadingLayout } from '@/features/reading-engine/components/ReadingLayou
 import { ReadingProgressBar } from '@/features/reading-engine/components/ReadingProgressBar'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import {
-  DOT_MEMORY_FLASH_DURATION_MS,
+  dotFlashDurationMsForRound,
   DOT_MEMORY_GRID_ROUNDS_PER_SESSION,
   computeAccuracyPercent,
   dotCountForRound,
@@ -145,7 +145,7 @@ export function DotMemoryGridCanvas({ gridSize, onComplete, onExitRequested }: D
   // open the grid up for taps.
   useEffect(() => {
     if (roundPhase !== 'flash') return
-    const timeout = setTimeout(() => setRoundPhase('recall'), DOT_MEMORY_FLASH_DURATION_MS)
+    const timeout = setTimeout(() => setRoundPhase('recall'), dotFlashDurationMsForRound(roundIndex))
     return () => clearTimeout(timeout)
   }, [roundPhase, roundIndex])
 

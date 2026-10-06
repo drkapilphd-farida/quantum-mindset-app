@@ -18,7 +18,7 @@ import { WhyThisDrillWorks } from '@/components/exercises/WhyThisDrillWorks'
 // the two always agree): fast enough to feel genuinely disruptive to
 // subvocalization on a first attempt, without being so extreme that a
 // first-timer sees nothing but a blur.
-const TARGET_WPM_OPTIONS = [600, 700, 800, 900, 1000, 1100, 1200] as const
+const TARGET_WPM_OPTIONS = [250, 300, 400, 500, 600, 800] as const
 
 type SubvocalizationDestroyerSettingsProps = {
   targetWpm: number

@@ -130,7 +130,7 @@ describe('buildCurriculumDayPlan', () => {
     expect(buildCurriculumDayPlan(15)).toEqual(buildCurriculumDayPlan(15))
   })
 
-  it('Phase 3 (days 15-21) includes Sensory Imagery Builder and Calm Breath Balance in its visualization rotation', () => {
+  it('Phase 3 (days 15-21) includes Sensory Imagery Builder and Calm Breathing in its visualization rotation', () => {
     const phase3VisualizationIds = new Set<string>()
     for (let day = 15; day <= 21; day++) {
       for (const exercise of buildCurriculumDayPlan(day).exercises.visualization) {
@@ -138,7 +138,7 @@ describe('buildCurriculumDayPlan', () => {
       }
     }
     expect(phase3VisualizationIds.has('sensory-hologram-builder')).toBe(true)
-    expect(phase3VisualizationIds.has('fluid-energy-balancer')).toBe(true)
+    expect(phase3VisualizationIds.has('calm-breathing')).toBe(true)
   })
 
   it('covers every catalog exercise at least once across all 30 days (no exercise left unused)', () => {
@@ -155,12 +155,22 @@ describe('buildCurriculumDayPlan', () => {
     expect(touchedIds.size).toBe(catalogIds.size)
   })
 
-  it('Eye Foundation Module exercises appear on days 22-27 in their exact real prerequisite order', () => {
-    const expectedOrder = ['eye-warm-up', 'eye-stretch', 'eye-span', 'regression-control', 'reading-speed', 'rsvp']
-    for (let i = 0; i < expectedOrder.length; i++) {
-      const day = 22 + i
-      expect(buildCurriculumDayPlan(day).exercises.brainGym.map((exercise) => exercise.id)).toContain(expectedOrder[i])
+  it('never schedules the same exercise twice on one day', () => {
+    for (let day = 1; day <= TOTAL_CURRICULUM_DAYS; day++) {
+      const ids = allExerciseIdsInPlan(day)
+      expect(new Set(ids).size, `day ${day}`).toBe(ids.length)
     }
+  })
+
+  it('days 9/19/29 (were Zener) and 10/20/30 (were Hidden Target) now train visual memory', () => {
+    for (const day of [9, 10, 19, 20, 29, 30]) {
+      const id = buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]?.id
+      expect(['dot-memory-grid', 'number-flash-grid', 'hemispheric-color-sync', 'pictorial-essence-sprint']).toContain(id)
+    }
+  })
+
+  it('no day mentions eye training, energies, holograms or intuition in its theme', () => {
+    for (const theme of CURRICULUM_DAY_THEMES) expect(`${theme.title} ${theme.focus}`).not.toMatch(/ocular|eye|energy|hologram|intuiti|RSVP/i)
   })
 
   it('Reading Expansion Module exercises appear on days 22-25 in their exact real prerequisite order', () => {

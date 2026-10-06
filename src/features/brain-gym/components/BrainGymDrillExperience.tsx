@@ -71,7 +71,7 @@ export function BrainGymDrillExperience({ config, onComplete, onExit }: BrainGym
     const accuracyPercent = Math.round((correctCount / config.roundCount) * 100)
     setCompletedResult({ elapsedMs, correctCount, bestStreak, averageReactionMs })
     setBestStats(recordBestBrainGymStats(config.storageKey, { bestAccuracyPercent: accuracyPercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
+    void session.recordCompletion(elapsedMs, { score: correctCount, accuracyPercent, extra: { bestStreak, averageReactionMs } })
     setPhase('complete')
   }
 

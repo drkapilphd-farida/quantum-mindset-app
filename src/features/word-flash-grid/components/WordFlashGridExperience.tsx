@@ -74,7 +74,7 @@ export function WordFlashGridExperience({ onComplete }: WordFlashGridExperienceP
     const accuracyPercent = computeAccuracyPercent(totalCorrect, totalWords)
     setCompletedResult({ elapsedMs, totalCorrect, totalWords, bestStreak, accuracyPercent })
     setBestStats(recordBestWordFlashGridStats(BEST_STATS_STORAGE_KEY, { bestScorePercent: accuracyPercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
+    void session.recordCompletion(elapsedMs, { score: totalCorrect, accuracyPercent, extra: { bestStreak } })
     setPhase('complete')
   }
 

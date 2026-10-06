@@ -8,7 +8,7 @@ export type JourneyStepExerciseId =
   | 'schulte-grid-drill'
   | 'word-flash'
   | 'brain-gym-circuit'
-  | 'esp-zener-telepathy'
+  | 'dot-memory-grid'
   | 'photographic-memory'
   | 'hemispheric-color-sync'
   | 'color-scene-transformation'
@@ -51,13 +51,11 @@ const WEEK_2_POOL: readonly JourneyStepExercise[] = [
   { exerciseId: 'quantum-mental-rotation', title: 'Mental Object Rotation', domain: 'visualisation' },
 ]
 
-// Week 3 (Advanced Quantum Flow & Intuition) — Zener Card Telepathy
-// headlines this week (the only week Intuition content ever appears in),
-// alongside Right Brain and a Visualisation module of its own — creative
-// Visualisation exercises are strategically placed across both Week 2
-// and Week 3, never confined to just one week.
+// Week 3 (Advanced Focus Flow & Attention) — Dot Memory Grid replaced the
+// Zener card guessing game (Oct 2026): a guessing score is pure chance and
+// can never improve. No week has "intuition" content any more.
 const WEEK_3_POOL: readonly JourneyStepExercise[] = [
-  { exerciseId: 'esp-zener-telepathy', title: 'Zener Card Sprint', domain: 'intuition' },
+  { exerciseId: 'dot-memory-grid', title: 'Dot Memory Grid™', domain: 'right_brain' },
   { exerciseId: 'hemispheric-color-sync', title: 'Color-Word Sync Grid', domain: 'right_brain' },
   { exerciseId: 'quantum-mental-rotation', title: 'Mental Object Rotation', domain: 'visualisation' },
 ]
@@ -67,8 +65,9 @@ const WEEK_3_POOL: readonly JourneyStepExercise[] = [
 // differ from whatever that day's normal Step 2 pick already is, when a
 // real alternative exists in that domain.
 const DOMAIN_EXERCISE_POOL: Record<Exclude<JourneyDomain, 'reading'>, readonly JourneyStepExercise[]> = {
+  // Kept only so learners with older "intuition" results never break; never injected.
   intuition: [WEEK_3_POOL[0]!],
-  right_brain: [WEEK_2_POOL[0]!, WEEK_3_POOL[1]!],
+  right_brain: [WEEK_2_POOL[0]!, WEEK_3_POOL[1]!, WEEK_3_POOL[0]!],
   visualisation: [WEEK_2_POOL[1]!, WEEK_2_POOL[2]!],
 }
 
@@ -132,10 +131,8 @@ export function getWeaknessDrill(domain: Exclude<JourneyDomain, 'reading'>, avoi
 // theme), Intuition injection is suppressed until Week 3. Week 3 allows
 // every domain, Intuition especially, since that's its whole point.
 export function canInjectWeaknessDrill(domain: Exclude<JourneyDomain, 'reading'>, day: number): boolean {
-  const week = getWeekNumber(day)
-  if (week === 1) return false
-  if (week === 2) return domain !== 'intuition'
-  return true
+  if (domain === 'intuition') return false
+  return getWeekNumber(day) !== 1
 }
 
 // Full Reading Sprint Variety™ + Progressive Reading™ — every reading
@@ -178,24 +175,10 @@ export function getReadingLengthTier(day: number): JourneyLengthTier {
   return 'long'
 }
 
-// Dynamic Zener Card Naming Variant™ — the same real exercise
-// (esp-zener-telepathy: same drill, same accuracy tracking, same
-// 'intuition' domain) shown under two different display names depending
-// on which audience is looking at it. Productivity/QSR-ad traffic sees
-// "Pattern Intuition Sprint™" — a pattern-recognition framing that fits
-// a speed-reading/productivity pitch; organic/spiritual-angle traffic
-// sees the original "ESP Zener Card Telepathy™". This only ever changes
-// the label a learner reads on screen (and what's fed to the AI Coach
-// prompt, so its generated message stays consistent with what the
-// learner just saw) — never the exercise itself, its scoring, or its
-// domain classification.
+// Display-title variants (kept as a seam for audience-specific naming; every
+// exercise currently shows its own title for both).
 export type ExerciseLabelVariant = 'productivity' | 'spiritual'
 
-const ZENER_LABEL_BY_VARIANT: Record<ExerciseLabelVariant, string> = {
-  productivity: 'Zener Card Sprint',
-  spiritual: 'Zener Card Sprint',
-}
-
-export function resolveExerciseDisplayTitle(exercise: JourneyStepExercise, variant: ExerciseLabelVariant): string {
-  return exercise.exerciseId === 'esp-zener-telepathy' ? ZENER_LABEL_BY_VARIANT[variant] : exercise.title
+export function resolveExerciseDisplayTitle(exercise: JourneyStepExercise, _variant: ExerciseLabelVariant): string {
+  return exercise.title
 }

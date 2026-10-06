@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { dayTitle, categoryLabel } from '@/lib/app-i18n/curriculumText'
+import { dayTitle, categoryLabel, exerciseTitle } from '@/lib/app-i18n/curriculumText'
 import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, PartyPopper, SkipForward, Sparkles, X } from 'lucide-react'
@@ -15,7 +15,7 @@ import { getEmbeddableComponent } from '../curriculumExerciseComponentRegistry'
 import { markCurriculumDayComplete } from '../curriculumProgress'
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
 import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
-import { EmbeddedExerciseProvider } from '../embeddedExerciseContext'
+import { CurriculumDayProvider, EmbeddedExerciseProvider } from '../embeddedExerciseContext'
 import { useImmersiveExerciseLock } from '@/hooks/exercises/useImmersiveExerciseLock'
 
 const CARD_CLASS_NAME = 'relative overflow-hidden rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
@@ -65,6 +65,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   const router = useRouter()
   const plan = useMemo(() => buildCurriculumDayPlan(day), [day])
   const queueIds = useMemo(() => buildSessionQueue(plan.exercises), [plan])
+  const dayInfo = useMemo(() => ({ day, isReplay }), [day, isReplay])
 
   const [stepIndex, setStepIndex] = useState<number | null>(null)
   const [mode, setMode] = useState<WizardMode>('playing')
@@ -229,7 +230,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           <p className="text-[9px] font-semibold tracking-widest text-muted-foreground uppercase sm:text-[10px]">
             {t('curriculum.player.stepOf', { step: stepIndex + 1, total: queueIds.length, category: categoryLabel(t, exercise.category) })}
           </p>
-          <p className="truncate text-xs font-semibold text-foreground sm:text-sm">{exercise.title}</p>
+          <p className="truncate text-xs font-semibold text-foreground sm:text-sm">{exerciseTitle(t, exercise)}</p>
         </div>
         <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <button
@@ -266,6 +267,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
 
       <div className="min-h-0 flex-1 overflow-y-auto">
         <EmbeddedExerciseProvider>
+          <CurriculumDayProvider value={dayInfo}>
           {isGated ? (
             <GatedStepHandoff exercise={exercise} onContinue={() => handleGatedHandoff(exercise, stepIndex)} />
           ) : EmbeddedComponent !== undefined ? (
@@ -273,6 +275,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           ) : (
             <GatedStepHandoff exercise={exercise} onContinue={handleStepComplete} skipLabel={t('curriculum.player.skipStep')} />
           )}
+          </CurriculumDayProvider>
         </EmbeddedExerciseProvider>
       </div>
     </div>
@@ -299,7 +302,7 @@ function GatedStepHandoff({
         <Sparkles className="size-6" aria-hidden="true" />
       </div>
       <div>
-        <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">{exercise.title}</h3>
+        <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">{exerciseTitle(t, exercise)}</h3>
         <p className="mt-2 max-w-sm text-sm text-muted-foreground">
           {t('curriculum.player.gatedIntro')}
         </p>

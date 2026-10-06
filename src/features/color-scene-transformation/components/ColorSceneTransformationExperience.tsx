@@ -84,7 +84,7 @@ export function ColorSceneTransformationExperience({ onComplete }: ColorSceneTra
     const accuracyPercent = Math.round((correctCount / ROUNDS_PER_SESSION) * 100)
     setCompletedResult({ elapsedMs, correctCount, totalScore, bestStreak, fastestReactionMs, totalFocusTimeMs, accuracyPercent })
     setBestStats(recordBestColorSceneTransformationStats(BEST_STATS_STORAGE_KEY, { bestAccuracyPercent: accuracyPercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
+    void session.recordCompletion(elapsedMs, { score: totalScore, accuracyPercent, extra: { bestStreak } })
     setPhase('complete')
   }
 

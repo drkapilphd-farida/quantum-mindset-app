@@ -56,7 +56,22 @@ export function RotatingQuantumReadingSprintPhase({ pickedId, onComplete }: Rota
     case 'rapid-visual-span-expander':
       return <RapidVisualSpanExpanderExperience onComplete={handlePoolReadingComplete} />
     case 'dynamic-chunk-sliding':
-      return <DynamicChunkSlidingExperience onComplete={handlePoolReadingComplete} />
+      return (
+        <DynamicChunkSlidingExperience
+          onComplete={(accuracyPercent, session) => {
+            const wpm = Math.round(session.metrics.wpm ?? 0)
+            const readingScore = computeReadingPowerScore(wpm, accuracyPercent)
+            onComplete({
+              supportsRetention: false,
+              xpEarned: computeReadingXp(readingScore),
+              statLine: `${wpm} WPM • ${accuracyPercent}% Comprehension`,
+              wpm,
+              accuracyPercent,
+              readingScore,
+            })
+          }}
+        />
+      )
     case 'flash-recall-sprint':
       return <FlashRecallSprintExperience onComplete={handlePoolReadingComplete} />
     case 'vertical-word-reading':

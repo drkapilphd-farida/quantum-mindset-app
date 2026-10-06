@@ -865,6 +865,57 @@ export type Database = {
         }
         Relationships: []
       }
+      exercise_results: {
+        Row: {
+          accuracy_percent: number | null
+          content_lang: string | null
+          curriculum_day: number | null
+          details: Json
+          duration_ms: number | null
+          exercise_id: string
+          id: string
+          is_replay: boolean
+          level_end: number | null
+          level_start: number | null
+          played_at: string
+          rounds: number | null
+          score: number
+          user_id: string
+        }
+        Insert: {
+          accuracy_percent?: number | null
+          content_lang?: string | null
+          curriculum_day?: number | null
+          details?: Json
+          duration_ms?: number | null
+          exercise_id: string
+          id?: string
+          is_replay?: boolean
+          level_end?: number | null
+          level_start?: number | null
+          played_at?: string
+          rounds?: number | null
+          score: number
+          user_id: string
+        }
+        Update: {
+          accuracy_percent?: number | null
+          content_lang?: string | null
+          curriculum_day?: number | null
+          details?: Json
+          duration_ms?: number | null
+          exercise_id?: string
+          id?: string
+          is_replay?: boolean
+          level_end?: number | null
+          level_start?: number | null
+          played_at?: string
+          rounds?: number | null
+          score?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       families: {
         Row: {
           created_at: string

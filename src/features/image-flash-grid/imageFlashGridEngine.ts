@@ -22,7 +22,11 @@ export type ImageFlashTargetCell = { cellIndex: number; icon: string }
 // progression, by design — all four Right Brain flash-grid exercises
 // share one difficulty language.
 const ICON_COUNTS_BY_ROUND: readonly number[] = [3, 4, 5, 6, 6]
-const FLASH_DURATION_MS_BY_ROUND: readonly number[] = [1000, 850, 700, 600, 500]
+// Easy start (exercise rebuild, Phase 1): flash time scales with how many
+// items are shown — round 1 gives every item 800 ms, so nothing
+// disappears before a beginner can see it; later rounds get quicker per item.
+const FLASH_MS_PER_ITEM_BY_ROUND: readonly number[] = [800, 650, 550, 450, 400]
+const FLASH_DURATION_MS_BY_ROUND: readonly number[] = FLASH_MS_PER_ITEM_BY_ROUND.map((ms, i) => ms * (ICON_COUNTS_BY_ROUND[i] ?? 1))
 
 // Distinct, vibrant, single-glyph thematic icons — real emoji (no lorem,
 // no filler, no AI/API call), each visually distinct from every other so

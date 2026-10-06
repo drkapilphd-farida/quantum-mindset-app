@@ -6,6 +6,7 @@ import { ArrowRight, Grid3x3, SkipForward } from 'lucide-react'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
 import { cn } from '@/lib/utils'
+import { useExerciseSession } from '@/hooks/exercises/useExerciseSession'
 import type { VisualActivationExerciseProps } from './types'
 
 // Schulte Grid Speed Drill™ — Exercise 9 of the Visual Activation Suite.
@@ -127,6 +128,8 @@ function createBowlResonanceImpulse(audioContext: AudioContext): AudioBuffer {
 export function SchulteGridSpeedDrill({ onComplete, onExit }: VisualActivationExerciseProps): React.JSX.Element {
   const isEmbedded = useIsEmbeddedExercise()
   const [phase, setPhase] = useState<ExercisePhase>('intro')
+  // Server-saved result (exercise_results + practice log): cells found per minute and accuracy.
+  const session = useExerciseSession({ labId: 'quantum-speed-reading', exerciseId: 'schulte-grid-speed-drill' })
   const [grid, setGrid] = useState<readonly number[]>([])
   const [nextExpected, setNextExpected] = useState(1)
   const [mistakeCount, setMistakeCount] = useState(0)
@@ -334,6 +337,12 @@ export function SchulteGridSpeedDrill({ onComplete, onExit }: VisualActivationEx
       if (next > TOTAL_CELLS) {
         teardownAudio()
         setPhase('complete')
+        const durationMs = Math.max(1, performance.now() - (startedAtRef.current ?? performance.now()))
+        void session.recordCompletion(durationMs, {
+          score: Math.round((TOTAL_CELLS * 60_000) / durationMs),
+          accuracyPercent: Math.round((TOTAL_CELLS / (TOTAL_CELLS + mistakeCount)) * 100),
+          extra: { seconds: durationMs / 1000, mistakes: mistakeCount, gridSize: GRID_SIZE },
+        })
       }
     } else {
       setMistakeCount((count) => count + 1)

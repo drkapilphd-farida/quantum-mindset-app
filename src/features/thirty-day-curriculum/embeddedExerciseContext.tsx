@@ -25,3 +25,18 @@ export function EmbeddedExerciseProvider({ children }: { children: React.ReactNo
 export function useIsEmbeddedExercise(): boolean {
   return useContext(EmbeddedExerciseContext)
 }
+
+// Which 30-day programme day an embedded exercise is being played for, so
+// its server-saved result can be filed under that day (exercise_results.
+// curriculum_day). null everywhere outside DayMasterPlayer.
+export type CurriculumDayInfo = { day: number; isReplay: boolean }
+
+const CurriculumDayContext = createContext<CurriculumDayInfo | null>(null)
+
+export function CurriculumDayProvider({ value, children }: { value: CurriculumDayInfo; children: React.ReactNode }): React.JSX.Element {
+  return <CurriculumDayContext.Provider value={value}>{children}</CurriculumDayContext.Provider>
+}
+
+export function useCurriculumDayInfo(): CurriculumDayInfo | null {
+  return useContext(CurriculumDayContext)
+}

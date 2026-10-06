@@ -5,7 +5,7 @@ import { computeWpm, computeUnitDwellMs, countWords } from '@/features/reading-e
 import type { ReadingRuntimePhase } from '@/features/reading-engine/types'
 
 const TICK_MS = 100
-const DEFAULT_TARGET_WPM = 250
+const DEFAULT_TARGET_WPM = 200
 
 export type UseReadingRuntimeResult = {
   phase: ReadingRuntimePhase

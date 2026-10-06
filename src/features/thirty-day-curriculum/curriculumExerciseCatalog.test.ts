@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 import {
   CURRICULUM_EXERCISE_CATALOG,
   CURRICULUM_EXERCISE_CATEGORIES,
-  EYE_FOUNDATION_POOL,
   FLASH_INTELLIGENCE_POOL,
   READING_EXPANSION_POOL,
   getCurriculumExerciseById,
@@ -38,7 +37,7 @@ describe('CURRICULUM_EXERCISE_CATALOG', () => {
 
 describe('getCurriculumExerciseById', () => {
   it('finds a known exercise', () => {
-    expect(getCurriculumExerciseById('rsvp')?.title).toBe('RSVP')
+    expect(getCurriculumExerciseById('calm-breathing')?.title).toBe('Calm Breathing')
   })
   it('returns undefined for an unknown id', () => {
     expect(getCurriculumExerciseById('does-not-exist')).toBeUndefined()
@@ -46,17 +45,6 @@ describe('getCurriculumExerciseById', () => {
 })
 
 describe('gated module pools preserve their real, server-enforced internal order', () => {
-  it('Eye Foundation Module order matches eyeFoundationModule.ts', () => {
-    expect(EYE_FOUNDATION_POOL.map((exercise) => exercise.id)).toEqual([
-      'eye-warm-up',
-      'eye-stretch',
-      'eye-span',
-      'regression-control',
-      'reading-speed',
-      'rsvp',
-    ])
-  })
-
   it('Reading Expansion Module order matches readingExpansionModule.ts', () => {
     expect(READING_EXPANSION_POOL.map((exercise) => exercise.id)).toEqual([
       'phrase-reading',
@@ -74,5 +62,36 @@ describe('gated module pools preserve their real, server-enforced internal order
       'mixed-flash',
       'peripheral-flash',
     ])
+  })
+})
+
+describe('exercise rebuild, Phase 1', () => {
+  const REMOVED = [
+    'esp-zener-telepathy-sprint',
+    'quantum-hidden-target-grid',
+    'after-image-gazing',
+    'tratak-afterimage-stretches',
+    'cardinal-oculomotor-stretches',
+    'infinity-figure-eight-gliding',
+    'aura-edge-color-pulsing',
+    'saccadic-eye-jump',
+    'peripheral-expanding-circle',
+    'brain-gym-circuit',
+    'theta-breathing-anchor',
+    'eye-warm-up',
+    'eye-stretch',
+    'eye-span',
+    'regression-control',
+    'reading-speed',
+    'rsvp',
+    'fluid-energy-balancer',
+  ]
+
+  it('no guessing game, eye-movement, staring or afterimage drill is in the programme', () => {
+    for (const id of REMOVED) expect(getCurriculumExerciseById(id), id).toBeUndefined()
+  })
+
+  it('real guided breathing replaces the old balance game', () => {
+    expect(getCurriculumExerciseById('calm-breathing')?.href).toBe('/labs/sharp-brain/calm-breathing')
   })
 })

@@ -4,12 +4,10 @@ import { VisualActivationPhase } from './VisualActivationPhase'
 import { computeVisualActivationXp } from './visualActivationDataset'
 import { computePoolExerciseXp, type Phase2PoolExerciseId } from './qsrProCircuitRotation'
 import { SchulteGridDrillExperience } from '@/features/schulte-grid-drill/components/SchulteGridDrillExperience'
-import { EspZenerTelepathyExperience } from '@/features/esp-zener-telepathy/components/EspZenerTelepathyExperience'
 import { PhotographicMemoryExperience } from '@/features/photographic-memory/components/PhotographicMemoryExperience'
 import { ColorSceneTransformationExperience } from '@/features/color-scene-transformation/components/ColorSceneTransformationExperience'
 import { HemisphericColorSyncExperience } from '@/features/hemispheric-color-sync/components/HemisphericColorSyncExperience'
 import { QuantumMentalRotationExperience } from '@/features/quantum-mental-rotation/components/QuantumMentalRotationExperience'
-import { QuantumHiddenTargetGridExperience } from '@/features/quantum-hidden-target-grid/components/QuantumHiddenTargetGridExperience'
 
 // A flat XP floor for Schulte Grid specifically — it has no accuracy%
 // concept (own real metric is completion time/mistake count, per its own
@@ -23,12 +21,10 @@ const SCHULTE_GRID_FLAT_XP = 50
 const POOL_TITLES: Record<Phase2PoolExerciseId, string> = {
   'visual-activation': 'Visual Activation Complete',
   'schulte-grid-drill': 'Peripheral Vision Activator Complete',
-  'esp-zener-telepathy': 'Intuition Sprint Complete',
   'photographic-memory': 'Deep Visualisation Recall Complete',
   'color-scene-transformation': 'Scene Transformation Complete',
   'hemispheric-color-sync': 'Color-Word Sync Complete',
   'quantum-mental-rotation': 'Mental Rotation Complete',
-  'quantum-hidden-target-grid': 'Hidden Target Grid Complete',
 }
 
 type RotatingVisualActivationPhaseProps = {
@@ -61,8 +57,6 @@ export function RotatingVisualActivationPhase({ pickedId, onComplete }: Rotating
   switch (pickedId) {
     case 'schulte-grid-drill':
       return <SchulteGridDrillExperience onComplete={() => onComplete(SCHULTE_GRID_FLAT_XP, undefined, POOL_TITLES['schulte-grid-drill'])} />
-    case 'esp-zener-telepathy':
-      return <EspZenerTelepathyExperience onComplete={(accuracyPercent) => handleAccuracyOnlyComplete('esp-zener-telepathy', accuracyPercent)} />
     case 'photographic-memory':
       return <PhotographicMemoryExperience onComplete={(accuracyPercent) => handleAccuracyOnlyComplete('photographic-memory', accuracyPercent)} />
     case 'color-scene-transformation':
@@ -71,8 +65,6 @@ export function RotatingVisualActivationPhase({ pickedId, onComplete }: Rotating
       return <HemisphericColorSyncExperience onComplete={(accuracyPercent) => handleAccuracyOnlyComplete('hemispheric-color-sync', accuracyPercent)} />
     case 'quantum-mental-rotation':
       return <QuantumMentalRotationExperience onComplete={(accuracyPercent) => handleAccuracyOnlyComplete('quantum-mental-rotation', accuracyPercent)} />
-    case 'quantum-hidden-target-grid':
-      return <QuantumHiddenTargetGridExperience onComplete={(accuracyPercent) => handleAccuracyOnlyComplete('quantum-hidden-target-grid', accuracyPercent)} />
     case 'visual-activation':
     default:
       return <VisualActivationPhase onComplete={handleClassicComplete} />

@@ -1,15 +1,6 @@
-import type { Metadata } from 'next'
-import { FluidEnergyBalancerExperience } from '@/features/fluid-energy-balancer/components/FluidEnergyBalancerExperience'
+import { permanentRedirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'Calm Breath Balance — Sharp Brain Lab',
-  robots: { index: false, follow: false },
-}
-
-// Fluid Energy Balancer™ — a Visualization Hub exercise: a real-time,
-// dual-scale mental focus and mind-over-matter balancing simulation.
-// Deliberately its own route/folder, no collision with any existing
-// route.
-export default function FluidEnergyBalancerPage(): React.JSX.Element {
-  return <FluidEnergyBalancerExperience />
+// The old "Calm Breath Balance" game was replaced by real guided breathing.
+export default function FluidEnergyBalancerPage(): never {
+  permanentRedirect('/labs/sharp-brain/calm-breathing')
 }

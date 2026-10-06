@@ -11,6 +11,13 @@ export const DOT_MEMORY_GRID_ROUNDS_PER_SESSION = 5
 
 export const DOT_MEMORY_FLASH_DURATION_MS = 1000
 
+// Easy start: the first rounds stay on screen longer (1.5 s → 1 s).
+const FLASH_DURATION_MS_BY_ROUND: readonly number[] = [1500, 1300, 1200, 1100, 1000]
+
+export function dotFlashDurationMsForRound(roundIndex: number): number {
+  return FLASH_DURATION_MS_BY_ROUND[roundIndex] ?? DOT_MEMORY_FLASH_DURATION_MS
+}
+
 // The dot-count progression across the 5 rounds of a session — each round
 // asks for one more cell than the last, per the spec's own "3 to 7 dots
 // depending on difficulty" range. Deliberately NOT tied to grid size on

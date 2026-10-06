@@ -90,7 +90,7 @@ export function SensoryHologramBuilderExperience({ onComplete }: SensoryHologram
     const record = recordSensoryHologramBuilderCompletion(BEST_STATS_STORAGE_KEY, immersionScorePercent)
     setBestStats({ bestScorePercent: record.bestScorePercent, bestStreak: record.bestStreak })
     setCompletedResult({ elapsedMs: journeyElapsedMs, immersionScorePercent, streak: record.currentStreak })
-    void session.recordCompletion(journeyElapsedMs)
+    void session.recordCompletion(journeyElapsedMs, { score: immersionScorePercent, accuracyPercent: null })
     setPhase('complete')
   }
 

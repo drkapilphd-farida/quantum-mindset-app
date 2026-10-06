@@ -17,6 +17,7 @@ import en_mentor from './messages/en/mentor.json'
 import en_nav from './messages/en/nav.json'
 import en_progress from './messages/en/progress.json'
 import en_settings from './messages/en/settings.json'
+import en_training from './messages/en/training.json'
 import en_welcome from './messages/en/welcome.json'
 import hi_auth from './messages/hi/auth.json'
 import hi_common from './messages/hi/common.json'
@@ -30,6 +31,7 @@ import hi_mentor from './messages/hi/mentor.json'
 import hi_nav from './messages/hi/nav.json'
 import hi_progress from './messages/hi/progress.json'
 import hi_settings from './messages/hi/settings.json'
+import hi_training from './messages/hi/training.json'
 import hi_welcome from './messages/hi/welcome.json'
 import kn_auth from './messages/kn/auth.json'
 import kn_common from './messages/kn/common.json'
@@ -43,6 +45,7 @@ import kn_mentor from './messages/kn/mentor.json'
 import kn_nav from './messages/kn/nav.json'
 import kn_progress from './messages/kn/progress.json'
 import kn_settings from './messages/kn/settings.json'
+import kn_training from './messages/kn/training.json'
 import kn_welcome from './messages/kn/welcome.json'
 import ta_auth from './messages/ta/auth.json'
 import ta_common from './messages/ta/common.json'
@@ -56,6 +59,7 @@ import ta_mentor from './messages/ta/mentor.json'
 import ta_nav from './messages/ta/nav.json'
 import ta_progress from './messages/ta/progress.json'
 import ta_settings from './messages/ta/settings.json'
+import ta_training from './messages/ta/training.json'
 import ta_welcome from './messages/ta/welcome.json'
 import te_auth from './messages/te/auth.json'
 import te_common from './messages/te/common.json'
@@ -69,6 +73,7 @@ import te_mentor from './messages/te/mentor.json'
 import te_nav from './messages/te/nav.json'
 import te_progress from './messages/te/progress.json'
 import te_settings from './messages/te/settings.json'
+import te_training from './messages/te/training.json'
 import te_welcome from './messages/te/welcome.json'
 import mr_auth from './messages/mr/auth.json'
 import mr_common from './messages/mr/common.json'
@@ -82,6 +87,7 @@ import mr_mentor from './messages/mr/mentor.json'
 import mr_nav from './messages/mr/nav.json'
 import mr_progress from './messages/mr/progress.json'
 import mr_settings from './messages/mr/settings.json'
+import mr_training from './messages/mr/training.json'
 import mr_welcome from './messages/mr/welcome.json'
 import gu_auth from './messages/gu/auth.json'
 import gu_common from './messages/gu/common.json'
@@ -95,9 +101,10 @@ import gu_mentor from './messages/gu/mentor.json'
 import gu_nav from './messages/gu/nav.json'
 import gu_progress from './messages/gu/progress.json'
 import gu_settings from './messages/gu/settings.json'
+import gu_training from './messages/gu/training.json'
 import gu_welcome from './messages/gu/welcome.json'
 
-export const NAMESPACES = ["auth","common","curriculum","curriculumPlan","dashboard","docWidget","enrol","exercises","mentor","nav","progress","settings","welcome"] as const
+export const NAMESPACES = ["auth","common","curriculum","curriculumPlan","dashboard","docWidget","enrol","exercises","mentor","nav","progress","settings","training","welcome"] as const
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- only its type is used
 const english = {
@@ -113,6 +120,7 @@ const english = {
   "nav": en_nav,
   "progress": en_progress,
   "settings": en_settings,
+  "training": en_training,
   "welcome": en_welcome,
 }
 
@@ -132,6 +140,7 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "nav": en_nav as MessageDict,
     "progress": en_progress as MessageDict,
     "settings": en_settings as MessageDict,
+    "training": en_training as MessageDict,
     "welcome": en_welcome as MessageDict,
   },
   hi: {
@@ -147,6 +156,7 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "nav": hi_nav as MessageDict,
     "progress": hi_progress as MessageDict,
     "settings": hi_settings as MessageDict,
+    "training": hi_training as MessageDict,
     "welcome": hi_welcome as MessageDict,
   },
   kn: {
@@ -162,6 +172,7 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "nav": kn_nav as MessageDict,
     "progress": kn_progress as MessageDict,
     "settings": kn_settings as MessageDict,
+    "training": kn_training as MessageDict,
     "welcome": kn_welcome as MessageDict,
   },
   ta: {
@@ -177,6 +188,7 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "nav": ta_nav as MessageDict,
     "progress": ta_progress as MessageDict,
     "settings": ta_settings as MessageDict,
+    "training": ta_training as MessageDict,
     "welcome": ta_welcome as MessageDict,
   },
   te: {
@@ -192,6 +204,7 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "nav": te_nav as MessageDict,
     "progress": te_progress as MessageDict,
     "settings": te_settings as MessageDict,
+    "training": te_training as MessageDict,
     "welcome": te_welcome as MessageDict,
   },
   mr: {
@@ -207,6 +220,7 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "nav": mr_nav as MessageDict,
     "progress": mr_progress as MessageDict,
     "settings": mr_settings as MessageDict,
+    "training": mr_training as MessageDict,
     "welcome": mr_welcome as MessageDict,
   },
   gu: {
@@ -222,6 +236,7 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "nav": gu_nav as MessageDict,
     "progress": gu_progress as MessageDict,
     "settings": gu_settings as MessageDict,
+    "training": gu_training as MessageDict,
     "welcome": gu_welcome as MessageDict,
   },
 }

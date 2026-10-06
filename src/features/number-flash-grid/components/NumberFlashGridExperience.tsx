@@ -72,7 +72,7 @@ export function NumberFlashGridExperience({ onComplete }: NumberFlashGridExperie
     const accuracyPercent = computeAccuracyPercent(totalCorrect, totalDigits)
     setCompletedResult({ elapsedMs, totalCorrect, totalDigits, bestStreak, accuracyPercent })
     setBestStats(recordBestNumberFlashGridStats(BEST_STATS_STORAGE_KEY, { bestScorePercent: accuracyPercent, bestStreak }))
-    void session.recordCompletion(elapsedMs)
+    void session.recordCompletion(elapsedMs, { score: totalCorrect, accuracyPercent, extra: { bestStreak } })
     setPhase('complete')
   }
 

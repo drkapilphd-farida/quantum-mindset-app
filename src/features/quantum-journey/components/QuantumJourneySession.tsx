@@ -27,7 +27,7 @@ import { EyeWarmupExperience } from '@/features/quantum-speed-reading/components
 import { SchulteGridDrillExperience } from '@/features/schulte-grid-drill/components/SchulteGridDrillExperience'
 import { WordFlashExperience } from '@/features/flash-intelligence/components/WordFlashExperience'
 import { BrainGymCircuitExperience } from '@/features/brain-gym/components/BrainGymCircuitExperience'
-import { EspZenerTelepathyExperience } from '@/features/esp-zener-telepathy/components/EspZenerTelepathyExperience'
+import { DotMemoryGridExperience } from '@/features/dot-memory-grid/components/DotMemoryGridExperience'
 import { PhotographicMemoryExperience } from '@/features/photographic-memory/components/PhotographicMemoryExperience'
 import { HemisphericColorSyncExperience } from '@/features/hemispheric-color-sync/components/HemisphericColorSyncExperience'
 import { ColorSceneTransformationExperience } from '@/features/color-scene-transformation/components/ColorSceneTransformationExperience'
@@ -555,8 +555,8 @@ export function QuantumJourneySession({
         return <WordFlashExperience onComplete={onDone} />
       case 'brain-gym-circuit':
         return <BrainGymCircuitExperience onComplete={onDone} />
-      case 'esp-zener-telepathy':
-        return <EspZenerTelepathyExperience onComplete={onAccuracyDone} />
+      case 'dot-memory-grid':
+        return <DotMemoryGridExperience onComplete={onAccuracyDone} />
       case 'photographic-memory':
         return <PhotographicMemoryExperience onComplete={onAccuracyDone} />
       case 'hemispheric-color-sync':
