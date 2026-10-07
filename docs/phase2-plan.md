@@ -299,20 +299,47 @@ These scores come from reading the code and production counts on 7 Oct 2026. Ite
 
 | Order | Item | Audit # | Before scaling ads? |
 |---|---|---|---|
-| 1 | Fair before/after test (self-paced, equivalent passages, Day 1 and Day 30) + improvement report | 1 | **Must-have** |
+| 1 | Fair reading test: same length and difficulty on Day 1 and Day 30, self-paced (not app-paced), fixed comprehension questions; **effective speed = WPM × comprehension %**; improvement report | 1 | **Must-have** |
 | 2 | Day 30 certificate and shareable result card with before → after numbers | 7 | **Must-have** |
 | 3 | Live-class attendance + guarantee-eligibility table + CSV export | 4 | **Must-have** |
-| 4 | Memory test (immediate + delayed) and Focus Score, on Day 1 and Day 30 | 2, 3 | **Must-have** (both are promised) |
-| 5 | WhatsApp reminders + missed-day nudge + gentle streak rule | 5 | **Must-have** (completion drives results) |
-| 6 | Admin dashboard: falling behind, expiring access, completion rates | 8 | **Must-have** |
-| 7 | Low-end Android speed and accessibility pass | 10 | **Must-have** (ad traffic is mostly mobile) |
-| 8 | First-time "Start Day 1" flow + usability check with 3 new learners | 11 | Should-have |
-| 9 | Day 31 maintenance plan → Continued Practice Access | 5 | Should-have |
-| 10 | Plain-language weekly parent summary (+ WhatsApp) | 6 | Should-have |
-| 11 | Hindi practice content, then the other languages one by one | 9 | Should-have (Hindi), later (others) |
-| 12 | The original Phase 2 items: new exercises (Visual Search, Flanker, Go/No-Go, Read → Recall → Summary) and the new 30-day plan, applied only to days a learner hasn't reached | — | Later (keep it after the measurement work, so improvements can be measured) |
+| 4 | **Pace control:** one new day unlocks per calendar day + a minimum practice time before a day counts as complete (details below) | 5 | **Must-have** (results need daily practice; protects the guarantee) |
+| 5 | Memory test (immediate + delayed) and Focus Score, on Day 1 and Day 30 | 2, 3 | **Must-have** (both are promised) |
+| 6 | WhatsApp reminders + missed-day nudge + gentle streak rule | 5 | **Must-have** (completion drives results) |
+| 7 | Admin dashboard: falling behind, expiring access, completion rates | 8 | **Must-have** |
+| 8 | Low-end Android speed and accessibility pass | 10 | **Must-have** (ad traffic is mostly mobile) |
+| 9 | First-time "Start Day 1" flow + usability check with 3 new learners | 11 | Should-have |
+| 10 | Day 31 maintenance plan → Continued Practice Access | 5 | Should-have |
+| 11 | Plain-language weekly parent summary (+ WhatsApp) | 6 | Should-have |
+| 12 | Hindi practice content, then the other languages one by one | 9 | Should-have (Hindi), later (others) |
+| 13 | The original Phase 2 items: new exercises (Visual Search, Flanker, Go/No-Go, Read → Recall → Summary) and the new 30-day plan, applied only to days a learner hasn't reached | — | Later (keep it after the measurement work, so improvements can be measured) |
+| 14 | Lint clean-up of `scripts/` and `public/sw.js` (list below) | — | Low priority |
 
-Note: item 12 was the original Phase 2 scope. Your Phase 2 list (A–F) doesn't include it, so I've moved it into Phase 3. Tell me if you want it back in Phase 2.
+**Item 4 — pace control (proposal)**
+
+Why: one paid learner completed Days 1–22 in 14 hours (14 Sep); a test account did 7 days in 5 minutes (4 Sep). Improvement comes from spaced, daily practice. A 30-day result squeezed into one afternoon can't deliver the promise, and it makes the guarantee impossible to judge.
+- **One new day per calendar day (India time):** Day N opens on the calendar day after Day N-1 was completed, at midnight IST. Completed days always stay open, and Practice Again stays unlimited.
+- **Minimum practice time:** a day counts as complete only after about 10 minutes of active practice that day, summed from the exercises' own timers (time when the tab isn't visible doesn't count), plus finishing all of that day's steps. Checkpoint days still need the reading check.
+- **Enforced on the server**, in the same place that checks "Day N-1 complete" today, so it can't be bypassed from the browser.
+- **Existing learners keep everything:** completed days, unlocked days, streaks and checkpoint results are untouched. The rule applies only to days completed after it goes live. The learner with the Day 3 gap is left as is (your decision, 7 Oct).
+- **Exceptions:** an admin switch per learner (for example a reviewer, or a learner catching up after illness), and the dev/staging unlock for testing. Test accounts on production should use that switch, not real days.
+- **Learner message (all 8 languages):** "Day N opens tomorrow — your brain grows between sessions." With a countdown, and a "Practise again" link for days already done.
+- **Decide before building:** the minimum minutes (suggest 10), whether a missed day stays open until done (suggested), and the IST midnight rule.
+
+**Item 14 — lint clean-up (50 errors, 4 warnings; none is in app code)**
+
+| File | Problems |
+|---|---|
+| `scripts/admin/provisionUser.mjs` | no-console ×13, explicit-function-return-type ×2 |
+| `scripts/admin/revokeUserAccess.mjs` | no-console ×10, explicit-function-return-type ×2 |
+| `scripts/i18n-csv.mjs` | explicit-function-return-type ×10, no-console ×3, no-unused-expressions ×4 (warnings) |
+| `scripts/i18n-labels.mjs` | explicit-function-return-type ×4, no-console ×1 |
+| `scripts/i18n-catalog.mjs` | explicit-function-return-type ×1, no-console ×1 |
+| `scripts/i18n-seed.mjs` | explicit-function-return-type ×1, no-console ×1 |
+| `public/sw.js` | explicit-function-return-type ×1 |
+
+These are command-line scripts and the service worker, where printing to the console is the intended output. The fix is an ESLint override for `scripts/**` (allow `console`; the scripts are plain JavaScript files, so drop the return-type rule) plus a return type in `sw.js`, then add the whole repo to the CI lint.
+
+Note: item 13 was the original Phase 2 scope; moved to Phase 3 with your OK (7 Oct). Your Phase 2 list (A–F) doesn't include it, so I've moved it into Phase 3.
 
 ---
 
