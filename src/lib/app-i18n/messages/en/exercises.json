@@ -82,54 +82,12 @@
     "backToDashboard": "Back to Dashboard"
   },
   "defs": {
-    "eye-stretch": {
-      "description": "Let's gently extend how far your eyes can comfortably move — a wider range means fewer stops and starts as you read.",
-      "duration": "About 45 seconds",
-      "posture": "Sit comfortably. Keep your head still — glance gently, then return to center.",
-      "doneTitle": "You're stretched and ready.",
-      "doneLine": "Gently done — your eyes have a little more room now."
-    },
-    "regression-control": {
-      "description": "Let's practice moving steadily forward, without looking back.",
-      "duration": "About 35 seconds",
-      "posture": "Sit comfortably. Follow the lead point forward — there's no need to check back.",
-      "doneTitle": "You kept moving forward.",
-      "doneLine": "No backtracking needed — that forward ease is exactly what we're building."
-    },
-    "reading-speed": {
-      "description": "Let's build a smooth, comfortable reading rhythm.",
-      "duration": "About 35 seconds",
-      "posture": "Sit comfortably. Read each line naturally as it's highlighted — no need to rush.",
-      "doneTitle": "That's a comfortable reading rhythm.",
-      "doneLine": "Smooth and steady — that's exactly the foundation we're building on."
-    },
     "fixation-reduction": {
       "description": "Let's train your eyes to cover the same line in fewer stops.",
       "duration": "About 40 seconds",
       "posture": "Sit comfortably. Follow the highlighted point — let your eyes jump, not drift.",
       "doneTitle": "You're covering more ground per glance.",
       "doneLine": "Fewer stops, same line — that ease will carry into your reading."
-    },
-    "eye-span": {
-      "description": "Let's see how much your eyes can take in at once, without moving them.",
-      "duration": "About 45 seconds",
-      "posture": "Sit comfortably. Keep your eyes on the center dot — let things appear around it.",
-      "doneTitle": "You're noticing more.",
-      "doneLine": "Calm and steady — your glance is widening."
-    },
-    "eye-warm-up": {
-      "description": "Let's loosen up your eyes before we begin — relaxed eye muscles move faster and tire less during reading.",
-      "duration": "About 45 seconds",
-      "posture": "Sit comfortably. Keep your head still — let your eyes do the moving.",
-      "doneTitle": "You're warmed up.",
-      "doneLine": "Nice and easy — your eyes are ready."
-    },
-    "rsvp": {
-      "description": "Let's practice recognizing single words at a fixed point, without moving your eyes.",
-      "duration": "About 45 seconds",
-      "posture": "Sit comfortably. Keep your eyes still — let each word arrive and go without chasing it.",
-      "doneTitle": "You stayed calm and steady.",
-      "doneLine": "That's the skill — recognizing words without anxiety about catching every one."
     }
   },
   "dotMemory": {

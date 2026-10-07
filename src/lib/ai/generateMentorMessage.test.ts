@@ -7,7 +7,7 @@ describe('mentorNoteLang', () => {
   it('Hindi gets the note in Hindi; the other new languages get English until native review', () => {
     expect(mentorNoteLang('hi')).toBe('hi')
     expect(mentorNoteLang('en')).toBe('en')
-    for (const lang of ['kn', 'ta', 'te', 'mr', 'gu'] as const) expect(mentorNoteLang(lang)).toBe('en')
+    for (const lang of ['kn', 'ta', 'te', 'mr', 'gu', 'bn'] as const) expect(mentorNoteLang(lang)).toBe('en')
   })
 })
 

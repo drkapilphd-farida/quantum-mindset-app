@@ -3,7 +3,7 @@
 // script in the picker. `review: 'pending'` = machine-assisted translation
 // waiting for a native speaker (see docs/translations/README.md).
 
-export const APP_LANGS = ['en', 'hi', 'kn', 'ta', 'te', 'mr', 'gu'] as const
+export const APP_LANGS = ['en', 'hi', 'kn', 'ta', 'te', 'mr', 'gu', 'bn'] as const
 
 export type AppLang = (typeof APP_LANGS)[number]
 
@@ -23,6 +23,7 @@ export const LANGUAGES: Record<AppLang, LanguageInfo> = {
   te: { nativeName: 'తెలుగు', englishName: 'Telugu', htmlLang: 'te', review: 'pending' },
   mr: { nativeName: 'मराठी', englishName: 'Marathi', htmlLang: 'mr', review: 'pending' },
   gu: { nativeName: 'ગુજરાતી', englishName: 'Gujarati', htmlLang: 'gu', review: 'pending' },
+  bn: { nativeName: 'বাংলা', englishName: 'Bengali', htmlLang: 'bn', review: 'pending' },
 }
 
 /** Cookie the server reads to render app pages in the chosen language. */

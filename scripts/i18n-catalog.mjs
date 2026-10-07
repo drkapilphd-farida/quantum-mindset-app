@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const ROOT = 'src/lib/app-i18n/messages'
-const LANGS = ['en', 'hi', 'kn', 'ta', 'te', 'mr', 'gu']
+const LANGS = ['en', 'hi', 'kn', 'ta', 'te', 'mr', 'gu', 'bn']
 const namespaces = fs.readdirSync(path.join(ROOT, 'en')).filter((f) => f.endsWith('.json')).map((f) => f.replace(/\.json$/, '')).sort()
 
 for (const lang of LANGS) {

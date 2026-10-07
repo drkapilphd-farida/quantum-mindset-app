@@ -10,6 +10,7 @@ import {
   Noto_Sans_Tamil,
   Noto_Sans_Telugu,
   Noto_Sans_Gujarati,
+  Noto_Sans_Bengali,
 } from 'next/font/google'
 import { Providers } from '@/components/Providers'
 import { Toaster } from '@/components/ui/sonner'
@@ -69,6 +70,7 @@ const notoKannada = Noto_Sans_Kannada({ subsets: ['kannada'], weight: ['400', '6
 const notoTamil = Noto_Sans_Tamil({ subsets: ['tamil'], weight: ['400', '600', '700'], variable: '--font-noto-tamil', display: 'swap', preload: false })
 const notoTelugu = Noto_Sans_Telugu({ subsets: ['telugu'], weight: ['400', '600', '700'], variable: '--font-noto-telugu', display: 'swap', preload: false })
 const notoGujarati = Noto_Sans_Gujarati({ subsets: ['gujarati'], weight: ['400', '600', '700'], variable: '--font-noto-gujarati', display: 'swap', preload: false })
+const notoBengali = Noto_Sans_Bengali({ subsets: ['bengali'], weight: ['400', '600', '700'], variable: '--font-noto-bengali', display: 'swap', preload: false })
 
 const homepageDisplay = Instrument_Serif({
   subsets: ['latin'],
@@ -167,7 +169,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${homepageSans.variable} ${homepageDevanagari.variable} ${homepageDisplay.variable} ${homepageMono.variable} ${notoKannada.variable} ${notoTamil.variable} ${notoTelugu.variable} ${notoGujarati.variable} scroll-smooth`}
+      className={`${geistSans.variable} ${geistMono.variable} ${homepageSans.variable} ${homepageDevanagari.variable} ${homepageDisplay.variable} ${homepageMono.variable} ${notoKannada.variable} ${notoTamil.variable} ${notoTelugu.variable} ${notoGujarati.variable} ${notoBengali.variable} scroll-smooth`}
     >
       <body className="antialiased">
         <LanguageProvider>

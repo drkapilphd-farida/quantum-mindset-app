@@ -103,6 +103,20 @@ import gu_progress from './messages/gu/progress.json'
 import gu_settings from './messages/gu/settings.json'
 import gu_training from './messages/gu/training.json'
 import gu_welcome from './messages/gu/welcome.json'
+import bn_auth from './messages/bn/auth.json'
+import bn_common from './messages/bn/common.json'
+import bn_curriculum from './messages/bn/curriculum.json'
+import bn_curriculumPlan from './messages/bn/curriculumPlan.json'
+import bn_dashboard from './messages/bn/dashboard.json'
+import bn_docWidget from './messages/bn/docWidget.json'
+import bn_enrol from './messages/bn/enrol.json'
+import bn_exercises from './messages/bn/exercises.json'
+import bn_mentor from './messages/bn/mentor.json'
+import bn_nav from './messages/bn/nav.json'
+import bn_progress from './messages/bn/progress.json'
+import bn_settings from './messages/bn/settings.json'
+import bn_training from './messages/bn/training.json'
+import bn_welcome from './messages/bn/welcome.json'
 
 export const NAMESPACES = ["auth","common","curriculum","curriculumPlan","dashboard","docWidget","enrol","exercises","mentor","nav","progress","settings","training","welcome"] as const
 
@@ -238,6 +252,22 @@ export const CATALOG: Record<AppLang, MessageDict> = {
     "settings": gu_settings as MessageDict,
     "training": gu_training as MessageDict,
     "welcome": gu_welcome as MessageDict,
+  },
+  bn: {
+    "auth": bn_auth as MessageDict,
+    "common": bn_common as MessageDict,
+    "curriculum": bn_curriculum as MessageDict,
+    "curriculumPlan": bn_curriculumPlan as MessageDict,
+    "dashboard": bn_dashboard as MessageDict,
+    "docWidget": bn_docWidget as MessageDict,
+    "enrol": bn_enrol as MessageDict,
+    "exercises": bn_exercises as MessageDict,
+    "mentor": bn_mentor as MessageDict,
+    "nav": bn_nav as MessageDict,
+    "progress": bn_progress as MessageDict,
+    "settings": bn_settings as MessageDict,
+    "training": bn_training as MessageDict,
+    "welcome": bn_welcome as MessageDict,
   },
 }
 

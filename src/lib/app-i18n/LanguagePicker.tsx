@@ -44,7 +44,7 @@ export function LanguagePicker({ className = "" }: { className?: string }): Reac
 // Compact switcher for app headers: a native <select>, so it works the same
 // on every phone. Options show each language in its own script.
 // Short label for the compact switcher on phones, in the language's own script.
-const SHORT_LABEL: Record<AppLang, string> = { en: "EN", hi: "हिं", kn: "ಕ", ta: "த", te: "తె", mr: "मर", gu: "ગુ" };
+const SHORT_LABEL: Record<AppLang, string> = { en: "EN", hi: "हिं", kn: "ಕ", ta: "த", te: "తె", mr: "मर", gu: "ગુ", bn: "বা" };
 
 // Compact switcher for app headers. On phones it shows only an icon and a
 // short label (the header has no room for a full language name at 360px);

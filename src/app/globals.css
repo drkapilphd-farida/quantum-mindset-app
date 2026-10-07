@@ -1156,7 +1156,7 @@
    when that script is on the page (see the Noto fonts in app/layout.tsx). */
 :root {
   --font-indic: var(--font-homepage-devanagari, sans-serif), var(--font-noto-kannada, sans-serif), var(--font-noto-tamil, sans-serif),
-    var(--font-noto-telugu, sans-serif), var(--font-noto-gujarati, sans-serif);
+    var(--font-noto-telugu, sans-serif), var(--font-noto-gujarati, sans-serif), var(--font-noto-bengali, sans-serif);
 }
 
 

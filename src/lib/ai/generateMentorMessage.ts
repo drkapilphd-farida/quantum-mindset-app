@@ -39,7 +39,7 @@ function firstName(studentName: string): string {
 }
 
 // Which languages Dr. Kapil's Note is written in. Until native reviewers
-// approve the wording, Kannada, Tamil, Telugu, Marathi and Gujarati
+// approve the wording, Kannada, Tamil, Telugu, Marathi, Gujarati and Bengali
 // learners get the note in English; Hindi gets it in Hindi.
 export function mentorNoteLang(lang: AppLang): AppLang {
   return lang === 'hi' ? 'hi' : 'en'
@@ -55,6 +55,7 @@ const SCRIPT: Record<Exclude<AppLang, 'en'>, RegExp> = {
   ta: /[\u0B80-\u0BFF]/g,
   te: /[\u0C00-\u0C7F]/g,
   gu: /[\u0A80-\u0AFF]/g,
+  bn: /[\u0980-\u09FF]/g,
 }
 
 // The respectful "you" for each language, so the note never sounds curt.
@@ -65,6 +66,7 @@ const RESPECTFUL_YOU: Record<Exclude<AppLang, 'en'>, string> = {
   ta: 'நீங்கள்',
   te: 'మీరు',
   gu: 'તમે',
+  bn: 'আপনি',
 }
 
 /**

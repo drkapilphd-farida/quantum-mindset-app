@@ -1,0 +1,88 @@
+{
+  "eyebrow": "Sharp Brain 30-Day Curriculum",
+  "title": "আপনার দৈনিক রোডম্যাপ",
+  "intro": "4টি পর্বে 30 দিন — ফোকাস ওয়ার্ম-আপ, দৃষ্টি-স্মৃতি ও মনোযোগ, কল্পনা আর পড়ার অনুশীলন একটি সুষম সার্কিটে, পথে পথে আসল WPM ও বোঝার চেকপয়েন্ট সহ।",
+  "metrics": {
+    "brainScore": "Brain Score",
+    "readingGrowth": "পড়ার উন্নতি",
+    "comprehension": "বোঝা",
+    "consistency": "নিয়মিততা",
+    "visualizationDepth": "কল্পনার গভীরতা"
+  },
+  "allDays": "সব 30 দিন",
+  "allDaysHintPro": "আগের দিন সম্পূর্ণ হলে পরের দিন খোলে। তারা-চিহ্নিত দিনগুলি আসল WPM + বোঝার চেকপয়েন্ট।",
+  "allDaysHintFree": "পুরো 30 দিনের পাঠ্যক্রম খুলতে ভর্তি হন। যে দিনগুলি আপনি আগেই সম্পূর্ণ করেছেন সেগুলি খোলা থাকবে। তারা-চিহ্নিত দিনগুলি আসল WPM + বোঝার চেকপয়েন্ট।",
+  "startProgram": "{program} শুরু করুন",
+  "phaseLabel": "পর্ব {phase} · দিন {start}–{end}",
+  "dayShort": "দিন {day}",
+  "dayLockedTitle": "দিন {day} — খুলতে ভর্তি হন",
+  "categories": {
+    "brainGym": "ফোকাস ওয়ার্ম-আপ",
+    "visualFocusMemory": "দৃষ্টি-মনোযোগ ও স্মৃতি",
+    "visualization": "কল্পনা",
+    "readingIntelligence": "Reading Intelligence"
+  },
+  "detail": {
+    "backToAll": "সব 30 দিন",
+    "dayCompleteUnlocked": "দিন {day} সম্পূর্ণ! দিন {next} এখন খোলা।",
+    "phaseDay": "পর্ব {phase} · দিন {day}",
+    "checkpointDay": "চেকপয়েন্ট দিন",
+    "completed": "সম্পূর্ণ",
+    "checkpointRecorded": "চেকপয়েন্ট রেকর্ড হয়েছে",
+    "trueWpm": "True WPM",
+    "comprehension": "বোঝা",
+    "vsBaseline": "আপনার দিন 1-এর শুরুর মাপের তুলনায়",
+    "dayDone": "দিন {day} সম্পূর্ণ — দারুণ কাজ।",
+    "practiceAgain": "আবার অনুশীলন করুন",
+    "uploadStarted": "দিন {day}-এর জন্য অধ্যায় আপলোড শুরু হয়েছে",
+    "uploadStartedHint": "যেখানে থেমেছিলেন সেখান থেকে চালিয়ে যেতে যেকোনো সময় Upload & Learn-এ ফিরে যান।",
+    "uploadToday": "আজকের অধ্যায় আপলোড করুন",
+    "uploadTodayHint": "“{title}”-এর জন্য আসল পড়ার উপকরণ আনুন আর আসল লেখাতেই Sharp Brain অনুশীলন করুন।",
+    "uploadLink": "Upload & Learn →"
+  },
+  "player": {
+    "dayDone": "{title} — সম্পূর্ণ!",
+    "allExercisesDone": "{count}টি অনুশীলনই সম্পূর্ণ। দিন {next} এখন খোলা।",
+    "backToRoadmap": "রোডম্যাপে ফিরে যান",
+    "oneMoreStep": "আর একটি ধাপ",
+    "niceWork": "আজ দারুণ কাজ করেছেন।",
+    "checkpointIntro": "আজ চেকপয়েন্ট দিন — দিন {day} সম্পূর্ণ করতে একটি ছোট WPM ও বোঝার চেক-ইন দিয়ে শেষ করুন।",
+    "startCheckIn": "চেক-ইন শুরু করুন",
+    "stepOf": "ধাপ {step} / {total} · {category}",
+    "skipExercise": "অনুশীলনটি বাদ দিন",
+    "skip": "বাদ দিন",
+    "exitToRoadmap": "রোডম্যাপে বেরিয়ে যান",
+    "skipStep": "এই ধাপটি বাদ দিন",
+    "continueGuided": "এর নিজস্ব গাইডেড ভিউতে চালিয়ে যান",
+    "gatedIntro": "এই অনুশীলনের নিজস্ব গাইডেড প্রবাহ ও অগ্রগতি ট্র্যাকিং আছে — এটি নিজের ভিউতে খুলবে, তারপর আপনাকে সোজা এখানে ফিরিয়ে আনবে।",
+    "dayCompleteEyebrow": "দিন {day} সম্পূর্ণ",
+    "loading": "আজকের সেশন লোড হচ্ছে…"
+  },
+  "phaseComplete": {
+    "title": "পর্ব {phase} সম্পূর্ণ!",
+    "upNext": "এরপর — পর্ব {phase}: {title}।"
+  },
+  "finishPrevious": {
+    "title": "দিন {previous}-এর পরে দিন {day} খুলবে",
+    "body": "30টি দিন একটির পর একটি খোলে। দিন {previous} শেষ করলেই দিন {day} সঙ্গে সঙ্গে খুলবে।",
+    "goTo": "দিন {previous}-এ যান"
+  },
+  "assessment": {
+    "eyebrow": "চেকপয়েন্ট সম্পূর্ণ",
+    "title": "দিন {day}-এর মূল্যায়ন"
+  },
+  "paywall": {
+    "dayTitle": "দিন {day} হলো {program}-এর অংশ",
+    "startTitle": "{program} শুরু করুন",
+    "body": "পাঠ্যক্রমের সব 30 দিন — আসল WPM ও বোঝার চেকপয়েন্ট, আর Dr. Kapil Dev Sharma-র সঙ্গে 7টি লাইভ ক্লাস — ভর্তি হলেই খুলে যাবে। যে দিনগুলি আপনি আগেই সম্পূর্ণ করেছেন সেগুলি খোলা থাকবে।"
+  },
+  "practice": {
+    "complete": "অনুশীলন সম্পূর্ণ",
+    "saved": "অনুশীলন সেভ হয়েছে। দিন {day}-এর আপনার আসল ফলাফল একই থাকবে।",
+    "checkpointIntro": "অনুশীলন চেক-ইন: আজ কেমন করছেন দেখতে আবার পড়ুন ও উত্তর দিন। দিন {day}-এর আপনার অফিশিয়াল ফলাফল বদলাবে না।",
+    "practisedOn": "আবার অনুশীলন · {date}",
+    "times": "{n} বার",
+    "latestResult": "সর্বশেষ: {wpm} WPM · {percent}% বোঝা",
+    "originalKept": "শুধু অনুশীলন — দিন {day}-এর আপনার অফিশিয়াল ফলাফল একই থাকবে।"
+  }
+}

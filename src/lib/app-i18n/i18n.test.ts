@@ -8,9 +8,13 @@ import { practiceContentLang, practiceTextIsFallback, sameContentLang } from './
 import { enrolT } from './enrol'
 
 describe('languages', () => {
-  it('has the 7 app languages, each named in its own script', () => {
-    expect(APP_LANGS).toEqual(['en', 'hi', 'kn', 'ta', 'te', 'mr', 'gu'])
-    expect(APP_LANGS.map((l) => LANGUAGES[l].nativeName)).toEqual(['English', 'हिंदी', 'ಕನ್ನಡ', 'தமிழ்', 'తెలుగు', 'मराठी', 'ગુજરાતી'])
+  it('has the 8 app languages, each named in its own script', () => {
+    expect(APP_LANGS).toEqual(['en', 'hi', 'kn', 'ta', 'te', 'mr', 'gu', 'bn'])
+    expect(APP_LANGS.map((l) => LANGUAGES[l].nativeName)).toEqual(['English', 'हिंदी', 'ಕನ್ನಡ', 'தமிழ்', 'తెలుగు', 'मराठी', 'ગુજરાતી', 'বাংলা'])
+  })
+
+  it('every language but English is marked pending native-speaker review', () => {
+    for (const l of APP_LANGS) expect(LANGUAGES[l].review, l).toBe(l === 'en' ? 'reviewed' : 'pending')
   })
 
   it('defaults from the browser language, else English', () => {
@@ -22,7 +26,7 @@ describe('languages', () => {
 
   it('website pages stay English/Hindi', () => {
     expect(siteLangFor('hi')).toBe('hi')
-    for (const l of ['en', 'kn', 'ta', 'te', 'mr', 'gu'] as const) expect(siteLangFor(l)).toBe('en')
+    for (const l of ['en', 'kn', 'ta', 'te', 'mr', 'gu', 'bn'] as const) expect(siteLangFor(l)).toBe('en')
   })
 
   it('rejects unknown codes', () => {
@@ -63,6 +67,14 @@ describe('fallback', () => {
 
 describe('catalog integrity', () => {
   const placeholders = (s: string): string[] => [...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]!).sort()
+
+  it('every language has its own entry for every learner-facing key (no silent English fallback)', () => {
+    const englishKeys = keyPaths(ENGLISH)
+    for (const lang of APP_LANGS) {
+      const missing = englishKeys.filter((k) => lookup(CATALOG[lang], k) === undefined)
+      expect(missing, `${lang} is missing ${missing.length} entries`).toEqual([])
+    }
+  })
 
   it('no language has keys that English does not have', () => {
     const englishKeys = new Set(keyPaths(ENGLISH))
@@ -142,6 +154,13 @@ describe('practice text language (Part B)', () => {
     expect(practiceTextIsFallback('ta', 'reading')).toBe(true)
     expect(practiceContentLang('en', 'reading')).toBe('en')
     expect(practiceTextIsFallback('en', 'reading')).toBe(false)
+  })
+
+  it('Bengali practice text is English, so Bengali reading results are saved as English reading', () => {
+    for (const kind of ['reading', 'rsvp', 'wordList', 'phraseList', 'readingTest', 'chunkPassages'] as const) {
+      expect(practiceContentLang('bn', kind)).toBe('en')
+      expect(practiceTextIsFallback('bn', kind)).toBe(true)
+    }
   })
 
   it('Hindi gets Hindi where Hindi text exists (Reading Speed Test)', () => {

@@ -18,7 +18,7 @@ import path from 'node:path'
 const MESSAGES = 'src/lib/app-i18n/messages'
 const REVIEW = 'src/lib/app-i18n/review'
 const OUT = 'docs/translations'
-const LANGS = ['hi', 'kn', 'ta', 'te', 'mr', 'gu']
+const LANGS = ['hi', 'kn', 'ta', 'te', 'mr', 'gu', 'bn']
 
 const readJson = (file, fallback) => (fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback)
 

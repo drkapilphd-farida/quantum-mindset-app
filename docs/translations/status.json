@@ -1,43 +1,50 @@
 [
   {
     "lang": "hi",
-    "keys": 1017,
-    "pending": 990,
+    "keys": 1314,
+    "pending": 1287,
     "missing": 0,
     "reviewed": 27
   },
   {
     "lang": "kn",
-    "keys": 1017,
-    "pending": 1017,
+    "keys": 1314,
+    "pending": 1314,
     "missing": 0,
     "reviewed": 0
   },
   {
     "lang": "ta",
-    "keys": 1017,
-    "pending": 1017,
+    "keys": 1314,
+    "pending": 1314,
     "missing": 0,
     "reviewed": 0
   },
   {
     "lang": "te",
-    "keys": 1017,
-    "pending": 1017,
+    "keys": 1314,
+    "pending": 1314,
     "missing": 0,
     "reviewed": 0
   },
   {
     "lang": "mr",
-    "keys": 1017,
-    "pending": 1017,
+    "keys": 1314,
+    "pending": 1314,
     "missing": 0,
     "reviewed": 0
   },
   {
     "lang": "gu",
-    "keys": 1017,
-    "pending": 1017,
+    "keys": 1314,
+    "pending": 1314,
+    "missing": 0,
+    "reviewed": 0
+  },
+  {
+    "lang": "bn",
+    "keys": 1314,
+    "pending": 1314,
     "missing": 0,
     "reviewed": 0
   }

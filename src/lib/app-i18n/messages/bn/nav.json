@@ -1,0 +1,23 @@
+{
+  "dashboard": "ড্যাশবোর্ড",
+  "history": "ইতিহাস",
+  "settings": "সেটিংস",
+  "documentStudio": "ডকুমেন্ট স্টুডিও",
+  "mainNavigation": "প্রধান নেভিগেশন",
+  "openNavigation": "নেভিগেশন খুলুন",
+  "account": "অ্যাকাউন্ট",
+  "openAccountMenu": "অ্যাকাউন্ট মেনু খুলুন",
+  "profileSettings": "প্রোফাইল ও সেটিংস",
+  "subscription": "সাবস্ক্রিপশন",
+  "support": "সহায়তা",
+  "privacy": "গোপনীয়তা নীতি",
+  "terms": "পরিষেবার শর্তাবলী",
+  "refund": "রিফান্ড ও বাতিল নীতি",
+  "signOut": "সাইন আউট",
+  "signingOut": "সাইন আউট হচ্ছে…",
+  "installApp": "অ্যাপ ইনস্টল করুন",
+  "toggleTheme": "থিম বদলান",
+  "lightMode": "লাইট মোডে যান",
+  "darkMode": "ডার্ক মোডে যান",
+  "liveClasses": "লাইভ ক্লাস"
+}
