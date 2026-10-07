@@ -11,13 +11,11 @@ import { estimateSpeechDurationMs } from '../hologramSpeechTiming'
 import { NARRATION_LANGUAGE_TAGS, pickVoiceForLanguage, type NarrationLanguage } from '../hologramVoiceSelection'
 
 const TICK_MS = 100
-// Locked deliberately slow and low — a calm 0.75 rate and a 0.85 pitch
-// are what actually separate a "studio-grade meditation guide" reading
-// from a default text-to-speech voice reading the same words quickly and
-// flatly. Both apply identically to en-IN and hi-IN (see
-// hologramVoiceSelection.ts's own NARRATION_LANGUAGE_TAGS).
+// A calm, slow 0.75 rate at the voice's natural pitch. A lowered pitch (0.85,
+// until Oct 2026) made every device voice sound robotic; the voice itself is
+// chosen by pickVoiceForLanguage (Indian, natural/online voices first).
 const SPEECH_RATE = 0.75
-const SPEECH_PITCH = 0.85
+const SPEECH_PITCH = 1
 // Pause between consecutive lines within a phase, and the longer pause at
 // a phase boundary — both purely pacing/breathing room, independent of
 // however long the actual utterance itself takes to speak.

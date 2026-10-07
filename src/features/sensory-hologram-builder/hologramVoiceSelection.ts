@@ -86,23 +86,38 @@ function isLikelyMaleVoice(voice: VoiceLike): boolean {
 // ranking. Returns null (never throws) when the browser has no voice at
 // all for the requested language — the caller is expected to fall back
 // to a silent, timer-paced session rather than crash.
+// Names that mark the higher-quality neural / natural voices browsers ship
+// (Edge "Online (Natural)", Chrome "Google …", Apple "Enhanced"/"Premium").
+const NATURAL_VOICE_NAME_HINT = /\b(natural|neural|online|enhanced|premium|google)\b/i
+
+// Ranks the device's voices for the narration language: an Indian voice for
+// that language first, then natural/neural voices, then the browser's online
+// voices over installed ones (usually far better on Chrome/Android), and a
+// male voice only as the last tie-breaker. Returns null when no voice speaks
+// the language at all.
 export function pickVoiceForLanguage<T extends VoiceLike>(voices: readonly T[], language: NarrationLanguage): T | null {
   const langPrefix = language === 'hi' ? 'hi' : 'en'
   const exactTag = NARRATION_LANGUAGE_TAGS[language].toLowerCase()
 
-  const exactMatches = voices.filter((voice) => voice.lang.toLowerCase() === exactTag)
-  const prefixMatches = voices.filter((voice) => voice.lang.toLowerCase().startsWith(langPrefix))
-  const candidates = exactMatches.length > 0 ? exactMatches : prefixMatches
-  if (candidates.length === 0) return null
+  const score = (voice: T): number => {
+    const lang = voice.lang.toLowerCase().replace('_', '-')
+    let points = 0
+    if (lang === exactTag) points += 100
+    if (NATURAL_VOICE_NAME_HINT.test(voice.name)) points += 40
+    if (voice.localService === false) points += 20
+    if (isLikelyMaleVoice(voice)) points += 5
+    return points
+  }
 
-  const localMaleMatch = candidates.find((voice) => isLikelyMaleVoice(voice) && voice.localService === true)
-  if (localMaleMatch) return localMaleMatch
-
-  const maleMatch = candidates.find((voice) => isLikelyMaleVoice(voice))
-  if (maleMatch) return maleMatch
-
-  const localMatch = candidates.find((voice) => voice.localService === true)
-  if (localMatch) return localMatch
-
-  return candidates[0]!
+  let best: T | null = null
+  let bestScore = -1
+  for (const voice of voices) {
+    if (!voice.lang.toLowerCase().startsWith(langPrefix)) continue
+    const points = score(voice)
+    if (points > bestScore) {
+      best = voice
+      bestScore = points
+    }
+  }
+  return best
 }

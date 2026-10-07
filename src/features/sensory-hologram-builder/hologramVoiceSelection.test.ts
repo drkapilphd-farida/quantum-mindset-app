@@ -72,22 +72,22 @@ describe('pickVoiceForLanguage', () => {
     expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('DANIEL MALE VOICE')
   })
 
-  it('prefers an on-device (localService) voice over a network one when no gender hint is available', () => {
+  it('prefers the browser\'s online voice over an installed one when no other hint is available (online voices sound more natural)', () => {
     const voices: VoiceLike[] = [
+      { name: 'Local Voice', lang: 'en-IN', localService: true },
       { name: 'Cloud Voice One', lang: 'en-IN', localService: false },
       { name: 'Cloud Voice Two', lang: 'en-IN', localService: false },
-      { name: 'Local Voice', lang: 'en-IN', localService: true },
     ]
-    expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('Local Voice')
+    expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('Cloud Voice One')
   })
 
-  it('prefers a local, name-heuristic male voice above every other tier — the "studio-grade" combination', () => {
+  it('a male voice is only a tie-breaker: an online voice beats an installed male one', () => {
     const voices: VoiceLike[] = [
-      { name: 'Cloud Male Voice', lang: 'en-IN', localService: false },
-      { name: 'Local Female Voice', lang: 'en-IN', localService: true },
       { name: 'Local Male Voice (Male)', lang: 'en-IN', localService: true },
+      { name: 'Local Female Voice', lang: 'en-IN', localService: true },
+      { name: 'Cloud Voice', lang: 'en-IN', localService: false },
     ]
-    expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('Local Male Voice (Male)')
+    expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('Cloud Voice')
   })
 
   it('still prefers a network male voice over a local voice with no gender hint at all', () => {
@@ -101,5 +101,39 @@ describe('pickVoiceForLanguage', () => {
   it('treats a voice with no localService field as equivalent to non-local, never throwing', () => {
     const voices: VoiceLike[] = [{ name: 'Unknown Voice', lang: 'en-IN' }]
     expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('Unknown Voice')
+  })
+})
+
+describe('pickVoiceForLanguage — natural voices first (Phase 2)', () => {
+  it('prefers a natural/online Indian voice over an installed male one', () => {
+    const voices: VoiceLike[] = [
+      { name: 'Microsoft Hemant - Hindi (India)', lang: 'hi-IN', localService: true },
+      { name: 'Google हिन्दी', lang: 'hi-IN', localService: false },
+    ]
+    expect(pickVoiceForLanguage(voices, 'hi')?.name).toBe('Google हिन्दी')
+  })
+
+  it('prefers Edge "Online (Natural)" voices over the installed ones', () => {
+    const voices: VoiceLike[] = [
+      { name: 'Microsoft Ravi - English (India)', lang: 'en-IN', localService: true },
+      { name: 'Microsoft Prabhat Online (Natural) - English (India)', lang: 'en-IN', localService: false },
+    ]
+    expect(pickVoiceForLanguage(voices, 'en')?.name).toContain('Prabhat Online (Natural)')
+  })
+
+  it('an Indian voice still beats a natural voice from another region', () => {
+    const voices: VoiceLike[] = [
+      { name: 'Google US English', lang: 'en-US', localService: false },
+      { name: 'Rishi', lang: 'en-IN', localService: true },
+    ]
+    expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('Rishi')
+  })
+
+  it('reads Android-style tags (en_IN) as Indian', () => {
+    const voices: VoiceLike[] = [
+      { name: 'English United States', lang: 'en_US' },
+      { name: 'English India', lang: 'en_IN' },
+    ]
+    expect(pickVoiceForLanguage(voices, 'en')?.name).toBe('English India')
   })
 })
