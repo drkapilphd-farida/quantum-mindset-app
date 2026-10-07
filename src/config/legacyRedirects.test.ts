@@ -30,4 +30,13 @@ describe('Starter closed to new buyers', () => {
     expect(find('/programs/habit-builder')?.destination).toBe('/programs/sharp-brain')
     expect(find('/programs/habit-builder/:path*')?.destination).toBe('/programs/sharp-brain')
   })
+
+  it('sends the old Eye Foundation pages to their current replacements (Phase 2)', () => {
+    const to = (source: string): string | undefined => LEGACY_REDIRECTS.find((r) => r.source === source)?.destination
+    expect(to('/labs/sharp-brain/eye-warm-up')).toBe('/labs/sharp-brain/calm-breathing')
+    expect(to('/labs/sharp-brain/eye-stretch')).toBe('/labs/sharp-brain/brain-gym')
+    expect(to('/labs/sharp-brain/eye-span')).toBe('/labs/sharp-brain/visual-span')
+    expect(to('/labs/sharp-brain/regression-control')).toBe('/labs/sharp-brain/guided-paragraph-reading-mode')
+    for (const slug of ['reading-speed', 'rsvp', 'preparation']) expect(to(`/labs/sharp-brain/${slug}`)).toBe('/labs/sharp-brain/thirty-day-curriculum')
+  })
 })

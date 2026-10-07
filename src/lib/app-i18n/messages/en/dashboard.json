@@ -7,9 +7,9 @@
     "line": "{greeting}, {name}",
     "fallbackName": "there"
   },
-  "eyeFoundation": {
-    "complete": "Eye Foundation Module complete — keep the momentum going.",
-    "progress": "{percent}% through the Eye Foundation Module."
+  "program": {
+    "complete": "30-day plan complete — use Practice again on any day to keep your skills sharp.",
+    "progress": "Day {day} of {total} · {done} days complete"
   },
   "documentStudio": {
     "eyebrow": "Tier 1 · Utility Hub",

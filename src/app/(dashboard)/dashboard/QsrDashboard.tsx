@@ -3,11 +3,9 @@ import { getAppT } from '@/lib/app-i18n/server'
 import { createClient } from '@/lib/supabase/server'
 import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
-import { getModuleProgress } from '@/lib/exercises/queries/getModuleProgress'
 import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
-import { getContinueLearningSummary } from '@/lib/exercises/continueLearning'
 import { computeDailyStreak, computeTodaysProgress, computeTotalPracticeStats } from '@/lib/exercises/practiceHistory'
-import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFoundationModule'
+import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
 import { computeMemoryScore } from '@/lib/exercises/mindScore'
 import { GreetingHeading } from '@/components/dashboard/GreetingHeading'
 import { AIMentorSection, AIMentorSkeleton } from '@/components/dashboard/AIMentorSection'
@@ -24,9 +22,7 @@ import { ParentFeedbackPrompt } from '@/features/school-dashboard/components/Par
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
 import { programs } from '@/config/site.config'
 
-const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((ex) => ex.exerciseId)
-
-// Mind Score: weighted blend of Reading progress (60%) and streak
+// Mind Score: weighted blend of 30-day plan progress (60%) and streak
 // consistency (40%), capped at 100. Grows as the student practices more
 // and maintains a longer streak. Never fabricated — always from real data.
 function computeMindScore(completionPercent: number, currentStreak: number): number {
@@ -67,8 +63,8 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
     )
   }
 
-  const [labProgress, labSessions, profile, isPaidUser, recentQuantumDocuments, quantumDocumentSessionHistory, fixationSessions] = await Promise.all([
-    getModuleProgress('quantum-speed-reading', EXERCISE_IDS),
+  const [program, labSessions, profile, isPaidUser, recentQuantumDocuments, quantumDocumentSessionHistory, fixationSessions] = await Promise.all([
+    getProgramProgress(),
     getPracticeSessions('quantum-speed-reading'),
     getCurrentUserProfile(user.id),
     getIsPaidUser(user.id),
@@ -78,12 +74,12 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
   ])
 
   // ── Derived data from Learning Journey Engine ────────────────────────────
-  const labSummary = getContinueLearningSummary(labProgress, EYE_FOUNDATION_MODULE)
   const labStreak = computeDailyStreak(labSessions)
   const labToday = computeTodaysProgress(labSessions)
   const labTotals = computeTotalPracticeStats(labSessions)
 
-  const completionPercent = labProgress.totalCount > 0 ? Math.round((labProgress.completedCount / labProgress.totalCount) * 100) : 0
+  // The higher of the 30-day plan and the old Eye Foundation module, so no learner's score drops.
+  const completionPercent = program.scorePercent
 
   // ── New computations (all from real data) ────────────────────────────────
   const mindScore = computeMindScore(completionPercent, labStreak.currentStreak)
@@ -120,7 +116,9 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
       <div className="glass-premium-card glass-premium-lift p-6 sm:p-8">
         <GreetingHeading studentName={studentFirstName} />
         <p className="mt-1 text-sm text-muted-foreground">
-          {labSummary.isComplete ? t('dashboard.eyeFoundation.complete') : t('dashboard.eyeFoundation.progress', { percent: completionPercent })}
+          {program.nextDay === null
+            ? t('dashboard.program.complete')
+            : t('dashboard.program.progress', { day: program.nextDay, done: program.completedDays, total: program.totalDays })}
         </p>
 
         <div className="mt-5">
@@ -129,8 +127,8 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
               studentName={studentName}
               currentStreak={labStreak.currentStreak}
               bestStreak={labStreak.bestStreak}
-              completedCount={labProgress.completedCount}
-              totalCount={labProgress.totalCount}
+              completedCount={program.completedDays}
+              totalCount={program.totalDays}
               todaySessionCount={labToday.exercisesCompletedToday}
               totalCompletedSessions={labTotals.totalCompletedSessions}
             />

@@ -1,18 +1,15 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
-import { getModuleProgress } from '@/lib/exercises/queries/getModuleProgress'
 import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
 import { computeDailyStreak } from '@/lib/exercises/practiceHistory'
 import { computeReadingScore, computeMindScore } from '@/lib/exercises/mindScore'
-import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFoundationModule'
+import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
 import { UnifiedQuantumSessionPreviewClient } from './components/UnifiedQuantumSessionPreviewClient'
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
-
-const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((exercise) => exercise.exerciseId)
 
 // QSR Pro Circuit™ — real, standalone route for the Daily Quantum Session
 // (a deliberately non-colliding sandbox, separate from both the
@@ -41,11 +38,12 @@ export default async function UnifiedQuantumSessionPreviewPage(): Promise<React.
 
   let mindScore = 0
   if (user) {
-    const [labProgress, labSessions] = await Promise.all([
-      getModuleProgress('quantum-speed-reading', EXERCISE_IDS),
+    const [program, labSessions] = await Promise.all([
+      getProgramProgress(),
       getPracticeSessions('quantum-speed-reading'),
     ])
-    const completionPercent = labProgress.totalCount > 0 ? Math.round((labProgress.completedCount / labProgress.totalCount) * 100) : 0
+    // The higher of the 30-day plan and the old Eye Foundation module, so no score drops.
+    const completionPercent = program.scorePercent
     const labStreak = computeDailyStreak(labSessions)
     const readingScore = computeReadingScore(completionPercent, labStreak.currentStreak)
     mindScore = computeMindScore([readingScore])

@@ -121,7 +121,7 @@ Reply with the sentence only — no preamble, no quotation marks, no translation
     const prompt = `Student: ${first}
 Current streak: ${currentStreak} day${currentStreak !== 1 ? 's' : ''}
 Best streak: ${bestStreak} day${bestStreak !== 1 ? 's' : ''}
-Reading exercises completed: ${completedCount} of ${totalCount}
+30-day plan days completed: ${completedCount} of ${totalCount}
 Sessions today: ${todaySessionCount}
 Total sessions ever: ${totalCompletedSessions}`
 

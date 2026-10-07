@@ -58,6 +58,21 @@ export const LEGACY_REDIRECTS: Redirect[] = [
     destination: '/labs/sharp-brain/brain-gym',
     statusCode: 301 as const,
   })),
+  // The old Eye Foundation module ("Reading Preparation") removed in Phase 2
+  // (Oct 2026): each page goes to its current replacement.
+  ...[
+    ['eye-warm-up', 'calm-breathing'],
+    ['eye-stretch', 'brain-gym'],
+    ['eye-span', 'visual-span'],
+    ['regression-control', 'guided-paragraph-reading-mode'],
+    ['reading-speed', 'thirty-day-curriculum'],
+    ['rsvp', 'thirty-day-curriculum'],
+    ['preparation', 'thirty-day-curriculum'],
+  ].map(([oldSlug, newSlug]) => ({
+    source: `/labs/sharp-brain/${oldSlug}`,
+    destination: `/labs/sharp-brain/${newSlug}`,
+    statusCode: 301 as const,
+  })),
   // App: everything else under the old base
   { source: '/labs/quantum-speed-reading', destination: '/labs/sharp-brain', statusCode: 301 },
   { source: '/labs/quantum-speed-reading/:path*', destination: '/labs/sharp-brain/:path*', statusCode: 301 },

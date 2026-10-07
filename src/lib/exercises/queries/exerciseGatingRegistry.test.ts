@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { findGatingSequence } from './exerciseGatingRegistry'
 import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readingExpansionModule'
-import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFoundationModule'
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
 
 describe('findGatingSequence', () => {
@@ -11,9 +10,9 @@ describe('findGatingSequence', () => {
     }
   })
 
-  it('resolves every EYE_FOUNDATION_MODULE member to that same sequence', () => {
-    for (const item of EYE_FOUNDATION_MODULE) {
-      expect(findGatingSequence('quantum-speed-reading', item.exerciseId)).toBe(EYE_FOUNDATION_MODULE)
+  it('the removed Eye Foundation drills gate nothing any more (Oct 2026)', () => {
+    for (const id of ['eye-warm-up', 'eye-stretch', 'eye-span', 'regression-control', 'reading-speed', 'rsvp']) {
+      expect(findGatingSequence('quantum-speed-reading', id)).toBeNull()
     }
   })
 

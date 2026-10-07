@@ -1,7 +1,6 @@
 import type { LabId } from '../types'
 import type { ExerciseSequenceItem } from '../sequence'
 import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readingExpansionModule'
-import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFoundationModule'
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
 
 // Single source of truth for "which gated sequence, if any, governs this
@@ -15,7 +14,7 @@ import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIn
 // An exercise absent from every sequence here has "no lock sequence of its
 // own yet" and stays unconditionally allowed, exactly as before.
 const GATED_SEQUENCES: Record<LabId, readonly (readonly ExerciseSequenceItem[])[]> = {
-  'quantum-speed-reading': [READING_EXPANSION_MODULE, EYE_FOUNDATION_MODULE, FLASH_INTELLIGENCE_MODULE],
+  'quantum-speed-reading': [READING_EXPANSION_MODULE, FLASH_INTELLIGENCE_MODULE],
   'memory-intelligence': [],
   'focus-intelligence': [],
   'visual-intelligence': [],

@@ -7,9 +7,9 @@
     "line": "{greeting}, {name}",
     "fallbackName": "நண்பரே"
   },
-  "eyeFoundation": {
-    "complete": "Eye Foundation பகுதி முடிந்தது — இதே வேகத்தைத் தொடருங்கள்.",
-    "progress": "Eye Foundation பகுதியில் {percent}% முடிந்தது."
+  "program": {
+    "complete": "30 நாள் திட்டம் முடிந்தது — உங்கள் திறன்களைக் கூர்மையாக வைத்திருக்க எந்த நாளையும் மீண்டும் பயிற்சி செய்யுங்கள்.",
+    "progress": "{total} நாட்களில் நாள் {day} · {done} நாட்கள் முடிந்தன"
   },
   "documentStudio": {
     "eyebrow": "நிலை 1 · பயன்பாட்டு மையம்",

@@ -7,9 +7,9 @@
     "line": "{greeting}, {name}",
     "fallbackName": "मित्रा"
   },
-  "eyeFoundation": {
-    "complete": "Eye Foundation मॉड्यूल पूर्ण — हाच वेग चालू ठेवा.",
-    "progress": "Eye Foundation मॉड्यूलचे {percent}% पूर्ण."
+  "program": {
+    "complete": "30 दिवसांचा प्लॅन पूर्ण — तुमची कौशल्ये धारदार ठेवण्यासाठी कोणत्याही दिवसाचा पुन्हा सराव करा.",
+    "progress": "{total} पैकी दिवस {day} · {done} दिवस पूर्ण"
   },
   "documentStudio": {
     "eyebrow": "स्तर 1 · उपयुक्त केंद्र",

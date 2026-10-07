@@ -32,9 +32,9 @@ function fallbackInsights(input: MindScoreInsightsInput): string[] {
   if (completedCount > 0) {
     const remaining = totalCount - completedCount
     if (remaining > 0) {
-      insights.push(`Reading Intelligence: ${readingScore}/100. ${remaining} exercise${remaining !== 1 ? 's' : ''} remain in the Eye Foundation Module — completing them will raise your score.`)
+      insights.push(`Reading Intelligence: ${readingScore}/100. ${remaining} day${remaining !== 1 ? 's' : ''} left in your 30-day plan — each one raises your score.`)
     } else {
-      insights.push(`Reading Intelligence: ${readingScore}/100. Eye Foundation Module complete — maintain your streak to keep the score growing.`)
+      insights.push(`Reading Intelligence: ${readingScore}/100. All 30 days complete — keep your streak going to keep the score growing.`)
     }
   }
 
@@ -82,7 +82,7 @@ Generate exactly 3 concise, specific intelligence insights for ${first}.
 Data:
 - Mind Score: ${mindScore}/1000
 - Reading Intelligence: ${readingScore}/100
-- Exercises completed: ${completedCount}/${totalCount}
+- 30-day plan days completed: ${completedCount}/${totalCount}
 - Streak: ${currentStreak} days
 - Weekly trend: ${weeklyTrend !== null ? `${weeklyTrend > 0 ? '+' : ''}${weeklyTrend}% vs prior period` : 'insufficient data'}
 - Journey status: ${journeyStatus}

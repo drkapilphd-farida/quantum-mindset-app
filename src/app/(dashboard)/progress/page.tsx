@@ -2,9 +2,7 @@ import { Suspense } from 'react'
 import { getAppT } from '@/lib/app-i18n/server'
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
-import { getModuleProgress } from '@/lib/exercises/queries/getModuleProgress'
 import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
-import { getContinueLearningSummary } from '@/lib/exercises/continueLearning'
 import {
   computeDailyStreak,
   computeWeeklyActivity,
@@ -29,7 +27,8 @@ import { getReadingIntelligenceSessions } from '@/features/quantum-speed-reading
 import { computeReadingProfile } from '@/features/quantum-speed-reading/adaptive-intelligence/readingProfileEngine'
 import { getFixationSessions } from '@/features/visual-intelligence/fixation/queries/getFixationSessions'
 import { computeFocusScore, getHighestDifficultyRatio } from '@/features/visual-intelligence/fixation/focusScore'
-import { EYE_FOUNDATION_MODULE } from '@/features/quantum-speed-reading/eyeFoundationModule'
+import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
+import { dayTitle } from '@/lib/app-i18n/curriculumText'
 import { MindScoreHeroCard } from '@/components/mindScore/MindScoreHeroCard'
 import { DimensionScoreGrid } from '@/components/mindScore/DimensionScoreGrid'
 import { GrowthTrendChart } from '@/components/mindScore/GrowthTrendChart'
@@ -46,7 +45,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-const EXERCISE_IDS = EYE_FOUNDATION_MODULE.map((ex) => ex.exerciseId)
 
 // Derives an overall growth classification for the Weekly Intelligence Report.
 function toOverallGrowth(
@@ -74,8 +72,8 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return <div />
 
-  const [labProgress, labSessions, profile, readingSessions, fixationSessions] = await Promise.all([
-    getModuleProgress('quantum-speed-reading', EXERCISE_IDS),
+  const [program, labSessions, profile, readingSessions, fixationSessions] = await Promise.all([
+    getProgramProgress(),
     getPracticeSessions('quantum-speed-reading'),
     getCurrentUserProfile(user.id),
     getReadingIntelligenceSessions(),
@@ -83,19 +81,15 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
   ])
 
   // ── Core practice data ──────────────────────────────────────────────────
-  const labSummary = getContinueLearningSummary(labProgress, EYE_FOUNDATION_MODULE)
+  // Today's recommendation is the next day of the 30-day plan.
+  const nextDayTitle = program.nextDay === null ? null : `${t('curriculum.dayShort', { day: program.nextDay })} · ${dayTitle(t, program.nextDay)}`
   const labStreak = computeDailyStreak(labSessions)
   const labWeek = computeWeeklyActivity(labSessions)
   const labTotals = computeTotalPracticeStats(labSessions)
 
-  // Eye Foundation Module completion+streak score — a genuinely different
-  // real signal from the Adaptive Reading Intelligence WPM/comprehension
-  // scores below (separate feature, separate table). Kept under its
-  // original name/shape since MindScoreHeroCard's ring and the AI
-  // Insights copy ("X exercises remain in the Eye Foundation Module")
-  // are written specifically about this number — swapping in the WPM
-  // score here would make that copy factually wrong.
-  const completionPercent = labProgress.totalCount > 0 ? Math.round((labProgress.completedCount / labProgress.totalCount) * 100) : 0
+  // 30-day plan completion + streak score. Uses the higher of the plan and the
+  // old Eye Foundation module (removed Oct 2026), so no learner's score drops.
+  const completionPercent = program.scorePercent
   const readingScore = computeReadingScore(completionPercent, labStreak.currentStreak)
 
   // ── Reading Speed + Comprehension Accuracy — real Adaptive Reading
@@ -130,12 +124,12 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
 
   // ── Mind Score™ computation ───────────────────────────────────────────────
   const weeklyTrend = computeWeeklyTrend(labWeek)
-  const journeyStatus = computeJourneyStatus(labStreak.currentStreak, labProgress.completedCount, weeklyTrend)
+  const journeyStatus = computeJourneyStatus(labStreak.currentStreak, program.activityCount, weeklyTrend)
   const journeyMeta = buildJourneyStatusMeta(
     labStreak.currentStreak,
     labStreak.bestStreak,
     labWeek.filter((d) => d.sessionCount > 0).length,
-    labProgress.completedCount,
+    program.activityCount,
     weeklyTrend,
   )
 
@@ -144,12 +138,12 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
   const consistencyScore = computeConsistencyMomentumScore(
     journeyMeta.consistencyPercent,
     journeyMeta.momentumPercent,
-    labProgress.completedCount > 0,
+    program.activityCount > 0,
   )
   const neuralRetrainingIndex = computeNeuralRetrainingIndex(readingSpeedScore, comprehensionScore, consistencyScore)
 
   // Overall Mind Score™ averages every ACTIVE (non-null) dimension
-  // computable server-side, including the original Eye Foundation Module
+  // computable server-side, including the 30-day plan
   // readingScore. QSR/Holographic Recall is deliberately excluded here —
   // its one real signal lives in localStorage (see DimensionScoreGrid.tsx),
   // not reachable from this server component — and Neural Retraining
@@ -224,10 +218,10 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
           wpmGrowth={wpmGrowth}
         />
         <TodaysRecommendationCard
-          exerciseTitle={labSummary.currentExercise?.title ?? null}
-          exerciseHref={labSummary.currentExercise?.href ?? null}
-          actionLabel={labSummary.actionLabel}
-          isComplete={labSummary.isComplete}
+          exerciseTitle={nextDayTitle}
+          exerciseHref={nextDayTitle === null ? null : '/labs/sharp-brain/thirty-day-curriculum'}
+          actionLabel={nextDayTitle === null ? 'Review' : `${program.completedDays === 0 ? 'Start' : 'Continue'}: ${nextDayTitle}`}
+          isComplete={program.nextDay === null}
         />
       </div>
 
@@ -239,8 +233,8 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
           readingScore={readingScore}
           weeklyTrend={weeklyTrend}
           currentStreak={labStreak.currentStreak}
-          completedCount={labProgress.completedCount}
-          totalCount={labProgress.totalCount}
+          completedCount={program.completedDays}
+          totalCount={program.totalDays}
           journeyStatus={journeyStatus}
         />
       </Suspense>
@@ -252,15 +246,15 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
       <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
         <WeeklyIntelligenceReport
           dimensions={weeklyDimensions}
-          overallGrowth={toOverallGrowth(weeklyTrend, labStreak.currentStreak, labProgress.completedCount)}
+          overallGrowth={toOverallGrowth(weeklyTrend, labStreak.currentStreak, program.activityCount)}
         />
         <MindJourneyCard
           {...journeyMeta}
           currentStreak={labStreak.currentStreak}
           bestStreak={labStreak.bestStreak}
           totalSessions={labTotals.totalCompletedSessions}
-          completedCount={labProgress.completedCount}
-          totalCount={labProgress.totalCount}
+          completedCount={program.completedDays}
+          totalCount={program.totalDays}
         />
       </div>
     </div>
