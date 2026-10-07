@@ -21,6 +21,10 @@ import { useImmersiveExerciseLock } from '@/hooks/exercises/useImmersiveExercise
 import { PalaceRecallStep } from '@/features/memory-palace/components/PalaceRecallStep'
 import { getPendingPalace, type PendingPalace } from '@/features/memory-palace/actions/palaceActions'
 import { clearTodayPalace, loadTodayPalace, type TodayPalace } from '@/features/memory-palace/todayPalace'
+import { FairReadingTest } from '@/features/fair-reading-test/components/FairReadingTest'
+import { getFairResults } from '@/features/fair-reading-test/actions'
+import { needsOneTimeBaseline } from '@/features/fair-reading-test/fairTest'
+import { baselinePrompt, loadPostponedOn, postponeBaseline, type BaselinePrompt } from '@/features/fair-reading-test/oneTimeBaseline'
 
 const CARD_CLASS_NAME = 'relative overflow-hidden rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
 
@@ -79,6 +83,9 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   // (whatever the day), and today's palace after the day's last step.
   const [pendingPalace, setPendingPalace] = useState<PendingPalace | null>(null)
   const [sameDayPalace, setSameDayPalace] = useState<TodayPalace | null>(null)
+  // Phase 3: learners who began before the fair reading test take a one-time
+  // fair baseline at the start of their next day (one "Tomorrow" allowed).
+  const [fairBaseline, setFairBaseline] = useState<BaselinePrompt>('hidden')
 
   // True Full-Screen Viewport Lock™ — only while 'playing' (the fixed
   // inset-0 mode below); 'celebrating'/'ready-for-checkpoint' render as
@@ -103,9 +110,14 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       void getPendingPalace()
         .catch(() => null)
         .then((p) => setPendingPalace(p))
+      if (!isReplay && day > 1) {
+        void getFairResults()
+          .then((results) => (needsOneTimeBaseline([1], results) ? setFairBaseline(baselinePrompt(loadPostponedOn())) : undefined))
+          .catch(() => undefined)
+      }
     }
     setMode('playing')
-  }, [day, queueIds.length])
+  }, [day, isReplay, queueIds.length])
 
   // See this component's own doc comment — makes even an embedded
   // exercise's own internal Exit/Escape affordance land back on this
@@ -165,6 +177,25 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
 
   if (stepIndex === null) {
     return <div className={`${CARD_CLASS_NAME} flex min-h-[40vh] items-center justify-center p-6 text-sm text-muted-foreground`}>{t('curriculum.player.loading')}</div>
+  }
+
+  if (fairBaseline !== 'hidden') {
+    return (
+      <div className="fixed inset-0 z-50 overflow-y-auto bg-background" data-day-master-player={day} data-fair-baseline="one-time">
+        <FairReadingTest
+          day={null}
+          onComplete={() => setFairBaseline('hidden')}
+          {...(fairBaseline === 'offer-with-tomorrow'
+            ? {
+                onPostpone: () => {
+                  postponeBaseline()
+                  setFairBaseline('hidden')
+                },
+              }
+            : {})}
+        />
+      </div>
+    )
   }
 
   if (pendingPalace !== null || sameDayPalace !== null) {

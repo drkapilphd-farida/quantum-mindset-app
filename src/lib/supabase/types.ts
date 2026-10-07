@@ -2339,6 +2339,57 @@ export type Database = {
         }
         Relationships: []
       }
+      reading_tests: {
+        Row: {
+          answers: Json
+          comprehension_percent: number
+          created_at: string
+          curriculum_day: number | null
+          effective_wpm: number
+          elapsed_ms: number
+          form_id: string
+          id: string
+          kind: string
+          lang: string
+          status: string
+          user_id: string
+          wpm: number
+          word_count: number
+        }
+        Insert: {
+          answers?: Json
+          comprehension_percent: number
+          created_at?: string
+          curriculum_day?: number | null
+          effective_wpm: number
+          elapsed_ms: number
+          form_id: string
+          id?: string
+          kind: string
+          lang: string
+          status: string
+          user_id: string
+          wpm: number
+          word_count: number
+        }
+        Update: {
+          answers?: Json
+          comprehension_percent?: number
+          created_at?: string
+          curriculum_day?: number | null
+          effective_wpm?: number
+          elapsed_ms?: number
+          form_id?: string
+          id?: string
+          kind?: string
+          lang?: string
+          status?: string
+          user_id?: string
+          wpm?: number
+          word_count?: number
+        }
+        Relationships: []
+      }
       role_permissions: {
         Row: {
           permission_id: string

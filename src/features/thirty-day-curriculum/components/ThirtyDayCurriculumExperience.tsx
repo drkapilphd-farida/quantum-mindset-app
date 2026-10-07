@@ -6,6 +6,8 @@ import { practiceContentLang, sameContentLang } from '@/lib/app-i18n/practiceCon
 import { useUiLang } from '@/lib/app-i18n/client'
 import { useSearchParams } from 'next/navigation'
 import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
+import { FairReadingTest } from '@/features/fair-reading-test/components/FairReadingTest'
+import type { FairResult } from '@/features/fair-reading-test/fairTest'
 import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
 import { MasterclassPaywallModal } from './MasterclassPaywallModal'
 import { FinishPreviousDayModal } from './FinishPreviousDayModal'
@@ -172,7 +174,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // `completedDays` becomes this component's gate state immediately,
   // with no round-trip gap before the learner can move on.
   async function handleAssessmentComplete(measured: CurriculumCheckpointResult): Promise<void> {
-    const result: CurriculumCheckpointResult = { ...measured, contentLang }
+    const result: CurriculumCheckpointResult = { contentLang, ...measured }
     if (practiceAssessment) {
       // Practice only: the original checkpoint (Day 1 baseline, official
       // Day 30 result) is never replaced — locally or on the server.
@@ -193,6 +195,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
       rawWpm: result.rawWpm,
       trueWpm: result.trueWpm,
       comprehensionAccuracyPercent: result.comprehensionAccuracyPercent,
+      ...(result.contentLang === 'en' || result.contentLang === 'hi' ? { contentLang: result.contentLang } : {}),
     })
     if (outcome.ok) {
       setServerCompletedDays(outcome.completedDays)
@@ -200,6 +203,30 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     setProgress(loadCurriculumProgress())
     setRefreshKey((key) => key + 1)
     setView('day-detail')
+  }
+
+  // Phase 3: the official check-in (Days 1, 7, 14, 21, 30) is the fair
+  // reading test — a matched passage read at the learner's own pace.
+  // Practice replays keep the earlier flashed-word check-in.
+  function handleFairTestComplete(fair: FairResult): void {
+    void handleAssessmentComplete({
+      day: selectedDay ?? fair.day ?? 1,
+      rawWpm: fair.wpm,
+      trueWpm: fair.effectiveWpm,
+      comprehensionAccuracyPercent: fair.comprehensionPercent,
+      completedAt: fair.createdAt,
+      contentLang: fair.lang,
+    })
+  }
+
+  const fairDay = selectedDay === 1 || selectedDay === 7 || selectedDay === 14 || selectedDay === 21 || selectedDay === 30 ? selectedDay : null
+  if (view === 'assessment' && fairDay !== null && !practiceAssessment) {
+    return (
+      <>
+        <FairReadingTest day={fairDay} onComplete={handleFairTestComplete} />
+        {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
+      </>
+    )
   }
 
   if (view === 'assessment' && selectedDay !== null) {

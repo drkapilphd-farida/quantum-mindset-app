@@ -11,6 +11,8 @@ export type CompleteCurriculumDayInput = {
   rawWpm?: number
   trueWpm?: number
   comprehensionAccuracyPercent?: number
+  /** Language of the passage the checkpoint was read in (fair reading test: 'en' or 'hi'). Defaults to the practice-text language. */
+  contentLang?: 'en' | 'hi'
 }
 
 export type CompleteCurriculumDayResult =
@@ -82,7 +84,7 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
     const { error: writeError } = await supabase.from('curriculum_day_completions').insert({
       user_id: user.id,
       day: input.day,
-      content_lang: await getPracticeContentLang('reading'),
+      content_lang: input.contentLang === 'en' || input.contentLang === 'hi' ? input.contentLang : await getPracticeContentLang('reading'),
       raw_wpm: input.rawWpm ?? null,
       true_wpm: input.trueWpm ?? null,
       comprehension_accuracy_percent: input.comprehensionAccuracyPercent ?? null,
