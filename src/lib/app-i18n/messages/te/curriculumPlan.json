@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "బహు-ఇంద్రియ ఊహ మొదలు",
-      "focus": "Sensory Imagery Builder లో స్పష్టమైన, బహు-ఇంద్రియ మనో చిత్రాల ప్రాక్టీస్ చేయండి."
+      "focus": "మీ మెమరీ ప్యాలెస్‌ను మరింత స్పష్టంగా చేయండి: చూపు, శబ్దం, స్పర్శతో ప్రతి వస్తువును దాని చోటులో స్థిరపరచండి."
     },
     "d16": {
       "title": "ప్రశాంతత & స్థిరమైన ఫోకస్",
@@ -156,7 +156,6 @@
     "image-flash-grid": "ఇమేజ్ ఫ్లాష్ గ్రిడ్",
     "quantum-mental-rotation": "మెంటల్ ఆబ్జెక్ట్ రొటేషన్",
     "color-scene-transformation": "రంగు & దృశ్య మార్పు",
-    "sensory-hologram-builder": "సెన్సరీ ఇమేజరీ బిల్డర్",
     "calm-breathing": "ప్రశాంత శ్వాస",
     "dynamic-chunk-sliding": "డైనమిక్ చంక్ స్లైడింగ్",
     "vertical-chunk-sliding": "వర్టికల్ చంక్ స్లైడింగ్",
@@ -179,6 +178,7 @@
     "symbol-flash": "సింబల్ ఫ్లాష్",
     "mixed-flash": "మిక్స్‌డ్ ఫ్లాష్",
     "peripheral-flash": "పెరిఫెరల్ ఫ్లాష్",
-    "progressive-chunk-reading": "ప్రోగ్రెసివ్ చంక్ రీడింగ్"
+    "progressive-chunk-reading": "ప్రోగ్రెసివ్ చంక్ రీడింగ్",
+    "memory-palace": "మెమరీ ప్యాలెస్"
   }
 }

@@ -36,15 +36,6 @@ export const VISUALIZATION_HUB_MODES: readonly VisualizationHubMode[] = [
     storageKey: 'qsr-color-scene-transformation-best',
   },
   {
-    id: 'sensory-hologram-builder',
-    title: 'Sensory Imagery Builder',
-    purpose: 'A guided, bilingual voice-narrated journey through sight, touch, and scent — building a vivid mental image of a life goal you choose.',
-    status: 'available',
-    href: '/labs/sharp-brain/sensory-hologram-builder',
-    exerciseId: 'sensory-hologram-builder',
-    storageKey: 'qsr-sensory-hologram-builder-best',
-  },
-  {
     id: 'fluid-energy-balancer',
     title: 'Calm Breath Balance',
     purpose: 'Keep two drifting elements — Earth & Gold, Air & Water — in balance as they fluctuate: 5 rounds of steadily tightening focus.',

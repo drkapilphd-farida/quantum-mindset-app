@@ -93,12 +93,8 @@ const VISUALIZATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
     href: '/labs/sharp-brain/color-scene-transformation',
     category: 'visualization',
   },
-  {
-    id: 'sensory-hologram-builder',
-    title: 'Sensory Imagery Builder',
-    href: '/labs/sharp-brain/sensory-hologram-builder',
-    category: 'visualization',
-  },
+  // Memory Palace replaced the Sensory Imagery Builder (Phase 2, Oct 2026).
+  { id: 'memory-palace', title: 'Memory Palace', href: '/labs/sharp-brain/memory-palace', category: 'visualization' },
   // Real guided breathing; replaced the "Calm Breath Balance" game (fluid-energy-balancer).
   { id: 'calm-breathing', title: 'Calm Breathing', href: '/labs/sharp-brain/calm-breathing', category: 'visualization' },
 ]

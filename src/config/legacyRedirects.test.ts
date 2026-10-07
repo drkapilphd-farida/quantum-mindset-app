@@ -39,4 +39,8 @@ describe('Starter closed to new buyers', () => {
     expect(to('/labs/sharp-brain/regression-control')).toBe('/labs/sharp-brain/guided-paragraph-reading-mode')
     for (const slug of ['reading-speed', 'rsvp', 'preparation']) expect(to(`/labs/sharp-brain/${slug}`)).toBe('/labs/sharp-brain/thirty-day-curriculum')
   })
+
+  it('sends the old Sensory Imagery Builder page to Memory Palace (Deploy 5)', () => {
+    expect(LEGACY_REDIRECTS.find((r) => r.source === '/labs/sharp-brain/sensory-hologram-builder')).toMatchObject({ destination: '/labs/sharp-brain/memory-palace', statusCode: 301 })
+  })
 })

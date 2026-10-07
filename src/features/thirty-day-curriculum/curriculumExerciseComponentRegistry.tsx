@@ -79,10 +79,7 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
     () => import('@/features/color-scene-transformation/components/ColorSceneTransformationExperience'),
     'ColorSceneTransformationExperience',
   ),
-  'sensory-hologram-builder': lazyNamed(
-    () => import('@/features/sensory-hologram-builder/components/SensoryHologramBuilderExperience'),
-    'SensoryHologramBuilderExperience',
-  ),
+  'memory-palace': lazyNamed(() => import('@/features/memory-palace/components/MemoryPalaceExperience'), 'MemoryPalaceExperience'),
   'calm-breathing': lazyNamed(() => import('@/features/calm-breathing/components/CalmBreathingExperience'), 'CalmBreathingExperience'),
 
   // Reading Hub

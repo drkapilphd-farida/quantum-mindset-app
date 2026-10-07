@@ -18,6 +18,9 @@ import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
 import { CurriculumDayProvider, EmbeddedExerciseProvider } from '../embeddedExerciseContext'
 import { EyeRelaxationBreak } from './EyeRelaxationBreak'
 import { useImmersiveExerciseLock } from '@/hooks/exercises/useImmersiveExerciseLock'
+import { PalaceRecallStep } from '@/features/memory-palace/components/PalaceRecallStep'
+import { getPendingPalace, type PendingPalace } from '@/features/memory-palace/actions/palaceActions'
+import { clearTodayPalace, loadTodayPalace, type TodayPalace } from '@/features/memory-palace/todayPalace'
 
 const CARD_CLASS_NAME = 'relative overflow-hidden rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
 
@@ -72,6 +75,10 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   const [mode, setMode] = useState<WizardMode>('playing')
   // The optional eye break is offered once before each reading step.
   const [eyeBreakDoneFor, setEyeBreakDoneFor] = useState<number | null>(null)
+  // Memory Palace: yesterday's palace is recalled before the day's first step
+  // (whatever the day), and today's palace after the day's last step.
+  const [pendingPalace, setPendingPalace] = useState<PendingPalace | null>(null)
+  const [sameDayPalace, setSameDayPalace] = useState<TodayPalace | null>(null)
 
   // True Full-Screen Viewport Lock™ — only while 'playing' (the fixed
   // inset-0 mode below); 'celebrating'/'ready-for-checkpoint' render as
@@ -93,6 +100,9 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       setStepIndex(resumeAt)
     } else {
       setStepIndex(0)
+      void getPendingPalace()
+        .catch(() => null)
+        .then((p) => setPendingPalace(p))
     }
     setMode('playing')
   }, [day, queueIds.length])
@@ -134,7 +144,9 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       if (current === null) return current
       const nextIndex = current + 1
       if (nextIndex >= queueIds.length) {
-        finishDay()
+        const todayPalace = queueIds.includes('memory-palace') ? loadTodayPalace(day) : null
+        if (todayPalace !== null) setSameDayPalace(todayPalace)
+        else finishDay()
         return current
       }
       return nextIndex
@@ -153,6 +165,32 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
 
   if (stepIndex === null) {
     return <div className={`${CARD_CLASS_NAME} flex min-h-[40vh] items-center justify-center p-6 text-sm text-muted-foreground`}>{t('curriculum.player.loading')}</div>
+  }
+
+  if (pendingPalace !== null || sameDayPalace !== null) {
+    return (
+      <div className="fixed inset-0 z-50 overflow-y-auto bg-background" data-day-master-player={day} data-palace-step={pendingPalace !== null ? 'next-day' : 'same-day'}>
+        {pendingPalace !== null ? (
+          <PalaceRecallStep
+            palace={pendingPalace}
+            phase="next-day"
+            delay={{ label: pendingPalace.label, days: pendingPalace.days, hoursSince: pendingPalace.hoursSince }}
+            onDone={() => setPendingPalace(null)}
+            onNotNow={() => setPendingPalace(null)}
+          />
+        ) : (
+          <PalaceRecallStep
+            palace={sameDayPalace!}
+            phase="same-day"
+            onDone={() => {
+              clearTodayPalace()
+              setSameDayPalace(null)
+              finishDay()
+            }}
+          />
+        )}
+      </div>
+    )
   }
 
   if (mode === 'celebrating') {

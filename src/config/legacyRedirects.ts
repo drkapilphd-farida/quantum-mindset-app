@@ -68,6 +68,8 @@ export const LEGACY_REDIRECTS: Redirect[] = [
     ['reading-speed', 'thirty-day-curriculum'],
     ['rsvp', 'thirty-day-curriculum'],
     ['preparation', 'thirty-day-curriculum'],
+    // Sensory Imagery Builder became Memory Palace (Phase 2, Deploy 5).
+    ['sensory-hologram-builder', 'memory-palace'],
   ].map(([oldSlug, newSlug]) => ({
     source: `/labs/sharp-brain/${oldSlug}`,
     destination: `/labs/sharp-brain/${newSlug}`,

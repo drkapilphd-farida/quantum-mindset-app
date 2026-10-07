@@ -130,14 +130,14 @@ describe('buildCurriculumDayPlan', () => {
     expect(buildCurriculumDayPlan(15)).toEqual(buildCurriculumDayPlan(15))
   })
 
-  it('Phase 3 (days 15-21) includes Sensory Imagery Builder and Calm Breathing in its visualization rotation', () => {
+  it('Phase 3 (days 15-21) includes Memory Palace and Calm Breathing in its visualization rotation', () => {
     const phase3VisualizationIds = new Set<string>()
     for (let day = 15; day <= 21; day++) {
       for (const exercise of buildCurriculumDayPlan(day).exercises.visualization) {
         phase3VisualizationIds.add(exercise.id)
       }
     }
-    expect(phase3VisualizationIds.has('sensory-hologram-builder')).toBe(true)
+    expect(phase3VisualizationIds.has('memory-palace')).toBe(true)
     expect(phase3VisualizationIds.has('calm-breathing')).toBe(true)
   })
 
@@ -199,5 +199,15 @@ describe('buildFullCurriculum', () => {
     const fullCurriculum = buildFullCurriculum()
     expect(fullCurriculum).toHaveLength(30)
     expect(fullCurriculum.map((plan) => plan.day)).toEqual(Array.from({ length: 30 }, (_, i) => i + 1))
+  })
+
+  it('Memory Palace replaced Sensory Imagery Builder on exactly Days 3, 7, 11, 15, 19, 23 and 27', () => {
+    const days: number[] = []
+    for (let day = 1; day <= 30; day++) {
+      const ids = Object.values(buildCurriculumDayPlan(day).exercises).flat().map((e) => e.id)
+      expect(ids, `day ${day}`).not.toContain('sensory-hologram-builder')
+      if (ids.includes('memory-palace')) days.push(day)
+    }
+    expect(days).toEqual([3, 7, 11, 15, 19, 23, 27])
   })
 })

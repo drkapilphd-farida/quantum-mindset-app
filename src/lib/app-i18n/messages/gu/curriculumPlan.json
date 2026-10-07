@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "બહુ-ઇન્દ્રિય કલ્પનાની શરૂઆત",
-      "focus": "Sensory Imagery Builder માં સ્પષ્ટ, બહુ-ઇન્દ્રિય માનસિક ચિત્રોની પ્રેક્ટિસ કરો."
+      "focus": "તમારા મેમરી પેલેસને વધુ જીવંત બનાવો: દૃશ્ય, અવાજ અને સ્પર્શથી દરેક વસ્તુને તેની જગ્યાએ પાકી કરો."
     },
     "d16": {
       "title": "શાંત અને સ્થિર ફોકસ",
@@ -156,7 +156,6 @@
     "image-flash-grid": "ઇમેજ ફ્લેશ ગ્રિડ",
     "quantum-mental-rotation": "મેન્ટલ ઑબ્જેક્ટ રોટેશન",
     "color-scene-transformation": "રંગ અને દૃશ્ય પરિવર્તન",
-    "sensory-hologram-builder": "સેન્સરી ઇમેજરી બિલ્ડર",
     "calm-breathing": "શાંત શ્વાસ",
     "dynamic-chunk-sliding": "ડાયનેમિક ચંક સ્લાઇડિંગ",
     "vertical-chunk-sliding": "વર્ટિકલ ચંક સ્લાઇડિંગ",
@@ -179,6 +178,7 @@
     "symbol-flash": "સિમ્બોલ ફ્લેશ",
     "mixed-flash": "મિક્સ્ડ ફ્લેશ",
     "peripheral-flash": "પેરિફેરલ ફ્લેશ",
-    "progressive-chunk-reading": "પ્રોગ્રેસિવ ચંક રીડિંગ"
+    "progressive-chunk-reading": "પ્રોગ્રેસિવ ચંક રીડિંગ",
+    "memory-palace": "મેમરી પેલેસ"
   }
 }

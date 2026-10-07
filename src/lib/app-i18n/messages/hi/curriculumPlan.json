@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "कई इंद्रियों वाली कल्पना की शुरुआत",
-      "focus": "Sensory Imagery Builder में जाकर साफ़, कई इंद्रियों वाली मन की तस्वीरें बनाने की प्रैक्टिस करें।"
+      "focus": "अपने मेमोरी पैलेस को और जीवंत बनाएँ: हर चीज़ को उसकी जगह पर देखकर, सुनकर और छूकर पक्का करें।"
     },
     "d16": {
       "title": "शांत और स्थिर फ़ोकस",
@@ -156,7 +156,6 @@
     "image-flash-grid": "इमेज फ़्लैश ग्रिड",
     "quantum-mental-rotation": "मेंटल ऑब्जेक्ट रोटेशन",
     "color-scene-transformation": "रंग और दृश्य परिवर्तन",
-    "sensory-hologram-builder": "सेंसरी इमेजरी बिल्डर",
     "calm-breathing": "शांत साँसें",
     "dynamic-chunk-sliding": "डायनैमिक चंक स्लाइडिंग",
     "vertical-chunk-sliding": "वर्टिकल चंक स्लाइडिंग",
@@ -179,6 +178,7 @@
     "symbol-flash": "सिंबल फ़्लैश",
     "mixed-flash": "मिक्स्ड फ़्लैश",
     "peripheral-flash": "पेरिफ़ेरल फ़्लैश",
-    "progressive-chunk-reading": "प्रोग्रेसिव चंक रीडिंग"
+    "progressive-chunk-reading": "प्रोग्रेसिव चंक रीडिंग",
+    "memory-palace": "मेमोरी पैलेस"
   }
 }

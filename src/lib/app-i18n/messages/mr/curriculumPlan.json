@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "बहु-इंद्रिय कल्पनेची सुरुवात",
-      "focus": "Sensory Imagery Builder मध्ये स्पष्ट, बहु-इंद्रिय मानसिक चित्रांचा सराव करा."
+      "focus": "तुमचा मेमरी पॅलेस अधिक जिवंत करा: दृष्टी, आवाज आणि स्पर्शाने प्रत्येक वस्तू तिच्या जागी पक्की करा."
     },
     "d16": {
       "title": "शांत आणि स्थिर फोकस",
@@ -156,7 +156,6 @@
     "image-flash-grid": "इमेज फ्लॅश ग्रिड",
     "quantum-mental-rotation": "मेंटल ऑब्जेक्ट रोटेशन",
     "color-scene-transformation": "रंग आणि दृश्य परिवर्तन",
-    "sensory-hologram-builder": "सेन्सरी इमेजरी बिल्डर",
     "calm-breathing": "शांत श्वास",
     "dynamic-chunk-sliding": "डायनॅमिक चंक स्लायडिंग",
     "vertical-chunk-sliding": "व्हर्टिकल चंक स्लायडिंग",
@@ -179,6 +178,7 @@
     "symbol-flash": "सिंबल फ्लॅश",
     "mixed-flash": "मिक्स्ड फ्लॅश",
     "peripheral-flash": "पेरिफेरल फ्लॅश",
-    "progressive-chunk-reading": "प्रोग्रेसिव्ह चंक रीडिंग"
+    "progressive-chunk-reading": "प्रोग्रेसिव्ह चंक रीडिंग",
+    "memory-palace": "मेमरी पॅलेस"
   }
 }

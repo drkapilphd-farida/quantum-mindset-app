@@ -22,6 +22,14 @@ export default function AboutPage(): React.JSX.Element {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationSchema }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personSchema }} />
       <AboutPageContent />
+      {/* Memory Palace object pictures (CC BY 4.0 requires this credit). */}
+      <p className="mx-auto max-w-3xl px-6 pb-10 text-center text-xs text-muted-foreground">
+        Memory Palace pictures: Twemoji by Twitter, Inc. and other contributors, licensed under{' '}
+        <a href="https://creativecommons.org/licenses/by/4.0/" className="underline" rel="noopener noreferrer" target="_blank">
+          CC BY 4.0
+        </a>
+        .
+      </p>
     </>
   )
 }

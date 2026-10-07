@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "Multi-Sensory Visualisation Begins",
-      "focus": "Enter the Sensory Imagery Builder to train vivid, multi-sensory mental imagery."
+      "focus": "Make your Memory Palace more vivid: use sight, sound and touch to fix each object in its place."
     },
     "d16": {
       "title": "Calm & Steady Focus",
@@ -156,7 +156,6 @@
     "image-flash-grid": "Image Flash Grid",
     "quantum-mental-rotation": "Mental Object Rotation",
     "color-scene-transformation": "Color & Scene Transformation Journey",
-    "sensory-hologram-builder": "Sensory Imagery Builder",
     "calm-breathing": "Calm Breathing",
     "dynamic-chunk-sliding": "Dynamic Chunk Sliding",
     "vertical-chunk-sliding": "Vertical Chunk Sliding",
@@ -179,6 +178,7 @@
     "symbol-flash": "Symbol Flash",
     "mixed-flash": "Mixed Flash",
     "peripheral-flash": "Peripheral Flash",
-    "progressive-chunk-reading": "Progressive Chunk Reading"
+    "progressive-chunk-reading": "Progressive Chunk Reading",
+    "memory-palace": "Memory Palace"
   }
 }

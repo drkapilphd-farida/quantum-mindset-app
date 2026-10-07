@@ -7,7 +7,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { loadBestQuantumMentalRotationStats } from '@/features/quantum-mental-rotation/quantumMentalRotationLocalHistory'
 import { loadBestColorSceneTransformationStats } from '@/features/color-scene-transformation/colorSceneTransformationLocalHistory'
-import { loadBestSensoryHologramBuilderStats } from '@/features/sensory-hologram-builder/sensoryHologramBuilderLocalHistory'
 import { loadBestFluidEnergyBalancerStats } from '@/features/fluid-energy-balancer/fluidEnergyBalancerLocalHistory'
 import type { VisualizationHubMode } from '../visualizationHubModes'
 
@@ -35,7 +34,6 @@ const BEST_STATS_LOADERS: Record<string, (storageKey: string) => { bestScorePerc
     const stats = loadBestColorSceneTransformationStats(storageKey)
     return { bestScorePercent: stats.bestAccuracyPercent, bestStreak: stats.bestStreak }
   },
-  'sensory-hologram-builder': loadBestSensoryHologramBuilderStats,
   'fluid-energy-balancer': loadBestFluidEnergyBalancerStats,
 }
 

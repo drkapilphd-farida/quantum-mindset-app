@@ -1,16 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useAppT, useLabelT } from '@/lib/app-i18n/client'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
 import { useCountUp } from '@/hooks/exercises/useCountUp'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { cn } from '@/lib/utils'
-import {
-  SENSORY_HOLOGRAM_BUILDER_STORAGE_KEY,
-  loadBestSensoryHologramBuilderStats,
-} from '@/features/sensory-hologram-builder/sensoryHologramBuilderLocalHistory'
 
 type Dimension = {
   id: string
@@ -24,7 +19,10 @@ type DimensionScoreGridProps = {
   readingSpeedScore: number | null
   readingSpeedTrend: number | null
   comprehensionScore: number | null
-  visualizationDepthScore: number | null
+  /** Memory Palace immediate recall, last 7 days. */
+  memoryScore: number | null
+  /** Memory Palace next-day recall, last 7 days. */
+  retentionScore: number | null
   consistencyScore: number | null
   neuralRetrainingIndex: number | null
 }
@@ -93,23 +91,13 @@ export function DimensionScoreGrid({
   readingSpeedScore,
   readingSpeedTrend,
   comprehensionScore,
-  visualizationDepthScore,
+  memoryScore,
+  retentionScore,
   consistencyScore,
   neuralRetrainingIndex,
 }: DimensionScoreGridProps): React.JSX.Element {
   const t = useAppT()
   const tl = useLabelT()
-  // QSR/Holographic Recall is the one dimension whose real signal (the
-  // Sensory Hologram Builder's self-reported immersion score) lives in
-  // localStorage, not Supabase — this component is already 'use client',
-  // so it reads it directly after mount, same pattern as
-  // ThirtyDayMasterclassHeroCard.tsx's own curriculum-progress read.
-  const [qsrRecallScore, setQsrRecallScore] = useState<number | null>(null)
-  useEffect(() => {
-    const stats = loadBestSensoryHologramBuilderStats(SENSORY_HOLOGRAM_BUILDER_STORAGE_KEY)
-    setQsrRecallScore(stats.bestScorePercent > 0 ? stats.bestScorePercent : null)
-  }, [])
-
   const dimensions: Dimension[] = [
     {
       id: 'reading-speed',
@@ -126,18 +114,18 @@ export function DimensionScoreGrid({
       startHref: '/labs/sharp-brain/start',
     },
     {
-      id: 'visualization',
-      label: 'Visualization Depth',
-      score: visualizationDepthScore,
+      id: 'memory',
+      label: 'Memory',
+      score: memoryScore,
       trend: null,
-      startHref: '/labs/visual-intelligence/fixation',
+      startHref: '/labs/sharp-brain/memory-palace',
     },
     {
-      id: 'qsr-recall',
-      label: 'Visual Recall',
-      score: qsrRecallScore,
+      id: 'retention',
+      label: 'Retention',
+      score: retentionScore,
       trend: null,
-      startHref: '/labs/sharp-brain/sensory-hologram-builder',
+      startHref: '/labs/sharp-brain/memory-palace',
     },
     {
       id: 'consistency',

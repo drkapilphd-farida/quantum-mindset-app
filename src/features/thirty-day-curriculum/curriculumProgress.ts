@@ -19,7 +19,6 @@ import type { AppLang } from '@/lib/app-i18n/languages'
 import { sameContentLang } from '@/lib/app-i18n/practiceContent'
 import { loadBestFluidEnergyBalancerStats } from '@/features/fluid-energy-balancer/fluidEnergyBalancerLocalHistory'
 import { loadBestQuantumMentalRotationStats } from '@/features/quantum-mental-rotation/quantumMentalRotationLocalHistory'
-import { loadBestSensoryHologramBuilderStats } from '@/features/sensory-hologram-builder/sensoryHologramBuilderLocalHistory'
 import { isDevUnlockEnabled } from '@/lib/dev/isDevUnlockEnabled'
 import { TOTAL_CURRICULUM_DAYS } from './curriculumDatabase'
 
@@ -361,7 +360,6 @@ const VISUALIZATION_STATS_LOADERS: readonly VisualizationStatsLoader[] = [
     const stats = loadBestColorSceneTransformationStats('qsr-color-scene-transformation-best')
     return { bestScorePercent: stats.bestAccuracyPercent }
   },
-  () => loadBestSensoryHologramBuilderStats('qsr-sensory-hologram-builder-best'),
   () => loadBestFluidEnergyBalancerStats('qsr-fluid-energy-balancer-best'),
 ]
 

@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "ಬಹು-ಇಂದ್ರಿಯ ಕಲ್ಪನೆಯ ಆರಂಭ",
-      "focus": "Sensory Imagery Builder ನಲ್ಲಿ ಸ್ಪಷ್ಟ, ಬಹು-ಇಂದ್ರಿಯ ಮನಸ್ಸಿನ ಚಿತ್ರಗಳ ಅಭ್ಯಾಸ ಮಾಡಿ."
+      "focus": "ನಿಮ್ಮ ಮೆಮೊರಿ ಪ್ಯಾಲೇಸ್ ಅನ್ನು ಇನ್ನಷ್ಟು ಜೀವಂತಗೊಳಿಸಿ: ನೋಟ, ಶಬ್ದ ಮತ್ತು ಸ್ಪರ್ಶದಿಂದ ಪ್ರತಿ ವಸ್ತುವನ್ನು ಅದರ ಜಾಗದಲ್ಲಿ ಸ್ಥಿರಗೊಳಿಸಿ."
     },
     "d16": {
       "title": "ಶಾಂತ ಮತ್ತು ಸ್ಥಿರ ಫೋಕಸ್",
@@ -156,7 +156,6 @@
     "image-flash-grid": "ಇಮೇಜ್ ಫ್ಲ್ಯಾಶ್ ಗ್ರಿಡ್",
     "quantum-mental-rotation": "ಮೆಂಟಲ್ ಆಬ್ಜೆಕ್ಟ್ ರೊಟೇಶನ್",
     "color-scene-transformation": "ಬಣ್ಣ ಮತ್ತು ದೃಶ್ಯ ಪರಿವರ್ತನೆ",
-    "sensory-hologram-builder": "ಸೆನ್ಸರಿ ಇಮೇಜರಿ ಬಿಲ್ಡರ್",
     "calm-breathing": "ಶಾಂತ ಉಸಿರಾಟ",
     "dynamic-chunk-sliding": "ಡೈನಾಮಿಕ್ ಚಂಕ್ ಸ್ಲೈಡಿಂಗ್",
     "vertical-chunk-sliding": "ವರ್ಟಿಕಲ್ ಚಂಕ್ ಸ್ಲೈಡಿಂಗ್",
@@ -179,6 +178,7 @@
     "symbol-flash": "ಸಿಂಬಲ್ ಫ್ಲ್ಯಾಶ್",
     "mixed-flash": "ಮಿಕ್ಸ್ಡ್ ಫ್ಲ್ಯಾಶ್",
     "peripheral-flash": "ಪೆರಿಫೆರಲ್ ಫ್ಲ್ಯಾಶ್",
-    "progressive-chunk-reading": "ಪ್ರೋಗ್ರೆಸಿವ್ ಚಂಕ್ ರೀಡಿಂಗ್"
+    "progressive-chunk-reading": "ಪ್ರೋಗ್ರೆಸಿವ್ ಚಂಕ್ ರೀಡಿಂಗ್",
+    "memory-palace": "ಮೆಮೊರಿ ಪ್ಯಾಲೇಸ್"
   }
 }

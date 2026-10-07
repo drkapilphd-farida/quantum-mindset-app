@@ -28,6 +28,7 @@ import { computeReadingProfile } from '@/features/quantum-speed-reading/adaptive
 import { getFixationSessions } from '@/features/visual-intelligence/fixation/queries/getFixationSessions'
 import { computeFocusScore, getHighestDifficultyRatio } from '@/features/visual-intelligence/fixation/focusScore'
 import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
+import { getMemoryScores } from '@/features/memory-palace/actions/palaceActions'
 import { dayTitle } from '@/lib/app-i18n/curriculumText'
 import { MindScoreHeroCard } from '@/components/mindScore/MindScoreHeroCard'
 import { DimensionScoreGrid } from '@/components/mindScore/DimensionScoreGrid'
@@ -72,12 +73,13 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return <div />
 
-  const [program, labSessions, profile, readingSessions, fixationSessions] = await Promise.all([
+  const [program, labSessions, profile, readingSessions, fixationSessions, memoryScores] = await Promise.all([
     getProgramProgress(),
     getPracticeSessions('quantum-speed-reading'),
     getCurrentUserProfile(user.id),
     getReadingIntelligenceSessions(),
     getFixationSessions(),
+    getMemoryScores(),
   ])
 
   // ── Core practice data ──────────────────────────────────────────────────
@@ -200,7 +202,8 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
         readingSpeedScore={readingSpeedScore}
         readingSpeedTrend={wpmGrowth?.growthPercent ?? null}
         comprehensionScore={comprehensionScore}
-        visualizationDepthScore={visualizationDepthScore}
+        memoryScore={memoryScores.memory}
+        retentionScore={memoryScores.retention}
         consistencyScore={consistencyScore}
         neuralRetrainingIndex={neuralRetrainingIndex}
       />

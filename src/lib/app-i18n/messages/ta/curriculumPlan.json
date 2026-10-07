@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "பல-புலன் கற்பனையின் தொடக்கம்",
-      "focus": "Sensory Imagery Builder இல் தெளிவான, பல-புலன் மனப் படங்களைப் பயிற்சி செய்யுங்கள்."
+      "focus": "உங்கள் மெமரி பேலஸை இன்னும் உயிரோட்டமாக்குங்கள்: பார்வை, ஒலி, தொடுதல் மூலம் ஒவ்வொரு பொருளையும் அதன் இடத்தில் பதியுங்கள்."
     },
     "d16": {
       "title": "அமைதி & நிலையான கவனம்",
@@ -156,7 +156,6 @@
     "image-flash-grid": "பட ஃப்ளாஷ் கட்டம்",
     "quantum-mental-rotation": "மனப் பொருள் சுழற்சி",
     "color-scene-transformation": "நிறம் & காட்சி மாற்றம்",
-    "sensory-hologram-builder": "புலன் கற்பனை உருவாக்கி",
     "calm-breathing": "அமைதியான சுவாசம்",
     "dynamic-chunk-sliding": "டைனமிக் சங்க் ஸ்லைடிங்",
     "vertical-chunk-sliding": "செங்குத்து சங்க் ஸ்லைடிங்",
@@ -179,6 +178,7 @@
     "symbol-flash": "குறியீட்டு ஃப்ளாஷ்",
     "mixed-flash": "கலவை ஃப்ளாஷ்",
     "peripheral-flash": "பெரிஃபெரல் ஃப்ளாஷ்",
-    "progressive-chunk-reading": "படிப்படியான சங்க் வாசிப்பு"
+    "progressive-chunk-reading": "படிப்படியான சங்க் வாசிப்பு",
+    "memory-palace": "மெமரி பேலஸ்"
   }
 }

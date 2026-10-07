@@ -58,7 +58,7 @@
     },
     "d15": {
       "title": "বহু-ইন্দ্রিয় কল্পনা শুরু",
-      "focus": "জীবন্ত, বহু-ইন্দ্রিয় মানসচিত্রের অনুশীলনে Sensory Imagery Builder-এ প্রবেশ করুন।"
+      "focus": "আপনার মেমরি প্যালেসকে আরও জীবন্ত করুন: দেখা, শোনা আর ছোঁয়া দিয়ে প্রতিটি জিনিসকে তার জায়গায় গেঁথে নিন।"
     },
     "d16": {
       "title": "শান্ত ও স্থির মনোযোগ",
@@ -156,7 +156,6 @@
     "image-flash-grid": "ছবি ফ্ল্যাশ গ্রিড",
     "quantum-mental-rotation": "মনে মনে বস্তু ঘোরানো",
     "color-scene-transformation": "রং ও দৃশ্য রূপান্তর যাত্রা",
-    "sensory-hologram-builder": "Sensory Imagery Builder",
     "calm-breathing": "শান্ত শ্বাস",
     "dynamic-chunk-sliding": "ডায়নামিক চাঙ্ক স্লাইডিং",
     "vertical-chunk-sliding": "ভার্টিক্যাল চাঙ্ক স্লাইডিং",
@@ -179,6 +178,7 @@
     "symbol-flash": "Symbol Flash",
     "mixed-flash": "Mixed Flash",
     "peripheral-flash": "Peripheral Flash",
-    "progressive-chunk-reading": "প্রগ্রেসিভ চাঙ্ক রিডিং"
+    "progressive-chunk-reading": "প্রগ্রেসিভ চাঙ্ক রিডিং",
+    "memory-palace": "মেমরি প্যালেস"
   }
 }
