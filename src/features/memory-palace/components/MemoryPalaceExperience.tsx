@@ -85,8 +85,9 @@ export function MemoryPalaceExperience({ onComplete, onExit }: MemoryPalaceExper
     setObjects(chosen)
     startedAt.current = Date.now()
     setStage('guided')
-    for (const id of ['common-01', 'common-02', 'common-03', 'common-04', 'common-05', 'common-06', 'common-07', 'common-08', 'common-09']) {
-      await say(id, undefined)
+    const opening = ['common-01', 'common-02', 'common-03', 'common-04', 'common-05', 'common-06', 'common-07', 'common-08', 'common-09']
+    for (let i = 0; i < opening.length; i++) {
+      await say(opening[i]!, opening[i + 1] ?? 'place-01')
       if (cancelled.current) return
     }
     for (let i = 0; i < chosen.length; i++) {
@@ -160,7 +161,7 @@ export function MemoryPalaceExperience({ onComplete, onExit }: MemoryPalaceExper
   }
 
   const bar = (
-    <NarrationBar line={narration.current} muted={narration.muted} volume={narration.volume} onMutedChange={narration.setMuted} onVolumeChange={narration.setVolume} onReplay={narration.replay} />
+    <NarrationBar line={narration.current} source={narration.source} muted={narration.muted} volume={narration.volume} onMutedChange={narration.setMuted} onVolumeChange={narration.setVolume} onReplay={narration.replay} />
   )
 
   if (stage === 'intro') {

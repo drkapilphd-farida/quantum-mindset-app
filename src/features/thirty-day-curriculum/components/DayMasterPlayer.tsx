@@ -170,6 +170,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   if (pendingPalace !== null || sameDayPalace !== null) {
     return (
       <div className="fixed inset-0 z-50 overflow-y-auto bg-background" data-day-master-player={day} data-palace-step={pendingPalace !== null ? 'next-day' : 'same-day'}>
+        <CurriculumDayProvider value={dayInfo}>
         {pendingPalace !== null ? (
           <PalaceRecallStep
             palace={pendingPalace}
@@ -189,6 +190,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
             }}
           />
         )}
+        </CurriculumDayProvider>
       </div>
     )
   }

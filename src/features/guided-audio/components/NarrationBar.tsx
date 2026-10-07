@@ -6,6 +6,8 @@ import type { NarrationLine } from '../useGuidedNarration'
 
 type NarrationBarProps = {
   line: NarrationLine | null
+  /** Which source is playing the line (recorded / device voice / caption only). */
+  source?: string | null
   muted: boolean
   volume: number
   onMutedChange: (muted: boolean) => void
@@ -15,12 +17,12 @@ type NarrationBarProps = {
 
 // The caption of the line being spoken, plus mute, volume and "replay this
 // line". Large tap targets for phones; "..." pauses show as gentle ellipses.
-export function NarrationBar({ line, muted, volume, onMutedChange, onVolumeChange, onReplay }: NarrationBarProps): React.JSX.Element {
+export function NarrationBar({ line, source = null, muted, volume, onMutedChange, onVolumeChange, onReplay }: NarrationBarProps): React.JSX.Element {
   const t = useAppT()
   const caption = line?.text.replace(/\s*\.\.\.\s*/g, ' … ').trim() ?? ''
   return (
     <div className="flex w-full flex-col gap-3" data-narration-bar="true">
-      <p className="min-h-[4.5rem] text-center text-lg leading-relaxed font-medium text-foreground" aria-live="polite" aria-label={t('training.palace.captionLabel')} data-caption-line={line?.id ?? ''}>
+      <p className="min-h-[4.5rem] text-center text-lg leading-relaxed font-medium text-foreground" aria-live="polite" aria-label={t('training.palace.captionLabel')} data-caption-line={line?.id ?? ''} data-narration-source={source ?? ''}>
         {caption}
       </p>
       <div className="flex items-center justify-center gap-2">

@@ -84,6 +84,10 @@ function buildContentSecurityPolicy(): string {
       ...(supabase ? [supabase] : []),
     ],
     'font-src': ["'self'", 'data:'],
+    // Guided-voice MP3s from the public "guided-audio" bucket (Memory
+    // Palace), plus the silent data: clip that unlocks audio on iPhone.
+    // Without this, media falls back to default-src 'self' and is blocked.
+    'media-src': ["'self'", 'data:', 'blob:', ...(supabase ? [supabase] : [])],
     // Sentry ingest — both regional endpoints allowed proactively (same
     // "allow before it's wired up" posture as the Razorpay/GA entries
     // above); harmless when NEXT_PUBLIC_SENTRY_DSN is unset since no

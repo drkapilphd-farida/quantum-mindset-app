@@ -101,7 +101,7 @@ export function PalaceRecallStep({ palace, phase, delay, onDone, onNotNow }: Pal
       {stage === 'recall' && (
         <>
           <RecallBoard objects={palace.objects} level={palace.level} onFinished={finished} />
-          <NarrationBar line={narration.current} muted={narration.muted} volume={narration.volume} onMutedChange={narration.setMuted} onVolumeChange={narration.setVolume} onReplay={narration.replay} />
+          <NarrationBar line={narration.current} source={narration.source} muted={narration.muted} volume={narration.volume} onMutedChange={narration.setMuted} onVolumeChange={narration.setVolume} onReplay={narration.replay} />
         </>
       )}
 

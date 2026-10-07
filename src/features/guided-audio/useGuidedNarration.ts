@@ -68,10 +68,14 @@ export function useGuidedNarration(exercise: string, lang: AppLang): {
     settingsRef.current = s
   }, [])
 
+  const manifestPromiseRef = useRef<Promise<AudioManifest | null> | null>(null)
+
   useEffect(() => {
     let cancelled = false
     setReady(false)
-    void loadAudioManifest(exercise, lang).then((m) => {
+    const promise = loadAudioManifest(exercise, lang)
+    manifestPromiseRef.current = promise
+    void promise.then((m) => {
       if (cancelled) return
       manifestRef.current = m
       setReady(true)
@@ -126,10 +130,13 @@ export function useGuidedNarration(exercise: string, lang: AppLang): {
   }, [urlFor])
 
   const speak = useCallback(
-    (line: NarrationLine, next?: NarrationLine): Promise<void> => {
+    async (line: NarrationLine, next?: NarrationLine): Promise<void> => {
       stopPlayback()
       const token = tokenRef.current
       setCurrent(line)
+      // The first line can be asked for before the manifest has arrived: wait for it (it's cached after that).
+      if (manifestRef.current === null && manifestPromiseRef.current !== null) manifestRef.current = await manifestPromiseRef.current
+      if (tokenRef.current !== token) return
       const m = manifestRef.current
       const waitMs = lineDurationMs(line.text, m, line.id)
       const hasVoice = typeof window !== 'undefined' && 'speechSynthesis' in window && pickVoiceForLanguage(voicesRef.current, lang) !== null
