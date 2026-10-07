@@ -313,6 +313,7 @@ These scores come from reading the code and production counts on 7 Oct 2026. Ite
 | 12 | Hindi practice content, then the other languages one by one | 9 | Should-have (Hindi), later (others) |
 | 13 | The original Phase 2 items: new exercises (Visual Search, Flanker, Go/No-Go, Read → Recall → Summary) and the new 30-day plan, applied only to days a learner hasn't reached | — | Later (keep it after the measurement work, so improvements can be measured) |
 | 14 | Lint clean-up of `scripts/` and `public/sw.js` (list below) | — | Low priority |
+| 15 | `exercise_results.content_lang` doesn't accept `bn`. Add `bn` to its allowed values (add-only migration), then store Memory Palace's narration language there instead of only in `details` | — | Low priority (no data is lost meanwhile) |
 
 **Item 4 — pace control (proposal)**
 
