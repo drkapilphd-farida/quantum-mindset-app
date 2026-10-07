@@ -1,0 +1,31 @@
+# Type-check, lint and unit tests on every push and pull request.
+# These used to run inside the Vercel build, where the type-check step
+# sometimes ran out of memory with a restored build cache and was killed
+# (Oct 2026). Vercel now only compiles; this workflow is the quality gate.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Type-check
+        run: npx tsc --noEmit -p .
+      - name: Lint
+        run: npx eslint src
+      - name: Unit tests
+        run: npx vitest run

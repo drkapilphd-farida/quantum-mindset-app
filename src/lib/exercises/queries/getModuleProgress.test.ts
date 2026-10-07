@@ -4,10 +4,11 @@ import { deriveAvailability, type ExerciseStatus } from './getModuleProgress'
 const SEQUENCE = ['phrase-reading', 'multi-line-reading', 'sentence-reading', 'paragraph-reading'] as const
 
 describe('deriveAvailability', () => {
-  it('is monotonic: an out-of-order completed row cannot unlock past an incomplete earlier exercise', () => {
-    // The exact real-world state this fix addresses: sentence-reading has
-    // its own completed row, but phrase-reading and multi-line-reading
-    // (both earlier in sequence) have no row at all.
+  it('an out-of-order completed exercise stays open; only the first gap is current, the rest stay locked', () => {
+    // sentence-reading has its own completed row, but phrase-reading and
+    // multi-line-reading (both earlier in sequence) have no row at all. A
+    // learner never loses an exercise they already completed (Phase 2 rule:
+    // nothing a learner had may become locked).
     const status: Record<string, ExerciseStatus> = {
       'phrase-reading': 'not-started',
       'multi-line-reading': 'not-started',
@@ -18,7 +19,7 @@ describe('deriveAvailability', () => {
     expect(deriveAvailability([...SEQUENCE], status)).toEqual({
       'phrase-reading': 'current',
       'multi-line-reading': 'locked',
-      'sentence-reading': 'locked',
+      'sentence-reading': 'completed',
       'paragraph-reading': 'locked',
     })
   })
@@ -87,7 +88,7 @@ describe('deriveAvailability', () => {
     })
   })
 
-  it('two separate out-of-order completions still only unlock up to the first gap', () => {
+  it('two separate out-of-order completions both stay open; nothing new unlocks past the first gap', () => {
     // phrase-reading incomplete, but BOTH multi-line-reading and
     // paragraph-reading have stray completed rows.
     const status: Record<string, ExerciseStatus> = {
@@ -99,9 +100,9 @@ describe('deriveAvailability', () => {
 
     expect(deriveAvailability([...SEQUENCE], status)).toEqual({
       'phrase-reading': 'current',
-      'multi-line-reading': 'locked',
+      'multi-line-reading': 'completed',
       'sentence-reading': 'locked',
-      'paragraph-reading': 'locked',
+      'paragraph-reading': 'completed',
     })
   })
 })

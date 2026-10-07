@@ -219,6 +219,12 @@ const nextConfig: NextConfig = {
     ]
   },
 
+  // Type-check and lint run in GitHub Actions (.github/workflows/ci.yml), not
+  // in the Vercel build: with a restored build cache that step sometimes ran
+  // the 8 GB build machine out of memory and was killed (Oct 2026).
+  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
+
   images: {
     remotePatterns: [
       {
