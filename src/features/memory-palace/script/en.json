@@ -1,0 +1,341 @@
+{
+  "lang": "en",
+  "review": "source",
+  "lines": [
+    {
+      "id": "common-01",
+      "phase": "settle",
+      "text": "Find a comfortable position, ... and gently close your eyes."
+    },
+    {
+      "id": "common-02",
+      "phase": "settle",
+      "text": "Take a slow, ... deep breath in... and let it go."
+    },
+    {
+      "id": "common-03",
+      "phase": "settle",
+      "text": "Let your body soften, ... and your mind grow still."
+    },
+    {
+      "id": "common-04",
+      "phase": "settle",
+      "text": "Just breathe, ... in this stillness, ... for a moment longer."
+    },
+    {
+      "id": "common-05",
+      "phase": "settle",
+      "text": "You are safe here. You are ready to begin."
+    },
+    {
+      "id": "common-06",
+      "phase": "build",
+      "text": "Now picture the front door of your own home. ... See its colour, ... its handle, ... the way it opens."
+    },
+    {
+      "id": "common-07",
+      "phase": "build",
+      "text": "This home is your memory palace. ... Every place in it can hold something for you."
+    },
+    {
+      "id": "common-08",
+      "phase": "build",
+      "text": "We will walk the same path every time, ... so your mind always knows the way."
+    },
+    {
+      "id": "common-09",
+      "phase": "place",
+      "text": "Make each object big, ... bright, ... and a little unusual. ... Strange pictures stay in the mind."
+    },
+    {
+      "id": "common-10",
+      "phase": "place",
+      "text": "Leave it there, ... and walk on."
+    },
+    {
+      "id": "common-11",
+      "phase": "walk-back",
+      "text": "Now go back to your front door. ... Walk the same path again, ... slowly."
+    },
+    {
+      "id": "common-12",
+      "phase": "walk-back",
+      "text": "At each place, ... look around. ... What did you leave there?"
+    },
+    {
+      "id": "common-13",
+      "phase": "recall",
+      "text": "Open your eyes when you are ready, ... and show what you found."
+    },
+    {
+      "id": "common-14",
+      "phase": "delayed",
+      "text": "Before you finish today, ... close your eyes once more ... and walk through your palace."
+    },
+    {
+      "id": "common-15",
+      "phase": "close",
+      "text": "Your palace is always with you. ... The more you walk it, ... the stronger it becomes."
+    },
+    {
+      "id": "common-16",
+      "phase": "close",
+      "text": "When you are ready, ... gently open your eyes."
+    },
+    {
+      "id": "common-17",
+      "phase": "next-day",
+      "text": "Welcome back. ... Before today's practice, ... walk through yesterday's palace. ... What is still waiting at each place?"
+    },
+    {
+      "id": "place-01",
+      "phase": "place",
+      "text": "You are at the front door."
+    },
+    {
+      "id": "place-02",
+      "phase": "place",
+      "text": "Step into the hallway."
+    },
+    {
+      "id": "place-03",
+      "phase": "place",
+      "text": "Walk into the living room."
+    },
+    {
+      "id": "place-04",
+      "phase": "place",
+      "text": "Go into the kitchen."
+    },
+    {
+      "id": "place-05",
+      "phase": "place",
+      "text": "Enter your bedroom."
+    },
+    {
+      "id": "place-06",
+      "phase": "place",
+      "text": "Now step into the bathroom."
+    },
+    {
+      "id": "place-07",
+      "phase": "place",
+      "text": "Walk out onto the balcony."
+    },
+    {
+      "id": "place-08",
+      "phase": "place",
+      "text": "Sit down at your study table."
+    },
+    {
+      "id": "place-09",
+      "phase": "place",
+      "text": "Go to the dining table."
+    },
+    {
+      "id": "place-10",
+      "phase": "place",
+      "text": "Stop at the window."
+    },
+    {
+      "id": "object-1-01",
+      "phase": "object",
+      "text": "A giant mango, ... glowing gold."
+    },
+    {
+      "id": "object-1-02",
+      "phase": "object",
+      "text": "A red umbrella, ... dripping wet."
+    },
+    {
+      "id": "object-1-03",
+      "phase": "object",
+      "text": "A steel kettle, ... whistling loudly."
+    },
+    {
+      "id": "object-1-04",
+      "phase": "object",
+      "text": "An alarm clock, ... ringing and jumping."
+    },
+    {
+      "id": "object-1-05",
+      "phase": "object",
+      "text": "A huge bunch of keys, ... jingling."
+    },
+    {
+      "id": "object-1-06",
+      "phase": "object",
+      "text": "A tall stack of warm rotis."
+    },
+    {
+      "id": "object-1-07",
+      "phase": "object",
+      "text": "A bright green parrot, ... talking."
+    },
+    {
+      "id": "object-1-08",
+      "phase": "object",
+      "text": "A candle taller than you."
+    },
+    {
+      "id": "object-1-09",
+      "phase": "object",
+      "text": "A basket of eggs, ... wobbling."
+    },
+    {
+      "id": "object-1-10",
+      "phase": "object",
+      "text": "A mobile phone, ... buzzing and buzzing."
+    },
+    {
+      "id": "object-2-01",
+      "phase": "object",
+      "text": "A tiny elephant, ... wearing shoes."
+    },
+    {
+      "id": "object-2-02",
+      "phase": "object",
+      "text": "An auto-rickshaw, ... full of flowers."
+    },
+    {
+      "id": "object-2-03",
+      "phase": "object",
+      "text": "A rainbow-coloured kite."
+    },
+    {
+      "id": "object-2-04",
+      "phase": "object",
+      "text": "A block of ice, ... melting fast."
+    },
+    {
+      "id": "object-2-05",
+      "phase": "object",
+      "text": "A sunflower, ... as tall as a tree."
+    },
+    {
+      "id": "object-2-06",
+      "phase": "object",
+      "text": "A train whistle, ... blowing."
+    },
+    {
+      "id": "object-2-07",
+      "phase": "object",
+      "text": "A paper boat, ... floating in a bucket."
+    },
+    {
+      "id": "object-2-08",
+      "phase": "object",
+      "text": "A mountain of salt."
+    },
+    {
+      "id": "object-2-09",
+      "phase": "object",
+      "text": "A camel, ... drinking from a cup."
+    },
+    {
+      "id": "object-2-10",
+      "phase": "object",
+      "text": "A golden bicycle."
+    },
+    {
+      "id": "object-3-01",
+      "phase": "object",
+      "text": "A book, ... flapping like a bird."
+    },
+    {
+      "id": "object-3-02",
+      "phase": "object",
+      "text": "A pencil, ... as long as a broom."
+    },
+    {
+      "id": "object-3-03",
+      "phase": "object",
+      "text": "A globe, ... spinning fast."
+    },
+    {
+      "id": "object-3-04",
+      "phase": "object",
+      "text": "A blackboard, ... covered in stars."
+    },
+    {
+      "id": "object-3-05",
+      "phase": "object",
+      "text": "A calculator, ... singing a song."
+    },
+    {
+      "id": "object-3-06",
+      "phase": "object",
+      "text": "A school bag, ... full of oranges."
+    },
+    {
+      "id": "object-3-07",
+      "phase": "object",
+      "text": "A ruler, ... made of chocolate."
+    },
+    {
+      "id": "object-3-08",
+      "phase": "object",
+      "text": "A laptop, ... glowing blue."
+    },
+    {
+      "id": "object-3-09",
+      "phase": "object",
+      "text": "A trophy, ... filled with water."
+    },
+    {
+      "id": "object-3-10",
+      "phase": "object",
+      "text": "A pair of glasses, ... on a cat."
+    },
+    {
+      "id": "object-4-01",
+      "phase": "object",
+      "text": "A drum, ... beating by itself."
+    },
+    {
+      "id": "object-4-02",
+      "phase": "object",
+      "text": "A flute, ... made of sugarcane."
+    },
+    {
+      "id": "object-4-03",
+      "phase": "object",
+      "text": "A diya, ... with three bright flames."
+    },
+    {
+      "id": "object-4-04",
+      "phase": "object",
+      "text": "A heavy garland, ... of orange marigolds."
+    },
+    {
+      "id": "object-4-05",
+      "phase": "object",
+      "text": "A kite string, ... tangled everywhere."
+    },
+    {
+      "id": "object-4-06",
+      "phase": "object",
+      "text": "A bell, ... ringing inside a box."
+    },
+    {
+      "id": "object-4-07",
+      "phase": "object",
+      "text": "A colourful rangoli, ... that moves."
+    },
+    {
+      "id": "object-4-08",
+      "phase": "object",
+      "text": "A spinning top, ... as big as a chair."
+    },
+    {
+      "id": "object-4-09",
+      "phase": "object",
+      "text": "A box of sweets, ... overflowing."
+    },
+    {
+      "id": "object-4-10",
+      "phase": "object",
+      "text": "A peacock, ... dancing."
+    }
+  ]
+}

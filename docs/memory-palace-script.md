@@ -1,6 +1,6 @@
 # Memory Palace — voice script outline (for review)
 
-Replaces the Sensory Hologram Builder (Phase 2, Part C, Option 1). Draft 1, 7 Oct 2026. English is shown here. After you approve it, the lines are translated into the other 7 languages (marked "pending native review") and voiced with the Sarvam voices you pick.
+Replaces the Sensory Hologram Builder (Phase 2, Part C, Option 1). Draft 2, 7 Oct 2026 — approved with changes (own home, 24-hour recall, the 16 new common lines + 1, voice "shubh" in all 8 languages). The final lines are in `src/features/memory-palace/script/<lang>.json`. English is shown here. After you approve it, the lines are translated into the other 7 languages (marked "pending native review") and voiced with the Sarvam voices you pick.
 
 ## How a session works (about 5 minutes)
 
@@ -8,8 +8,9 @@ Replaces the Sensory Hologram Builder (Phase 2, Part C, Option 1). Draft 1, 7 Oc
 2. **Build the palace (voice):** the learner pictures their own home and walks a fixed route: front door → hallway → living room → kitchen → bedroom. Higher levels add 5 more places.
 3. **Place the items (voice + picture):** at each place the voice says where we are, then gives one vivid object to leave there. A picture of the object shows on screen.
 4. **Walk back (voice), then immediate recall (screen):** for each place in order, the learner picks what they left there from 4 pictures. This is scored.
-5. **Delayed recall (screen, end of the day's session):** after the day's other exercises, "Walk through your palace once more" — the same places, asked again. This is scored separately, and it's the first delayed-recall measure in the app.
-6. **Close (voice):** 2 lines.
+5. **Next-day recall (voice + screen, START of the next day's session):** common-17, then the learner recalls yesterday's objects at each place. Scored separately as 24-hour recall.
+6. **Delayed recall (screen, end of the day's session):** after the day's other exercises, "Walk through your palace once more" — the same places, asked again. This is scored separately, and it's the first delayed-recall measure in the app.
+7. **Close (voice):** 2 lines.
 
 **Scoring and levels (shared 10-level trainer):**
 - Level 1: 5 places, 5 items, recall in order with 4 picture choices.
@@ -18,7 +19,7 @@ Replaces the Sensory Hologram Builder (Phase 2, Part C, Option 1). Draft 1, 7 Oc
 
 ## Line list
 
-### A. Common lines — every session (16 lines)
+### A. Common lines (17)
 
 | ID | Phase | English draft |
 |---|---|---|
@@ -38,6 +39,7 @@ Replaces the Sensory Hologram Builder (Phase 2, Part C, Option 1). Draft 1, 7 Oc
 | common-14 | Delayed | Before you finish today, ... close your eyes once more ... and walk through your palace. |
 | common-15 | Close | Your palace is always with you. ... The more you walk it, ... the stronger it becomes. |
 | common-16 | Close | When you are ready, ... gently open your eyes. *(same as today's closing line)* |
+| common-17 | Next day | Welcome back. ... Before today's practice, ... walk through yesterday's palace. ... What is still waiting at each place? |
 
 ### B. Place lines — 10
 
@@ -69,10 +71,10 @@ Replaces the Sensory Hologram Builder (Phase 2, Part C, Option 1). Draft 1, 7 Oc
 
 | | Lines per language | ≈ characters | Credits (8 languages, one pass) |
 |---|---|---|---|
-| A. Common | 16 | ≈ 1,000 | ≈ 24 |
+| A. Common | 17 | ≈ 1,000 | ≈ 24 |
 | B. Places | 10 | ≈ 250 | ≈ 6 |
 | C. Objects | 40 | ≈ 1,300 | ≈ 31 |
-| **Total** | **66** | **≈ 2,550** | **≈ 61** |
+| **Total** | **67** | **≈ 2,550** | **≈ 61** |
 
 Credits are 3 per 1,000 characters (Sarvam pricing, 7 Oct 2026). About 96 free credits remain after the samples, so one full pass fits. Retakes of individual lines cost about 0.1–0.3 credits each.
 
@@ -82,3 +84,9 @@ Credits are 3 per 1,000 characters (Sarvam pricing, 7 Oct 2026). About 96 free c
 2. Approve or edit the 16 common lines, the 10 places and the 40 objects. Should any objects be swapped for Indian-specific ones, or for items more suitable for children?
 3. Is "your own home" fine as the palace? For learners who don't want to picture their home, the alternative is a guided school building.
 4. Pick one voice per language from the samples. The other 6 languages can use the same Sarvam voice (the voices are multilingual) or a different one.
+
+## Changes in draft 2
+
+- 24-hour recall at the start of the next day's session (common-17), scored separately from the end-of-session recall.
+- Objects kept familiar to Indian learners and neutral across languages: "firecracker" → "a spinning top as big as a chair", "chapatis" → "a tall stack of warm rotis", "teapot" → "steel kettle".
+- **Generated (7 Oct):** English and Hindi, 67 lines each, voice "shubh" (pace 0.8, 0.9 s pauses), cleaned to −16 LUFS mono MP3. **14.2 credits.** Not uploaded.
