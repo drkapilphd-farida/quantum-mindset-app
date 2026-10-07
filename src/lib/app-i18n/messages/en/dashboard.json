@@ -54,5 +54,22 @@
     "dayCompleted": "Day {day}, completed",
     "dayUnlocked": "Day {day}, unlocked",
     "dayLocked": "Day {day}, locked, part of the {program}"
+  },
+  "liveClasses": {
+    "title": "Live Classes & Mentorship",
+    "intro": "Your live class schedule, class recordings and direct access to your mentor.",
+    "tabClasses": "Live classes",
+    "tabParents": "Parents Dashboard",
+    "next": "Next live class",
+    "none": "No live class is scheduled right now. Check back soon.",
+    "dateTba": "Date to be announced",
+    "join": "Join live class",
+    "withMentor": "with {name}",
+    "recordings": "Class recordings",
+    "noRecordings": "No recordings yet.",
+    "watch": "Watch recording",
+    "mentorTitle": "Direct mentor guidance",
+    "mentorBody": "Questions about a class, a practice day or your progress? Message Dr. Kapil directly.",
+    "mentorCta": "Message Dr. Kapil"
   }
 }

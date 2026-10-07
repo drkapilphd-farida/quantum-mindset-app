@@ -1,13 +1,14 @@
 import { CalendarClock, Video } from 'lucide-react'
 import type { ActiveMasterclass } from '../queries/getActiveMasterclasses'
+import { getAppT } from '@/lib/app-i18n/server'
+import { LANGUAGES, type AppLang } from '@/lib/app-i18n/languages'
 
 type UpcomingCohortScheduleProps = {
   sessions: readonly ActiveMasterclass[]
 }
 
-function formatSessionDate(scheduledAt: string | null): string {
-  if (scheduledAt === null) return 'Date to be announced'
-  return new Intl.DateTimeFormat('en-IN', {
+function formatSessionDate(scheduledAt: string, lang: AppLang): string {
+  return new Intl.DateTimeFormat(lang === 'en' ? 'en-IN' : LANGUAGES[lang].htmlLang, {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -23,13 +24,14 @@ function formatSessionDate(scheduledAt: string | null): string {
 // count — just the real date and, once set, the real join link. When
 // nothing is scheduled, this renders a plain, honest empty state, never
 // a sales pitch to fill the gap.
-export function UpcomingCohortSchedule({ sessions }: UpcomingCohortScheduleProps): React.JSX.Element {
+export async function UpcomingCohortSchedule({ sessions }: UpcomingCohortScheduleProps): Promise<React.JSX.Element> {
+  const { t, lang } = await getAppT()
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Next Live Cohort</p>
+      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('dashboard.liveClasses.next')}</p>
 
       {sessions.length === 0 ? (
-        <p className="mt-4 text-sm text-muted-foreground">No live session is currently scheduled. Check back soon.</p>
+        <p className="mt-4 text-sm text-muted-foreground">{t('dashboard.liveClasses.none')}</p>
       ) : (
         <ul className="mt-4 space-y-3">
           {sessions.map((session) => (
@@ -47,16 +49,16 @@ export function UpcomingCohortSchedule({ sessions }: UpcomingCohortScheduleProps
                     className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary/30 bg-primary/[0.06] px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/[0.12]"
                   >
                     <Video className="size-3.5" aria-hidden="true" />
-                    Join Live Session
+                    {t('dashboard.liveClasses.join')}
                   </a>
                 )}
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1.5">
                   <CalendarClock className="size-3.5" aria-hidden="true" />
-                  {formatSessionDate(session.scheduledAt)}
+                  {session.scheduledAt === null ? t('dashboard.liveClasses.dateTba') : formatSessionDate(session.scheduledAt, lang)}
                 </span>
-                <span>with {session.mentorName}</span>
+                <span>{t('dashboard.liveClasses.withMentor', { name: session.mentorName })}</span>
               </div>
             </li>
           ))}

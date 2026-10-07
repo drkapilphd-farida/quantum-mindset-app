@@ -18,5 +18,6 @@
   "installApp": "Install App",
   "toggleTheme": "Toggle theme",
   "lightMode": "Switch to light mode",
-  "darkMode": "Switch to dark mode"
+  "darkMode": "Switch to dark mode",
+  "liveClasses": "Live Classes"
 }

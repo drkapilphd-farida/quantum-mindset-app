@@ -9,10 +9,11 @@ import { RecordedMasterclassVault } from '@/features/live-masterclass/components
 import { MentorGuidanceCard } from '@/features/live-masterclass/components/MentorGuidanceCard'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
 import { cn } from '@/lib/utils'
+import { getAppT } from '@/lib/app-i18n/server'
 
-export const metadata: Metadata = {
-  title: 'Live Masterclasses & Mentorship',
-  robots: { index: false, follow: false },
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getAppT()
+  return { title: t('dashboard.liveClasses.title'), robots: { index: false, follow: false } }
 }
 
 // Pillar 1 — Live Member Training Hub™. Member-Exclusive Simplification™:
@@ -36,19 +37,19 @@ export default async function MasterclassesPage(): Promise<React.JSX.Element> {
 
   const allSessions = await getActiveMasterclasses()
   const { upcoming, recorded } = splitMasterclassesByStatus(allSessions)
+  const { t } = await getAppT()
 
   return (
     <div className="space-y-6">
       <div>
-        <p className={TYPOGRAPHY.label}>Pillar 1</p>
-        <h1 className={cn(TYPOGRAPHY.h1, 'mt-1')}>🔴 Live Masterclasses & Mentorship</h1>
-        <p className={cn(TYPOGRAPHY.body, 'mt-2 text-muted-foreground')}>Your live cohort schedule, recorded sessions, and direct mentor access.</p>
+        <h1 className={TYPOGRAPHY.h1}>{t('dashboard.liveClasses.title')}</h1>
+        <p className={cn(TYPOGRAPHY.body, 'mt-2 text-muted-foreground')}>{t('dashboard.liveClasses.intro')}</p>
       </div>
 
       <Tabs defaultValue="masterclass">
         <TabsList>
-          <TabsTrigger value="masterclass">Masterclass</TabsTrigger>
-          <TabsTrigger value="parents">Parents Dashboard</TabsTrigger>
+          <TabsTrigger value="masterclass">{t('dashboard.liveClasses.tabClasses')}</TabsTrigger>
+          <TabsTrigger value="parents">{t('dashboard.liveClasses.tabParents')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="masterclass" className="space-y-4 pt-4 sm:space-y-6">
