@@ -1,6 +1,6 @@
 {
   "lang": "hi",
-  "review": "pending",
+  "review": "reviewed",
   "lines": [
     {
       "id": "common-01",
@@ -337,5 +337,6 @@
       "phase": "object",
       "text": "नाचता हुआ, ... एक मोर।"
     }
-  ]
+  ],
+  "reviewedBy": "founder (native Hindi), 7 Oct 2026"
 }
