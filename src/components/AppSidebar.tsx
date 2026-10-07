@@ -6,6 +6,7 @@ import { LivingBrainLogo } from '@/components/brand/LivingBrainLogo'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
 import { brand } from '@/config/site.config'
+import { getAppT } from '@/lib/app-i18n/server'
 
 type AppSidebarProps = {
   // School Dashboard white-labeling — set only for a student who belongs
@@ -26,7 +27,8 @@ type AppSidebarProps = {
   email: string
 }
 
-export function AppSidebar({ brandName = null, brandLogoUrl = null, appDomain, showPracticeJourney, fullName, avatarUrl, email }: AppSidebarProps): React.JSX.Element {
+export async function AppSidebar({ brandName = null, brandLogoUrl = null, appDomain, showPracticeJourney, fullName, avatarUrl, email }: AppSidebarProps): Promise<React.JSX.Element> {
+  const { t } = await getAppT()
   return (
     <aside className="flex h-full w-60 flex-col border-r bg-card/80">
       <div className="flex h-14 shrink-0 items-center gap-2.5 border-b border-border/60 px-4">
@@ -55,7 +57,7 @@ export function AppSidebar({ brandName = null, brandLogoUrl = null, appDomain, s
           below the h-14 header rather than crammed inline next to the
           wordmark — the full tagline is too long to fit that single row
           in a 240px-wide sidebar. */}
-      <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain)}</p>
+      <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain, t('nav.appTagline'))}</p>
       <div className="flex-1 overflow-y-auto py-3">
         <NavLinks appDomain={appDomain} showPracticeJourney={showPracticeJourney} />
       </div>

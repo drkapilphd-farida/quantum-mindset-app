@@ -2,7 +2,7 @@
   "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
   "history": "ಇತಿಹಾಸ",
   "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
-  "documentStudio": "Document Studio",
+  "documentStudio": "ಡಾಕ್ಯುಮೆಂಟ್ ಸ್ಟುಡಿಯೋ",
   "mainNavigation": "ಮುಖ್ಯ ಮೆನು",
   "openNavigation": "ಮೆನು ತೆರೆಯಿರಿ",
   "account": "ಖಾತೆ",
@@ -19,5 +19,6 @@
   "toggleTheme": "ಥೀಮ್ ಬದಲಿಸಿ",
   "lightMode": "ಲೈಟ್ ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ",
   "darkMode": "ಡಾರ್ಕ್ ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ",
-  "liveClasses": "ಲೈವ್ ತರಗತಿಗಳು"
+  "liveClasses": "ಲೈವ್ ತರಗತಿಗಳು",
+  "appTagline": "AI ಓದು ಮತ್ತು ಡಾಕ್ಯುಮೆಂಟ್ ಇಂಟೆಲಿಜೆನ್ಸ್™"
 }

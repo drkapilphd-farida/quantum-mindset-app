@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getAppDomain } from '@/lib/domains/appDomain'
 import { getDomainTagline } from '@/lib/domains/domainTagline'
 import { brand } from '@/config/site.config'
+import { getAppT } from '@/lib/app-i18n/server'
 import AppI18nRoot from '@/lib/app-i18n/AppI18nRoot'
 import { LanguageSwitcher } from '@/lib/app-i18n/LanguagePicker'
 
@@ -18,6 +19,7 @@ export default async function AuthLayout({
   children: React.ReactNode
 }): Promise<React.JSX.Element> {
   const appDomain = await getAppDomain()
+  const { t } = await getAppT()
 
   return (
     <AppI18nRoot>
@@ -27,7 +29,7 @@ export default async function AuthLayout({
             {brand.appName}
           </Link>
           <div className="flex items-center gap-3">
-            <span className="hidden text-xs font-medium text-muted-foreground sm:inline">{getDomainTagline(appDomain)}</span>
+            <span className="hidden text-xs font-medium text-muted-foreground sm:inline">{getDomainTagline(appDomain, t('nav.appTagline'))}</span>
             <LanguageSwitcher />
           </div>
         </header>

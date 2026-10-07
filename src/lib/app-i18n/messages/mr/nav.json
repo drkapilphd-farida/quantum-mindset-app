@@ -2,7 +2,7 @@
   "dashboard": "डॅशबोर्ड",
   "history": "इतिहास",
   "settings": "सेटिंग्ज",
-  "documentStudio": "Document Studio",
+  "documentStudio": "डॉक्युमेंट स्टुडिओ",
   "mainNavigation": "मुख्य मेन्यू",
   "openNavigation": "मेन्यू उघडा",
   "account": "खाते",
@@ -19,5 +19,6 @@
   "toggleTheme": "थीम बदला",
   "lightMode": "लाइट मोडवर जा",
   "darkMode": "डार्क मोडवर जा",
-  "liveClasses": "लाइव्ह क्लासेस"
+  "liveClasses": "लाइव्ह क्लासेस",
+  "appTagline": "AI वाचन आणि डॉक्युमेंट इंटेलिजन्स™"
 }

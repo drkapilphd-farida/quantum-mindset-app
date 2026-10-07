@@ -2,7 +2,7 @@
   "dashboard": "డాష్‌బోర్డ్",
   "history": "చరిత్ర",
   "settings": "సెట్టింగ్‌లు",
-  "documentStudio": "Document Studio",
+  "documentStudio": "డాక్యుమెంట్ స్టూడియో",
   "mainNavigation": "ప్రధాన మెనూ",
   "openNavigation": "మెనూ తెరవండి",
   "account": "ఖాతా",
@@ -19,5 +19,6 @@
   "toggleTheme": "థీమ్ మార్చండి",
   "lightMode": "లైట్ మోడ్‌కు మార్చండి",
   "darkMode": "డార్క్ మోడ్‌కు మార్చండి",
-  "liveClasses": "లైవ్ క్లాసులు"
+  "liveClasses": "లైవ్ క్లాసులు",
+  "appTagline": "AI రీడింగ్ & డాక్యుమెంట్ ఇంటెలిజెన్స్™"
 }

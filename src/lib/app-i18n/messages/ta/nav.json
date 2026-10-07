@@ -2,7 +2,7 @@
   "dashboard": "டாஷ்போர்டு",
   "history": "வரலாறு",
   "settings": "அமைப்புகள்",
-  "documentStudio": "Document Studio",
+  "documentStudio": "ஆவண ஸ்டுடியோ",
   "mainNavigation": "முதன்மை மெனு",
   "openNavigation": "மெனுவைத் திற",
   "account": "கணக்கு",
@@ -19,5 +19,6 @@
   "toggleTheme": "தீம் மாற்று",
   "lightMode": "லைட் மோடுக்கு மாற்று",
   "darkMode": "டார்க் மோடுக்கு மாற்று",
-  "liveClasses": "நேரலை வகுப்புகள்"
+  "liveClasses": "நேரலை வகுப்புகள்",
+  "appTagline": "AI வாசிப்பு & ஆவண நுண்ணறிவு™"
 }

@@ -12,6 +12,8 @@ import { programs } from '@/config/site.config'
 // Single source of truth for the subtitle shown next to the "Quantum
 // Mind" wordmark across dashboard chrome, auth pages, and the legacy
 // marketing chrome — never invented separately per call site.
-export function getDomainTagline(appDomain: AppDomain): string {
-  return appDomain === 'habit' ? programs.sharpBrain.shortName : 'AI Reading & Document Intelligence™'
+// App chrome passes the translated tagline (nav.appTagline); the legacy
+// marketing chrome keeps the English default.
+export function getDomainTagline(appDomain: AppDomain, appTagline: string = 'AI Reading & Document Intelligence™'): string {
+  return appDomain === 'habit' ? programs.sharpBrain.shortName : appTagline
 }
