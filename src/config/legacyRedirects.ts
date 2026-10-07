@@ -51,6 +51,13 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   // App: exercises whose slug itself changed (old base and new base)
   ...exerciseRedirects('/labs/quantum-speed-reading'),
   ...exerciseRedirects('/labs/sharp-brain'),
+  // Eye-movement and staring drills removed from Sharp Brain (Oct 2026):
+  // old links land on the current Focus Warm-ups menu.
+  ...['saccadic-eye-jump', 'peripheral-expanding-circle', 'after-image-gazing', 'brain-gym-circuit'].map((slug) => ({
+    source: `/labs/sharp-brain/${slug}`,
+    destination: '/labs/sharp-brain/brain-gym',
+    statusCode: 301 as const,
+  })),
   // App: everything else under the old base
   { source: '/labs/quantum-speed-reading', destination: '/labs/sharp-brain', statusCode: 301 },
   { source: '/labs/quantum-speed-reading/:path*', destination: '/labs/sharp-brain/:path*', statusCode: 301 },

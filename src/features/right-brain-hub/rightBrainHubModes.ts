@@ -44,15 +44,6 @@ export const RIGHT_BRAIN_HUB_MODES: readonly RightBrainHubMode[] = [
     storageKey: 'qsr-hemispheric-color-sync-best',
   },
   {
-    id: 'after-image-gazing',
-    title: 'After-Image / Complementary Color Gazing™',
-    purpose: 'Fix your gaze on a glowing shape, then notice the complementary afterimage that lingers on a neutral surface.',
-    status: 'available',
-    href: '/labs/sharp-brain/after-image-gazing',
-    exerciseId: 'after-image-gazing',
-    storageKey: 'qsr-after-image-gazing-best',
-  },
-  {
     id: 'dot-memory-grid',
     title: 'Dot Memory Grid™',
     purpose: 'A cluster of glowing dots flashes across a grid — memorize their positions, then tap them from memory, 5 escalating rounds.',
