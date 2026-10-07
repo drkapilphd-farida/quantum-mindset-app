@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { VisualActivationSuiteExperience } from '@/components/qsr/visual-activation/VisualActivationSuiteExperience'
+import { FocusWarmupsHub } from '@/features/exercise-core/components/FocusWarmupsHub'
 
 export const metadata: Metadata = {
   title: 'Focus Warm-ups — Sharp Brain Lab',
@@ -7,12 +7,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-// Brain Gym™ — the 7-Exercise Visual Activation Suite (see
-// src/components/qsr/visual-activation/), relocated here as its own
-// ungated pillar alongside Reading Intelligence, Intuition Development,
-// Visualization, and Right Brain Activation (see LabPillarsGrid.tsx). No
-// longer a journey stage or a prerequisite for anything — the orchestrator
-// component below is self-contained.
-export default function BrainGymPage(): React.JSX.Element {
-  return <VisualActivationSuiteExperience />
+// Focus Warm-ups (route kept as /brain-gym so old links still work) — a menu
+// of the current warm-ups; every entry plays the current version.
+export default function FocusWarmupsPage(): React.JSX.Element {
+  return <FocusWarmupsHub />
 }

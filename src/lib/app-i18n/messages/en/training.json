@@ -300,5 +300,12 @@
       "purpose": "Catch a word that appears for just a blink.",
       "demo2": "One word appears for a blink."
     }
+  },
+  "focusHub": {
+    "title": "Focus warm-ups",
+    "intro": "Short warm-ups for steady attention before you read. Pick one.",
+    "schulte": "Find the numbers 1 to 25 in order as fast as you can.",
+    "crossLateral": "A side lights up — tap the opposite side.",
+    "fastPattern": "A symbol appears for a moment — pick what you saw."
   }
 }

@@ -3,7 +3,7 @@
 import { QuantumReadingSprintPhase, type QuantumReadingSprintResult } from './QuantumReadingSprintPhase'
 import { computeReadingPowerScore, computeReadingXp } from './quantumReadingSprintDataset'
 import type { Phase3PoolExerciseId } from './qsrProCircuitRotation'
-import { RapidVisualSpanExpanderExperience } from '@/features/rapid-visual-span-expander/components/RapidVisualSpanExpanderExperience'
+import { RapidVisualSpanGlimpse } from '@/features/exercise-core/components/GlimpseExperiences'
 import { DynamicChunkSlidingExperience } from '@/features/dynamic-chunk-sliding/components/DynamicChunkSlidingExperience'
 import { FlashRecallSprintExperience } from '@/features/flash-recall-sprint/components/FlashRecallSprintExperience'
 import { VerticalWordReadingExperience } from '@/features/vertical-word-reading/components/VerticalWordReadingExperience'
@@ -54,7 +54,21 @@ export function RotatingQuantumReadingSprintPhase({ pickedId, onComplete }: Rota
 
   switch (pickedId) {
     case 'rapid-visual-span-expander':
-      return <RapidVisualSpanExpanderExperience onComplete={handlePoolReadingComplete} />
+      return (
+        <RapidVisualSpanGlimpse
+          onComplete={(accuracyPercent, session) => {
+            const readingScore = computeReadingPowerScore(0, accuracyPercent)
+            onComplete({
+              supportsRetention: false,
+              xpEarned: computeReadingXp(readingScore),
+              statLine: `${accuracyPercent}% Accuracy · ${session.score} points`,
+              wpm: 0,
+              accuracyPercent,
+              readingScore,
+            })
+          }}
+        />
+      )
     case 'dynamic-chunk-sliding':
       return (
         <DynamicChunkSlidingExperience

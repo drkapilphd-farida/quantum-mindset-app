@@ -31,6 +31,8 @@ export type ReadingMode = 'quantum-reading-sprint' | 'phrase' | 'vertical-word' 
 // replaced the 2-Minute Circuit of eye drills (Oct 2026). 4 real items for 7
 // days, so every day still gets a distinct Step 1 and Step 2. No domain
 // injection of any kind in week 1 (see canInjectWeaknessDrill below).
+const COLOR_WORD_EASY: JourneyStepExercise = { exerciseId: 'hemispheric-color-sync', title: 'Color-Word Sync Grid', domain: null }
+
 const WEEK_1_POOL: readonly JourneyStepExercise[] = [
   { exerciseId: 'calm-breathing', title: 'Calm Breathing', domain: null },
   { exerciseId: 'schulte-grid-drill', title: 'Peripheral Vision Activator™', domain: null },
@@ -106,6 +108,13 @@ export function getStep1AndStep2(day: number): { step1: JourneyStepExercise; ste
   const dayIndexInWeek = (day - 1) % 7
   const step1 = pool[dayIndexInWeek % pool.length]!
   const step2 = pool[(dayIndexInWeek + 1) % pool.length]!
+  // Never breathe twice in a row: on compulsory-breathing days (1–7) the
+  // breathing warm-up already plays first, so Calm Breathing is swapped for
+  // the easy Color-Word grid.
+  if (isMandatoryBreathingDay(day) && step2.exerciseId === 'calm-breathing') {
+    const otherStep1 = step1.exerciseId === COLOR_WORD_EASY.exerciseId ? (pool.find((e) => e.exerciseId !== 'calm-breathing' && e.exerciseId !== COLOR_WORD_EASY.exerciseId) ?? step1) : step1
+    return { step1: otherStep1, step2: COLOR_WORD_EASY }
+  }
   return { step1, step2 }
 }
 

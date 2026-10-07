@@ -45,26 +45,15 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
   // `{ onComplete: () => void; onExit: () => void }` — both required —
   // so the wizard now drives one real, complete, single drill per step,
   // exactly like every other Brain Gym pick.
-  'theta-breathing-anchor': lazyNamed(() => import('@/components/qsr/visual-activation/ThetaBreathingAnchor'), 'ThetaBreathingAnchor'),
-  'cardinal-oculomotor-stretches': lazyNamed(() => import('@/components/qsr/visual-activation/CardinalOculomotorStretches'), 'CardinalOculomotorStretches'),
-  'infinity-figure-eight-gliding': lazyNamed(() => import('@/components/qsr/visual-activation/InfinityFigureEightGliding'), 'InfinityFigureEightGliding'),
   // The four former watch-only drills now end with an answer step (exercise-core glimpse trainer).
   'peripheral-flash-expander': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'PeripheralFlashGlimpse'),
   'quantum-tachistoscope-multi-word-blast': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'MultiWordFlashGlimpse'),
-  'aura-edge-color-pulsing': lazyNamed(() => import('@/components/qsr/visual-activation/AuraEdgeColorPulsing'), 'AuraEdgeColorPulsing'),
   'blink-trigger-micro-recall': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'BlinkRecallGlimpse'),
-  'tratak-afterimage-stretches': lazyNamed(() => import('@/components/qsr/visual-activation/TratakAfterimageStretches'), 'TratakAfterimageStretches'),
   'schulte-grid-speed-drill': lazyNamed(() => import('@/components/qsr/visual-activation/SchulteGridSpeedDrill'), 'SchulteGridSpeedDrill'),
   'rapid-visual-span-expander': lazyNamed(() => import('@/features/exercise-core/components/GlimpseExperiences'), 'RapidVisualSpanGlimpse'),
 
-  'saccadic-eye-jump': lazyNamed(() => import('@/features/brain-gym/components/SaccadicEyeJumpExperience'), 'SaccadicEyeJumpExperience'),
   'cross-lateral-tap': lazyNamed(() => import('@/features/brain-gym/components/CrossLateralTapExperience'), 'CrossLateralTapExperience'),
   'fast-pattern-blinking': lazyNamed(() => import('@/features/brain-gym/components/FastPatternBlinkingExperience'), 'FastPatternBlinkingExperience'),
-  'peripheral-expanding-circle': lazyNamed(
-    () => import('@/features/brain-gym/components/PeripheralExpandingCircleExperience'),
-    'PeripheralExpandingCircleExperience',
-  ),
-  'brain-gym-circuit': lazyNamed(() => import('@/features/brain-gym/components/BrainGymCircuitExperience'), 'BrainGymCircuitExperience'),
 
   // Right-Brain / Intuition
   'photographic-memory': lazyNamed(() => import('@/features/photographic-memory/components/PhotographicMemoryExperience'), 'PhotographicMemoryExperience'),
@@ -76,16 +65,10 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
     () => import('@/features/hemispheric-color-sync/components/HemisphericColorSyncExperience'),
     'HemisphericColorSyncExperience',
   ),
-  'after-image-gazing': lazyNamed(() => import('@/features/after-image-gazing/components/AfterImageGazingExperience'), 'AfterImageGazingExperience'),
   'dot-memory-grid': lazyNamed(() => import('@/features/dot-memory-grid/components/DotMemoryGridExperience'), 'DotMemoryGridExperience'),
   'number-flash-grid': lazyNamed(() => import('@/features/number-flash-grid/components/NumberFlashGridExperience'), 'NumberFlashGridExperience'),
   'word-flash-grid': lazyNamed(() => import('@/features/word-flash-grid/components/WordFlashGridExperience'), 'WordFlashGridExperience'),
   'image-flash-grid': lazyNamed(() => import('@/features/image-flash-grid/components/ImageFlashGridExperience'), 'ImageFlashGridExperience'),
-  'esp-zener-telepathy-sprint': lazyNamed(() => import('@/features/esp-zener-telepathy/components/EspZenerTelepathyExperience'), 'EspZenerTelepathyExperience'),
-  'quantum-hidden-target-grid': lazyNamed(
-    () => import('@/features/quantum-hidden-target-grid/components/QuantumHiddenTargetGridExperience'),
-    'QuantumHiddenTargetGridExperience',
-  ),
 
   // Visualization
   'quantum-mental-rotation': lazyNamed(
