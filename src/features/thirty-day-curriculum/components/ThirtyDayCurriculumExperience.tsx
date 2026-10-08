@@ -9,6 +9,7 @@ import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
 import { FairReadingTest } from '@/features/fair-reading-test/components/FairReadingTest'
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
 import { CertificateReadyCard } from '@/features/certificate/components/CertificateReadyCard'
+import { LiveClassesProgressLink } from '@/features/live-classes/components/LiveClassesExperience'
 import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
 import { MasterclassPaywallModal } from './MasterclassPaywallModal'
 import { FinishPreviousDayModal } from './FinishPreviousDayModal'
@@ -57,6 +58,8 @@ function parseValidDay(rawDay: string | null): number | null {
 // real page round-trip. Every other, embeddable exercise never leaves
 // this route at all; see DayMasterPlayer.tsx.
 type ThirtyDayCurriculumExperienceProps = {
+  /** Live classes done (x of 7), shown as a small link above the plan. */
+  liveClassesDone?: number
   // 30-Day Masterclass Paywall™ — resolved server-side (see this
   // route's page.tsx, hasQuantumSpeedReadingProAccess) and passed down
   // as the one real source of truth every gate in this component tree
@@ -78,7 +81,7 @@ type ThirtyDayCurriculumExperienceProps = {
   watermarkText: string | null
 }
 
-export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
+export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, liveClassesDone = 0 }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
   // Practice text is English until a language gets its own passages; WPM is compared only within one language.
   const contentLang = practiceContentLang(useUiLang(), 'reading')
@@ -278,6 +281,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   return (
     <>
       {serverCompletedDays.includes(TOTAL_CURRICULUM_DAYS) && <CertificateReadyCard />}
+      {isPro && <LiveClassesProgressLink classesDone={liveClassesDone} />}
       <ThirtyDayCurriculumOverview
         onSelectDay={handleSelectDay}
         onLockedDayClick={handleClosedDay}

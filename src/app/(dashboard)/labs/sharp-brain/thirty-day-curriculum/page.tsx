@@ -5,6 +5,7 @@ import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSp
 import { getCurriculumDayCompletions } from '@/features/thirty-day-curriculum/actions/getCurriculumDayCompletions'
 import { getCurriculumWatermarkText } from '@/features/thirty-day-curriculum/actions/getCurriculumWatermarkText'
 import { isCurriculumDayUnlocked } from '@/features/thirty-day-curriculum/curriculumProgress'
+import { getMyClassesDone } from '@/features/live-classes/actions'
 
 export const metadata: Metadata = {
   title: 'Sharp Brain 30-Day Program Curriculum — Sharp Brain Lab',
@@ -39,10 +40,11 @@ type ThirtyDayCurriculumPageProps = {
 }
 
 export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDayCurriculumPageProps): Promise<React.JSX.Element> {
-  const [isPro, completions, watermarkText] = await Promise.all([
+  const [isPro, completions, watermarkText, liveClassesDone] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
     getCurriculumDayCompletions(),
     getCurriculumWatermarkText(),
+    getMyClassesDone(),
   ])
   const initialServerCompletedDays = completions.map((completion) => completion.day)
 
@@ -54,5 +56,5 @@ export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDa
   if (requestedDay !== null && Number.isInteger(requestedDay) && !isCurriculumDayUnlocked(requestedDay, initialServerCompletedDays, isPro)) {
     redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
   }
-  return <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} />
+  return <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} />
 }

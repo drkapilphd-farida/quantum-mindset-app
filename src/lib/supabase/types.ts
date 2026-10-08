@@ -1573,6 +1573,93 @@ export type Database = {
         }
         Relationships: []
       }
+      live_class_attendance: {
+        Row: {
+          class_number: number
+          counts: boolean
+          id: string
+          kind: string
+          marked_at: string
+          marked_by: string
+          session_id: string | null
+          user_id: string
+        }
+        Insert: {
+          class_number: number
+          counts: boolean
+          id?: string
+          kind: string
+          marked_at?: string
+          marked_by: string
+          session_id?: string | null
+          user_id: string
+        }
+        Update: {
+          class_number?: number
+          counts?: boolean
+          id?: string
+          kind?: string
+          marked_at?: string
+          marked_by?: string
+          session_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      live_class_registrations: {
+        Row: {
+          cancelled_at: string | null
+          created_at: string
+          id: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          created_at?: string
+          id?: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          created_at?: string
+          id?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      live_class_sessions: {
+        Row: {
+          class_number: number
+          created_at: string
+          ends_at: string
+          id: string
+          starts_at: string
+          status: string
+          topic_override: string | null
+        }
+        Insert: {
+          class_number: number
+          created_at?: string
+          ends_at: string
+          id?: string
+          starts_at: string
+          status?: string
+          topic_override?: string | null
+        }
+        Update: {
+          class_number?: number
+          created_at?: string
+          ends_at?: string
+          id?: string
+          starts_at?: string
+          status?: string
+          topic_override?: string | null
+        }
+        Relationships: []
+      }
       masterclass_payments: {
         Row: {
           amount_cents: number | null

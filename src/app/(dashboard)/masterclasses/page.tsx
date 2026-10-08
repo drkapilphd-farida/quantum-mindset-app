@@ -3,9 +3,8 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
-import { getActiveMasterclasses, splitMasterclassesByStatus } from '@/features/live-masterclass/queries/getActiveMasterclasses'
-import { UpcomingCohortSchedule } from '@/features/live-masterclass/components/UpcomingCohortSchedule'
-import { RecordedMasterclassVault } from '@/features/live-masterclass/components/RecordedMasterclassVault'
+import { getLiveClassesView } from '@/features/live-classes/actions'
+import { LiveClassesExperience } from '@/features/live-classes/components/LiveClassesExperience'
 import { MentorGuidanceCard } from '@/features/live-masterclass/components/MentorGuidanceCard'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
 import { cn } from '@/lib/utils'
@@ -35,9 +34,9 @@ export default async function MasterclassesPage(): Promise<React.JSX.Element> {
 
   if (!user) redirect('/login?next=/masterclasses')
 
-  const allSessions = await getActiveMasterclasses()
-  const { upcoming, recorded } = splitMasterclassesByStatus(allSessions)
-  const { t } = await getAppT()
+  // Phase 3: the rolling monthly cycle of Classes 1–7 (the old per-session
+  // "masterclasses" table is no longer shown here).
+  const [view, { t }] = await Promise.all([getLiveClassesView(), getAppT()])
 
   return (
     <div className="space-y-6">
@@ -53,8 +52,7 @@ export default async function MasterclassesPage(): Promise<React.JSX.Element> {
         </TabsList>
 
         <TabsContent value="masterclass" className="space-y-4 pt-4 sm:space-y-6">
-          <UpcomingCohortSchedule sessions={upcoming} />
-          <RecordedMasterclassVault sessions={recorded} />
+          <LiveClassesExperience view={view} now={Date.now()} />
           <MentorGuidanceCard />
         </TabsContent>
 

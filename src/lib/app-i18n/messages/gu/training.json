@@ -484,5 +484,37 @@
     "cardTitle": "તમારું Sharp Brain પ્રમાણપત્ર તૈયાર છે",
     "cardCta": "પ્રમાણપત્ર જુઓ",
     "shareText": "મેં Mind Ur Mind સાથે Sharp Brain ના 30 દિવસ પૂર્ણ કર્યા. ચકાસો: {url}"
+  },
+  "liveClasses": {
+    "myClasses": "મારા ક્લાસ",
+    "progress": "{classes}/7 ક્લાસ · {days}/30 દિવસ",
+    "classN": "Class {n}",
+    "done": "પૂર્ણ",
+    "next": "આગળ: {date}",
+    "tba": "તારીખ ટૂંક સમયમાં જણાવાશે",
+    "recordingsNote": "રેકોર્ડિંગ Classplus પર ઉપલબ્ધ છે.",
+    "upcoming": "આવનારા લાઇવ ક્લાસ",
+    "noneUpcoming": "હજી કોઈ લાઇવ ક્લાસ નક્કી નથી. કૃપા કરીને થોડા સમયમાં ફરી જુઓ.",
+    "when": "{date}, {from}–{to} IST",
+    "register": "આ ક્લાસ માટે નોંધણી કરો",
+    "registered": "નોંધણી થઈ ગઈ — ડૉ. કપિલ તમને WhatsApp પર Zoom લિંક મોકલશે.",
+    "resend": "WhatsApp સંદેશ ફરી મોકલો",
+    "cancel": "નોંધણી રદ કરો",
+    "sessionCancelled": "આ ક્લાસ રદ થયો છે",
+    "closed": "નોંધણી બંધ",
+    "notEnrolled": "લાઇવ ક્લાસ Sharp Brain વિદ્યાર્થીઓ માટે છે.",
+    "error": "કંઈક ખોટું થયું. કૃપા કરીને ફરી પ્રયાસ કરો.",
+    "whatsapp": "નમસ્તે, મારું નામ {name} છે. મારે Class {n} – {topic} ({when}) join કરવો છે. Email: {email}",
+    "planLine": "7 માંથી {classes} લાઇવ ક્લાસ",
+    "planLink": "લાઇવ ક્લાસ",
+    "topics": {
+      "c1": "પાયો",
+      "c2": "આંખ અને ફોકસ તાલીમ",
+      "c3": "અંદરના અવાજ પર નિયંત્રણ",
+      "c4": "મેમરી સિસ્ટમ્સ",
+      "c5": "વિઝ્યુઅલાઇઝેશન અને માનસિક નિપુણતા",
+      "c6": "અભ્યાસ અને કામમાં ઉપયોગ",
+      "c7": "શ્રેષ્ઠ પ્રદર્શન"
+    }
   }
 }

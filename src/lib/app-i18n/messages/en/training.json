@@ -484,5 +484,37 @@
     "cardTitle": "Your Sharp Brain certificate is ready",
     "cardCta": "View certificate",
     "shareText": "I completed 30 days of Sharp Brain with Mind Ur Mind. Verify: {url}"
+  },
+  "liveClasses": {
+    "myClasses": "My classes",
+    "progress": "{classes} of 7 classes · {days} of 30 days",
+    "classN": "Class {n}",
+    "done": "Done",
+    "next": "Next: {date}",
+    "tba": "Date to be announced",
+    "recordingsNote": "Recordings are available on Classplus.",
+    "upcoming": "Upcoming live classes",
+    "noneUpcoming": "No live classes are scheduled yet. Please check again soon.",
+    "when": "{date}, {from}–{to} IST",
+    "register": "Register for this class",
+    "registered": "Registered — Dr. Kapil will send you the Zoom link on WhatsApp.",
+    "resend": "Send the WhatsApp message again",
+    "cancel": "Cancel registration",
+    "sessionCancelled": "This class is cancelled",
+    "closed": "Registration closed",
+    "notEnrolled": "Live classes are for Sharp Brain learners.",
+    "error": "Something went wrong. Please try again.",
+    "whatsapp": "Hello, my name is {name}. I would like to join Class {n} – {topic} ({when}). Email: {email}",
+    "planLine": "{classes} of 7 live classes",
+    "planLink": "Live classes",
+    "topics": {
+      "c1": "Foundation",
+      "c2": "Eye & Focus Training",
+      "c3": "Inner Voice Control",
+      "c4": "Memory Systems",
+      "c5": "Visualization & Mental Mastery",
+      "c6": "Study & Work Application",
+      "c7": "Peak Performance"
+    }
   }
 }
