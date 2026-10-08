@@ -1988,6 +1988,42 @@ export type Database = {
         }
         Relationships: []
       }
+      program_certificates: {
+        Row: {
+          code: string
+          completed_on: string
+          id: string
+          issued_at: string
+          learner_name: string
+          program: string
+          revoked_at: string | null
+          snapshot: Json
+          user_id: string
+        }
+        Insert: {
+          code: string
+          completed_on: string
+          id?: string
+          issued_at?: string
+          learner_name: string
+          program?: string
+          revoked_at?: string | null
+          snapshot?: Json
+          user_id: string
+        }
+        Update: {
+          code?: string
+          completed_on?: string
+          id?: string
+          issued_at?: string
+          learner_name?: string
+          program?: string
+          revoked_at?: string | null
+          snapshot?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       qsr_reading_assessments: {
         Row: {
           content_lang: string

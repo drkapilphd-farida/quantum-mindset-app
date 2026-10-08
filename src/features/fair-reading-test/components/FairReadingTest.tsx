@@ -1,7 +1,9 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { CERTIFICATE_ROUTE } from '@/features/certificate/components/CertificateReadyCard'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { LANGUAGES } from '@/lib/app-i18n/languages'
 import { hasReachedEnd } from '@/features/reading-speed-test/scoring'
@@ -316,6 +318,9 @@ function ResultView({ result, results, firstName, onContinue }: { result: FairRe
           </table>
           <Button variant="outline" size="lg" className="min-h-12 rounded-full" onClick={() => void share()} data-fair-share="true">
             {t('training.fairTest.share')}
+          </Button>
+          <Button asChild size="lg" className="min-h-12 rounded-full" data-fair-certificate="true">
+            <Link href={CERTIFICATE_ROUTE}>{t('training.certificate.cardCta')}</Link>
           </Button>
         </div>
       )}

@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation'
 import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
 import { FairReadingTest } from '@/features/fair-reading-test/components/FairReadingTest'
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
+import { CertificateReadyCard } from '@/features/certificate/components/CertificateReadyCard'
 import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
 import { MasterclassPaywallModal } from './MasterclassPaywallModal'
 import { FinishPreviousDayModal } from './FinishPreviousDayModal'
@@ -248,6 +249,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   if (view === 'day-detail' && selectedDay !== null) {
     return (
       <>
+        {selectedDay === TOTAL_CURRICULUM_DAYS && serverCompletedDays.includes(TOTAL_CURRICULUM_DAYS) && <CertificateReadyCard />}
         <ThirtyDayCurriculumDayDetail
           day={selectedDay}
           progress={progress}
@@ -275,6 +277,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // regardless, so there's no conflict during play either.
   return (
     <>
+      {serverCompletedDays.includes(TOTAL_CURRICULUM_DAYS) && <CertificateReadyCard />}
       <ThirtyDayCurriculumOverview
         onSelectDay={handleSelectDay}
         onLockedDayClick={handleClosedDay}
