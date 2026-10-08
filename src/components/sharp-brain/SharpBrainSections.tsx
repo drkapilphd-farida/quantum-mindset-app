@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2, ShieldCheck } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { programs, trainer } from "@/config/site.config";
+import { programs, qsrGuarantee, trainer } from "@/config/site.config";
 import { FREE_TEST_LINKS } from "@/config/navigation";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { QSR_ADULT_VIDEO_REVIEWS, QSR_MORE_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
@@ -17,6 +17,7 @@ import { istDayMonth } from "@/features/sharp-brain-enrol/copy";
 import { BatchCheckout, PriceLine, useEnrolLabel, useNextBatch } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import { Eyebrow } from "../ui";
 import TrainerBio from "../TrainerBio";
+import GuaranteeBadge from "./GuaranteeBadge";
 import VideoReviewGrid from "../VideoReviewGrid";
 
 // Sections of /programs/sharp-brain (rewritten 1 Oct 2026), in page order:
@@ -390,24 +391,6 @@ export function SharpBrainTrainer(): React.JSX.Element {
   );
 }
 
-function GuaranteeBox(): React.JSX.Element {
-  const c = useCopy().guarantee;
-  return (
-    <div className="flex items-start gap-3 rounded-sm border border-gold/40 bg-gold-soft px-5 py-4">
-      <ShieldCheck className="mt-0.5 h-5 w-5 flex-none text-gold" aria-hidden="true" />
-      <div>
-        <p className="text-[14px] font-bold text-ink">{c.title}</p>
-        <p className="mt-1 text-[13px] leading-relaxed text-ink-dim">
-          {c.statement} {c.request}{" "}
-          <Link href="/refund-policy" className="underline underline-offset-2 hover:text-ink">
-            {c.policy}
-          </Link>
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export function SharpBrainOffer(): React.JSX.Element {
   const c = useCopy().offer;
   const { lang } = useLanguage();
@@ -431,6 +414,12 @@ export function SharpBrainOffer(): React.JSX.Element {
             <div className="mt-6">
               <BatchCheckout location="sharp_brain_offer" showPerDay />
             </div>
+            <p className="mt-3 text-[12.5px] leading-relaxed text-ink-dim" data-guarantee-short>
+              {qsrGuarantee[lang].short}{" "}
+              <a href="#guarantee" className="font-medium text-ink underline underline-offset-2">
+                {qsrGuarantee[lang].fullTerms}
+              </a>
+            </p>
             <a
               href={WHATSAPP_MASTERCLASS_INQUIRY_LINK}
               target="_blank"
@@ -443,7 +432,7 @@ export function SharpBrainOffer(): React.JSX.Element {
           </div>
         </div>
         <div className="mt-8 max-w-3xl">
-          <GuaranteeBox />
+          <GuaranteeBadge id="guarantee" />
         </div>
       </div>
     </section>

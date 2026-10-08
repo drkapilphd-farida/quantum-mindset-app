@@ -68,7 +68,7 @@ export default function TermsOfServicePage(): React.JSX.Element {
             completing the {programs.sharpBrain.name}).
           </li>
           <li>
-            Refunds and cancellations — including the {programs.sharpBrain.name}&rsquo;s 100% Results
+            Refunds and cancellations — including the {programs.sharpBrain.name}&rsquo;s Results
             Guarantee — are governed by our{' '}
             <a href="/refund-policy" className="text-foreground underline underline-offset-2">
               Refund &amp; Cancellation Policy

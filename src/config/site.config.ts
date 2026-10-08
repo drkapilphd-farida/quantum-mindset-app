@@ -492,33 +492,61 @@ export const organisationsWorkedWith: readonly string[] = []
 export const franchisePartnerFormats: readonly string[] | null = null
 
 /**
- * QSR results guarantee — the single wording used on the QSR page, FAQs
- * and the Refund & Cancellation Policy page, so the conditions can never
- * differ between them. `statement` is the binding sentence; `short` is
- * the one-line summary for tight spots (it must not add or drop a
- * condition).
+ * Sharp Brain Results Guarantee — the single wording used on the Sharp Brain
+ * page, the FAQs, the Refund & Cancellation Policy page and the test-offer
+ * page, so the conditions can never differ between them (approved by the
+ * founder, 8 Oct 2026). `conditions` + `retest` are the binding terms;
+ * `statement` is the same terms as one paragraph for FAQ answers; `short` is
+ * the line under the payment button (it must not add or drop a condition).
+ * Never "100%". Retention = comprehension in the fair reading test.
  */
+const GUARANTEE_EN = {
+  intro: 'You get a full refund of your fee only if all of these are true:',
+  conditions: [
+    'You completed all 30 days of practice in the app.',
+    'You completed all 7 classes, live or by watching a recording that Dr. Kapil approves.',
+    'You took both the Day 1 and the Day 30 reading tests.',
+    'You ask for the refund within 7 days of completing Day 30. After that, the guarantee no longer applies.',
+    'On Day 30, both your effective reading speed and your retention (how much you remember from the test passage) show no improvement over Day 1.',
+  ],
+  retest: 'Before a refund, we may ask you to repeat the Day 30 test with Dr. Kapil on Zoom.',
+} as const
+
+const GUARANTEE_HI = {
+  intro: 'आपको अपनी फ़ीस का पूरा रिफंड तभी मिलेगा जब ये सभी बातें सही हों:',
+  conditions: [
+    'आपने ऐप में 30 दिनों का पूरा अभ्यास किया हो।',
+    'आपने सभी 7 क्लासेस पूरी की हों — लाइव, या ऐसी रिकॉर्डिंग देखकर जिसे डॉ. कपिल स्वीकार करें।',
+    'आपने Day 1 और Day 30, दोनों रीडिंग टेस्ट दिए हों।',
+    'आप Day 30 पूरा करने के 7 दिनों के भीतर रिफंड माँगें। इसके बाद गारंटी लागू नहीं होगी।',
+    'Day 30 पर आपकी प्रभावी पढ़ने की गति और रिटेंशन (टेस्ट के पैराग्राफ़ से आपको कितना याद रहा), दोनों में Day 1 के मुकाबले कोई सुधार न हो।',
+  ],
+  retest: 'रिफंड से पहले, हम आपसे डॉ. कपिल के साथ Zoom पर Day 30 टेस्ट दोबारा देने के लिए कह सकते हैं।',
+} as const
+
+const asParagraph = (g: { intro: string; conditions: readonly string[]; retest: string }): string =>
+  `${g.intro} ${g.conditions.map((c, i) => `(${i + 1}) ${c}`).join(' ')} ${g.retest}`
+
 const qsrGuaranteeData = {
   en: {
-    title: '100% Results Guarantee',
-    /** Title on sales pages (Sharp Brain page, test result), which carry no "100%" claims. */
+    title: 'Results Guarantee',
     label: 'Results Guarantee',
-    statement:
-      "If you complete the full 30-day protocol as instructed — every daily app session, and all 7 live masterclass sessions with Dr. Kapil Dev Sharma — and your reading speed (WPM) and comprehension haven't measurably improved between your Day 1 baseline and your Day 30 checkpoint, we'll issue a full refund of your enrolment fee.",
+    ...GUARANTEE_EN,
+    statement: asParagraph(GUARANTEE_EN),
     short:
-      "100% Results Guarantee — a full refund if your WPM and comprehension haven't measurably improved after the complete 30-day protocol.",
-    requestWindow: 'Request it within 7 days of completing Day 30.',
+      'Results Guarantee: a full refund if you complete all 30 days and all 7 classes, take both reading tests, and on Day 30 neither your effective reading speed nor your retention has improved. Claim within 7 days of Day 30.',
+    fullTerms: 'See full terms',
   },
   hi: {
-    title: '100% रिज़ल्ट गारंटी',
-    label: 'रिज़ल्ट गारंटी',
-    statement:
-      'अगर आप पूरा 30-दिवसीय प्रोटोकॉल निर्देशानुसार पूरा करते हैं — हर दैनिक ऐप सेशन, और डॉ. कपिल देव शर्मा के साथ सभी 7 लाइव मास्टरक्लास सेशन — और आपके दिन 1 के बेसलाइन और दिन 30 के चेकपॉइंट के बीच आपकी रीडिंग स्पीड (WPM) और समझ में मापने योग्य सुधार नहीं होता, तो हम आपकी नामांकन फीस का पूरा रिफंड देंगे।',
+    title: 'परिणाम गारंटी',
+    label: 'परिणाम गारंटी',
+    ...GUARANTEE_HI,
+    statement: asParagraph(GUARANTEE_HI),
     short:
-      '100% रिज़ल्ट गारंटी — पूरा 30-दिवसीय प्रोटोकॉल पूरा करने के बाद भी अगर आपकी WPM और समझ में मापने योग्य सुधार नहीं होता, तो पूरा रिफंड।',
-    requestWindow: 'दिन 30 पूरा करने के 7 दिनों के भीतर अनुरोध करें।',
+      'परिणाम गारंटी: अगर आप 30 दिन और सभी 7 क्लासेस पूरी करते हैं, दोनों रीडिंग टेस्ट देते हैं, और Day 30 पर न आपकी प्रभावी पढ़ने की गति सुधरी, न रिटेंशन — तो पूरा रिफंड। Day 30 के 7 दिनों के भीतर दावा करें।',
+    fullTerms: 'पूरी शर्तें देखें',
   },
-} as const
+}
 
 export const qsrGuarantee: Widen<typeof qsrGuaranteeData> = qsrGuaranteeData
 

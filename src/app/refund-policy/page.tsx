@@ -39,18 +39,24 @@ export default function RefundPolicyPage(): React.JSX.Element {
       </p>
 
       <section>
-        <h2 className={legalStyles.h2}>{programs.sharpBrain.name} — 100% Results Guarantee</h2>
-        <p className={legalStyles.p}>{qsrGuarantee.en.statement}</p>
+        <h2 className={legalStyles.h2}>{programs.sharpBrain.name} — {qsrGuarantee.en.title}</h2>
+        <p className={legalStyles.p}>{qsrGuarantee.en.intro}</p>
+        <ol className={`${legalStyles.p} list-decimal space-y-1 pl-6`}>
+          {qsrGuarantee.en.conditions.map((condition) => (
+            <li key={condition}>{condition}</li>
+          ))}
+        </ol>
+        <p className={legalStyles.p}>{qsrGuarantee.en.retest}</p>
         <ul className={legalStyles.list}>
           <li>
-            <strong>Eligibility:</strong> you must have completed all 30 days and all 7 live sessions. Partial
+            <strong>Eligibility:</strong> you must have completed all 30 days, all 7 classes (live, or a recording Dr. Kapil approves) and both reading tests. Partial
             completion, or stopping partway through, isn&rsquo;t covered by this guarantee — see &ldquo;Cancelling
             before finishing&rdquo; below for that case instead.
           </li>
           <li>
-            <strong>What &ldquo;results&rdquo; means:</strong> your own WPM and comprehension scores, tracked
-            automatically by the app at your Day 1 baseline and your Day 30 checkpoint. We use this real, recorded
-            data to evaluate every guarantee claim — not a subjective judgment call.
+            <strong>What &ldquo;results&rdquo; means:</strong> your own effective reading speed and retention
+            (comprehension in the fair reading test), recorded by the app in your Day 1 and Day 30 reading tests. We
+            use this real, recorded data to evaluate every guarantee claim — not a subjective judgment call.
           </li>
           <li>
             <strong>How to request it:</strong> message us on WhatsApp or email{' '}
@@ -66,7 +72,7 @@ export default function RefundPolicyPage(): React.JSX.Element {
           </li>
         </ul>
         <p className={legalStyles.p}>
-          <strong>Cancelling before finishing:</strong> if you stop before completing all 30 days and 7 sessions, the
+          <strong>Cancelling before finishing:</strong> if you stop before completing all 30 days and 7 classes, the
           results guarantee above doesn&rsquo;t apply. Message us — we handle these on a case-by-case basis and may
           offer a partial refund or credit toward a future batch, depending on how much of the program you&rsquo;ve
           used.

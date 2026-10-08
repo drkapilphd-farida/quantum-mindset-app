@@ -34,7 +34,6 @@ export type SharpBrainCopy = {
   proof: { eyebrow: string; title: string; oldLabel: string; playlistCta: string }
   trainer: { eyebrow: string; readStory: string }
   offer: { eyebrow: string; title: string; items: string[]; questions: string }
-  guarantee: { title: string; statement: string; request: string; policy: string }
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] }
   final: { title: string; speedTest: string }
   sticky: { cta: string }
@@ -142,15 +141,15 @@ const en: SharpBrainCopy = {
     eyebrow: 'The main value',
     title: 'The 7 live classes',
     items: [
-      { title: 'Your Brain & How You Learn', desc: 'How attention, reading and memory work; your Day 1 reading assessment; setting your personal goal.' },
-      { title: 'Focus Training', desc: 'Attention drills, handling distractions, the 25-minute deep-focus method for study and work.' },
-      { title: 'Smart Reading I', desc: 'Reading in phrases instead of word by word, reducing re-reading, reading with a purpose.' },
-      { title: 'Smart Reading II', desc: 'Controlling the inner voice, reading faster while keeping understanding, recall right after reading.' },
-      { title: 'Memory Techniques', desc: 'Visual memory, association, memory palace, peg system and acronyms for facts, formulas and names.' },
-      { title: 'Retention System', desc: 'Active recall, mind maps and spaced revision so what you learn stays — for exams and for work.' },
-      { title: 'Mobile Discipline & Your Day 30 Result', desc: 'Phone-distraction habits, your Day 30 reading assessment, and your 90-day practice plan.' },
+      { title: 'Foundation', desc: 'How attention, reading and memory work, and how your 30 days are planned.' },
+      { title: 'Eye & Focus Training', desc: 'Eye-movement and attention drills for steady focus while you read and study.' },
+      { title: 'Inner Voice Control', desc: 'Reading without saying every word in your head, so you read faster and still understand.' },
+      { title: 'Memory Systems', desc: 'Memory palace, association and other methods for facts, formulas and names.' },
+      { title: 'Visualization & Mental Mastery', desc: 'Using mental pictures to understand, remember and stay calm under pressure.' },
+      { title: 'Study & Work Application', desc: 'Using the methods for exams, revision and reading at work.' },
+      { title: 'Peak Performance', desc: 'Habits, phone discipline and your plan after the 30 days.' },
     ],
-    note: `Live on Zoom with ${trainer.name} — not recordings. Doubts answered in class.`,
+    note: `Live on Zoom with ${trainer.name}, 7:00–9:00 pm IST, one full cycle every month. Missed a class? Join it in a later month, or watch the recording on Classplus.`,
   },
   audiences: {
     eyebrow: 'Who it’s for',
@@ -209,12 +208,6 @@ const en: SharpBrainCopy = {
     ],
     questions: 'Questions? Chat on WhatsApp',
   },
-  guarantee: {
-    title: qsrGuarantee.en.label,
-    statement: qsrGuarantee.en.statement,
-    request: qsrGuarantee.en.requestWindow,
-    policy: 'See the Refund & Cancellation Policy',
-  },
   faq: {
     eyebrow: 'Questions',
     title: 'Before you enrol',
@@ -247,7 +240,7 @@ const en: SharpBrainCopy = {
       },
       {
         question: 'What if it doesn’t work for me?',
-        answer: `${qsrGuarantee.en.statement} ${qsrGuarantee.en.requestWindow}`,
+        answer: qsrGuarantee.en.statement,
       },
       {
         question: 'What happened to Quantum Speed Reading?',
@@ -359,15 +352,15 @@ const hi: SharpBrainCopy = {
     eyebrow: 'प्रोग्राम की असली ताक़त',
     title: '7 लाइव क्लासेस',
     items: [
-      { title: 'आपका दिमाग़ और आप कैसे सीखते हैं', desc: 'ध्यान, पढ़ना और याददाश्त कैसे काम करते हैं; आपका Day 1 रीडिंग असेसमेंट; अपना व्यक्तिगत लक्ष्य तय करना।' },
-      { title: 'फोकस ट्रेनिंग', desc: 'ध्यान के अभ्यास, भटकावों से निपटना, पढ़ाई और काम के लिए 25 मिनट का डीप-फोकस तरीका।' },
-      { title: 'स्मार्ट रीडिंग I', desc: 'शब्द-शब्द की जगह वाक्यांशों में पढ़ना, दोबारा पढ़ना कम करना, उद्देश्य के साथ पढ़ना।' },
-      { title: 'स्मार्ट रीडिंग II', desc: 'मन की आवाज़ पर नियंत्रण, समझ बनाए रखते हुए तेज़ पढ़ना, पढ़ने के तुरंत बाद याद करना।' },
-      { title: 'मेमोरी तकनीकें', desc: 'तथ्य, फ़ॉर्मूले और नाम याद रखने के लिए विज़ुअल मेमोरी, एसोसिएशन, मेमोरी पैलेस, पेग सिस्टम और एक्रोनिम।' },
-      { title: 'याद बनाए रखने का सिस्टम', desc: 'एक्टिव रिकॉल, माइंड मैप और अंतराल पर दोहराव, ताकि जो सीखें वह याद रहे — परीक्षा के लिए भी और काम के लिए भी।' },
-      { title: 'मोबाइल अनुशासन और आपका Day 30 नतीजा', desc: 'फ़ोन से भटकाव की आदतें, आपका Day 30 रीडिंग असेसमेंट, और आपका 90 दिन का अभ्यास प्लान।' },
+      { title: 'Foundation (बुनियाद)', desc: 'ध्यान, पढ़ना और याददाश्त कैसे काम करते हैं, और आपके 30 दिनों की योजना।' },
+      { title: 'Eye & Focus Training', desc: 'पढ़ते और पढ़ाई करते समय स्थिर ध्यान के लिए आँखों और फ़ोकस के अभ्यास।' },
+      { title: 'Inner Voice Control', desc: 'मन में हर शब्द बोले बिना पढ़ना, ताकि आप तेज़ पढ़ें और समझ भी बनी रहे।' },
+      { title: 'Memory Systems', desc: 'तथ्य, फ़ॉर्मूले और नाम याद रखने के लिए मेमोरी पैलेस, एसोसिएशन और दूसरे तरीके।' },
+      { title: 'Visualization & Mental Mastery', desc: 'समझने, याद रखने और दबाव में शांत रहने के लिए मन की तस्वीरों का उपयोग।' },
+      { title: 'Study & Work Application', desc: 'परीक्षा, रिवीज़न और काम की रीडिंग में इन तरीकों का उपयोग।' },
+      { title: 'Peak Performance', desc: 'आदतें, फ़ोन अनुशासन और 30 दिनों के बाद की आपकी योजना।' },
     ],
-    note: `${trainer.nameHi} के साथ Zoom पर लाइव — रिकॉर्डिंग नहीं। सवालों के जवाब क्लास में ही।`,
+    note: `${trainer.nameHi} के साथ Zoom पर लाइव, शाम 7:00–9:00 बजे (IST), हर महीने एक पूरा चक्र। कोई क्लास छूट गई? उसे अगले महीने के चक्र में जॉइन करें, या Classplus पर रिकॉर्डिंग देखें।`,
   },
   audiences: {
     eyebrow: 'यह किसके लिए है',
@@ -426,12 +419,6 @@ const hi: SharpBrainCopy = {
     ],
     questions: 'सवाल हैं? WhatsApp पर बात करें',
   },
-  guarantee: {
-    title: qsrGuarantee.hi.label,
-    statement: qsrGuarantee.hi.statement,
-    request: qsrGuarantee.hi.requestWindow,
-    policy: 'रिफंड और कैंसिलेशन नीति देखें',
-  },
   faq: {
     eyebrow: 'सवाल',
     title: 'नामांकन से पहले',
@@ -462,7 +449,7 @@ const hi: SharpBrainCopy = {
         question: `${regular} में क्या मिलता है?`,
         answer: `${trainer.nameHi} के साथ 7 लाइव क्लासेस, सभी एक्सरसाइज़ के साथ 30 दिन का गाइडेड ऐप अभ्यास, Day 1 और Day 30 पर निष्पक्ष रीडिंग टेस्ट, परीक्षा और काम के लिए याद रखने व दोहराने के तरीके, सर्टिफ़िकेट और प्रोग्राम के दौरान WhatsApp सपोर्ट। एकमुश्त भुगतान — न सब्सक्रिप्शन, न किश्तें।`,
       },
-      { question: 'अगर यह मेरे लिए काम न करे तो?', answer: `${qsrGuarantee.hi.statement} ${qsrGuarantee.hi.requestWindow}` },
+      { question: 'अगर यह मेरे लिए काम न करे तो?', answer: qsrGuarantee.hi.statement },
       { question: 'Quantum Speed Reading का क्या हुआ?', answer: 'अब इसका नाम Sharp Brain है — वही मूल प्रशिक्षण, साफ़ नाम, और फोकस व याददाश्त पर ज़्यादा ज़ोर।' },
     ],
   },

@@ -28,3 +28,26 @@ describe('Sharp Brain page — certificate section', () => {
     expect(JSON.stringify(sharpBrainCopy)).not.toMatch(/Class 1|Class 7/)
   })
 })
+
+describe('Results Guarantee wording (approved 8 Oct 2026)', () => {
+  it('both languages: 5 conditions, the re-test note, the same terms in the FAQ paragraph, never "100%"', async () => {
+    const { qsrGuarantee } = await import('@/config/site.config')
+    for (const lang of ['en', 'hi'] as const) {
+      const g = qsrGuarantee[lang]
+      expect(g.conditions).toHaveLength(5)
+      expect(g.retest).toMatch(/Zoom/)
+      for (const condition of g.conditions) expect(g.statement).toContain(condition)
+      expect(g.statement).toContain(g.retest)
+      expect(JSON.stringify(g)).not.toMatch(/100\s*%/)
+      expect(g.short).toMatch(/7/)
+    }
+    expect(qsrGuarantee.en.title).toBe('Results Guarantee')
+  })
+
+  it('the live-class list uses the new class names and the recording rule', () => {
+    expect(sharpBrainCopy.en.classes.items.map((i) => i.title)).toEqual(['Foundation', 'Eye & Focus Training', 'Inner Voice Control', 'Memory Systems', 'Visualization & Mental Mastery', 'Study & Work Application', 'Peak Performance'])
+    expect(sharpBrainCopy.en.classes.note).toMatch(/Classplus/)
+    expect(sharpBrainCopy.hi.classes.note).toMatch(/Classplus/)
+    expect(JSON.stringify(sharpBrainCopy)).not.toMatch(/not recordings|रिकॉर्डिंग नहीं/)
+  })
+})
