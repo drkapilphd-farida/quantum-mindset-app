@@ -39,6 +39,8 @@ export type CertDrawInput = {
   fonts: CertFonts
   logo: CanvasImageSource
   signature: CanvasImageSource | null
+  /** Website sample: "—" for every number, no signature, a QR placeholder and a SAMPLE stamp. */
+  sample?: { dateText: string; stamp: string }
 }
 
 type Ctx = CanvasRenderingContext2D
@@ -142,6 +144,25 @@ function drawQr(ctx: Ctx, text: string, x: number, y: number, size: number, colo
   for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) ctx.fillRect(x + c * cell, y + r * cell, Math.ceil(cell), Math.ceil(cell))
 }
 
+const DASH = '—'
+
+/** A large rotated "SAMPLE" stamp across the whole image. */
+function drawStamp(ctx: Ctx, text: string, W: number, H: number, sizePx: number, family: string, color: string): void {
+  ctx.save()
+  ctx.translate(W / 2, H / 2)
+  ctx.rotate((-24 * Math.PI) / 180)
+  font(ctx, 800, sizePx, family)
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  const w = [...text].reduce((sum, ch) => sum + ctx.measureText(ch).width, 0) + sizePx * 0.12 * (text.length - 1)
+  ctx.fillStyle = color
+  spaced(ctx, text, 0, 0, sizePx * 0.12, 'center')
+  ctx.strokeStyle = color
+  ctx.lineWidth = sizePx * 0.055
+  ctx.strokeRect(-w / 2 - sizePx * 0.3, -sizePx * 0.62, w + sizePx * 0.6, sizePx * 1.2)
+  ctx.restore()
+}
+
 function languageName(lang: AppLang, readLang: 'en' | 'hi'): string {
   return lang === 'en' ? LANGUAGES[readLang].englishName : LANGUAGES[readLang].nativeName
 }
@@ -235,7 +256,8 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
 
   // "has completed all 30 days of <program> on <date>", programme in bold.
   y += 4.2 * u
-  const date = formatCertDate(input.completedOn, LANGUAGES[input.lang].htmlLang)
+  const sample = input.sample ?? null
+  const date = sample?.dateText ?? formatCertDate(input.completedOn, LANGUAGES[input.lang].htmlLang)
   const setBody = (bold: boolean): void => font(ctx, bold ? 600 : 400, 1.35 * u, bold ? F.latinBody : F.body)
   const lines = wrapRich(ctx, richFromTemplate(L.completed, { program: PROGRAM_NAME, date }, 'program'), 62 * u, setBody)
   y = drawRichCentered(ctx, lines, cx, y, 2.1 * u, setBody, { normal: C.inkSoft, bold: C.ink })
@@ -277,6 +299,7 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
       },
       { label: L.effective, b: `${before?.effective ?? ''}`, a: `${reading.after.effective}`, change: before ? gainPercent(before.effective, reading.after.effective) : null, key: true },
     ]
+    if (sample !== null) for (const row of rows) Object.assign(row, { b: DASH, a: DASH, change: DASH })
     // The "Change" heading only when at least one number went up.
     const heads = before === null ? [fill(L.day, { day: 30 })] : [fill(L.day, { day: before.day }), fill(L.day, { day: 30 }), ...(rows.some((r) => r.change !== null) ? [L.change] : [])]
     heads.forEach((h, i) => ctx.fillText(h, cols[i]!, ty))
@@ -302,7 +325,7 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
         ctx.fillText(row.a, cols[1]!, ty)
         if (row.change !== null) {
           font(ctx, 600, size, F.body)
-          ctx.fillStyle = C.up
+          ctx.fillStyle = sample !== null ? C.inkSoft : C.up
           ctx.fillText(row.change, cols[2]!, ty)
         }
       }
@@ -311,8 +334,8 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
     ctx.textAlign = 'left'
     font(ctx, 400, 0.95 * u, F.body)
     ctx.fillStyle = C.inkSoft
-    const notes = [fill(L.readingNote, { language: languageName(input.lang, reading.lang) })]
-    if (before !== null && before.day > 1) notes.unshift(fill(L.baselineOnDay, { day: before.day }))
+    const notes = sample !== null ? [] : [fill(L.readingNote, { language: languageName(input.lang, reading.lang) })]
+    if (sample === null && before !== null && before.day > 1) notes.unshift(fill(L.baselineOnDay, { day: before.day }))
     const noteLines = wrapRich(ctx, [{ text: notes.join(' '), bold: false }], readingW, () => font(ctx, 400, 0.95 * u, F.body))
     noteLines.forEach((line, i) => ctx.fillText(line.map((s) => s.text).join(''), x0, ty + i * 1.5 * u))
     x0 += readingW + gap
@@ -338,7 +361,7 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
       ctx.fillText(b.label, bx + 1 * u, by + 2 * u)
       font(ctx, 400, 2.6 * u, F.latinDisplay)
       ctx.fillStyle = C.ink
-      ctx.fillText(`${b.value}%`, bx + 1 * u, by + 4.9 * u)
+      ctx.fillText(sample !== null ? DASH : `${b.value}%`, bx + 1 * u, by + 4.9 * u)
       fitFont(ctx, b.sub, 400, 0.9 * u, F.body, boxW - 2 * u)
       ctx.fillStyle = C.inkSoft
       ctx.fillText(b.sub, bx + 1 * u, by + 6.4 * u)
@@ -387,7 +410,20 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
   spaced(ctx, input.domain, cx, footY + 1.5 * u, 0.11 * u, 'center')
 
   const qrSize = 6 * u
-  drawQr(ctx, input.verifyUrl, right - qrSize, footY - 2.4 * u - qrSize, qrSize, C.ink)
+  if (sample !== null) {
+    ctx.save()
+    ctx.strokeStyle = C.inkSoft
+    ctx.lineWidth = 0.1 * u
+    ctx.setLineDash([0.5 * u, 0.4 * u])
+    ctx.strokeRect(right - qrSize, footY - 2.4 * u - qrSize, qrSize, qrSize)
+    ctx.restore()
+    ctx.textAlign = 'center'
+    font(ctx, 500, 1 * u, F.latinBody)
+    ctx.fillStyle = C.inkSoft
+    ctx.fillText('QR', right - qrSize / 2, footY - 2.4 * u - qrSize / 2 + 0.35 * u)
+  } else {
+    drawQr(ctx, input.verifyUrl, right - qrSize, footY - 2.4 * u - qrSize, qrSize, C.ink)
+  }
   ctx.textAlign = 'right'
   font(ctx, 400, 1 * u, F.body)
   ctx.fillStyle = C.inkSoft
@@ -400,6 +436,8 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
   ctx.fillStyle = C.inkSoft
   ctx.fillText(idLabel, right - codeW, footY)
   ctx.fillText(fill(L.verifyAt, { url: input.verifyUrl.replace(/^https?:\/\/(www\.)?/, '') }), right, footY + 1.5 * u)
+
+  if (sample !== null) drawStamp(ctx, sample.stamp, W, H, 13 * u, F.latinBody, 'rgba(166,47,47,0.2)')
 }
 
 export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput): void {
@@ -409,6 +447,7 @@ export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput):
   const ctx = canvas.getContext('2d')!
   const u = W / 100
   const { labels: L, fonts: F, snapshot } = input
+  const sample = input.sample ?? null
 
   const bg = ctx.createLinearGradient(0, 0, W * 0.4, H)
   bg.addColorStop(0, C.navyTop)
@@ -451,12 +490,12 @@ export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput):
   if (reading !== null) {
     y += 23 * u
     const before = reading.before
-    const to = `${reading.after.effective}`
+    const to = sample !== null ? DASH : `${reading.after.effective}`
     font(ctx, 400, 15 * u, F.latinDisplay)
     const toW = ctx.measureText(to).width
     if (before !== null) {
       font(ctx, 400, 9 * u, F.latinDisplay)
-      const from = `${before.effective}`
+      const from = sample !== null ? DASH : `${before.effective}`
       const fromW = ctx.measureText(from).width
       font(ctx, 400, 6 * u, F.latinBody)
       const arrowW = ctx.measureText('→').width
@@ -484,7 +523,7 @@ export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput):
     font(ctx, 400, 3.4 * u, F.body)
     ctx.fillStyle = '#C9CFDD'
     ctx.fillText(before === null ? L.shareUnitDay30 : fill(L.shareUnit, { day: before.day }), cx, y)
-    const gain = before === null ? null : gainPercent(before.effective, reading.after.effective)
+    const gain = before === null || sample !== null ? null : gainPercent(before.effective, reading.after.effective)
     if (gain !== null) {
       y += 8 * u
       font(ctx, 700, 5 * u, F.latinBody)
@@ -501,6 +540,7 @@ export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput):
     cells.push({ label: L.shareComprehension, value: b ? `${b.comprehension} → ${reading.after.comprehension}%` : `${reading.after.comprehension}%` })
   }
   if (snapshot.memory?.retention != null) cells.push({ label: L.shareRetention, value: `${snapshot.memory.retention}%` })
+  if (sample !== null) for (const cell of cells) cell.value = cell.label === L.shareRetention ? DASH : `${DASH} → ${DASH}`
   const rowTop = H - 33 * u
   if (cells.length > 0) {
     ctx.fillStyle = 'rgba(217,181,106,0.5)'
@@ -526,4 +566,6 @@ export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput):
   font(ctx, 500, 2.6 * u, F.latinBody)
   ctx.fillStyle = C.goldLight
   spaced(ctx, input.domain, cx, H - 8.6 * u, 0.36 * u, 'center')
+
+  if (sample !== null) drawStamp(ctx, sample.stamp, W, H, 15 * u, F.latinBody, 'rgba(255,120,120,0.32)')
 }

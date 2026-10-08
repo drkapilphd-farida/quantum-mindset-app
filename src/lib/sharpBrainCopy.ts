@@ -29,6 +29,8 @@ export type SharpBrainCopy = {
   classes: { eyebrow: string; title: string; items: { title: string; desc: string }[]; note: string }
   audiences: { eyebrow: string; title: string; cards: { title: string; desc: string }[]; line: string }
   how: { eyebrow: string; title: string; steps: { title: string; desc: string }[] }
+  /** "Your Sharp Brain certificate" — samples only, no speed or percentage promises (see sharpBrainCopy.test.ts). */
+  certificate: { eyebrow: string; title: string; intro: string; points: { title: string; desc: string }[]; vary: string; caption: string; certAlt: string; shareAlt: string; enlarge: string }
   proof: { eyebrow: string; title: string; oldLabel: string; playlistCta: string }
   trainer: { eyebrow: string; readStory: string }
   offer: { eyebrow: string; title: string; items: string[]; questions: string }
@@ -114,7 +116,7 @@ const en: SharpBrainCopy = {
       'Use 4–5 memory techniques for formulas, facts, names and presentations.',
       'Revise in a way that makes information stay.',
       'Control phone distraction with simple daily habits.',
-      'Compare your own reading numbers from Class 1 and Class 7.',
+      'Compare your own reading numbers from Day 1 and Day 30.',
     ],
   },
   app: {
@@ -165,11 +167,27 @@ const en: SharpBrainCopy = {
     eyebrow: 'How it works',
     title: 'Measure, train, practise, re-measure',
     steps: [
-      { title: 'Reading assessment in Class 1', desc: 'Your reading speed and comprehension — your own starting point.' },
+      { title: 'Fair reading test on Day 1', desc: 'A self-paced reading test in the app: your reading speed and comprehension — your own starting point.' },
       { title: '7 live classes', desc: `Live on Zoom with ${trainer.name} across the 30 days.` },
       { title: 'Daily app practice', desc: '10–15 minutes a day in the Mind Ur Mind App, tracked automatically.' },
-      { title: 'Reading assessment in Class 7', desc: 'The same measures again, compared with Class 1.' },
+      { title: 'Fair reading test on Day 30', desc: 'An equally hard passage, compared with your Day 1 result.' },
     ],
+  },
+  certificate: {
+    eyebrow: 'Your certificate',
+    title: 'Your Sharp Brain certificate',
+    intro: 'Finish Day 30 and you receive a certificate with your own before-and-after numbers.',
+    points: [
+      { title: 'Your own numbers', desc: 'Reading speed, comprehension and effective speed on Day 1 and Day 30, plus your Memory and Retention scores.' },
+      { title: 'A fair test', desc: 'The numbers come from a self-paced reading test, equally hard on Day 1 and Day 30.' },
+      { title: 'Easy to verify', desc: 'Every certificate has a unique ID and a public verification link.' },
+      { title: 'Yours to keep and share', desc: 'In 8 languages, as a PDF and as an image for WhatsApp and Instagram.' },
+    ],
+    vary: 'Results vary from learner to learner.',
+    caption: 'Sample. Your certificate shows your own name and your own results.',
+    certAlt: 'Sample Sharp Brain certificate, marked SAMPLE, with "Your Name" and blank results',
+    shareAlt: 'Sample share image for WhatsApp and Instagram, marked SAMPLE, with blank results',
+    enlarge: 'Tap to view full size.',
   },
   proof: {
     eyebrow: 'Real learners',
@@ -184,7 +202,7 @@ const en: SharpBrainCopy = {
     items: [
       `7 live classes with ${trainer.name}`,
       '30 days of guided app practice (all exercises)',
-      'Reading assessment in Class 1 and Class 7',
+      'Fair reading test on Day 1 and Day 30',
       'Memory & revision methods for exams and work',
       'Certificate of completion',
       'WhatsApp support during the program',
@@ -225,7 +243,7 @@ const en: SharpBrainCopy = {
       },
       {
         question: `What do I get for ${regular}?`,
-        answer: `7 live classes with ${trainer.name}, 30 days of guided app practice with all exercises, a reading assessment in Class 1 and Class 7, memory and revision methods for exams and work, a certificate of completion and WhatsApp support during the program. One-time payment — no subscription, no instalments.`,
+        answer: `7 live classes with ${trainer.name}, 30 days of guided app practice with all exercises, a fair reading test on Day 1 and Day 30, memory and revision methods for exams and work, a certificate of completion and WhatsApp support during the program. One-time payment — no subscription, no instalments.`,
       },
       {
         question: 'What if it doesn’t work for me?',
@@ -315,7 +333,7 @@ const hi: SharpBrainCopy = {
       'फ़ॉर्मूले, तथ्य, नाम और प्रेज़ेंटेशन याद रखने के लिए 4–5 मेमोरी तकनीकों का इस्तेमाल।',
       'ऐसे दोहराना कि जानकारी याद रहे।',
       'आसान रोज़ की आदतों से फ़ोन के भटकाव पर काबू।',
-      'Class 1 और Class 7 के अपने रीडिंग आँकड़ों की तुलना करना।',
+      'Day 1 और Day 30 के अपने रीडिंग आँकड़ों की तुलना करना।',
     ],
   },
   app: {
@@ -366,11 +384,27 @@ const hi: SharpBrainCopy = {
     eyebrow: 'यह कैसे काम करता है',
     title: 'नापें, सीखें, अभ्यास करें, फिर नापें',
     steps: [
-      { title: 'Class 1 में रीडिंग असेसमेंट', desc: 'आपकी रीडिंग स्पीड और समझ — आपकी अपनी शुरुआत।' },
+      { title: 'Day 1 पर निष्पक्ष रीडिंग टेस्ट', desc: 'ऐप में अपनी गति से पढ़ने वाला टेस्ट: आपकी रीडिंग स्पीड और समझ — आपकी अपनी शुरुआत।' },
       { title: '7 लाइव क्लासेस', desc: `30 दिनों में ${trainer.nameHi} के साथ Zoom पर लाइव।` },
       { title: 'रोज़ ऐप पर अभ्यास', desc: 'Mind Ur Mind App में रोज़ 10–15 मिनट, अपने-आप ट्रैक।' },
-      { title: 'Class 7 में रीडिंग असेसमेंट', desc: 'वही माप दोबारा, Class 1 से तुलना के साथ।' },
+      { title: 'Day 30 पर निष्पक्ष रीडिंग टेस्ट', desc: 'बराबर कठिन पैराग्राफ़, आपके Day 1 नतीजे से तुलना के साथ।' },
     ],
+  },
+  certificate: {
+    eyebrow: 'आपका प्रमाणपत्र',
+    title: 'आपका Sharp Brain प्रमाणपत्र',
+    intro: 'Day 30 पूरा करने पर आपको प्रमाणपत्र मिलता है, जिसमें आपके अपने पहले और बाद के नंबर होते हैं।',
+    points: [
+      { title: 'आपके अपने नंबर', desc: 'Day 1 और Day 30 पर पढ़ने की गति, समझ और प्रभावी गति, साथ में आपके याददाश्त (Memory) और टिकाव (Retention) स्कोर।' },
+      { title: 'निष्पक्ष टेस्ट', desc: 'ये नंबर अपनी गति से पढ़ने वाले एक टेस्ट से आते हैं, जो Day 1 और Day 30 पर बराबर कठिन होता है।' },
+      { title: 'आसानी से जाँच', desc: 'हर प्रमाणपत्र की एक अलग ID और एक सार्वजनिक जाँच लिंक होती है।' },
+      { title: 'रखें और शेयर करें', desc: '8 भाषाओं में, PDF के रूप में और WhatsApp व Instagram के लिए इमेज के रूप में।' },
+    ],
+    vary: 'नतीजे हर विद्यार्थी के लिए अलग होते हैं।',
+    caption: 'नमूना। आपके प्रमाणपत्र पर आपका अपना नाम और आपके अपने नतीजे होंगे।',
+    certAlt: 'Sharp Brain प्रमाणपत्र का नमूना, SAMPLE चिह्न के साथ, "आपका नाम" और खाली नतीजे',
+    shareAlt: 'WhatsApp और Instagram के लिए शेयर इमेज का नमूना, SAMPLE चिह्न के साथ, खाली नतीजे',
+    enlarge: 'पूरा आकार देखने के लिए टैप करें।',
   },
   proof: {
     eyebrow: 'असली विद्यार्थी',
@@ -385,7 +419,7 @@ const hi: SharpBrainCopy = {
     items: [
       `${trainer.nameHi} के साथ 7 लाइव क्लासेस`,
       '30 दिन का गाइडेड ऐप अभ्यास (सभी एक्सरसाइज़)',
-      'Class 1 और Class 7 में रीडिंग असेसमेंट',
+      'Day 1 और Day 30 पर निष्पक्ष रीडिंग टेस्ट',
       'परीक्षा और काम के लिए याद रखने और दोहराने के तरीके',
       'कोर्स पूरा करने का सर्टिफ़िकेट',
       'प्रोग्राम के दौरान WhatsApp सपोर्ट',
@@ -426,7 +460,7 @@ const hi: SharpBrainCopy = {
       },
       {
         question: `${regular} में क्या मिलता है?`,
-        answer: `${trainer.nameHi} के साथ 7 लाइव क्लासेस, सभी एक्सरसाइज़ के साथ 30 दिन का गाइडेड ऐप अभ्यास, Class 1 और Class 7 में रीडिंग असेसमेंट, परीक्षा और काम के लिए याद रखने व दोहराने के तरीके, सर्टिफ़िकेट और प्रोग्राम के दौरान WhatsApp सपोर्ट। एकमुश्त भुगतान — न सब्सक्रिप्शन, न किश्तें।`,
+        answer: `${trainer.nameHi} के साथ 7 लाइव क्लासेस, सभी एक्सरसाइज़ के साथ 30 दिन का गाइडेड ऐप अभ्यास, Day 1 और Day 30 पर निष्पक्ष रीडिंग टेस्ट, परीक्षा और काम के लिए याद रखने व दोहराने के तरीके, सर्टिफ़िकेट और प्रोग्राम के दौरान WhatsApp सपोर्ट। एकमुश्त भुगतान — न सब्सक्रिप्शन, न किश्तें।`,
       },
       { question: 'अगर यह मेरे लिए काम न करे तो?', answer: `${qsrGuarantee.hi.statement} ${qsrGuarantee.hi.requestWindow}` },
       { question: 'Quantum Speed Reading का क्या हुआ?', answer: 'अब इसका नाम Sharp Brain है — वही मूल प्रशिक्षण, साफ़ नाम, और फोकस व याददाश्त पर ज़्यादा ज़ोर।' },

@@ -12,6 +12,7 @@ import SharpBrainNav from '@/components/sharp-brain/SharpBrainNav'
 import {
   SharpBrainApp,
   SharpBrainAudiences,
+  SharpBrainCertificate,
   SharpBrainClasses,
   SharpBrainFaq,
   SharpBrainFinal,
@@ -69,6 +70,7 @@ export default function SharpBrainPage(): React.JSX.Element {
           <SharpBrainClasses />
           <SharpBrainAudiences />
           <SharpBrainHow />
+          <SharpBrainCertificate />
           <SharpBrainProof />
           <SharpBrainTrainer />
           <SharpBrainOffer />

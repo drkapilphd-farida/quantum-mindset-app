@@ -272,6 +272,56 @@ export function SharpBrainHow(): React.JSX.Element {
   );
 }
 
+// "Your Sharp Brain certificate" — the certificate and share image shown as
+// clearly marked SAMPLES ("Your Name", "—" for every number, no signature),
+// drawn by the app's own certificate code. No speed or percentage promises.
+const CERT_SAMPLES = {
+  en: { cert: "/brand/samples/sample-certificate-en.webp", share: "/brand/samples/sample-share-image-en.webp" },
+  hi: { cert: "/brand/samples/sample-certificate-hi.webp", share: "/brand/samples/sample-share-image-hi.webp" },
+} as const;
+
+export function SharpBrainCertificate(): React.JSX.Element {
+  const c = useCopy().certificate;
+  const { lang } = useLanguage();
+  const samples = CERT_SAMPLES[lang === "hi" ? "hi" : "en"];
+  return (
+    <section id="certificate" className={sectionClass}>
+      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
+        <div className="min-w-0">
+          <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
+          <h2 className={h2Class}>{c.title}</h2>
+          <p className="mt-4 text-[16px] leading-relaxed text-ink">{c.intro}</p>
+          <ul className="mt-6 space-y-4">
+            {c.points.map((point) => (
+              <li key={point.title} className="grid grid-cols-[18px_minmax(0,1fr)] gap-x-2.5">
+                <span className="mt-2 size-2 rounded-full bg-gold" aria-hidden="true" />
+                <div>
+                  <h3 className="text-[16px] font-bold text-ink">{point.title}</h3>
+                  <p className="mt-0.5 text-[14.5px] leading-relaxed text-ink-dim">{point.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-[13px] text-ink-faint" data-results-vary>
+            {c.vary}
+          </p>
+        </div>
+        <div className="flex min-w-0 flex-col items-center gap-4 sm:grid sm:grid-cols-[minmax(0,1fr)_200px] sm:items-end lg:grid-cols-[minmax(0,1fr)_210px]">
+          <a href={samples.cert} target="_blank" rel="noopener" className="block w-full" aria-label={`${c.certAlt}. ${c.enlarge}`}>
+            <Image src={samples.cert} alt={c.certAlt} width={2000} height={1415} sizes="(min-width: 1024px) 520px, (min-width: 640px) 60vw, 92vw" className="h-auto w-full shadow-[0_10px_30px_rgba(20,32,56,0.14)]" data-certificate-sample />
+          </a>
+          <a href={samples.share} target="_blank" rel="noopener" className="block w-[62%] max-w-[240px] sm:w-full" aria-label={`${c.shareAlt}. ${c.enlarge}`}>
+            <Image src={samples.share} alt={c.shareAlt} width={1080} height={1350} sizes="(min-width: 640px) 210px, 62vw" className="h-auto w-full shadow-[0_10px_30px_rgba(10,16,30,0.3)]" data-share-sample />
+          </a>
+          <p className="text-center text-[12.5px] text-ink-faint sm:col-span-2">
+            {c.caption} <span className="whitespace-nowrap">{c.enlarge}</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function SharpBrainProof(): React.JSX.Element {
   const c = useCopy().proof;
   const testimonials = useProgramTestimonials("sharpBrain").filter((item) => item.quote !== null);
