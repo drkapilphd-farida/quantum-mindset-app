@@ -71,5 +71,48 @@
     "mentorTitle": "Direct mentor guidance",
     "mentorBody": "Questions about a class, a practice day or your progress? Message Dr. Kapil directly.",
     "mentorCta": "Message Dr. Kapil"
+  },
+  "reminders": {
+    "push": {
+      "title": "Dr. Kapil · Sharp Brain",
+      "daily": "Day {day} is ready. 10 minutes today keeps your brain sharp 🔥",
+      "checkin": "Today is your progress test (Day {day}). Let's see how far you've come!",
+      "missed": "We kept your place. Day {day} is waiting — 10 minutes today is a great restart.",
+      "liveClass": "Day {day} is ready — and tomorrow is your live Class {n}: {topic}. See you there!"
+    },
+    "banner": {
+      "ready": "Day {day} is ready 🔥",
+      "start": "Start Day {day}",
+      "opensLater": "Today's practice is done ✓ Day {day} opens at {time}.",
+      "missedOne": "You missed a day — let's continue with Day {day} today. Nothing is lost.",
+      "missedMany": "You missed {n} days — let's restart today with Day {day}. Nothing is lost.",
+      "complete": "30 days complete 🎉 Your certificate is ready.",
+      "viewCertificate": "View certificate",
+      "streak": "{n} days in a row"
+    },
+    "optin": {
+      "title": "Want a daily reminder from Dr. Kapil?",
+      "body": "One short reminder a day, only when today's practice isn't done yet. Change the time or turn it off any time in Settings.",
+      "time": "Reminder time (India time)",
+      "turnOn": "Turn on reminders",
+      "notNow": "Not now",
+      "on": "Reminders are on — see you at {time}.",
+      "denied": "Notifications are blocked for this site. Allow them in your browser's site settings, then try again.",
+      "unsupported": "This browser can't show notifications. On iPhone, use Safari and add the app to your Home Screen.",
+      "iosTitle": "On iPhone: first add the app to your Home Screen",
+      "iosSteps": "In Safari, tap Share, then “Add to Home Screen”. Open Mind Ur Mind from your Home Screen and turn on reminders there. (Needs iOS 16.4 or later.)",
+      "androidHow": "On Android, tap Allow when Chrome asks."
+    },
+    "settings": {
+      "title": "Daily reminders",
+      "desc": "A short reminder from Dr. Kapil at your chosen time, only on days you haven't practised yet.",
+      "on": "On",
+      "off": "Off",
+      "turnOff": "Turn off reminders",
+      "saveTime": "Save time",
+      "saved": "Saved",
+      "adminOff": "Reminders are paused for your account. Message us on WhatsApp if you'd like them back.",
+      "error": "Something went wrong. Please try again."
+    }
   }
 }

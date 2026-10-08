@@ -36,8 +36,12 @@ import { createClient } from '@/lib/supabase/server'
 // on that). DO NOT extend this expiry branch to cover 'lifetime' (or any
 // future non-recurring interval) — that would silently revoke access
 // customers paid once, in full, to keep forever.
-export async function getIsPaidUser(userId: string): Promise<boolean> {
-  const supabase = await createClient()
+/**
+ * `client` lets server jobs with no signed-in learner (the reminder job)
+ * pass the service client; requests use the learner's own session.
+ */
+export async function getIsPaidUser(userId: string, client?: Pick<Awaited<ReturnType<typeof createClient>>, 'from'>): Promise<boolean> {
+  const supabase = client ?? (await createClient())
 
   const { data: subscriptions } = await supabase
     .from('subscriptions')

@@ -1573,6 +1573,111 @@ export type Database = {
         }
         Relationships: []
       }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          device_label: string | null
+          endpoint: string
+          failed_count: number
+          id: string
+          last_success_at: string | null
+          p256dh: string
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          device_label?: string | null
+          endpoint: string
+          failed_count?: number
+          id?: string
+          last_success_at?: string | null
+          p256dh: string
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          device_label?: string | null
+          endpoint?: string
+          failed_count?: number
+          id?: string
+          last_success_at?: string | null
+          p256dh?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reminder_log: {
+        Row: {
+          channel: string
+          created_at: string
+          detail: string | null
+          id: string
+          ist_date: string
+          kind: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          channel: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          ist_date: string
+          kind: string
+          status: string
+          user_id: string
+        }
+        Update: {
+          channel?: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          ist_date?: string
+          kind?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reminder_settings: {
+        Row: {
+          admin_disabled: boolean
+          admin_note: string | null
+          push_enabled: boolean
+          reminder_time: string
+          updated_at: string
+          user_id: string
+          whatsapp_number: string | null
+          whatsapp_opt_in: boolean
+          whatsapp_opted_in_at: string | null
+        }
+        Insert: {
+          admin_disabled?: boolean
+          admin_note?: string | null
+          push_enabled?: boolean
+          reminder_time?: string
+          updated_at?: string
+          user_id: string
+          whatsapp_number?: string | null
+          whatsapp_opt_in?: boolean
+          whatsapp_opted_in_at?: string | null
+        }
+        Update: {
+          admin_disabled?: boolean
+          admin_note?: string | null
+          push_enabled?: boolean
+          reminder_time?: string
+          updated_at?: string
+          user_id?: string
+          whatsapp_number?: string | null
+          whatsapp_opt_in?: boolean
+          whatsapp_opted_in_at?: string | null
+        }
+        Relationships: []
+      }
       curriculum_day_activity: {
         Row: {
           active_seconds: number

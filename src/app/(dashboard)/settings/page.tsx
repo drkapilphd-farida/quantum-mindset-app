@@ -8,6 +8,8 @@ import { listRetakeableAssessments } from '@/features/quantum-speed-reading-runt
 import { RetakeAssessmentButton } from '@/features/quantum-speed-reading-runtime/assessment/components/RetakeAssessmentButton'
 import { getAppT } from '@/lib/app-i18n/server'
 import { LanguagePicker } from '@/lib/app-i18n/LanguagePicker'
+import { ReminderOptIn } from '@/features/reminders/components/ReminderOptIn'
+import { getReminderSettings } from '@/features/reminders/actions'
 
 export const metadata: Metadata = {
   title: 'Settings',
@@ -30,7 +32,7 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
     .single()
 
   const fullName = profile?.full_name ?? ''
-  const retakeableAssessments = await listRetakeableAssessments(user.id)
+  const [retakeableAssessments, reminderSettings] = await Promise.all([listRetakeableAssessments(user.id), getReminderSettings()])
 
   return (
     <div className="space-y-6">
@@ -44,6 +46,14 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
       <Separator />
 
       <div className="max-w-md space-y-8">
+        <section className="space-y-4" id="reminders">
+          <div>
+            <h2 className="text-base font-medium">{t('dashboard.reminders.settings.title')}</h2>
+            <p className="text-muted-foreground mt-1 text-sm">{t('dashboard.reminders.settings.desc')}</p>
+          </div>
+          <ReminderOptIn variant="settings" initial={reminderSettings} />
+        </section>
+
         <section className="space-y-4" id="language">
           <div>
             <h2 className="text-base font-medium">{t('settings.language.title')}</h2>

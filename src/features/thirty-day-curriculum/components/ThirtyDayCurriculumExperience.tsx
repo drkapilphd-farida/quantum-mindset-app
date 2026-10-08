@@ -10,6 +10,7 @@ import { FairReadingTest } from '@/features/fair-reading-test/components/FairRea
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
 import { CertificateReadyCard } from '@/features/certificate/components/CertificateReadyCard'
 import { LiveClassesProgressLink } from '@/features/live-classes/components/LiveClassesExperience'
+import { ReminderOptInPrompt } from '@/features/reminders/components/ReminderOptInPrompt'
 import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
 import { MasterclassPaywallModal } from './MasterclassPaywallModal'
 import { FinishPreviousDayModal } from './FinishPreviousDayModal'
@@ -93,6 +94,8 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   const [progress, setProgress] = useState(() => loadCurriculumProgress())
   const [serverCompletedDays, setServerCompletedDays] = useState<readonly number[]>(initialServerCompletedDays)
   const [nextDayOpensAt, setNextDayOpensAt] = useState<string | null>(initialNextDayOpensAt)
+  // Daily reminders: offered once, right after Day 1 is complete.
+  const [offerReminders, setOfferReminders] = useState(false)
   // Defense in depth — `?view=day&day=N` is a real, legitimate URL this
   // app itself generates (curriculumReturnRouting.ts, returning from a
   // gated exercise mid-day), but it's also just a URL anyone could type
@@ -210,6 +213,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     if (outcome.ok) {
       setServerCompletedDays(outcome.completedDays)
       void getNextDayOpensAt().then(setNextDayOpensAt)
+      if (result.day === 1) setOfferReminders(true)
     }
     setProgress(loadCurriculumProgress())
     setRefreshKey((key) => key + 1)
@@ -260,6 +264,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     return (
       <>
         {selectedDay === TOTAL_CURRICULUM_DAYS && serverCompletedDays.includes(TOTAL_CURRICULUM_DAYS) && <CertificateReadyCard />}
+        {offerReminders && selectedDay === 1 && <ReminderOptInPrompt onDone={() => setOfferReminders(false)} />}
         <ThirtyDayCurriculumDayDetail
           day={selectedDay}
           progress={progress}

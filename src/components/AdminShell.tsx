@@ -19,6 +19,7 @@ const NAV_ITEMS = [
   { href: '/admin/partners', label: 'Partners', icon: Handshake, exact: false },
   { href: '/admin/sharp-brain-enrolments', label: 'Sharp Brain Enrolments', icon: ClipboardList, exact: false },
   { href: '/admin/live-classes', label: 'Live Classes', icon: ClipboardList, exact: false },
+  { href: '/admin/reminders', label: 'Reminders', icon: ClipboardList, exact: false },
   { href: '/admin/franchise-leads', label: 'Franchise Leads', icon: ClipboardList, exact: false },
   { href: '/admin/partner-resources', label: 'Partner Resources', icon: BookOpen, exact: false },
   { href: '/admin/leaderboard', label: 'Leaderboard', icon: Trophy, exact: false },

@@ -7,6 +7,7 @@ import { getCurriculumWatermarkText } from '@/features/thirty-day-curriculum/act
 import { isCurriculumDayUnlocked } from '@/features/thirty-day-curriculum/curriculumProgress'
 import { getMyClassesDone } from '@/features/live-classes/actions'
 import { getNextDayOpensAt } from '@/features/thirty-day-curriculum/actions/paceActions'
+import { ReminderBanner } from '@/features/reminders/components/ReminderBanner'
 
 export const metadata: Metadata = {
   title: 'Sharp Brain 30-Day Program Curriculum — Sharp Brain Lab',
@@ -58,5 +59,10 @@ export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDa
   if (requestedDay !== null && Number.isInteger(requestedDay) && !isCurriculumDayUnlocked(requestedDay, initialServerCompletedDays, isPro, nextDayOpensAt)) {
     redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
   }
-  return <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} initialNextDayOpensAt={nextDayOpensAt} />
+  return (
+    <>
+      {requestedDay === null && <ReminderBanner />}
+      <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} initialNextDayOpensAt={nextDayOpensAt} />
+    </>
+  )
 }
