@@ -78,6 +78,8 @@ export type LearnerRow = Person & {
   day30: { effective: number; comprehension: number; lang: string } | null
   certificateCode: string | null
   guarantee: GuaranteeCheck
+  /** Pace control turned off by the trainer, with the note (null = pace control on). */
+  paceOff: { note: string | null } | null
 }
 
 /** One row per learner who has started anything: practice, a test, a class, or a payment. */
@@ -91,6 +93,7 @@ export async function getLearnerOverview(now: number = Date.now()): Promise<Lear
     db.from('masterclass_payments').select('user_id, batch_start, created_at').not('user_id', 'is', null).order('created_at'),
     db.from('program_certificates').select('user_id, code').is('revoked_at', null),
   ])
+  const { data: paceSettings } = await db.from('curriculum_pace_settings').select('user_id, pace_off, note')
   const ids = [
     ...new Set([
       ...(days.data ?? []).map((r) => r.user_id),
@@ -122,6 +125,7 @@ export async function getLearnerOverview(now: number = Date.now()): Promise<Lear
         day1: baseline ? { effective: baseline.effective_wpm, comprehension: baseline.comprehension_percent, lang: baseline.lang } : null,
         day30: final ? { effective: final.effective_wpm, comprehension: final.comprehension_percent, lang: final.lang } : null,
         certificateCode: (certs.data ?? []).find((c) => c.user_id === id)?.code ?? null,
+        paceOff: ((setting) => (setting?.pace_off ? { note: setting.note } : null))((paceSettings ?? []).find((p) => p.user_id === id)),
         guarantee: evaluateGuarantee({
           daysCompleted,
           day30CompletedAt: day30At,

@@ -84,5 +84,21 @@
     "times": "{n} times",
     "latestResult": "Latest: {wpm} WPM · {percent}% comprehension",
     "originalKept": "Practice only — your official Day {day} result stays the same."
+  },
+  "pace": {
+    "opensTomorrow": "Great work! Day {day} opens tomorrow.",
+    "opensAt": "Opens at {time}, {date}",
+    "nothingLost": "Come back any time tomorrow. Nothing is lost if you miss a day.",
+    "dayOpensAt": "Day {day} opens at {time}, {date}.",
+    "almostThere": "Almost there",
+    "fewMore": "Spend a few more minutes practising to complete today.",
+    "practiceTime": "Practice time today · about 10 minutes needed",
+    "practiseAgain": "Practise again",
+    "readyEyebrow": "Ready",
+    "ready": "Nice — you've practised enough for today.",
+    "complete": "Complete Day {day}",
+    "checkinWait": "Spend a few more minutes practising first, so your test reflects a full day's practice.",
+    "doLater": "Do this later",
+    "error": "Something went wrong while saving your day. Please try again."
   }
 }

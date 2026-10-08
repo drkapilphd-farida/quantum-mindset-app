@@ -150,3 +150,18 @@ export async function setRecording(input: unknown): Promise<Result> {
   }
   return { ok: true }
 }
+
+/** Pace control on/off for one learner (reviewers, catching up after illness …). */
+export async function setPaceControl(input: unknown): Promise<Result> {
+  const admin = await guard()
+  if (!admin) return { ok: false, error: 'Not authorized.' }
+  const parsed = z.object({ userId: z.string().uuid(), off: z.boolean(), note: z.string().trim().max(200).optional() }).safeParse(input)
+  if (!parsed.success) return { ok: false, error: 'Invalid request.' }
+  const db = createServiceClient()
+  const { userId, off, note } = parsed.data
+  const { error } = off
+    ? await db.from('curriculum_pace_settings').upsert({ user_id: userId, pace_off: true, note: note || null, set_by: admin, set_at: new Date().toISOString() }, { onConflict: 'user_id' })
+    : await db.from('curriculum_pace_settings').delete().eq('user_id', userId)
+  if (error) return { ok: false, error: 'Could not change pace control.' }
+  return { ok: true, message: off ? 'Pace control turned off for this learner.' : 'Pace control turned back on.' }
+}

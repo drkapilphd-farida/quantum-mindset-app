@@ -1,4 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { dayStepIds } from '../paceControl'
 
 // Real server-side gate test (see the "Pre-Launch Audit Fix Pass" task,
 // Phase 4) — mirrors the mocking convention revokeMasterclassAccess.test.ts
@@ -6,25 +7,46 @@ import { describe, expect, it, vi, beforeEach } from 'vitest'
 // module dependencies, since this action calls both the regular
 // (RLS-scoped) Supabase client and getIsPaidUser.
 
+type Activity = { day: number; active_seconds: number; steps_done: string[]; paced: boolean; short_attempts: number }
+
 type MockConfig = {
   user?: { id: string } | null
   existingDays?: readonly number[]
+  /** When each existing day was completed (default: long ago). */
+  completedAt?: string
   readError?: { message: string } | null
   writeError?: { message: string; code?: string } | null
   writes?: unknown[]
+  /** Pace control: activity rows; by default every day has all its steps and 10 minutes. */
+  activity?: Activity[]
+  paceOff?: boolean
 }
 
-function makeClient({ user = { id: 'user-1' }, existingDays = [], readError = null, writeError = null, writes = [] }: MockConfig = {}): {
+const fullDay = (day: number, over: Partial<Activity> = {}): Activity => ({ day, active_seconds: 600, steps_done: [...dayStepIds(day)], paced: false, short_attempts: 0, ...over })
+
+function makeClient({ user = { id: 'user-1' }, existingDays = [], completedAt = '2026-01-01T10:00:00Z', readError = null, writeError = null, writes = [], activity, paceOff = false }: MockConfig = {}): {
   auth: { getUser: () => Promise<{ data: { user: { id: string } | null } }> }
   from: (table: string) => unknown
 } {
   return {
     auth: { getUser: () => Promise.resolve({ data: { user } }) },
     from: (table: string) => {
+      if (table === 'curriculum_day_activity') {
+        return {
+          select: () => ({
+            eq: () => ({
+              in: (_col: string, days: number[]) => Promise.resolve({ data: activity ?? days.filter((d) => d >= 1).map((d) => fullDay(d)), error: null }),
+            }),
+          }),
+        }
+      }
+      if (table === 'curriculum_pace_settings') {
+        return { select: () => ({ eq: () => ({ maybeSingle: () => Promise.resolve({ data: paceOff ? { pace_off: true } : null, error: null }) }) }) }
+      }
       if (table !== 'curriculum_day_completions') throw new Error(`Unexpected table in test mock: ${table}`)
       return {
         select: () => ({
-          eq: () => Promise.resolve({ data: existingDays.map((day) => ({ day })), error: readError }),
+          eq: () => Promise.resolve({ data: existingDays.map((day) => ({ day, completed_at: completedAt })), error: readError }),
         }),
         insert: (row: unknown) => {
           writes.push({ insert: row })
@@ -42,9 +64,13 @@ function makeClient({ user = { id: 'user-1' }, existingDays = [], readError = nu
 async function importAction(
   client: ReturnType<typeof makeClient>,
   isPaidUser: boolean,
+  activityWrites: unknown[] = [],
 ): Promise<typeof import('./completeCurriculumDay')> {
   vi.resetModules()
   vi.doMock('@/lib/supabase/server', () => ({ createClient: () => Promise.resolve(client) }))
+  vi.doMock('@/lib/supabase/service', () => ({
+    createServiceClient: () => ({ from: () => ({ upsert: (row: unknown) => (activityWrites.push(row), Promise.resolve({ error: null })) }) }),
+  }))
   vi.doMock('@/lib/subscription/getIsPaidUser', () => ({ getIsPaidUser: () => Promise.resolve(isPaidUser) }))
   return import('./completeCurriculumDay')
 }
@@ -77,7 +103,7 @@ describe('completeCurriculumDay', () => {
 
     const result = await completeCurriculumDay({ day: 1 })
 
-    expect(result).toEqual({ ok: true, completedDays: [1] })
+    expect(result).toEqual({ ok: true, completedDays: [1], paced: true })
   })
 
   // The exact bypass this action exists to close: a client-forged call
@@ -106,7 +132,7 @@ describe('completeCurriculumDay', () => {
 
     const result = await completeCurriculumDay({ day: 4, rawWpm: 300, trueWpm: 280, comprehensionAccuracyPercent: 90 })
 
-    expect(result).toEqual({ ok: true, completedDays: [1, 2, 3, 4] })
+    expect(result).toEqual({ ok: true, completedDays: [1, 2, 3, 4], paced: true })
   })
 
   // Permanent, re-practiceable access (must match curriculumProgress.ts's
@@ -119,7 +145,7 @@ describe('completeCurriculumDay', () => {
 
     const result = await completeCurriculumDay({ day: 1 })
 
-    expect(result).toEqual({ ok: true, completedDays: [1] })
+    expect(result).toEqual({ ok: true, completedDays: [1], paced: false })
   })
 
   it('surfaces a db_error (not a false success) if reading existing completions fails', async () => {
@@ -148,7 +174,7 @@ describe('completeCurriculumDay', () => {
 
       const result = await completeCurriculumDay({ day: 4, trueWpm: 999, comprehensionAccuracyPercent: 10 })
 
-      expect(result).toEqual({ ok: true, completedDays: [1, 2, 3, 4] })
+      expect(result).toEqual({ ok: true, completedDays: [1, 2, 3, 4], paced: false })
       expect(writes).toEqual([])
     })
 
@@ -179,7 +205,47 @@ describe('completeCurriculumDay', () => {
       const client = makeClient({ existingDays: [], writeError: { message: 'duplicate', code: '23505' } })
       const { completeCurriculumDay } = await importAction(client, true)
 
-      expect(await completeCurriculumDay({ day: 1 })).toEqual({ ok: true, completedDays: [1] })
+      expect(await completeCurriculumDay({ day: 1 })).toEqual({ ok: true, completedDays: [1], paced: true })
+    })
+  })
+
+  describe('pace control (one day per calendar day, all steps, about 10 minutes)', () => {
+    it('refuses a day with less than 10 minutes of practice, and counts the attempt', async () => {
+      const activityWrites: unknown[] = []
+      const client = makeClient({ existingDays: [1, 2, 3, 4], activity: [fullDay(5, { active_seconds: 372 })] })
+      const { completeCurriculumDay } = await importAction(client, true, activityWrites)
+      expect(await completeCurriculumDay({ day: 5 })).toEqual({ ok: false, reason: 'needs_more_practice', activeSeconds: 372 })
+      expect(activityWrites).toEqual([expect.objectContaining({ day: 5, short_attempts: 1 })])
+    })
+
+    it('refuses a day with a step not done (e.g. one left for later)', async () => {
+      const steps = [...dayStepIds(5)]
+      const client = makeClient({ existingDays: [1, 2, 3, 4], activity: [fullDay(5, { steps_done: steps.slice(0, -1) })] })
+      const { completeCurriculumDay } = await importAction(client, true)
+      expect(await completeCurriculumDay({ day: 5 })).toEqual({ ok: false, reason: 'steps_incomplete', missing: [steps[steps.length - 1]] })
+    })
+
+    it('refuses a day before midnight IST after a paced completion of the previous day', async () => {
+      const justNow = new Date().toISOString()
+      const client = makeClient({ existingDays: [1, 2, 3, 4], completedAt: justNow, activity: [fullDay(4, { paced: true }), fullDay(5)] })
+      const { completeCurriculumDay } = await importAction(client, true)
+      const result = await completeCurriculumDay({ day: 5 })
+      expect(result).toMatchObject({ ok: false, reason: 'not_yet_open' })
+    })
+
+    it('a day completed before launch (not paced) leaves the next day open straight away', async () => {
+      const justNow = new Date().toISOString()
+      const client = makeClient({ existingDays: [1, 2, 3, 4], completedAt: justNow, activity: [fullDay(4, { paced: false }), fullDay(5)] })
+      const { completeCurriculumDay } = await importAction(client, true)
+      expect(await completeCurriculumDay({ day: 5 })).toEqual({ ok: true, completedDays: [1, 2, 3, 4, 5], paced: true })
+    })
+
+    it('pace control turned off by the trainer: no checks, and the next day does not wait', async () => {
+      const activityWrites: unknown[] = []
+      const client = makeClient({ existingDays: [1, 2, 3, 4], completedAt: new Date().toISOString(), paceOff: true, activity: [fullDay(4, { paced: true }), fullDay(5, { active_seconds: 0, steps_done: [] })] })
+      const { completeCurriculumDay } = await importAction(client, true, activityWrites)
+      expect(await completeCurriculumDay({ day: 5 })).toEqual({ ok: true, completedDays: [1, 2, 3, 4, 5], paced: false })
+      expect(activityWrites).toEqual([expect.objectContaining({ day: 5, paced: false })])
     })
   })
 })

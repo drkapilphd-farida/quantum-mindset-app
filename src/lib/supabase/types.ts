@@ -1573,6 +1573,69 @@ export type Database = {
         }
         Relationships: []
       }
+      curriculum_day_activity: {
+        Row: {
+          active_seconds: number
+          completed_active_seconds: number | null
+          day: number
+          last_beat_at: string | null
+          paced: boolean
+          short_attempts: number
+          started_at: string
+          steps_done: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          active_seconds?: number
+          completed_active_seconds?: number | null
+          day: number
+          last_beat_at?: string | null
+          paced?: boolean
+          short_attempts?: number
+          started_at?: string
+          steps_done?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          active_seconds?: number
+          completed_active_seconds?: number | null
+          day?: number
+          last_beat_at?: string | null
+          paced?: boolean
+          short_attempts?: number
+          started_at?: string
+          steps_done?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      curriculum_pace_settings: {
+        Row: {
+          note: string | null
+          pace_off: boolean
+          set_at: string
+          set_by: string
+          user_id: string
+        }
+        Insert: {
+          note?: string | null
+          pace_off?: boolean
+          set_at?: string
+          set_by: string
+          user_id: string
+        }
+        Update: {
+          note?: string | null
+          pace_off?: boolean
+          set_at?: string
+          set_by?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       live_class_attendance: {
         Row: {
           class_number: number

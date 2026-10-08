@@ -5,14 +5,16 @@ import {
   getWizardAwareBackHref,
   isCurriculumSessionCurrentExercise,
   setActiveWizardDay,
+  takePendingStepsDone,
 } from './curriculumReturnRouting'
-import { startCurriculumSession, loadActiveCurriculumSession, type ActiveCurriculumSession } from './curriculumSessionRunner'
+import { CURRICULUM_SESSION_STORAGE_KEY, startCurriculumSession, loadActiveCurriculumSession, type ActiveCurriculumSession } from './curriculumSessionRunner'
 import { loadCurriculumProgress } from './curriculumProgress'
 import { completeCurriculumDay } from './actions/completeCurriculumDay'
 import { recordCurriculumDayPractice } from './actions/curriculumDayPractice'
 
 vi.mock('./actions/completeCurriculumDay', () => ({ completeCurriculumDay: vi.fn(() => Promise.resolve({ ok: true, completedDays: [] })) }))
 vi.mock('./actions/curriculumDayPractice', () => ({ recordCurriculumDayPractice: vi.fn(() => Promise.resolve({ ok: true })) }))
+vi.mock('./actions/paceActions', () => ({ recordStepDone: vi.fn(() => Promise.resolve({ ok: true })) }))
 
 let sessionStore: Record<string, string>
 let localStore: Record<string, string>
@@ -88,42 +90,30 @@ describe('getCurriculumSmartCompleteHref', () => {
     expect(getCurriculumSmartCompleteHref('eye-warm-up', '/labs/sharp-brain')).toBe('/labs/sharp-brain')
   })
 
-  it('on a non-final step, advances the session pointer but ALWAYS returns to the day view — never chains straight to the next exercise page', () => {
+  // Pace control (Phase 3, item 4): a real step finished on its own page is
+  // recorded on the server and the learner returns to the day view, which
+  // works out the next step — or finishing the day, with its pace checks.
+  // The day is never completed from here.
+  it('a real step: records it on the server, clears the hand-off, and returns to the day view', async () => {
+    const { recordStepDone } = await import('./actions/paceActions')
     const firstId = firstExerciseIdForDay(1)
     const href = getCurriculumSmartCompleteHref(firstId, '/labs/sharp-brain')
-    const session = loadActiveCurriculumSession() as ActiveCurriculumSession
-    expect(session.currentIndex).toBe(1)
     expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=1')
-  })
-
-  it('on the final exercise of a non-checkpoint day, marks the day complete, clears the session, and returns the day view with dayComplete=1', () => {
-    // Day 2 is not a checkpoint day (CHECKPOINT_DAYS = [1,7,14,21,30]).
-    let session = startCurriculumSession(2)
-    while (session.currentIndex < session.exerciseIds.length - 1) {
-      const currentId = session.exerciseIds[session.currentIndex]!
-      getCurriculumSmartCompleteHref(currentId, '/labs/sharp-brain')
-      session = loadActiveCurriculumSession() as ActiveCurriculumSession
-    }
-    const finalId = session.exerciseIds[session.currentIndex]!
-    const href = getCurriculumSmartCompleteHref(finalId, '/labs/sharp-brain')
-    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=2&dayComplete=1')
     expect(loadActiveCurriculumSession()).toBeNull()
-    expect(loadCurriculumProgress().completedDays).toEqual([2])
+    expect(recordStepDone).toHaveBeenCalledWith({ day: 1, exerciseId: firstId })
+    expect(takePendingStepsDone(1)).toEqual([firstId])
+    expect(takePendingStepsDone(1)).toEqual([])
   })
 
-  it('on the final exercise of a CHECKPOINT day, does NOT mark the day complete — the assessment is still required', () => {
-    // Day 1 is a checkpoint day.
-    let session = startCurriculumSession(1)
-    while (session.currentIndex < session.exerciseIds.length - 1) {
-      const currentId = session.exerciseIds[session.currentIndex]!
-      getCurriculumSmartCompleteHref(currentId, '/labs/sharp-brain')
-      session = loadActiveCurriculumSession() as ActiveCurriculumSession
-    }
-    const finalId = session.exerciseIds[session.currentIndex]!
+  it('the final step of a day never completes the day from an exercise page (the day view applies the pace checks)', () => {
+    const session = startCurriculumSession(2)
+    const finalId = session.exerciseIds[session.exerciseIds.length - 1]!
+    sessionStorage.setItem(CURRICULUM_SESSION_STORAGE_KEY, JSON.stringify({ ...session, currentIndex: session.exerciseIds.length - 1 }))
     const href = getCurriculumSmartCompleteHref(finalId, '/labs/sharp-brain')
-    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=1')
+    expect(href).toBe('/labs/sharp-brain/thirty-day-curriculum?view=day&day=2')
     expect(loadActiveCurriculumSession()).toBeNull()
     expect(loadCurriculumProgress().completedDays).toEqual([])
+    expect(completeCurriculumDay).not.toHaveBeenCalled()
   })
 })
 

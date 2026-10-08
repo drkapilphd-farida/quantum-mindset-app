@@ -18,7 +18,7 @@ const WEEK_MS = 7 * 24 * 3_600_000
 
 /**
  * The learner's most recent palace that is due for its next-day recall
- * (built 12 h – 7 days ago, not yet recalled the next day), or null. Only
+ * (built 8 h – 7 days ago, not yet recalled the next day), or null. Only
  * the latest palace is ever asked, so old ones never pile up.
  */
 export async function getPendingPalace(): Promise<PendingPalace | null> {
@@ -64,7 +64,7 @@ export async function getPendingPalace(): Promise<PendingPalace | null> {
       palaceId,
       objects,
       level: clampLevel(typeof details.level === 'number' ? details.level : (latest.level_end ?? 1)),
-      hoursSince: Math.round((Date.now() - new Date(latest.played_at).getTime()) / 3_600_000),
+      hoursSince: Math.floor((Date.now() - new Date(latest.played_at).getTime()) / 3_600_000),
       label: status.label,
       days: status.days,
     }

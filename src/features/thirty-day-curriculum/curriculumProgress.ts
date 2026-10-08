@@ -168,13 +168,15 @@ function saveCurriculumProgress(progress: CurriculumProgress): void {
 // localStorage is still written on every completion (markCurriculumDayComplete/
 // recordCurriculumCheckpoint) purely as an optimistic UI cache/analytics
 // source (streaks, checkpoint deltas, brain score) — never consulted here.
-export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readonly number[], isPro: boolean): boolean {
+export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readonly number[], isPro: boolean, nextDayOpensAt: string | null = null, nowMs: number = Date.now()): boolean {
   if (isDevUnlockEnabled()) return true
   if (serverCompletedDays.includes(day)) return true
   // No free days: app practice is for enrolled learners only.
   if (!isPro) return false
   if (day === 1) return true
-  return serverCompletedDays.includes(day - 1)
+  if (!serverCompletedDays.includes(day - 1)) return false
+  // Pace control: the next day waits for midnight IST (null = open now).
+  return nextDayOpensAt === null || nowMs >= Date.parse(nextDayOpensAt)
 }
 
 /**
@@ -183,11 +185,12 @@ export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readon
  * paying learner simply hasn't reached this day yet. Completed days are
  * always open.
  */
-export type CurriculumDayAccess = 'open' | 'needs_enrolment' | 'finish_previous'
+export type CurriculumDayAccess = 'open' | 'needs_enrolment' | 'finish_previous' | 'opens_later'
 
-export function curriculumDayAccess(day: number, serverCompletedDays: readonly number[], isPro: boolean): CurriculumDayAccess {
-  if (isCurriculumDayUnlocked(day, serverCompletedDays, isPro)) return 'open'
-  return isPro ? 'finish_previous' : 'needs_enrolment'
+export function curriculumDayAccess(day: number, serverCompletedDays: readonly number[], isPro: boolean, nextDayOpensAt: string | null = null, nowMs: number = Date.now()): CurriculumDayAccess {
+  if (isCurriculumDayUnlocked(day, serverCompletedDays, isPro, nextDayOpensAt, nowMs)) return 'open'
+  if (!isPro) return 'needs_enrolment'
+  return serverCompletedDays.includes(day - 1) ? 'opens_later' : 'finish_previous'
 }
 
 // The highest day the learner has progressed to by real completion —

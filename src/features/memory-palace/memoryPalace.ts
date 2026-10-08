@@ -105,13 +105,18 @@ export function applyPalaceSession(state: LevelState, accuracy: number): LevelSt
 
 export type DelayLabel = '24h' | '48h' | 'later'
 
+/** A palace is due for its next-day recall this many hours after it was built. */
+export const NEXT_DAY_RECALL_MIN_HOURS = 8
+
 /**
  * Whether a palace built `hoursSince` hours ago is due for its next-day recall:
- * under 12 h is still the same day (not yet), 12–36 h is "24 h", 36–60 h is
- * "48 h", up to 7 days is "later (N days)", after that it has expired.
+ * under 8 h is still the same day (not yet), 8–36 h is "24 h", 36–60 h is
+ * "48 h", up to 7 days is "later (N days)", after that it has expired. The
+ * minimum is 8 h (lowered from 12 h with pace control, 8 Oct 2026) so an
+ * evening palace can be recalled the next morning, after a night's sleep.
  */
 export function nextDayRecallStatus(hoursSince: number): { due: true; label: DelayLabel; days: number } | { due: false; reason: 'too-soon' | 'expired' } {
-  if (!Number.isFinite(hoursSince) || hoursSince < 12) return { due: false, reason: 'too-soon' }
+  if (!Number.isFinite(hoursSince) || hoursSince < NEXT_DAY_RECALL_MIN_HOURS) return { due: false, reason: 'too-soon' }
   if (hoursSince > 24 * 7) return { due: false, reason: 'expired' }
   const days = Math.max(1, Math.round(hoursSince / 24))
   if (hoursSince <= 36) return { due: true, label: '24h', days }

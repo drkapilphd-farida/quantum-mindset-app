@@ -110,7 +110,9 @@ describe('objects and choices', () => {
 describe('next-day recall timing', () => {
   it('under 12 hours is still the same day', () => {
     expect(nextDayRecallStatus(2)).toEqual({ due: false, reason: 'too-soon' })
-    expect(nextDayRecallStatus(11.9)).toEqual({ due: false, reason: 'too-soon' })
+    expect(nextDayRecallStatus(7.9)).toEqual({ due: false, reason: 'too-soon' })
+    // 11 pm palace → 7 am next day (8 h) is due: pace control opens days at midnight.
+    expect(nextDayRecallStatus(8)).toMatchObject({ due: true, label: '24h' })
   })
 
   it('12–36 h is 24 h, 36–60 h is 48 h, then "later" up to 7 days', () => {

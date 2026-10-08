@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getLearnerOverview } from '@/features/live-classes/admin/data'
-import { RecordingControl } from '@/features/live-classes/admin/components/AdminControls'
+import { PaceToggle, RecordingControl } from '@/features/live-classes/admin/components/AdminControls'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
@@ -37,7 +37,7 @@ export default async function AdminLearnersPage(): Promise<React.JSX.Element> {
         </Link>
       </div>
       <div className="overflow-x-auto rounded-md border border-border">
-        <table className="w-full min-w-[1100px] text-sm">
+        <table className="w-full min-w-[1240px] text-sm">
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
             <tr>
               <th className="p-2">Learner</th>
@@ -50,12 +50,13 @@ export default async function AdminLearnersPage(): Promise<React.JSX.Element> {
               <th className="p-2">No improvement</th>
               <th className="p-2">Refund conditions</th>
               <th className="p-2">Recording</th>
+              <th className="p-2">Pace control</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 && (
               <tr>
-                <td colSpan={10} className="p-3 text-muted-foreground">
+                <td colSpan={11} className="p-3 text-muted-foreground">
                   No learners yet.
                 </td>
               </tr>
@@ -102,6 +103,9 @@ export default async function AdminLearnersPage(): Promise<React.JSX.Element> {
                 </td>
                 <td className="p-2">
                   <RecordingControl userId={r.userId} recordings={r.recordings} />
+                </td>
+                <td className="p-2">
+                  <PaceToggle userId={r.userId} paceOff={r.paceOff} />
                 </td>
               </tr>
             ))}

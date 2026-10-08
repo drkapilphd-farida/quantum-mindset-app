@@ -33,6 +33,8 @@ type ThirtyDayCurriculumOverviewProps = {
   // richer local `progress` (brain score, phase counts, streaks) stays
   // untouched since none of it is a security gate.
   serverCompletedDays: readonly number[]
+  /** Pace control: when the next day opens (null = open now). */
+  nextDayOpensAt?: string | null
   refreshKey: number
 }
 
@@ -46,6 +48,7 @@ export function ThirtyDayCurriculumOverview({
   onStartProgram,
   isPro,
   serverCompletedDays,
+  nextDayOpensAt = null,
   refreshKey,
 }: ThirtyDayCurriculumOverviewProps): React.JSX.Element {
   const t = useAppT()
@@ -110,6 +113,7 @@ export function ThirtyDayCurriculumOverview({
               key={day}
               day={day}
               serverCompletedDays={serverCompletedDays}
+              nextDayOpensAt={nextDayOpensAt}
               isPro={isPro}
               onSelectDay={onSelectDay}
               onLockedDayClick={onLockedDayClick}
@@ -159,18 +163,20 @@ function PhaseCard({ phaseId, serverCompletedDays }: { phaseId: CurriculumPhaseI
 function DayCell({
   day,
   serverCompletedDays,
+  nextDayOpensAt,
   isPro,
   onSelectDay,
   onLockedDayClick,
 }: {
   day: number
   serverCompletedDays: readonly number[]
+  nextDayOpensAt: string | null
   isPro: boolean
   onSelectDay: (day: number) => void
   onLockedDayClick: (day: number) => void
 }): React.JSX.Element {
   const t = useAppT()
-  const unlocked = isCurriculumDayUnlocked(day, serverCompletedDays, isPro)
+  const unlocked = isCurriculumDayUnlocked(day, serverCompletedDays, isPro, nextDayOpensAt)
   const completed = serverCompletedDays.includes(day)
   const isCheckpoint = CHECKPOINT_DAYS.includes(day)
 

@@ -20,6 +20,7 @@ import { curriculumDayAccess, isCurriculumDayUnlocked, loadCurriculumProgress, r
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
 import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
 import { getCurriculumDayCompletions } from '../actions/getCurriculumDayCompletions'
+import { getNextDayOpensAt } from '../actions/paceActions'
 
 type CurriculumView = 'overview' | 'day-detail' | 'assessment'
 
@@ -60,6 +61,8 @@ function parseValidDay(rawDay: string | null): number | null {
 type ThirtyDayCurriculumExperienceProps = {
   /** Live classes done (x of 7), shown as a small link above the plan. */
   liveClassesDone?: number
+  /** Pace control: when the learner's next day opens (null = open now). Resolved on the server. */
+  initialNextDayOpensAt?: string | null
   // 30-Day Masterclass Paywall™ — resolved server-side (see this
   // route's page.tsx, hasQuantumSpeedReadingProAccess) and passed down
   // as the one real source of truth every gate in this component tree
@@ -81,7 +84,7 @@ type ThirtyDayCurriculumExperienceProps = {
   watermarkText: string | null
 }
 
-export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, liveClassesDone = 0 }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
+export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, liveClassesDone = 0, initialNextDayOpensAt = null }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
   // Practice text is English until a language gets its own passages; WPM is compared only within one language.
   const contentLang = practiceContentLang(useUiLang(), 'reading')
@@ -89,6 +92,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
 
   const [progress, setProgress] = useState(() => loadCurriculumProgress())
   const [serverCompletedDays, setServerCompletedDays] = useState<readonly number[]>(initialServerCompletedDays)
+  const [nextDayOpensAt, setNextDayOpensAt] = useState<string | null>(initialNextDayOpensAt)
   // Defense in depth — `?view=day&day=N` is a real, legitimate URL this
   // app itself generates (curriculumReturnRouting.ts, returning from a
   // gated exercise mid-day), but it's also just a URL anyone could type
@@ -97,7 +101,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // landing here with an actually-locked day can never skip straight to
   // real content — it resolves to the overview with the paywall already
   // open instead.
-  const initialDayIsUnlocked = initialDay !== null && isCurriculumDayUnlocked(initialDay, serverCompletedDays, isPro)
+  const initialDayIsUnlocked = initialDay !== null && isCurriculumDayUnlocked(initialDay, serverCompletedDays, isPro, initialNextDayOpensAt)
 
   // Practising a completed day again (see curriculumReturnRouting.ts): only
   // ever for a day the server already counts as completed.
@@ -115,9 +119,9 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // `locked` comes from the server redirect when a closed day is opened by URL.
   const lockedParam = Number(searchParams.get('locked'))
   const closedDay = initialDay !== null && !initialDayIsUnlocked ? initialDay : Number.isInteger(lockedParam) && lockedParam >= 1 && lockedParam <= 30 ? lockedParam : null
-  const closedAccess = closedDay === null ? 'open' : curriculumDayAccess(closedDay, initialServerCompletedDays, isPro)
+  const closedAccess = closedDay === null ? 'open' : curriculumDayAccess(closedDay, initialServerCompletedDays, isPro, initialNextDayOpensAt)
   const [paywallDay, setPaywallDay] = useState<number | null>(closedAccess === 'needs_enrolment' ? closedDay : null)
-  const [finishPreviousDay, setFinishPreviousDay] = useState<number | null>(closedAccess === 'finish_previous' ? closedDay : null)
+  const [finishPreviousDay, setFinishPreviousDay] = useState<number | null>(closedAccess === 'finish_previous' || closedAccess === 'opens_later' ? closedDay : null)
   const [refreshKey, setRefreshKey] = useState(0)
 
   // Re-reads both the local optimistic cache (streaks/checkpoints/brain
@@ -129,12 +133,14 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   async function refreshProgress(): Promise<void> {
     setProgress(loadCurriculumProgress())
     setRefreshKey((key) => key + 1)
-    const records = await getCurriculumDayCompletions()
+    const [records, opensAt] = await Promise.all([getCurriculumDayCompletions(), getNextDayOpensAt()])
     setServerCompletedDays(records.map((record) => record.day))
+    setNextDayOpensAt(opensAt)
   }
 
   function handleClosedDay(day: number): void {
-    if (curriculumDayAccess(day, serverCompletedDays, isPro) === 'finish_previous') setFinishPreviousDay(day)
+    const access = curriculumDayAccess(day, serverCompletedDays, isPro, nextDayOpensAt)
+    if (access === 'finish_previous' || access === 'opens_later') setFinishPreviousDay(day)
     else setPaywallDay(day)
   }
 
@@ -148,7 +154,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // the same "never trust the client-side hint alone" discipline this
   // gate itself was built to enforce.
   function handleSelectDay(day: number): void {
-    if (!isCurriculumDayUnlocked(day, serverCompletedDays, isPro)) {
+    if (!isCurriculumDayUnlocked(day, serverCompletedDays, isPro, nextDayOpensAt)) {
       handleClosedDay(day)
       return
     }
@@ -203,6 +209,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
     })
     if (outcome.ok) {
       setServerCompletedDays(outcome.completedDays)
+      void getNextDayOpensAt().then(setNextDayOpensAt)
     }
     setProgress(loadCurriculumProgress())
     setRefreshKey((key) => key + 1)
@@ -288,11 +295,13 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
         onStartProgram={openProgramOffer}
         isPro={isPro}
         serverCompletedDays={serverCompletedDays}
+        nextDayOpensAt={nextDayOpensAt}
         refreshKey={refreshKey}
       />
       <MasterclassPaywallModal open={paywallDay !== null} onOpenChange={(open) => { if (!open) setPaywallDay(null) }} day={paywallDay === 0 ? null : paywallDay} />
       <FinishPreviousDayModal
         day={finishPreviousDay}
+        opensAt={finishPreviousDay !== null && serverCompletedDays.includes(finishPreviousDay - 1) ? nextDayOpensAt : null}
         onOpenChange={(open) => { if (!open) setFinishPreviousDay(null) }}
         onGoToDay={(day) => {
           setFinishPreviousDay(null)

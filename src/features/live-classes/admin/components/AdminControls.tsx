@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { addLearnerToSession, copyLastCycle, createSession, markAllRegisteredPresent, publishDrafts, setPresent, setRecording, updateSession } from '../actions'
+import { addLearnerToSession, copyLastCycle, createSession, markAllRegisteredPresent, publishDrafts, setPaceControl, setPresent, setRecording, updateSession } from '../actions'
 import { CLASS_NUMBERS, CLASS_TOPICS_EN, DEFAULT_END_IST, DEFAULT_START_IST, type ClassNumber } from '../../liveClasses'
 
 // The trainer's live-class controls (admin, English). Every change goes
@@ -299,6 +299,32 @@ export function RecordingControl({ userId, recordings }: { userId: string; recor
           Watched recording
         </Button>
       </div>
+      <Note note={note} isError={isError} />
+    </div>
+  )
+}
+
+/** Pace control on/off for one learner, with an optional note ("reviewer", "catching up after illness"). */
+export function PaceToggle({ userId, paceOff }: { userId: string; paceOff: { note: string | null } | null }): React.JSX.Element {
+  const { run, pending, note, isError } = useAction(`pace-${userId}`)
+  const [reason, setReason] = useState('')
+  if (paceOff !== null)
+    return (
+      <div className="flex flex-col gap-1 text-xs" data-pace="off">
+        <span className="font-semibold text-amber-800">Off{paceOff.note ? ` · ${paceOff.note}` : ''}</span>
+        <button type="button" className="self-start text-primary underline" disabled={pending} onClick={() => run(() => setPaceControl({ userId, off: false }))}>
+          Turn back on
+        </button>
+        <Note note={note} isError={isError} />
+      </div>
+    )
+  return (
+    <div className="flex flex-col gap-1 text-xs" data-pace="on">
+      <span className="font-semibold text-emerald-800">On</span>
+      <input aria-label="Reason for turning pace control off" placeholder="Reason (optional)" className={`${field} min-h-8 w-36 px-2 text-xs`} value={reason} maxLength={200} onChange={(e) => setReason(e.target.value)} />
+      <button type="button" className="self-start text-primary underline" disabled={pending} onClick={() => run(() => setPaceControl({ userId, off: true, note: reason }))}>
+        Turn off
+      </button>
       <Note note={note} isError={isError} />
     </div>
   )

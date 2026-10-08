@@ -23,10 +23,9 @@
 // screen renders (never a genuine mid-session cancel) — see each batch
 // edit's own file for the specific reasoning.
 import { advanceCurriculumSession, clearActiveCurriculumSession, isSessionOnFinalExercise, loadActiveCurriculumSession } from './curriculumSessionRunner'
-import { markCurriculumDayComplete } from './curriculumProgress'
 import { isCheckpointDay } from './curriculumDatabase'
-import { completeCurriculumDay } from './actions/completeCurriculumDay'
 import { recordCurriculumDayPractice } from './actions/curriculumDayPractice'
+import { recordStepDone } from './actions/paceActions'
 
 const CURRICULUM_ROUTE = '/labs/sharp-brain/thirty-day-curriculum'
 
@@ -138,29 +137,55 @@ export function getCurriculumSmartCompleteHref(exerciseId: string, fallbackHref:
 
   const replay = session.replay === true
 
+  // Pace control (Phase 3, item 4): a real (non-replay) step is recorded as
+  // finished on the server, and the learner always returns to the day view.
+  // DayMasterPlayer then works out what is left from the server — the next
+  // step, or finishing the day with its pace checks. The day is never
+  // completed from here.
+  if (!replay) {
+    rememberStepDone(day, exerciseId)
+    void recordStepDone({ day, exerciseId })
+    clearActiveCurriculumSession()
+    return buildDayReturnUrl(day)
+  }
+
   if (!isSessionOnFinalExercise(session)) {
     advanceCurriculumSession()
     return buildDayReturnUrl(day, { replay })
   }
 
-  // Final exercise (or the queue otherwise ran out) — the playlist itself
-  // is done. On a checkpoint day (1/7/14/21/30), finishing the regular
-  // exercise queue must NOT mark the day complete — that day's real
-  // completion condition is the WPM + comprehension assessment
-  // (see recordCurriculumCheckpoint), never bypassable by just clicking
-  // through exercises. Every other day marks complete right here.
+  // Final exercise of a replay: saved as practice only; never marks the day
+  // complete again or changes its original result.
   clearActiveCurriculumSession()
-  // Practising a completed day again: saved as practice only; never marks
-  // the day complete again or changes its original result.
-  if (replay) {
-    if (isCheckpointDay(day)) return buildDayReturnUrl(day, { practiceCheckpoint: true })
-    void recordCurriculumDayPractice({ day })
-    return buildDayReturnUrl(day, { practised: true })
+  if (isCheckpointDay(day)) return buildDayReturnUrl(day, { practiceCheckpoint: true })
+  void recordCurriculumDayPractice({ day })
+  return buildDayReturnUrl(day, { practised: true })
+}
+
+const PENDING_STEPS_KEY = 'qsr-curriculum-steps-done'
+
+/** Steps finished on an exercise's own page, kept until the day view has re-sent them (the first save may still be in flight). */
+function rememberStepDone(day: number, exerciseId: string): void {
+  try {
+    const all = JSON.parse(sessionStorage.getItem(PENDING_STEPS_KEY) ?? '{}') as Record<string, string[]>
+    const list = new Set(all[day] ?? [])
+    list.add(exerciseId)
+    all[day] = [...list]
+    sessionStorage.setItem(PENDING_STEPS_KEY, JSON.stringify(all))
+  } catch {
+    // Storage unavailable: the server save above still records the step.
   }
-  if (isCheckpointDay(day)) {
-    return buildDayReturnUrl(day)
+}
+
+/** Takes (and clears) the steps finished on their own pages for a day. */
+export function takePendingStepsDone(day: number): string[] {
+  try {
+    const all = JSON.parse(sessionStorage.getItem(PENDING_STEPS_KEY) ?? '{}') as Record<string, string[]>
+    const list = all[day] ?? []
+    delete all[day]
+    sessionStorage.setItem(PENDING_STEPS_KEY, JSON.stringify(all))
+    return list
+  } catch {
+    return []
   }
-  markCurriculumDayComplete(day)
-  void completeCurriculumDay({ day })
-  return buildDayReturnUrl(day, { dayComplete: true })
 }

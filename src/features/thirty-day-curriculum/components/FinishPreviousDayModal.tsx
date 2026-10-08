@@ -1,7 +1,8 @@
 'use client'
 
 import { Lock } from 'lucide-react'
-import { useAppT } from '@/lib/app-i18n/client'
+import { useAppT, useUiLang } from '@/lib/app-i18n/client'
+import { LANGUAGES } from '@/lib/app-i18n/languages'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 
@@ -9,12 +10,23 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/compone
 // days open one after another. Never an enrolment offer here.
 type FinishPreviousDayModalProps = {
   day: number | null
+  /** Pace control: the previous day is done and this day opens at this time. */
+  opensAt?: string | null
   onOpenChange: (open: boolean) => void
   onGoToDay: (day: number) => void
 }
 
-export function FinishPreviousDayModal({ day, onOpenChange, onGoToDay }: FinishPreviousDayModalProps): React.JSX.Element {
+export function FinishPreviousDayModal({ day, opensAt = null, onOpenChange, onGoToDay }: FinishPreviousDayModalProps): React.JSX.Element {
   const t = useAppT()
+  const htmlLang = LANGUAGES[useUiLang()].htmlLang
+  const opensText =
+    opensAt === null
+      ? null
+      : t('curriculum.pace.dayOpensAt', {
+          day: day ?? '',
+          time: new Intl.DateTimeFormat(`${htmlLang}-IN-u-nu-latn`, { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(opensAt)),
+          date: new Intl.DateTimeFormat(`${htmlLang}-IN-u-nu-latn`, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' }).format(new Date(opensAt)),
+        })
   const previous = day === null ? null : day - 1
   // The modal is only open while `day` is set; '' keeps the closed state valid.
   const vars = { day: day ?? '', previous: previous ?? '' }
@@ -26,12 +38,12 @@ export function FinishPreviousDayModal({ day, onOpenChange, onGoToDay }: FinishP
             <Lock className="size-6" />
           </div>
           <div>
-            <DialogTitle className="font-heading text-xl font-bold tracking-tight text-foreground">{t('curriculum.finishPrevious.title', vars)}</DialogTitle>
-            <DialogDescription className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {t('curriculum.finishPrevious.body', vars)}
+            <DialogTitle className="font-heading text-xl font-bold tracking-tight text-foreground">{opensText ?? t('curriculum.finishPrevious.title', vars)}</DialogTitle>
+            <DialogDescription className="mt-2 text-sm leading-relaxed text-muted-foreground" data-opens-at={opensAt ?? undefined}>
+              {opensText !== null ? t('curriculum.pace.nothingLost') : t('curriculum.finishPrevious.body', vars)}
             </DialogDescription>
           </div>
-          {previous !== null && previous >= 1 && (
+          {opensText === null && previous !== null && previous >= 1 && (
             <Button size="lg" className="w-full rounded-full" onClick={() => onGoToDay(previous)}>
               {t('curriculum.finishPrevious.goTo', { previous })}
             </Button>

@@ -7,7 +7,7 @@ const yesNo = (v: boolean | null): string => (v === null ? '' : v ? 'Yes' : 'No'
 /** The learners overview as CSV (opens in Excel with every script intact). */
 export function learnersCsv(rows: readonly LearnerRow[]): string {
   return toCsv([
-    ['Name', 'Email', 'Phone', 'Batch', 'Classes done (of 7)', 'Class numbers', 'Recordings', 'Days done (of 30)', 'Day 30 completed', 'Day 1 effective speed', 'Day 1 comprehension %', 'Day 30 effective speed', 'Day 30 comprehension %', 'Test language', 'Certificate ID', 'Claim window closes', 'Claim window', 'No improvement (speed AND retention)', 'Check before refund', 'All refund conditions met'],
+    ['Name', 'Email', 'Phone', 'Batch', 'Classes done (of 7)', 'Class numbers', 'Recordings', 'Days done (of 30)', 'Day 30 completed', 'Day 1 effective speed', 'Day 1 comprehension %', 'Day 30 effective speed', 'Day 30 comprehension %', 'Test language', 'Certificate ID', 'Claim window closes', 'Claim window', 'No improvement (speed AND retention)', 'Check before refund', 'All refund conditions met', 'Pace control'],
     ...rows.map((r) => [
       r.name,
       r.email,
@@ -29,6 +29,7 @@ export function learnersCsv(rows: readonly LearnerRow[]): string {
       yesNo(r.guarantee.noImprovement),
       r.guarantee.checkBeforeRefund ? 'Yes' : '',
       r.guarantee.qualifies ? 'Yes' : 'No',
+      r.paceOff ? `Off${r.paceOff.note ? ` (${r.paceOff.note})` : ''}` : 'On',
     ]),
   ])
 }

@@ -6,6 +6,7 @@ import { getCurriculumDayCompletions } from '@/features/thirty-day-curriculum/ac
 import { getCurriculumWatermarkText } from '@/features/thirty-day-curriculum/actions/getCurriculumWatermarkText'
 import { isCurriculumDayUnlocked } from '@/features/thirty-day-curriculum/curriculumProgress'
 import { getMyClassesDone } from '@/features/live-classes/actions'
+import { getNextDayOpensAt } from '@/features/thirty-day-curriculum/actions/paceActions'
 
 export const metadata: Metadata = {
   title: 'Sharp Brain 30-Day Program Curriculum — Sharp Brain Lab',
@@ -40,11 +41,12 @@ type ThirtyDayCurriculumPageProps = {
 }
 
 export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDayCurriculumPageProps): Promise<React.JSX.Element> {
-  const [isPro, completions, watermarkText, liveClassesDone] = await Promise.all([
+  const [isPro, completions, watermarkText, liveClassesDone, nextDayOpensAt] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
     getCurriculumDayCompletions(),
     getCurriculumWatermarkText(),
     getMyClassesDone(),
+    getNextDayOpensAt(),
   ])
   const initialServerCompletedDays = completions.map((completion) => completion.day)
 
@@ -53,8 +55,8 @@ export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDa
   // shows the enroll offer or "finish the previous day" as appropriate.
   const params = await searchParams
   const requestedDay = params.view === 'day' ? Number(params.day) : null
-  if (requestedDay !== null && Number.isInteger(requestedDay) && !isCurriculumDayUnlocked(requestedDay, initialServerCompletedDays, isPro)) {
+  if (requestedDay !== null && Number.isInteger(requestedDay) && !isCurriculumDayUnlocked(requestedDay, initialServerCompletedDays, isPro, nextDayOpensAt)) {
     redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
   }
-  return <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} />
+  return <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} initialNextDayOpensAt={nextDayOpensAt} />
 }
