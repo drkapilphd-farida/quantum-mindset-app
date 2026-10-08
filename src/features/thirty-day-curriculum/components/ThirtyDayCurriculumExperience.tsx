@@ -4,7 +4,7 @@ import { useState } from 'react'
 import type { AppLang } from '@/lib/app-i18n/languages'
 import { practiceContentLang, sameContentLang } from '@/lib/app-i18n/practiceContent'
 import { useUiLang } from '@/lib/app-i18n/client'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
 import { FairReadingTest } from '@/features/fair-reading-test/components/FairReadingTest'
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
@@ -87,6 +87,7 @@ type ThirtyDayCurriculumExperienceProps = {
 
 export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, liveClassesDone = 0, initialNextDayOpensAt = null }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
+  const router = useRouter()
   // Practice text is English until a language gets its own passages; WPM is compared only within one language.
   const contentLang = practiceContentLang(useUiLang(), 'reading')
   const initialDay = searchParams.get('view') === 'day' ? parseValidDay(searchParams.get('day')) : null
@@ -214,6 +215,8 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
       setServerCompletedDays(outcome.completedDays)
       void getNextDayOpensAt().then(setNextDayOpensAt)
       if (result.day === 1) setOfferReminders(true)
+      // Clears pre-loaded pages, so the dashboard shows today as done.
+      router.refresh()
     }
     setProgress(loadCurriculumProgress())
     setRefreshKey((key) => key + 1)

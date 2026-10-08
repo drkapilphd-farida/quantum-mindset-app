@@ -186,6 +186,8 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   function handleCompletion(res: CompleteCurriculumDayResult): void {
     if (res.ok) {
       markCurriculumDayComplete(day)
+      // Clears pre-loaded pages, so the dashboard and plan show today as done.
+      router.refresh()
       setNextOpensAt(res.paced && day < 30 ? nextIstMidnight(new Date().toISOString()) : null)
       setMode('celebrating')
       return

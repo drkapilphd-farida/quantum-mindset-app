@@ -15,6 +15,8 @@ import {
 import { Providers } from '@/components/Providers'
 import { Toaster } from '@/components/ui/sonner'
 import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration'
+import { NavigationProgress } from '@/components/NavigationProgress'
+import { Suspense } from 'react'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import ConversionTracker from '@/components/analytics/ConversionTracker'
 import { MetaPixel } from '@/components/analytics/MetaPixel'
@@ -172,6 +174,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${homepageSans.variable} ${homepageDevanagari.variable} ${homepageDisplay.variable} ${homepageMono.variable} ${notoKannada.variable} ${notoTamil.variable} ${notoTelugu.variable} ${notoGujarati.variable} ${notoBengali.variable} scroll-smooth`}
     >
       <body className="antialiased">
+        <Suspense fallback={null}>
+          <NavigationProgress />
+        </Suspense>
         <LanguageProvider>
           <Providers>{children}</Providers>
         </LanguageProvider>

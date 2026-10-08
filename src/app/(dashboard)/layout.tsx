@@ -9,6 +9,7 @@ import { getAppDomain } from '@/lib/domains/appDomain'
 import { AppSidebar } from '@/components/AppSidebar'
 import { Topbar } from '@/components/Topbar'
 import { CurriculumSessionHeartbeat } from '@/features/thirty-day-curriculum/components/CurriculumSessionHeartbeat'
+import { PrefetchMainPages } from '@/components/PrefetchMainPages'
 
 // Design Tokens™ — Plus Jakarta Sans (primary) with Inter (fallback),
 // scoped to the dashboard route group only via CSS variables, not a
@@ -68,6 +69,7 @@ export default async function DashboardLayout({
           <main className="flex-1 overflow-y-auto">
             <div className="mx-auto max-w-4xl px-6 py-8 sm:px-8">{children}</div>
             <CurriculumSessionHeartbeat />
+            <PrefetchMainPages />
           </main>
         </div>
       </div>

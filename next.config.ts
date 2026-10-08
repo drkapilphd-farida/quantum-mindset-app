@@ -184,6 +184,11 @@ const nextConfig: NextConfig = {
   // packages out of webpack bundling entirely (real `require()` against
   // node_modules at runtime instead), which is what lets Vercel's own
   // file-tracing correctly find and include the native binary.
+  // Speed fix 4 (8 Oct 2026): the main pages are pre-loaded in the background
+  // (PrefetchMainPages). A pre-loaded page is reused for at most 30 s (the
+  // minimum; default 5 min), and completing a day clears it at once
+  // (router.refresh), so a learner never sees an out-of-date plan or banner.
+  experimental: { staleTimes: { static: 30 } },
   serverExternalPackages: ['pdfjs-dist', '@napi-rs/canvas'],
 
   // Belt-and-suspenders alongside serverExternalPackages above:
