@@ -1,4 +1,5 @@
 // Server-only. Never import this from client components.
+import { unstable_cache } from 'next/cache'
 import Anthropic from '@anthropic-ai/sdk'
 import { brand } from '@/config/site.config'
 import { LANGUAGES, type AppLang } from '@/lib/app-i18n/languages'
@@ -98,10 +99,44 @@ export function isUsableMentorNote(note: string, lang: AppLang, name: string): b
 export async function generateMentorMessage(input: MentorMessageInput, appLang: AppLang, appT: Translator): Promise<string> {
   const lang = mentorNoteLang(appLang)
   const t = lang === appLang ? appT : ENGLISH_T
+  return (await generateAiMentorNote(input, lang)) ?? fallbackMessage(input, t)
+}
+
+/**
+ * "Dr. Kapil's Note" made once per learner per India calendar day, then
+ * reused for every dashboard visit that day — including background
+ * pre-loads — so the dashboard doesn't wait for (or pay for) an AI call each
+ * time. Kept in the Vercel data cache, keyed by learner, date and language.
+ * Only a real AI note is kept: if the AI is unavailable, the simple built-in
+ * note is shown and the next visit tries again.
+ */
+export async function getDailyMentorNote(userId: string, input: MentorMessageInput, appLang: AppLang, appT: Translator): Promise<string> {
+  const lang = mentorNoteLang(appLang)
+  const t = lang === appLang ? appT : ENGLISH_T
+  const day = new Date(Date.now() + IST_OFFSET_MS).toISOString().slice(0, 10)
+  try {
+    return await unstable_cache(
+      async (): Promise<string> => {
+        const note = await generateAiMentorNote(input, lang)
+        if (note === null) throw new Error('no AI note') // not cached
+        return note
+      },
+      ['dr-kapil-note-v1', userId, day, lang],
+      { revalidate: 36 * 60 * 60, tags: [`dr-kapil-note:${userId}`] },
+    )()
+  } catch {
+    return fallbackMessage(input, t)
+  }
+}
+
+const IST_OFFSET_MS = (5 * 60 + 30) * 60_000
+
+/** The AI-written note, or null when the AI is unavailable or its reply isn't usable. */
+async function generateAiMentorNote(input: MentorMessageInput, lang: AppLang): Promise<string | null> {
   const apiKey = process.env.ANTHROPIC_API_KEY
 
   if (!apiKey || apiKey.includes('stub') || apiKey.includes('placeholder')) {
-    return fallbackMessage(input, t)
+    return null
   }
 
   try {
@@ -136,12 +171,12 @@ Total sessions ever: ${totalCompletedSessions}`
     })
 
     const text = response.content.at(0)
-    if (!text || text.type !== 'text') return fallbackMessage(input, t)
+    if (!text || text.type !== 'text') return null
     // Indian scripts: compose characters (NFC) and drop invisible zero-width
     // characters, which can otherwise render as a dotted circle.
     const note = text.text.normalize('NFC').replace(/[\u200B\uFEFF]/g, '').trim()
-    return isUsableMentorNote(note, lang, first) ? note : fallbackMessage(input, t)
+    return isUsableMentorNote(note, lang, first) ? note : null
   } catch {
-    return fallbackMessage(input, t)
+    return null
   }
 }

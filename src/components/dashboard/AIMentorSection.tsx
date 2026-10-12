@@ -1,6 +1,7 @@
 import { Sparkles } from 'lucide-react'
 import { getAppT } from '@/lib/app-i18n/server'
-import { generateMentorMessage, type MentorMessageInput } from '@/lib/ai/generateMentorMessage'
+import { generateMentorMessage, getDailyMentorNote, type MentorMessageInput } from '@/lib/ai/generateMentorMessage'
+import { createClient } from '@/lib/supabase/server'
 
 // Value Shift™ (Phase 2) — this used to be labeled "AI Mentor™". Same
 // underlying mechanism (generateMentorMessage.ts calls Claude, in Dr.
@@ -12,8 +13,12 @@ import { generateMentorMessage, type MentorMessageInput } from '@/lib/ai/generat
 // renders instantly while the note is generated (~500ms–2s in production,
 // near-instant when falling back to the deterministic path).
 export async function AIMentorSection(props: MentorMessageInput): Promise<React.JSX.Element> {
-  const { lang, t } = await getAppT()
-  const message = await generateMentorMessage(props, lang, t)
+  const [{ lang, t }, supabase] = await Promise.all([getAppT(), createClient()])
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  // One note per learner per day, reused for every visit and background pre-load.
+  const message = user ? await getDailyMentorNote(user.id, props, lang, t) : await generateMentorMessage(props, lang, t)
 
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-sm">
