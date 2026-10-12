@@ -5,7 +5,7 @@ import { APP_DOMAIN_HEADER, resolveAppDomain, isAppSubdomain, type AppDomain } f
 import { ACTIVE_SESSION_COOKIE, ACTIVE_SESSION_COOKIE_MAX_AGE_SECONDS, resolveActiveSession } from '@/lib/activeSessions/activeSessionGate'
 import { DEVICE_CHECK_COOKIE, DEVICE_CHECK_INTERVAL_MS, deviceCheckIsFresh, makeDeviceCheckStamp } from '@/lib/activeSessions/deviceCheckStamp'
 
-const PROTECTED_PATHS = ['/dashboard', '/labs', '/practice', '/progress', '/settings', '/admin', '/preview', '/parent-dashboard', '/school-admin', '/partner-admin']
+const PROTECTED_PATHS = ['/dashboard', '/labs', '/practice', '/progress', '/memory-studio', '/settings', '/admin', '/preview', '/parent-dashboard', '/school-admin', '/partner-admin']
 const AUTH_PATHS = ['/login', '/signup']
 
 // Domain Split™ — checked independently of PROTECTED_PATHS/auth state,
@@ -21,6 +21,7 @@ const DOMAIN_ROUTES: { prefix: string; domain: AppDomain }[] = [
   { prefix: '/preview', domain: 'app' },
   { prefix: '/parent-dashboard', domain: 'app' },
   { prefix: '/progress', domain: 'app' },
+  { prefix: '/memory-studio', domain: 'app' },
   { prefix: '/library', domain: 'app' },
   { prefix: '/masterclasses', domain: 'app' },
   { prefix: '/document-studio', domain: 'app' },

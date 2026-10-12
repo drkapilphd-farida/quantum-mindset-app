@@ -167,12 +167,12 @@ export async function recordReview(input: unknown): Promise<{ ok: true } | Fail>
 
 const MODEL = 'claude-haiku-4-5-20251001'
 const FEATURE = 'memory-studio-suggest'
-export const SUGGESTIONS_PER_DAY = 20
+const SUGGESTIONS_PER_DAY = 20
 
 const SYSTEM = [
   'You help children and adults use memory techniques. Reply with the idea only — no greeting, no list markup, no explanations.',
   'Make it vivid, funny and kind: big sizes, movement, sounds, colours. Never violent, scary, rude or about real people.',
-  'Keep every item exactly as given, in the given order. Use simple words a 10-year-old understands.',
+  'Keep every item exactly as given, in the given order, and do not add other objects or characters beyond what links them. Use simple words a 10-year-old understands. Normal sentence case — never ALL CAPS, no sound effects in capitals, no emoji.',
 ].join(' ')
 
 const SuggestSchema = z.discriminatedUnion('kind', [

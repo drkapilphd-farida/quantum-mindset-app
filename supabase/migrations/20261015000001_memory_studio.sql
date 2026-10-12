@@ -56,7 +56,9 @@ CREATE TABLE public.review_items (
 );
 
 CREATE INDEX review_items_due_idx ON public.review_items (user_id, due_at) WHERE due_at IS NOT NULL;
-CREATE UNIQUE INDEX review_items_source_ref_key ON public.review_items (user_id, source, source_ref) WHERE source_ref IS NOT NULL;
+-- One card per source item (e.g. peg 7 of the rhyme set). A plain unique index, so the
+-- server can upsert on it; rows without a source_ref never collide (NULLs are distinct).
+CREATE UNIQUE INDEX review_items_source_ref_key ON public.review_items (user_id, source, source_ref);
 
 ALTER TABLE public.review_items ENABLE ROW LEVEL SECURITY;
 

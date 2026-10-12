@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft, BookOpen, Dumbbell, ListChecks, type LucideIcon } from 'lucide-react'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 
-export const MEMORY_STUDIO_ROUTE = '/labs/sharp-brain/memory-studio'
+export const MEMORY_STUDIO_ROUTE = '/memory-studio'
 
 export type MethodAction = { key: string; label: string; sub?: string; icon: 'learn' | 'practise' | 'own'; onClick: () => void; primary?: boolean }
 

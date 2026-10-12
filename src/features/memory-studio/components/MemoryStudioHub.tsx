@@ -8,7 +8,7 @@ import { ReviewDueCard } from './ReviewDueCard'
 export async function MemoryStudioHub(): Promise<React.JSX.Element> {
   const { t } = await getAppT()
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-col gap-5 px-4 py-6" data-memory-studio="true">
+    <div className="mx-auto flex w-full max-w-xl flex-col gap-5" data-memory-studio="true">
       <div>
         <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('training.skills.memory')}</p>
         <h1 className="mt-1 font-heading text-2xl font-bold text-foreground">{t('training.studio.title')}</h1>

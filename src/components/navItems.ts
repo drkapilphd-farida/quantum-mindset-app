@@ -41,7 +41,7 @@ const HABIT_NAV_ITEMS = [
 const QSR_NAV_ITEMS = [
   // Brand name — stays in English in every language.
   { href: '/labs/sharp-brain/thirty-day-curriculum', labelKey: null, label: programs.sharpBrain.shortName, icon: Brain },
-  { href: '/labs/sharp-brain/memory-studio', labelKey: 'nav.memoryStudio', icon: Lightbulb },
+  { href: '/memory-studio', labelKey: 'nav.memoryStudio', icon: Lightbulb },
   { href: '/masterclasses', labelKey: 'nav.liveClasses', icon: Radio },
   { href: '/document-studio', labelKey: 'nav.documentStudio', icon: BookOpen },
 ] as const
