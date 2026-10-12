@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { CurriculumAssessmentCanvas } from './CurriculumAssessmentCanvas'
 import { FairReadingTest } from '@/features/fair-reading-test/components/FairReadingTest'
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
+import { MemoryCheck } from '@/features/memory-check/components/MemoryCheck'
 import { CertificateReadyCard } from '@/features/certificate/components/CertificateReadyCard'
 import { LiveClassesProgressLink } from '@/features/live-classes/components/LiveClassesExperience'
 import { ReminderOptInPrompt } from '@/features/reminders/components/ReminderOptInPrompt'
@@ -113,6 +114,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   const initialPracticeCheckpoint = isPro && initialDayIsUnlocked && initialDayCompleted && searchParams.get('practiceCheckpoint') === '1'
   const initialReplay = initialDayIsUnlocked && initialDayCompleted && searchParams.get('replay') === '1'
   const [practiceAssessment, setPracticeAssessment] = useState(initialPracticeCheckpoint)
+  const [memoryCheckDoneFor, setMemoryCheckDoneFor] = useState<number | null>(null)
   const [justPractised, setJustPractised] = useState(initialDayIsUnlocked && initialDayCompleted && searchParams.get('practised') === '1')
 
   const [view, setView] = useState<CurriculumView>(initialPracticeCheckpoint ? 'assessment' : initialDayIsUnlocked ? 'day-detail' : 'overview')
@@ -177,6 +179,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
 
   function handleLaunchAssessment(day: number, practice: boolean): void {
     setSelectedDay(day)
+    setMemoryCheckDoneFor(null)
     setPracticeAssessment(practice)
     setView('assessment')
   }
@@ -235,6 +238,18 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
       completedAt: fair.createdAt,
       contentLang: fair.lang,
     })
+  }
+
+  // Days 1 and 30: the memory check comes first (it skips itself when it was
+  // already taken), so leaving half-way never means reading the passage twice.
+  const memoryPhase = selectedDay === 1 ? 'baseline' : selectedDay === 30 ? 'final' : null
+  if (view === 'assessment' && memoryPhase !== null && !practiceAssessment && memoryCheckDoneFor !== selectedDay) {
+    return (
+      <>
+        <MemoryCheck phase={memoryPhase} onComplete={() => setMemoryCheckDoneFor(selectedDay)} />
+        {watermarkText !== null && <CurriculumWatermarkOverlay text={watermarkText} />}
+      </>
+    )
   }
 
   const fairDay = selectedDay === 1 || selectedDay === 7 || selectedDay === 14 || selectedDay === 21 || selectedDay === 30 ? selectedDay : null

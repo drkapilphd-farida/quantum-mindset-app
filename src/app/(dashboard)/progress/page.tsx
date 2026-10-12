@@ -29,6 +29,7 @@ import { getFixationSessions } from '@/features/visual-intelligence/fixation/que
 import { computeFocusScore, getHighestDifficultyRatio } from '@/features/visual-intelligence/fixation/focusScore'
 import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
 import { getMemoryScores } from '@/features/memory-palace/actions/palaceActions'
+import { MemoryCheckCard } from '@/features/memory-check/components/MemoryCheckCard'
 import { dayTitle } from '@/lib/app-i18n/curriculumText'
 import { MindScoreHeroCard } from '@/components/mindScore/MindScoreHeroCard'
 import { DimensionScoreGrid } from '@/components/mindScore/DimensionScoreGrid'
@@ -240,6 +241,11 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
           totalCount={program.totalDays}
           journeyStatus={journeyStatus}
         />
+      </Suspense>
+
+      {/* Memory check: start and Day 30 */}
+      <Suspense fallback={null}>
+        <MemoryCheckCard />
       </Suspense>
 
       {/* 6. Strength Areas */}

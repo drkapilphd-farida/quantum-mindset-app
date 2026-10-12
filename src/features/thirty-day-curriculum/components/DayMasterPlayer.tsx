@@ -29,6 +29,10 @@ import { FairReadingTest } from '@/features/fair-reading-test/components/FairRea
 import { getFairResults } from '@/features/fair-reading-test/actions'
 import { needsOneTimeBaseline } from '@/features/fair-reading-test/fairTest'
 import { baselinePrompt, loadPostponedOn, postponeBaseline, type BaselinePrompt } from '@/features/fair-reading-test/oneTimeBaseline'
+import { getMemoryCheckStatus } from '@/features/memory-check/actions'
+import { MemoryCheck } from '@/features/memory-check/components/MemoryCheck'
+import { BASELINE_LAST_DAY } from '@/features/memory-check/memoryCheck'
+import { laterToday, saveLater } from '@/features/memory-check/memoryOffer'
 
 const CARD_CLASS_NAME = 'relative overflow-hidden rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
 
@@ -101,6 +105,8 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   // Phase 3: learners who began before the fair reading test take a one-time
   // fair baseline at the start of their next day (one "Tomorrow" allowed).
   const [fairBaseline, setFairBaseline] = useState<BaselinePrompt>('hidden')
+  // The optional starting memory check, for learners on Days 2–7 without one.
+  const [memoryOffer, setMemoryOffer] = useState(false)
 
   // True Full-Screen Viewport Lock™ — only while 'playing' (the fixed
   // inset-0 mode below); 'celebrating'/'ready-for-checkpoint' render as
@@ -127,6 +133,11 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       if (!isReplay && day > 1) {
         void getFairResults()
           .then((results) => (!cancelled && needsOneTimeBaseline([1], results) ? setFairBaseline(baselinePrompt(loadPostponedOn())) : undefined))
+          .catch(() => undefined)
+      }
+      if (!isReplay && day > 1 && day <= BASELINE_LAST_DAY && !laterToday()) {
+        void getMemoryCheckStatus()
+          .then((status) => !cancelled && setMemoryOffer(status.baselineOpen))
           .catch(() => undefined)
       }
     }
@@ -279,6 +290,21 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
                 },
               }
             : {})}
+        />
+      </div>
+    )
+  }
+
+  if (memoryOffer) {
+    return (
+      <div className="fixed inset-0 z-50 overflow-y-auto bg-background" data-day-master-player={day} data-memory-offer="true">
+        <MemoryCheck
+          phase="baseline"
+          onComplete={() => setMemoryOffer(false)}
+          onLater={() => {
+            saveLater()
+            setMemoryOffer(false)
+          }}
         />
       </div>
     )
