@@ -1,6 +1,6 @@
 # Memory Studio + Smart Reader — Step 0 plan
 
-Branch `feat/memory-and-reader` (from main 4456d6f) · written 12 Oct 2026 · **plan only. No code is written until you approve it.**
+Branch `feat/memory-and-reader` (from main 4456d6f) · written 12 Oct 2026 · **approved 12 Oct with the decisions and scope change in section 0.** Where section 0 differs from the sections below, section 0 wins.
 
 Rules for every build:
 - Learner progress, scores, streaks, certificates and completed days are never changed or locked.
@@ -9,6 +9,90 @@ Rules for every build:
 - Banned claims: "photographic memory", "read a book in an hour", "memorise a whole book", and percentage promises.
 - Tests, type-check, lint and a local production build must pass. You get screenshots (EN + HI, Level 1 + a higher level) and a staging link.
 - Nothing goes live without your **CONFIRM DEPLOY**. No production database change without your OK.
+
+---
+
+## 0. Approved 12 Oct — decisions and scope change
+
+### Decisions
+| # | Decision |
+|---|---|
+| 1 | Pictures are drawn in the app's own flat style, like the Memory Palace. |
+| 2 | Name–Face uses illustrated faces drawn by the app: diverse Indian faces (skin tones, ages, hair, glasses, beard, bindi…), clearly not real people. No photo-realistic AI faces. |
+| 3 | A learner who reaches Day 30 without a baseline takes the memory test, and their score is shown on its own, without a comparison. |
+| 4 | Upload limit: **3 per learner per day**, set in `site.config`. |
+| 5 | Voice for the first 4 Learn lessons (Story, Peg, Palace, Chapter) in **EN + HI** (≈ 29 Sarvam credits); captions only for the rest. Credits for the rest: see below. |
+| 6 | KN, TA, TE, MR, GU and BN show the picture lists with **English labels** and the note "native version coming" until reviewers check them. All word lists are exported to `docs/translations/` for review. |
+| 7 | The daily Dr. Kapil's note (70670eb) is approved for deploy; it ships on its own, separately from this work. |
+
+### Scope change — Upload & Learn is no longer a separate section
+a. The Document Studio / Upload & Learn page, the dashboard card, the welcome-screen choice and the menu entry are **hidden behind a flag (default off)**.
+   - The code and all existing data stay.
+   - `/document-studio` and `/library/*` redirect to the dashboard while the flag is off.
+   - The 24 existing uploads stay in the database.
+
+b. The **Smart Reader is built on the app's own passage library**, so every learner uses it in the daily plan without uploading anything.
+   - The library has 18 EN + 18 HI passages today. They will be extended with longer, sectioned passages that have pre-written section questions, in EN and HI.
+   - KN, TA, TE, MR, GU and BN use the English passages with the note "Practice text in English — native version coming", as today, until native passages are written and reviewed.
+   - Questions are pre-written, so **reading the library costs no AI**.
+
+c. **"Use your own material" exists only inside the 30-day plan, Days 22–29:** upload a PDF or paste text → Smart Reader → section questions → Chapter & Book method → review queue.
+   - Kept: text reading from PDF/Word/pasted text, the 4 MB limit, AI cost logging and the 3-per-day limit.
+   - Dropped from this path: web-page and YouTube import.
+
+d. **Dropped:** the standalone AI extras (separate summary tool, multiple-choice/recall drills, explain-it-back challenge, story, subject lens, keyword icons) and the document library. The mind map survives only inside the Chapter & Book method.
+
+### Effort and cost saved
+| | Before | After |
+|---|---|---|
+| Translating the Upload & Learn page (≈ 1,500 lines of English-only screens) | ≈ 3 days | **0**, because it is hidden |
+| Making the full upload analysis answer in KN, TE and BN | ≈ 1 day | **0**: only the Days 22–29 upload path needs section questions + key ideas, in one smaller AI call |
+| Smart Reader build | ≈ 8–9 days | ≈ 6 days (one source path for the library; uploads plug into the same sections) |
+| **Total programme** | ≈ 5–6 weeks | **≈ 4–5 weeks** |
+| AI cost per Smart Reader session | ≈ ₹2.5–5 per upload, every time a learner reads | **₹0 for library reading**; ≈ ₹1.5–4 only for an own-material upload on Days 22–29 (max 3 a day) |
+
+New work instead: longer EN + HI library passages with section questions (writing, ≈ 2 days), and later native passages for the other 6 languages (writers/reviewers).
+
+### Sarvam credits for the remaining voice
+- One 90-second lesson is ≈ 1,200 characters ≈ 3.6 credits.
+- After the first 4 lessons in EN + HI (≈ 29 credits) about **8 credits** are left.
+- Lessons 5–8 in EN + HI: ≈ 29 credits.
+- All 8 lessons in KN, TA, TE, MR, GU and BN: ≈ 173 credits (after their scripts are translated and reviewed).
+- **Total ≈ 202 credits, plus ≈ 20% for retakes = buy ≈ 250 credits.** At the 3 credits per 1,000 characters rate used so far, that is about ₹250 (check the current price on the Sarvam page before buying).
+
+### Release order (each: tests, staging, preview + screenshots, your CONFIRM DEPLOY)
+| # | Release | DB |
+|---|---|---|
+| 1 | **Memory measurement** (20 words, 10-digit number, 5 name–face pairs), released on its own, before the 15 Oct batch. | none: results go into `exercise_results` |
+| 2 | Review queue + dashboard Review card + Story + Peg (+ voice for their lessons) | `review_items`, `memory_creations` |
+| 3 | Personal palaces | `memory_palaces` |
+| 4 | Chapter & Book, plus the Days 22–29 own-material path; Upload & Learn hidden behind the flag | `chapter_maps` |
+| 5 | Smart Reader on the passage library | `document_sections`, `reading_positions` |
+| 6 | Number code, Name–Face method, Keyword, Acronyms | none |
+| 7 | New 30-day plan (memory + review steps, days not yet reached) | none |
+| 8 | Phase 2 focus exercises (Flanker, Go/No-Go, n-back, Visual Search, Focus Score) | — |
+
+### Release 1 — memory measurement (how it works)
+- **When:**
+  - **Day 1** gets a required "Memory check" step, alongside the fair reading test. A Day 1 learner can't skip it.
+  - **Learners already in the program who are on Days 2–7** see a "Take your memory baseline" card in the plan (optional, once). Their result is marked "Baseline · taken on Day N, date".
+  - Learners past Day 7 don't get a baseline; on Day 30 their score is shown on its own (decision 3).
+  - **Day 30** gets the same required step with an equivalent form.
+- **The check (≈ 4 minutes, phone-first):**
+  1. **20 words**, shown one at a time (2 s each).
+  2. **A 10-digit number** (shown for 10 s, then typed on the number keypad). It also serves as the pause before word recall.
+  3. **Word recall:** tap the words you saw in a grid of 40 (20 seen + 20 similar unseen). Score = words found − wrong taps, 0–20. Tapping is used instead of typing so children and all 8 scripts can do it on a phone in the same way.
+  4. **5 name–face pairs** (6 s each), then match each face to its name.
+- **Score:** each part as a percentage (words /20, digits in the right place /10, pairs /5), plus a **Memory score 0–100** = the average of the three. Day 30 shows "Day 1 → Day 30" for each part when a baseline exists; otherwise the score alone.
+- **Fair forms:**
+  - Form A (start) and Form B (Day 30) use different word lists of equally common, concrete words, and different faces and names.
+  - The number is random each time.
+  - Answers are checked **on the server** with a signed answer key (as in the fair reading test), so a result can't be faked from the browser.
+- **Languages:**
+  - Words come in all 8 languages. EN and HI are written by me; the other 6 are my translations of simple concrete nouns, marked "pending native review" and exported to `docs/translations/`.
+  - Names are common Indian names from all regions, written in Devanagari for HI and in English letters elsewhere.
+  - Words in the other 6 languages need native review **before the 15 Oct batch relies on them**. Otherwise those learners use the English list with the note (decision 6). The language used is saved with the result, so Day 1 and Day 30 are compared only in the same language.
+- **Where it shows:** the result screen; a "Memory" card on the Progress page and in the parent view (baseline date/day, Day 30, change). The certificate is **not** changed in this release; adding memory to it needs your approval of a new design.
 
 ---
 
