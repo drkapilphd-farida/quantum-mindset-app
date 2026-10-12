@@ -159,8 +159,10 @@ export function MemoryCheck({ phase, onComplete, onLater }: MemoryCheckProps): R
                 </button>
               ))}
             </div>
-            {uiLang !== 'en' && uiLang !== 'hi' && <p className="text-xs text-muted-foreground">{t('training.memoryCheck.otherLangNote')}</p>}
-            <p className="text-xs text-muted-foreground">{t('training.memoryCheck.langNote')}</p>
+            {/* KN/TA/TE/MR/GU/BN: no reviewed words yet — the learner picks English or Hindi, and Day 30 uses the same. */}
+            <p className="text-xs text-muted-foreground" data-memory-lang-note={uiLang === 'en' || uiLang === 'hi' ? 'same' : 'choose'}>
+              {uiLang === 'en' || uiLang === 'hi' ? t('training.memoryCheck.langNote') : t('training.memoryCheck.otherLangNote')}
+            </p>
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">{t('training.memoryCheck.langLocked', { language: LANGUAGES[lockedLang].nativeName })}</p>

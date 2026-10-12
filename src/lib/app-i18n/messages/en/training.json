@@ -524,7 +524,7 @@
     "finalTitle": "Your Day 30 memory check",
     "intro": "Three short parts, about 4 minutes: remember 20 words, a 10-digit number and 5 people's names. Find a quiet place. There's no time limit for answering.",
     "chooseLang": "Which language would you like the words in?",
-    "otherLangNote": "Words in your language are coming soon. For now, please choose English or Hindi.",
+    "otherLangNote": "Memory words are in English or Hindi for now. Choose the language you know better — your Day 30 check will use the same one.",
     "langNote": "Your Day 30 check will use the same language, so the two results can be compared fairly.",
     "langLocked": "Language: {language}",
     "start": "Start",
