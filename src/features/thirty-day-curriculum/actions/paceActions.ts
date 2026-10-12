@@ -1,10 +1,12 @@
 'use server'
 
+import { cache } from 'react'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { beatCredit, dayOpensAt, dayStepIds } from '../paceControl'
+import { getCurriculumDayCompletions } from './getCurriculumDayCompletions'
 
 // Pace control (Phase 3, item 4) — the server keeps the practice time and the
 // finished steps of each day, so neither can be faked from the browser.
@@ -68,20 +70,23 @@ export async function recordStepDone(input: unknown): Promise<{ ok: boolean }> {
   return { ok: !error }
 }
 
-/** When the learner's next day opens (null = open now, or nothing waiting). */
+/** When the learner's next day opens (null = open now, or nothing waiting). Once per request; its three reads run together. */
 export async function getNextDayOpensAt(): Promise<string | null> {
+  return nextDayOpensAtForRequest()
+}
+
+const nextDayOpensAtForRequest = cache(async (): Promise<string | null> => {
   const uid = await userId()
   if (uid === null) return null
   const supabase = await createClient()
-  const [{ data: completions }, { data: setting }] = await Promise.all([
-    supabase.from('curriculum_day_completions').select('day, completed_at').eq('user_id', uid),
+  const [completions, { data: setting }, { data: activity }] = await Promise.all([
+    getCurriculumDayCompletions(),
     supabase.from('curriculum_pace_settings').select('pace_off').eq('user_id', uid).maybeSingle(),
+    supabase.from('curriculum_day_activity').select('day, paced').eq('user_id', uid).eq('paced', true),
   ])
-  const days = (completions ?? []).map((c) => c.day)
-  const last = Math.max(0, ...days)
-  if (last === 0 || last >= 30) return null
-  const { data: activity } = await supabase.from('curriculum_day_activity').select('paced').eq('user_id', uid).eq('day', last).maybeSingle()
-  const prev = (completions ?? []).find((c) => c.day === last)!
-  const opensAt = dayOpensAt({ completedAt: prev.completed_at, paced: activity?.paced === true }, setting?.pace_off === true)
+  const last = completions.reduce<(typeof completions)[number] | null>((a, b) => (a === null || b.day > a.day ? b : a), null)
+  if (last === null || last.day >= 30) return null
+  const paced = (activity ?? []).some((row) => row.day === last.day)
+  const opensAt = dayOpensAt({ completedAt: last.completedAt, paced }, setting?.pace_off === true)
   return opensAt !== null && Date.parse(opensAt) > Date.now() ? opensAt : null
-}
+})

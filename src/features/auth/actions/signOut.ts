@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { ACTIVE_SESSION_COOKIE } from '@/lib/activeSessions/activeSessionGate'
+import { DEVICE_CHECK_COOKIE } from '@/lib/activeSessions/deviceCheckStamp'
 
 export async function signOut(): Promise<void> {
   const supabase = await createClient()
@@ -26,6 +27,7 @@ export async function signOut(): Promise<void> {
 
   const cookieStore = await cookies()
   cookieStore.delete(ACTIVE_SESSION_COOKIE)
+  cookieStore.delete(DEVICE_CHECK_COOKIE)
 
   redirect('/login')
 }

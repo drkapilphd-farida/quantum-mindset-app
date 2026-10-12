@@ -12,7 +12,9 @@ function makeClient(subscriptions: SubscriptionRow[], plans: PlanRow[]): { from:
   return {
     from: (table: string) => {
       if (table === 'subscriptions') {
-        return { select: () => ({ eq: () => ({ in: () => Promise.resolve({ data: subscriptions }) }) }) }
+        // One query: each subscription comes with its plan's billing interval (embedded select).
+        const withPlans = subscriptions.map((sub) => ({ ...sub, plans: plans.find((plan) => plan.id === sub.plan_id) ?? null }))
+        return { select: () => ({ eq: () => ({ in: () => Promise.resolve({ data: withPlans }) }) }) }
       }
       if (table === 'plans') {
         return { select: () => ({ in: () => Promise.resolve({ data: plans }) }) }

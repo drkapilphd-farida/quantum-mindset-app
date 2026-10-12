@@ -39,9 +39,14 @@ export async function updateSession(request: NextRequest): Promise<SessionResult
     },
   })
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  // Speed fix 2 (Oct 2026): verify the session token here with the project's
+  // public signing key (ES256) instead of asking the auth server on every
+  // click. getClaims still refreshes an expired session (writing the new
+  // cookies above) and checks the signature and expiry; older HS256 tokens
+  // fall back to the auth server automatically.
+  const { data } = await supabase.auth.getClaims()
+  const claims = data?.claims
+  const user = claims?.sub ? ({ id: claims.sub, email: claims.email } as User) : null
 
   return { response, user, supabase }
 }

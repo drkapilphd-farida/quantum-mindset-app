@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
 
 // Real, RLS-respecting check against the `subscriptions` table (see
@@ -36,35 +37,34 @@ import { createClient } from '@/lib/supabase/server'
 // on that). DO NOT extend this expiry branch to cover 'lifetime' (or any
 // future non-recurring interval) — that would silently revoke access
 // customers paid once, in full, to keep forever.
-/**
- * `client` lets server jobs with no signed-in learner (the reminder job)
- * pass the service client; requests use the learner's own session.
- */
-export async function getIsPaidUser(userId: string, client?: Pick<Awaited<ReturnType<typeof createClient>>, 'from'>): Promise<boolean> {
-  const supabase = client ?? (await createClient())
+type Client = Pick<Awaited<ReturnType<typeof createClient>>, 'from'>
 
+/**
+ * Whether the learner has an active paid plan. One query (subscriptions with
+ * their plan's billing interval), remembered for the rest of the request.
+ * `client` lets server jobs with no signed-in learner (the reminder job) pass
+ * the service client; requests use the learner's own session.
+ */
+export async function getIsPaidUser(userId: string, client?: Client): Promise<boolean> {
+  return client ? isPaid(userId, client) : isPaidForRequest(userId)
+}
+
+const isPaidForRequest = cache(async (userId: string): Promise<boolean> => isPaid(userId, await createClient()))
+
+async function isPaid(userId: string, supabase: Client): Promise<boolean> {
   const { data: subscriptions } = await supabase
     .from('subscriptions')
-    .select('plan_id, current_period_end')
+    .select('plan_id, current_period_end, plans(billing_interval)')
     .eq('user_id', userId)
     .in('status', ['active', 'trialing'])
 
   if (!subscriptions || subscriptions.length === 0) return false
 
-  const planIds = [...new Set(subscriptions.map((subscription) => subscription.plan_id))]
-  const { data: plans } = await supabase.from('plans').select('id, billing_interval').in('id', planIds)
-  const billingIntervalByPlanId = new Map((plans ?? []).map((plan) => [plan.id, plan.billing_interval]))
-
   const now = Date.now()
-
   return subscriptions.some((subscription) => {
-    // Any plan that isn't the recurring monthly one (lifetime, year,
-    // free, or an unrecognized/missing plan row) is exempt from this
-    // check entirely — see the doc comment above for why 'lifetime'
-    // must never be touched here.
-    if (billingIntervalByPlanId.get(subscription.plan_id) !== 'month') return true
-    // No period end recorded is a data gap, not a lapse — never
-    // penalize a real subscriber for a missing timestamp.
+    const plan = subscription.plans as { billing_interval: string } | { billing_interval: string }[] | null
+    const interval = Array.isArray(plan) ? plan[0]?.billing_interval : plan?.billing_interval
+    if (interval !== 'month') return true
     if (subscription.current_period_end === null) return true
     return new Date(subscription.current_period_end).getTime() > now
   })

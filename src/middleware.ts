@@ -3,6 +3,7 @@ import { retiredPageRedirect } from '@/config/retiredPages'
 import { updateSession } from '@/lib/supabase/middleware'
 import { APP_DOMAIN_HEADER, resolveAppDomain, isAppSubdomain, type AppDomain } from '@/lib/domains/appDomain'
 import { ACTIVE_SESSION_COOKIE, ACTIVE_SESSION_COOKIE_MAX_AGE_SECONDS, resolveActiveSession } from '@/lib/activeSessions/activeSessionGate'
+import { DEVICE_CHECK_COOKIE, DEVICE_CHECK_INTERVAL_MS, deviceCheckIsFresh, makeDeviceCheckStamp } from '@/lib/activeSessions/deviceCheckStamp'
 
 const PROTECTED_PATHS = ['/dashboard', '/labs', '/practice', '/progress', '/settings', '/admin', '/preview', '/parent-dashboard', '/school-admin', '/partner-admin']
 const AUTH_PATHS = ['/login', '/signup']
@@ -86,7 +87,12 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   // per-request database round-trip where it actually matters. See
   // activeSessionGate.ts for the full allow/claim/confirm/force-logout
   // decision this drives.
-  if (isProtected && user) {
+  // Speed fix 2: a device check that passed in the last 3 minutes (signed
+  // cookie, bound to this learner and device session) is trusted without
+  // another database round-trip.
+  const deviceCheckedRecently =
+    isProtected && user !== null && (await deviceCheckIsFresh(request.cookies.get(DEVICE_CHECK_COOKIE)?.value, user.id, request.cookies.get(ACTIVE_SESSION_COOKIE)?.value ?? null, Date.now()))
+  if (isProtected && user && !deviceCheckedRecently) {
     const cookieSessionId = request.cookies.get(ACTIVE_SESSION_COOKIE)?.value ?? null
     const { action, newSessionId } = await resolveActiveSession({
       supabase,
@@ -102,6 +108,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
       const logoutResponse = NextResponse.redirect(loginUrl)
       sessionResponse.cookies.getAll().forEach((cookie) => logoutResponse.cookies.set(cookie))
       logoutResponse.cookies.delete(ACTIVE_SESSION_COOKIE)
+      logoutResponse.cookies.delete(DEVICE_CHECK_COOKIE)
       return logoutResponse
     }
 
@@ -110,6 +117,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
       conflictUrl.searchParams.set('next', pathname)
       const conflictResponse = NextResponse.redirect(conflictUrl)
       sessionResponse.cookies.getAll().forEach((cookie) => conflictResponse.cookies.set(cookie))
+      conflictResponse.cookies.delete(DEVICE_CHECK_COOKIE)
       return conflictResponse
     }
 
@@ -121,6 +129,21 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         path: '/',
         maxAge: ACTIVE_SESSION_COOKIE_MAX_AGE_SECONDS,
       })
+    }
+
+    // The check passed: trust it for the next few minutes.
+    const checkedSessionId = action === 'claim' && newSessionId ? newSessionId : action === 'allow' ? cookieSessionId : null
+    if (checkedSessionId) {
+      const stamp = await makeDeviceCheckStamp(user.id, checkedSessionId, Date.now())
+      if (stamp) {
+        sessionResponse.cookies.set(DEVICE_CHECK_COOKIE, stamp, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          path: '/',
+          maxAge: Math.floor(DEVICE_CHECK_INTERVAL_MS / 1000),
+        })
+      }
     }
   }
 

@@ -6,6 +6,7 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { getNextDayOpensAt } from '@/features/thirty-day-curriculum/actions/paceActions'
+import { getCurriculumDayCompletions } from '@/features/thirty-day-curriculum/actions/getCurriculumDayCompletions'
 import { cleanReminderTime, DEFAULT_REMINDER, streakDays, todayStatus, type TodayStatus } from './reminders'
 
 // Daily reminders (Phase 3) — the learner's side: today's banner, and phone
@@ -24,10 +25,11 @@ export type BannerData = { status: TodayStatus; streak: number } | null
 /** Today's status and streak for the in-app banner (enrolled learners only). */
 export async function getReminderBanner(): Promise<BannerData> {
   const uid = await userId()
-  if (uid === null || !(await hasQuantumSpeedReadingProAccess())) return null
-  const supabase = await createClient()
-  const [{ data }, opensAt] = await Promise.all([supabase.from('curriculum_day_completions').select('day, completed_at').eq('user_id', uid), getNextDayOpensAt()])
-  const completions = (data ?? []).map((c) => ({ day: c.day, completedAt: c.completed_at }))
+  if (uid === null) return null
+  // Independent reads run together; each is shared with the rest of the page (fetched once per request).
+  const [isPro, records, opensAt] = await Promise.all([hasQuantumSpeedReadingProAccess(), getCurriculumDayCompletions(), getNextDayOpensAt()])
+  if (!isPro) return null
+  const completions = records.map((c) => ({ day: c.day, completedAt: c.completedAt }))
   const now = Date.now()
   return { status: todayStatus(completions, opensAt, now), streak: streakDays(completions, now) }
 }

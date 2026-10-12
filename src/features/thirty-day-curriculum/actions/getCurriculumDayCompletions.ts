@@ -1,5 +1,6 @@
 'use server'
 
+import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import { isAppLang, type AppLang } from '@/lib/app-i18n/languages'
 
@@ -18,7 +19,12 @@ export type CurriculumDayCompletionRecord = {
 // completeCurriculumDay.ts. Powers the Parents Dashboard's "Daily
 // Curriculum Progress" and "Session History" — ordered most-recent-first,
 // matching every other session-history list in this app.
+/** The signed-in learner's completed days. Fetched once per request (several parts of a page ask). */
 export async function getCurriculumDayCompletions(): Promise<readonly CurriculumDayCompletionRecord[]> {
+  return completionsForRequest()
+}
+
+const completionsForRequest = cache(async (): Promise<readonly CurriculumDayCompletionRecord[]> => {
   const supabase = await createClient()
   const {
     data: { user },
@@ -42,4 +48,4 @@ export async function getCurriculumDayCompletions(): Promise<readonly Curriculum
     completedAt: row.completed_at,
     contentLang: isAppLang(row.content_lang) ? row.content_lang : 'en',
   }))
-}
+})
