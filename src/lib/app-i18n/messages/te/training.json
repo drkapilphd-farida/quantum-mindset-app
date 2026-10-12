@@ -483,7 +483,12 @@
     "error": "ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.",
     "cardTitle": "మీ Sharp Brain ధృవపత్రం సిద్ధంగా ఉంది",
     "cardCta": "ధృవపత్రం చూడండి",
-    "shareText": "నేను Mind Ur Mind తో Sharp Brain యొక్క 30 రోజులు పూర్తి చేశాను. ధృవీకరించండి: {url}"
+    "shareText": "నేను Mind Ur Mind తో Sharp Brain యొక్క 30 రోజులు పూర్తి చేశాను. ధృవీకరించండి: {url}",
+    "memorySectionTitle": "జ్ఞాపకశక్తి",
+    "memoryCheck": "జ్ఞాపకశక్తి పరీక్ష",
+    "memoryCheckSub": "100 లో · రోజు {day} → రోజు 30",
+    "memoryCheckSubDay30": "100 లో · రోజు 30",
+    "shareMemory": "జ్ఞాపకశక్తి"
   },
   "liveClasses": {
     "myClasses": "నా తరగతులు",

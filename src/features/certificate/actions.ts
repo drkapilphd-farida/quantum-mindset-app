@@ -7,6 +7,8 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { getFairResults } from '@/features/fair-reading-test/actions'
 import { MEMORY_PALACE_EXERCISE_ID, NEXT_DAY_RECALL_EXERCISE_ID } from '@/features/memory-palace/memoryPalace'
+import { getMemoryCheckResults } from '@/features/memory-check/actions'
+import { memoryCheckPair } from './certificate'
 import { buildSnapshot, CERT_DAY, CERT_PROGRAM, cleanLearnerName, completedOnIst, generateCode, type CertificateSnapshot } from './certificate'
 
 export type IssuedCertificate = { code: string; learnerName: string; completedOn: string; snapshot: CertificateSnapshot }
@@ -99,11 +101,12 @@ export async function issueCertificate(input: unknown): Promise<{ ok: true; cert
   const day30 = (completions ?? []).find((c) => c.day === CERT_DAY)
   if (!day30) return { ok: false, error: 'locked' }
 
-  const [results, memory] = await Promise.all([getFairResults(), programmeMemoryScores(userId)])
+  const [results, memory, memoryChecks] = await Promise.all([getFairResults(), programmeMemoryScores(userId), getMemoryCheckResults()])
   const snapshot = buildSnapshot(
     results,
     (completions ?? []).map((c) => c.completed_at),
     memory,
+    memoryCheckPair(memoryChecks),
   )
 
   const service = createServiceClient()

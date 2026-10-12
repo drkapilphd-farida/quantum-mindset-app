@@ -1,3 +1,4 @@
+import type { MemoryCheckResult } from '@/features/memory-check/memoryCheck'
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
 import { percentChange } from '@/features/fair-reading-test/fairTest'
 import type { FairLang } from '@/features/fair-reading-test/forms'
@@ -62,7 +63,12 @@ export type CertificateSnapshot = {
   } | null
   /** Memory Palace averages, 0–100; null when never attempted (the box is left off). */
   memory: { memory: number | null; retention: number | null } | null
+  /** The Day 1 / Day 30 memory check (0–100), when the Day 30 check was taken. Absent on certificates issued before it existed. */
+  memoryCheck?: { before: { score: number; day: number | null } | null; after: number } | null
 }
+
+/** The memory check's start → Day 30 pair, as the certificate shows it. */
+export type MemoryCheckPair = NonNullable<CertificateSnapshot['memoryCheck']>
 
 const numbers = (r: FairResult): ReadingNumbers => ({ wpm: r.wpm, comprehension: r.comprehensionPercent, effective: r.effectiveWpm })
 
@@ -81,6 +87,7 @@ export function buildSnapshot(
   results: readonly FairResult[],
   completedAt: readonly string[],
   memory: { memory: number | null; retention: number | null },
+  memoryCheck: MemoryCheckPair | null = null,
 ): CertificateSnapshot {
   const baseline = results.find((r) => r.kind === 'baseline') ?? null
   const final = [...results].reverse().find((r) => r.kind === 'final' && (baseline === null || r.lang === baseline.lang)) ?? null
@@ -94,6 +101,7 @@ export function buildSnapshot(
             after: numbers(final),
           },
     memory: memory.memory === null && memory.retention === null ? null : memory,
+    memoryCheck,
   }
 }
 
@@ -122,4 +130,12 @@ export function formatCertDate(isoDate: string, htmlLang: string): string {
 
 export function verifyPath(code: string): string {
   return `/verify/${code}`
+}
+
+/** Day 30 memory check, with the starting one when both are in the same language; null without a Day 30 check. */
+export function memoryCheckPair(results: readonly Pick<MemoryCheckResult, 'phase' | 'score' | 'day' | 'lang'>[]): MemoryCheckPair | null {
+  const start = results.find((r) => r.phase === 'baseline') ?? null
+  const final = results.find((r) => r.phase === 'final') ?? null
+  if (final === null) return null
+  return { before: start !== null && start.lang === final.lang ? { score: start.score, day: start.day } : null, after: final.score }
 }

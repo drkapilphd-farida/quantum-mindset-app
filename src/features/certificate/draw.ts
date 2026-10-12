@@ -266,7 +266,19 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
   y += 5.2 * u
   const reading = snapshot.reading
   const memory = snapshot.memory
-  const memCount = memory === null ? 0 : [memory.memory, memory.retention].filter((v) => v !== null).length
+  const check = snapshot.memoryCheck ?? null
+  // With a Day 30 memory check, it takes the place of the Memory Palace average; Retention stays.
+  const memBoxes: { label: string; value: string; sub: string }[] =
+    check !== null
+      ? [
+          { label: L.memoryCheck, value: check.before === null ? `${check.after}` : `${check.before.score} → ${check.after}`, sub: check.before === null ? L.memoryCheckSubDay30 : fill(L.memoryCheckSub, { day: check.before.day ?? 1 }) },
+          ...(memory?.retention != null ? [{ label: L.retention, value: `${memory.retention}%`, sub: L.retentionSub }] : []),
+        ]
+      : [
+          ...(memory?.memory != null ? [{ label: L.memory, value: `${memory.memory}%`, sub: L.memorySub }] : []),
+          ...(memory?.retention != null ? [{ label: L.retention, value: `${memory.retention}%`, sub: L.retentionSub }] : []),
+        ]
+  const memCount = memBoxes.length
   const readingW = reading === null ? 0 : reading.before === null ? 34 * u : 47 * u
   const memoryW = memCount === 0 ? 0 : memCount === 2 ? 26 * u : 13 * u
   const gap = readingW > 0 && memoryW > 0 ? 4 * u : 0
@@ -341,16 +353,12 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
     x0 += readingW + gap
   }
 
-  if (memory !== null && memCount > 0) {
-    sectionLabel(L.memoryTitle, x0, y)
-    const boxes = [
-      memory.memory === null ? null : { label: L.memory, value: memory.memory, sub: L.memorySub },
-      memory.retention === null ? null : { label: L.retention, value: memory.retention, sub: L.retentionSub },
-    ].filter((b) => b !== null)
-    const boxW = (memoryW - (boxes.length - 1) * 1 * u) / boxes.length
+  if (memCount > 0) {
+    sectionLabel(check !== null ? L.memorySectionTitle : L.memoryTitle, x0, y)
+    const boxW = (memoryW - (memBoxes.length - 1) * 1 * u) / memBoxes.length
     const by = y + 1.4 * u
     const boxH = 7.4 * u
-    boxes.forEach((b, i) => {
+    memBoxes.forEach((b, i) => {
       const bx = x0 + i * (boxW + 1 * u)
       ctx.strokeStyle = C.goldSoft
       ctx.lineWidth = 0.06 * u
@@ -359,9 +367,10 @@ export function drawCertificate(canvas: HTMLCanvasElement, input: CertDrawInput)
       font(ctx, 400, 1.05 * u, F.body)
       ctx.fillStyle = C.inkSoft
       ctx.fillText(b.label, bx + 1 * u, by + 2 * u)
-      font(ctx, 400, 2.6 * u, F.latinDisplay)
+      const value = sample !== null ? DASH : b.value
+      fitFont(ctx, value, 400, 2.6 * u, F.latinDisplay, boxW - 2 * u)
       ctx.fillStyle = C.ink
-      ctx.fillText(sample !== null ? DASH : `${b.value}%`, bx + 1 * u, by + 4.9 * u)
+      ctx.fillText(value, bx + 1 * u, by + 4.9 * u)
       fitFont(ctx, b.sub, 400, 0.9 * u, F.body, boxW - 2 * u)
       ctx.fillStyle = C.inkSoft
       ctx.fillText(b.sub, bx + 1 * u, by + 6.4 * u)
@@ -539,6 +548,8 @@ export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput):
     cells.push({ label: L.shareSpeed, value: b ? `${b.wpm} → ${reading.after.wpm}` : `${reading.after.wpm}` })
     cells.push({ label: L.shareComprehension, value: b ? `${b.comprehension} → ${reading.after.comprehension}%` : `${reading.after.comprehension}%` })
   }
+  const shareCheck = snapshot.memoryCheck ?? null
+  if (shareCheck !== null) cells.push({ label: L.shareMemory, value: shareCheck.before === null ? `${shareCheck.after}` : `${shareCheck.before.score} → ${shareCheck.after}` })
   if (snapshot.memory?.retention != null) cells.push({ label: L.shareRetention, value: `${snapshot.memory.retention}%` })
   if (sample !== null) for (const cell of cells) cell.value = cell.label === L.shareRetention ? DASH : `${DASH} → ${DASH}`
   const rowTop = H - 33 * u

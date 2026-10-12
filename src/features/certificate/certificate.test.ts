@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
 import { jpegToPdf } from './pdf'
-import { baselineDay, buildSnapshot, cleanLearnerName, completedOnIst, formatCertDate, gainPercent, gainPoints, generateCode, normalizeCode, publicName } from './certificate'
+import { baselineDay, buildSnapshot, cleanLearnerName, completedOnIst, formatCertDate, gainPercent, gainPoints, generateCode, memoryCheckPair, normalizeCode, publicName } from './certificate'
 
 const result = (over: Partial<FairResult>): FairResult => ({ kind: 'baseline', day: 1, form: 'A', lang: 'en', wpm: 182, comprehensionPercent: 70, effectiveWpm: 127, status: 'valid', createdAt: '2026-09-15T04:00:00Z', ...over })
 
@@ -57,6 +57,15 @@ describe('snapshot', () => {
   })
   it('no Day 30 fair result: no reading section', () => {
     expect(buildSnapshot([result({})], completed, { memory: 50, retention: null }).reading).toBeNull()
+  })
+  it('memory check: start → Day 30 when both exist in the same language', () => {
+    const mc = (over: object): { phase: 'baseline' | 'final'; score: number; day: number; lang: 'en' | 'hi' } => ({ phase: 'baseline' as const, score: 65, day: 1, lang: 'en' as const, ...over })
+    expect(memoryCheckPair([mc({}), mc({ phase: 'final', score: 85, day: 30 })])).toEqual({ before: { score: 65, day: 1 }, after: 85 })
+    expect(memoryCheckPair([mc({ day: 4 }), mc({ phase: 'final', score: 85, day: 30 })])?.before?.day).toBe(4)
+    expect(memoryCheckPair([mc({ phase: 'final', score: 85, day: 30 })])).toEqual({ before: null, after: 85 })
+    expect(memoryCheckPair([mc({ lang: 'hi' }), mc({ phase: 'final', score: 85, day: 30 })])?.before).toBeNull()
+    expect(memoryCheckPair([mc({})])).toBeNull()
+    expect(buildSnapshot([result({})], completed, { memory: null, retention: 70 }, { before: null, after: 80 }).memoryCheck).toEqual({ before: null, after: 80 })
   })
 })
 

@@ -483,7 +483,12 @@
     "error": "Something went wrong. Please try again.",
     "cardTitle": "Your Sharp Brain certificate is ready",
     "cardCta": "View certificate",
-    "shareText": "I completed 30 days of Sharp Brain with Mind Ur Mind. Verify: {url}"
+    "shareText": "I completed 30 days of Sharp Brain with Mind Ur Mind. Verify: {url}",
+    "memorySectionTitle": "Memory",
+    "memoryCheck": "Memory check",
+    "memoryCheckSub": "out of 100 · Day {day} → Day 30",
+    "memoryCheckSubDay30": "out of 100 · Day 30",
+    "shareMemory": "Memory"
   },
   "liveClasses": {
     "myClasses": "My classes",

@@ -483,7 +483,12 @@
     "error": "કંઈક ખોટું થયું. કૃપા કરીને ફરી પ્રયાસ કરો.",
     "cardTitle": "તમારું Sharp Brain પ્રમાણપત્ર તૈયાર છે",
     "cardCta": "પ્રમાણપત્ર જુઓ",
-    "shareText": "મેં Mind Ur Mind સાથે Sharp Brain ના 30 દિવસ પૂર્ણ કર્યા. ચકાસો: {url}"
+    "shareText": "મેં Mind Ur Mind સાથે Sharp Brain ના 30 દિવસ પૂર્ણ કર્યા. ચકાસો: {url}",
+    "memorySectionTitle": "યાદશક્તિ",
+    "memoryCheck": "યાદશક્તિ કસોટી",
+    "memoryCheckSub": "100 માંથી · દિવસ {day} → દિવસ 30",
+    "memoryCheckSubDay30": "100 માંથી · દિવસ 30",
+    "shareMemory": "યાદશક્તિ"
   },
   "liveClasses": {
     "myClasses": "મારા ક્લાસ",

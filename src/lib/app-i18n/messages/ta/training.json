@@ -483,7 +483,12 @@
     "error": "ஏதோ தவறு நடந்தது. மீண்டும் முயற்சிக்கவும்.",
     "cardTitle": "உங்கள் Sharp Brain சான்றிதழ் தயார்",
     "cardCta": "சான்றிதழைப் பார்",
-    "shareText": "நான் Mind Ur Mind உடன் Sharp Brain இன் 30 நாட்களை நிறைவு செய்தேன். சரிபார்க்க: {url}"
+    "shareText": "நான் Mind Ur Mind உடன் Sharp Brain இன் 30 நாட்களை நிறைவு செய்தேன். சரிபார்க்க: {url}",
+    "memorySectionTitle": "நினைவு",
+    "memoryCheck": "நினைவுச் சோதனை",
+    "memoryCheckSub": "100 இல் · நாள் {day} → நாள் 30",
+    "memoryCheckSubDay30": "100 இல் · நாள் 30",
+    "shareMemory": "நினைவு"
   },
   "liveClasses": {
     "myClasses": "என் வகுப்புகள்",

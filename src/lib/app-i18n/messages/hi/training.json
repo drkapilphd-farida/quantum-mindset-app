@@ -483,7 +483,12 @@
     "error": "कुछ गड़बड़ हो गई। कृपया फिर से कोशिश करें।",
     "cardTitle": "आपका Sharp Brain प्रमाणपत्र तैयार है",
     "cardCta": "प्रमाणपत्र देखें",
-    "shareText": "मैंने Mind Ur Mind के साथ Sharp Brain के 30 दिन पूरे किए। जाँचें: {url}"
+    "shareText": "मैंने Mind Ur Mind के साथ Sharp Brain के 30 दिन पूरे किए। जाँचें: {url}",
+    "memorySectionTitle": "याददाश्त",
+    "memoryCheck": "मेमोरी जाँच",
+    "memoryCheckSub": "100 में से · दिन {day} → दिन 30",
+    "memoryCheckSubDay30": "100 में से · दिन 30",
+    "shareMemory": "याददाश्त"
   },
   "liveClasses": {
     "myClasses": "मेरी क्लासेस",

@@ -7,6 +7,7 @@ export const CERT_LABEL_KEYS = [
   'title', 'certifies', 'completed', 'readingTitle', 'day', 'change', 'speed', 'comprehension', 'effective', 'points',
   'readingNote', 'baselineOnDay', 'memoryTitle', 'memory', 'memorySub', 'retention', 'retentionSub', 'founder', 'certId', 'verifyAt',
   'shareDone', 'shareUnit', 'shareUnitDay30', 'shareSpeed', 'shareComprehension', 'shareRetention', 'shareVerify',
+  'memorySectionTitle', 'memoryCheck', 'memoryCheckSub', 'memoryCheckSubDay30', 'shareMemory',
 ] as const
 
 export type CertLabelKey = (typeof CERT_LABEL_KEYS)[number]

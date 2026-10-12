@@ -483,7 +483,12 @@
     "error": "কিছু ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
     "cardTitle": "আপনার Sharp Brain শংসাপত্র তৈরি",
     "cardCta": "শংসাপত্র দেখুন",
-    "shareText": "আমি Mind Ur Mind-এর সঙ্গে Sharp Brain-এর 30 দিন সম্পূর্ণ করেছি। যাচাই: {url}"
+    "shareText": "আমি Mind Ur Mind-এর সঙ্গে Sharp Brain-এর 30 দিন সম্পূর্ণ করেছি। যাচাই: {url}",
+    "memorySectionTitle": "স্মৃতি",
+    "memoryCheck": "স্মৃতি-পরীক্ষা",
+    "memoryCheckSub": "100-এর মধ্যে · দিন {day} → দিন 30",
+    "memoryCheckSubDay30": "100-এর মধ্যে · দিন 30",
+    "shareMemory": "স্মৃতি"
   },
   "liveClasses": {
     "myClasses": "আমার ক্লাস",

@@ -15,6 +15,7 @@ import { ConsistencyCard } from './ConsistencyCard'
 import { CurriculumProgressCard } from './CurriculumProgressCard'
 import { CurriculumSessionHistoryCard } from './CurriculumSessionHistoryCard'
 import { DocumentMasteryCard } from './DocumentMasteryCard'
+import { MemoryCheckCard } from '@/features/memory-check/components/MemoryCheckCard'
 
 type ParentDashboardProps = {
   userId: string
@@ -79,6 +80,9 @@ export async function ParentDashboard({ userId }: ParentDashboardProps): Promise
         </div>
 
         <CurriculumProgressCard completions={curriculumCompletions} />
+
+        {/* Memory check: the starting result and Day 30 (nothing shown until one is taken). */}
+        <MemoryCheckCard />
 
         <CurriculumSessionHistoryCard completions={curriculumCompletions} />
 

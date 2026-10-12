@@ -483,7 +483,12 @@
     "error": "ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
     "cardTitle": "ನಿಮ್ಮ Sharp Brain ಪ್ರಮಾಣಪತ್ರ ಸಿದ್ಧವಾಗಿದೆ",
     "cardCta": "ಪ್ರಮಾಣಪತ್ರ ನೋಡಿ",
-    "shareText": "ನಾನು Mind Ur Mind ಜೊತೆ Sharp Brain ನ 30 ದಿನಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೇನೆ. ಪರಿಶೀಲಿಸಿ: {url}"
+    "shareText": "ನಾನು Mind Ur Mind ಜೊತೆ Sharp Brain ನ 30 ದಿನಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೇನೆ. ಪರಿಶೀಲಿಸಿ: {url}",
+    "memorySectionTitle": "ನೆನಪು",
+    "memoryCheck": "ನೆನಪಿನ ಪರೀಕ್ಷೆ",
+    "memoryCheckSub": "100 ರಲ್ಲಿ · ದಿನ {day} → ದಿನ 30",
+    "memoryCheckSubDay30": "100 ರಲ್ಲಿ · ದಿನ 30",
+    "shareMemory": "ನೆನಪು"
   },
   "liveClasses": {
     "myClasses": "ನನ್ನ ತರಗತಿಗಳು",
