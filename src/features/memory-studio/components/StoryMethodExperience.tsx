@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { AdaptiveExerciseShell, type RoundOutcome } from '@/features/exercise-core/components/AdaptiveExerciseShell'
 import { useExerciseProgress } from '@/features/exercise-core/useExerciseProgress'
@@ -18,16 +18,25 @@ const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'practice' | 'own'
 
 // Story / Link method: Learn (lesson) → Practise (levels 1–10) → own lists.
-export function StoryMethodExperience(): React.JSX.Element {
+// Inside the 30-day plan (onComplete given): no start screen — the lesson the
+// first time, then one practice round and one scored round (about 3 minutes).
+export function StoryMethodExperience({ onComplete, onExit }: { onComplete?: () => void; onExit?: () => void } = {}): React.JSX.Element {
+  const inPlan = onComplete !== undefined
   const t = useAppT()
   const uiLang = useUiLang()
   const lang: StudioLang = uiLang === 'hi' ? 'hi' : 'en'
   const { progress } = useExerciseProgress(STORY_EXERCISE_ID)
-  const [mode, setMode] = useState<Mode>('home')
+  const [mode, setMode] = useState<Mode | null>(inPlan ? null : 'home')
   const rounds = useRef(new Map<string, { list: StudioItem[]; unseen: StudioItem[] }>())
   const lastIds = useRef<string[]>([])
   const lesson = useMemo(() => storyLesson(t, lang), [t, lang])
   const played = progress.ready && !progress.isFirstTime
+
+  useEffect(() => {
+    if (inPlan && mode === null && progress.ready) setMode(progress.isFirstTime ? 'lesson' : 'practice')
+  }, [inPlan, mode, progress.ready, progress.isFirstTime])
+
+  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
 
   if (mode === 'lesson') return <MethodLesson narrationId={STORY_LESSON_ID} title={t('training.studio.storyTitle')} lines={lesson} onDone={() => setMode('practice')} />
 
@@ -53,14 +62,15 @@ export function StoryMethodExperience(): React.JSX.Element {
         purpose={t('training.studio.storyPurpose')}
         minutes={5}
         demo={demo}
-        roundsPerSession={2}
+        roundsPerSession={inPlan ? 1 : 2}
         scoreLabel={t('training.studio.points')}
         contentLang={lang}
+        {...(inPlan ? { onComplete: () => onComplete?.() } : {})}
         describeLevel={(level) => {
           const c = storyLevel(level)
           return c.pictures ? t('training.studio.levelPictures', { count: c.count }) : t('training.studio.levelWords', { count: c.count })
         }}
-        onExit={() => setMode('home')}
+        onExit={() => (inPlan ? onExit?.() : setMode('home'))}
         renderRound={({ level, isPractice, roundIndex, onDone }) => {
           const key = `${isPractice ? 'p' : 'r'}-${roundIndex}-${level}`
           let round = rounds.current.get(key)

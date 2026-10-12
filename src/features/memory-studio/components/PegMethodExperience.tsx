@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { AdaptiveExerciseShell, type RoundOutcome } from '@/features/exercise-core/components/AdaptiveExerciseShell'
 import { useExerciseProgress } from '@/features/exercise-core/useExerciseProgress'
@@ -21,18 +21,27 @@ type Mode = 'home' | 'lesson' | 'learn' | 'practice' | 'own'
 
 // Peg method: Learn (lesson) → learn the 10 pegs → Practise (levels 1–10) → own lists.
 // English uses rhyme pegs; every other language uses shape pegs.
-export function PegMethodExperience(): React.JSX.Element {
+// Inside the 30-day plan (onComplete given): no start screen — the lesson and
+// the pegs the first time, then one practice round and one scored round.
+export function PegMethodExperience({ onComplete, onExit }: { onComplete?: () => void; onExit?: () => void } = {}): React.JSX.Element {
+  const inPlan = onComplete !== undefined
   const t = useAppT()
   const uiLang = useUiLang()
   const lang: StudioLang = uiLang === 'hi' ? 'hi' : 'en'
   const set = pegSetFor(uiLang)
   const { progress } = useExerciseProgress(PEG_EXERCISE_ID)
   const learned = useExerciseProgress(PEG_LEARN_EXERCISE_ID).progress
-  const [mode, setMode] = useState<Mode>('home')
+  const [mode, setMode] = useState<Mode | null>(inPlan ? null : 'home')
   const rounds = useRef(new Map<string, { list: StudioItem[]; questions: PegQuestion[]; showPeg: boolean }>())
   const lastIds = useRef<string[]>([])
   const lesson = useMemo(() => pegLesson(set, t, lang), [set, t, lang])
   const pegsKnown = learned.ready && !learned.isFirstTime
+
+  useEffect(() => {
+    if (inPlan && mode === null && learned.ready && progress.ready) setMode(learned.isFirstTime ? 'lesson' : 'practice')
+  }, [inPlan, mode, learned.ready, learned.isFirstTime, progress.ready])
+
+  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
 
   const wrap = (children: React.ReactNode, title: string): React.JSX.Element => (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-4 py-6">
@@ -59,14 +68,15 @@ export function PegMethodExperience(): React.JSX.Element {
         purpose={t('training.studio.pegPurpose')}
         minutes={5}
         demo={demo}
-        roundsPerSession={2}
+        roundsPerSession={inPlan ? 1 : 2}
         scoreLabel={t('training.studio.points')}
         contentLang={lang}
+        {...(inPlan ? { onComplete: () => onComplete?.() } : {})}
         describeLevel={(level) => {
           const c = pegLevel(level)
           return !c.showPeg ? t('training.studio.pegLevelHidden', { count: c.count }) : c.mixedOrder ? t('training.studio.pegLevelMixed', { count: c.count }) : t('training.studio.pegLevelInOrder', { count: c.count })
         }}
-        onExit={() => setMode('home')}
+        onExit={() => (inPlan ? onExit?.() : setMode('home'))}
         renderRound={({ level, isPractice, roundIndex, onDone }) => {
           const key = `${isPractice ? 'p' : 'r'}-${roundIndex}-${level}`
           let round = rounds.current.get(key)

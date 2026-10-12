@@ -165,8 +165,19 @@ describe('buildCurriculumDayPlan', () => {
   it('days 9/19/29 (were Zener) and 10/20/30 (were Hidden Target) now train visual memory', () => {
     for (const day of [9, 10, 19, 20, 29, 30]) {
       const id = buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]?.id
-      expect(['dot-memory-grid', 'number-flash-grid', 'hemispheric-color-sync', 'pictorial-essence-sprint']).toContain(id)
+      expect(['dot-memory-grid', 'number-flash-grid', 'hemispheric-color-sync', 'pictorial-essence-sprint', 'peg-method']).toContain(id)
     }
+  })
+
+  it('Release 2: the memory step of Days 2–6 is the Story method and of Days 7–10 the Peg method — replacing it, so every day keeps 4 steps', () => {
+    for (let day = 2; day <= 10; day++) {
+      const plan = buildCurriculumDayPlan(day)
+      expect(plan.exercises.rightBrainIntuition.map((e) => e.id)).toEqual([day <= 6 ? 'story-method' : 'peg-method'])
+      expect(plan.exercises.brainGym).toHaveLength(1)
+      expect(plan.exercises.visualization).toHaveLength(1)
+      expect(plan.exercises.readingIntelligence).toHaveLength(1)
+    }
+    for (const day of [1, 11, 20, 30]) expect(buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]?.id).not.toMatch(/story|peg/)
   })
 
   it('no day mentions eye training, energies, holograms or intuition in its theme', () => {

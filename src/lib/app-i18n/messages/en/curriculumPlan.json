@@ -6,7 +6,7 @@
     },
     "d2": {
       "title": "Focus Foundation",
-      "focus": "Warm up your attention with a number hunt, then train picture memory and chunk reading."
+      "focus": "Warm up your attention with a number hunt, learn the Story method for remembering lists, then practise chunk reading."
     },
     "d3": {
       "title": "First Visual Focus Session",
@@ -179,6 +179,8 @@
     "mixed-flash": "Mixed Flash",
     "peripheral-flash": "Peripheral Flash",
     "progressive-chunk-reading": "Progressive Chunk Reading",
-    "memory-palace": "Memory Palace"
+    "memory-palace": "Memory Palace",
+    "story-method": "Story method",
+    "peg-method": "Peg method"
   }
 }

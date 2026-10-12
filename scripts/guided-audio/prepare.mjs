@@ -24,7 +24,8 @@ const out = arg('out')
 const voice = arg('voice', 'unknown')
 if (!exercise || !lang || !input || !out) throw new Error('usage: --exercise <id> --lang <code> --in <folder> --out <folder>')
 
-const script = JSON.parse(fs.readFileSync(`src/features/${exercise}/script/${lang}.json`, 'utf8'))
+// --script <file> voices any script file (same format); default: the exercise's own script.
+const script = JSON.parse(fs.readFileSync(arg('script', `src/features/${exercise}/script/${lang}.json`), 'utf8'))
 const expected = new Set(script.lines.map((l) => l.id))
 const files = fs.readdirSync(input).filter((f) => /\.(wav|mp3)$/i.test(f))
 const unexpected = files.filter((f) => !expected.has(f.replace(/\.(wav|mp3)$/i, '')))

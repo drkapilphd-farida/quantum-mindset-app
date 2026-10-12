@@ -29,7 +29,8 @@ const GAP_S = 0.9
 const CODES = { en: 'en-IN', hi: 'hi-IN', kn: 'kn-IN', ta: 'ta-IN', te: 'te-IN', mr: 'mr-IN', gu: 'gu-IN', bn: 'bn-IN' }
 if (!exercise || !lang || !out || !CODES[lang]) throw new Error('usage: --exercise <id> --lang <en|hi|kn|ta|te|mr|gu|bn> --out <folder> --max-credits <n>')
 
-const script = JSON.parse(fs.readFileSync(`src/features/${exercise}/script/${lang}.json`, 'utf8'))
+// --script <file> voices any script file (same format); default: the exercise's own script.
+const script = JSON.parse(fs.readFileSync(arg('script', `src/features/${exercise}/script/${lang}.json`), 'utf8'))
 const rawDir = path.join(out, 'raw', lang)
 fs.mkdirSync(rawDir, { recursive: true })
 const pieces = (text) => text.split(/\s*\.\.\.\s*/).map((s) => s.trim()).filter(Boolean)

@@ -80,6 +80,8 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
     'ColorSceneTransformationExperience',
   ),
   'memory-palace': lazyNamed(() => import('@/features/memory-palace/components/MemoryPalaceExperience'), 'MemoryPalaceExperience'),
+  'story-method': lazyNamed(() => import('@/features/memory-studio/components/StoryMethodExperience'), 'StoryMethodExperience'),
+  'peg-method': lazyNamed(() => import('@/features/memory-studio/components/PegMethodExperience'), 'PegMethodExperience'),
   'calm-breathing': lazyNamed(() => import('@/features/calm-breathing/components/CalmBreathingExperience'), 'CalmBreathingExperience'),
 
   // Reading Hub

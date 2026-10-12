@@ -77,6 +77,9 @@ const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   { id: 'number-flash-grid', title: 'Number Flash Grid™', href: '/labs/sharp-brain/number-flash-grid', category: 'right-brain-intuition' },
   { id: 'word-flash-grid', title: 'Word Flash Grid™', href: '/labs/sharp-brain/word-flash-grid', category: 'right-brain-intuition' },
   { id: 'image-flash-grid', title: 'Image Flash Grid™', href: '/labs/sharp-brain/image-flash-grid', category: 'right-brain-intuition' },
+  // Memory Studio methods (Release 2) — the memory step of Days 2–10.
+  { id: 'story-method', title: 'Story method', href: '/labs/sharp-brain/story-method', category: 'right-brain-intuition' },
+  { id: 'peg-method', title: 'Peg method', href: '/labs/sharp-brain/peg-method', category: 'right-brain-intuition' },
 ]
 
 // ---- Visualization (Visualization Hub) ----
