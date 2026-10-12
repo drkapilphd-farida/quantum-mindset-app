@@ -1176,6 +1176,42 @@ export type Database = {
       // it's actually run; regenerate this file for real (`supabase gen
       // types typescript`) after applying the migration, rather than
       // trusting this hand-written copy indefinitely.
+      memory_creations: {
+        Row: {
+          created_at: string
+          id: string
+          items: Json
+          lang: string
+          method: string
+          story: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          items: Json
+          lang: string
+          method: string
+          story?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          items?: Json
+          lang?: string
+          method?: string
+          story?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       overthinking_test_leads: {
         Row: {
           created_at: string
@@ -2678,6 +2714,54 @@ export type Database = {
           user_id?: string
           wpm?: number
           word_count?: number
+        }
+        Relationships: []
+      }
+      review_items: {
+        Row: {
+          back: Json
+          created_at: string
+          due_at: string | null
+          front: Json
+          id: string
+          lang: string
+          last_result: string | null
+          reviews: number
+          source: string
+          source_ref: string | null
+          step: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          back: Json
+          created_at?: string
+          due_at?: string | null
+          front: Json
+          id?: string
+          lang: string
+          last_result?: string | null
+          reviews?: number
+          source: string
+          source_ref?: string | null
+          step?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          back?: Json
+          created_at?: string
+          due_at?: string | null
+          front?: Json
+          id?: string
+          lang?: string
+          last_result?: string | null
+          reviews?: number
+          source?: string
+          source_ref?: string | null
+          step?: number
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

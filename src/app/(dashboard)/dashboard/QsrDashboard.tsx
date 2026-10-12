@@ -22,6 +22,7 @@ import { ParentFeedbackPrompt } from '@/features/school-dashboard/components/Par
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
 import { programs } from '@/config/site.config'
 import { ReminderBanner } from '@/features/reminders/components/ReminderBanner'
+import { ReviewDueCard } from '@/features/memory-studio/components/ReviewDueCard'
 
 // Mind Score: weighted blend of 30-day plan progress (60%) and streak
 // consistency (40%), capped at 100. Grows as the student practices more
@@ -101,6 +102,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
   return (
     <div className="glass-premium relative -m-6 space-y-4 p-6 sm:-m-8 sm:space-y-6 sm:p-8">
       <ReminderBanner />
+      <ReviewDueCard />
       {/* Dashboard Glass™ ambient background — fixed so it stays full-
           viewport regardless of this page's own scroll position or the
           parent layout's max-w-4xl centering; -z-10 keeps it behind both

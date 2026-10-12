@@ -1,5 +1,5 @@
 import type { MessageKey } from '@/lib/app-i18n/translate'
-import { BarChart3, BookOpen, Brain, LayoutDashboard, Radio, Settings, type LucideIcon } from 'lucide-react'
+import { BarChart3, BookOpen, Brain, LayoutDashboard, Lightbulb, Radio, Settings, type LucideIcon } from 'lucide-react'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { programs } from '@/config/site.config'
 
@@ -41,6 +41,7 @@ const HABIT_NAV_ITEMS = [
 const QSR_NAV_ITEMS = [
   // Brand name — stays in English in every language.
   { href: '/labs/sharp-brain/thirty-day-curriculum', labelKey: null, label: programs.sharpBrain.shortName, icon: Brain },
+  { href: '/labs/sharp-brain/memory-studio', labelKey: 'nav.memoryStudio', icon: Lightbulb },
   { href: '/masterclasses', labelKey: 'nav.liveClasses', icon: Radio },
   { href: '/document-studio', labelKey: 'nav.documentStudio', icon: BookOpen },
 ] as const
