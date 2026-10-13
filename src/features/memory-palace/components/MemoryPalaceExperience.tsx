@@ -31,7 +31,7 @@ export function MemoryPalaceExperience({ onComplete, onExit }: MemoryPalaceExper
   const lang = useUiLang()
   const dayFromContext = useCurriculumDayInfo()
   const { progress, save } = useExerciseProgress(MEMORY_PALACE_EXERCISE_ID)
-  const narration = useGuidedNarration(MEMORY_PALACE_EXERCISE_ID, lang)
+  const narration = useGuidedNarration(MEMORY_PALACE_EXERCISE_ID, lang, { deviceVoice: false })
   const [stage, setStage] = useState<Stage>('loading')
   const [pending, setPending] = useState<PendingPalace | null>(null)
   const [script, setScript] = useState<Map<string, NarrationLine> | null>(null)

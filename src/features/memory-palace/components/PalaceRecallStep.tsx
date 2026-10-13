@@ -26,7 +26,7 @@ type PalaceRecallStepProps = {
 export function PalaceRecallStep({ palace, phase, delay, onDone, onNotNow }: PalaceRecallStepProps): React.JSX.Element {
   const t = useAppT()
   const lang = useUiLang()
-  const narration = useGuidedNarration(MEMORY_PALACE_EXERCISE_ID, lang)
+  const narration = useGuidedNarration(MEMORY_PALACE_EXERCISE_ID, lang, { deviceVoice: false })
   const { save } = useExerciseProgress(phase === 'same-day' ? SAME_DAY_RECALL_EXERCISE_ID : NEXT_DAY_RECALL_EXERCISE_ID)
   const [stage, setStage] = useState<'intro' | 'recall' | 'result'>('intro')
   const [result, setResult] = useState<{ correct: number; total: number } | null>(null)

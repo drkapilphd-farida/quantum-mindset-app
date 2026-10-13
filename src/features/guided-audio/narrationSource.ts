@@ -7,6 +7,8 @@ import type { AudioManifest } from './manifest'
 export type NarrationSource = 'mp3' | 'voice' | 'caption'
 
 export const MP3_START_TIMEOUT_MS = 4000
+/** Recordings only (no phone voice to fall back on): wait longer on a slow connection before showing the silent caption. */
+export const RECORDING_ONLY_START_TIMEOUT_MS = 8000
 const WORDS_PER_MINUTE = 120
 const MIN_LINE_MS = 1800
 

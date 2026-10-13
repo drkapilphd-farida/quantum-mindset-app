@@ -1,0 +1,38 @@
+{
+  "lang": "en",
+  "review": "approved by the founder 12 Oct 2026",
+  "lines": [
+    {
+      "id": "line-1",
+      "text": "The Story method helps you remember a list in the right order."
+    },
+    {
+      "id": "line-2",
+      "text": "Here is a list: rocket, guitar, tomato, crown, penguin."
+    },
+    {
+      "id": "line-3",
+      "text": "Link the first item to the second. A huge rocket crashes into a guitar ... and the guitar plays a loud song."
+    },
+    {
+      "id": "line-4",
+      "text": "The song is so loud that a giant tomato bursts ... splash!"
+    },
+    {
+      "id": "line-5",
+      "text": "Out of the tomato rolls a shiny golden crown."
+    },
+    {
+      "id": "line-6",
+      "text": "A little penguin puts on the crown and waddles like a king."
+    },
+    {
+      "id": "line-7",
+      "text": "Now walk the story again: rocket, guitar, tomato, crown, penguin. Each picture brings back the next."
+    },
+    {
+      "id": "line-8",
+      "text": "Make your pictures big, funny and moving. Your own story works best — now it’s your turn."
+    }
+  ]
+}

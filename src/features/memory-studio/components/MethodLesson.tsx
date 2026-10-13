@@ -15,7 +15,8 @@ export type LessonLine = { id: string; text: string; pictures?: { id: string; la
 export function MethodLesson({ narrationId, title, lines, onDone }: { narrationId: string; title: string; lines: readonly LessonLine[]; onDone: () => void }): React.JSX.Element {
   const t = useAppT()
   const lang = useUiLang()
-  const narration = useGuidedNarration(narrationId, lang)
+  // Recorded voice (Sarvam "shubh", as in the Memory Palace) or silent captions — never the phone's own voice.
+  const narration = useGuidedNarration(narrationId, lang, { deviceVoice: false })
   const [index, setIndex] = useState<number | null>(null)
   const [finished, setFinished] = useState(false)
   const run = useRef(0)

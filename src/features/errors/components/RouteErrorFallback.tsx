@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { reportClientError } from '@/lib/reportClientError'
+import { isStaleBuildError, reloadOnceForNewVersion } from '../staleBuild'
 import { Button } from '@/components/ui/button'
 
 type RouteErrorFallbackProps = {
@@ -25,7 +26,13 @@ type RouteErrorFallbackProps = {
 // the server via reportClientError, so no boundary can silently regress
 // to "only logs to the crashed user's own browser console."
 export function RouteErrorFallback({ error, reset, context, message, fullScreen = false }: RouteErrorFallbackProps): React.JSX.Element {
+  const staleBuild = isStaleBuildError(error)
+
   useEffect(() => {
+    // A page from before the latest deploy: reload once to get the new
+    // version (not reported — it isn't a bug). If that already happened in
+    // the last minute, fall through to the normal report and fallback.
+    if (staleBuild && reloadOnceForNewVersion(safeSessionStorage(), window.location.pathname, Date.now(), () => window.location.reload())) return
     reportClientError(context, error)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- report once per distinct error, not on every render
   }, [error])
@@ -36,9 +43,17 @@ export function RouteErrorFallback({ error, reset, context, message, fullScreen 
       <h2 className="text-lg font-semibold">Something went wrong</h2>
       <p className="text-muted-foreground mt-2 max-w-xs text-sm">{message}</p>
       {error.digest !== undefined && <p className="text-muted-foreground/70 mt-1 text-xs">Error ID: {error.digest}</p>}
-      <Button onClick={reset} className="mt-6">
+      <Button onClick={staleBuild ? () => window.location.reload() : reset} className="mt-6">
         Try again
       </Button>
     </div>
   )
+}
+
+function safeSessionStorage(): Storage | null {
+  try {
+    return window.sessionStorage
+  } catch {
+    return null
+  }
 }

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { AppLang } from '@/lib/app-i18n/languages'
 import { guidedAudioBaseUrl, loadAudioManifest, type AudioManifest } from './manifest'
-import { chooseSource, lineDurationMs, MP3_START_TIMEOUT_MS, speakableText, type NarrationSource } from './narrationSource'
+import { chooseSource, lineDurationMs, MP3_START_TIMEOUT_MS, RECORDING_ONLY_START_TIMEOUT_MS, speakableText, type NarrationSource } from './narrationSource'
 import { NARRATION_LANGUAGE_TAGS, pickVoiceForLanguage } from './voiceSelection'
 
 export type NarrationLine = { id: string; text: string }
@@ -37,7 +37,12 @@ function writeSettings(settings: Settings): void {
  * the current one plays. `speak` resolves when the line has finished (or was
  * stopped), so a session can simply `await` each line in order.
  */
-export function useGuidedNarration(exercise: string, lang: AppLang): {
+/**
+ * `deviceVoice: false` = recordings only: a line without a recording (or one
+ * that hasn't started within 8 s, e.g. on a slow connection) is shown as a
+ * silent, timed caption — the phone's built-in text-to-speech voice is never used.
+ */
+export function useGuidedNarration(exercise: string, lang: AppLang, { deviceVoice = true }: { deviceVoice?: boolean } = {}): {
   ready: boolean
   current: NarrationLine | null
   source: NarrationSource | null
@@ -139,7 +144,7 @@ export function useGuidedNarration(exercise: string, lang: AppLang): {
       if (tokenRef.current !== token) return
       const m = manifestRef.current
       const waitMs = lineDurationMs(line.text, m, line.id)
-      const hasVoice = typeof window !== 'undefined' && 'speechSynthesis' in window && pickVoiceForLanguage(voicesRef.current, lang) !== null
+      const hasVoice = deviceVoice && typeof window !== 'undefined' && 'speechSynthesis' in window && pickVoiceForLanguage(voicesRef.current, lang) !== null
 
       return new Promise<void>((resolve) => {
         let done = false
@@ -203,11 +208,11 @@ export function useGuidedNarration(exercise: string, lang: AppLang): {
         audio.volume = settingsRef.current.volume
         audio.src = urlFor(line.id) ?? ''
         void audio.play().catch(() => fallBack())
-        window.setTimeout(fallBack, MP3_START_TIMEOUT_MS)
+        window.setTimeout(fallBack, deviceVoice ? MP3_START_TIMEOUT_MS : RECORDING_ONLY_START_TIMEOUT_MS)
         preload(next)
       })
     },
-    [lang, preload, stopPlayback, urlFor],
+    [deviceVoice, lang, preload, stopPlayback, urlFor],
   )
 
   const replay = useCallback((): void => {
@@ -218,14 +223,14 @@ export function useGuidedNarration(exercise: string, lang: AppLang): {
     if (url !== null && audioRef.current) {
       audioRef.current.currentTime = 0
       void audioRef.current.play().catch(() => undefined)
-    } else if (!settingsRef.current.muted && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    } else if (deviceVoice && !settingsRef.current.muted && typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel()
       const utterance = new SpeechSynthesisUtterance(speakableText(line.text))
       utterance.lang = NARRATION_LANGUAGE_TAGS[lang]
       utterance.rate = VOICE_RATE
       window.speechSynthesis.speak(utterance)
     }
-  }, [current, lang, urlFor])
+  }, [current, deviceVoice, lang, urlFor])
 
   const setMuted = useCallback((muted: boolean): void => {
     const s = { ...settingsRef.current, muted }
