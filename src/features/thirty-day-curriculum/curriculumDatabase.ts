@@ -192,7 +192,7 @@ export const DAY_EXERCISE_IDS: Readonly<Record<number, DaySlots>> = {
   24: ['fast-pattern-blinking', 'number-pictures', 'calm-breathing', ['sentence-reading']],
   25: ['schulte-grid-speed-drill', 'keyword-method', 'quantum-mental-rotation', ['paragraph-reading']],
   26: ['blink-trigger-micro-recall', 'my-palaces', 'color-scene-transformation', ['word-flash']],
-  27: ['cross-lateral-tap', 'number-pictures', 'memory-palace', ['number-flash']],
+  27: ['cross-lateral-tap', 'chapter-book', 'memory-palace', ['number-flash']],
   28: ['rapid-visual-span-expander', 'chapter-book', 'calm-breathing', ['symbol-flash']],
   29: ['fast-pattern-blinking', 'names-and-faces', 'quantum-mental-rotation', ['mixed-flash']],
   30: ['schulte-grid-speed-drill', 'acronyms', 'color-scene-transformation', ['peripheral-flash', 'progressive-chunk-reading']],
