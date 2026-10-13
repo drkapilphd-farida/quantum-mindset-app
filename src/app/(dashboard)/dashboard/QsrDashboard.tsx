@@ -20,7 +20,7 @@ import { getFixationSessions } from '@/features/visual-intelligence/fixation/que
 import { getFixationStats } from '@/features/visual-intelligence/fixation/queries/getFixationStats'
 import { ParentFeedbackPrompt } from '@/features/school-dashboard/components/ParentFeedbackPrompt'
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
-import { programs } from '@/config/site.config'
+import { features, programs } from '@/config/site.config'
 import { ReminderBanner } from '@/features/reminders/components/ReminderBanner'
 import { ReviewDueCard } from '@/features/memory-studio/components/ReviewDueCard'
 
@@ -151,6 +151,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           (AIDocumentTransformerWidget) shows the real ₹9,999 paywall
           modal for a non-pro user — no separate pricing chip needed here
           anymore. */}
+      {features.uploadAndLearn && (
       <section aria-labelledby="document-tools-heading">
         <DashboardSectionHeader
           id="document-tools-heading"
@@ -162,6 +163,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           <AIDocumentTransformerWidget isPro={isPaidUser} recentDocuments={recentQuantumDocuments.slice(0, 1)} />
         </div>
       </section>
+      )}
 
       {/* Domain Split™ — this used to be "Masterclass & Programs" and also
           hosted the 21-Day Habit Builder card (Tier 2). That card now

@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { AIPresenceLogo } from './AIPresenceLogo'
 import { GatewayAuthModal } from './GatewayAuthModal'
-import { brand, primaryCheckoutHref, programs } from '@/config/site.config'
+import { brand, features, primaryCheckoutHref, programs } from '@/config/site.config'
 import { trackInitiateCheckout } from '@/lib/analytics/conversions'
 
 const PROGRAM_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
@@ -203,7 +203,7 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
               />
             </div>
           ) : (
-            <div className="grid w-full max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className={`grid w-full gap-6 ${features.uploadAndLearn ? 'max-w-3xl grid-cols-1 sm:grid-cols-2' : 'max-w-md grid-cols-1'}`}>
               <PathCard
                 emoji="⚡"
                 title="Sharp Brain"
@@ -212,6 +212,7 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
                 ctaLabel={t('welcome.app.start')}
                 onSelect={() => handleSelect('/labs/sharp-brain/thirty-day-curriculum')}
               />
+              {features.uploadAndLearn && (
               <PathCard
                 emoji="📄"
                 title={t('welcome.app.uploadTitle')}
@@ -220,6 +221,7 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
                 ctaLabel={t('welcome.app.uploadCta')}
                 onSelect={() => handleSelect('/document-studio')}
               />
+              )}
             </div>
           )}
         </div>

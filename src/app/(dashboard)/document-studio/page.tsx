@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
 import { cn } from '@/lib/utils'
+import { features } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Document Mastery Studio',
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
 // has its own multi-stage routes (6-stage reading flow, MCQs, etc.) that
 // don't collapse into a single tab.
 export default async function DocumentStudioPage(): Promise<React.JSX.Element> {
+  if (!features.uploadAndLearn) redirect('/dashboard')
   const supabase = await createClient()
   const {
     data: { user },

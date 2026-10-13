@@ -615,6 +615,16 @@ export function upcomingEvents(now: Date = new Date()): UpcomingEvent[] {
  * most this many new chapters a day into a Chapter & Book map (each one is an
  * AI call; reopening a saved chapter, or the same text again, is free).
  */
+/**
+ * Feature switches. Upload & Learn (Document Studio) is hidden (founder, 12 Oct
+ * 2026): own material lives inside the plan's Chapter & Book step instead.
+ * Off = the page sends learners to the dashboard, and the dashboard card and
+ * the welcome-screen choice are not shown.
+ */
+export const features = {
+  uploadAndLearn: false,
+} as const
+
 export const memoryStudio = {
   chapterMapsPerDay: 3,
   /** Characters of a chapter sent to the AI (a long chapter is cut here, at a paragraph). */
