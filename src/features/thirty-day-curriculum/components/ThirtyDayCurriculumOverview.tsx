@@ -18,7 +18,7 @@ import {
   type CurriculumProgress,
 } from '../curriculumProgress'
 
-const CARD_CLASS_NAME = 'rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
+const CARD_CLASS_NAME = 'rounded-3xl border-2 border-border/60 bg-card shadow-sm backdrop-blur-md'
 
 type ThirtyDayCurriculumOverviewProps = {
   onSelectDay: (day: number) => void
@@ -69,7 +69,7 @@ export function ThirtyDayCurriculumOverview({
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10 sm:px-6">
-      <div className="relative rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 p-6 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95">
+      <div className="relative rounded-3xl border-2 border-border/60 bg-card p-6 shadow-sm backdrop-blur-md">
         <BrandWatermark className="absolute top-4 left-6" />
         <div className="mt-8 flex flex-col gap-2 sm:mt-6">
           <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('curriculum.eyebrow')}</p>

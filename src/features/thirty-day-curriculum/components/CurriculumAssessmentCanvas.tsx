@@ -24,7 +24,7 @@ type CurriculumAssessmentCanvasProps = {
 // FluidEnergyBalancerCanvas.tsx's own CARD_CLASS_NAME); no shared export
 // exists for it yet, so this follows the established convention rather
 // than inventing a new one.
-const CARD_CLASS_NAME = 'relative w-full rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 p-2 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
+const CARD_CLASS_NAME = 'relative w-full rounded-3xl border-2 border-border/60 bg-card p-2 shadow-sm backdrop-blur-md'
 
 function lengthTierForDay(day: number): JourneyLengthTier {
   if (day === 1) return 'short'

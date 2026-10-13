@@ -14,7 +14,7 @@ import { DayMasterPlayer } from './DayMasterPlayer'
 import { getCurriculumDayPractice, type CurriculumDayPracticeAttempt } from '../actions/curriculumDayPractice'
 import { PhaseCompleteCelebration } from './PhaseCompleteCelebration'
 
-const CARD_CLASS_NAME = 'relative rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
+const CARD_CLASS_NAME = 'relative rounded-3xl border-2 border-border/60 bg-card shadow-sm backdrop-blur-md'
 
 type ThirtyDayCurriculumDayDetailProps = {
   day: number
