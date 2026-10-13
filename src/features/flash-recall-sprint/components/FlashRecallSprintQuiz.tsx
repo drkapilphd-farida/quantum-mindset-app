@@ -7,8 +7,8 @@ import type { FlashRecallSprintQuizQuestion } from '../flashRecallSprintDataset'
 // Same literal high-contrast palette as FlashRecallSprintCanvas.tsx /
 // Vertical Chunk Sliding (own-copy, not a shared import — see those
 // files' own comments on why these are static literal Tailwind classes).
-const CARD_CLASS_NAME = 'bg-[#FBF9F4] dark:bg-[#16171A]'
-const TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-card'
+const TEXT_COLOR_CLASS_NAME = 'text-foreground'
 
 type FlashRecallSprintQuizProps = {
   questions: readonly FlashRecallSprintQuizQuestion[]

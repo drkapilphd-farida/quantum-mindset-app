@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { PlayScope } from '@/components/PlayScope'
 import { MemoryPalaceExperience } from '@/features/memory-palace/components/MemoryPalaceExperience'
 
 export const metadata: Metadata = {
@@ -9,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function MemoryPalacePage(): React.JSX.Element {
   return (
-    <PlayScope className="min-h-dvh">
+    <>
       <MemoryPalaceExperience />
-    </PlayScope>
+    </>
   )
 }

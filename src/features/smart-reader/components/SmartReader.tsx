@@ -182,7 +182,7 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
 
   if (stage.name === 'break')
     return (
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-6 px-4 py-10 text-center" data-reader-break={stage.left}>
+      <div className="play-calm mx-auto flex min-h-dvh max-w-xl flex-col items-center gap-6 px-4 py-10 text-center" data-reader-break={stage.left}>
         <h2 className="text-[1.75rem] text-foreground">{t('training.reader.breakTitle')}</h2>
         <div className="flex size-44 items-center justify-center rounded-full motion-safe:animate-pulse" style={{ background: 'color-mix(in srgb, var(--skill-calm, #0d9488) 25%, transparent)' }}>
           <span className="font-heading text-5xl text-foreground tabular-nums">{stage.left}</span>

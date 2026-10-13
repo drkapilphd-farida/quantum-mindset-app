@@ -45,9 +45,9 @@ const CHROME_AUTO_HIDE_DELAY_MS = 2_200
 // words visibly dissolve in and out of the channel instead of popping.
 // `WebkitMaskImage` is required alongside the standard `maskImage` for
 // broad engine support; both target the exact same gradient.
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
 const CARD_MASK_IMAGE = 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)'
-const TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // The exact tuned drone recipe every sibling exercise in this app
 // establishes (own-copy).

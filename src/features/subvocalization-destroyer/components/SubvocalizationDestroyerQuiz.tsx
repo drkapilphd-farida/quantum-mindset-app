@@ -9,8 +9,8 @@ import type { FlashRecallSprintQuizQuestion } from '../subvocalizationDestroyerD
 // Frosted-glass palette — own-copy, matching this exercise's own Canvas
 // and every other Reading Mode built this session (a deliberate upgrade
 // from Flash Recall Sprint's own solid-card quiz).
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-card backdrop-blur-md'
+const TEXT_COLOR_CLASS_NAME = 'text-foreground'
 
 type SubvocalizationDestroyerQuizProps = {
   questions: readonly FlashRecallSprintQuizQuestion[]

@@ -1,4 +1,4 @@
-import { PlayScope } from '@/components/PlayScope'
+
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { ThirtyDayCurriculumExperience } from '@/features/thirty-day-curriculum/components/ThirtyDayCurriculumExperience'
@@ -61,9 +61,9 @@ export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDa
     redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
   }
   return (
-    <PlayScope className="-mx-4 -my-6 min-h-[calc(100dvh-3.5rem)] px-4 py-6 sm:-mx-6 sm:px-6">
+    <>
       {requestedDay === null && <ReminderBanner />}
       <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} initialNextDayOpensAt={nextDayOpensAt} />
-    </PlayScope>
+    </>
   )
 }

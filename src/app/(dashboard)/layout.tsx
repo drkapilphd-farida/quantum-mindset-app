@@ -10,6 +10,7 @@ import { AppSidebar } from '@/components/AppSidebar'
 import { Topbar } from '@/components/Topbar'
 import { CurriculumSessionHeartbeat } from '@/features/thirty-day-curriculum/components/CurriculumSessionHeartbeat'
 import { PrefetchMainPages } from '@/components/PrefetchMainPages'
+import { PlayScope } from '@/components/PlayScope'
 
 // Design Tokens™ — Plus Jakarta Sans (primary) with Inter (fallback),
 // scoped to the dashboard route group only via CSS variables, not a
@@ -41,7 +42,7 @@ export default async function DashboardLayout({
 
   return (
     <AppI18nRoot>
-      <div className={`bg-muted/30 flex h-screen overflow-hidden ${plusJakartaSans.variable} ${inter.variable}`}>
+      <PlayScope className={`flex h-screen overflow-hidden ${plusJakartaSans.variable} ${inter.variable}`}>
         {/* Desktop sidebar — hidden on mobile */}
         <div className="hidden md:flex">
           <AppSidebar
@@ -67,12 +68,12 @@ export default async function DashboardLayout({
             showPracticeJourney={showPracticeJourney}
           />
           <main className="flex-1 overflow-y-auto">
-            <div className="mx-auto max-w-4xl px-6 py-8 sm:px-8">{children}</div>
+            <div className="mx-auto max-w-4xl px-4 py-6 sm:px-8 sm:py-8">{children}</div>
             <CurriculumSessionHeartbeat />
             <PrefetchMainPages />
           </main>
         </div>
-      </div>
+      </PlayScope>
     </AppI18nRoot>
   )
 }

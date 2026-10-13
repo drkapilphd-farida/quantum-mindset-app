@@ -58,9 +58,9 @@ const CHROME_AUTO_HIDE_DELAY_MS = 2_200
 // gradient mask now on the top/bottom axis — a soft cinematic vignette
 // where lines dissolve as they scroll in from below and out above, rather
 // than a hard cut.
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
 const CARD_MASK_IMAGE = 'linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)'
-const TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // The exact tuned drone recipe every sibling exercise in this app
 // establishes (own-copy).

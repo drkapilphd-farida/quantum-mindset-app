@@ -43,8 +43,8 @@ const ENGINE_TICK_MS = 100
 // a shared import), just with a touch of translucency and backdrop blur
 // layered on top for the requested frosted-glass focus window, while
 // staying close enough to fully opaque that text contrast is unaffected.
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const WORD_TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
+const WORD_TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // Every row is the same fixed height, so a unit's vertical center is pure
 // arithmetic — no measurement of any kind needed (see file header comment).

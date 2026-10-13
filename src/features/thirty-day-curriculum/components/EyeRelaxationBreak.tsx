@@ -34,7 +34,7 @@ export function EyeRelaxationBreak({ onDone }: { onDone: () => void }): React.JS
   const left = running ? (lookFar ? LOOK_FAR_S - elapsed : TOTAL_S - elapsed) : TOTAL_S
 
   return (
-    <div className="mx-auto flex min-h-[55vh] max-w-sm flex-col items-center justify-center gap-4 px-6 py-10 text-center" data-eye-break={running ? 'running' : 'offer'}>
+    <div className="play-calm mx-auto flex min-h-[55vh] max-w-sm flex-col items-center justify-center gap-4 rounded-3xl px-6 py-10 text-center" data-eye-break={running ? 'running' : 'offer'}>
       <div className="flex size-14 items-center justify-center rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-300">
         <Eye className="size-6" aria-hidden="true" />
       </div>

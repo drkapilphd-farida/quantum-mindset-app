@@ -5,6 +5,7 @@ import { brand } from '@/config/site.config'
 import { getAppT } from '@/lib/app-i18n/server'
 import AppI18nRoot from '@/lib/app-i18n/AppI18nRoot'
 import { LanguageSwitcher } from '@/lib/app-i18n/LanguagePicker'
+import { PlayScope } from '@/components/PlayScope'
 
 // Consistent Branding™ — /login, /signup, /forgot-password, etc. all live
 // under this route group, outside (dashboard)/layout.tsx, so they never
@@ -23,9 +24,9 @@ export default async function AuthLayout({
 
   return (
     <AppI18nRoot>
-      <div className="bg-muted/40 flex min-h-screen flex-col">
-        <header className="bg-background flex h-14 items-center justify-between gap-3 border-b px-4 sm:px-6">
-          <Link href="/" className="font-semibold tracking-tight">
+      <PlayScope className="flex min-h-dvh flex-col">
+        <header className="bg-card flex h-14 items-center justify-between gap-3 border-b px-4 sm:px-6">
+          <Link href="/" className="font-heading text-xl tracking-tight">
             {brand.appName}
           </Link>
           <div className="flex items-center gap-3">
@@ -36,7 +37,7 @@ export default async function AuthLayout({
         <main className="flex flex-1 items-center justify-center p-6">
           <div className="w-full max-w-sm">{children}</div>
         </main>
-      </div>
+      </PlayScope>
     </AppI18nRoot>
   )
 }

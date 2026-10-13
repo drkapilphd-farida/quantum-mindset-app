@@ -39,8 +39,8 @@ const ENGINE_TICK_MS = 100
 // Mode built this session shares (own-copy, not a shared import) — a
 // deliberate upgrade from Flash Recall Sprint's own solid card, per this
 // exercise's explicit "frosted-glass focus framing" spec.
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const WORD_TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
+const WORD_TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // The Optimal Recognition Point (ORP) — the classic RSVP technique (the
 // same one Spritz popularized) for genuinely keeping the eyes locked on

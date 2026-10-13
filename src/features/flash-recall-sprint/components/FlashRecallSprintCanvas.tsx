@@ -24,8 +24,8 @@ const ENGINE_TICK_MS = 100
 // Chunk Sliding (own-copy, not a shared import — see those files' own
 // comments on why these are static literal Tailwind classes, never built
 // from JS constants via template-literal interpolation).
-const CARD_CLASS_NAME = 'bg-[#FBF9F4] dark:bg-[#16171A]'
-const WORD_TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-[#fffdf6]'
+const WORD_TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // The Optimal Recognition Point (ORP) — the classic RSVP technique (the
 // same one Spritz popularized) for genuinely keeping the eyes locked on

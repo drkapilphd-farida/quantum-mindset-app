@@ -8,8 +8,8 @@ import type { SentenceReadingModeQuizQuestion } from '../sentenceReadingModeData
 // Vertical Chunk Sliding's own quiz (own-copy, not a shared import — see
 // those files' own comments on why these are static literal Tailwind
 // classes).
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-card backdrop-blur-md'
+const TEXT_COLOR_CLASS_NAME = 'text-foreground'
 
 type SentenceReadingModeQuizProps = {
   questions: readonly SentenceReadingModeQuizQuestion[]

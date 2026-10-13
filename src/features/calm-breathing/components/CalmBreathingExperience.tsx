@@ -32,25 +32,27 @@ export function CalmBreathingExperience({ onComplete, onExit }: { onComplete?: (
     { caption: t('training.breathing.demo3'), visual: <DemoCircle text="4 · 6" grow="loop" /> },
   ]
   return (
-    <AdaptiveExerciseShell
-      exerciseId={CALM_BREATHING_EXERCISE_ID}
-      title={t('training.breathing.title')}
-      skill={t('training.skills.calmFocus')}
-      purpose={t('training.breathing.purpose')}
-      minutes={2}
-      demo={demo}
-      roundsPerSession={ROUNDS_PER_SESSION}
-      thresholds={{ good: 0.75, poor: 0.5 }}
-      scoreLabel={t('training.breathing.scoreLabel')}
-      describeLevel={(level) => {
-        const p = breathPattern(level)
-        return p.holdMs > 0
-          ? t('training.breathing.levelHintHold', { inS: p.inMs / 1000, holdS: p.holdMs / 1000, outS: p.outMs / 1000 })
-          : t('training.breathing.levelHint', { inS: p.inMs / 1000, outS: p.outMs / 1000 })
-      }}
-      renderRound={({ level, isPractice, onDone }) => <CalmBreathingRound level={level} isPractice={isPractice} onDone={onDone} />}
-      {...(onComplete ? { onComplete } : {})}
-      {...(onExit ? { onExit } : {})}
-    />
+    <div className="play-calm min-h-dvh">
+      <AdaptiveExerciseShell
+        exerciseId={CALM_BREATHING_EXERCISE_ID}
+        title={t('training.breathing.title')}
+        skill={t('training.skills.calmFocus')}
+        purpose={t('training.breathing.purpose')}
+        minutes={2}
+        demo={demo}
+        roundsPerSession={ROUNDS_PER_SESSION}
+        thresholds={{ good: 0.75, poor: 0.5 }}
+        scoreLabel={t('training.breathing.scoreLabel')}
+        describeLevel={(level) => {
+          const p = breathPattern(level)
+          return p.holdMs > 0
+            ? t('training.breathing.levelHintHold', { inS: p.inMs / 1000, holdS: p.holdMs / 1000, outS: p.outMs / 1000 })
+            : t('training.breathing.levelHint', { inS: p.inMs / 1000, outS: p.outMs / 1000 })
+        }}
+        renderRound={({ level, isPractice, onDone }) => <CalmBreathingRound level={level} isPractice={isPractice} onDone={onDone} />}
+        {...(onComplete ? { onComplete } : {})}
+        {...(onExit ? { onExit } : {})}
+      />
+    </div>
   )
 }

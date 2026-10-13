@@ -51,8 +51,8 @@ const CHROME_AUTO_HIDE_DELAY_MS = 2_200
 // A spacious, high-contrast "frosted glass" card — the same palette
 // established across this app's reading exercises (own-copy, not a
 // shared import).
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const SENTENCE_TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
+const SENTENCE_TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // The exact tuned drone recipe every sibling exercise in this app
 // establishes (own-copy) — a full octave down from the original Brain Gym

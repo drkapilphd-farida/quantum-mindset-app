@@ -22,8 +22,8 @@ const ENGINE_TICK_MS = 100
 // Frosted-glass palette — own-copy, matching every sibling Reading Mode
 // built this session, per this exercise's explicit "split glass-card
 // layout" spec.
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const STREAM_TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
+const STREAM_TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // The exact tuned 110Hz drone recipe (own-copy) shared by every Reading
 // Mode this session — a full octave down from the original Brain Gym

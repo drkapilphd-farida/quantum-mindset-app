@@ -32,8 +32,8 @@ const CHROME_AUTO_HIDE_DELAY_MS = 2_200
 
 // Cinematic Reader palette — same frosted-glass card every sibling Reading
 // Mode in this app shares (own-copy, not a shared import).
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
+const TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 
 // The glowing guide bar itself — a soft, saturated glow (own-copy color
 // choice, deliberately distinct from the app's neutral foreground/primary

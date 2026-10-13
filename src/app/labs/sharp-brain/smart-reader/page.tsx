@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { PlayScope } from '@/components/PlayScope'
 import { ProLockedScreen } from '@/components/exercises/ProLockedScreen'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { SmartReaderLibrary } from '@/features/smart-reader/components/SmartReaderLibrary'
@@ -10,8 +9,8 @@ export default async function SmartReaderPage({ searchParams }: { searchParams: 
   if (!(await hasQuantumSpeedReadingProAccess())) return <ProLockedScreen title="Smart Reader" />
   const { p } = await searchParams
   return (
-    <PlayScope className="min-h-dvh">
+    <>
       <SmartReaderLibrary initialPassage={typeof p === 'string' ? p.slice(0, 60) : null} />
-    </PlayScope>
+    </>
   )
 }

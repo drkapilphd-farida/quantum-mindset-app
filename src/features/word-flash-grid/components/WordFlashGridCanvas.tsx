@@ -34,7 +34,7 @@ type RoundProgress = { entries: ReadonlyMap<number, RoundEntry> }
 // Frosted-glass palette — own-copy, matching every Reading Mode and
 // NumberFlashGridCanvas.tsx / DotMemoryGridCanvas.tsx built this app, per
 // this exercise's explicit "frosted-glass focus framing" spec.
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
+const CARD_CLASS_NAME = 'bg-card backdrop-blur-md'
 
 // The exact tuned 110Hz drone recipe (own-copy) shared by every exercise
 // this app has built — a full octave down from the original Brain Gym

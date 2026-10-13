@@ -42,8 +42,8 @@ const ENGINE_TICK_MS = 100
 const HAPTIC_TRANSITION_MS = 10
 const CHROME_AUTO_HIDE_DELAY_MS = 2_200
 
-const CARD_CLASS_NAME = 'bg-[#FBF9F4]/95 dark:bg-[#16171A]/95 backdrop-blur-md'
-const TEXT_COLOR_CLASS_NAME = 'text-[#17181C] dark:text-[#F5F5F2]'
+const CARD_CLASS_NAME = 'bg-[#fffdf6] backdrop-blur-md'
+const TEXT_COLOR_CLASS_NAME = 'text-[#1b1b2f]'
 const GLOW_MARKER_CLASS_NAME = 'rounded-full bg-sky-400/20 dark:bg-sky-300/20 ring-1 ring-sky-400/50 dark:ring-sky-300/50'
 const GLOW_MARKER_BOX_SHADOW = '0 0 24px 6px rgba(56, 189, 248, 0.4), 0 0 8px rgba(56, 189, 248, 0.55)'
 
