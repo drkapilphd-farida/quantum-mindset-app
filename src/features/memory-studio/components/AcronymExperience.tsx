@@ -1,9 +1,10 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
-import { ACRONYM_EXAMPLES, ACRONYM_EXERCISE_ID, ACRONYM_MAX, ACRONYM_MIN, firstLetters, sentenceMatches } from '../acronym'
+import { useExerciseProgress } from '@/features/exercise-core/useExerciseProgress'
+import { ACRONYM_EXAMPLES, ACRONYM_EXERCISE_ID, ACRONYM_MAX, ACRONYM_MIN, ACRONYM_READY_LISTS, ACRONYM_TRY_EXERCISE_ID, firstLetters, sentenceMatches } from '../acronym'
 import { saveOwnList } from '../actions'
 import { ACRONYM_LESSON_ID, acronymLesson } from '../lessons'
 import { saveSimpleResult } from '../saveResult'
@@ -14,16 +15,23 @@ import { OrderRecall } from './OrderRecall'
 import { SuggestButton } from './SuggestButton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
-type Stage = { name: 'home' } | { name: 'lesson' } | { name: 'make' } | { name: 'test'; items: string[]; code: string; sentence: string } | { name: 'result'; correct: number; total: number }
+type Stage = { name: 'plan' } | { name: 'try'; index: number } | { name: 'home' } | { name: 'lesson' } | { name: 'make' } | { name: 'test'; items: string[]; code: string; sentence: string } | { name: 'result'; correct: number; total: number }
 
 // Acronyms & first-letter sentences: a quick tool, no levels. A short list →
 // its first letters → a word or a funny sentence → saved, tested once now
 // (put the list back in order with the code as the only help), then reviewed.
-export function AcronymExperience(): React.JSX.Element {
+// Inside the 30-day plan (onComplete given): the lesson the first time, then
+// "try it" on a ready list (its letters, an optional sentence, then put it back in order).
+export function AcronymExperience({ onComplete, onExit }: { onComplete?: () => void; onExit?: () => void } = {}): React.JSX.Element {
+  const inPlan = onComplete !== undefined
   const t = useAppT()
   const uiLang = useUiLang()
   const exampleLang = uiLang === 'hi' ? 'hi' : 'en'
-  const [stage, setStage] = useState<Stage>({ name: 'home' })
+  const { progress } = useExerciseProgress(ACRONYM_TRY_EXERCISE_ID)
+  const [stage, setStage] = useState<Stage>(inPlan ? { name: 'plan' } : { name: 'home' })
+  useEffect(() => {
+    if (inPlan && stage.name === 'plan' && progress.ready) setStage(progress.isFirstTime ? { name: 'lesson' } : { name: 'try', index: 1 + Math.floor(Math.random() * 2) })
+  }, [inPlan, stage.name, progress.ready, progress.isFirstTime])
   const [title, setTitle] = useState('')
   const [itemsText, setItemsText] = useState('')
   const [sentence, setSentence] = useState('')
@@ -60,7 +68,13 @@ export function AcronymExperience(): React.JSX.Element {
     </div>
   )
 
-  if (stage.name === 'lesson') return <MethodLesson narrationId={ACRONYM_LESSON_ID} title={t('training.studio.acronymTitle')} lines={lesson} onDone={() => setStage({ name: 'make' })} />
+  if (stage.name === 'plan') return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (stage.name === 'lesson') return <MethodLesson narrationId={ACRONYM_LESSON_ID} title={t('training.studio.acronymTitle')} lines={lesson} onDone={() => setStage(inPlan ? { name: 'try', index: 0 } : { name: 'make' })} />
+  if (stage.name === 'try') {
+    const lists = ACRONYM_READY_LISTS[exampleLang]
+    const ready = lists[stage.index % lists.length]!
+    return wrap(<AcronymTry key={ready.title} list={ready} onDone={() => (inPlan ? onComplete?.() : setStage({ name: 'home' }))} />)
+  }
 
   if (stage.name === 'test') {
     const choices = shuffle(
@@ -153,7 +167,7 @@ export function AcronymExperience(): React.JSX.Element {
         <Button type="submit" size="lg" className="min-h-12 rounded-full" disabled={busy} data-own-save="true">
           {t('training.studio.saveAndTest')}
         </Button>
-        <Button type="button" variant="ghost" size="lg" className="min-h-12 rounded-full" onClick={() => setStage({ name: 'home' })}>
+        <Button type="button" variant="ghost" size="lg" className="min-h-12 rounded-full" onClick={() => (inPlan ? onExit?.() : setStage({ name: 'home' }))}>
           {t('training.studio.back')}
         </Button>
       </form>,
@@ -181,5 +195,84 @@ export function AcronymExperience(): React.JSX.Element {
         ))}
       </div>
     </>
+  )
+}
+
+function AcronymTry({ list, onDone }: { list: { title: string; items: string[] }; onDone: () => void }): React.JSX.Element {
+  const t = useAppT()
+  const uiLang = useUiLang()
+  const [sentence, setSentence] = useState('')
+  const [phase, setPhase] = useState<'study' | 'recall' | 'result'>('study')
+  const [correct, setCorrect] = useState(0)
+  const started = useRef(performance.now())
+  const code = firstLetters(list.items)
+  const choices = useMemo(
+    () =>
+      shuffle(
+        list.items.map((label, i) => ({ id: `i${i}`, label, picture: false })),
+        rng,
+      ),
+    [list],
+  )
+  if (phase === 'result')
+    return (
+      <div className="flex flex-col gap-4" data-acronym-try-result={correct}>
+        <h2 className="font-heading text-3xl font-bold text-foreground tabular-nums">{t('training.studio.correctOf', { correct, total: list.items.length })}</h2>
+        <Button size="lg" className="min-h-12 rounded-full" onClick={onDone} data-acronym-try-done="true">
+          {t('training.studio.continue')}
+        </Button>
+      </div>
+    )
+  if (phase === 'recall')
+    return (
+      <>
+        <div className="rounded-2xl bg-primary/10 p-3 text-center">
+          <p className="font-heading text-2xl font-bold tracking-widest text-foreground">{code}</p>
+          {sentence.trim() && <p className="mt-1 text-sm text-foreground">{sentence.trim()}</p>}
+        </div>
+        <OrderRecall
+          choices={choices}
+          count={list.items.length}
+          hint={t('training.studio.acronymRecallHint')}
+          onCheck={(answer) => {
+            const n = orderScore(
+              list.items.map((_, i) => `i${i}`),
+              answer,
+            )
+            saveSimpleResult(ACRONYM_TRY_EXERCISE_ID, n, list.items.length, performance.now() - started.current, uiLang)
+            setCorrect(n)
+            setPhase('result')
+          }}
+        />
+      </>
+    )
+  return (
+    <div className="flex flex-col gap-4" data-acronym-try={list.title}>
+      <p className="text-sm text-muted-foreground">{t('training.studio.acronymTryIntro')}</p>
+      <div className="rounded-2xl border border-border/60 p-4">
+        <p className="font-semibold text-foreground">{list.title}</p>
+        <ol className="mt-2 flex flex-col gap-1">
+          {list.items.map((it, i) => (
+            <li key={it} className="flex gap-2 text-base text-foreground">
+              <span className="w-6 text-right font-bold text-primary tabular-nums">{i + 1}.</span>
+              <span>
+                <strong className="text-primary">{Array.from(it)[0]}</strong>
+                {Array.from(it).slice(1).join('')}
+              </span>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-3 font-heading text-3xl font-bold tracking-widest text-primary">{code}</p>
+      </div>
+      <label className="flex flex-col gap-1">
+        <span className="text-sm font-semibold text-foreground">{t('training.studio.acronymSentence')}</span>
+        <input value={sentence} maxLength={300} onChange={(e) => setSentence(e.target.value)} placeholder={t('training.studio.acronymSentencePlaceholder')} className="min-h-12 rounded-xl border border-border bg-background px-3 text-base text-foreground" />
+        {sentence.trim() !== '' && !sentenceMatches(code, sentence) && <span className="text-xs text-muted-foreground">{t('training.studio.acronymSentenceCheck', { letters: code })}</span>}
+      </label>
+      <SuggestButton request={{ kind: 'acronym', letters: code.replace(/\s/g, '').slice(0, 12), items: list.items, lang: uiLang }} onIdea={(text) => setSentence(text.slice(0, 300))} />
+      <Button size="lg" className="min-h-12 rounded-full" onClick={() => setPhase('recall')} data-acronym-try-ready="true">
+        {t('training.studio.faceReady')}
+      </Button>
+    </div>
   )
 }

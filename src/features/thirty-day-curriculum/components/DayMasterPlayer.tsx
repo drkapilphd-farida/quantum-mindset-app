@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowRight, Clock, PartyPopper, Sparkles, Undo2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getCurriculumExerciseById, type CurriculumCatalogExercise } from '../curriculumExerciseCatalog'
-import { buildCurriculumDayPlan, isCheckpointDay } from '../curriculumDatabase'
+import { buildCurriculumDayPlan, doneStepIds, isCheckpointDay } from '../curriculumDatabase'
 import { buildSessionQueue, clearActiveCurriculumSession, loadActiveCurriculumSession, startCurriculumSessionAtStep } from '../curriculumSessionRunner'
 import { setActiveWizardDay, takePendingStepsDone } from '../curriculumReturnRouting'
 import { isCurriculumExerciseGated } from '../curriculumGatedExercises'
@@ -160,7 +160,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       for (const exerciseId of pending) await recordStepDone({ day, exerciseId }).catch(() => undefined)
       const current = await getDayPace({ day }).catch((): DayPace => ({ activeSeconds: 0, stepsDone: [], paceOff: false }))
       if (cancelled) return
-      const done = new Set([...current.stepsDone, ...pending])
+      const done = doneStepIds(day, [...current.stepsDone, ...pending])
       const remaining = all.filter((index) => !done.has(queueIds[index]!))
       setPace(current)
       setDoneIds(done)
@@ -458,7 +458,7 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       <div className="flex shrink-0 items-center justify-between gap-2 border-b border-border/60 px-3 py-2 pt-[max(0.5rem,env(safe-area-inset-top))] sm:px-6 sm:py-4">
         <div className="min-w-0">
           <p className="text-[9px] font-semibold tracking-widest text-muted-foreground uppercase sm:text-[10px]">
-            {t('curriculum.player.stepOf', { step: Math.min(queueIds.length, doneIds.size + 1), total: queueIds.length, category: categoryLabel(t, exercise.category) })}
+            {t('curriculum.player.stepOf', { step: Math.min(queueIds.length, queueIds.filter((id) => doneIds.has(id)).length + 1), total: queueIds.length, category: categoryLabel(t, exercise.category) })}
           </p>
           <p className="truncate text-xs font-semibold text-foreground sm:text-sm">{exerciseTitle(t, exercise)}</p>
         </div>

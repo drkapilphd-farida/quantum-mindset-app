@@ -38,3 +38,19 @@ export const ACRONYM_EXAMPLES: Readonly<Record<'en' | 'hi', readonly AcronymExam
     { title: 'सौरमंडल के ग्रह, पास से दूर', items: ['बुध', 'शुक्र', 'पृथ्वी', 'मंगल', 'बृहस्पति', 'शनि', 'अरुण', 'वरुण'], code: 'बु शु पृ मं बृ श अ व' },
   ],
 }
+
+export const ACRONYM_TRY_EXERCISE_ID = 'acronym-try'
+
+/** Ready lists for the 30-day plan's "try it" step (no memory-check words). The first one is the easiest. */
+export const ACRONYM_READY_LISTS: Readonly<Record<'en' | 'hi', readonly { title: string; items: string[] }[]>> = {
+  en: [
+    { title: 'The five senses', items: ['Sight', 'Hearing', 'Smell', 'Taste', 'Touch'] },
+    { title: 'Parts of a cell', items: ['Nucleus', 'Cytoplasm', 'Membrane', 'Mitochondria', 'Vacuole'] },
+    { title: 'The continents, largest first', items: ['Asia', 'Africa', 'North America', 'South America', 'Antarctica', 'Europe', 'Australia'] },
+  ],
+  hi: [
+    { title: 'पाँच इंद्रियाँ', items: ['देखना', 'सुनना', 'सूँघना', 'चखना', 'छूना'] },
+    { title: 'कोशिका के भाग', items: ['केंद्रक', 'कोशिका द्रव्य', 'झिल्ली', 'माइटोकॉन्ड्रिया', 'रिक्तिका'] },
+    { title: 'महाद्वीप, सबसे बड़े से', items: ['एशिया', 'अफ़्रीका', 'उत्तरी अमेरिका', 'दक्षिणी अमेरिका', 'अंटार्कटिका', 'यूरोप', 'ऑस्ट्रेलिया'] },
+  ],
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { AdaptiveExerciseShell, type RoundOutcome } from '@/features/exercise-core/components/AdaptiveExerciseShell'
 import { useExerciseProgress } from '@/features/exercise-core/useExerciseProgress'
@@ -16,16 +16,24 @@ type Mode = 'home' | 'lesson' | 'practice' | 'own'
 
 // Keyword method: Learn (lesson) → Practise (levels 1–10, 3 → 10 words, help
 // fading from keyword + picture to the learner's own) → your own words.
-export function KeywordExperience(): React.JSX.Element {
+// Inside the 30-day plan (onComplete given): the lesson the first time, then one
+// practice round and one scored round.
+export function KeywordExperience({ onComplete, onExit }: { onComplete?: () => void; onExit?: () => void } = {}): React.JSX.Element {
+  const inPlan = onComplete !== undefined
   const t = useAppT()
   const uiLang = useUiLang()
   const list = keywordListFor(uiLang)
   const { progress } = useExerciseProgress(KEYWORD_EXERCISE_ID)
-  const [mode, setMode] = useState<Mode>('home')
+  const [mode, setMode] = useState<Mode | null>(inPlan ? null : 'home')
   const rounds = useRef(new Map<string, Round>())
   const lastIds = useRef<string[]>([])
   const lesson = useMemo(() => keywordLesson(t, list), [t, list])
   const example = KEYWORD_CARDS[list][0]!
+  useEffect(() => {
+    if (inPlan && mode === null && progress.ready) setMode(progress.isFirstTime ? 'lesson' : 'practice')
+  }, [inPlan, mode, progress.ready, progress.isFirstTime])
+
+  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
 
   if (mode === 'lesson') return <MethodLesson narrationId={KEYWORD_LESSON_ID[list]} title={t('training.studio.keywordTitle')} lines={lesson} onDone={() => setMode('practice')} />
   if (mode === 'own')
@@ -50,14 +58,15 @@ export function KeywordExperience(): React.JSX.Element {
         purpose={t('training.studio.keywordPurpose')}
         minutes={5}
         demo={demo}
-        roundsPerSession={2}
+        roundsPerSession={inPlan ? 1 : 2}
         scoreLabel={t('training.studio.points')}
         contentLang={list}
+        {...(inPlan ? { onComplete: () => onComplete?.() } : {})}
         describeLevel={(level) => {
           const c = keywordLevel(level)
           return t(c.help === 'full' ? 'training.studio.keywordLevelFull' : c.help === 'keyword' ? 'training.studio.keywordLevelKeyword' : 'training.studio.keywordLevelOwn', { count: c.count })
         }}
-        onExit={() => setMode('home')}
+        onExit={() => (inPlan ? onExit?.() : setMode('home'))}
         renderRound={({ level, isPractice, roundIndex, onDone }) => {
           const key = `${isPractice ? 'p' : 'r'}-${roundIndex}-${level}`
           let round = rounds.current.get(key)

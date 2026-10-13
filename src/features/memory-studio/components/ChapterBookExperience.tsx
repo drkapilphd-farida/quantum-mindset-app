@@ -9,6 +9,7 @@ import { createChapterMap, deleteChapterMap, listChapterMaps, type ChapterMap } 
 import { listMyPalaces } from '../palaceActions'
 import { STATION_SUGGESTIONS, type MyPalace } from '../palaces'
 import { chapterLesson, CHAPTER_LESSON_ID } from '../lessons'
+import { SAMPLE_CHAPTER } from '../sampleChapter'
 import { ChapterEditor } from './ChapterEditor'
 import { ChapterMindMap } from './ChapterMindMap'
 import { ChapterWalk } from './ChapterWalk'
@@ -18,11 +19,15 @@ import { MethodLesson } from './MethodLesson'
 type Mode = { name: 'home' } | { name: 'lesson' } | { name: 'new' } | { name: 'list' } | { name: 'edit'; map: ChapterMap } | { name: 'view'; map: ChapterMap } | { name: 'walk'; map: ChapterMap; journey: boolean }
 
 // Chapter & Book: remember the key ideas and structure of a chapter or a book.
-export function ChapterBookExperience(): React.JSX.Element {
+// Inside the 30-day plan (onComplete given): no chapters yet → the lesson, then a
+// new chapter (their own, or the sample) → journey → walk. With chapters → make
+// a new one, or walk a saved one. The step is done when the walk is done.
+export function ChapterBookExperience({ onComplete, onExit }: { onComplete?: () => void; onExit?: () => void } = {}): React.JSX.Element {
+  const inPlan = onComplete !== undefined
   const t = useAppT()
   const uiLang = useUiLang()
   const lang: StudioLang = uiLang === 'hi' ? 'hi' : 'en'
-  const [mode, setMode] = useState<Mode>({ name: 'home' })
+  const [mode, setMode] = useState<Mode | null>(inPlan ? null : { name: 'home' })
   const [maps, setMaps] = useState<ChapterMap[] | null>(null)
   const [palaces, setPalaces] = useState<MyPalace[]>([])
   const lesson = useMemo(() => chapterLesson(t), [t])
@@ -31,6 +36,10 @@ export function ChapterBookExperience(): React.JSX.Element {
     void listMyPalaces().then(setPalaces)
   }, [])
   useEffect(reload, [reload])
+  useEffect(() => {
+    if (inPlan && mode === null && maps !== null) setMode(maps.length === 0 ? { name: 'lesson' } : { name: 'list' })
+  }, [inPlan, mode, maps])
+  const home = (): void => (inPlan ? onExit?.() : setMode({ name: 'home' }))
   const defaultStations = STATION_SUGGESTIONS.home[lang]
   const stationsFor = (map: ChapterMap): readonly string[] => palaces.find((p) => p.id === map.palaceId && p.stations.length >= map.ideas.length)?.stations ?? defaultStations
 
@@ -41,8 +50,9 @@ export function ChapterBookExperience(): React.JSX.Element {
     </div>
   )
 
+  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
   if (mode.name === 'lesson') return <MethodLesson narrationId={CHAPTER_LESSON_ID} title={t('training.studio.chapterTitle')} lines={lesson} onDone={() => setMode({ name: 'new' })} />
-  if (mode.name === 'new') return wrap(t('training.studio.chapterNew'), <NewChapter onCreated={(map) => (reload(), setMode({ name: 'edit', map }))} onBack={() => setMode({ name: 'home' })} />)
+  if (mode.name === 'new') return wrap(t('training.studio.chapterNew'), <NewChapter sample={inPlan} onCreated={(map) => (reload(), setMode({ name: 'edit', map }))} onBack={home} />)
   if (mode.name === 'edit')
     return wrap(
       mode.map.title,
@@ -60,7 +70,7 @@ export function ChapterBookExperience(): React.JSX.Element {
   if (mode.name === 'walk')
     return wrap(
       mode.map.title,
-      <ChapterWalk mapId={mode.map.id} title={mode.map.title} ideas={mode.map.ideas} questions={mode.map.questions} stations={stationsFor(mode.map)} skipJourney={!mode.journey} onDone={() => (reload(), setMode({ name: 'list' }))} />,
+      <ChapterWalk mapId={mode.map.id} title={mode.map.title} ideas={mode.map.ideas} questions={mode.map.questions} stations={stationsFor(mode.map)} skipJourney={!mode.journey} onDone={() => (inPlan ? onComplete?.() : (reload(), setMode({ name: 'list' })))} />,
     )
   if (mode.name === 'view')
     return wrap(
@@ -87,19 +97,27 @@ export function ChapterBookExperience(): React.JSX.Element {
     return wrap(
       t('training.studio.chapterMine'),
       <>
+        {inPlan && (
+          <>
+            <p className="text-sm text-muted-foreground">{t('training.studio.chapterPlanIntro')}</p>
+            <Button size="lg" className="min-h-12 rounded-full" onClick={() => setMode({ name: 'new' })} data-chapter-plan-new="true">
+              {t('training.studio.chapterNew')}
+            </Button>
+          </>
+        )}
         {(maps ?? []).length === 0 && <p className="text-sm text-muted-foreground">{t('training.studio.chapterNone')}</p>}
         {[...books.entries()].map(([book, list]) => (
           <section key={book} className="flex flex-col gap-2">
             {book && <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">{book}</h2>}
             {list.map((m) => (
-              <button key={m.id} type="button" onClick={() => setMode({ name: 'view', map: m })} className="flex flex-col items-start rounded-2xl border border-border/60 bg-card p-4 text-left" data-chapter-card={m.id}>
+              <button key={m.id} type="button" onClick={() => setMode(inPlan ? { name: 'walk', map: m, journey: false } : { name: 'view', map: m })} className="flex flex-col items-start rounded-2xl border border-border/60 bg-card p-4 text-left" data-chapter-card={m.id}>
                 <span className="font-semibold break-words text-foreground">{m.title}</span>
                 <span className="text-sm text-muted-foreground">{t('training.studio.ideasN', { count: m.ideas.length })}</span>
               </button>
             ))}
           </section>
         ))}
-        <Button variant="ghost" size="lg" className="min-h-12 rounded-full" onClick={() => setMode({ name: 'home' })}>
+        <Button variant="ghost" size="lg" className="min-h-12 rounded-full" onClick={home}>
           {t('training.studio.back')}
         </Button>
       </>,
@@ -119,7 +137,7 @@ export function ChapterBookExperience(): React.JSX.Element {
   )
 }
 
-function NewChapter({ onCreated, onBack }: { onCreated: (map: ChapterMap) => void; onBack: () => void }): React.JSX.Element {
+function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated: (map: ChapterMap) => void; onBack: () => void }): React.JSX.Element {
   const t = useAppT()
   const uiLang = useUiLang()
   const [title, setTitle] = useState('')
@@ -170,6 +188,22 @@ function NewChapter({ onCreated, onBack }: { onCreated: (map: ChapterMap) => voi
       data-chapter-new="true"
     >
       <p className="text-sm text-muted-foreground">{t('training.studio.chapterNewIntro')}</p>
+      {sample && (
+        <Button
+          type="button"
+          variant="outline"
+          className="min-h-11 self-start rounded-full"
+          onClick={() => {
+            const s = SAMPLE_CHAPTER[uiLang === 'hi' ? 'hi' : 'en']
+            setTitle(s.title)
+            setText(s.text)
+            setSource('paste')
+          }}
+          data-chapter-sample="true"
+        >
+          {t('training.studio.chapterUseSample')}
+        </Button>
+      )}
       <label className="flex flex-col gap-1">
         <span className="text-sm font-semibold text-foreground">{t('training.studio.chapterName')}</span>
         <input value={title} maxLength={120} onChange={(e) => setTitle(e.target.value)} className="min-h-12 rounded-xl border border-border bg-background px-3 text-base" data-chapter-title="true" />

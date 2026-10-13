@@ -953,6 +953,9 @@
       "l5": "Say your word or sentence a few times, and link each letter back to its item.",
       "l6": "Now try it on a list of your own — three to eight items."
     },
-    "acronymRecallHint": "Tap the items in order — the letters above are your only help."
+    "acronymRecallHint": "Tap the items in order — the letters above are your only help.",
+    "chapterPlanIntro": "Make a new chapter, or walk one you made before — tap it to go through it again.",
+    "chapterUseSample": "No chapter at hand? Use a sample chapter",
+    "acronymTryIntro": "Here is a ready list. See its first letters — make a word or a funny sentence from them, then put the list back in order."
   }
 }

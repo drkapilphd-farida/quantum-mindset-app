@@ -1,4 +1,4 @@
-import { buildCurriculumDayPlan } from './curriculumDatabase'
+import { buildCurriculumDayPlan, doneStepIds } from './curriculumDatabase'
 import { buildSessionQueue } from './curriculumSessionRunner'
 
 // Pure rules of pace control (Phase 3, item 4): one new day per calendar day,
@@ -54,7 +54,7 @@ export function dayStepIds(day: number): readonly string[] {
 
 /** Steps of the day not yet finished, in play order. */
 export function missingSteps(day: number, done: readonly string[]): string[] {
-  const finished = new Set(done)
+  const finished = doneStepIds(day, done)
   return dayStepIds(day).filter((id) => !finished.has(id))
 }
 

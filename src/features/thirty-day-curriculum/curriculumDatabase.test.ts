@@ -7,11 +7,13 @@ import {
   TOTAL_CURRICULUM_DAYS,
   buildCurriculumDayPlan,
   buildFullCurriculum,
+  doneStepIds,
   getCurriculumDayTheme,
   getCurriculumPhase,
   getPhaseForDay,
   getPhaseJustCompleted,
   isCheckpointDay,
+  PREVIOUS_MEMORY_STEP,
 } from './curriculumDatabase'
 
 function allExerciseIdsInPlan(day: number): string[] {
@@ -141,18 +143,18 @@ describe('buildCurriculumDayPlan', () => {
     expect(phase3VisualizationIds.has('calm-breathing')).toBe(true)
   })
 
-  it('covers every catalog exercise at least once across all 30 days (no exercise left unused)', () => {
+  // Group A (13 Oct 2026) replaced these visual-memory drills as the memory step of Days 11–30.
+  // They stay in the labs for free practice, just not in the plan.
+  const RETIRED_FROM_PLAN = ['pictorial-essence-sprint', 'hemispheric-color-sync', 'word-flash-grid', 'dot-memory-grid', 'number-flash-grid', 'image-flash-grid']
+
+  it('covers every catalog exercise at least once across all 30 days, except the drills Group A retired from the plan', () => {
     const touchedIds = new Set<string>()
     for (let day = 1; day <= TOTAL_CURRICULUM_DAYS; day++) {
       for (const id of allExerciseIdsInPlan(day)) {
         touchedIds.add(id)
       }
     }
-    const catalogIds = new Set(CURRICULUM_EXERCISE_CATALOG.map((exercise) => exercise.id))
-    for (const id of catalogIds) {
-      expect(touchedIds.has(id)).toBe(true)
-    }
-    expect(touchedIds.size).toBe(catalogIds.size)
+    for (const { id } of CURRICULUM_EXERCISE_CATALOG) expect(touchedIds.has(id), id).toBe(!RETIRED_FROM_PLAN.includes(id))
   })
 
   it('never schedules the same exercise twice on one day', () => {
@@ -162,11 +164,25 @@ describe('buildCurriculumDayPlan', () => {
     }
   })
 
-  it('days 9/19/29 (were Zener) and 10/20/30 (were Hidden Target) now train visual memory', () => {
-    for (const day of [9, 10, 19, 20, 29, 30]) {
-      const id = buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]?.id
-      expect(['dot-memory-grid', 'number-flash-grid', 'hemispheric-color-sync', 'pictorial-essence-sprint', 'peg-method']).toContain(id)
+  it('Group A: Days 11–30 use the new memory methods, easy to hard, with Chapter & Book by Day 22 — replacing, so every day keeps 4 steps', () => {
+    const memory = (day: number): string => buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]!.id
+    const NEW = ['names-and-faces', 'number-pictures', 'keyword-method', 'my-palaces', 'chapter-book', 'acronyms']
+    for (let day = 11; day <= 30; day++) {
+      expect(NEW, `day ${day}`).toContain(memory(day))
+      expect(buildCurriculumDayPlan(day).exercises.rightBrainIntuition).toHaveLength(1)
     }
+    for (const id of NEW) expect(Array.from({ length: 20 }, (_, i) => memory(11 + i))).toContain(id)
+    const firstChapter = Array.from({ length: 20 }, (_, i) => 11 + i).find((d) => memory(d) === 'chapter-book')!
+    expect(firstChapter).toBeLessThanOrEqual(22)
+    // Each method's first day comes before its later days; palaces are built before Chapter & Book uses them.
+    expect(Array.from({ length: 20 }, (_, i) => 11 + i).find((d) => memory(d) === 'my-palaces')!).toBeLessThan(firstChapter)
+  })
+
+  it('a learner part-way through a day who already did the old memory step keeps it as done', () => {
+    expect(PREVIOUS_MEMORY_STEP[12]).toBe('pictorial-essence-sprint')
+    expect(doneStepIds(12, ['pictorial-essence-sprint']).has('names-and-faces')).toBe(true)
+    expect(doneStepIds(12, []).has('names-and-faces')).toBe(false)
+    expect(doneStepIds(5, ['story-method']).has('story-method')).toBe(true)
   })
 
   it('Release 2: the memory step of Days 2–6 is the Story method and of Days 7–10 the Peg method — replacing it, so every day keeps 4 steps', () => {
@@ -177,7 +193,7 @@ describe('buildCurriculumDayPlan', () => {
       expect(plan.exercises.visualization).toHaveLength(1)
       expect(plan.exercises.readingIntelligence).toHaveLength(1)
     }
-    for (const day of [1, 11, 20, 30]) expect(buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]?.id).not.toMatch(/story|peg/)
+    for (const day of [1, 11, 20, 30]) expect(buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]?.id).not.toMatch(/story|peg-method/)
   })
 
   it('no day mentions eye training, energies, holograms or intuition in its theme', () => {

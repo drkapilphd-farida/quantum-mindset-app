@@ -96,7 +96,7 @@ export const CURRICULUM_DAY_THEMES: readonly CurriculumDayTheme[] = [
   { day: 8, title: 'Visual Focus Expansion Begins', focus: 'Deepen visual recall training.' },
   { day: 9, title: 'Inner Voice Awareness', focus: 'Start noticing and interrupting your inner voice while reading.' },
   { day: 10, title: 'Flash Intelligence Warm-Up', focus: 'Sharpen instant recognition speed with flash-based drills.' },
-  { day: 11, title: 'Deeper Visual Focus Practice', focus: 'Extend non-verbal recall span and grid complexity.' },
+  { day: 11, title: 'Deeper Visual Focus Practice', focus: 'Remember new names and faces, and keep your reading focus deep.' },
   { day: 12, title: 'Inner Voice Control', focus: 'Push further into silent, voice-free reading.' },
   { day: 13, title: 'Integration Circuit', focus: 'Combine visual-focus and reading gains in one balanced session.' },
   { day: 14, title: 'Checkpoint — Visual Focus Review', focus: 'Re-measure WPM and comprehension to confirm real week-two growth.' },
@@ -163,7 +163,8 @@ type DaySlots = readonly [brainGym: string, rightBrainIntuition: string, visuali
 
 // One row per day: focus warm-up · visual memory · visualisation/calm · reading.
 // Days 2–6 and 7–10: the memory step is the Story and the Peg method (Release 2,
-// 12 Oct 2026) — it replaces that day's visual-memory drill, so each day keeps 4 steps.
+// 12 Oct 2026); Days 11–30: the Group A methods (13 Oct 2026). Each replaces that
+// day's visual-memory drill, so every day keeps its 4 steps.
 export const DAY_EXERCISE_IDS: Readonly<Record<number, DaySlots>> = {
   1: ['calm-breathing', 'photographic-memory', 'quantum-mental-rotation', ['dynamic-chunk-sliding']],
   2: ['schulte-grid-speed-drill', 'story-method', 'color-scene-transformation', ['vertical-chunk-sliding']],
@@ -175,26 +176,62 @@ export const DAY_EXERCISE_IDS: Readonly<Record<number, DaySlots>> = {
   8: ['rapid-visual-span-expander', 'peg-method', 'calm-breathing', ['paragraph-reading-mode']],
   9: ['schulte-grid-speed-drill', 'peg-method', 'quantum-mental-rotation', ['guided-paragraph-reading-mode']],
   10: ['rapid-visual-span-expander', 'peg-method', 'color-scene-transformation', ['subvocalization-destroyer']],
-  11: ['blink-trigger-micro-recall', 'photographic-memory', 'memory-palace', ['photographic-reading']],
-  12: ['cross-lateral-tap', 'pictorial-essence-sprint', 'calm-breathing', ['dual-stream-split-reader']],
-  13: ['fast-pattern-blinking', 'hemispheric-color-sync', 'quantum-mental-rotation', ['dynamic-chunk-sliding']],
-  14: ['schulte-grid-speed-drill', 'word-flash-grid', 'color-scene-transformation', ['vertical-chunk-sliding']],
-  15: ['rapid-visual-span-expander', 'dot-memory-grid', 'memory-palace', ['flash-recall-sprint']],
-  16: ['cross-lateral-tap', 'number-flash-grid', 'calm-breathing', ['vertical-flash-recall']],
-  17: ['fast-pattern-blinking', 'word-flash-grid', 'quantum-mental-rotation', ['vertical-word-reading']],
-  18: ['blink-trigger-micro-recall', 'image-flash-grid', 'color-scene-transformation', ['phrase-reading-mode']],
-  19: ['peripheral-flash-expander', 'hemispheric-color-sync', 'memory-palace', ['sentence-reading-mode']],
-  20: ['quantum-tachistoscope-multi-word-blast', 'dot-memory-grid', 'calm-breathing', ['paragraph-reading-mode']],
-  21: ['schulte-grid-speed-drill', 'photographic-memory', 'quantum-mental-rotation', ['guided-paragraph-reading-mode']],
-  22: ['cross-lateral-tap', 'pictorial-essence-sprint', 'color-scene-transformation', ['phrase-reading']],
-  23: ['rapid-visual-span-expander', 'hemispheric-color-sync', 'memory-palace', ['multi-line-reading']],
-  24: ['fast-pattern-blinking', 'word-flash-grid', 'calm-breathing', ['sentence-reading']],
-  25: ['schulte-grid-speed-drill', 'dot-memory-grid', 'quantum-mental-rotation', ['paragraph-reading']],
-  26: ['blink-trigger-micro-recall', 'number-flash-grid', 'color-scene-transformation', ['word-flash']],
-  27: ['cross-lateral-tap', 'word-flash-grid', 'memory-palace', ['number-flash']],
-  28: ['rapid-visual-span-expander', 'image-flash-grid', 'calm-breathing', ['symbol-flash']],
-  29: ['fast-pattern-blinking', 'pictorial-essence-sprint', 'quantum-mental-rotation', ['mixed-flash']],
-  30: ['schulte-grid-speed-drill', 'dot-memory-grid', 'color-scene-transformation', ['peripheral-flash', 'progressive-chunk-reading']],
+  11: ['blink-trigger-micro-recall', 'names-and-faces', 'memory-palace', ['photographic-reading']],
+  12: ['cross-lateral-tap', 'names-and-faces', 'calm-breathing', ['dual-stream-split-reader']],
+  13: ['fast-pattern-blinking', 'number-pictures', 'quantum-mental-rotation', ['dynamic-chunk-sliding']],
+  14: ['schulte-grid-speed-drill', 'number-pictures', 'color-scene-transformation', ['vertical-chunk-sliding']],
+  15: ['rapid-visual-span-expander', 'keyword-method', 'memory-palace', ['flash-recall-sprint']],
+  16: ['cross-lateral-tap', 'keyword-method', 'calm-breathing', ['vertical-flash-recall']],
+  17: ['fast-pattern-blinking', 'my-palaces', 'quantum-mental-rotation', ['vertical-word-reading']],
+  18: ['blink-trigger-micro-recall', 'my-palaces', 'color-scene-transformation', ['phrase-reading-mode']],
+  19: ['peripheral-flash-expander', 'number-pictures', 'memory-palace', ['sentence-reading-mode']],
+  20: ['quantum-tachistoscope-multi-word-blast', 'chapter-book', 'calm-breathing', ['paragraph-reading-mode']],
+  21: ['schulte-grid-speed-drill', 'acronyms', 'quantum-mental-rotation', ['guided-paragraph-reading-mode']],
+  22: ['cross-lateral-tap', 'chapter-book', 'color-scene-transformation', ['phrase-reading']],
+  23: ['rapid-visual-span-expander', 'names-and-faces', 'memory-palace', ['multi-line-reading']],
+  24: ['fast-pattern-blinking', 'number-pictures', 'calm-breathing', ['sentence-reading']],
+  25: ['schulte-grid-speed-drill', 'keyword-method', 'quantum-mental-rotation', ['paragraph-reading']],
+  26: ['blink-trigger-micro-recall', 'my-palaces', 'color-scene-transformation', ['word-flash']],
+  27: ['cross-lateral-tap', 'number-pictures', 'memory-palace', ['number-flash']],
+  28: ['rapid-visual-span-expander', 'chapter-book', 'calm-breathing', ['symbol-flash']],
+  29: ['fast-pattern-blinking', 'names-and-faces', 'quantum-mental-rotation', ['mixed-flash']],
+  30: ['schulte-grid-speed-drill', 'acronyms', 'color-scene-transformation', ['peripheral-flash', 'progressive-chunk-reading']],
+}
+
+/**
+ * The memory step each of Days 11–30 had before Group A. A learner who had
+ * already finished it that day keeps it as done (the new step counts as done
+ * too), so nobody part-way through a day is asked for an extra step.
+ */
+export const PREVIOUS_MEMORY_STEP: Readonly<Record<number, string>> = {
+  11: 'photographic-memory',
+  12: 'pictorial-essence-sprint',
+  13: 'hemispheric-color-sync',
+  14: 'word-flash-grid',
+  15: 'dot-memory-grid',
+  16: 'number-flash-grid',
+  17: 'word-flash-grid',
+  18: 'image-flash-grid',
+  19: 'hemispheric-color-sync',
+  20: 'dot-memory-grid',
+  21: 'photographic-memory',
+  22: 'pictorial-essence-sprint',
+  23: 'hemispheric-color-sync',
+  24: 'word-flash-grid',
+  25: 'dot-memory-grid',
+  26: 'number-flash-grid',
+  27: 'word-flash-grid',
+  28: 'image-flash-grid',
+  29: 'pictorial-essence-sprint',
+  30: 'dot-memory-grid',
+}
+
+/** The day's finished steps, with a finished previous memory step counted as the current one. */
+export function doneStepIds(day: number, done: readonly string[]): Set<string> {
+  const finished = new Set(done)
+  const previous = PREVIOUS_MEMORY_STEP[day]
+  if (previous !== undefined && finished.has(previous)) finished.add(DAY_EXERCISE_IDS[day]![1])
+  return finished
 }
 
 function exercise(id: string): CurriculumCatalogExercise {

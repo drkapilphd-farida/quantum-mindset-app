@@ -82,6 +82,12 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
   'memory-palace': lazyNamed(() => import('@/features/memory-palace/components/MemoryPalaceExperience'), 'MemoryPalaceExperience'),
   'story-method': lazyNamed(() => import('@/features/memory-studio/components/StoryMethodExperience'), 'StoryMethodExperience'),
   'peg-method': lazyNamed(() => import('@/features/memory-studio/components/PegMethodExperience'), 'PegMethodExperience'),
+  'names-and-faces': lazyNamed(() => import('@/features/memory-studio/components/NameFaceExperience'), 'NameFaceExperience'),
+  'number-pictures': lazyNamed(() => import('@/features/memory-studio/components/NumberCodeExperience'), 'NumberCodeExperience'),
+  'keyword-method': lazyNamed(() => import('@/features/memory-studio/components/KeywordExperience'), 'KeywordExperience'),
+  'my-palaces': lazyNamed(() => import('@/features/memory-studio/components/PalaceMethodExperience'), 'PalaceMethodExperience'),
+  'chapter-book': lazyNamed(() => import('@/features/memory-studio/components/ChapterBookExperience'), 'ChapterBookExperience'),
+  'acronyms': lazyNamed(() => import('@/features/memory-studio/components/AcronymExperience'), 'AcronymExperience'),
   'calm-breathing': lazyNamed(() => import('@/features/calm-breathing/components/CalmBreathingExperience'), 'CalmBreathingExperience'),
 
   // Reading Hub

@@ -18,11 +18,12 @@ type Stage = { name: 'sets' } | { name: 'cards'; set: number; i: number } | { na
 // Learn the number pictures 10 at a time: look at each card (number, picture,
 // word, its two sounds) → a 10-question check → 8 or more and the set goes
 // into the review queue (tomorrow, then 3, 7, 14 and 30 days).
-export function NumberLearn({ list, onBack }: { list: NumberList; onBack: () => void }): React.JSX.Element {
+// In the 30-day plan (planSet given): just that one set, then Continue.
+export function NumberLearn({ list, onBack, planSet, onPlanDone }: { list: NumberList; onBack: () => void; planSet?: number; onPlanDone?: () => void }): React.JSX.Element {
   const t = useAppT()
   const uiLang = useUiLang()
   const [learned, setLearned] = useState<number[] | null>(null)
-  const [stage, setStage] = useState<Stage>({ name: 'sets' })
+  const [stage, setStage] = useState<Stage>(planSet === undefined ? { name: 'sets' } : { name: 'cards', set: planSet, i: 0 })
   const started = useRef(0)
 
   useEffect(() => {
@@ -82,7 +83,12 @@ export function NumberLearn({ list, onBack }: { list: NumberList; onBack: () => 
       <div className="flex flex-col gap-4" data-number-learn-result={stage.correct}>
         <h2 className="font-heading text-3xl font-bold text-foreground tabular-nums">{t('training.studio.correctOf', { correct: stage.correct, total: 10 })}</h2>
         <p className="text-sm text-muted-foreground">{passed ? t('training.studio.numberSetDone') : t('training.studio.pegsAgain')}</p>
-        {passed && next !== null ? (
+        {onPlanDone !== undefined && (
+          <Button size="lg" className="min-h-12 rounded-full" onClick={onPlanDone} data-number-plan-done="true">
+            {t('training.studio.continue')}
+          </Button>
+        )}
+        {onPlanDone !== undefined ? null : passed && next !== null ? (
           <Button size="lg" className="min-h-12 rounded-full" onClick={() => setStage({ name: 'cards', set: next, i: 0 })} data-number-next-set="true">
             {t('training.studio.numberNextSet', { from: `${next}0`, to: `${next}9` })}
           </Button>
@@ -93,9 +99,11 @@ export function NumberLearn({ list, onBack }: { list: NumberList; onBack: () => 
             </Button>
           )
         )}
-        <Button variant="outline" size="lg" className="min-h-12 rounded-full" onClick={() => setStage({ name: 'sets' })}>
-          {t('training.studio.numberAllSets')}
-        </Button>
+        {onPlanDone === undefined && (
+          <Button variant="outline" size="lg" className="min-h-12 rounded-full" onClick={() => setStage({ name: 'sets' })}>
+            {t('training.studio.numberAllSets')}
+          </Button>
+        )}
       </div>
     )
   }

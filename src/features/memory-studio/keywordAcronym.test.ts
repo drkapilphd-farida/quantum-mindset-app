@@ -67,3 +67,13 @@ describe('Acronyms', () => {
     expect(sentenceMatches('MVE', 'Very My Educated')).toBe(false)
   })
 })
+
+describe('Material used inside the 30-day plan', () => {
+  it('the sample chapter and the ready acronym lists use no memory-check word', async () => {
+    const { SAMPLE_CHAPTER } = await import('./sampleChapter')
+    const { ACRONYM_READY_LISTS } = await import('./acronym')
+    const banned = new Set(ALL_MEMORY_WORDS.flatMap((w) => [w.en.toLowerCase(), w.hi]))
+    const texts = [SAMPLE_CHAPTER.en.text, SAMPLE_CHAPTER.hi.text, ...Object.values(ACRONYM_READY_LISTS).flat().flatMap((l) => [l.title, ...l.items])]
+    for (const text of texts) for (const word of text.toLowerCase().split(/[\s,.!?;:—'"“”‘’()।-]+/)) expect(banned.has(word), word).toBe(false)
+  })
+})

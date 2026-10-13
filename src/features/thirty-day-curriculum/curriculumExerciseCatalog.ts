@@ -80,6 +80,13 @@ const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   // Memory Studio methods (Release 2) — the memory step of Days 2–10.
   { id: 'story-method', title: 'Story method', href: '/labs/sharp-brain/story-method', category: 'right-brain-intuition' },
   { id: 'peg-method', title: 'Peg method', href: '/labs/sharp-brain/peg-method', category: 'right-brain-intuition' },
+  // Memory Studio Group A (13 Oct 2026) — the memory step of Days 11–30.
+  { id: 'names-and-faces', title: 'Names and faces', href: '/labs/sharp-brain/names-and-faces', category: 'right-brain-intuition' },
+  { id: 'number-pictures', title: 'Number pictures', href: '/labs/sharp-brain/number-pictures', category: 'right-brain-intuition' },
+  { id: 'keyword-method', title: 'Keyword method', href: '/labs/sharp-brain/keyword-method', category: 'right-brain-intuition' },
+  { id: 'my-palaces', title: 'My memory palaces', href: '/labs/sharp-brain/my-palaces', category: 'right-brain-intuition' },
+  { id: 'chapter-book', title: 'Chapter & Book', href: '/labs/sharp-brain/chapter-book', category: 'right-brain-intuition' },
+  { id: 'acronyms', title: 'Acronyms', href: '/labs/sharp-brain/acronyms', category: 'right-brain-intuition' },
 ]
 
 // ---- Visualization (Visualization Hub) ----

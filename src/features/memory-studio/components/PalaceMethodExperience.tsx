@@ -19,12 +19,15 @@ type Mode = 'home' | 'lesson' | 'palaces' | 'practice' | 'own'
 
 // My memory palaces: Learn → build up to 3 palaces → practise in your own
 // palace (levels 1–10) → your own lists. The guided Memory Palace stays as it is.
-export function PalaceMethodExperience(): React.JSX.Element {
+// Inside the 30-day plan (onComplete given): the lesson the first time, build a
+// palace if the learner has none yet, then one scored round in it.
+export function PalaceMethodExperience({ onComplete, onExit }: { onComplete?: () => void; onExit?: () => void } = {}): React.JSX.Element {
+  const inPlan = onComplete !== undefined
   const t = useAppT()
   const uiLang = useUiLang()
   const lang: StudioLang = uiLang === 'hi' ? 'hi' : 'en'
   const { progress } = useExerciseProgress(PALACE_PRACTICE_EXERCISE_ID)
-  const [mode, setMode] = useState<Mode>('home')
+  const [mode, setMode] = useState<Mode | null>(inPlan ? null : 'home')
   const [palaces, setPalaces] = useState<MyPalace[] | null>(null)
   const [palaceId, setPalaceId] = useState<string | null>(null)
   const rounds = useRef(new Map<string, { items: StudioItem[]; questions: PalaceQuestion[]; pictures: boolean }>())
@@ -32,6 +35,12 @@ export function PalaceMethodExperience(): React.JSX.Element {
   const lesson = useMemo(() => palaceLesson(t, lang), [t, lang])
   const reload = useCallback(() => void listMyPalaces().then(setPalaces), [])
   useEffect(reload, [reload])
+  // In the plan: start once the palaces and progress are known; after building the first palace, go straight to practice.
+  useEffect(() => {
+    if (!inPlan || palaces === null || !progress.ready) return
+    if (mode === null) setMode(palaces.length === 0 ? (progress.isFirstTime ? 'lesson' : 'palaces') : 'practice')
+    else if (mode === 'palaces' && palaces.length > 0) setMode('practice')
+  }, [inPlan, mode, palaces, progress.ready, progress.isFirstTime])
 
   const palace = palaces?.find((p) => p.id === palaceId) ?? palaces?.[0] ?? null
   const wrap = (title: string, children: React.ReactNode): React.JSX.Element => (
@@ -41,12 +50,13 @@ export function PalaceMethodExperience(): React.JSX.Element {
     </div>
   )
 
+  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
   if (mode === 'lesson') return <MethodLesson narrationId={PALACE_LESSON_ID} title={t('training.studio.myPalacesTitle')} lines={lesson} onDone={() => setMode('palaces')} />
   if (mode === 'palaces' || ((mode === 'practice' || mode === 'own') && palaces !== null && palaces.length === 0))
     return wrap(
       t('training.studio.myPalacesTitle'),
       palaces === null ? <p className="text-sm text-muted-foreground">{t('training.shell.loading')}</p> : (
-<MyPalaces palaces={palaces} lang={lang} onChanged={reload} onBack={() => setMode('home')} />
+<MyPalaces palaces={palaces} lang={lang} onChanged={reload} onBack={() => (inPlan ? onExit?.() : setMode('home'))} />
       ),
     )
   if (mode === 'own' && palaces !== null) return wrap(t('training.studio.ownTitle'), <PalaceOwnList palaces={palaces} onBack={() => setMode('home')} />)
@@ -75,11 +85,12 @@ export function PalaceMethodExperience(): React.JSX.Element {
             { caption: t('training.studio.palaceDemo2'), visual: <p className="text-center text-lg font-semibold text-foreground">{palace.stations[0]} + 🚀</p> },
             { caption: t('training.studio.palaceDemo3'), visual: <p className="text-center text-lg font-semibold text-foreground">{palace.stations[0]} → ?</p> },
           ]}
-          roundsPerSession={2}
+          roundsPerSession={inPlan ? 1 : 2}
           scoreLabel={t('training.studio.points')}
           contentLang={lang}
+          {...(inPlan ? { onComplete: () => onComplete?.() } : {})}
           describeLevel={(level) => t('training.studio.palaceLevel', { count: palaceLevel(level, palace.stations.length).count })}
-          onExit={() => setMode('home')}
+          onExit={() => (inPlan ? onExit?.() : setMode('home'))}
           renderRound={({ level, isPractice, roundIndex, onDone }) => {
             const key = `${palace.id}-${isPractice ? 'p' : 'r'}-${roundIndex}-${level}`
             let round = rounds.current.get(key)

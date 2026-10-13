@@ -1,12 +1,13 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { AdaptiveExerciseShell, type RoundOutcome } from '@/features/exercise-core/components/AdaptiveExerciseShell'
 import { useExerciseProgress } from '@/features/exercise-core/useExerciseProgress'
 import type { StudioLang } from '../content'
 import { NUMBER_LESSON_ID, numberLesson } from '../lessons'
-import { NUMBER_EXERCISE_ID, numberLevel, numberListFor, randomNumber } from '../numberCode'
+import { getLearnedNumberSets } from '../actions'
+import { NUMBER_EXERCISE_ID, NUMBER_SETS, numberLevel, numberListFor, randomNumber } from '../numberCode'
 import { MethodHome } from './MethodHome'
 import { MethodLesson, type LessonLine } from './MethodLesson'
 import { NumberDates } from './NumberDates'
@@ -20,13 +21,19 @@ type Mode = 'home' | 'lesson' | 'pictures' | 'practice' | 'dates' | 'own'
 
 // Number pictures: Learn (lesson) → learn the 100 pictures, 10 at a time →
 // Practise (4 → 12 digits) → Dates → your own numbers.
-export function NumberCodeExperience(): React.JSX.Element {
+// Inside the 30-day plan (onComplete given): the lesson + pictures 00–09 the
+// first time, then the next set of 10 until 3 sets are learned, then one
+// practice round.
+const PLAN_SETS = 3
+export function NumberCodeExperience({ onComplete, onExit }: { onComplete?: () => void; onExit?: () => void } = {}): React.JSX.Element {
+  const inPlan = onComplete !== undefined
   const t = useAppT()
   const uiLang = useUiLang()
   const lang: StudioLang = uiLang === 'hi' ? 'hi' : 'en'
   const list = numberListFor(uiLang)
   const { progress } = useExerciseProgress(NUMBER_EXERCISE_ID)
-  const [mode, setMode] = useState<Mode>('home')
+  const [mode, setMode] = useState<Mode | null>(inPlan ? null : 'home')
+  const [planSet, setPlanSet] = useState<number | null>(null)
   const numbers = useRef(new Map<string, string>())
   const lesson = useMemo<LessonLine[]>(
     () =>
@@ -46,6 +53,15 @@ export function NumberCodeExperience(): React.JSX.Element {
       ),
     [t, list],
   )
+  useEffect(() => {
+    if (!inPlan || mode !== null || !progress.ready) return
+    void getLearnedNumberSets({ list }).then((learned) => {
+      const next = Array.from({ length: NUMBER_SETS }, (_, i) => i).find((i) => !learned.includes(i))
+      if (learned.length >= PLAN_SETS || next === undefined) return setMode('practice')
+      setPlanSet(next)
+      setMode(learned.length === 0 && progress.isFirstTime ? 'lesson' : 'pictures')
+    })
+  }, [inPlan, mode, progress.ready, progress.isFirstTime, list])
   const wrap = (title: string, children: React.ReactNode): React.JSX.Element => (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-4 py-6">
       <h1 className="font-heading text-2xl font-bold text-foreground">{title}</h1>
@@ -53,6 +69,8 @@ export function NumberCodeExperience(): React.JSX.Element {
     </div>
   )
 
+  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (inPlan && mode === 'pictures' && planSet !== null) return wrap(t('training.studio.numberPicturesTitle'), <NumberLearn list={list} planSet={planSet} onBack={() => onExit?.()} onPlanDone={() => onComplete?.()} />)
   if (mode === 'lesson') return <MethodLesson narrationId={NUMBER_LESSON_ID[list]} title={t('training.studio.numberTitle')} lines={lesson} onDone={() => setMode('pictures')} />
   if (mode === 'pictures') return wrap(t('training.studio.numberPicturesTitle'), <NumberLearn list={list} onBack={() => setMode('home')} />)
   if (mode === 'dates') return wrap(t('training.studio.numberDatesTitle'), <NumberDates list={list} lang={lang} onBack={() => setMode('home')} />)
@@ -82,14 +100,15 @@ export function NumberCodeExperience(): React.JSX.Element {
         purpose={t('training.studio.numberPurpose')}
         minutes={5}
         demo={demo}
-        roundsPerSession={2}
+        roundsPerSession={inPlan ? 1 : 2}
         scoreLabel={t('training.studio.points')}
         contentLang={lang}
+        {...(inPlan ? { onComplete: () => onComplete?.() } : {})}
         describeLevel={(level) => {
           const c = numberLevel(level)
           return c.pictures ? t('training.studio.numberLevelPictures', { count: c.digits }) : t('training.studio.numberLevel', { count: c.digits })
         }}
-        onExit={() => setMode('home')}
+        onExit={() => (inPlan ? onExit?.() : setMode('home'))}
         renderRound={({ level, isPractice, roundIndex, onDone }) => {
           const key = `${isPractice ? 'p' : 'r'}-${roundIndex}-${level}`
           let number = numbers.current.get(key)
