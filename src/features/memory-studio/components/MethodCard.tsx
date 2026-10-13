@@ -3,7 +3,7 @@ import { IllustratedFace } from '@/features/memory-check/components/IllustratedF
 import { itemIcon } from '../content'
 import { STUDIO_FACES } from '../nameFace'
 
-const ICON: Record<string, string> = { 'story-rocket': itemIcon('rocket'), 'peg-shape': itemIcon('shape-swan'), palace: '/memory-palace/icons/1-01.svg', 'my-palaces': itemIcon('tent'), chapter: itemIcon('telescope') }
+const ICON: Record<string, string> = { 'story-rocket': itemIcon('rocket'), 'peg-shape': itemIcon('shape-swan'), palace: '/memory-palace/icons/1-01.svg', 'my-palaces': itemIcon('tent'), chapter: itemIcon('telescope'), number: '/memory-studio/numbers/1f3b2.svg' }
 
 export function MethodCard({ href, icon, title, description }: { href: string; icon: keyof typeof ICON | 'name-face'; title: string; description: string }): React.JSX.Element {
   return (

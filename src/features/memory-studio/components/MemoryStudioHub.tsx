@@ -22,6 +22,7 @@ export async function MemoryStudioHub(): Promise<React.JSX.Element> {
         <MethodCard href="/labs/sharp-brain/memory-palace" icon="palace" title={t('training.palace.title')} description={t('training.studio.palaceDesc')} />
         <MethodCard href="/labs/sharp-brain/my-palaces" icon="my-palaces" title={t('training.studio.myPalacesTitle')} description={t('training.studio.myPalacesDesc')} />
         <MethodCard href="/labs/sharp-brain/names-and-faces" icon="name-face" title={t('training.studio.nameFaceTitle')} description={t('training.studio.nameFaceDesc')} />
+        <MethodCard href="/labs/sharp-brain/number-pictures" icon="number" title={t('training.studio.numberTitle')} description={t('training.studio.numberDesc')} />
       </div>
       <Link href="/labs/sharp-brain/review" className="self-start text-sm font-medium text-primary" data-review-link="true">
         {t('training.studio.reviewTitle')} →

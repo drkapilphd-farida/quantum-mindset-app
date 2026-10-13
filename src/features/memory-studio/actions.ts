@@ -10,6 +10,7 @@ import { DEFAULT_MODEL_PRICING } from '@/core/ai-foundation/types/ModelPricing'
 import { isAppLang, LANGUAGES } from '@/lib/app-i18n/languages'
 import { afterReview, cardSeconds, firstDue, pickSession, sessionMinutes, type ReviewResult } from './reviewSchedule'
 import type { PegSet } from './content'
+import { NUMBER_SETS, type NumberList } from './numberCode'
 
 // Memory Studio (Release 2): the learner's own lists, the shared review queue
 // and the optional "Suggest an idea" helper. Writes go through the server.
@@ -93,6 +94,41 @@ export async function addPegCards(input: unknown): Promise<{ ok: true } | Fail> 
   return { ok: true }
 }
 
+/** After learning a set of 10 number pictures (00–09 … 90–99): one review card per picture. Already-added cards are left as they are. */
+export async function addNumberCards(input: unknown): Promise<{ ok: true } | Fail> {
+  const parsed = z.object({ list: z.enum(['en', 'hi']), set: z.number().int().min(0).max(NUMBER_SETS - 1), lang: LangSchema }).safeParse(input)
+  if (!parsed.success) return { ok: false, error: 'invalid' }
+  const uid = await userId()
+  if (uid === null) return { ok: false, error: 'unauthenticated' }
+  const { list, set, lang } = parsed.data
+  const due = firstDue(Date.now())
+  const rows = Array.from({ length: 10 }, (_, i) => {
+    const n = String(set * 10 + i).padStart(2, '0')
+    return { user_id: uid, source: 'number', source_ref: `${list}-${n}`, front: { kind: 'number', list: list satisfies NumberList, n }, back: { list, n }, lang, step: due.step, due_at: due.dueAt }
+  })
+  const { error } = await createServiceClient().from('review_items').upsert(rows, { onConflict: 'user_id,source,source_ref', ignoreDuplicates: true })
+  if (error) {
+    logger.error('addNumberCards: upsert failed', { code: error.code })
+    return { ok: false, error: 'db' }
+  }
+  return { ok: true }
+}
+
+/** Which sets of number pictures the learner has learned (their cards are in the review queue). */
+export async function getLearnedNumberSets(input: unknown): Promise<number[]> {
+  const parsed = z.object({ list: z.enum(['en', 'hi']) }).safeParse(input)
+  const uid = await userId()
+  if (!parsed.success || uid === null) return []
+  const supabase = await createClient()
+  const { data, error } = await supabase.from('review_items').select('source_ref').eq('user_id', uid).eq('source', 'number').like('source_ref', `${parsed.data.list}-%`).limit(200)
+  if (error) {
+    logger.error('getLearnedNumberSets: read failed', { code: error.code })
+    return []
+  }
+  const sets = new Set((data ?? []).map((r) => Math.floor(Number(String(r.source_ref).slice(3)) / 10)).filter((x) => Number.isInteger(x) && x >= 0 && x < NUMBER_SETS))
+  return [...sets].sort((a, b) => a - b)
+}
+
 // ── Review queue ─────────────────────────────────────────────────────────
 
 export type ListMethod = 'story' | 'peg' | 'palace' | 'chapter' | 'name-face' | 'number' | 'keyword' | 'acronym'
@@ -101,6 +137,7 @@ const LIST_METHODS: readonly ListMethod[] = ['story', 'peg', 'palace', 'chapter'
 export type ReviewCard =
   | { id: string; kind: 'list'; method: ListMethod; title: string; items: string[]; dueAt: string; seconds: number }
   | { id: string; kind: 'peg'; set: PegSet; n: number; dueAt: string; seconds: number }
+  | { id: string; kind: 'number'; list: NumberList; n: string; dueAt: string; seconds: number }
 
 type Row = { id: string; front: unknown; back: unknown; due_at: string }
 
@@ -113,6 +150,9 @@ function toCard(row: Row): ReviewCard | null {
   }
   if (front.kind === 'peg' && (front.set === 'rhyme' || front.set === 'shape') && typeof front.n === 'number') {
     return { id: row.id, kind: 'peg', set: front.set, n: front.n, dueAt: row.due_at, seconds: cardSeconds({ kind: 'peg' }) }
+  }
+  if (front.kind === 'number' && (front.list === 'en' || front.list === 'hi') && typeof front.n === 'string' && /^\d\d$/.test(front.n)) {
+    return { id: row.id, kind: 'number', list: front.list, n: front.n, dueAt: row.due_at, seconds: cardSeconds({ kind: 'peg' }) }
   }
   return null
 }

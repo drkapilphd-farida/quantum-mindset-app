@@ -76,3 +76,12 @@ export const NAME_FACE_LESSON_ID = 'name-face-lesson'
 export function nameFaceLessonText(t: Translator): { id: string; text: string }[] {
   return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.nameFaceLesson.l${n}` as Parameters<Translator>[0]) }))
 }
+
+export const NUMBER_LESSON_ID: Record<'en' | 'hi', string> = { en: 'number-lesson-en', hi: 'number-lesson-hi' }
+
+/** English learners and Hindi learners get lessons built on their own list's sounds. Pictures: the two example pairs. */
+export function numberLesson(t: Translator, list: 'en' | 'hi'): { id: string; text: string; pairs?: string[] }[] {
+  const pairs: Record<number, string[]> = list === 'en' ? { 4: ['47', '19'], 6: ['47', '19'], 7: ['47', '19'] } : { 4: ['47', '25'], 6: ['47', '25'], 7: ['47', '25'] }
+  const key = list === 'en' ? 'numberLessonEn' : 'numberLessonHi'
+  return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.${key}.l${n}` as Parameters<Translator>[0]), ...(pairs[n] ? { pairs: pairs[n] } : {}) }))
+}

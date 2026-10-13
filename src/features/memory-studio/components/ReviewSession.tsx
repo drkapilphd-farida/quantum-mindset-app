@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { recordReview, type ListMethod, type ReviewCard } from '../actions'
 import { saveSimpleResult } from '../saveResult'
+import { NumberPictureCard } from './NumberPictureCard'
 import { PegPicture } from './PegPicture'
 import { MEMORY_STUDIO_ROUTE } from './MethodHome'
 
@@ -97,6 +98,15 @@ export function ReviewSession({ cards }: { cards: readonly ReviewCard[] }): Reac
                   </li>
                 ))}
               </ol>
+            )}
+          </>
+        ) : card.kind === 'number' ? (
+          <>
+            <p className="text-lg font-semibold text-foreground">{t('training.studio.numberFront', { n: card.n })}</p>
+            {shown && (
+              <div data-review-answer="true">
+                <NumberPictureCard list={card.list} pair={card.n} size={72} showNumber={false} />
+              </div>
             )}
           </>
         ) : (
