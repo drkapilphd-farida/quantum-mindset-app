@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: 'Memory Studio — Sharp Brain Lab', 
 export default async function MemoryStudioPage(): Promise<React.JSX.Element> {
   if (!(await hasQuantumSpeedReadingProAccess())) return <ProLockedScreen title="Memory Studio" />
   return (
-    <PlayScope className="-mx-4 -my-6 px-4 py-6 sm:-mx-6 sm:px-6">
+    <PlayScope className="-mx-4 -my-6 min-h-[calc(100dvh-3.5rem)] px-4 py-6 sm:-mx-6 sm:px-6">
       <MemoryStudioHub />
     </PlayScope>
   )

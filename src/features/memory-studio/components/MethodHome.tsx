@@ -22,7 +22,7 @@ export function MethodHome({ title, description, actions }: { title: string; des
       </Link>
       <div>
         <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('training.skills.memory')}</p>
-        <h1 className="mt-1 font-heading text-2xl font-bold text-foreground">{title}</h1>
+        <h1 className="mt-1 text-[1.75rem] text-foreground">{title}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{description}</p>
       </div>
       <div className="flex flex-col gap-3">
@@ -33,12 +33,14 @@ export function MethodHome({ title, description, actions }: { title: string; des
               key={a.key}
               type="button"
               onClick={a.onClick}
-              className={`flex min-h-16 items-center gap-4 rounded-2xl border p-4 text-left ${a.primary ? 'border-primary bg-primary/5' : 'border-border/60 bg-card'}`}
+              className={`play-card flex min-h-[4.5rem] items-center gap-4 p-4 text-left ${a.primary ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}`}
               data-method-action={a.key}
             >
-              <Icon className="size-6 shrink-0 text-primary" aria-hidden="true" />
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl text-white" style={{ background: '#7c3aed' }}>
+                <Icon className="size-6" aria-hidden="true" />
+              </span>
               <span className="min-w-0">
-                <span className="block text-base font-semibold text-foreground">{a.label}</span>
+                <span className="block text-lg font-bold text-foreground">{a.label}</span>
                 {a.sub && <span className="block text-sm text-muted-foreground">{a.sub}</span>}
               </span>
             </button>

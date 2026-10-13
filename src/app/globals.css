@@ -1320,3 +1320,5 @@
 .play .play-option:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 var(--play-outline); }
 .play .play-option[data-state="right"] { border-color: var(--play-good); background: var(--play-good-bg); box-shadow: 0 3px 0 var(--play-good); }
 .play .play-option[data-state="chosen"] { border-style: dashed; border-color: var(--play-warn); background: var(--play-warn-bg); box-shadow: none; }
+/* Violet text on Night Sky: a lighter violet so small text keeps AA contrast (buttons keep the deep violet behind white text). */
+.dark .play .text-primary { color: #c4b5fd; }

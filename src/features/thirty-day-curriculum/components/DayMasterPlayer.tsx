@@ -348,8 +348,9 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
         {!isReplay && <Confetti />}
         <Stars count={3} size={44} />
         <div>
-          <p className="text-xs font-bold tracking-widest text-primary uppercase">{isReplay ? t('curriculum.practice.complete') : t('curriculum.player.dayCompleteEyebrow', { day })}</p>
+          {isReplay && <p className="text-xs font-bold tracking-widest text-primary uppercase">{t('curriculum.practice.complete')}</p>}
           <h2 className="mt-1 text-[2rem] text-foreground">{isReplay ? t('curriculum.player.dayDone', { title: dayTitle(t, day) }) : t('training.play.dayDone', { day })}</h2>
+          {!isReplay && <p className="mt-1 text-sm font-semibold text-muted-foreground">{dayTitle(t, day)}</p>}
         </div>
         <ul className="w-full max-w-sm text-left" data-day-steps={queueIds.length}>
           {queueIds.map((id) => {
