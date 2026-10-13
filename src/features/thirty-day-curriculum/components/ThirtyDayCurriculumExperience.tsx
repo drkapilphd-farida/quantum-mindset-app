@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { AppLang } from '@/lib/app-i18n/languages'
 import { practiceContentLang, sameContentLang } from '@/lib/app-i18n/practiceContent'
 import { useUiLang } from '@/lib/app-i18n/client'
@@ -18,7 +18,7 @@ import { FinishPreviousDayModal } from './FinishPreviousDayModal'
 import { ThirtyDayCurriculumDayDetail } from './ThirtyDayCurriculumDayDetail'
 import { ThirtyDayCurriculumOverview } from './ThirtyDayCurriculumOverview'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
-import { curriculumDayAccess, isCurriculumDayUnlocked, loadCurriculumProgress, recordCurriculumCheckpoint, type CurriculumCheckpointResult } from '../curriculumProgress'
+import { curriculumDayAccess, EMPTY_PROGRESS, isCurriculumDayUnlocked, loadCurriculumProgress, recordCurriculumCheckpoint, type CurriculumCheckpointResult, type CurriculumProgress } from '../curriculumProgress'
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
 import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
 import { getCurriculumDayCompletions } from '../actions/getCurriculumDayCompletions'
@@ -93,7 +93,12 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   const contentLang = practiceContentLang(useUiLang(), 'reading')
   const initialDay = searchParams.get('view') === 'day' ? parseValidDay(searchParams.get('day')) : null
 
-  const [progress, setProgress] = useState(() => loadCurriculumProgress())
+  // The locally cached progress (check-in results, streaks) exists only in the
+  // browser, so the first render uses the empty cache on both server and client
+  // and the real one is read right after mounting — otherwise a finished
+  // check-in day's result card was drawn differently by the server and the phone.
+  const [progress, setProgress] = useState<CurriculumProgress>(EMPTY_PROGRESS)
+  useEffect(() => setProgress(loadCurriculumProgress()), [])
   const [serverCompletedDays, setServerCompletedDays] = useState<readonly number[]>(initialServerCompletedDays)
   const [nextDayOpensAt, setNextDayOpensAt] = useState<string | null>(initialNextDayOpensAt)
   // Daily reminders: offered once, right after Day 1 is complete.

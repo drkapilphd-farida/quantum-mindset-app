@@ -57,7 +57,8 @@ export async function AppSidebar({ brandName = null, brandLogoUrl = null, appDom
           below the h-14 header rather than crammed inline next to the
           wordmark — the full tagline is too long to fit that single row
           in a 240px-wide sidebar. */}
-      <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain, t('nav.appTagline'))}</p>
+      {/* The learner app shows no subtitle under the name (founder, 13 Oct 2026); the habit domain keeps its programme name. */}
+{appDomain === 'habit' && <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain, t('nav.appTagline'))}</p>}
       <div className="flex-1 overflow-y-auto py-3">
         <NavLinks appDomain={appDomain} showPracticeJourney={showPracticeJourney} />
       </div>

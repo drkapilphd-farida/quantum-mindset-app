@@ -59,7 +59,8 @@ export type CurriculumProgress = {
   uploadStartedDays: readonly number[]
 }
 
-const EMPTY_PROGRESS: CurriculumProgress = { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
+/** What the server (and the first client render) sees: no locally cached progress. */
+export const EMPTY_PROGRESS: CurriculumProgress = { completedDays: [], checkpoints: {}, completedDayTimestamps: {}, uploadStartedDays: [] }
 
 function isValidCheckpointResult(value: unknown): value is CurriculumCheckpointResult {
   if (typeof value !== 'object' || value === null) return false

@@ -224,7 +224,7 @@ export function ThirtyDayCurriculumDayDetail({
           <div className="mt-4 rounded-2xl border border-border/60 bg-card/60 px-4 py-3 text-center" data-practised-again="true">
             <p className="text-xs font-semibold text-foreground">
               {t('curriculum.practice.practisedOn', {
-                date: new Date(practice.practisedAt).toLocaleDateString(LANGUAGES[lang].htmlLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+                date: new Date(practice.practisedAt).toLocaleDateString(LANGUAGES[lang].htmlLang, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' }),
               })}
               {practice.count > 1 ? ` · ${t('curriculum.practice.times', { n: practice.count })}` : ''}
             </p>

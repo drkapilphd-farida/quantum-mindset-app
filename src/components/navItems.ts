@@ -1,5 +1,5 @@
 import type { MessageKey } from '@/lib/app-i18n/translate'
-import { BarChart3, BookOpen, Brain, LayoutDashboard, Lightbulb, Radio, Settings, type LucideIcon } from 'lucide-react'
+import { BarChart3, Brain, LayoutDashboard, Lightbulb, Radio, Settings, type LucideIcon } from 'lucide-react'
 import type { AppDomain } from '@/lib/domains/appDomain'
 import { programs } from '@/config/site.config'
 
@@ -37,13 +37,13 @@ const HABIT_NAV_ITEMS = [
 // only inside the 30-Day Masterclass's own daily missions now, never as
 // a separate browsable catalog. "Sharp Brain" opens the 30-day plan (the
 // daily practice); live classes, recordings and the Parents Dashboard tab
-// sit under their own "Live Classes" item.
+// sit under their own "Live Classes" item. Document Studio left the learner
+// menu on 13 Oct 2026 (founder's decision).
 const QSR_NAV_ITEMS = [
   // Brand name — stays in English in every language.
   { href: '/labs/sharp-brain/thirty-day-curriculum', labelKey: null, label: programs.sharpBrain.shortName, icon: Brain },
   { href: '/memory-studio', labelKey: 'nav.memoryStudio', icon: Lightbulb },
   { href: '/masterclasses', labelKey: 'nav.liveClasses', icon: Radio },
-  { href: '/document-studio', labelKey: 'nav.documentStudio', icon: BookOpen },
 ] as const
 
 // "History" belongs to the Practice Journey, shown only to learners who

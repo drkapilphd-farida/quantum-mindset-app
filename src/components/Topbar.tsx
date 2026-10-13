@@ -79,7 +79,8 @@ export function Topbar({
             </SheetTitle>
           </SheetHeader>
           {/* Consistent Branding™ — see AppSidebar.tsx's identical row. */}
-          <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain, t('nav.appTagline'))}</p>
+          {/* The learner app shows no subtitle under the name (founder, 13 Oct 2026); the habit domain keeps its programme name. */}
+{appDomain === 'habit' && <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain, t('nav.appTagline'))}</p>}
           <div className="flex-1 overflow-y-auto py-4">
             <NavLinks onSelect={() => setOpen(false)} appDomain={appDomain} showPracticeJourney={showPracticeJourney} />
           </div>
