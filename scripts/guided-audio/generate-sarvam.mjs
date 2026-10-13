@@ -34,7 +34,17 @@ const script = JSON.parse(fs.readFileSync(arg('script', `src/features/${exercise
 const rawDir = path.join(out, 'raw', lang)
 fs.mkdirSync(rawDir, { recursive: true })
 const pieces = (text) => text.split(/\s*\.\.\.\s*/).map((s) => s.trim()).filter(Boolean)
-const todo = script.lines.filter((line) => !fs.existsSync(path.join(rawDir, `${line.id}.wav`)))
+// Each recording keeps the exact text it was voiced from (<id>.txt). A line is
+// voiced again only when it has no recording yet, or its text has changed since
+// (e.g. corrected after native review) — every other line is never paid twice.
+// Recordings made before this check existed adopt their current text.
+const recordedText = (id) => path.join(rawDir, `${id}.txt`)
+for (const line of script.lines) {
+  if (fs.existsSync(path.join(rawDir, `${line.id}.wav`)) && !fs.existsSync(recordedText(line.id))) fs.writeFileSync(recordedText(line.id), line.text)
+}
+const todo = script.lines.filter((line) => !fs.existsSync(path.join(rawDir, `${line.id}.wav`)) || fs.readFileSync(recordedText(line.id), 'utf8') !== line.text)
+const changed = todo.filter((line) => fs.existsSync(path.join(rawDir, `${line.id}.wav`))).map((l) => l.id)
+if (changed.length > 0) process.stdout.write(`text changed since recording, will re-record: ${changed.join(', ')}\n`)
 const chars = todo.reduce((sum, line) => sum + pieces(line.text).join('').length, 0)
 const credits = (chars * 3) / 1000
 process.stdout.write(`${exercise}/${lang}: ${todo.length} of ${script.lines.length} lines to voice, ${chars} characters ≈ ${credits.toFixed(1)} credits\n`)
@@ -74,5 +84,6 @@ for (const line of todo) {
   const list = path.join(tmp, `${line.id}.txt`)
   fs.writeFileSync(list, parts.map((p) => `file '${p}'`).join('\n'))
   execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', path.join(rawDir, `${line.id}.wav`)])
+  fs.writeFileSync(recordedText(line.id), line.text)
 }
 process.stdout.write(`done: ${sent} characters sent ≈ ${((sent * 3) / 1000).toFixed(1)} credits\n`)
