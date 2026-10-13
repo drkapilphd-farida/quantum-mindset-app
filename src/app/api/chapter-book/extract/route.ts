@@ -26,5 +26,5 @@ export async function POST(request: Request): Promise<NextResponse> {
     logger.warn('chapter-book extract failed', { sourceType: validated.source.sourceType })
     return NextResponse.json({ ok: false, error: 'unreadable' }, { status: 422 })
   }
-  return NextResponse.json({ ok: true, title: extraction.document.title || file.name.replace(/\.[^.]+$/, ''), text: extraction.document.content.slice(0, 400_000) })
+  return NextResponse.json({ ok: true, title: (extraction.document.title || file.name).replace(/\.(pdf|docx|txt)$/i, ''), text: extraction.document.content.slice(0, 400_000) })
 }

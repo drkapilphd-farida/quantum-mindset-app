@@ -13,7 +13,7 @@ type Draft = { id: string | null; name: string; kind: PalaceKind; stations: stri
 // The learner's own palaces: up to 3, each with 10–20 stations in walking
 // order. A new palace starts from suggested stations the learner changes to
 // match their own place.
-export function MyPalaces({ palaces, lang, onChanged }: { palaces: readonly MyPalace[]; lang: StudioLang; onChanged: () => void }): React.JSX.Element {
+export function MyPalaces({ palaces, lang, onChanged, onBack }: { palaces: readonly MyPalace[]; lang: StudioLang; onChanged: () => void; onBack: () => void }): React.JSX.Element {
   const t = useAppT()
   const [draft, setDraft] = useState<Draft | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -134,6 +134,9 @@ export function MyPalaces({ palaces, lang, onChanged }: { palaces: readonly MyPa
           </div>
         </div>
       )}
+      <Button variant="ghost" size="lg" className="min-h-12 rounded-full" onClick={onBack}>
+        {t('training.studio.back')}
+      </Button>
     </div>
   )
 }

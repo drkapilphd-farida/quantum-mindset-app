@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Button } from '@/components/ui/button'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { AdaptiveExerciseShell, type RoundOutcome } from '@/features/exercise-core/components/AdaptiveExerciseShell'
 import { useExerciseProgress } from '@/features/exercise-core/useExerciseProgress'
@@ -47,12 +46,7 @@ export function PalaceMethodExperience(): React.JSX.Element {
     return wrap(
       t('training.studio.myPalacesTitle'),
       palaces === null ? <p className="text-sm text-muted-foreground">{t('training.shell.loading')}</p> : (
-        <>
-          <MyPalaces palaces={palaces} lang={lang} onChanged={reload} />
-          <Button variant="ghost" size="lg" className="min-h-12 rounded-full" onClick={() => setMode('home')}>
-            {t('training.studio.back')}
-          </Button>
-        </>
+<MyPalaces palaces={palaces} lang={lang} onChanged={reload} onBack={() => setMode('home')} />
       ),
     )
   if (mode === 'own' && palaces !== null) return wrap(t('training.studio.ownTitle'), <PalaceOwnList palaces={palaces} onBack={() => setMode('home')} />)
