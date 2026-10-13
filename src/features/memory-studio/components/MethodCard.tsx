@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { itemIcon } from '../content'
 
-const ICON: Record<string, string> = { 'story-rocket': itemIcon('rocket'), 'peg-shape': itemIcon('shape-swan'), palace: '/memory-palace/icons/1-01.svg' }
+const ICON: Record<string, string> = { 'story-rocket': itemIcon('rocket'), 'peg-shape': itemIcon('shape-swan'), palace: '/memory-palace/icons/1-01.svg', 'my-palaces': itemIcon('tent') }
 
 export function MethodCard({ href, icon, title, description }: { href: string; icon: keyof typeof ICON; title: string; description: string }): React.JSX.Element {
   return (

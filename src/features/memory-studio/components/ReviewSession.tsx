@@ -4,12 +4,26 @@ import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
-import { recordReview, type ReviewCard } from '../actions'
+import { recordReview, type ListMethod, type ReviewCard } from '../actions'
 import { saveSimpleResult } from '../saveResult'
 import { PegPicture } from './PegPicture'
 import { MEMORY_STUDIO_ROUTE } from './MethodHome'
 
 export const REVIEW_EXERCISE_ID = 'spaced-review'
+
+function methodTitle(t: ReturnType<typeof useAppT>, method: ListMethod): string {
+  const titles: Record<ListMethod, Parameters<typeof t>[0]> = {
+    story: 'training.studio.storyTitle',
+    peg: 'training.studio.pegTitle',
+    palace: 'training.studio.myPalacesTitle',
+    chapter: 'training.studio.chapterTitle',
+    'name-face': 'training.studio.nameFaceTitle',
+    number: 'training.studio.numberTitle',
+    keyword: 'training.studio.keywordTitle',
+    acronym: 'training.studio.acronymTitle',
+  }
+  return t(titles[method])
+}
 
 // Today's review (about 5 minutes): recall the card in your head, show the
 // answer, and say honestly whether you remembered it. Remembered cards come
@@ -72,7 +86,7 @@ export function ReviewSession({ cards }: { cards: readonly ReviewCard[] }): Reac
           <>
             <p className="text-lg font-semibold break-words text-foreground">{t('training.studio.listFront', { title: card.title })}</p>
             <p className="text-sm text-muted-foreground">
-              {t('training.studio.itemCount', { count: card.items.length })} · {card.method === 'story' ? t('training.studio.storyTitle') : t('training.studio.pegTitle')}
+              {t('training.studio.itemCount', { count: card.items.length })} · {methodTitle(t, card.method)}
             </p>
             {shown && (
               <ol className="mt-2 flex w-full flex-col gap-1 text-left" data-review-answer="true">

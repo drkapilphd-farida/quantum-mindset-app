@@ -92,8 +92,11 @@ export async function addPegCards(input: unknown): Promise<{ ok: true } | Fail> 
 
 // ── Review queue ─────────────────────────────────────────────────────────
 
+export type ListMethod = 'story' | 'peg' | 'palace' | 'chapter' | 'name-face' | 'number' | 'keyword' | 'acronym'
+const LIST_METHODS: readonly ListMethod[] = ['story', 'peg', 'palace', 'chapter', 'name-face', 'number', 'keyword', 'acronym']
+
 export type ReviewCard =
-  | { id: string; kind: 'list'; method: 'story' | 'peg'; title: string; items: string[]; dueAt: string; seconds: number }
+  | { id: string; kind: 'list'; method: ListMethod; title: string; items: string[]; dueAt: string; seconds: number }
   | { id: string; kind: 'peg'; set: PegSet; n: number; dueAt: string; seconds: number }
 
 type Row = { id: string; front: unknown; back: unknown; due_at: string }
@@ -103,7 +106,7 @@ function toCard(row: Row): ReviewCard | null {
   const back = (row.back ?? {}) as Record<string, unknown>
   if (front.kind === 'list' && Array.isArray(back.items) && typeof front.title === 'string') {
     const items = back.items.filter((x): x is string => typeof x === 'string')
-    return { id: row.id, kind: 'list', method: front.method === 'peg' ? 'peg' : 'story', title: front.title, items, dueAt: row.due_at, seconds: cardSeconds({ kind: 'list', count: items.length }) }
+    return { id: row.id, kind: 'list', method: LIST_METHODS.includes(front.method as ListMethod) ? (front.method as ListMethod) : 'story', title: front.title, items, dueAt: row.due_at, seconds: cardSeconds({ kind: 'list', count: items.length }) }
   }
   if (front.kind === 'peg' && (front.set === 'rhyme' || front.set === 'shape') && typeof front.n === 'number') {
     return { id: row.id, kind: 'peg', set: front.set, n: front.n, dueAt: row.due_at, seconds: cardSeconds({ kind: 'peg' }) }

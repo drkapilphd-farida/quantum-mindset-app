@@ -269,6 +269,54 @@ export type Database = {
           },
         ]
       }
+      chapter_maps: {
+        Row: {
+          book_title: string | null
+          created_at: string
+          edited: boolean
+          id: string
+          ideas: Json
+          lang: string
+          palace_id: string | null
+          questions: Json
+          source: string
+          text_hash: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          book_title?: string | null
+          created_at?: string
+          edited?: boolean
+          id?: string
+          ideas: Json
+          lang: string
+          palace_id?: string | null
+          questions?: Json
+          source: string
+          text_hash: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          book_title?: string | null
+          created_at?: string
+          edited?: boolean
+          id?: string
+          ideas?: Json
+          lang?: string
+          palace_id?: string | null
+          questions?: Json
+          source?: string
+          text_hash?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       class_enrollments: {
         Row: {
           class_id: string
@@ -1207,6 +1255,36 @@ export type Database = {
           method?: string
           story?: string | null
           title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      memory_palaces: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          stations: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          name: string
+          stations: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          stations?: string[]
           updated_at?: string
           user_id?: string
         }
