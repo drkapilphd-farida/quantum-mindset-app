@@ -85,3 +85,16 @@ export function numberLesson(t: Translator, list: 'en' | 'hi'): { id: string; te
   const key = list === 'en' ? 'numberLessonEn' : 'numberLessonHi'
   return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.${key}.l${n}` as Parameters<Translator>[0]), ...(pairs[n] ? { pairs: pairs[n] } : {}) }))
 }
+
+export const KEYWORD_LESSON_ID: Record<'en' | 'hi', string> = { en: 'keyword-lesson-en', hi: 'keyword-lesson-hi' }
+
+export function keywordLesson(t: Translator, list: 'en' | 'hi'): LessonLine[] {
+  const key = list === 'en' ? 'keywordLessonEn' : 'keywordLessonHi'
+  return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.${key}.l${n}` as Parameters<Translator>[0]) }))
+}
+
+export const ACRONYM_LESSON_ID = 'acronym-lesson'
+
+export function acronymLesson(t: Translator): LessonLine[] {
+  return [1, 2, 3, 4, 5, 6].map((n) => ({ id: `line-${n}`, text: t(`training.studio.acronymLesson.l${n}` as Parameters<Translator>[0]) }))
+}

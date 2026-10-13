@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useAppT } from '@/lib/app-i18n/client'
 import { suggestIdea } from '../actions'
 
-type Request = { kind: 'story'; items: string[]; lang: string } | { kind: 'peg'; peg: string; n: number; item: string; lang: string } | { kind: 'face'; name: string; feature: string; lang: string }
+type Request = { kind: 'story'; items: string[]; lang: string } | { kind: 'peg'; peg: string; n: number; item: string; lang: string } | { kind: 'face'; name: string; feature: string; lang: string } | { kind: 'keyword'; word: string; meaning: string; lang: string } | { kind: 'acronym'; letters: string; items: string[]; lang: string }
 
 // "Suggest an idea": the AI only suggests; the learner's own text box gets the
 // idea to change and make their own. Never fills in without a tap.

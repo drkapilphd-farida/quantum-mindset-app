@@ -16,7 +16,7 @@ import { NameFaceRound } from './NameFaceRound'
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'practice' | 'own'
 
-/** The lesson's example person ("Sagar", round glasses). */
+/** The lesson's example person ("Kiran", round glasses). */
 const EXAMPLE_FACE = STUDIO_FACES.find((f) => f.id === 'm02')!
 
 // Names and faces: Learn (lesson) → Practise (levels 1–10, 3 → 10 faces) →
@@ -62,7 +62,7 @@ export function NameFaceExperience({ onComplete, onExit }: { onComplete?: () => 
         visual: (
           <div className="flex items-center gap-3">
             {exampleFace}
-            <span className="font-heading text-2xl font-bold text-foreground">{lang === 'hi' ? 'सागर' : 'Sagar'}</span>
+            <span className="font-heading text-2xl font-bold text-foreground">{lang === 'hi' ? 'किरण' : 'Kiran'}</span>
           </div>
         ),
       },

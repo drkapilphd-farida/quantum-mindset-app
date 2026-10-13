@@ -9,7 +9,7 @@ export type RecallChoice = { id: string; label: string; picture: boolean }
 
 // Put items back in order: tap them one after another (undo the last tap if
 // needed). Used by the Story method's practice and the learner's own lists.
-export function OrderRecall({ choices, count, onCheck }: { choices: readonly RecallChoice[]; count: number; onCheck: (answer: string[]) => void }): React.JSX.Element {
+export function OrderRecall({ choices, count, onCheck, hint }: { choices: readonly RecallChoice[]; count: number; onCheck: (answer: string[]) => void; hint?: string }): React.JSX.Element {
   const t = useAppT()
   const [answer, setAnswer] = useState<string[]>([])
   const byId = useMemo(() => new Map(choices.map((c) => [c.id, c])), [choices])
@@ -17,7 +17,7 @@ export function OrderRecall({ choices, count, onCheck }: { choices: readonly Rec
     <div className="flex flex-col gap-4" data-order-recall="true">
       <div>
         <h2 className="text-xl font-bold text-foreground">{t('training.studio.recallTitle')}</h2>
-        <p className="mt-1 text-sm text-muted-foreground">{t('training.studio.recallHint')}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{hint ?? t('training.studio.recallHint')}</p>
       </div>
       <ol className="flex min-h-14 flex-wrap gap-2 rounded-2xl border border-dashed border-border p-2" aria-label={t('training.studio.yourOrder')}>
         {answer.map((id, i) => (

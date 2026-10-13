@@ -225,6 +225,8 @@ const SuggestSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('story'), items: z.array(ItemText).min(2).max(20), lang: LangSchema }),
   z.object({ kind: z.literal('peg'), peg: z.string().trim().min(1).max(60), n: z.number().int().min(1).max(20), item: ItemText, lang: LangSchema }),
   z.object({ kind: z.literal('face'), name: ItemText, feature: z.string().trim().min(1).max(60), lang: LangSchema }),
+  z.object({ kind: z.literal('keyword'), word: ItemText, meaning: z.string().trim().min(1).max(120), lang: LangSchema }),
+  z.object({ kind: z.literal('acronym'), letters: z.string().trim().min(2).max(12), items: z.array(ItemText).min(2).max(12), lang: LangSchema }),
 ])
 
 async function usedToday(uid: string): Promise<number> {
@@ -249,10 +251,14 @@ export async function suggestIdea(input: unknown): Promise<{ ok: true; text: str
       ? `Write one short linking story (3–5 sentences, in ${language}) that connects these items in this exact order, each one doing something to the next: ${p.items.join(', ')}.`
       : p.kind === 'peg'
         ? `Peg number ${p.n} is "${p.peg}". Write one vivid picture (one sentence, in ${language}) that joins "${p.peg}" with "${p.item}" so the item is easy to remember at number ${p.n}.`
-        : `A made-up cartoon person called "${p.name}" has this feature: ${p.feature}. Write one vivid picture (one or two short sentences, in ${language}) that turns the name into a picture — its meaning, or an everyday word that sounds like it — and joins that picture to the feature, so the name comes back when you see the face. Do not mention any famous person.`
+        : p.kind === 'keyword'
+          ? `The word "${p.word}" means "${p.meaning}". Suggest one keyword — an everyday ${language} word that sounds like "${p.word}" or its first part — and one vivid picture (one sentence, in ${language}) that joins the keyword with the meaning. Reply in exactly this form: Keyword: … — Picture: …`
+          : p.kind === 'acronym'
+            ? `Write one short, funny, easy-to-remember sentence in ${language} whose words start, in order, with the letters ${p.letters.split('').join(', ')} (one word per letter), to help remember this list in order: ${p.items.join(', ')}. Reply with the sentence only.`
+            : `A made-up cartoon person called "${p.name}" has this feature: ${p.feature}. Write one vivid picture (one or two short sentences, in ${language}) that turns the name into a picture — its meaning, or an everyday word that sounds like it — and joins that picture to the feature, so the name comes back when you see the face. Do not mention any famous person.`
   const started = Date.now()
   try {
-    const response = await new Anthropic({ apiKey }).messages.create({ model: MODEL, max_tokens: p.kind === 'story' ? 400 : p.kind === 'face' ? 160 : 120, system: SYSTEM, messages: [{ role: 'user', content: prompt }] })
+    const response = await new Anthropic({ apiKey }).messages.create({ model: MODEL, max_tokens: p.kind === 'story' ? 400 : p.kind === 'peg' ? 120 : 160, system: SYSTEM, messages: [{ role: 'user', content: prompt }] })
     const text = response.content
       .filter((b) => b.type === 'text')
       .map((b) => b.text)
