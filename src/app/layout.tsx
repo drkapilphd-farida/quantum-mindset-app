@@ -11,6 +11,13 @@ import {
   Noto_Sans_Telugu,
   Noto_Sans_Gujarati,
   Noto_Sans_Bengali,
+  Noto_Sans,
+  Baloo_2,
+  Baloo_Bhai_2,
+  Baloo_Tamma_2,
+  Baloo_Thambi_2,
+  Baloo_Tammudu_2,
+  Baloo_Da_2,
 } from 'next/font/google'
 import { Providers } from '@/components/Providers'
 import { Toaster } from '@/components/ui/sonner'
@@ -73,6 +80,16 @@ const notoTamil = Noto_Sans_Tamil({ subsets: ['tamil'], weight: ['400', '600', '
 const notoTelugu = Noto_Sans_Telugu({ subsets: ['telugu'], weight: ['400', '600', '700'], variable: '--font-noto-telugu', display: 'swap', preload: false })
 const notoGujarati = Noto_Sans_Gujarati({ subsets: ['gujarati'], weight: ['400', '600', '700'], variable: '--font-noto-gujarati', display: 'swap', preload: false })
 const notoBengali = Noto_Sans_Bengali({ subsets: ['bengali'], weight: ['400', '600', '700'], variable: '--font-noto-bengali', display: 'swap', preload: false })
+// Play design (13 Oct 2026): Baloo headings in every script + Noto Sans body,
+// used inside the "play" screens (Memory Studio, the day player). Not
+// preloaded — each loads only when a play screen uses it.
+const noto = Noto_Sans({ subsets: ['latin', 'devanagari'], weight: ['400', '500', '600', '700'], variable: '--font-noto-sans', display: 'swap', preload: false })
+const baloo = Baloo_2({ subsets: ['latin', 'devanagari'], weight: ['600', '700', '800'], variable: '--font-baloo', display: 'swap', preload: false })
+const balooBhai = Baloo_Bhai_2({ subsets: ['gujarati', 'latin'], weight: ['600', '700', '800'], variable: '--font-baloo-gu', display: 'swap', preload: false })
+const balooTamma = Baloo_Tamma_2({ subsets: ['kannada', 'latin'], weight: ['600', '700', '800'], variable: '--font-baloo-kn', display: 'swap', preload: false })
+const balooThambi = Baloo_Thambi_2({ subsets: ['tamil', 'latin'], weight: ['600', '700', '800'], variable: '--font-baloo-ta', display: 'swap', preload: false })
+const balooTammudu = Baloo_Tammudu_2({ subsets: ['telugu', 'latin'], weight: ['600', '700', '800'], variable: '--font-baloo-te', display: 'swap', preload: false })
+const balooDa = Baloo_Da_2({ subsets: ['bengali', 'latin'], weight: ['600', '700', '800'], variable: '--font-baloo-bn', display: 'swap', preload: false })
 
 const homepageDisplay = Instrument_Serif({
   subsets: ['latin'],
@@ -171,7 +188,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${homepageSans.variable} ${homepageDevanagari.variable} ${homepageDisplay.variable} ${homepageMono.variable} ${notoKannada.variable} ${notoTamil.variable} ${notoTelugu.variable} ${notoGujarati.variable} ${notoBengali.variable} scroll-smooth`}
+      className={`${geistSans.variable} ${geistMono.variable} ${homepageSans.variable} ${homepageDevanagari.variable} ${homepageDisplay.variable} ${homepageMono.variable} ${notoKannada.variable} ${notoTamil.variable} ${notoTelugu.variable} ${notoGujarati.variable} ${notoBengali.variable} ${noto.variable} ${baloo.variable} ${balooBhai.variable} ${balooTamma.variable} ${balooThambi.variable} ${balooTammudu.variable} ${balooDa.variable} scroll-smooth`}
     >
       <body className="antialiased">
         <Suspense fallback={null}>

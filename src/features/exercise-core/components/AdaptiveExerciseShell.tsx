@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowDown, ArrowRight, ArrowUp, Check, RotateCcw, Trophy } from 'lucide-react'
+import { ArrowDown, ArrowRight, ArrowUp, RotateCcw, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ExercisePracticeLayout } from '@/components/exercises/ExercisePracticeLayout'
 import { useAppT } from '@/lib/app-i18n/client'
@@ -26,6 +26,8 @@ import {
 } from '../levelEngine'
 import { useExerciseProgress } from '../useExerciseProgress'
 import { DemoPlayer, type DemoStep } from './DemoPlayer'
+import { Confetti } from '@/components/play/Confetti'
+import { Stars, starsFor } from '@/components/play/Stars'
 
 const LAB_HREF = '/labs/sharp-brain'
 
@@ -407,11 +409,8 @@ function RoundFeedback({
   return (
     <CenterCard>
       <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">{t('training.shell.roundOf', { round: roundNumber, total: totalRounds })}</p>
-      <div
-        className={`mt-3 flex size-16 items-center justify-center rounded-full ${grade === 'good' ? 'bg-emerald-500/15 text-emerald-600' : grade === 'okay' ? 'bg-primary/10 text-primary' : 'bg-amber-500/15 text-amber-600'}`}
-        aria-hidden="true"
-      >
-        <Check className="size-8" />
+      <div className="mt-3">
+        <Stars count={starsFor(outcome.correct, outcome.total)} />
       </div>
       <p className="mt-3 font-heading text-3xl font-bold tabular-nums text-foreground" data-round-correct={outcome.correct}>
         {t('training.shell.correctOf', { correct: outcome.correct, total: outcome.total })}
@@ -476,7 +475,11 @@ function EndScreen({
   const isNewBest = saved !== null && score > 0 && score > saved.bestBefore
   return (
     <CenterCard>
+      {isNewBest && <Confetti />}
       <p className="text-xs font-semibold tracking-widest text-primary uppercase">{t('training.shell.sessionDone')}</p>
+      <div className="mt-3">
+        <Stars count={starsFor(accuracyPercent, 100)} size={44} />
+      </div>
       <p className="mt-2 font-heading text-5xl font-bold tabular-nums text-foreground" data-session-score={score}>
         {score}
       </p>

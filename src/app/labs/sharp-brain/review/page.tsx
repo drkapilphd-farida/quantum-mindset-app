@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PlayScope } from '@/components/PlayScope'
 import { ProLockedScreen } from '@/components/exercises/ProLockedScreen'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { getReviewSession } from '@/features/memory-studio/actions'
@@ -10,5 +11,9 @@ export const dynamic = 'force-dynamic'
 
 export default async function ReviewPage(): Promise<React.JSX.Element> {
   if (!(await hasQuantumSpeedReadingProAccess())) return <ProLockedScreen title="Review" />
-  return <ReviewSession cards={await getReviewSession()} />
+  return (
+    <PlayScope className="min-h-dvh">
+      <ReviewSession cards={await getReviewSession()} />
+    </PlayScope>
+  )
 }

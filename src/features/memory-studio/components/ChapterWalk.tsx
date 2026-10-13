@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useRef, useState } from 'react'
+import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
 import { Button } from '@/components/ui/button'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { CHAPTER_EXERCISE_ID, weakIdeas, type ChapterIdea, type ChapterQuestion } from '../chapterBook'
@@ -20,6 +21,18 @@ export function ChapterWalk({ mapId, title, ideas, questions, stations, skipJour
   const [stage, setStage] = useState<Stage>(skipJourney ? { name: 'walk', i: 0 } : { name: 'journey', i: 0 })
   const answers = useRef<{ idea: number; right: boolean }[]>([])
   const [score, setScore] = useState({ walk: 0, questions: 0 })
+  const [pending, setPending] = useState<{ chosen: number; feedback: Feedback; then: () => void } | null>(null)
+  const sheet =
+    pending === null ? null : (
+      <FeedbackSheet
+        feedback={pending.feedback}
+        onContinue={() => {
+          const then = pending.then
+          setPending(null)
+          then()
+        }}
+      />
+    )
   const started = useRef(performance.now())
   const options = useMemo(
     () =>
@@ -67,7 +80,7 @@ export function ChapterWalk({ mapId, title, ideas, questions, stations, skipJour
   if (stage.name === 'walk') {
     const i = stage.i
     return (
-      <div className="flex flex-col gap-4" data-chapter-walk={i}>
+      <div className="flex flex-col gap-4 pb-56" data-chapter-walk={i}>
         <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.chapterWalkTitle')} · {t('training.studio.nOfTotal', { n: i + 1, total: ideas.length })}</p>
         <h2 className="text-xl font-bold break-words text-foreground">{t('training.studio.chapterWalkQuestion', { station: stations[i]! })}</h2>
         <div className="flex flex-col gap-2">
@@ -75,13 +88,19 @@ export function ChapterWalk({ mapId, title, ideas, questions, stations, skipJour
             <button
               key={o}
               type="button"
-              className="min-h-12 rounded-xl border-2 border-border/60 bg-background px-3 text-left text-base font-semibold break-words text-foreground"
+              className="play-option min-h-14 px-4 py-2 text-left text-lg font-semibold break-words text-foreground"
+              disabled={pending !== null}
+              data-state={pending === null ? 'idle' : o === i ? 'right' : o === pending.chosen ? 'chosen' : 'idle'}
               onClick={() => {
                 const right = o === i
                 answers.current.push({ idea: i, right })
                 const next = { ...score, walk: score.walk + (right ? 1 : 0) }
                 setScore(next)
-                setStage(i + 1 < ideas.length ? { name: 'walk', i: i + 1 } : qs.length > 0 ? { name: 'questions', i: 0 } : { name: 'result' })
+                setPending({
+                  chosen: o,
+                  feedback: right ? { kind: 'good', points: 2, detail: `${stations[i]} → ${ideas[i]!.title}` } : { kind: 'warn', answer: t('training.play.answerIs', { answer: `${stations[i]} → ${ideas[i]!.title}` }), tip: t('training.studio.chapterTip'), comesBack: false },
+                  then: () => setStage(i + 1 < ideas.length ? { name: 'walk', i: i + 1 } : qs.length > 0 ? { name: 'questions', i: 0 } : { name: 'result' }),
+                })
               }}
               data-chapter-walk-option={o}
             >
@@ -89,6 +108,7 @@ export function ChapterWalk({ mapId, title, ideas, questions, stations, skipJour
             </button>
           ))}
         </div>
+        {sheet}
       </div>
     )
   }
@@ -96,7 +116,7 @@ export function ChapterWalk({ mapId, title, ideas, questions, stations, skipJour
   if (stage.name === 'questions') {
     const q = qs[stage.i]!
     return (
-      <div className="flex flex-col gap-4" data-chapter-question={stage.i}>
+      <div className="flex flex-col gap-4 pb-56" data-chapter-question={stage.i}>
         <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: stage.i + 1, total: qs.length })}</p>
         <h2 className="text-lg font-bold break-words text-foreground">{q.question}</h2>
         <div className="flex flex-col gap-2">
@@ -104,17 +124,22 @@ export function ChapterWalk({ mapId, title, ideas, questions, stations, skipJour
             <button
               key={o}
               type="button"
-              className="min-h-12 rounded-xl border-2 border-border/60 bg-background px-3 text-left text-base break-words text-foreground"
+              className="play-option min-h-14 px-4 py-2 text-left text-base break-words text-foreground"
+              disabled={pending !== null}
+              data-state={pending === null ? 'idle' : o === q.correctIndex ? 'right' : o === pending.chosen ? 'chosen' : 'idle'}
               onClick={() => {
                 const right = o === q.correctIndex
                 answers.current.push({ idea: q.idea, right })
                 const next = { ...score, questions: score.questions + (right ? 1 : 0) }
                 setScore(next)
-                if (stage.i + 1 < qs.length) return setStage({ name: 'questions', i: stage.i + 1 })
-                const total = ideas.length + qs.length
-                saveSimpleResult(CHAPTER_EXERCISE_ID, next.walk + next.questions, total, performance.now() - started.current, uiLang)
-                void addChapterReviews({ id: mapId, weak: weakIdeas(answers.current), lang: uiLang })
-                setStage({ name: 'result' })
+                const advance = (): void => {
+                  if (stage.i + 1 < qs.length) return setStage({ name: 'questions', i: stage.i + 1 })
+                  const total = ideas.length + qs.length
+                  saveSimpleResult(CHAPTER_EXERCISE_ID, next.walk + next.questions, total, performance.now() - started.current, uiLang)
+                  void addChapterReviews({ id: mapId, weak: weakIdeas(answers.current), lang: uiLang })
+                  setStage({ name: 'result' })
+                }
+                setPending({ chosen: o, feedback: right ? { kind: 'good', points: 2 } : { kind: 'warn', answer: t('training.play.answerIs', { answer: q.options[q.correctIndex] ?? '' }), tip: t('training.studio.chapterQuestionTip', { idea: ideas[q.idea]?.title ?? '' }), comesBack: false }, then: advance })
               }}
               data-chapter-option={o}
             >
@@ -122,6 +147,7 @@ export function ChapterWalk({ mapId, title, ideas, questions, stations, skipJour
             </button>
           ))}
         </div>
+        {sheet}
       </div>
     )
   }

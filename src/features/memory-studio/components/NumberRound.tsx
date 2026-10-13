@@ -8,6 +8,7 @@ import { digitScore, numberPicture, pairsOf, type NumberList } from '../numberCo
 import { DigitPad } from './DigitPad'
 import { NumberPictureCard } from './NumberPictureCard'
 import { SuggestButton } from './SuggestButton'
+import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
 
 // One number round: see the number in pairs (with their pictures at the
 // easier levels) → make one scene from the pictures, in order → type the
@@ -16,13 +17,28 @@ export function NumberRound({ number, list, pictures, level, onDone }: { number:
   const t = useAppT()
   const [stage, setStage] = useState<'study' | 'recall'>('study')
   const [scene, setScene] = useState('')
+  const [result, setResult] = useState<{ outcome: RoundOutcome; feedback: Feedback } | null>(null)
   const pairs = pairsOf(number)
 
   if (stage === 'recall')
     return (
-      <div className="flex flex-col gap-4" data-number-recall={number.length}>
+      <div className="flex flex-col gap-4 pb-56" data-number-recall={number.length}>
         <h2 className="text-xl font-bold text-foreground">{t('training.studio.numberRecall')}</h2>
-        <DigitPad length={number.length} onSubmit={(answer) => onDone({ correct: digitScore(number, answer), total: number.length, score: digitScore(number, answer) * level })} />
+        <DigitPad
+          length={number.length}
+          onSubmit={(answer) => {
+            const correct = digitScore(number, answer)
+            const outcome = { correct, total: number.length, score: correct * level }
+            setResult({
+              outcome,
+              feedback:
+                correct === number.length
+                  ? { kind: 'good', points: correct * level, detail: pairsOf(number).join(' ') }
+                  : { kind: 'warn', answer: t('training.play.answerIs', { answer: pairsOf(number).join(' ') }), tip: t('training.studio.numberRoundTip', { correct, total: number.length }), comesBack: false },
+            })
+          }}
+        />
+        {result !== null && <FeedbackSheet feedback={result.feedback} onContinue={() => onDone(result.outcome)} />}
       </div>
     )
 

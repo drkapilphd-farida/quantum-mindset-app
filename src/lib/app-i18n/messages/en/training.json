@@ -961,6 +961,32 @@
     "acronymRecallHint": "Tap the items in order — the letters above are your only help.",
     "chapterPlanIntro": "Make a new chapter, or walk one you made before — tap it to go through it again.",
     "chapterUseSample": "No chapter at hand? Use a sample chapter",
-    "acronymTryIntro": "Here is a ready list. See its first letters — make a word or a funny sentence from them, then put the list back in order."
+    "acronymTryIntro": "Here is a ready list. See its first letters — make a word or a funny sentence from them, then put the list back in order.",
+    "faceTip": "Next time, link the name to what stands out: {feature}.",
+    "keywordTip": "Sounds like “{keyword}” — make the picture bigger and funnier.",
+    "palaceTip": "Walk to that station in your mind and see the item there, big and moving.",
+    "pegTip": "See your peg for {n} first — the item is joined to it.",
+    "numberTip": "{pair} sounds like {sounds}.",
+    "numberRoundTip": "{correct} of {total} digits in place. Make one scene with the pictures, in order.",
+    "storyTip": "{correct} of {total} in the right place. Walk through your story again from the start.",
+    "chapterTip": "Picture the idea at its station once more — big and moving.",
+    "chapterQuestionTip": "This comes from the idea: {idea}."
+  },
+  "play": {
+    "brilliant": "Brilliant!",
+    "almost": "Almost there",
+    "xp": "+{n} XP",
+    "comesBack": "It comes back in a moment, so you get another go.",
+    "continue": "Continue",
+    "gotIt": "Got it",
+    "stars": "{n} of 3 stars",
+    "answerIs": "The answer: {answer}",
+    "settingsTitle": "Look and sound",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeAuto": "Auto (follows your phone)",
+    "sound": "Sounds for right and wrong answers",
+    "vibration": "Light vibration on phones"
   }
 }

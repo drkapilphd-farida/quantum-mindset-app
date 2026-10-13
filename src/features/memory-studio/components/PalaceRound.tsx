@@ -7,6 +7,8 @@ import type { RoundOutcome } from '@/features/exercise-core/components/AdaptiveE
 import { itemName, STORY_ITEMS, type StudioItem, type StudioLang } from '../content'
 import type { PalaceQuestion } from '../palaces'
 import { StudioPicture } from './StudioPicture'
+import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
+import { answer, current, finished, isRetry, startQueue, willComeBack } from '@/components/play/retryQueue'
 
 // One round in the learner's own palace: walk the stations, leaving one item
 // at each (a vivid picture of the two together) → walk again and say what is
@@ -15,7 +17,8 @@ export function PalaceRound({ stations, items, questions, pictures, lang, level,
   const t = useAppT()
   const [study, setStudy] = useState(0)
   const [q, setQ] = useState<number | null>(null)
-  const [correct, setCorrect] = useState(0)
+  const [queue, setQueue] = useState(() => startQueue(questions.map((_, i) => i)))
+  const [pending, setPending] = useState<{ chosen: string; right: boolean; feedback: Feedback } | null>(null)
   const name = (id: string): string => itemName(STORY_ITEMS.find((i) => i.id === id)!, lang)
 
   if (q === null) {
@@ -32,30 +35,36 @@ export function PalaceRound({ stations, items, questions, pictures, lang, level,
       </div>
     )
   }
-  const question = questions[q]!
+  const ask = current(queue)
+  if (ask === null) return <div />
+  const question = questions[ask]!
+  const choose = (id: string): void => {
+    if (pending !== null) return
+    const right = id === question.answer
+    setPending({ right, chosen: id, feedback: right ? { kind: 'good', points: isRetry(queue) ? 0 : level * 2, detail: `${stations[question.station]} → ${name(question.answer)}` } : { kind: 'warn', answer: t('training.play.answerIs', { answer: `${stations[question.station]} → ${name(question.answer)}` }), tip: t('training.studio.palaceTip'), comesBack: willComeBack(queue) } })
+  }
+  const next = (): void => {
+    if (pending === null) return
+    const q2 = answer(queue, pending.right)
+    setPending(null)
+    setQueue(q2)
+    if (finished(q2)) onDone({ correct: q2.correctFirst, total: questions.length, score: q2.correctFirst * level })
+  }
   return (
-    <div className="flex flex-col gap-4" data-palace-question={question.station}>
-      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: q + 1, total: questions.length })}</p>
-      <h2 className="text-xl font-bold break-words text-foreground">{t('training.studio.palaceQuestion', { station: stations[question.station]! })}</h2>
-      <div className="grid grid-cols-2 gap-2 min-[420px]:grid-cols-3">
-        {question.options.map((id) => (
-          <button
-            key={id}
-            type="button"
-            onClick={() => {
-              const total = correct + (id === question.answer ? 1 : 0)
-              if (q + 1 < questions.length) {
-                setCorrect(total)
-                setQ(q + 1)
-              } else onDone({ correct: total, total: questions.length, score: total * level })
-            }}
-            className="flex min-h-24 flex-col items-center justify-center rounded-xl border-2 border-border/60 bg-background p-2 active:border-primary"
-            data-palace-option={id}
-          >
-            {pictures ? <StudioPicture id={id} label={name(id)} size={44} /> : <span className="text-base font-semibold text-foreground">{name(id)}</span>}
-          </button>
-        ))}
+    <div className="flex flex-col gap-4 pb-56" data-palace-question={question.station}>
+      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: Math.min(queue.pos + 1, queue.order.length), total: queue.order.length })}</p>
+      <h2 className="text-2xl break-words text-foreground">{t('training.studio.palaceQuestion', { station: stations[question.station]! })}</h2>
+      <div className="grid grid-cols-2 gap-3 min-[420px]:grid-cols-3">
+        {question.options.map((id) => {
+          const state = pending === null ? 'idle' : id === question.answer ? 'right' : id === pending.chosen ? 'chosen' : 'idle'
+          return (
+            <button key={id} type="button" onClick={() => choose(id)} disabled={pending !== null} className="play-option flex min-h-24 flex-col items-center justify-center p-2" data-state={state} data-palace-option={id}>
+              {pictures ? <StudioPicture id={id} label={name(id)} size={48} /> : <span className="text-lg font-semibold text-foreground">{name(id)}</span>}
+            </button>
+          )
+        })}
       </div>
+      {pending !== null && <FeedbackSheet feedback={pending.feedback} onContinue={next} />}
     </div>
   )
 }

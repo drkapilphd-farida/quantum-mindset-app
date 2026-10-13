@@ -9,6 +9,8 @@ import { NUMBER_LEARN_EXERCISE_ID, NUMBER_SETS, pairSounds, setPictures, type Nu
 import { saveSimpleResult } from '../saveResult'
 import { shuffle } from '../storyMethod'
 import { NumberPictureCard } from './NumberPictureCard'
+import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
+import { answer, current, finished, isRetry, startQueue, willComeBack } from '@/components/play/retryQueue'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 const PASS = 8
@@ -140,34 +142,47 @@ export function NumberLearn({ list, onBack, planSet, onPlanDone }: { list: Numbe
 function SetQuiz({ list, set, onDone }: { list: NumberList; set: number; onDone: (correct: number) => void }): React.JSX.Element {
   const t = useAppT()
   const pictures = useMemo(() => setPictures(list, set), [list, set])
-  const order = useMemo(() => shuffle(pictures, rng), [pictures])
-  const [q, setQ] = useState(0)
-  const [correct, setCorrect] = useState(0)
-  const target = order[q]!
+  const order = useMemo(
+    () =>
+      shuffle(
+        pictures.map((_, i) => i),
+        rng,
+      ),
+    [pictures],
+  )
+  const [queue, setQueue] = useState(() => startQueue(order))
+  const [pending, setPending] = useState<{ chosen: string; right: boolean; feedback: Feedback } | null>(null)
+  const ask = current(queue)
+  const target = pictures[ask ?? 0]!
   const options = useMemo(() => shuffle([target, ...shuffle(pictures.filter((x) => x.n !== target.n), rng).slice(0, 3)], rng), [target, pictures])
+  if (ask === null) return <div />
+  const choose = (n: string): void => {
+    if (pending !== null) return
+    const right = n === target.n
+    setPending({ right, chosen: n, feedback: right ? { kind: 'good', points: isRetry(queue) ? 0 : 2, detail: `${target.n} = ${target.word}` } : { kind: 'warn', answer: t('training.play.answerIs', { answer: `${target.n} = ${target.word}` }), tip: t('training.studio.numberTip', { pair: target.n, sounds: pairSounds(list, target.n) }), comesBack: willComeBack(queue) } })
+  }
+  const next = (): void => {
+    if (pending === null) return
+    const q2 = answer(queue, pending.right)
+    setPending(null)
+    setQueue(q2)
+    if (finished(q2)) onDone(q2.correctFirst)
+  }
   return (
-    <div className="flex flex-col gap-4" data-number-quiz={target.n}>
-      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: q + 1, total: 10 })}</p>
-      <h2 className="text-xl font-bold text-foreground">{t('training.studio.numberQuiz', { n: target.n })}</h2>
-      <div className="grid grid-cols-2 gap-2">
-        {options.map((o) => (
-          <button
-            key={o.n}
-            type="button"
-            onClick={() => {
-              const total = correct + (o.n === target.n ? 1 : 0)
-              if (q + 1 < 10) {
-                setCorrect(total)
-                setQ(q + 1)
-              } else onDone(total)
-            }}
-            className="flex min-h-24 items-center justify-center rounded-xl border-2 border-border/60 bg-background p-2 active:border-primary"
-            data-number-option={o.n}
-          >
-            <NumberPictureCard list={list} pair={o.n} size={44} showNumber={false} />
-          </button>
-        ))}
+    <div className="flex flex-col gap-4 pb-56" data-number-quiz={target.n}>
+      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: Math.min(queue.pos + 1, queue.order.length), total: queue.order.length })}</p>
+      <h2 className="text-2xl text-foreground">{t('training.studio.numberQuiz', { n: target.n })}</h2>
+      <div className="grid grid-cols-2 gap-3">
+        {options.map((o) => {
+          const state = pending === null ? 'idle' : o.n === target.n ? 'right' : o.n === pending.chosen ? 'chosen' : 'idle'
+          return (
+            <button key={o.n} type="button" onClick={() => choose(o.n)} disabled={pending !== null} className="play-option flex min-h-28 items-center justify-center p-2" data-state={state} data-number-option={o.n}>
+              <NumberPictureCard list={list} pair={o.n} size={52} showNumber={false} />
+            </button>
+          )
+        })}
       </div>
+      {pending !== null && <FeedbackSheet feedback={pending.feedback} onContinue={next} />}
     </div>
   )
 }

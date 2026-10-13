@@ -8,6 +8,8 @@ import { IllustratedFace } from '@/features/memory-check/components/IllustratedF
 import type { StudioLang } from '../content'
 import { mainFeature, personName, type FaceFeature, type NameFaceRound as Round } from '../nameFace'
 import { SuggestButton } from './SuggestButton'
+import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
+import { answer, current, finished, isRetry, startQueue, willComeBack } from '@/components/play/retryQueue'
 
 export function featureKey(feature: FaceFeature): Parameters<ReturnType<typeof useAppT>>[0] {
   return `training.studio.feature.${feature}` as Parameters<ReturnType<typeof useAppT>>[0]
@@ -22,7 +24,8 @@ export function NameFaceRound({ round, hint, lang, level, onDone }: { round: Rou
   const [notes, setNotes] = useState<string[]>(() => round.people.map(() => ''))
   const [suggested, setSuggested] = useState(false)
   const [q, setQ] = useState<number | null>(null)
-  const [correct, setCorrect] = useState(0)
+  const [queue, setQueue] = useState(() => startQueue(round.askOrder))
+  const [pending, setPending] = useState<{ chosen: string; right: boolean; feedback: Feedback } | null>(null)
 
   if (q === null) {
     const person = round.people[study]!
@@ -68,31 +71,37 @@ export function NameFaceRound({ round, hint, lang, level, onDone }: { round: Rou
     )
   }
 
-  const person = round.people[round.askOrder[q]!]!
+  const ask = queue.order.length > 0 ? current(queue) : null
+  if (ask === null) return <div />
+  const person = round.people[ask]!
+  const choose = (id: string): void => {
+    if (pending !== null) return
+    const right = id === person.name.id
+    setPending({ right, chosen: id, feedback: right ? { kind: 'good', points: isRetry(queue) ? 0 : level * 2, detail: personName(person.name, lang) } : { kind: 'warn', answer: t('training.play.answerIs', { answer: personName(person.name, lang) }), tip: t('training.studio.faceTip', { feature: t(featureKey(mainFeature(person.face.spec))) }), comesBack: willComeBack(queue) } })
+  }
+  const next = (): void => {
+    if (pending === null) return
+    const q2 = answer(queue, pending.right)
+    setPending(null)
+    setQueue(q2)
+    if (finished(q2)) onDone({ correct: q2.correctFirst, total: round.people.length, score: q2.correctFirst * level })
+  }
   return (
-    <div className="flex flex-col items-center gap-4" data-face-question={q}>
-      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: q + 1, total: round.people.length })}</p>
+    <div className="flex flex-col items-center gap-4 pb-56" data-face-question={queue.pos}>
+      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: Math.min(queue.pos + 1, queue.order.length), total: queue.order.length })}</p>
       <IllustratedFace face={person.face.spec} colorIndex={person.recallShirt} size={130} label={t('training.studio.faceQuestion')} />
-      <h2 className="text-xl font-bold text-foreground">{t('training.studio.faceQuestion')}</h2>
-      <div className="grid w-full grid-cols-2 gap-2 min-[420px]:grid-cols-3">
-        {round.choices.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            onClick={() => {
-              const total = correct + (c.id === person.name.id ? 1 : 0)
-              if (q + 1 < round.people.length) {
-                setCorrect(total)
-                setQ(q + 1)
-              } else onDone({ correct: total, total: round.people.length, score: total * level })
-            }}
-            className="min-h-12 rounded-xl border-2 border-border/60 bg-background px-2 text-base font-semibold text-foreground active:border-primary"
-            data-face-option={c.id}
-          >
-            {personName(c, lang)}
-          </button>
-        ))}
+      <h2 className="text-2xl text-foreground">{t('training.studio.faceQuestion')}</h2>
+      <div className="grid w-full grid-cols-2 gap-3 min-[420px]:grid-cols-3">
+        {round.choices.map((c) => {
+          const state = pending === null ? 'idle' : c.id === person.name.id ? 'right' : c.id === pending.chosen ? 'chosen' : 'idle'
+          return (
+            <button key={c.id} type="button" onClick={() => choose(c.id)} disabled={pending !== null} className="play-option min-h-14 px-2 text-lg font-bold text-foreground" data-state={state} data-face-option={c.id}>
+              {personName(c, lang)}
+            </button>
+          )
+        })}
       </div>
+      {pending !== null && <FeedbackSheet feedback={pending.feedback} onContinue={next} />}
     </div>
   )
 }

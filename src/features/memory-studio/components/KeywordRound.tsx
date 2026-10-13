@@ -6,6 +6,8 @@ import { useAppT } from '@/lib/app-i18n/client'
 import type { RoundOutcome } from '@/features/exercise-core/components/AdaptiveExerciseShell'
 import type { KeywordHelp, KeywordList, KeywordRound as Round } from '../keyword'
 import { SuggestButton } from './SuggestButton'
+import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
+import { answer, current, finished, isRetry, startQueue, willComeBack } from '@/components/play/retryQueue'
 
 // One Keyword round: each new word with its meaning → its keyword (a word that
 // sounds like it) and one picture joining keyword and meaning — given at the
@@ -15,7 +17,8 @@ export function KeywordRound({ round, help, list, level, onDone }: { round: Roun
   const [study, setStudy] = useState(0)
   const [notes, setNotes] = useState<string[]>(() => round.cards.map(() => ''))
   const [q, setQ] = useState<number | null>(null)
-  const [correct, setCorrect] = useState(0)
+  const [queue, setQueue] = useState(() => startQueue(round.askOrder))
+  const [pending, setPending] = useState<{ chosen: string; right: boolean; feedback: Feedback } | null>(null)
 
   if (q === null) {
     const card = round.cards[study]!
@@ -52,30 +55,36 @@ export function KeywordRound({ round, help, list, level, onDone }: { round: Roun
     )
   }
 
-  const card = round.cards[round.askOrder[q]!]!
+  const ask = current(queue)
+  if (ask === null) return <div />
+  const card = round.cards[ask]!
+  const choose = (id: string): void => {
+    if (pending !== null) return
+    const right = id === card.id
+    setPending({ right, chosen: id, feedback: right ? { kind: 'good', points: isRetry(queue) ? 0 : level * 2, detail: `${card.word} = ${card.meaning}` } : { kind: 'warn', answer: t('training.play.answerIs', { answer: `${card.word} = ${card.meaning}` }), tip: t('training.studio.keywordTip', { keyword: card.keyword }), comesBack: willComeBack(queue) } })
+  }
+  const next = (): void => {
+    if (pending === null) return
+    const q2 = answer(queue, pending.right)
+    setPending(null)
+    setQueue(q2)
+    if (finished(q2)) onDone({ correct: q2.correctFirst, total: round.cards.length, score: q2.correctFirst * level })
+  }
   return (
-    <div className="flex flex-col gap-4" data-keyword-question={card.id}>
-      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: q + 1, total: round.cards.length })}</p>
-      <h2 className="text-xl font-bold text-foreground">{t('training.studio.keywordQuestion', { word: card.word })}</h2>
-      <div className="flex flex-col gap-2">
-        {round.choices.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            onClick={() => {
-              const total = correct + (c.id === card.id ? 1 : 0)
-              if (q + 1 < round.cards.length) {
-                setCorrect(total)
-                setQ(q + 1)
-              } else onDone({ correct: total, total: round.cards.length, score: total * level })
-            }}
-            className="min-h-12 rounded-xl border-2 border-border/60 bg-background px-3 py-2 text-left text-base font-semibold break-words text-foreground active:border-primary"
-            data-keyword-option={c.id}
-          >
-            {c.meaning}
-          </button>
-        ))}
+    <div className="flex flex-col gap-4 pb-56" data-keyword-question={card.id}>
+      <p className="text-sm font-semibold text-muted-foreground tabular-nums">{t('training.studio.nOfTotal', { n: Math.min(queue.pos + 1, queue.order.length), total: queue.order.length })}</p>
+      <h2 className="text-2xl text-foreground">{t('training.studio.keywordQuestion', { word: card.word })}</h2>
+      <div className="flex flex-col gap-3">
+        {round.choices.map((c) => {
+          const state = pending === null ? 'idle' : c.id === card.id ? 'right' : c.id === pending.chosen ? 'chosen' : 'idle'
+          return (
+            <button key={c.id} type="button" onClick={() => choose(c.id)} disabled={pending !== null} className="play-option min-h-14 px-4 py-2 text-left text-lg font-semibold break-words text-foreground" data-state={state} data-keyword-option={c.id}>
+              {c.meaning}
+            </button>
+          )
+        })}
       </div>
+      {pending !== null && <FeedbackSheet feedback={pending.feedback} onContinue={next} />}
     </div>
   )
 }

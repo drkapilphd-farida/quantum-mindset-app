@@ -504,7 +504,10 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           ) : isGated ? (
             <GatedStepHandoff exercise={exercise} onContinue={() => handleGatedHandoff(exercise, playIndex!)} />
           ) : EmbeddedComponent !== undefined ? (
-            <EmbeddedComponent key={`${currentExerciseId}-${playIndex}-${mode}`} onComplete={handleStepComplete} onExit={handleExitWizard} />
+            // Reading steps sit on a light "paper" surface in both themes (play design).
+            <div className={exercise.category === 'reading-intelligence' ? 'play-paper min-h-full' : 'contents'}>
+              <EmbeddedComponent key={`${currentExerciseId}-${playIndex}-${mode}`} onComplete={handleStepComplete} onExit={handleExitWizard} />
+            </div>
           ) : (
             <GatedStepHandoff exercise={exercise} onContinue={handleStepComplete} skipLabel={t('curriculum.player.skipStep')} />
           )}

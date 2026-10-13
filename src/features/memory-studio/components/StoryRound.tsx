@@ -9,6 +9,7 @@ import { orderScore, shuffle, storyLevel } from '../storyMethod'
 import { OrderRecall } from './OrderRecall'
 import { StudioPicture } from './StudioPicture'
 import { SuggestButton } from './SuggestButton'
+import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 
@@ -35,21 +36,30 @@ export function StoryRound({
   const [stage, setStage] = useState<'study' | 'recall'>('study')
   const [story, setStory] = useState('')
   const [suggested, setSuggested] = useState(false)
+  const [result, setResult] = useState<{ outcome: RoundOutcome; feedback: Feedback } | null>(null)
   const choices = useMemo(() => shuffle([...list, ...unseen], rng).map((i) => ({ id: i.id, label: itemName(i, lang), picture: pictures })), [list, unseen, lang, pictures])
 
   if (stage === 'recall') {
     return (
-      <OrderRecall
-        choices={choices}
-        count={list.length}
-        onCheck={(answer) => {
-          const correct = orderScore(
-            list.map((i) => i.id),
-            answer,
-          )
-          onDone({ correct, total: list.length, score: correct * level })
-        }}
-      />
+      <div className="pb-56">
+        <OrderRecall
+          choices={choices}
+          count={list.length}
+          onCheck={(answer) => {
+            if (result !== null) return
+            const correct = orderScore(
+              list.map((i) => i.id),
+              answer,
+            )
+            const order = list.map((i) => itemName(i, lang)).join(' → ')
+            setResult({
+              outcome: { correct, total: list.length, score: correct * level },
+              feedback: correct === list.length ? { kind: 'good', points: correct * level, detail: order } : { kind: 'warn', answer: t('training.play.answerIs', { answer: order }), tip: t('training.studio.storyTip', { correct, total: list.length }), comesBack: false },
+            })
+          }}
+        />
+        {result !== null && <FeedbackSheet feedback={result.feedback} onContinue={() => onDone(result.outcome)} />}
+      </div>
     )
   }
 

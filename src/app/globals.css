@@ -1178,3 +1178,145 @@
   0% { transform: translateY(0); }
   100% { transform: translateY(var(--mum-rise, -50%)); }
 }
+
+/*
+ * ─── Play design (13 Oct 2026) ─────────────────────────────────────────────
+ * Light = "Sunny Playground", dark = "Night Sky" (follows the phone, or the
+ * Light / Dark / Auto choice in Settings). Scoped to `.play` (Memory Studio
+ * and the day player for now; the rest of the app later): it redefines the
+ * shared colour tokens, so existing components inside take the new look.
+ * Text colours meet WCAG AA on their backgrounds in both themes.
+ */
+.play {
+  --background: #fff7e8;
+  --foreground: #1b1b2f;
+  --card: #ffffff;
+  --card-foreground: #1b1b2f;
+  --popover: #ffffff;
+  --popover-foreground: #1b1b2f;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --secondary: #ffe7b8;
+  --secondary-foreground: #1b1b2f;
+  --muted: #fcefd6;
+  --muted-foreground: #4f4f66;
+  --accent: #ffe7b8;
+  --accent-foreground: #1b1b2f;
+  --success: #15803d;
+  --success-foreground: #ffffff;
+  --warning: #b45309;
+  --warning-foreground: #ffffff;
+  --border: #1b1b2f2e;
+  --input: #1b1b2f40;
+  --ring: #7c3aed;
+  --play-outline: #1b1b2f;
+  --play-good: #15803d;
+  --play-good-bg: #dcfce7;
+  --play-warn: #b45309;
+  --play-warn-bg: #fef3c7;
+  --play-star: #f59e0b;
+  --skill-focus: #4f46e5;
+  --skill-memory: #7c3aed;
+  --skill-reading: #ea580c;
+  --skill-calm: #0d9488;
+  --skill-discipline: #d97706;
+  --play-heading: var(--font-baloo), var(--font-noto-sans), var(--font-indic), sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-noto-sans), var(--font-indic), sans-serif;
+}
+.dark .play {
+  --background: #0e1330;
+  --foreground: #f5f7ff;
+  --card: #1a2150;
+  --card-foreground: #f5f7ff;
+  --popover: #1a2150;
+  --popover-foreground: #f5f7ff;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --secondary: #252d63;
+  --secondary-foreground: #f5f7ff;
+  --muted: #20285a;
+  --muted-foreground: #c3c9ee;
+  --accent: #252d63;
+  --accent-foreground: #f5f7ff;
+  --success: #4ade80;
+  --success-foreground: #0e1330;
+  --warning: #fbbf24;
+  --warning-foreground: #0e1330;
+  --border: #ffffff26;
+  --input: #ffffff33;
+  --ring: #a78bfa;
+  --play-outline: #ffffff24;
+  --play-good: #4ade80;
+  --play-good-bg: #4ade8024;
+  --play-warn: #fbbf24;
+  --play-warn-bg: #fbbf2424;
+  --skill-focus: #818cf8;
+  --skill-memory: #a78bfa;
+  --skill-reading: #fb923c;
+  --skill-calm: #2dd4bf;
+  --skill-discipline: #fbbf24;
+}
+.play[data-lang="gu"] { --play-heading: var(--font-baloo-gu), var(--font-baloo), var(--font-indic), sans-serif; }
+.play[data-lang="kn"] { --play-heading: var(--font-baloo-kn), var(--font-baloo), var(--font-indic), sans-serif; }
+.play[data-lang="ta"] { --play-heading: var(--font-baloo-ta), var(--font-baloo), var(--font-indic), sans-serif; }
+.play[data-lang="te"] { --play-heading: var(--font-baloo-te), var(--font-baloo), var(--font-indic), sans-serif; }
+.play[data-lang="bn"] { --play-heading: var(--font-baloo-bn), var(--font-baloo), var(--font-indic), sans-serif; }
+
+/* Headings: Baloo, bold. Body: 16–17 px. */
+.play h1, .play h2, .play h3, .play .font-heading { font-family: var(--play-heading); font-weight: 800; letter-spacing: 0; line-height: 1.15; }
+.play .text-xs { font-size: 0.8125rem; }
+.play .text-sm { font-size: 0.9375rem; }
+.play .text-base { font-size: 1.0625rem; }
+
+/* Chunky "playground" surfaces in light; soft glowing ones at night. */
+.play .play-card { background: var(--card); border: 2.5px solid var(--play-outline); border-radius: 1.25rem; box-shadow: 0 4px 0 var(--play-outline); }
+.dark .play .play-card { border-width: 1px; box-shadow: 0 8px 24px rgb(0 0 0 / 0.35); }
+.play [data-slot="button"][data-variant="default"] { border: 2.5px solid var(--play-outline); box-shadow: 0 4px 0 #4c1d95; font-family: var(--play-heading); font-weight: 800; font-size: 1.125rem; }
+.dark .play [data-slot="button"][data-variant="default"] { border-width: 0; box-shadow: 0 6px 20px rgb(124 58 237 / 0.45); }
+.play [data-slot="button"][data-variant="default"]:active { transform: translateY(2px); box-shadow: 0 2px 0 #4c1d95; }
+.play [data-slot="button"][data-variant="outline"] { border-width: 2px; border-color: var(--play-outline); font-weight: 700; }
+
+/* Main finish buttons ("See tomorrow", day complete): Night Sky's violet → blue gradient in both themes. */
+.play .btn-finish, .play [data-slot="button"].btn-finish { background: linear-gradient(90deg, #7c3aed, #2563eb); color: #fff; }
+
+/* Long reading passages and reading drills: a light "paper" card in both themes. */
+.play .paper { background: #fffdf6; color: #1b1b2f; border-radius: 1rem; }
+.play .paper :is(p, li, span) { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  .play *, .play *::before, .play *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+/* A reading step inside the play scope: the light tokens again, even in dark. */
+.play .play-paper, .dark .play .play-paper {
+  --background: #fffdf6;
+  --foreground: #1b1b2f;
+  --card: #ffffff;
+  --card-foreground: #1b1b2f;
+  --popover: #ffffff;
+  --popover-foreground: #1b1b2f;
+  --muted: #f5efe2;
+  --muted-foreground: #4f4f66;
+  --secondary: #f5efe2;
+  --secondary-foreground: #1b1b2f;
+  --accent: #f5efe2;
+  --accent-foreground: #1b1b2f;
+  --border: #1b1b2f2e;
+  --input: #1b1b2f40;
+  background: var(--background);
+  color: var(--foreground);
+  color-scheme: light;
+}
+@keyframes play-confetti-fall {
+  0% { transform: translateY(-20px) rotate(var(--r)); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(calc(var(--r) + 540deg)); opacity: 0; }
+}
+.play-confetti { animation-name: play-confetti-fall; animation-timing-function: cubic-bezier(.2,.6,.4,1); animation-fill-mode: both; }
+/* Answer options: big, chunky, with gentle right/chosen states (never red). */
+.play .play-option { background: var(--card); border: 2.5px solid var(--play-outline); border-radius: 1rem; box-shadow: 0 3px 0 var(--play-outline); transition: transform .12s; }
+.dark .play .play-option { border-width: 1.5px; box-shadow: none; }
+.play .play-option:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 var(--play-outline); }
+.play .play-option[data-state="right"] { border-color: var(--play-good); background: var(--play-good-bg); box-shadow: 0 3px 0 var(--play-good); }
+.play .play-option[data-state="chosen"] { border-style: dashed; border-color: var(--play-warn); background: var(--play-warn-bg); box-shadow: none; }
