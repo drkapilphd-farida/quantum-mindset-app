@@ -345,7 +345,7 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
           </div>
         )}
       </div>
-      <div className="sticky bottom-0 flex flex-col gap-2 bg-background/95 py-2" data-reader-controls="true">
+      <div className="sticky bottom-0 -mx-4 flex flex-col gap-2 border-t border-border bg-background px-4 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]" data-reader-controls="true">
         {mode !== 'normal' && (
           <div className="flex justify-center">
             <SpeedControl wpm={wpm} onChange={setWpm} compact />
