@@ -1,0 +1,38 @@
+{
+  "lang": "en",
+  "review": "EN/HI written 13 Oct 2026, shown to the founder in the Group A screenshots",
+  "lines": [
+    {
+      "id": "line-1",
+      "text": "Number pictures turn numbers that are hard to remember into pictures you can see."
+    },
+    {
+      "id": "line-2",
+      "text": "Every digit has a sound. 0 is s, 1 is t or d, 2 is n, 3 is m, and 4 is r."
+    },
+    {
+      "id": "line-3",
+      "text": "5 is l, 6 is j, ch or sh, 7 is k or g, 8 is f or v, and 9 is p or b."
+    },
+    {
+      "id": "line-4",
+      "text": "Two digits make a word from their sounds. 4 and 7 — r and k — a raccoon. 1 and 9 — t and p — a tap."
+    },
+    {
+      "id": "line-5",
+      "text": "Vowels don't count, and only the first two sounds matter. You learn one hundred pictures, ten at a time."
+    },
+    {
+      "id": "line-6",
+      "text": "Now the number 4719. Split it into pairs: 47 and 19 — a raccoon and a tap."
+    },
+    {
+      "id": "line-7",
+      "text": "Make one funny scene: a raccoon washing its paws under a tap, splashing everywhere. Read it back: raccoon, tap — 4 7 1 9."
+    },
+    {
+      "id": "line-8",
+      "text": "Start with the first ten pictures, 00 to 09."
+    }
+  ]
+}

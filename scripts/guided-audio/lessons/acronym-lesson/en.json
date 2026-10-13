@@ -1,0 +1,30 @@
+{
+  "lang": "en",
+  "review": "EN/HI written 13 Oct 2026, shown to the founder in the Group A screenshots",
+  "lines": [
+    {
+      "id": "line-1",
+      "text": "Acronyms help you remember a short list in the right order."
+    },
+    {
+      "id": "line-2",
+      "text": "Take the first letter of each item. The colours of the rainbow — violet, indigo, blue, green, yellow, orange, red — become VIBGYOR."
+    },
+    {
+      "id": "line-3",
+      "text": "If the letters don't make a word, make a funny sentence instead, one word for each letter."
+    },
+    {
+      "id": "line-4",
+      "text": "The planets, nearest first: My Very Educated Mother Just Served Us Nachos — Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."
+    },
+    {
+      "id": "line-5",
+      "text": "Say your word or sentence a few times, and link each letter back to its item."
+    },
+    {
+      "id": "line-6",
+      "text": "Now try it on a list of your own — three to eight items."
+    }
+  ]
+}
