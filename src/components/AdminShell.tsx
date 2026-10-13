@@ -18,6 +18,7 @@ const NAV_ITEMS = [
   { href: '/admin/schools', label: 'Schools', icon: Building2, exact: false },
   { href: '/admin/partners', label: 'Partners', icon: Handshake, exact: false },
   { href: '/admin/sharp-brain-enrolments', label: 'Sharp Brain Enrolments', icon: ClipboardList, exact: false },
+  { href: '/admin/manual-enrolments', label: 'Manual enrolments', icon: ClipboardList, exact: false },
   { href: '/admin/live-classes', label: 'Live Classes', icon: ClipboardList, exact: false },
   { href: '/admin/reminders', label: 'Reminders', icon: ClipboardList, exact: false },
   { href: '/admin/franchise-leads', label: 'Franchise Leads', icon: ClipboardList, exact: false },

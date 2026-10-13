@@ -33,8 +33,8 @@ export default async function AdminSharpBrainEnrolmentsPage(): Promise<React.JSX
       <div>
         <h1 className="text-2xl font-semibold">Sharp Brain Enrolments</h1>
         <p className="text-sm text-muted-foreground">
-          Paid 30-Day Program enrolments by batch (IST), newest batch first. Refunds are not subtracted here — access is removed automatically on a
-          Razorpay refund.
+          Paid 30-Day Program enrolments by batch (IST), newest batch first. Includes manual payments (GPay / cash / bank) from Manual enrolments; refunded manual payments are marked and left out of the total. Razorpay
+          refunds remove access automatically.
         </p>
       </div>
       {groups.length === 0 && <p className="text-sm text-muted-foreground">No paid enrolments yet.</p>}
@@ -43,7 +43,7 @@ export default async function AdminSharpBrainEnrolmentsPage(): Promise<React.JSX
           <h2 className="text-lg font-semibold">
             {formatBatch(group.batchStart)}{' '}
             <span className="text-sm font-normal text-muted-foreground">
-              · {group.rows.length} paid · ₹{group.totalInr.toLocaleString('en-IN')}
+              · {group.rows.filter((r) => !r.refunded).length} paid · ₹{group.totalInr.toLocaleString('en-IN')}
             </span>
           </h2>
           <div className="overflow-x-auto rounded-md border">
@@ -54,6 +54,7 @@ export default async function AdminSharpBrainEnrolmentsPage(): Promise<React.JSX
                   <TableHead>Phone</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Offer</TableHead>
+                  <TableHead>Payment</TableHead>
                   <TableHead className="text-right">Amount</TableHead>
                   <TableHead>Paid</TableHead>
                   <TableHead>App access</TableHead>
@@ -66,9 +67,10 @@ export default async function AdminSharpBrainEnrolmentsPage(): Promise<React.JSX
                     <TableCell className="whitespace-nowrap">{row.phone ?? '—'}</TableCell>
                     <TableCell>{row.email ?? '—'}</TableCell>
                     <TableCell>{row.offer === null ? '—' : (OFFER_LABEL[row.offer] ?? row.offer)}</TableCell>
+                    <TableCell>{row.paidVia}</TableCell>
                     <TableCell className="text-right tabular-nums">{row.amountInr === null ? '—' : `₹${row.amountInr.toLocaleString('en-IN')}`}</TableCell>
                     <TableCell className="whitespace-nowrap">{formatPaidAt(row.paidAt)}</TableCell>
-                    <TableCell>{row.granted ? 'Granted' : 'Waiting for sign-up'}</TableCell>
+                    <TableCell>{row.refunded ? 'Refunded' : row.granted ? 'Granted' : 'Waiting for sign-up'}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

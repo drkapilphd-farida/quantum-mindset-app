@@ -1,4 +1,5 @@
 import { createServiceClient } from '@/lib/supabase/service'
+import { PAYMENT_MODE_LABEL, type PaymentMode } from '@/features/manual-enrolments/rules'
 
 export type EnrolmentRow = {
   id: string
@@ -10,6 +11,10 @@ export type EnrolmentRow = {
   paidAt: string
   /** Access granted (an account matched); false = waiting for the buyer to sign up. */
   granted: boolean
+  /** 'Razorpay', or the manual payment mode (GPay / Cash / Bank transfer). */
+  paidVia: string
+  /** A manual payment refunded from /admin/manual-enrolments (not in the total). */
+  refunded: boolean
 }
 
 export type BatchGroup = { batchStart: string | null; rows: EnrolmentRow[]; totalInr: number }
@@ -23,7 +28,7 @@ export async function getEnrolmentsByBatch(): Promise<BatchGroup[]> {
   const supabase = createServiceClient()
   const { data } = await supabase
     .from('masterclass_payments')
-    .select('id, customer_name, phone, email, offer, amount_cents, created_at, batch_start, granted_at, user_id')
+    .select('id, customer_name, phone, email, offer, amount_cents, created_at, batch_start, granted_at, user_id, source, payment_mode, paid_on, refunded_at')
     .order('created_at', { ascending: false })
     .limit(2000)
   const rows = data ?? []
@@ -46,8 +51,11 @@ export async function getEnrolmentsByBatch(): Promise<BatchGroup[]> {
       email: r.email,
       offer: r.offer,
       amountInr: r.amount_cents === null ? null : r.amount_cents / 100,
-      paidAt: r.created_at,
-      granted: r.granted_at !== null,
+      // A manual payment's date is the day it was paid, not the day it was recorded.
+      paidAt: r.source === 'manual' && r.paid_on ? `${r.paid_on}T12:00:00+05:30` : r.created_at,
+      granted: r.granted_at !== null && r.refunded_at === null,
+      paidVia: r.source === 'manual' ? (PAYMENT_MODE_LABEL[r.payment_mode as PaymentMode] ?? 'Manual') : 'Razorpay',
+      refunded: r.refunded_at !== null,
     })
     groups.set(r.batch_start, list)
   }
@@ -55,5 +63,5 @@ export async function getEnrolmentsByBatch(): Promise<BatchGroup[]> {
   // Newest batch first; "not recorded" last.
   return [...groups.entries()]
     .sort(([a], [b]) => (a === null ? 1 : b === null ? -1 : b.localeCompare(a)))
-    .map(([batchStart, list]) => ({ batchStart, rows: list, totalInr: list.reduce((sum, r) => sum + (r.amountInr ?? 0), 0) }))
+    .map(([batchStart, list]) => ({ batchStart, rows: list, totalInr: list.filter((r) => !r.refunded).reduce((sum, r) => sum + (r.amountInr ?? 0), 0) }))
 }

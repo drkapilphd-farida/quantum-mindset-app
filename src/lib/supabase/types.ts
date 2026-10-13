@@ -1880,6 +1880,12 @@ export type Database = {
           phone: string | null
           razorpay_payment_id: string
           user_id: string | null
+          note: string | null
+          paid_on: string | null
+          payment_mode: string | null
+          recorded_by: string | null
+          refunded_at: string | null
+          source: string
         }
         Insert: {
           amount_cents?: number | null
@@ -1896,6 +1902,12 @@ export type Database = {
           phone?: string | null
           razorpay_payment_id: string
           user_id?: string | null
+          note?: string | null
+          paid_on?: string | null
+          payment_mode?: string | null
+          recorded_by?: string | null
+          refunded_at?: string | null
+          source?: string
         }
         Update: {
           amount_cents?: number | null
@@ -1912,6 +1924,12 @@ export type Database = {
           phone?: string | null
           razorpay_payment_id?: string
           user_id?: string | null
+          note?: string | null
+          paid_on?: string | null
+          payment_mode?: string | null
+          recorded_by?: string | null
+          refunded_at?: string | null
+          source?: string
         }
         Relationships: []
       }
