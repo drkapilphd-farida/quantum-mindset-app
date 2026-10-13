@@ -7,7 +7,7 @@ import { NarrationBar } from '@/features/guided-audio/components/NarrationBar'
 import { useGuidedNarration } from '@/features/guided-audio/useGuidedNarration'
 import { StudioPicture } from './StudioPicture'
 
-export type LessonLine = { id: string; text: string; pictures?: { id: string; label: string; number?: number }[] }
+export type LessonLine = { id: string; text: string; pictures?: { id: string; label: string; number?: number }[]; /** A drawing instead of pictures (e.g. a face). */ visual?: React.ReactNode }
 
 // A 60–90-second "Learn" lesson: one caption at a time with its pictures,
 // spoken by the recorded voice (EN/HI when uploaded), else the device voice,
@@ -49,6 +49,7 @@ export function MethodLesson({ narrationId, title, lines, onDone }: { narrationI
       ) : (
         <>
           <div className="flex min-h-28 flex-wrap items-center justify-center gap-3">
+            {line.visual}
             {line.pictures?.map((p) => <StudioPicture key={p.id} id={p.id} label={p.label} size={52} {...(p.number === undefined ? {} : { number: p.number })} />)}
           </div>
           <NarrationBar

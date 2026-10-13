@@ -69,3 +69,10 @@ export const CHAPTER_LESSON_ID = 'chapter-lesson'
 export function chapterLesson(t: Translator): LessonLine[] {
   return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.chapterLesson.l${n}` as Parameters<Translator>[0]) }))
 }
+
+export const NAME_FACE_LESSON_ID = 'name-face-lesson'
+
+/** Text only; the experience adds the example face to lines 2 and 5. */
+export function nameFaceLessonText(t: Translator): { id: string; text: string }[] {
+  return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.nameFaceLesson.l${n}` as Parameters<Translator>[0]) }))
+}

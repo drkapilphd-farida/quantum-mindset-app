@@ -28,11 +28,14 @@ async function userId(): Promise<string | null> {
 // ── Own lists ────────────────────────────────────────────────────────────
 
 const ItemText = z.string().trim().min(1).max(60)
+/** Own-list methods. Name–Face items are "name — who they are", so they may be longer. */
+const OWN_METHODS = ['story', 'peg', 'name-face', 'number', 'keyword', 'acronym'] as const
+export type OwnMethod = (typeof OWN_METHODS)[number]
 const OwnListSchema = z.object({
-  method: z.enum(['story', 'peg']),
+  method: z.enum(OWN_METHODS),
   title: z.string().trim().min(1).max(120),
-  items: z.array(ItemText).min(2).max(20),
-  /** Story: the learner's story. Peg: one line per item ("the picture I made"), joined by new lines. */
+  items: z.array(z.string().trim().min(1).max(120)).min(2).max(20),
+  /** Story: the learner's story. Other methods: one line per item ("the picture I made"), joined by new lines. */
   story: z.string().trim().max(2000).nullable(),
   lang: LangSchema,
 })
@@ -53,7 +56,7 @@ export async function saveOwnList(input: unknown): Promise<{ ok: true; id: strin
   const due = firstDue(Date.now())
   const { error: reviewError } = await db.from('review_items').insert({
     user_id: uid,
-    source: method === 'story' ? 'story' : 'peg-list',
+    source: method === 'peg' ? 'peg-list' : method,
     source_ref: data.id,
     front: { kind: 'list', method, title, count: items.length },
     back: { items },
@@ -181,6 +184,7 @@ const SYSTEM = [
 const SuggestSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('story'), items: z.array(ItemText).min(2).max(20), lang: LangSchema }),
   z.object({ kind: z.literal('peg'), peg: z.string().trim().min(1).max(60), n: z.number().int().min(1).max(20), item: ItemText, lang: LangSchema }),
+  z.object({ kind: z.literal('face'), name: ItemText, feature: z.string().trim().min(1).max(60), lang: LangSchema }),
 ])
 
 async function usedToday(uid: string): Promise<number> {
@@ -203,10 +207,12 @@ export async function suggestIdea(input: unknown): Promise<{ ok: true; text: str
   const prompt =
     p.kind === 'story'
       ? `Write one short linking story (3–5 sentences, in ${language}) that connects these items in this exact order, each one doing something to the next: ${p.items.join(', ')}.`
-      : `Peg number ${p.n} is "${p.peg}". Write one vivid picture (one sentence, in ${language}) that joins "${p.peg}" with "${p.item}" so the item is easy to remember at number ${p.n}.`
+      : p.kind === 'peg'
+        ? `Peg number ${p.n} is "${p.peg}". Write one vivid picture (one sentence, in ${language}) that joins "${p.peg}" with "${p.item}" so the item is easy to remember at number ${p.n}.`
+        : `A made-up cartoon person called "${p.name}" has this feature: ${p.feature}. Write one vivid picture (one or two short sentences, in ${language}) that turns the name into a picture — its meaning, or an everyday word that sounds like it — and joins that picture to the feature, so the name comes back when you see the face. Do not mention any famous person.`
   const started = Date.now()
   try {
-    const response = await new Anthropic({ apiKey }).messages.create({ model: MODEL, max_tokens: p.kind === 'story' ? 400 : 120, system: SYSTEM, messages: [{ role: 'user', content: prompt }] })
+    const response = await new Anthropic({ apiKey }).messages.create({ model: MODEL, max_tokens: p.kind === 'story' ? 400 : p.kind === 'face' ? 160 : 120, system: SYSTEM, messages: [{ role: 'user', content: prompt }] })
     const text = response.content
       .filter((b) => b.type === 'text')
       .map((b) => b.text)

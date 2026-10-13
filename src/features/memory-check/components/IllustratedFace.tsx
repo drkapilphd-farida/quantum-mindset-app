@@ -27,7 +27,7 @@ export function IllustratedFace({ face, colorIndex = 0, size = 128, label }: { f
   const shirt = SHIRTS[colorIndex % SHIRTS.length]
 
   return (
-    <svg viewBox="0 0 120 140" width={size} height={(size * 140) / 120} role="img" aria-label={label} className="shrink-0">
+    <svg viewBox="0 0 120 140" width={size} height={(size * 140) / 120} {...(label === '' ? { 'aria-hidden': true } : { role: 'img', 'aria-label': label })} className="shrink-0">
       <circle cx="60" cy="70" r="58" fill="#EEF0F4" />
       {/* hair that falls behind the head */}
       {face.hair === 'shoulder' && <path d={`M27 ${cy - 6} Q24 ${cy + 40} 34 ${cy + 46} L86 ${cy + 46} Q96 ${cy + 40} 93 ${cy - 6} Z`} fill={hair} />}
