@@ -5,6 +5,7 @@ import { useAppT } from '@/lib/app-i18n/client'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { SCHULTE_GRID_TOTAL_CELLS } from '../schulteGridDataset'
+import { SessionCelebration } from '@/components/play/SessionCelebration'
 
 type SchulteGridDrillCompleteScreenProps = {
   elapsedMs: number
@@ -31,6 +32,7 @@ export function SchulteGridDrillCompleteScreen({
   const t = useAppT()
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
+      <SessionCelebration stars={mistakeCount === 0 ? 3 : mistakeCount <= 2 ? 2 : 1} newBest={bestTimeMs > 0 && elapsedMs <= bestTimeMs} />
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('exercises.schulte.complete')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{t('exercises.schulte.nice')}</p>

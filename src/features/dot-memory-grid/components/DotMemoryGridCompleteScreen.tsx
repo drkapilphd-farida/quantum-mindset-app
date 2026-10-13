@@ -5,6 +5,8 @@ import { useAppT } from '@/lib/app-i18n/client'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { DOT_MEMORY_GRID_ROUNDS_PER_SESSION, computeAccuracyPercent } from '../dotMemoryGridEngine'
+import { SessionCelebration } from '@/components/play/SessionCelebration'
+import { starsFor } from '@/components/play/Stars'
 
 type DotMemoryGridCompleteScreenProps = {
   elapsedMs: number
@@ -38,6 +40,7 @@ export function DotMemoryGridCompleteScreen({
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
+      <SessionCelebration stars={starsFor(accuracyPercent, 100)} newBest={accuracyPercent > 0 && accuracyPercent >= bestScorePercentAllTime} />
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('exercises.complete.sessionComplete')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{t('exercises.dotMemory.nice')}</p>

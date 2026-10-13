@@ -991,7 +991,12 @@
     "vibration": "Light vibration on phones",
     "dayDone": "Day {day} done!",
     "todayComplete": "Today's practice is complete — see you tomorrow.",
-    "seeTomorrow": "See tomorrow"
+    "seeTomorrow": "See tomorrow",
+    "comprehensionCheck": "Comprehension check",
+    "quizScore": "You got {score} of {total}",
+    "quizPerfect": "Perfect — you understood every key idea.",
+    "quizGood": "Good reading — most of the ideas stayed with you.",
+    "quizTry": "Read a little slower next time — understanding comes first."
   },
   "reader": {
     "close": "Close",

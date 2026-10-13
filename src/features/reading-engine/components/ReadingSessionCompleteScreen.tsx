@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { ReadingStatTile } from './ReadingStatTile'
 import type { ReadingSessionResult } from '../types'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
+import { SessionCelebration } from '@/components/play/SessionCelebration'
+import { starsFor } from '@/components/play/Stars'
 
 type ReadingSessionCompleteScreenProps = {
   title?: string
@@ -44,6 +46,7 @@ export function ReadingSessionCompleteScreen({
   const t = useAppT()
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
+      <SessionCelebration stars={starsFor(result.completionPercent, 100)} newBest={result.averageWpm > 0 && result.averageWpm >= bestWpm} />
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{title ?? t('exercises.complete.sessionComplete')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>

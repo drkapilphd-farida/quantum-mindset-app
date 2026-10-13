@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import type { BrainGymDrillConfig } from '../types'
+import { SessionCelebration } from '@/components/play/SessionCelebration'
+import { starsFor } from '@/components/play/Stars'
 
 type BrainGymDrillCompleteScreenProps = {
   config: BrainGymDrillConfig
@@ -34,6 +36,7 @@ export function BrainGymDrillCompleteScreen({
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
+      <SessionCelebration stars={starsFor(accuracyPercent, 100)} newBest={accuracyPercent > 0 && accuracyPercent >= bestAccuracyPercentAllTime} />
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{config.completeHeading}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{config.completeSubline}</p>

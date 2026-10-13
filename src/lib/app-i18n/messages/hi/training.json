@@ -991,7 +991,12 @@
     "vibration": "फ़ोन पर हल्का कंपन",
     "dayDone": "दिन {day} पूरा!",
     "todayComplete": "आज का अभ्यास पूरा हो गया — कल मिलते हैं।",
-    "seeTomorrow": "कल देखें"
+    "seeTomorrow": "कल देखें",
+    "comprehensionCheck": "समझ की जाँच",
+    "quizScore": "{total} में से {score} सही",
+    "quizPerfect": "शानदार — आपने हर मुख्य बात समझी।",
+    "quizGood": "अच्छा पढ़ा — ज़्यादातर बातें याद रहीं।",
+    "quizTry": "अगली बार थोड़ा धीरे पढ़िए — पहले समझ ज़रूरी है।"
   },
   "reader": {
     "close": "बंद करें",

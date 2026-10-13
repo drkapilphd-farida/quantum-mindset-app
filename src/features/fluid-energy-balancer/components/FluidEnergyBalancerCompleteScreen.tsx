@@ -5,6 +5,8 @@ import { useAppT } from '@/lib/app-i18n/client'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { FLUID_ENERGY_ROUNDS_PER_SESSION } from '../fluidEnergyEngine'
+import { SessionCelebration } from '@/components/play/SessionCelebration'
+import { starsFor } from '@/components/play/Stars'
 
 type FluidEnergyBalancerCompleteScreenProps = {
   elapsedMs: number
@@ -34,6 +36,7 @@ export function FluidEnergyBalancerCompleteScreen({
   const t = useAppT()
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
+      <SessionCelebration stars={starsFor(overallStabilityPercent, 100)} newBest={overallStabilityPercent > 0 && overallStabilityPercent >= bestScorePercentAllTime} />
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">{t('exercises.calmBalance.harmony')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">

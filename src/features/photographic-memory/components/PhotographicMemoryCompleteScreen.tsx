@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { ReadingStatTile } from '@/features/reading-engine/components/ReadingStatTile'
 import { formatElapsedTime } from '@/features/quantum-speed-reading/readingSessionEngine'
 import { ROUNDS_PER_SESSION, PERFECT_SESSION_BONUS } from '../photographicMemoryDataset'
+import { SessionCelebration } from '@/components/play/SessionCelebration'
+import { starsFor } from '@/components/play/Stars'
 
 type PhotographicMemoryCompleteScreenProps = {
   elapsedMs: number
@@ -39,6 +41,7 @@ export function PhotographicMemoryCompleteScreen({
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-10 px-6 py-16 text-center">
+      <SessionCelebration stars={starsFor(scorePercent, 100)} newBest={scorePercent > 0 && scorePercent >= bestScorePercentAllTime} />
       <div>
         <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sprint Complete</h1>
         <p className="mt-2 text-sm text-muted-foreground">Nice visual recall.</p>
