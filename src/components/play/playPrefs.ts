@@ -1,8 +1,10 @@
 'use client'
 
-// Sound and vibration for answer feedback (play design). Both on by default;
-// the learner can switch either off. Kept in this browser only.
-const SOUND_KEY = 'play-sound'
+import { loadSoundEnabledPreference } from '@/lib/audio/soundPreference'
+
+// Sound and vibration for answer feedback (play design). Sound follows the
+// app-wide sound setting (Settings → Sound); vibration has its own switch.
+// Both on by default; kept in this browser only.
 const VIBRATE_KEY = 'play-vibrate'
 
 function read(key: string): boolean {
@@ -21,9 +23,8 @@ function write(key: string, on: boolean): void {
 }
 
 export const playPrefs = {
-  sound: (): boolean => read(SOUND_KEY),
+  sound: (): boolean => loadSoundEnabledPreference(),
   vibrate: (): boolean => read(VIBRATE_KEY),
-  setSound: (on: boolean): void => write(SOUND_KEY, on),
   setVibrate: (on: boolean): void => write(VIBRATE_KEY, on),
 }
 

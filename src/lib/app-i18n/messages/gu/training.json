@@ -970,7 +970,8 @@
     "numberRoundTip": "{total} માંથી {correct} અંક સાચી જગ્યાએ. ચિત્રોથી ક્રમમાં એક દૃશ્ય બનાવો.",
     "storyTip": "{total} માંથી {correct} સાચી જગ્યાએ. તમારી વાર્તા શરૂઆતથી ફરી યાદ કરો.",
     "chapterTip": "આ વિચારને તેના સ્ટેશન પર ફરી એક વાર કલ્પો — મોટો અને હલતો.",
-    "chapterQuestionTip": "આ આ વિચારમાંથી છે: {idea}."
+    "chapterQuestionTip": "આ આ વિચારમાંથી છે: {idea}.",
+    "methodNew": "નવું"
   },
   "play": {
     "brilliant": "શાનદાર!",
@@ -987,6 +988,9 @@
     "themeDark": "ડાર્ક",
     "themeAuto": "ઑટો (તમારા ફોન મુજબ)",
     "sound": "સાચા અને ખોટા જવાબ પર અવાજ",
-    "vibration": "ફોન પર હળવું કંપન"
+    "vibration": "ફોન પર હળવું કંપન",
+    "dayDone": "દિવસ {day} પૂરો!",
+    "todayComplete": "આજનો અભ્યાસ પૂરો થયો — કાલે મળીએ.",
+    "seeTomorrow": "કાલનું જુઓ"
   }
 }

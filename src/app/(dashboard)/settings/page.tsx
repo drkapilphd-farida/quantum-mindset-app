@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator'
 import { UpdateProfileForm } from '@/features/user/components/UpdateProfileForm'
 import { UpdatePasswordForm } from '@/features/user/components/UpdatePasswordForm'
 import { SoundPreferenceToggle } from '@/features/user/components/SoundPreferenceToggle'
+import { PlaySettings } from '@/components/play/PlaySettings'
 import { listRetakeableAssessments } from '@/features/quantum-speed-reading-runtime/assessment/actions/listRetakeableAssessments'
 import { RetakeAssessmentButton } from '@/features/quantum-speed-reading-runtime/assessment/components/RetakeAssessmentButton'
 import { getAppT } from '@/lib/app-i18n/server'
@@ -52,6 +53,14 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
             <p className="text-muted-foreground mt-1 text-sm">{t('dashboard.reminders.settings.desc')}</p>
           </div>
           <ReminderOptIn variant="settings" initial={reminderSettings} />
+        </section>
+
+        <section className="space-y-4" id="look">
+          <div>
+            <h2 className="text-base font-medium">{t('training.play.settingsTitle')}</h2>
+            <p className="text-muted-foreground mt-1 text-sm">{t('training.play.theme')}</p>
+          </div>
+          <PlaySettings />
         </section>
 
         <section className="space-y-4" id="language">

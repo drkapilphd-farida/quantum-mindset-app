@@ -5,10 +5,12 @@ import { dayTitle, categoryLabel, exerciseTitle } from '@/lib/app-i18n/curriculu
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { LANGUAGES } from '@/lib/app-i18n/languages'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, Clock, PartyPopper, Sparkles, Undo2, X } from 'lucide-react'
+import { ArrowRight, Clock, Sparkles, Undo2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getCurriculumExerciseById, type CurriculumCatalogExercise } from '../curriculumExerciseCatalog'
 import { buildCurriculumDayPlan, doneStepIds, isCheckpointDay } from '../curriculumDatabase'
+import { Confetti } from '@/components/play/Confetti'
+import { Stars } from '@/components/play/Stars'
 import { buildSessionQueue, clearActiveCurriculumSession, loadActiveCurriculumSession, startCurriculumSessionAtStep } from '../curriculumSessionRunner'
 import { setActiveWizardDay, takePendingStepsDone } from '../curriculumReturnRouting'
 import { isCurriculumExerciseGated } from '../curriculumGatedExercises'
@@ -34,7 +36,8 @@ import { MemoryCheck } from '@/features/memory-check/components/MemoryCheck'
 import { BASELINE_LAST_DAY } from '@/features/memory-check/memoryCheck'
 import { laterToday, saveLater } from '@/features/memory-check/memoryOffer'
 
-const CARD_CLASS_NAME = 'relative overflow-hidden rounded-3xl border-2 border-border/60 bg-[#FBF9F4]/95 shadow-sm backdrop-blur-md dark:bg-[#16171A]/95'
+// Play design: the theme's own card (cream/white in light, night blue in dark).
+const CARD_CLASS_NAME = 'play-card relative overflow-hidden'
 
 type WizardMode = 'playing' | 'celebrating' | 'ready-for-checkpoint' | 'finishing' | 'more-practice' | 'extra-practice' | 'finish-error'
 
@@ -339,36 +342,47 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   }
 
   if (mode === 'celebrating') {
+    const SKILL: Record<string, string> = { 'brain-gym': '#4f46e5', 'right-brain-intuition': '#7c3aed', visualization: '#0d9488', 'reading-intelligence': '#ea580c' }
     return (
-      <div className={`${CARD_CLASS_NAME} flex flex-col items-center gap-4 p-8 text-center sm:p-12`}>
-        <div className="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-emerald-500/15 blur-3xl" aria-hidden="true" />
-        <div className="relative flex size-16 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500/20 to-teal-500/20 text-emerald-500">
-          <PartyPopper className="size-8" aria-hidden="true" />
+      <div className={`${CARD_CLASS_NAME} flex flex-col items-center gap-4 p-6 text-center sm:p-10`} data-day-complete={day}>
+        {!isReplay && <Confetti />}
+        <Stars count={3} size={44} />
+        <div>
+          <p className="text-xs font-bold tracking-widest text-primary uppercase">{isReplay ? t('curriculum.practice.complete') : t('curriculum.player.dayCompleteEyebrow', { day })}</p>
+          <h2 className="mt-1 text-[2rem] text-foreground">{isReplay ? t('curriculum.player.dayDone', { title: dayTitle(t, day) }) : t('training.play.dayDone', { day })}</h2>
         </div>
-        <div className="relative">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">
-            {isReplay ? t('curriculum.practice.complete') : t('curriculum.player.dayCompleteEyebrow', { day })}
-          </p>
-          {!isReplay && nextOpensAt !== null ? (
-            <>
-              <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{t('curriculum.pace.opensTomorrow', { day: day + 1 })}</h2>
-              <p className="mx-auto mt-3 flex w-fit items-center gap-2 rounded-xl bg-muted/60 px-3 py-2 text-sm text-foreground" data-next-day-opens={nextOpensAt}>
+        <ul className="w-full max-w-sm text-left" data-day-steps={queueIds.length}>
+          {queueIds.map((id) => {
+            const ex = getCurriculumExerciseById(id)
+            if (ex === undefined) return null
+            return (
+              <li key={id} className="flex items-center gap-3 border-b border-border/60 py-2 last:border-b-0">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg font-bold text-white" style={{ background: SKILL[ex.category] ?? '#7c3aed' }} aria-hidden="true">
+                  ✓
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-base font-bold text-foreground">{exerciseTitle(t, ex)}</span>
+                  <span className="block text-xs text-muted-foreground">{categoryLabel(t, ex.category)}</span>
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+        {isReplay ? (
+          <p className="max-w-sm text-sm text-muted-foreground">{t('curriculum.practice.saved', { day })}</p>
+        ) : (
+          <div className="flex max-w-sm flex-col items-center gap-2">
+            <p className="text-base font-bold text-foreground" data-practice-complete="true">{t('training.play.todayComplete')}</p>
+            {nextOpensAt !== null && (
+              <p className="flex w-fit items-center gap-2 rounded-xl bg-muted px-3 py-2 text-sm text-foreground" data-next-day-opens={nextOpensAt}>
                 <Clock className="size-4 text-muted-foreground" aria-hidden="true" />
                 {t('curriculum.pace.opensAt', { time: formatOpenTime(nextOpensAt, htmlLang), date: formatOpenDate(nextOpensAt, htmlLang) })}
               </p>
-              <p className="mt-2 max-w-sm text-sm text-muted-foreground">{t('curriculum.pace.nothingLost')}</p>
-            </>
-          ) : (
-            <>
-              <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{t('curriculum.player.dayDone', { title: dayTitle(t, day) })}</h2>
-              <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-                {isReplay ? t('curriculum.practice.saved', { day }) : t('curriculum.player.allExercisesDone', { count: queueIds.length, next: day + 1 })}
-              </p>
-            </>
-          )}
-        </div>
-        <Button onClick={onDayComplete} size="lg" className="relative rounded-full" data-continue-to-roadmap="true">
-          {t('curriculum.player.backToRoadmap')}
+            )}
+          </div>
+        )}
+        <Button onClick={onDayComplete} size="lg" className="btn-finish relative min-h-12 w-full max-w-sm rounded-2xl" data-continue-to-roadmap="true">
+          {isReplay ? t('curriculum.player.backToRoadmap') : t('training.play.seeTomorrow')}
           <ArrowRight className="size-4" aria-hidden="true" />
         </Button>
       </div>
@@ -457,10 +471,10 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           text and duplicated the embedded exercise's own watermark. */}
       <div className="flex shrink-0 items-center justify-between gap-2 border-b border-border/60 px-3 py-2 pt-[max(0.5rem,env(safe-area-inset-top))] sm:px-6 sm:py-4">
         <div className="min-w-0">
-          <p className="text-[9px] font-semibold tracking-widest text-muted-foreground uppercase sm:text-[10px]">
+          <p className="text-xs font-bold tracking-wider text-muted-foreground uppercase">
             {t('curriculum.player.stepOf', { step: Math.min(queueIds.length, queueIds.filter((id) => doneIds.has(id)).length + 1), total: queueIds.length, category: categoryLabel(t, exercise.category) })}
           </p>
-          <p className="truncate text-xs font-semibold text-foreground sm:text-sm">{exerciseTitle(t, exercise)}</p>
+          <p className="truncate font-heading text-lg text-foreground">{exerciseTitle(t, exercise)}</p>
         </div>
         <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           {mode !== 'extra-practice' && order.length > 1 && (

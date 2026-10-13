@@ -970,7 +970,8 @@
     "numberRoundTip": "{correct} of {total} digits in place. Make one scene with the pictures, in order.",
     "storyTip": "{correct} of {total} in the right place. Walk through your story again from the start.",
     "chapterTip": "Picture the idea at its station once more — big and moving.",
-    "chapterQuestionTip": "This comes from the idea: {idea}."
+    "chapterQuestionTip": "This comes from the idea: {idea}.",
+    "methodNew": "New"
   },
   "play": {
     "brilliant": "Brilliant!",
@@ -987,6 +988,9 @@
     "themeDark": "Dark",
     "themeAuto": "Auto (follows your phone)",
     "sound": "Sounds for right and wrong answers",
-    "vibration": "Light vibration on phones"
+    "vibration": "Light vibration on phones",
+    "dayDone": "Day {day} done!",
+    "todayComplete": "Today's practice is complete — see you tomorrow.",
+    "seeTomorrow": "See tomorrow"
   }
 }

@@ -970,7 +970,8 @@
     "numberRoundTip": "{total} में से {correct} अंक सही जगह पर। तस्वीरों से क्रम से एक दृश्य बनाइए।",
     "storyTip": "{total} में से {correct} सही जगह पर। अपनी कहानी शुरू से फिर दोहराइए।",
     "chapterTip": "इस विचार को उसके स्टेशन पर एक बार फिर देखिए — बड़ा और चलता-फिरता।",
-    "chapterQuestionTip": "यह इस विचार से है: {idea}।"
+    "chapterQuestionTip": "यह इस विचार से है: {idea}।",
+    "methodNew": "नया"
   },
   "play": {
     "brilliant": "शानदार!",
@@ -987,6 +988,9 @@
     "themeDark": "डार्क",
     "themeAuto": "ऑटो (आपके फ़ोन के अनुसार)",
     "sound": "सही और ग़लत जवाब पर आवाज़",
-    "vibration": "फ़ोन पर हल्का कंपन"
+    "vibration": "फ़ोन पर हल्का कंपन",
+    "dayDone": "दिन {day} पूरा!",
+    "todayComplete": "आज का अभ्यास पूरा हो गया — कल मिलते हैं।",
+    "seeTomorrow": "कल देखें"
   }
 }
