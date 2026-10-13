@@ -16,6 +16,7 @@ export async function MemoryStudioHub(): Promise<React.JSX.Element> {
       </div>
       <ReviewDueCard />
       <div className="flex flex-col gap-3">
+        <MethodCard href="/labs/sharp-brain/chapter-book" icon="chapter" title={t('training.studio.chapterTitle')} description={t('training.studio.chapterDesc')} />
         <MethodCard href="/labs/sharp-brain/story-method" icon="story-rocket" title={t('training.studio.storyTitle')} description={t('training.studio.storyDesc')} />
         <MethodCard href="/labs/sharp-brain/peg-method" icon="peg-shape" title={t('training.studio.pegTitle')} description={t('training.studio.pegDesc')} />
         <MethodCard href="/labs/sharp-brain/memory-palace" icon="palace" title={t('training.palace.title')} description={t('training.studio.palaceDesc')} />

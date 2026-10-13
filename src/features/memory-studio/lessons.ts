@@ -63,3 +63,9 @@ export function palaceLesson(t: Translator, lang: StudioLang): LessonLine[] {
   const pictures: Record<number, LessonLine['pictures']> = { 5: [pic('rocket', lang, 1), pic('guitar', lang, 2)] }
   return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.palaceLesson.l${n}` as Parameters<Translator>[0]), ...(pictures[n] ? { pictures: pictures[n] } : {}) }))
 }
+
+export const CHAPTER_LESSON_ID = 'chapter-lesson'
+
+export function chapterLesson(t: Translator): LessonLine[] {
+  return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ id: `line-${n}`, text: t(`training.studio.chapterLesson.l${n}` as Parameters<Translator>[0]) }))
+}

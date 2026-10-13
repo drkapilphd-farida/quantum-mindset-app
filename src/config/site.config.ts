@@ -609,3 +609,16 @@ export function upcomingEvents(now: Date = new Date()): UpcomingEvent[] {
     .sort((a, b) => new Date(a.event.endISO).getTime() - new Date(b.event.endISO).getTime())
     .map((p) => ({ id: p.id, name: p.name, nameHi: p.nameHi, url: p.url, prices: p.prices, event: p.event }))
 }
+
+/**
+ * Memory Studio limits (founder decision, 12 Oct 2026): a learner can turn at
+ * most this many new chapters a day into a Chapter & Book map (each one is an
+ * AI call; reopening a saved chapter, or the same text again, is free).
+ */
+export const memoryStudio = {
+  chapterMapsPerDay: 3,
+  /** Characters of a chapter sent to the AI (a long chapter is cut here, at a paragraph). */
+  maxChapterChars: 24_000,
+  /** Upload size limit, same as Upload & Learn. */
+  maxUploadBytes: 4 * 1024 * 1024,
+} as const
