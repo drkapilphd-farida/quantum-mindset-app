@@ -140,7 +140,7 @@ export function ComprehensionCheckpoint({
           <button
             type="button"
             onClick={onPassContinue}
-            className="w-full max-w-xs rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="w-full max-w-xs rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {isLastBlock ? t('exercises.common.finish') : t('exercises.quiz.nextAt', { wpm: nextTargetWpm })}
           </button>
@@ -179,7 +179,7 @@ export function ComprehensionCheckpoint({
           {questions.map((question, index) => (
             <div
               key={question.id}
-              className={`h-1 flex-1 rounded-full ${index < questionIndex ? 'bg-foreground' : index === questionIndex ? 'bg-foreground/50' : 'bg-border'}`}
+              className={`h-1 flex-1 rounded-full ${index < questionIndex ? 'bg-primary' : index === questionIndex ? 'bg-foreground/50' : 'bg-border'}`}
             />
           ))}
         </div>

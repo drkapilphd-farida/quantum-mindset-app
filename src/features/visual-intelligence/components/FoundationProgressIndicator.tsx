@@ -37,7 +37,7 @@ export function FoundationProgressIndicator({ currentOrder }: FoundationProgress
                   'size-1.5 rounded-full',
                   !prefersReducedMotion && 'transition-all duration-300',
                   order === currentOrder
-                    ? 'size-2 bg-foreground'
+                    ? 'size-2 bg-primary'
                     : currentOrder !== null && order < currentOrder
                       ? 'bg-foreground/40'
                       : 'bg-border',

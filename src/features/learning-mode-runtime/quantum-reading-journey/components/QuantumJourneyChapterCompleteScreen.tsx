@@ -50,7 +50,7 @@ export function QuantumJourneyChapterCompleteScreen({ assessmentScore, wordsCove
 
       <div className="flex flex-col items-center gap-3">
         {hasNextChapter && (
-          <button onClick={onNextChapter} className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80">
+          <button onClick={onNextChapter} className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80">
             Next Chapter Ready →
           </button>
         )}

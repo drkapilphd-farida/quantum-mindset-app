@@ -93,7 +93,7 @@ export function GuidedParagraphReadingModeSettings({
               aria-pressed={option.id === orientation}
               className={`flex-1 rounded-2xl border px-4 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 ${
                 option.id === orientation
-                  ? 'border-foreground bg-foreground text-background'
+                  ? 'border-foreground bg-primary text-primary-foreground'
                   : 'border-border/60 bg-card text-foreground hover:border-foreground/40'
               }`}
             >
@@ -152,7 +152,7 @@ export function GuidedParagraphReadingModeSettings({
       <button
         onClick={onStart}
         disabled={categoryLabel === null}
-        className="rounded-full bg-foreground px-10 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="rounded-full bg-primary px-10 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         {categoryLabel === null ? 'Preparing…' : 'Start'}
       </button>

@@ -26,7 +26,7 @@ export function GuidedStepProgress({ currentIndex, totalSteps }: GuidedStepProgr
           className={cn(
             'size-1.5 rounded-full',
             !prefersReducedMotion && 'transition-all duration-300',
-            i === currentIndex ? 'size-2 bg-foreground' : i < currentIndex ? 'bg-foreground/40' : 'bg-border',
+            i === currentIndex ? 'size-2 bg-primary' : i < currentIndex ? 'bg-foreground/40' : 'bg-border',
           )}
           aria-hidden="true"
         />

@@ -13,6 +13,17 @@ type NavLinksProps = {
   showPracticeJourney: boolean
 }
 
+// Play design: each menu item's icon sits on its skill colour.
+function skillColour(href: string): string {
+  if (href.startsWith('/memory-studio')) return '#7c3aed'
+  if (href.startsWith('/labs/sharp-brain/thirty-day-curriculum')) return '#4f46e5'
+  if (href.startsWith('/masterclasses')) return '#0d9488'
+  if (href.startsWith('/labs/sharp-brain/smart-reader')) return '#c2410c'
+  if (href.startsWith('/labs/sharp-brain/journey')) return '#d97706'
+  if (href.startsWith('/settings')) return '#64748b'
+  return '#7c3aed'
+}
+
 export function NavLinks({ onSelect, appDomain, showPracticeJourney }: NavLinksProps): React.JSX.Element {
   const pathname = usePathname()
   const t = useAppT()
@@ -30,20 +41,14 @@ export function NavLinks({ onSelect, appDomain, showPracticeJourney }: NavLinksP
             {...(onSelect !== undefined ? { onClick: onSelect } : {})}
             aria-current={isActive ? 'page' : undefined}
             className={cn(
-              'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
+              'flex min-h-11 items-center gap-3 rounded-xl px-3 py-2 text-base font-semibold transition-colors duration-150',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
-              isActive
-                ? 'bg-foreground/[0.07] text-foreground'
-                : 'text-muted-foreground hover:bg-foreground/[0.04] hover:text-foreground',
+              isActive ? 'bg-primary/12 text-foreground' : 'text-muted-foreground hover:bg-primary/6 hover:text-foreground',
             )}
           >
-            <Icon
-              className={cn(
-                'size-4 shrink-0 transition-colors duration-150',
-                isActive ? 'text-foreground' : 'text-muted-foreground',
-              )}
-              aria-hidden="true"
-            />
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-lg text-white" style={{ background: skillColour(href) }} aria-hidden="true">
+              <Icon className="size-4" />
+            </span>
             {labelKey !== null ? t(labelKey) : label}
           </Link>
         )

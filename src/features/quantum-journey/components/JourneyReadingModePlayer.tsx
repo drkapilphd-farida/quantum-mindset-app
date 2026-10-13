@@ -248,7 +248,7 @@ export function JourneyReadingModePlayer({ mode, lengthTier, speedMultiplier, on
             <button
               type="button"
               onClick={finishReading}
-              className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Done Reading →
             </button>

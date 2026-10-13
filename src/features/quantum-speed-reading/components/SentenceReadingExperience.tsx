@@ -795,7 +795,7 @@ function SentenceReadingSession({
             </p>
             <button
               onClick={runtime.startSession}
-              className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {t('exercises.phrase.startMission')}
             </button>
@@ -828,7 +828,7 @@ function SentenceReadingSession({
                 </p>
                 <button
                   onClick={handleContinue}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {evalData.level < 5 ? t('exercises.sentence.continue') : t('exercises.sentence.viewResults')}
                 </button>
@@ -845,7 +845,7 @@ function SentenceReadingSession({
                 <p className="text-xs text-muted-foreground">{tl(computeLevelCoachLine(evalData.percent))}</p>
                 <button
                   onClick={handleTryAgain}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {t('exercises.sentence.retry')}
                 </button>
@@ -920,7 +920,7 @@ function SentenceReadingSession({
             </p>
             <button
               onClick={runtime.resume}
-              className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {t('exercises.resume')}
             </button>

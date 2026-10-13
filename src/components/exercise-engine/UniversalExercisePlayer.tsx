@@ -427,7 +427,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
             />
             <button
               onClick={runtime.startSession}
-              className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+              className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
             >
               {copy?.begin ?? 'Begin'}
             </button>
@@ -505,7 +505,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
             />
             <button
               onClick={runtime.resume}
-              className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background"
+              className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background"
             >
               {copy?.resume ?? 'Resume'}
             </button>

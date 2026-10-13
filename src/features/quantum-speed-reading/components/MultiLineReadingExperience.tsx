@@ -597,7 +597,7 @@ function MultiLineReadingSession({
             </p>
             <button
               onClick={runtime.startSession}
-              className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Start Mission
             </button>
@@ -628,7 +628,7 @@ function MultiLineReadingSession({
                 </p>
                 <button
                   onClick={handleContinue}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {evalData.level < 5 ? 'Continue to Next Level' : 'View Results'}
                 </button>
@@ -648,7 +648,7 @@ function MultiLineReadingSession({
                 )}
                 <button
                   onClick={handleTryAgain}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   Try Again
                 </button>
@@ -695,7 +695,7 @@ function MultiLineReadingSession({
             </p>
             <button
               onClick={runtime.resume}
-              className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background transition-all duration-150 hover:opacity-80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Resume
             </button>

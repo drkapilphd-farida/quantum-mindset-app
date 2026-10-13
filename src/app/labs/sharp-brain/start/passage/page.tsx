@@ -80,7 +80,7 @@ export default async function PassageSelectPage({ searchParams }: PassageSelectP
                   className={cn(
                     'flex h-full flex-col items-center gap-2 rounded-xl px-3 py-4 text-center transition-all duration-300 group-hover:-translate-y-0.5',
                     isActive
-                      ? 'bg-foreground text-background shadow-md'
+                      ? 'bg-primary text-primary-foreground shadow-md'
                       : 'bg-muted/40 text-foreground ring-1 ring-foreground/10 group-hover:ring-foreground/20',
                   )}
                 >
@@ -119,7 +119,7 @@ export default async function PassageSelectPage({ searchParams }: PassageSelectP
                   className={cn(
                     'flex h-full flex-col gap-1 rounded-xl px-4 py-3 text-left transition-all duration-300 group-hover:-translate-y-0.5',
                     isActive
-                      ? 'bg-foreground text-background shadow-md'
+                      ? 'bg-primary text-primary-foreground shadow-md'
                       : 'bg-muted/40 text-foreground ring-1 ring-foreground/10 group-hover:ring-foreground/20',
                   )}
                 >

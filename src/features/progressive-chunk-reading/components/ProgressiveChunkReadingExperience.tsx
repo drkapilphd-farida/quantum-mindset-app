@@ -773,7 +773,7 @@ function ProgressiveChunkReadingSession({
             </p>
             <button
               onClick={runtime.startSession}
-              className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+              className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
             >
               Begin Reading
             </button>
@@ -805,7 +805,7 @@ function ProgressiveChunkReadingSession({
                 </p>
                 <button
                   onClick={handleContinue}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
                 >
                   {evalData.level < 5 ? 'Continue to Next Level' : 'View Results'}
                 </button>
@@ -826,7 +826,7 @@ function ProgressiveChunkReadingSession({
                 )}
                 <button
                   onClick={handleTryAgain}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
                 >
                   Try Again
                 </button>
@@ -867,7 +867,7 @@ function ProgressiveChunkReadingSession({
             </p>
             <button
               onClick={runtime.resume}
-              className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background"
+              className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background"
             >
               Resume
             </button>

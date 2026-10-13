@@ -20,7 +20,7 @@ export function QuantumJourneyErrorScreen({ message, onRetry, onReturnToDashboar
       <p className="text-sm font-semibold text-foreground">We couldn&apos;t prepare this chapter yet.</p>
       <p className="text-xs text-muted-foreground">{message}</p>
       <div className="mt-2 flex flex-col items-center gap-2">
-        <button onClick={onRetry} className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-80">
+        <button onClick={onRetry} className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-80">
           Try Again
         </button>
         {onContinuePrevious && (

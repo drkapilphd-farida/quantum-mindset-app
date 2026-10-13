@@ -390,7 +390,7 @@ export function PhotographicMemoryCanvas({ categoryFilter, onComplete, onExitReq
           <div className="w-40">
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-border">
               <div
-                className={`h-full rounded-full bg-foreground ${prefersReducedMotion ? '' : 'transition-[width] duration-100 ease-linear'}`}
+                className={`h-full rounded-full bg-primary ${prefersReducedMotion ? '' : 'transition-[width] duration-100 ease-linear'}`}
                 style={{ width: `${(flashRemainingMs / flashDurationForRound) * 100}%` }}
               />
             </div>
@@ -410,7 +410,7 @@ export function PhotographicMemoryCanvas({ categoryFilter, onComplete, onExitReq
               <div className="w-32">
                 <div className="h-1 w-full overflow-hidden rounded-full bg-border">
                   <div
-                    className={`h-full rounded-full ${recallRemainingMs <= 1500 ? 'bg-red-500' : 'bg-foreground'} ${prefersReducedMotion ? '' : 'transition-[width] duration-100 ease-linear'}`}
+                    className={`h-full rounded-full ${recallRemainingMs <= 1500 ? 'bg-red-500' : 'bg-primary'} ${prefersReducedMotion ? '' : 'transition-[width] duration-100 ease-linear'}`}
                     style={{ width: `${(recallRemainingMs / RECALL_TIME_LIMIT_MS) * 100}%` }}
                   />
                 </div>

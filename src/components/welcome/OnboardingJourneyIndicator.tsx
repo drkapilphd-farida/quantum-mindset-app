@@ -52,7 +52,7 @@ export function OnboardingJourneyIndicator({ currentStepId, className }: Onboard
                     className={cn(
                       'relative flex size-2.5 items-center justify-center rounded-full transition-colors duration-300',
                       isComplete && 'bg-foreground/70',
-                      isCurrent && 'size-3 bg-foreground',
+                      isCurrent && 'size-3 bg-primary',
                       !isComplete && !isCurrent && 'border border-muted-foreground/30 bg-transparent',
                     )}
                   >

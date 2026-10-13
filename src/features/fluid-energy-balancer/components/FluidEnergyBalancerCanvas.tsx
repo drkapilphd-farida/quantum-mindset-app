@@ -501,7 +501,7 @@ export function FluidEnergyBalancerCanvas({ onComplete, onExitRequested }: Fluid
           onClick={() => setIsSoundscapeEnabled((enabled) => !enabled)}
           data-soundscape-enabled={isSoundscapeEnabled}
           className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 ${
-            isSoundscapeEnabled ? 'border-foreground bg-foreground text-background' : 'border-border bg-background text-foreground'
+            isSoundscapeEnabled ? 'border-foreground bg-primary text-primary-foreground' : 'border-border bg-background text-foreground'
           }`}
         >
           {isSoundscapeEnabled ? t('exercises.sound.soundscapeOn') : t('exercises.sound.soundscapeOff')}

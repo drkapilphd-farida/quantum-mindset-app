@@ -21,7 +21,7 @@ export async function DashboardViewToggle({ activeView }: DashboardViewTogglePro
         href="/dashboard"
         className={cn(
           'rounded-full px-3 py-1.5 transition-colors',
-          activeView === 'student' ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',
+          activeView === 'student' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
         )}
       >
         {t('dashboard.viewToggle.student')}
@@ -30,7 +30,7 @@ export async function DashboardViewToggle({ activeView }: DashboardViewTogglePro
         href="/dashboard?view=parent"
         className={cn(
           'rounded-full px-3 py-1.5 transition-colors',
-          activeView === 'parent' ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',
+          activeView === 'parent' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
         )}
       >
         {t('dashboard.viewToggle.parent')}

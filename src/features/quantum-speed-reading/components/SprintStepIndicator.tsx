@@ -40,7 +40,7 @@ export function SprintStepIndicator({ currentStep }: SprintStepIndicatorProps): 
                 className={cn(
                   'size-1.5 rounded-full transition-all duration-300',
                   step === currentStep
-                    ? 'size-2 bg-foreground'
+                    ? 'size-2 bg-primary'
                     : step < currentStep
                       ? 'bg-foreground/40'
                       : 'bg-border',

@@ -43,7 +43,7 @@ export function SpeedControl({
           onClick={() => onToggleMode(false)}
           className={cn(
             'rounded-full px-3 py-1 font-medium transition-colors',
-            !isManual ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',
+            !isManual ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
           )}
         >
           Auto
@@ -52,7 +52,7 @@ export function SpeedControl({
           onClick={() => onToggleMode(true)}
           className={cn(
             'rounded-full px-3 py-1 font-medium transition-colors',
-            isManual ? 'bg-foreground text-background' : 'text-muted-foreground hover:text-foreground',
+            isManual ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
           )}
         >
           Manual

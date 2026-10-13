@@ -33,7 +33,7 @@ export function QuantumJourneyChapterReadyScreen({ chapterTitle, wordCount, chun
           <dd className="mt-1 text-lg font-semibold tabular-nums text-foreground">{questionCount}</dd>
         </div>
       </dl>
-      <button onClick={onStart} className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80">
+      <button onClick={onStart} className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80">
         Begin Chapter
       </button>
     </div>

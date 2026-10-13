@@ -809,7 +809,7 @@ function PhraseReadingSession({
             </p>
             <button
               onClick={runtime.startSession}
-              className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+              className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
             >
               {t('exercises.phrase.startMission')}
             </button>
@@ -841,7 +841,7 @@ function PhraseReadingSession({
                 </p>
                 <button
                   onClick={handleContinue}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
                 >
                   {evalData.level < 5 ? t('exercises.phrase.continueNextLevel') : t('exercises.phrase.viewResults')}
                 </button>
@@ -862,7 +862,7 @@ function PhraseReadingSession({
                 )}
                 <button
                   onClick={handleTryAgain}
-                  className="mt-4 rounded-full bg-foreground px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+                  className="mt-4 rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
                 >
                   {t('exercises.quiz.tryAgain')}
                 </button>
@@ -912,7 +912,7 @@ function PhraseReadingSession({
             </p>
             <button
               onClick={runtime.resume}
-              className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background"
+              className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background"
             >
               {t('exercises.resume')}
             </button>

@@ -296,7 +296,7 @@ export function ColorSceneTransformationCanvas({ onComplete, onExitRequested }: 
             <div className="w-40">
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-border">
                 <div
-                  className={`h-full rounded-full bg-foreground ${prefersReducedMotion ? '' : 'transition-[width] duration-100 ease-linear'}`}
+                  className={`h-full rounded-full bg-primary ${prefersReducedMotion ? '' : 'transition-[width] duration-100 ease-linear'}`}
                   style={{ width: `${(momentRemainingMs / STEP_DURATION_MS) * 100}%` }}
                 />
               </div>

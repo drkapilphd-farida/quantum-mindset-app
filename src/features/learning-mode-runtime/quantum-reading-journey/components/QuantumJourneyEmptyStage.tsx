@@ -16,7 +16,7 @@ export function QuantumJourneyEmptyStage({ message, onSkip }: QuantumJourneyEmpt
       <p className="text-sm text-muted-foreground max-w-xs">{message}</p>
       <button
         onClick={onSkip}
-        className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-80"
+        className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-80"
       >
         Continue →
       </button>

@@ -224,10 +224,10 @@ function ReadingStage({ title, text, busy, onDone }: { title: string; text: stri
     }
   }, [])
   return (
-    <article className="flex flex-col gap-4" data-fair-reading="true">
-      <h2 className="font-heading text-xl font-bold text-foreground">{title}</h2>
+    <article className="paper flex flex-col gap-4 p-5 shadow-sm" data-fair-reading="true">
+      <h2 className="font-heading text-xl font-bold text-[#1b1b2f]">{title}</h2>
       {text.split('\n\n').map((p, i) => (
-        <p key={i} className="text-lg leading-relaxed text-foreground">
+        <p key={i} className="text-lg leading-relaxed text-[#1b1b2f]">
           {p}
         </p>
       ))}
