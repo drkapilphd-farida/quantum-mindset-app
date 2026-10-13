@@ -31,6 +31,14 @@ import { Stars, starsFor } from '@/components/play/Stars'
 
 const LAB_HREF = '/labs/sharp-brain'
 
+/** Play design: the skill label sits on its skill colour (dark enough for white text in both themes). */
+function skillColourFor(t: (k: 'training.skills.memory' | 'training.skills.focus' | 'training.skills.calmFocus' | 'training.skills.smartReading' | 'training.skills.retention') => string, skill: string): string {
+  if (skill === t('training.skills.memory')) return '#7c3aed'
+  if (skill === t('training.skills.smartReading')) return '#c2410c'
+  if (skill === t('training.skills.calmFocus') || skill === t('training.skills.retention')) return '#0f766e'
+  return '#4f46e5'
+}
+
 /** What one round reports back to the shell. */
 export type RoundOutcome = {
   correct: number
@@ -342,7 +350,9 @@ function IntroScreen({
   return (
     <div className="flex w-full flex-col items-center gap-4 py-2 text-center">
       <div>
-        <p className="text-[11px] font-semibold tracking-widest text-primary uppercase">{skill}</p>
+        <p className="inline-block rounded-full px-3 py-0.5 text-xs font-bold tracking-wider text-white uppercase" style={{ background: skillColourFor(t, skill) }}>
+          {skill}
+        </p>
         <h1 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground">{title}</h1>
         <p className="mt-1 text-sm text-muted-foreground">{purpose}</p>
       </div>
