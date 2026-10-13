@@ -9,7 +9,7 @@ import { LANGUAGES } from '@/lib/app-i18n/languages'
 export function PlayScope({ children, className = '' }: { children: React.ReactNode; className?: string }): React.JSX.Element {
   const lang = useUiLang()
   return (
-    <div className={`play min-h-full ${className}`} data-lang={lang} lang={LANGUAGES[lang].htmlLang}>
+    <div className={`play ${className}`} data-lang={lang} lang={LANGUAGES[lang].htmlLang}>
       {children}
     </div>
   )

@@ -345,7 +345,13 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
           </div>
         )}
       </div>
-      <div className="sticky bottom-0 flex items-center justify-between gap-2 bg-background/95 py-2" data-reader-controls="true">
+      <div className="sticky bottom-0 flex flex-col gap-2 bg-background/95 py-2" data-reader-controls="true">
+        {mode !== 'normal' && (
+          <div className="flex justify-center">
+            <SpeedControl wpm={wpm} onChange={setWpm} compact />
+          </div>
+        )}
+        <div className="flex items-center justify-between gap-2">
         {mode === 'normal' ? (
           <Button
             size="lg"
@@ -366,8 +372,7 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
             <button type="button" onClick={() => setAt(backOneSentence(ws, at))} aria-label={t('training.reader.back')} className="play-option flex size-12 items-center justify-center" data-reader-back="true">
               <ChevronsLeft className="size-5" aria-hidden="true" />
             </button>
-            <SpeedControl wpm={wpm} onChange={setWpm} compact />
-            <button type="button" onClick={pause} aria-label={paused ? t('training.reader.resume') : t('training.reader.pause')} className="flex size-14 items-center justify-center rounded-full text-white" style={{ background: '#7c3aed' }} data-reader-pause={paused ? 'paused' : 'playing'}>
+            <button type="button" onClick={pause} aria-label={paused ? t('training.reader.resume') : t('training.reader.pause')} className="flex size-16 items-center justify-center rounded-full text-white" style={{ background: '#7c3aed' }} data-reader-pause={paused ? 'paused' : 'playing'}>
               {paused ? <Play className="size-6" aria-hidden="true" /> : <Pause className="size-6" aria-hidden="true" />}
             </button>
           </>
@@ -376,6 +381,7 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
           <Coffee className="size-4" aria-hidden="true" />
           {t('training.reader.tired')}
         </button>
+        </div>
       </div>
     </div>
   )
@@ -397,7 +403,7 @@ function SpeedControl({ wpm, onChange, compact = false }: { wpm: number; onChang
       <button type="button" onClick={() => onChange(clampWpm(wpm - WPM_STEP))} aria-label={t('training.reader.slower')} className="play-option flex size-11 items-center justify-center">
         <Minus className="size-4" aria-hidden="true" />
       </button>
-      <span className="min-w-20 text-center font-heading text-lg text-foreground tabular-nums">{t('training.reader.wpmValue', { n: wpm })}</span>
+      <span className="min-w-24 text-center font-heading text-lg whitespace-nowrap text-foreground tabular-nums">{t('training.reader.wpmValue', { n: wpm })}</span>
       <button type="button" onClick={() => onChange(clampWpm(wpm + WPM_STEP))} aria-label={t('training.reader.faster')} className="play-option flex size-11 items-center justify-center">
         <Plus className="size-4" aria-hidden="true" />
       </button>
