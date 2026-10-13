@@ -10,13 +10,16 @@ import { listMyPalaces } from '../palaceActions'
 import { STATION_SUGGESTIONS, type MyPalace } from '../palaces'
 import { chapterLesson, CHAPTER_LESSON_ID } from '../lessons'
 import { SAMPLE_CHAPTER } from '../sampleChapter'
+import { SmartReader } from '@/features/smart-reader/components/SmartReader'
+import { prepareOwnChapter } from '@/features/smart-reader/actions'
+import { splitIntoSections, type ReaderSection } from '@/features/smart-reader/reader'
 import { ChapterEditor } from './ChapterEditor'
 import { ChapterMindMap } from './ChapterMindMap'
 import { ChapterWalk } from './ChapterWalk'
 import { MethodHome } from './MethodHome'
 import { MethodLesson } from './MethodLesson'
 
-type Mode = { name: 'home' } | { name: 'lesson' } | { name: 'new' } | { name: 'list' } | { name: 'edit'; map: ChapterMap } | { name: 'view'; map: ChapterMap } | { name: 'walk'; map: ChapterMap; journey: boolean }
+type Mode = { name: 'home' } | { name: 'lesson' } | { name: 'new' } | { name: 'read'; map: ChapterMap; sections: ReaderSection[] | null; text: string } | { name: 'list' } | { name: 'edit'; map: ChapterMap } | { name: 'view'; map: ChapterMap } | { name: 'walk'; map: ChapterMap; journey: boolean }
 
 // Chapter & Book: remember the key ideas and structure of a chapter or a book.
 // Inside the 30-day plan (onComplete given): no chapters yet → the lesson, then a
@@ -52,7 +55,12 @@ export function ChapterBookExperience({ onComplete, onExit }: { onComplete?: () 
 
   if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
   if (mode.name === 'lesson') return <MethodLesson narrationId={CHAPTER_LESSON_ID} title={t('training.studio.chapterTitle')} lines={lesson} onDone={() => setMode({ name: 'new' })} />
-  if (mode.name === 'new') return wrap(t('training.studio.chapterNew'), <NewChapter sample={inPlan} onCreated={(map) => (reload(), setMode({ name: 'edit', map }))} onBack={home} />)
+  if (mode.name === 'new') return wrap(t('training.studio.chapterNew'), <NewChapter sample={inPlan} onCreated={(map, text) => (reload(), setMode(text === SAMPLE_CHAPTER.en.text || text === SAMPLE_CHAPTER.hi.text ? { name: 'edit', map } : { name: 'read', map, sections: null, text }))} onBack={home} />)
+  if (mode.name === 'read') {
+    // Own-book practice: read the chapter in the Smart Reader (questions after each section), then on to its key ideas.
+    if (mode.sections === null) return <PrepareRead text={mode.text} onReady={(sections) => setMode({ ...mode, sections })} />
+    return <SmartReader title={mode.map.title} sections={mode.sections} source="chapter" sourceRef={mode.map.id} onFinished={() => setMode({ name: 'edit', map: mode.map })} onExit={() => setMode({ name: 'edit', map: mode.map })} />
+  }
   if (mode.name === 'edit')
     return wrap(
       mode.map.title,
@@ -137,7 +145,7 @@ export function ChapterBookExperience({ onComplete, onExit }: { onComplete?: () 
   )
 }
 
-function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated: (map: ChapterMap) => void; onBack: () => void }): React.JSX.Element {
+function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated: (map: ChapterMap, text: string) => void; onBack: () => void }): React.JSX.Element {
   const t = useAppT()
   const uiLang = useUiLang()
   const [title, setTitle] = useState('')
@@ -171,7 +179,7 @@ function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated:
         setMessage(null)
         void createChapterMap({ title: title.trim(), bookTitle: book.trim() || undefined, text, source, lang: uiLang }).then((res) => {
           setBusy(null)
-          if (res.ok) return onCreated(res.map)
+          if (res.ok) return onCreated(res.map, text)
           setMessage(
             t(
               res.error === 'garbled'
@@ -241,4 +249,19 @@ function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated:
       </Button>
     </form>
   )
+}
+
+/** Splits the chapter into sections and fetches their questions (one AI call); falls back to sections without questions. */
+function PrepareRead({ text, onReady }: { text: string; onReady: (sections: ReaderSection[]) => void }): React.JSX.Element {
+  const t = useAppT()
+  useEffect(() => {
+    let live = true
+    void prepareOwnChapter({ text })
+      .then((res) => live && onReady(res.ok ? res.sections : splitIntoSections(text).map((s) => ({ ...s, questions: [] }))))
+      .catch(() => live && onReady(splitIntoSections(text).map((s) => ({ ...s, questions: [] }))))
+    return () => {
+      live = false
+    }
+  }, [text]) // eslint-disable-line react-hooks/exhaustive-deps
+  return <div className="py-24 text-center text-base text-muted-foreground" data-chapter-preparing="true">{t('training.reader.preparing')}</div>
 }

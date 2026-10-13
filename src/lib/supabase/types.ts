@@ -2762,6 +2762,42 @@ export type Database = {
         }
         Relationships: []
       }
+      reading_positions: {
+        Row: {
+          finished: boolean
+          mode: string
+          section: number
+          source: string
+          source_ref: string
+          updated_at: string
+          user_id: string
+          word_index: number
+          wpm: number
+        }
+        Insert: {
+          finished?: boolean
+          mode?: string
+          section?: number
+          source: string
+          source_ref: string
+          updated_at?: string
+          user_id: string
+          word_index?: number
+          wpm: number
+        }
+        Update: {
+          finished?: boolean
+          mode?: string
+          section?: number
+          source?: string
+          source_ref?: string
+          updated_at?: string
+          user_id?: string
+          word_index?: number
+          wpm?: number
+        }
+        Relationships: []
+      }
       reading_tests: {
         Row: {
           answers: Json

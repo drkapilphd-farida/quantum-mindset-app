@@ -36,6 +36,15 @@ export async function MemoryStudioHub(): Promise<React.JSX.Element> {
           return <MethodCard key={m.href} href={m.href} icon={m.icon} title={t(m.title)} description={t(m.desc)} levelLabel={level === null ? t('training.studio.methodNew') : t('training.studio.levelChip', { level })} />
         })}
       </div>
+      <Link href="/labs/sharp-brain/smart-reader" className="play-card flex items-center gap-4 p-4" data-smart-reader-card="true">
+        <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl text-2xl" style={{ background: 'color-mix(in srgb, #ea580c 20%, transparent)' }} aria-hidden="true">
+          📖
+        </span>
+        <span className="min-w-0">
+          <span className="block text-lg font-bold text-foreground">{t('training.reader.libraryTitle')}</span>
+          <span className="block text-sm text-muted-foreground">{t('training.reader.libraryDesc')}</span>
+        </span>
+      </Link>
       <Link href="/labs/sharp-brain/review" className="self-start text-sm font-semibold text-primary" data-review-link="true">
         {t('training.studio.reviewTitle')} →
       </Link>
