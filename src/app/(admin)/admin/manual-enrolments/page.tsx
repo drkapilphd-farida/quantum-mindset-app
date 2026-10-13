@@ -5,7 +5,7 @@ import { upcomingBatches } from '@/features/sharp-brain-enrol/batches'
 import { listManualEnrolments } from '@/features/manual-enrolments/data'
 import { inRefundWindow, PAYMENT_MODE_LABEL, todayIst } from '@/features/manual-enrolments/rules'
 import { ManualEnrolmentForm } from '@/features/manual-enrolments/components/ManualEnrolmentForm'
-import { RefundButton } from '@/features/manual-enrolments/components/RefundButton'
+import { EntryActions } from '@/features/manual-enrolments/components/EntryActions'
 
 // Uses the service-role client — never at build time.
 export const dynamic = 'force-dynamic'
@@ -35,8 +35,7 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
       <div>
         <h1 className="text-2xl font-semibold">Manual enrolments</h1>
         <p className="text-sm text-muted-foreground">
-          Sharp Brain 30-Day Program payments by GPay, cash or bank transfer. “Give full access” switches the program and app on now — or, if the
-          person hasn’t signed up yet, as soon as they sign up with this email. Every entry is a sale (also listed in Sharp Brain Enrolments) with a
+          Sharp Brain 30-Day Program payments by GPay, cash or bank transfer. “Give full access” switches the program and app on now if they already have an account (any sign-in, including Google) — otherwise as soon as they sign up or log in with this email. One active entry per email: use Edit to correct it, Delete for an entry made by mistake. Every entry is a sale (also listed in Sharp Brain Enrolments) with a
           7-day refund window.
         </p>
       </div>
@@ -79,7 +78,13 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
                     <TableCell className="whitespace-nowrap">{fmt(r.refundBy)}</TableCell>
                     <TableCell className="whitespace-nowrap">{r.batchStart ? fmt(r.batchStart) : 'Not decided'}</TableCell>
                     <TableCell className={`whitespace-nowrap ${STATUS[r.status]!.className}`}>{STATUS[r.status]!.label}</TableCell>
-                    <TableCell>{r.status !== 'refunded' && <RefundButton id={r.id} inWindow={inRefundWindow(r.paidOn, today)} />}</TableCell>
+                    <TableCell>
+                      <EntryActions
+                        entry={{ id: r.id, amountInr: r.amountInr, mode: r.mode, paidOn: r.paidOn, batchStart: r.batchStart, refunded: r.status === 'refunded', inWindow: inRefundWindow(r.paidOn, today) }}
+                        batches={batches}
+                        today={today}
+                      />
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

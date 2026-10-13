@@ -3360,6 +3360,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_pending_access: { Args: { p_user: string }; Returns: number }
       is_active_family_member: {
         Args: { p_family_id: string }
         Returns: boolean
@@ -3386,6 +3387,7 @@ export type Database = {
         Args: { p_target_user_id: string }
         Returns: boolean
       }
+      user_id_by_email: { Args: { p_email: string }; Returns: string }
       verify_certificate: {
         Args: { p_token: string }
         Returns: {

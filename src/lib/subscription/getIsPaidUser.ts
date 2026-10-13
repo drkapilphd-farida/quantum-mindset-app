@@ -1,5 +1,7 @@
 import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
+import { logger } from '@/lib/logger'
 
 // Real, RLS-respecting check against the `subscriptions` table (see
 // supabase/migrations/20260711000005_create_plans_subscriptions_entitlements.sql).
@@ -49,7 +51,23 @@ export async function getIsPaidUser(userId: string, client?: Client): Promise<bo
   return client ? isPaid(userId, client) : isPaidForRequest(userId)
 }
 
-const isPaidForRequest = cache(async (userId: string): Promise<boolean> => isPaid(userId, await createClient()))
+// A signed-in learner without access may have a payment or grant waiting for
+// their email (recorded after their account was created): claim it now, so
+// access switches on at the next login / page load — not only at sign-up.
+const isPaidForRequest = cache(async (userId: string): Promise<boolean> => {
+  const client = await createClient()
+  if (await isPaid(userId, client)) return true
+  try {
+    const { data } = await createServiceClient().rpc('claim_pending_access', { p_user: userId })
+    if (typeof data === 'number' && data > 0) {
+      logger.info('pending access claimed at page load', { claimed: data })
+      return isPaid(userId, client)
+    }
+  } catch (error) {
+    logger.warn('claim_pending_access failed', { message: error instanceof Error ? error.message : 'unknown' })
+  }
+  return false
+})
 
 async function isPaid(userId: string, supabase: Client): Promise<boolean> {
   const { data: subscriptions } = await supabase
