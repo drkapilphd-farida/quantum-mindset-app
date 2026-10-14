@@ -82,7 +82,17 @@ export default function ReadingMemoryTest(): React.JSX.Element {
   const top = useRef<HTMLDivElement>(null)
 
   useEffect(() => setPassageLang(siteLang), [siteLang])
-  useEffect(() => top.current?.scrollIntoView({ block: 'start' }), [stage.name])
+  // Each new step (and each bonus) starts at its top, just below the site's sticky header; not on first load.
+  const view = stage.name === 'result' ? `result-${stage.view}` : stage.name
+  const firstView = useRef(true)
+  useEffect(() => {
+    if (firstView.current) {
+      firstView.current = false
+      return
+    }
+    const el = top.current
+    if (el !== null) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80) })
+  }, [view])
 
   async function start(): Promise<void> {
     setPending(true)
@@ -569,8 +579,23 @@ function ShareBlock({ c, result, profileName }: { c: MemoryTestCopy; result: Mem
   )
 }
 
+function useScrollToTopOn(key: string): React.RefObject<HTMLElement | null> {
+  const ref = useRef<HTMLElement | null>(null)
+  const first = useRef(true)
+  useEffect(() => {
+    if (first.current) {
+      first.current = false
+      return
+    }
+    const el = ref.current
+    if (el !== null) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80) })
+  }, [key])
+  return ref
+}
+
 function StoryBonus({ c, lang, before, onBack }: { c: MemoryTestCopy; lang: 'en' | 'hi'; before: number; onBack: () => void }): React.JSX.Element {
   const [phase, setPhase] = useState<'intro' | 'playing' | 'told' | 'recall' | 'done'>('intro')
+  const sectionRef = useScrollToTopOn(phase === 'recall' || phase === 'done' ? phase : 'story')
   const [shown, setShown] = useState(0)
   const [after, setAfter] = useState(0)
   const grid = useMemo(() => storyRecallGrid(), [])
@@ -605,7 +630,7 @@ function StoryBonus({ c, lang, before, onBack }: { c: MemoryTestCopy; lang: 'en'
   }
 
   return (
-    <section className="flex flex-col gap-4" data-story-bonus={phase}>
+    <section ref={sectionRef} className="flex flex-col gap-4" data-story-bonus={phase}>
       <h2 className="text-2xl text-foreground">{c.storyTitle}</h2>
       {(phase === 'intro' || phase === 'playing' || phase === 'told') && (
         <>
@@ -663,6 +688,7 @@ function StoryBonus({ c, lang, before, onBack }: { c: MemoryTestCopy; lang: 'en'
 
 function BoostBonus({ c, resultToken, onBack }: { c: MemoryTestCopy; resultToken: string; onBack: () => void }): React.JSX.Element {
   const [phase, setPhase] = useState<'loading' | 'intro' | 'run' | 'questions' | 'done' | 'error'>('loading')
+  const sectionRef = useScrollToTopOn(phase === 'questions' || phase === 'done' ? phase : 'boost')
   const [demo, setDemo] = useState<{ token: string; pace: number; words: string[]; questions: Shown[] } | null>(null)
   const [outcome, setOutcome] = useState<{ pace: number; percent: number } | null>(null)
   const [index, setIndex] = useState(0)
@@ -684,7 +710,7 @@ function BoostBonus({ c, resultToken, onBack }: { c: MemoryTestCopy; resultToken
   }, [phase, index, demo])
 
   return (
-    <section className="flex flex-col gap-4" data-boost-bonus={phase}>
+    <section ref={sectionRef} className="flex flex-col gap-4" data-boost-bonus={phase}>
       <h2 className="text-2xl text-foreground">{c.boostTitle}</h2>
       {phase === 'loading' && <div className="h-40 rounded-2xl bg-muted motion-safe:animate-pulse" />}
       {phase === 'error' && <p className="text-base text-foreground">{c.error}</p>}
