@@ -44,6 +44,9 @@ export type LeadMagnetCopy = {
   leadSub: string
   leadSubmit: string
   leadSaved: string
+  leadSendTitle: string
+  leadSendButton: string
+  leadSendNote: string
   programTitle: string
   programLines: [string, string, string]
   seeProgram: string
@@ -140,6 +143,9 @@ export const leadMagnetCopy: Record<'en' | 'hi', LeadMagnetCopy> = {
     leadSub: 'We’ll send it to your WhatsApp. No spam.',
     leadSubmit: 'Send it to my WhatsApp',
     leadSaved: 'Done! Dr. Kapil’s team will send your result, reading type, tips and offer link on WhatsApp.',
+    leadSendTitle: 'Last step: tap Send in WhatsApp',
+    leadSendButton: 'Send on WhatsApp',
+    leadSendNote: 'Your result is ready in the message — just press Send, and Dr. Kapil’s team replies with your full report, tips and offer.',
     programTitle: 'Want to train these skills properly?',
     programLines: [
       'Sharp Brain is a 30-day program for reading, focus and memory.',
@@ -226,6 +232,9 @@ export const leadMagnetCopy: Record<'en' | 'hi', LeadMagnetCopy> = {
     leadSub: 'हम इसे आपके WhatsApp पर भेजेंगे। कोई स्पैम नहीं।',
     leadSubmit: 'मेरे WhatsApp पर भेजें',
     leadSaved: 'हो गया! डॉ. कपिल की टीम आपका नतीजा, पढ़ने का तरीका, टिप्स और ऑफ़र लिंक WhatsApp पर भेजेगी।',
+    leadSendTitle: 'आख़िरी कदम: WhatsApp में Send दबाएँ',
+    leadSendButton: 'WhatsApp पर भेजें',
+    leadSendNote: 'आपका नतीजा मैसेज में तैयार है — बस Send दबाएँ, डॉ. कपिल की टीम पूरी रिपोर्ट, टिप्स और ऑफ़र भेजेगी।',
     programTitle: 'क्या आप ये कौशल ठीक से ट्रेन करना चाहते हैं?',
     programLines: [
       'Sharp Brain पढ़ने, फ़ोकस और याददाश्त का 30 दिन का प्रोग्राम है।',

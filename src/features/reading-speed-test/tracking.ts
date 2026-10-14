@@ -12,6 +12,7 @@ export type SpeedTestEvent =
   | { name: 'boost_played'; paceWpm: number }
   | { name: 'whatsapp_submitted'; status: string; profile: string | null }
   | { name: 'offer_used' }
+  | { name: 'whatsapp_opened'; how: 'auto' | 'button' }
 
 const GA_NAME: Record<SpeedTestEvent['name'], GaEventName> = {
   started: 'speed_test_started',
@@ -20,6 +21,7 @@ const GA_NAME: Record<SpeedTestEvent['name'], GaEventName> = {
   boost_played: 'speed_test_boost_played',
   whatsapp_submitted: 'speed_test_whatsapp_submitted',
   offer_used: 'speed_test_offer_used',
+  whatsapp_opened: 'speed_test_whatsapp_opened',
 }
 
 export function trackSpeedTest(event: SpeedTestEvent): void {

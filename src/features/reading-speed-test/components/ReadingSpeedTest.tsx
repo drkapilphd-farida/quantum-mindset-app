@@ -21,6 +21,8 @@ import { leadMagnetCopy, type LeadMagnetCopy } from "../leadMagnetCopy";
 import { hasReachedEnd, SPEED_BAND_EDGES, type SpeedBand } from "../scoring";
 import { drawShareCard, shareOrDownload } from "../shareCard";
 import { trackSpeedTest } from "../tracking";
+import { leadWhatsappMessage } from "../leadMessage";
+import { waLink } from "@/config/site.config";
 
 // Free Reading Speed Test — the lead magnet. Step 1 Read (self-paced,
 // timed by the server), Step 2 Questions (one at a time, passage hidden,
@@ -553,17 +555,41 @@ function LeadCapture({
   const [firstName, setFirstName] = useState("");
   const [state, setState] = useState<"idle" | "saving" | "saved">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [waUrl, setWaUrl] = useState<string | null>(null);
 
   async function save(): Promise<void> {
     setState("saving");
     setError(null);
+    // Opened now, during the tap, so the phone allows it; filled in once the lead is saved.
+    const waWindow = window.open("", "_blank");
     const simulateNow = new URLSearchParams(window.location.search).get("now") ?? undefined;
     const res = await saveSpeedTestResult({ resultToken, phone, firstName, simulateNow, utm: readUtmParams() });
     if (res.ok) {
       trackSpeedTest({ name: "whatsapp_submitted", status: result.status, profile: result.profile });
       if (res.offer !== null) onOffer(res.offer);
-      return setState("saved");
+      // The lead reaches Dr. Kapil in WhatsApp with the person's own results (and offer code), ready to send.
+      const url = waLink(
+        leadWhatsappMessage({
+          lang: lm === leadMagnetCopy.hi ? "hi" : "en",
+          firstName,
+          effectiveWpm: result.status === "valid" ? result.effectiveWpm : null,
+          wpm: result.status === "valid" ? result.wpm : null,
+          comprehensionPercent: result.status === "valid" ? result.comprehensionPercent : null,
+          retention: null,
+          memory: null,
+          profileName: result.profile === null ? null : lm.profiles[result.profile].name,
+          offer: res.offer === null ? null : { code: res.offer.code, expiresAtMs: res.offer.expiresAtMs },
+        }),
+      );
+      setWaUrl(url);
+      setState("saved");
+      if (waWindow !== null) {
+        waWindow.location.href = url;
+        trackSpeedTest({ name: "whatsapp_opened", how: "auto" });
+      }
+      return;
     }
+    waWindow?.close();
     setState("idle");
     setError(res.error);
   }
@@ -572,9 +598,18 @@ function LeadCapture({
     <div className="mt-8 rounded-sm border border-line-strong bg-panel p-5 sm:p-6" data-lead-capture>
       <h3 className="text-[18px] font-bold leading-snug text-ink">{lm.leadTitle}</h3>
       {state === "saved" ? (
-        <p className="mt-3 text-[15px] font-medium text-teal" data-lead-saved>
-          {lm.leadSaved}
-        </p>
+        <div className="mt-3" data-lead-saved>
+          <p className="text-[17px] font-bold text-ink">{lm.leadSendTitle}</p>
+          <a
+            href={waUrl ?? "#"}
+            onClick={() => trackSpeedTest({ name: "whatsapp_opened", how: "button" })}
+            className="mt-3 flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-[18px] font-bold text-white"
+            data-lead-send-whatsapp
+          >
+            {lm.leadSendButton}
+          </a>
+          <p className="mt-2 text-[13.5px] text-ink-dim">{lm.leadSendNote}</p>
+        </div>
       ) : (
         <form
           className="mt-3"

@@ -48,6 +48,7 @@ export type GaEventName =
   | 'speed_test_boost_played'
   | 'speed_test_whatsapp_submitted'
   | 'speed_test_offer_used'
+  | 'speed_test_whatsapp_opened'
 
 // No-ops when GA isn't configured (NEXT_PUBLIC_GA_MEASUREMENT_ID unset)
 // or gtag.js hasn't loaded yet — never throws, since a tracking call

@@ -10,6 +10,9 @@ import { countWords, practiceStartingPace, readingProfile, scoreReadingTest, spe
 import { signTestToken, verifyTestToken } from './testToken'
 import { activeOffer, discountsChargeable, getOrCreateTestOffer, pricingSnapshot, resolveNow } from '@/features/sharp-brain-enrol/server'
 import type { PricingSnapshot } from '@/features/sharp-brain-enrol/server'
+import { sendTestLeadNotification } from '@/lib/email/sendTestLeadNotification'
+import { leadMagnetCopy } from './leadMagnetCopy'
+import { offerCode } from './leadMessage'
 
 // Free Reading Speed Test — every number in a result is computed here.
 // Reading time = the server's own clock between "Start" and "Done"; answers
@@ -206,7 +209,7 @@ const SaveSchema = z.object({
  * carries the server clock and the prices with the offer applied, so the
  * countdown is the same on every device.
  */
-export type SpeedTestOffer = { id: string; expiresAtMs: number; pricing: PricingSnapshot }
+export type SpeedTestOffer = { id: string; code: string; expiresAtMs: number; pricing: PricingSnapshot }
 
 export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; offer: SpeedTestOffer | null } | Fail> {
   const parsed = SaveSchema.safeParse(input)
@@ -252,11 +255,25 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; o
       return { ok: false, error: GENERIC_ERROR }
     }
     // ₹1,000 off for 48 hours — only after a VALID test, one per number ever.
-    if (result.status !== 'valid' || !discountsChargeable()) return { ok: true, offer: null }
     const now = resolveNow(parsed.data.simulateNow)
-    const offer = activeOffer(await getOrCreateTestOffer(phone, saved.id), now)
+    const offer = result.status === 'valid' && discountsChargeable() ? activeOffer(await getOrCreateTestOffer(phone, saved.id), now) : null
+    const profile = withLeadSource.profile_type
+    // Every lead is emailed to the founder at once (never blocks the visitor).
+    await sendTestLeadNotification({
+      firstName: parsed.data.firstName ?? null,
+      whatsappNumber: phone,
+      lang: result.lang,
+      effectiveWpm: result.eff,
+      wpm: result.wpm,
+      comprehensionPercent: result.comp,
+      retention: null,
+      memory: null,
+      profile: profile === null ? null : leadMagnetCopy.en.profiles[profile].name,
+      offer: offer === null ? null : `${offerCode(offer.id)}, expires ${new Date(offer.expiresAtMs).toISOString()}`,
+      utmSource: withLeadSource.utm_source,
+    })
     if (offer === null) return { ok: true, offer: null }
-    return { ok: true, offer: { id: offer.id, expiresAtMs: offer.expiresAtMs, pricing: pricingSnapshot(now, offer.expiresAtMs) } }
+    return { ok: true, offer: { id: offer.id, code: offerCode(offer.id), expiresAtMs: offer.expiresAtMs, pricing: pricingSnapshot(now, offer.expiresAtMs) } }
   } catch {
     return { ok: false, error: GENERIC_ERROR }
   }

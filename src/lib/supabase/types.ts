@@ -3211,6 +3211,11 @@ export type Database = {
       }
       speed_test_results: {
         Row: {
+          lead_status: string
+          lead_status_updated_at: string | null
+          test_kind: string
+          retention_correct: number | null
+          memory_correct: number | null
           profile_type: string | null
           utm_campaign: string | null
           utm_content: string | null
@@ -3229,6 +3234,11 @@ export type Database = {
           wpm: number
         }
         Insert: {
+          lead_status?: string
+          lead_status_updated_at?: string | null
+          test_kind?: string
+          retention_correct?: number | null
+          memory_correct?: number | null
           profile_type?: string | null
           utm_campaign?: string | null
           utm_content?: string | null
@@ -3247,6 +3257,11 @@ export type Database = {
           wpm: number
         }
         Update: {
+          lead_status?: string
+          lead_status_updated_at?: string | null
+          test_kind?: string
+          retention_correct?: number | null
+          memory_correct?: number | null
           profile_type?: string | null
           utm_campaign?: string | null
           utm_content?: string | null
