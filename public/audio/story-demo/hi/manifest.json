@@ -1,0 +1,49 @@
+{
+  "exercise": "reading-memory-test",
+  "lang": "hi",
+  "voice": "shubh",
+  "review": "pending",
+  "createdAt": "2026-10-14T09:31:50.773Z",
+  "lines": {
+    "intro": {
+      "file": "intro.mp3",
+      "durationMs": 4050
+    },
+    "s1": {
+      "file": "s1.mp3",
+      "durationMs": 2658
+    },
+    "s2": {
+      "file": "s2.mp3",
+      "durationMs": 2662
+    },
+    "s3": {
+      "file": "s3.mp3",
+      "durationMs": 3436
+    },
+    "s4": {
+      "file": "s4.mp3",
+      "durationMs": 2475
+    },
+    "s5": {
+      "file": "s5.mp3",
+      "durationMs": 2776
+    },
+    "s6": {
+      "file": "s6.mp3",
+      "durationMs": 2967
+    },
+    "s7": {
+      "file": "s7.mp3",
+      "durationMs": 2289
+    },
+    "s8": {
+      "file": "s8.mp3",
+      "durationMs": 2020
+    },
+    "outro": {
+      "file": "outro.mp3",
+      "durationMs": 2450
+    }
+  }
+}

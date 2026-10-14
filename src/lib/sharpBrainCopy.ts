@@ -52,7 +52,7 @@ const en: SharpBrainCopy = {
     eyebrow: 'Brain skills training · 30 days · Live + App',
     h1: 'Sharp Brain™ — Read faster. Focus longer. Remember more.',
     sub: `A 30-day brain-skills program for students, exam aspirants and working professionals. 7 live classes with ${trainer.name} + 10–15 minutes of daily app practice — with your progress measured from Day 1 to Day 30.`,
-    speedTest: 'Take the free Reading Speed Test →',
+    speedTest: 'Take the free Reading & Memory Test →',
     trust: (nextBatch) => `${trainer.years.total} years in education & mind training · ${trainer.learners} learners · Next batch: ${nextBatch}`,
   },
   problems: {
@@ -248,7 +248,7 @@ const en: SharpBrainCopy = {
       },
     ],
   },
-  final: { title: 'Your brain can learn better. Start in the next batch.', speedTest: 'Take the free Reading Speed Test →' },
+  final: { title: 'Your brain can learn better. Start in the next batch.', speedTest: 'Take the free Reading & Memory Test →' },
   sticky: { cta: 'Enrol' },
   reviews: {
     metaTitle: 'Video Reviews — Sharp Brain™ | Mind Ur Mind',
@@ -264,7 +264,7 @@ const hi: SharpBrainCopy = {
     eyebrow: 'ब्रेन स्किल्स ट्रेनिंग · 30 दिन · लाइव + ऐप',
     h1: 'Sharp Brain™ — तेज़ पढ़ें। ज़्यादा देर फोकस करें। ज़्यादा याद रखें।',
     sub: `विद्यार्थियों, प्रतियोगी परीक्षा की तैयारी करने वालों और कामकाजी लोगों के लिए 30 दिन का ब्रेन-स्किल्स प्रोग्राम। ${trainer.nameHi} के साथ 7 लाइव क्लासेस + रोज़ 10–15 मिनट ऐप पर अभ्यास — और Day 1 से Day 30 तक आपकी प्रगति नापी जाती है।`,
-    speedTest: 'मुफ़्त Reading Speed Test दें →',
+    speedTest: 'मुफ़्त Reading और Memory Test दें →',
     trust: (nextBatch) => `शिक्षा और माइंड ट्रेनिंग में ${trainer.years.total} वर्ष · ${trainer.learners} विद्यार्थी · अगला बैच: ${nextBatch}`,
   },
   problems: {
@@ -453,7 +453,7 @@ const hi: SharpBrainCopy = {
       { question: 'Quantum Speed Reading का क्या हुआ?', answer: 'अब इसका नाम Sharp Brain है — वही मूल प्रशिक्षण, साफ़ नाम, और फोकस व याददाश्त पर ज़्यादा ज़ोर।' },
     ],
   },
-  final: { title: 'आपका दिमाग़ बेहतर सीख सकता है। अगले बैच से शुरू करें।', speedTest: 'मुफ़्त Reading Speed Test दें →' },
+  final: { title: 'आपका दिमाग़ बेहतर सीख सकता है। अगले बैच से शुरू करें।', speedTest: 'मुफ़्त Reading और Memory Test दें →' },
   sticky: { cta: 'नामांकन' },
   reviews: {
     metaTitle: 'Video Reviews — Sharp Brain™ | Mind Ur Mind',

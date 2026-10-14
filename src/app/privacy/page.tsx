@@ -70,16 +70,16 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
       </section>
 
       <section>
-        <h2 className={legalStyles.h2}>Free Reading Speed Test</h2>
+        <h2 className={legalStyles.h2}>Free Reading &amp; Memory Test</h2>
         <p className={legalStyles.p}>
-          You can take the free Reading Speed Test without giving us any personal details — nothing is stored unless
+          You can take the Free Reading &amp; Memory Test without giving us any personal details — nothing is stored unless
           you choose to leave your WhatsApp number to receive your result.
         </p>
         <ul className={legalStyles.list}>
           <li>
             <strong>What we store (only if you leave your number):</strong> your first name if you give it, your
-            WhatsApp number, and your test results (reading speed, comprehension, Effective Reading Speed, the passage
-            language and the date).
+            WhatsApp number, and your test results (reading speed, Effective Reading Speed, retention, memory, your profile type, the
+            passage language and the date).
           </li>
           <li>
             <strong>Why:</strong> to send you your result on WhatsApp, and we may contact you about the{' '}
@@ -88,7 +88,7 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
           <li>
             <strong>Deleting it:</strong> message us on{' '}
             <a
-              href={waLink('Hi Dr. Kapil, please delete my number and Reading Speed Test result.')}
+              href={waLink('Hi Dr. Kapil, please delete my number and Reading & Memory Test result.')}
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground underline underline-offset-2"

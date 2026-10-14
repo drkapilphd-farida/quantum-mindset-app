@@ -69,7 +69,7 @@ const en: HomeCopy = {
         audience: 'For school & college students, exam aspirants and working professionals — parents can enrol their child',
         programs: [{ name: programs.sharpBrain.name, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} one-time`, livePrice: true }],
         cta: { label: 'See Sharp Brain™', href: programs.sharpBrain.url },
-        extras: [{ label: 'Take the free Reading Speed Test →', href: '/programs/sharp-brain/speed-test' }],
+        extras: [{ label: 'Take the free Reading & Memory Test →', href: '/reading-memory-test' }],
         note: 'Read faster with understanding. Focus longer. Remember more. — 7 live classes + daily app practice, measured from your own Day 1 to Day 30.',
       },
       {
@@ -127,7 +127,7 @@ const en: HomeCopy = {
     eyebrow: 'Start free',
     title: 'Not sure yet? Start with a free step.',
     items: [
-      { title: 'Reading Speed Test', desc: 'About 3 minutes · your real reading speed and comprehension', href: '/programs/sharp-brain/speed-test', cta: 'Take the test' },
+      { title: 'Free Reading & Memory Test', desc: 'About 3 minutes · reading speed, memory and retention', href: '/reading-memory-test', cta: 'Take the test' },
       { title: 'Overthinking Test', desc: '2 minutes · a self-awareness check, not a diagnosis', href: '/mind-assessment', cta: 'Take the test' },
     ],
   },
@@ -212,7 +212,7 @@ const hi: HomeCopy = {
         audience: 'स्कूल-कॉलेज के विद्यार्थियों, परीक्षा की तैयारी करने वालों और कामकाजी लोगों के लिए — अभिभावक अपने बच्चे का नामांकन कर सकते हैं',
         programs: [{ name: programs.sharpBrain.nameHi, href: programs.sharpBrain.url, priceLine: qsrFrom === null ? null : `${inr(qsrFrom)} एकमुश्त`, livePrice: true }],
         cta: { label: 'Sharp Brain™ देखें', href: programs.sharpBrain.url },
-        extras: [{ label: 'मुफ़्त Reading Speed Test दें →', href: '/programs/sharp-brain/speed-test' }],
+        extras: [{ label: 'मुफ़्त Reading और Memory Test दें →', href: '/reading-memory-test' }],
         note: 'तेज़ पढ़ें, समझ के साथ। ज़्यादा देर फोकस करें। ज़्यादा याद रखें। — 7 लाइव क्लासेस + रोज़ ऐप अभ्यास, Day 1 से Day 30 तक नापा हुआ।',
       },
       {
@@ -270,7 +270,7 @@ const hi: HomeCopy = {
     eyebrow: 'फ्री में शुरू करें',
     title: 'अभी तय नहीं? एक फ्री कदम से शुरू करें।',
     items: [
-      { title: 'रीडिंग स्पीड टेस्ट', desc: 'लगभग 3 मिनट · आपकी असली रीडिंग स्पीड और समझ', href: '/programs/sharp-brain/speed-test', cta: 'टेस्ट दें' },
+      { title: 'मुफ़्त Reading और Memory Test', desc: 'लगभग 3 मिनट · पढ़ने की रफ़्तार, याददाश्त और याद टिकना', href: '/reading-memory-test', cta: 'टेस्ट दें' },
       { title: 'ओवरथिंकिंग टेस्ट', desc: '2 मिनट · एक सेल्फ-अवेयरनेस चेक, निदान नहीं', href: '/mind-assessment', cta: 'टेस्ट दें' },
     ],
   },

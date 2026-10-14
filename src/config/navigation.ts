@@ -12,7 +12,7 @@ export type NavLink = { label: string; href: string; external?: boolean }
 export type NavGroup = { heading: string; links: NavLink[] }
 
 export const FREE_TEST_LINKS = {
-  speedTest: '/programs/sharp-brain/speed-test',
+  speedTest: '/reading-memory-test',
   overthinkingTest: '/mind-assessment',
 } as const
 
@@ -56,7 +56,7 @@ export function programGroups(lang: Lang): NavGroup[] {
 export function freeTestLinks(lang: Lang): NavLink[] {
   const hi = lang === 'hi'
   return [
-    { label: hi ? 'रीडिंग स्पीड टेस्ट' : 'Reading Speed Test', href: FREE_TEST_LINKS.speedTest },
+    { label: hi ? 'मुफ़्त Reading और Memory Test' : 'Free Reading & Memory Test', href: FREE_TEST_LINKS.speedTest },
     { label: hi ? 'ओवरथिंकिंग टेस्ट' : 'Overthinking Test', href: FREE_TEST_LINKS.overthinkingTest },
   ]
 }

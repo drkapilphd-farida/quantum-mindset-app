@@ -1,0 +1,45 @@
+{
+  "review": "reviewed",
+  "lines": [
+    {
+      "id": "intro",
+      "text": "Watch: we link 8 pictures into one funny story."
+    },
+    {
+      "id": "s1",
+      "text": "Picture a giant whale..."
+    },
+    {
+      "id": "s2",
+      "text": "riding a giant wheel, round and round."
+    },
+    {
+      "id": "s3",
+      "text": "At the very top, the whale drops its ice cream."
+    },
+    {
+      "id": "s4",
+      "text": "Splat! It lands on a camera."
+    },
+    {
+      "id": "s5",
+      "text": "The camera starts spraying water, like a fountain."
+    },
+    {
+      "id": "s6",
+      "text": "The fountain fills an envelope with water."
+    },
+    {
+      "id": "s7",
+      "text": "A rooster grabs the dripping envelope..."
+    },
+    {
+      "id": "s8",
+      "text": "and plants it in a flower pot."
+    },
+    {
+      "id": "outro",
+      "text": "Now replay the story once in your mind."
+    }
+  ]
+}

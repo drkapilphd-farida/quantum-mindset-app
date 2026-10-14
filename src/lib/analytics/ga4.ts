@@ -49,6 +49,15 @@ export type GaEventName =
   | 'speed_test_whatsapp_submitted'
   | 'speed_test_offer_used'
   | 'speed_test_whatsapp_opened'
+  // Reading & Memory Test funnel (features/reading-memory-test/tracking.ts)
+  | 'memory_test_started'
+  | 'memory_test_step_completed'
+  | 'memory_test_result_shown'
+  | 'memory_test_bonus_story'
+  | 'memory_test_bonus_boost'
+  | 'memory_test_lead_submitted'
+  | 'memory_test_whatsapp_opened'
+  | 'memory_test_shared'
 
 // No-ops when GA isn't configured (NEXT_PUBLIC_GA_MEASUREMENT_ID unset)
 // or gtag.js hasn't loaded yet — never throws, since a tracking call

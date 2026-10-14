@@ -1,13 +1,13 @@
 'use server'
 
-import { randomInt } from 'node:crypto'
 import { z } from 'zod'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
-import { MEASURED_PASSAGES, PRACTICE_PASSAGES, type TestLang, type TestPassage } from './passages'
+import { MEASURED_PASSAGES, PRACTICE_PASSAGES } from './passages'
 import { countWords, practiceStartingPace, readingProfile, scoreReadingTest, speedBand, type ReadingProfileType, type ReadingTestStatus, type SpeedBand } from './scoring'
 import { signTestToken, verifyTestToken } from './testToken'
+import { countCorrect, findPassage, pickPassage, showQuestions, shuffledOrder, type ShownQuestion } from './quiz'
 import { activeOffer, discountsChargeable, getOrCreateTestOffer, pricingSnapshot, resolveNow } from '@/features/sharp-brain-enrol/server'
 import type { PricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { sendTestLeadNotification } from '@/lib/email/sendTestLeadNotification'
@@ -21,7 +21,6 @@ import { offerCode } from './leadMessage'
 // the signed token.
 
 type Fail = { ok: false; error: string }
-type ShownQuestion = { question: string; options: string[] }
 
 const START_RATE_LIMIT = { max: 30, windowMs: 60_000 }
 const SAVE_RATE_LIMIT = { max: 5, windowMs: 60_000 }
@@ -29,37 +28,6 @@ const GENERIC_ERROR = 'Something went wrong. Please try again.'
 
 const LangSchema = z.enum(['en', 'hi'])
 const TokenSchema = z.string().min(10).max(4000)
-
-function shuffledOrder(): number[] {
-  const order = [0, 1, 2, 3]
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = randomInt(i + 1)
-    ;[order[i], order[j]] = [order[j]!, order[i]!]
-  }
-  return order
-}
-
-function showQuestions(passage: TestPassage, perm: number[][]): ShownQuestion[] {
-  return passage.questions.map((q, i) => ({ question: q.question, options: perm[i]!.map((original) => q.options[original]!) }))
-}
-
-function countCorrect(passage: TestPassage, perm: number[][], answers: readonly number[]): number {
-  return passage.questions.reduce((sum, q, i) => (perm[i]?.[answers[i] ?? -1] === q.correctIndex ? sum + 1 : sum), 0)
-}
-
-function findPassage(pool: readonly TestPassage[], id: string): TestPassage {
-  const passage = pool.find((p) => p.id === id)
-  if (passage === undefined) throw new Error('unknown passage')
-  return passage
-}
-
-function pickPassage(pool: readonly TestPassage[], lang: TestLang, exclude: readonly string[]): TestPassage {
-  const inLang = pool.filter((p) => p.lang === lang)
-  const fresh = inLang.filter((p) => !exclude.includes(p.id))
-  // Every passage seen already: still never repeat the most recent one.
-  const candidates = fresh.length > 0 ? fresh : inLang.filter((p) => p.id !== exclude.at(-1))
-  return candidates[randomInt(candidates.length)]!
-}
 
 // ── Step 1: measured test ────────────────────────────────────────────────
 
@@ -233,8 +201,11 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; o
       status: result.status,
     }
     const utm = parsed.data.utm ?? {}
+    // A Reading & Memory Test result also carries retention (of 4) and memory (of 8).
+    const memoryTest = result.rt !== undefined && result.mem !== undefined
     const withLeadSource = {
       ...base,
+      ...(memoryTest ? { test_kind: 'reading_memory', retention_correct: result.rt ?? null, memory_correct: result.mem ?? null } : {}),
       profile_type: result.status === 'valid' ? readingProfile(result.wpm, result.comp) : null,
       utm_source: utm.utm_source ?? null,
       utm_medium: utm.utm_medium ?? null,
@@ -266,8 +237,8 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; o
       effectiveWpm: result.eff,
       wpm: result.wpm,
       comprehensionPercent: result.comp,
-      retention: null,
-      memory: null,
+      retention: memoryTest ? `${result.rt} of 4` : null,
+      memory: memoryTest ? `${result.mem} of 8` : null,
       profile: profile === null ? null : leadMagnetCopy.en.profiles[profile].name,
       offer: offer === null ? null : `${offerCode(offer.id)}, expires ${new Date(offer.expiresAtMs).toISOString()}`,
       utmSource: withLeadSource.utm_source,

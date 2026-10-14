@@ -11,7 +11,7 @@ import { BatchCheckout, Countdown, PriceLine, SharpBrainPricingProvider, useNext
 
 const copy = {
   en: {
-    eyebrow: "Your Reading Speed Test offer",
+    eyebrow: "Your Free Reading & Memory Test offer",
     title: (discount: string) => `${discount} off the Sharp Brain 30-Day Program`,
     unlocked: (price: string, regular: string) => `${price} instead of ${regular}. Choose your batch and enrol.`,
     valid: "Valid for:",
@@ -20,7 +20,7 @@ const copy = {
     program: "See what’s in the program →",
   },
   hi: {
-    eyebrow: "आपका Reading Speed Test ऑफ़र",
+    eyebrow: "आपका मुफ़्त Reading और Memory Test ऑफ़र",
     title: (discount: string) => `Sharp Brain 30-दिवसीय प्रोग्राम पर ${discount} की छूट`,
     unlocked: (price: string, regular: string) => `${regular} की जगह ${price}। अपना बैच चुनें और जुड़ें।`,
     valid: "बचा समय:",

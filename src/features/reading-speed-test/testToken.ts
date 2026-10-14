@@ -7,7 +7,10 @@ import { createHash, createHmac, timingSafeEqual } from 'node:crypto'
 export type TestTokenPayload =
   | { kind: 'reading'; pid: string; t0: number; perm: number[][] }
   | { kind: 'questions'; pid: string; readMs: number; perm: number[][] }
-  | { kind: 'result'; pid: string; lang: 'en' | 'hi'; wpm: number; comp: number; eff: number; status: string }
+  | { kind: 'result'; pid: string; lang: 'en' | 'hi'; wpm: number; comp: number; eff: number; status: string; rt?: number; mem?: number }
+  // Reading & Memory Test: same timing; questions come after the memory challenge.
+  | { kind: 'rm-reading'; pid: string; t0: number; perm: number[][] }
+  | { kind: 'rm-questions'; pid: string; readMs: number; perm: number[][] }
   | { kind: 'practice'; pid: string; pace: number; perm: number[][] }
 
 const MAX_AGE_MS = 60 * 60 * 1000

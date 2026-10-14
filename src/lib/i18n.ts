@@ -28,7 +28,7 @@ export const translations = {
       headlineNote: "Measured from your own Day 1 baseline.",
       sub: "Struggling to finish your syllabus? Reading for hours but remembering nothing? Your child studies for hours but forgets everything? This isn't a reading problem — it's a training problem. No hypnosis, no shortcuts — structured, measurable skills training.",
       ctaPrimary: "Watch the Free Training Now",
-      ctaSecondary: "Take the Free Speed Test",
+      ctaSecondary: "Take the free Reading & Memory Test →",
       portraitName: "Dr. Kapil Dev Sharma",
       portraitTitle: trainer.en.title,
       stats: [
@@ -1293,7 +1293,7 @@ export const translations = {
       headlineNote: "आपके अपने दिन 1 के बेसलाइन से मापा गया।",
       sub: "सिलेबस पूरा करने में दिक्कत हो रही है? घंटों पढ़ते हैं पर कुछ याद नहीं रहता? आपका बच्चा घंटों पढ़ता है पर सब भूल जाता है? यह पढ़ाई की समस्या नहीं है — यह ट्रेनिंग की समस्या है। कोई सम्मोहन नहीं, कोई शॉर्टकट नहीं — संरचित, मापने योग्य स्किल ट्रेनिंग।",
       ctaPrimary: "अभी फ्री ट्रेनिंग देखें",
-      ctaSecondary: "फ्री स्पीड टेस्ट लें",
+      ctaSecondary: "मुफ़्त Reading और Memory Test दें →",
       portraitName: "डॉ. कपिल देव शर्मा",
       portraitTitle: trainer.hi.title,
       stats: [

@@ -26,7 +26,7 @@ export function leadWhatsappMessage(m: LeadMessageInput): string {
   const name = m.firstName.trim()
   if (m.lang === 'hi') {
     return [
-      `नमस्ते डॉ. कपिल, मैंने मुफ़्त रीडिंग टेस्ट दिया।`,
+      `नमस्ते डॉ. कपिल, मैंने मुफ़्त Reading और Memory Test दिया।`,
       name ? `नाम: ${name}` : null,
       m.effectiveWpm !== null ? `Effective speed: ${m.effectiveWpm} WPM${m.wpm !== null && m.comprehensionPercent !== null ? ` (पढ़ना ${m.wpm} WPM, समझ ${m.comprehensionPercent}%)` : ''}` : null,
       m.retention ? `Retention: ${m.retention.total} में से ${m.retention.correct}` : null,
@@ -39,7 +39,7 @@ export function leadWhatsappMessage(m: LeadMessageInput): string {
       .join('\n')
   }
   return [
-    `Hi Dr. Kapil, I took the free reading test.`,
+    `Hi Dr. Kapil, I took the Free Reading & Memory Test.`,
     name ? `Name: ${name}` : null,
     m.effectiveWpm !== null ? `Effective speed: ${m.effectiveWpm} WPM${m.wpm !== null && m.comprehensionPercent !== null ? ` (reading ${m.wpm} WPM, understanding ${m.comprehensionPercent}%)` : ''}` : null,
     m.retention ? `Retention: ${m.retention.correct} of ${m.retention.total}` : null,
