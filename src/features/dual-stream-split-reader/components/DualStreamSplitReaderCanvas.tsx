@@ -256,7 +256,7 @@ export function DualStreamSplitReaderCanvas({
   return (
     <ReadingLayout maxWidthClassName="max-w-4xl" onExit={onExit}>
       <div className="w-full max-w-md">
-        <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Dual-Stream Split Reader™</p>
+        <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Dual-Stream Split Reader</p>
         {categoryLabel && <p className="mb-3 text-center text-xs text-muted-foreground">Reading: {categoryLabel}</p>}
 
         <div className="grid grid-cols-3 gap-x-4 text-center">

@@ -26,7 +26,7 @@ import { DashboardExperience } from '@/features/visual-intelligence/components/d
 import { brand } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: 'Visual Intelligence Dashboard™ — Visual Intelligence Lab™',
+  title: 'Visual Intelligence Dashboard — Visual Intelligence Lab',
   robots: { index: false, follow: false },
 }
 

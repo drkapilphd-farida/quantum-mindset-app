@@ -17,7 +17,7 @@ import { TratakJourneyLocked } from '@/features/tratak-intelligence/components/T
 import { TratakJourneyLanding, type TratakLandingMissionViewModel } from '@/features/tratak-intelligence/components/TratakJourneyLanding'
 
 export const metadata: Metadata = {
-  title: 'Tratak Intelligence Journey™ — Visual Intelligence Lab™',
+  title: 'Tratak Intelligence Journey — Visual Intelligence Lab',
   description: 'Develop stable visual attention, strengthen eye fixation and improve visual persistence through progressive guided practice.',
   robots: { index: false, follow: false },
 }

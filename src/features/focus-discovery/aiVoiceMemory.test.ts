@@ -20,21 +20,21 @@ describe('AiVoiceMemory', () => {
     expect(memory.pickLine([])).toBeNull()
   })
 
-  it('BEHAVIOURAL MEMORY™ — no real trend exists before a real second mission result', () => {
+  it('BEHAVIOURAL MEMORY — no real trend exists before a real second mission result', () => {
     const memory = new AiVoiceMemory()
     expect(memory.getTrend()).toBeNull()
     memory.recordMissionRatio(0.9)
     expect(memory.getTrend()).toBeNull()
   })
 
-  it('BEHAVIOURAL MEMORY™ — a real meaningful rise between consecutive missions reads as "improving"', () => {
+  it('BEHAVIOURAL MEMORY — a real meaningful rise between consecutive missions reads as "improving"', () => {
     const memory = new AiVoiceMemory()
     memory.recordMissionRatio(0.5)
     memory.recordMissionRatio(0.9)
     expect(memory.getTrend()).toBe('improving')
   })
 
-  it('BEHAVIOURAL MEMORY™ — a real meaningful drop between consecutive missions reads as "declining"', () => {
+  it('BEHAVIOURAL MEMORY — a real meaningful drop between consecutive missions reads as "declining"', () => {
     const memory = new AiVoiceMemory()
     memory.recordMissionRatio(0.9)
     memory.recordMissionRatio(0.5)

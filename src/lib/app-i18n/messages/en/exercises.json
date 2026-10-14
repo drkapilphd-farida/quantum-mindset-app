@@ -9,7 +9,7 @@
     "backToLab": "Back to Lab"
   },
   "rsvp": {
-    "mode": "RSVP Mode™",
+    "mode": "RSVP Mode",
     "speed": "Speed: {wpm} WPM"
   },
   "questions": {
@@ -451,7 +451,7 @@
     "this_phrase_is_mainly_about": "This phrase is mainly about:",
     "track_it": "Track It",
     "train_again": "Train Again",
-    "training_complete": "Training Complete™",
+    "training_complete": "Training Complete",
     "very_good": "Very Good",
     "visual_recall": "Visual Recall",
     "visual_span_and_peripheral_awareness": "Visual span and peripheral awareness",
@@ -487,7 +487,9 @@
     "your_mind_remembers_pick_up_where_you_left_off": "Your mind remembers — pick up where you left off",
     "your_practice_is_paying_off": "Your practice is paying off",
     "your_transformation_is_ready_to_begin": "Your transformation is ready to begin",
-    "your_transformation_starts_here": "Your transformation starts here"
+    "your_transformation_starts_here": "Your transformation starts here",
+    "reading": "Reading",
+    "practice_progress": "Practice Progress"
   },
   "sentence": {
     "intro": "Read a short themed chapter of full sentences, then recognise the whole idea.",

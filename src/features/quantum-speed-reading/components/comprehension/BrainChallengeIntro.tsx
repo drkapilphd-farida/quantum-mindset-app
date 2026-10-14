@@ -26,7 +26,7 @@ export function BrainChallengeIntro({ passageTitle, questionCount, onStart }: Br
       </div>
 
       <div className={fadeClass}>
-        <p className="text-xs font-medium tracking-[0.14em] text-muted-foreground uppercase">Comprehension Intelligence™</p>
+        <p className="text-xs font-medium tracking-[0.14em] text-muted-foreground uppercase">Comprehension Intelligence</p>
         <h1 className="mt-3 font-heading text-2xl font-bold tracking-tight text-balance text-foreground">
           Begin Brain Challenge
         </h1>

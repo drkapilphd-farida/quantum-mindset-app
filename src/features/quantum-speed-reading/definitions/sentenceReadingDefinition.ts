@@ -20,7 +20,7 @@ const SENTENCE_READING_DATASET = createDataset({
 export const SENTENCE_READING_DEFINITION: ExerciseDefinition = {
   id: 'sentence-reading',
   labId: 'quantum-speed-reading',
-  title: 'Sentence Reading™',
+  title: 'Sentence Reading',
   description: 'A complete sentence appears — recognise its central idea instantly, without reading word by word. Trains idea recognition.',
   trainsAbility: 'Idea recognition and rapid meaning processing',
   exerciseType: 'reading',

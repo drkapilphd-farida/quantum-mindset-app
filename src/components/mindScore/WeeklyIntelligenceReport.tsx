@@ -32,7 +32,7 @@ export async function WeeklyIntelligenceReport({ dimensions, overallGrowth }: We
     <div className="glass-premium-card p-6">
       <div className="flex items-center justify-between">
         <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-          Weekly Intelligence Report™
+          {t('progress.weeklyReport')}
         </p>
         <span className={cn(
           'text-xs font-semibold',

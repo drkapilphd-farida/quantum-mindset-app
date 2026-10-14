@@ -26,7 +26,7 @@ export const PREFRONTAL_POWER_FAQ_ITEMS: readonly { question: string; answer: st
   },
   {
     question: "What is included in ₹3,500?",
-    answer: "The full-day workshop, brain training workbook, MOVERS™ protocol, 21-day tracker, guided audio, digital resources and certificate.",
+    answer: "The full-day workshop, brain training workbook, MOVERS protocol, 21-day tracker, guided audio, digital resources and certificate.",
   },
   {
     question: "What should I bring?",

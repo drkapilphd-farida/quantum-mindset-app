@@ -255,7 +255,7 @@ export function ReadingWorkspace({ documentId, documentTitle, chunkStrategy, ini
   if (initial.kind === 'not-processed') {
     return (
       <div className="animate-in fade-in mx-auto max-w-lg px-6 py-16 duration-(--duration-base)">
-        <EmptyStateCard icon={Sparkles} title="This document hasn't been prepared for reading yet" description="Its Universal Learning Object™ hasn't been built yet — check back once processing finishes." />
+        <EmptyStateCard icon={Sparkles} title="This document hasn't been prepared for reading yet" description="Its Universal Learning Object hasn't been built yet — check back once processing finishes." />
       </div>
     )
   }
@@ -324,7 +324,7 @@ export function ReadingWorkspace({ documentId, documentTitle, chunkStrategy, ini
           </div>
         )}
 
-        {/* Quantum Speed Reading Experience Engine™ (QSR-E1) — the Hub
+        {/* Quantum Speed Reading Experience Engine (QSR-E1) — the Hub
             stays reachable above the chapter at all times (never a
             one-time gate), except in Focus Mode, which already hides
             every other piece of secondary chrome the same way. */}
@@ -364,7 +364,7 @@ export function ReadingWorkspace({ documentId, documentTitle, chunkStrategy, ini
           </>
         )}
 
-        {/* Reading Journey Experience™ (Sprint-5) has its own, fully
+        {/* Reading Journey Experience (Sprint-5) has its own, fully
             immersive early-return branch above — this classic layout is
             only ever reached for the other 7 modes, so this control bar
             can stay unconditional. */}

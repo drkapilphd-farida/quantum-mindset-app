@@ -294,7 +294,7 @@ export function DotMemoryGridCanvas({ gridSize, onComplete, onExitRequested }: D
   return (
     <ReadingLayout maxWidthClassName="max-w-lg" onExit={() => onExitRequested(elapsedMs)}>
       <div className="w-full max-w-md">
-        <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Dot Memory Grid™</p>
+        <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Dot Memory Grid</p>
         <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-4 sm:gap-4">
           <ReadingStatTile label={t('exercises.stats.round')} value={`${roundIndex + 1} / ${DOT_MEMORY_GRID_ROUNDS_PER_SESSION}`} />
           <ReadingStatTile label={t('exercises.stats.score')} value={scoreLabel} />

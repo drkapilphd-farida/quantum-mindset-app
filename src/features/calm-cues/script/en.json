@@ -1,0 +1,45 @@
+{
+  "review": "native-reviewed",
+  "lines": [
+    {
+      "id": "eyeFar",
+      "text": "Look far away for 20 seconds. Blink gently."
+    },
+    {
+      "id": "eyePalm",
+      "text": "Now palming. Cup your palms over your closed eyes, and breathe slowly."
+    },
+    {
+      "id": "eyeDone",
+      "text": "Done. Your eyes are rested."
+    },
+    {
+      "id": "getReady",
+      "text": "Get ready."
+    },
+    {
+      "id": "breatheIn",
+      "text": "Breathe in"
+    },
+    {
+      "id": "breathePause",
+      "text": "Pause"
+    },
+    {
+      "id": "breatheOut",
+      "text": "Breathe out"
+    },
+    {
+      "id": "breatheDone",
+      "text": "Well done."
+    },
+    {
+      "id": "breakStart",
+      "text": "Take a one-minute break. Breathe slowly, and look far away."
+    },
+    {
+      "id": "breakDone",
+      "text": "Break over. Your place is saved. Continue when you're ready."
+    }
+  ]
+}

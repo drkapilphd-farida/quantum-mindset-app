@@ -36,7 +36,7 @@ export function MindMapOutlineView({ projectId, outline }: MindMapOutlineViewPro
           🗺
         </span>
         <div>
-          <p className={TYPOGRAPHY.label}>Mind Map™</p>
+          <p className={TYPOGRAPHY.label}>Mind Map</p>
           <h1 className={cn(TYPOGRAPHY.h1, 'mt-1')}>{outline.documentTitle}</h1>
           <p className={cn(TYPOGRAPHY.small, 'mt-2')}>
             {outline.nodes.length} section{outline.nodes.length === 1 ? '' : 's'}
@@ -97,7 +97,7 @@ export function MindMapOutlineView({ projectId, outline }: MindMapOutlineViewPro
           <Link href={`/preview/learning-projects/${projectId}`}>Back to Learning Blueprint</Link>
         </Button>
         <Button asChild variant="ghost" size="sm">
-          <Link href="/preview/learning-studio">Back to AI Learning Studio™</Link>
+          <Link href="/preview/learning-studio">Back to AI Learning Studio</Link>
         </Button>
       </div>
     </div>

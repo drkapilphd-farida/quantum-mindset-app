@@ -5,7 +5,7 @@ import { CHUNK_READING_DATASET } from '../chunkDataset'
 export const CHUNK_READING_DEFINITION: ExerciseDefinition = {
   id: 'chunk-reading',
   labId: 'quantum-speed-reading',
-  title: 'Chunk Reading™',
+  title: 'Chunk Reading',
   description: 'A meaningful word group flashes briefly — identify it before it disappears. Chunk length increases as your visual span expands.',
   trainsAbility: 'Multi-word visual span',
   exerciseType: 'flash',

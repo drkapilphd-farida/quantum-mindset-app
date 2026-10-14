@@ -37,7 +37,7 @@ export async function AppSidebar({ brandName = null, brandLogoUrl = null, appDom
           className="flex items-center gap-2.5 text-sm font-semibold tracking-tight text-foreground transition-opacity hover:opacity-70"
         >
           {brandLogoUrl !== null ? (
-            <Image src={brandLogoUrl} alt="" width={24} height={24} className="size-6 shrink-0 rounded object-contain" unoptimized />
+            <Image src={brandLogoUrl} alt="" width={24} height={24} className="size-6 shrink-0 rounded bg-violet-700 object-contain" unoptimized />
           ) : (
             // Always the plain brand mark, unconditionally — a prior
             // "Duolingo-style" attempt made this shift color (toward red)
@@ -51,7 +51,7 @@ export async function AppSidebar({ brandName = null, brandLogoUrl = null, appDom
           <span className="brand-gradient-text">{brandName ?? brand.appName}</span>
         </Link>
       </div>
-      {/* Consistent Branding™ — the one place a habit-domain visitor sees
+      {/* Consistent Branding — the one place a habit-domain visitor sees
           "Sharp Brain 21-Day Starter" spelled out near the wordmark,
           never anything about document upload or speed reading. Own row
           below the h-14 header rather than crammed inline next to the
@@ -62,7 +62,7 @@ export async function AppSidebar({ brandName = null, brandLogoUrl = null, appDom
       <div className="flex-1 overflow-y-auto py-3">
         <NavLinks appDomain={appDomain} showPracticeJourney={showPracticeJourney} />
       </div>
-      {/* Global Account Dropdown™ (Phase 4) — Profile/Settings/Subscription/
+      {/* Global Account Dropdown (Phase 4) — Profile/Settings/Subscription/
           Support/Sign out, moved out of the top-level pillar list and into
           this sidebar-bottom row so the 3 pillars stay visually dominant.
           Desktop-only: Topbar keeps the compact trigger for mobile, which

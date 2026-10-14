@@ -34,7 +34,7 @@ export type RuntimeResultExtraStat = {
 // rename — additive, every field defaults to the existing text below when
 // omitted, so every current caller renders exactly as before.
 export type RuntimeResultLabels = {
-  completeSuffix?: string   // default 'Training Complete™'
+  completeSuffix?: string   // default 'Training Complete'
   correctLabel?: string     // default 'Correct'
   speedLabel?: string       // default 'Speed'
   scoreLabel?: string       // default 'Score'

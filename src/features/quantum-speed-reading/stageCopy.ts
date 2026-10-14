@@ -28,7 +28,7 @@ export const STAGE_COPY: Record<string, StageCopy> = {
     expectedOutcome: 'By the end, your eyes will move with less backtracking and more control.',
     growthStatement: "You're building steadier eye control and reading rhythm.",
     completionReinforcementLine: 'Your eye control and reading rhythm have measurably improved.',
-    nextStageTeaser: 'Next: Core Reading Journey™ — where this steadier rhythm turns into real reading speed. (Optional — you can also skip straight there.)',
+    nextStageTeaser: 'Next: Core Reading Path — where this steadier rhythm turns into real reading speed. (Optional — you can also skip straight there.)',
   },
   'core-reading-journey': {
     icon: '🚀',
@@ -38,7 +38,7 @@ export const STAGE_COPY: Record<string, StageCopy> = {
     expectedOutcome: "By the end, you'll read longer passages with more flow and better comprehension.",
     growthStatement: "You're turning your training into real reading fluency.",
     completionReinforcementLine: 'Your reading flow and comprehension have measurably improved.',
-    nextStageTeaser: 'Next: Reading Intelligence™ — where you can see everything your brain has built.',
+    nextStageTeaser: 'Next: Your reading results — where you can see everything your brain has built.',
   },
   'reading-intelligence': {
     icon: '🧠',

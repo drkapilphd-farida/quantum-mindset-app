@@ -106,11 +106,11 @@ const DYNAMIC_CHUNKING_RECALL_XP_BONUS = 20
 // rotating reading modes (see getReadingMode in quantumJourneyLevels.ts).
 const READING_MODE_STEP_LABELS: Record<ReadingMode, string> = {
   'quantum-reading-sprint': 'Core Reading & Chunking Sprint',
-  phrase: 'Phrase Reading™',
-  'vertical-word': 'Vertical Word Reading™',
-  sentence: 'Sentence Reading™',
-  paragraph: 'Paragraph Reading™',
-  'dynamic-chunking': 'Chunk Reading™',
+  phrase: 'Phrase Reading',
+  'vertical-word': 'Vertical Word Reading',
+  sentence: 'Sentence Reading',
+  paragraph: 'Paragraph Reading',
+  'dynamic-chunking': 'Chunk Reading',
 }
 
 function WarmupPrepScreen({ exerciseTitle, onStart, onSkip }: { exerciseTitle: string; onStart: () => void; onSkip: () => void }): React.JSX.Element {
@@ -374,7 +374,7 @@ export function QuantumJourneySession({
     setLevel(4)
   }
 
-  const step1DisplayTitle = isFoundationBreathingDay ? 'Mind Awakening™ (Breathing)' : resolvedStep1Title
+  const step1DisplayTitle = isFoundationBreathingDay ? 'Mind Awakening (Breathing)' : resolvedStep1Title
   const weaknessDomainLabel = isWeaknessInjected && weakestDomain !== null ? JOURNEY_DOMAIN_LABELS[weakestDomain.domain] : null
 
   // Daily Streak Reminders & Motivation System™ — milestoneReachedToday
@@ -659,9 +659,9 @@ export function QuantumJourneySession({
   // ran, so every label downstream of the reading step should reflect it.
   const readingStepLabel =
     readingPresentationChoice === 'guiding-line'
-      ? 'Guiding Line Pacer™'
+      ? 'Guiding Line Pacer'
       : readingPresentationChoice === 'rsvp'
-        ? 'RSVP Mode™'
+        ? 'RSVP Mode'
         : READING_MODE_STEP_LABELS[readingMode]
 
   const currentExerciseTitle =
@@ -775,22 +775,22 @@ export function QuantumJourneySession({
               </p>
               <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Day {day} Complete!</h2>
               {isBaselineDay && (
-                <p className="mt-1 text-xs font-medium text-primary">🎯 Baseline Test™ set — every day from here measures real growth against this.</p>
+                <p className="mt-1 text-xs font-medium text-primary">🎯 Baseline Test set — every day from here measures real growth against this.</p>
               )}
             </div>
 
             <p className="max-w-sm text-sm text-muted-foreground">
-              {isFoundationBreathingDay ? 'Mind Awakening™' : resolvedStep1Title} → {resolvedStep2Title} →{' '}
+              {isFoundationBreathingDay ? 'Mind Awakening' : resolvedStep1Title} → {resolvedStep2Title} →{' '}
               {isStandardDynamicChunkingDay ? `${readingStepLabel} → Recall Check` : `${readingStepLabel} → Retention Check`}{' '}
               — real progress recorded across every step.
             </p>
 
-            {/* AI Smart Coach™ — a real Claude-generated message grounded
+            {/* AI Smart Coach — a real Claude-generated message grounded
                 only in this session's actual numbers (see
                 generateCoachFeedback.ts's own prompt-building comment). */}
             {coachMessage !== null && (
               <div className="w-full max-w-sm rounded-2xl border border-border/60 bg-card/60 p-4 text-left">
-                <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Dr. Kapil&apos;s Note™</p>
+                <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Dr. Kapil&apos;s Note</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-foreground">{coachMessage}</p>
               </div>
             )}
@@ -816,7 +816,7 @@ export function QuantumJourneySession({
                 <Flame className="size-4 text-orange-500" aria-hidden="true" />
                 <span className="text-sm font-semibold text-foreground">{resultingStreak}-Day Streak</span>
               </div>
-              {/* Invisible-Reward Fix™ — XP was always computed and
+              {/* Invisible-Reward Fix — XP was always computed and
                   saved, never shown; this is its first real on-screen
                   appearance. */}
               {xpEarnedToday !== null && (
@@ -827,14 +827,14 @@ export function QuantumJourneySession({
               )}
             </div>
 
-            {/* Streak Milestone Celebration™ — getMilestoneHitExactly is
+            {/* Streak Milestone Celebration — getMilestoneHitExactly is
                 already computed above (milestoneReachedToday); this is
                 its first real visual/audio/haptic treatment. No extra
                 day !== 21 guard needed — the surrounding ternary already
                 makes this branch unreachable on Day 21. */}
             {milestoneReachedToday !== null && <JourneyMilestoneCelebration milestoneStreak={milestoneReachedToday} />}
 
-            {/* App 1 → App 2 Soft Upsell™ — only the two real mid-journey
+            {/* App 1 → App 2 Soft Upsell — only the two real mid-journey
                 momentum days (see AppTwoMilestoneBanner's own comment);
                 every other day's completion screen is unchanged. */}
             {(day === 7 || day === 14) && (
@@ -859,7 +859,7 @@ export function QuantumJourneySession({
         )}
       </AnimatePresence>
 
-      {/* Distraction Parking Lot™ — fixed-positioned, deliberately outside
+      {/* Distraction Parking Lot — fixed-positioned, deliberately outside
           AnimatePresence so it never unmounts/remounts (and loses its
           notes) between step transitions. Hidden during the briefing,
           the detox check-in, and the completion screen — it's scratch

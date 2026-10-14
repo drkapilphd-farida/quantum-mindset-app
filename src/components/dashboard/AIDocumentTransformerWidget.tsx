@@ -734,7 +734,7 @@ export function AIDocumentTransformerWidget({ isPro, recentDocuments }: AIDocume
                 <>
                   {recentDocuments.length > 0 && <RecentDocuments documents={recentDocuments} />}
 
-                  {/* Smart Transformer, Responsive Cross-Device™ — a compact
+                  {/* Smart Transformer, Responsive Cross-Device — a compact
                       tap-to-upload row below the sm breakpoint (640px), the
                       shared UploadZone's full drag-and-drop surface at sm and
                       above. Same handleFileSelected callback either way. */}

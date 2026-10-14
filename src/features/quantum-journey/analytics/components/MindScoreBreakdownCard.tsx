@@ -86,7 +86,7 @@ export function MindScoreBreakdownCard({
 
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Mind Score™</p>
+      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Mind Score</p>
 
       <div className="mt-4 flex flex-col items-center">
         <div className="relative inline-flex items-center justify-center" style={{ width: SIZE, height: SIZE }}>

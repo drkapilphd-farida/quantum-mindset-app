@@ -7,7 +7,7 @@ import { getUnifiedVisualStats } from '@/features/visual-intelligence/adaptive/q
 import { runAdaptiveEngine } from '@/features/visual-intelligence/adaptive/adaptiveEngine'
 
 export const metadata: Metadata = {
-  title: 'Visual Adaptation Engine™ — Visual Intelligence Lab™',
+  title: 'Visual Adaptation Engine — Visual Intelligence Lab',
   robots: { index: false, follow: false },
 }
 

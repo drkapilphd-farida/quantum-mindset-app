@@ -613,7 +613,7 @@ function ParagraphReadingSession({
         {runtime.phase === 'idle' && (
           <div className="flex w-full flex-col items-center gap-6 text-center">
             <ReadingJourney currentStage="paragraph" />
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">Paragraph Reading™</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">Paragraph Reading</h1>
             <p className="max-w-sm text-sm text-muted-foreground">
               Read a complete paragraph as one meaning block, then show what you understood — not what you memorized.
             </p>

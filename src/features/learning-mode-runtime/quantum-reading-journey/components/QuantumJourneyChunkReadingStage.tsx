@@ -42,7 +42,7 @@ export function QuantumJourneyChunkReadingStage({ projectId, chunkAssets, onComp
     () => ({
       id: 'quantum-journey-chunk-reading',
       labId: 'quantum-speed-reading',
-      title: 'Progressive Chunk Reading™',
+      title: 'Progressive Chunk Reading',
       description: 'Word groups from your document appear automatically, in flow — read naturally, then answer recognition questions to unlock the next level.',
       trainsAbility: 'Sustained reading rhythm at an expanding chunk size',
       exerciseType: 'reading',
@@ -57,7 +57,7 @@ export function QuantumJourneyChunkReadingStage({ projectId, chunkAssets, onComp
       labHref: `/preview/learning-projects/${projectId}`,
       locale: 'en',
       i18nKeys: {
-        title: 'Progressive Chunk Reading™',
+        title: 'Progressive Chunk Reading',
         description: 'Read naturally, then answer recognition questions to unlock the next level.',
         instruction: 'Which of these did you just read?',
         startLabel: 'Begin Reading',

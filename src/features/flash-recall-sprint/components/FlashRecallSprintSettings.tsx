@@ -39,7 +39,7 @@ export function FlashRecallSprintSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Flash Recall &amp; Retention Sprint™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Flash Recall &amp; Retention Sprint</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           A true RSVP stream flashes one word at a time at your target pace — no stops — then 3 quick questions check what you retained.
         </p>

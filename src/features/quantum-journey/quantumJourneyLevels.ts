@@ -35,16 +35,16 @@ const COLOR_WORD_EASY: JourneyStepExercise = { exerciseId: 'hemispheric-color-sy
 
 const WEEK_1_POOL: readonly JourneyStepExercise[] = [
   { exerciseId: 'calm-breathing', title: 'Calm Breathing', domain: null },
-  { exerciseId: 'schulte-grid-drill', title: 'Peripheral Vision Activator™', domain: null },
-  { exerciseId: 'word-flash', title: 'Rapid Recognition Drill™', domain: null },
+  { exerciseId: 'schulte-grid-drill', title: 'Peripheral Vision Activator', domain: null },
+  { exerciseId: 'word-flash', title: 'Rapid Recognition Drill', domain: null },
   { exerciseId: 'hemispheric-color-sync', title: 'Color-Word Sync Grid', domain: null },
 ]
 
 // Week 2 (Expansion & Visualisation) — Right Brain + Visualisation only;
 // Intuition/Zener is deliberately absent here too, moved to Week 3.
 const WEEK_2_POOL: readonly JourneyStepExercise[] = [
-  { exerciseId: 'photographic-memory', title: 'Deep Visualisation Recall™', domain: 'right_brain' },
-  { exerciseId: 'color-scene-transformation', title: 'Color & Scene Transformation Journey™', domain: 'visualisation' },
+  { exerciseId: 'photographic-memory', title: 'Deep Visualisation Recall', domain: 'right_brain' },
+  { exerciseId: 'color-scene-transformation', title: 'Color & Scene Transformation Journey', domain: 'visualisation' },
   { exerciseId: 'quantum-mental-rotation', title: 'Mental Object Rotation', domain: 'visualisation' },
 ]
 
@@ -52,7 +52,7 @@ const WEEK_2_POOL: readonly JourneyStepExercise[] = [
 // Zener card guessing game (Oct 2026): a guessing score is pure chance and
 // can never improve. No week has "intuition" content any more.
 const WEEK_3_POOL: readonly JourneyStepExercise[] = [
-  { exerciseId: 'dot-memory-grid', title: 'Dot Memory Grid™', domain: 'right_brain' },
+  { exerciseId: 'dot-memory-grid', title: 'Dot Memory Grid', domain: 'right_brain' },
   { exerciseId: 'hemispheric-color-sync', title: 'Color-Word Sync Grid', domain: 'right_brain' },
   { exerciseId: 'quantum-mental-rotation', title: 'Mental Object Rotation', domain: 'visualisation' },
 ]

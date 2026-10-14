@@ -12,7 +12,7 @@ import { PHRASE_READING_DATASET } from '../phraseDataset'
 export const PHRASE_READING_DEFINITION: ExerciseDefinition = {
   id: 'phrase-reading',
   labId: 'quantum-speed-reading',
-  title: 'Phrase Reading™',
+  title: 'Phrase Reading',
   description: 'Recognise the exact meaning of a phrase — not just its topic — among near-identical wording. Trains meaning recognition, not visual grouping.',
   trainsAbility: 'Meaning recognition and language processing',
   exerciseType: 'reading',

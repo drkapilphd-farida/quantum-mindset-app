@@ -35,7 +35,7 @@ export function DocumentOutcomeProfileCard({ profile }: DocumentOutcomeProfileCa
         <div className="quantum-icon-chip" aria-hidden="true">
           <Award className="size-3.5 text-violet-500" />
         </div>
-        <p className="text-sm font-semibold tracking-wide text-foreground">Document Outcome Profile™</p>
+        <p className="text-sm font-semibold tracking-wide text-foreground">Document Outcome Profile</p>
       </div>
 
       {profile.attemptsCount === 0 ? (

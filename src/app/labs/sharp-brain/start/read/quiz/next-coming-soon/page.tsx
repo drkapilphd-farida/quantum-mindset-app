@@ -18,7 +18,7 @@ import { AiMentorCard } from '@/features/quantum-speed-reading/components/ai-rea
 import { NextSessionRecommendationCard } from '@/features/quantum-speed-reading/components/ai-reading-coach/NextSessionRecommendationCard'
 
 export const metadata: Metadata = {
-  title: 'AI Reading Coach™ — Sharp Brain™',
+  title: 'AI Reading Coach — Sharp Brain™',
   robots: { index: false, follow: false },
 }
 
@@ -72,7 +72,7 @@ export default async function AiReadingCoachPage(): Promise<React.JSX.Element> {
   return (
     <div className="mx-auto max-w-2xl px-6 py-16">
       <div className="text-center">
-        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">AI Reading Coach™</p>
+        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">AI Reading Coach</p>
         <h1 className="mt-2 font-heading text-3xl font-bold tracking-tight text-foreground">Your Coaching Report</h1>
       </div>
 

@@ -13,7 +13,7 @@ import { WORD_FLASH_DATASET } from '../wordFlashDataset'
 export const MIXED_FLASH_DEFINITION: ExerciseDefinition = {
   id: 'mixed-flash',
   labId: 'quantum-speed-reading',
-  title: 'Mixed Flash™',
+  title: 'Mixed Flash',
   description: 'Words, numbers, and symbols — the brain never knows which is coming next.',
   trainsAbility: 'Recognition switching and cognitive flexibility',
   exerciseType: 'flash',

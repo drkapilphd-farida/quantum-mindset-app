@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useAppT } from '@/lib/app-i18n/client'
+import { useCalmCues, useWakeLock, type CalmCue } from '@/features/calm-cues/useCalmCues'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import type { RoundOutcome } from '@/features/exercise-core/components/AdaptiveExerciseShell'
 import { breathPattern, breathSync, IN_RHYTHM_SYNC, PRACTICE_BREATHS, type BreathSample } from '../breathingPatterns'
@@ -11,6 +12,9 @@ const TICK_MS = 100
 const FOLLOW_KEY = 'mum-breath-follow'
 
 type PhaseKind = 'ready' | 'in' | 'hold' | 'out' | 'done'
+
+// Each phase is announced by voice + chime + vibration, so it can be done with eyes closed.
+const PHASE_CUE: Record<PhaseKind, CalmCue> = { ready: 'getReady', in: 'breatheIn', hold: 'breathePause', out: 'breatheOut', done: 'breatheDone' }
 
 type Moment = { kind: PhaseKind; breath: number; msIntoPhase: number; phaseMs: number }
 
@@ -48,6 +52,10 @@ export function CalmBreathingRound({ level, isPractice, onDone }: { level: numbe
   const followRef = useRef(false)
   const samplesRef = useRef<BreathSample[][]>(Array.from({ length: breaths }, () => []))
   const doneRef = useRef(false)
+  const cue = useCalmCues()
+  const cueRef = useRef(cue)
+  cueRef.current = cue
+  useWakeLock(true)
 
   useEffect(() => {
     const f = readFollow()
@@ -62,8 +70,14 @@ export function CalmBreathingRound({ level, isPractice, onDone }: { level: numbe
 
   useEffect(() => {
     const startedAt = performance.now()
+    let lastPhase = ''
     const id = setInterval(() => {
       const m = momentAt(performance.now() - startedAt, level, breaths)
+      const phase = `${m.kind}-${m.breath}`
+      if (phase !== lastPhase) {
+        lastPhase = phase
+        cueRef.current(PHASE_CUE[m.kind])
+      }
       setMoment((prev) => (prev.kind === m.kind && prev.breath === m.breath && Math.floor(prev.msIntoPhase / 1000) === Math.floor(m.msIntoPhase / 1000) ? prev : m))
       if (m.kind === 'in' || m.kind === 'hold' || m.kind === 'out') {
         samplesRef.current[m.breath]?.push({ expectPressed: m.kind !== 'out', pressed: pressedRef.current, msIntoPhase: m.msIntoPhase })

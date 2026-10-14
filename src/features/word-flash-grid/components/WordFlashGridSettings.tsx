@@ -31,7 +31,7 @@ export function WordFlashGridSettings({ gridSize, onSelectGridSize, onStart }: W
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Word Flash Grid™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Word Flash Grid</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           {t('exercises.wordFlash.desc')}
         </p>

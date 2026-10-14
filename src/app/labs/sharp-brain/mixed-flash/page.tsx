@@ -7,8 +7,8 @@ import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
 
 export const metadata: Metadata = {
-  title: 'Mixed Flash™ — Sharp Brain Lab',
-  description: 'Words, numbers, and symbols — the brain never knows which is coming next. The Boss Mission of the Flash Intelligence Pack™.',
+  title: 'Mixed Flash — Sharp Brain Lab',
+  description: 'Words, numbers, and symbols — the brain never knows which is coming next. The Boss Mission of the Flash Reading Pack.',
   robots: { index: false, follow: false },
 }
 

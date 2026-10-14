@@ -38,7 +38,7 @@ export function DualStreamSplitReaderSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Dual-Stream Split Reader™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Dual-Stream Split Reader</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Two synchronized word streams flow side by side, left and right — training bilateral focus and genuinely
           parallel processing. 3 quick questions check what stuck from both sides.

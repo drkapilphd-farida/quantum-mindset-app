@@ -5,7 +5,7 @@ import type { FocusProfileRecord } from '@/features/focus-discovery/focusProfile
 function sampleFocusProfile(overrides: Partial<FocusProfileRecord> = {}): FocusProfileRecord {
   return {
     profileName: 'Selective Observer',
-    heroMetricLabel: 'Attention Stability™',
+    heroMetricLabel: 'Attention Stability',
     heroMetricPercent: 88,
     focusEfficiencyPercent: 91,
     strongestSkillLabel: 'Selective Attention',

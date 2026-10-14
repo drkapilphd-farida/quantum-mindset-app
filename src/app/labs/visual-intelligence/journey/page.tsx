@@ -4,7 +4,7 @@ import { getImagePersistenceSessionCount, getRecentImagePersistenceImageIds } fr
 import { selectImageForSession, getCycleIndex } from '@/features/visual-intelligence/image-persistence/imageRotation'
 
 export const metadata: Metadata = {
-  title: 'Foundation Journey™ — Visual Intelligence Lab™',
+  title: 'Foundation Journey — Visual Intelligence Lab',
   robots: { index: false, follow: false },
 }
 

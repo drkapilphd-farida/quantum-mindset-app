@@ -23,10 +23,10 @@ type JourneyReadingModePlayerProps = {
 }
 
 const MODE_LABELS: Record<ReadingPresentationMode, string> = {
-  phrase: 'Phrase Reading™',
-  'vertical-word': 'Vertical Word Reading™',
-  sentence: 'Sentence Reading™',
-  paragraph: 'Paragraph Reading™',
+  phrase: 'Phrase Reading',
+  'vertical-word': 'Vertical Word Reading',
+  sentence: 'Sentence Reading',
+  paragraph: 'Paragraph Reading',
 }
 
 // Baseline pace this player's flash timings are built around (~214 WPM at

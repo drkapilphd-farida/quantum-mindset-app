@@ -13,11 +13,11 @@ export const READING_SPRINT_ORDER: readonly ReadingSprintId[] = ['word', 'phrase
 // The internal `ReadingSprintId` literal ('meaning') is unchanged —
 // this is a display-label-only rename.
 export const READING_SPRINT_LABEL: Record<ReadingSprintId, string> = {
-  word: 'Word Sprint™',
-  phrase: 'Phrase Sprint™',
-  sentence: 'Sentence Sprint™',
-  paragraph: 'Paragraph Sprint™',
-  meaning: 'Reading Understanding™',
+  word: 'Word Sprint',
+  phrase: 'Phrase Sprint',
+  sentence: 'Sentence Sprint',
+  paragraph: 'Paragraph Sprint',
+  meaning: 'Reading Understanding',
 }
 
 // Sprint-2.5 FIX-04/FIX-10 — "What skill. Why it matters." A punchy

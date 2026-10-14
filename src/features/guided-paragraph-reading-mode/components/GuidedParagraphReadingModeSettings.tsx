@@ -71,7 +71,7 @@ export function GuidedParagraphReadingModeSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Guided Paragraph Reading™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Guided Paragraph Reading</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Read full paragraphs with a glowing guide gliding through them at your pace.
         </p>

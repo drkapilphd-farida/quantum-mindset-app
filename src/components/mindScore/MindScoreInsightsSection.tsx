@@ -8,7 +8,7 @@ export async function MindScoreInsightsSection(props: MindScoreInsightsInput): P
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
       <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden="true" />
-        AI Insights™
+        AI Insights
       </div>
 
       <ul className="mt-4 space-y-3" role="list">
@@ -28,7 +28,7 @@ export function MindScoreInsightsSkeleton(): React.JSX.Element {
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
       <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden="true" />
-        AI Insights™
+        AI Insights
       </div>
       <div className="mt-4 space-y-3">
         {[0.9, 0.75, 0.85].map((w, i) => (

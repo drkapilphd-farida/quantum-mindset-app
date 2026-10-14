@@ -60,7 +60,7 @@ export function FlashCardDeckView({ projectId, deck }: FlashCardDeckViewProps): 
           🃏
         </span>
         <div>
-          <p className={TYPOGRAPHY.label}>Flashcards™</p>
+          <p className={TYPOGRAPHY.label}>Flashcards</p>
           <h1 className={cn(TYPOGRAPHY.h1, 'mt-1')}>{deck.documentTitle}</h1>
           {deck.cards.length > 0 && (
             <p className={cn(TYPOGRAPHY.small, 'mt-2')}>
@@ -116,7 +116,7 @@ export function FlashCardDeckView({ projectId, deck }: FlashCardDeckViewProps): 
           <Link href={`/preview/learning-projects/${projectId}`}>Back to Learning Blueprint</Link>
         </Button>
         <Button asChild variant="ghost" size="sm">
-          <Link href="/preview/learning-studio">Back to AI Learning Studio™</Link>
+          <Link href="/preview/learning-studio">Back to AI Learning Studio</Link>
         </Button>
       </div>
     </div>

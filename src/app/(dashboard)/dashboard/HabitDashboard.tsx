@@ -52,7 +52,7 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
 
   return (
     <div className="glass-premium relative -m-6 space-y-4 p-6 sm:-m-8 sm:space-y-6 sm:p-8">
-      {/* Dashboard Glass™ ambient background — see QsrDashboard.tsx's
+      {/* Dashboard Glass ambient background — see QsrDashboard.tsx's
           identical block for why this is fixed/-z-10/scoped per page. */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="glass-ambient-blob" style={{ width: 520, height: 520, top: -140, left: -100, background: 'var(--ambient-a)' }} />

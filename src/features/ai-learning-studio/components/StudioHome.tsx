@@ -24,7 +24,7 @@ export function StudioHome({ viewState }: StudioHomeProps): React.JSX.Element {
   return (
     <div className="space-y-10">
       <div>
-        <p className={TYPOGRAPHY.label}>AI Learning Studio™</p>
+        <p className={TYPOGRAPHY.label}>AI Learning Studio</p>
         <h1 className={cn(TYPOGRAPHY.h1, 'mt-1')}>Studio</h1>
         {viewState.kind === 'active' && <p className={cn(TYPOGRAPHY.small, 'mt-2')}>Every document becomes a learning journey.</p>}
       </div>

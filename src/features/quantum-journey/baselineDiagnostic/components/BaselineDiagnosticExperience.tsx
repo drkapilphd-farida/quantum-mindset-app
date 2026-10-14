@@ -99,7 +99,7 @@ export function BaselineDiagnosticExperience(): React.JSX.Element {
         <div className="flex w-full flex-1 flex-col items-center justify-center gap-6">
           <LivingBrainLogo size={56} />
           <div>
-            <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Baseline Locked In™</p>
+            <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Baseline Locked In</p>
             <h1 className="mt-1 font-heading text-2xl font-bold tracking-tight text-foreground">Your Starting Point</h1>
             <p className="mt-2 max-w-sm text-sm text-muted-foreground">
               Every day of your {programs.focusStarter.appName} now measures real growth against this.

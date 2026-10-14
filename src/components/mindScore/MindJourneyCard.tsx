@@ -66,7 +66,7 @@ export function MindJourneyCard({
   return (
     <div className="glass-premium-card p-6">
       <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-        Mind Journey™
+        Mind Journey
       </p>
 
       {/* Status */}

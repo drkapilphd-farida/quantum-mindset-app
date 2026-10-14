@@ -214,7 +214,7 @@ export function computeFocusIntelligenceReport(inputs: FocusIntelligenceInputs):
   return {
     profileName: isAllRound ? ALL_ROUND_PROFILE : PROFILE_BY_MISSION[strongest],
     profileDescription: isAllRound ? ALL_ROUND_DESCRIPTION : PROFILE_DESCRIPTION_BY_MISSION[strongest],
-    heroMetricLabel: 'Attention Stability™',
+    heroMetricLabel: 'Attention Stability',
     heroMetricPercent: computeAttentionStability(inputs),
     focusEfficiencyPercent,
     reactionPrecisionPercent: Math.round(ratios['reaction-focus'] * 100),

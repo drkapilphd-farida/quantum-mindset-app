@@ -38,7 +38,7 @@ export function LearningProjectsEmptyState(): React.JSX.Element {
           <div aria-hidden="true" className="flex size-14 items-center justify-center rounded-2xl bg-foreground/5">
             <Brain className="size-7 text-foreground" />
           </div>
-          <h2 className={cn(TYPOGRAPHY.h3, 'mt-5')}>Discover Your Learning Potential™</h2>
+          <h2 className={cn(TYPOGRAPHY.h3, 'mt-5')}>Discover Your Learning Potential</h2>
           <p className={cn(TYPOGRAPHY.small, 'mt-2 text-muted-foreground')}>Test your Reading, Memory &amp; Focus in just 5 minutes.</p>
           <Button asChild size="lg" variant="outline" className="mt-6 w-full rounded-full">
             <Link href="/discover-learning-potential">Get Started</Link>

@@ -8,10 +8,10 @@ import { cn } from '@/lib/utils'
 import type { Recommendation, RecommendationType } from '@/types/intelligence'
 
 const TYPE_LABELS: Record<RecommendationType, string> = {
-  practice: 'AI Recommendation™',
-  evolve: 'Evolution Ready™',
-  rest: 'Recovery Mode™',
-  reflect: 'Mind Reset™',
+  practice: 'AI Recommendation',
+  evolve: 'Evolution Ready',
+  rest: 'Recovery Mode',
+  reflect: 'Mind Reset',
 }
 
 type AIRecommendationCardProps = {

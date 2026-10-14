@@ -71,7 +71,7 @@ export default function PrefrontalPowerHero(): React.JSX.Element {
         </div>
 
         <div className="relative mx-auto w-full max-w-[300px] lg:mx-0 lg:max-w-none lg:justify-self-end">
-          {/* Breathing-Room Frame™ — padding lives on the card div below,
+          {/* Breathing-Room Frame — padding lives on the card div below,
               not on the same element as the aspect-ratio box. A
               Next/Image `fill` child is absolutely positioned with
               inset:0, which CSS resolves against the containing block's

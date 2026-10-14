@@ -13,7 +13,7 @@ import { getReadingGoal } from './goalCatalog'
 // session, or a first-session welcome when there's no prior session yet.
 export function generateTodaysInsight(latest: ReadingSessionRecord, previous: ReadingSessionRecord | null): string {
   if (!previous) {
-    return `You completed your first tracked session at ${latest.wpm} WPM with ${latest.accuracyPercent}% accuracy. Every session from here sharpens your Reading DNA™.`
+    return `You completed your first tracked session at ${latest.wpm} WPM with ${latest.accuracyPercent}% accuracy. Every session from here sharpens your Reading DNA.`
   }
 
   const wpmDelta = latest.wpm - previous.wpm

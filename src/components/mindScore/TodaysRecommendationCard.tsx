@@ -38,7 +38,7 @@ export async function TodaysRecommendationCard({
     <div className="glass-premium-card p-6">
       <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden="true" />
-        Today&apos;s Recommendation™
+        Today&apos;s Recommendation
       </div>
 
       {isComplete ? (

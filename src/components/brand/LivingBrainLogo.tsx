@@ -208,7 +208,7 @@ export function LivingBrainLogo({
           {/* Spine — connects the brain base through the core to the book */}
           <line x1="100" y1="118" x2="100" y2="168" stroke={`url(#${gradientId})`} strokeWidth={3} />
 
-          {/* Center core — Learning Potential™. The ring and dot always
+          {/* Center core — Learning Potential. The ring and dot always
               read clearly; only the surrounding glow softly intensifies
               on hover, per "very soft glow around the center core." */}
           <motion.circle

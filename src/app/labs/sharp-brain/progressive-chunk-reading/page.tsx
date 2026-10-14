@@ -9,7 +9,7 @@ import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readi
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
 
 export const metadata: Metadata = {
-  title: 'Progressive Chunk Reading™ — Sharp Brain Lab',
+  title: 'Progressive Chunk Reading — Sharp Brain Lab',
   description: 'Word groups appear automatically, in flow — read naturally, then answer two quick recognition questions per block.',
   robots: { index: false, follow: false },
 }
@@ -32,9 +32,9 @@ export default async function ProgressiveChunkReadingPage(): Promise<React.JSX.E
   if (!isFlashPackComplete) {
     return (
       <ExerciseLockedScreen
-        title="Core Reading Journey™"
+        title="Core Reading Path"
         unlockHref="/labs/sharp-brain/word-flash"
-        unlockTarget="Flash Intelligence Pack™"
+        unlockTarget="Flash Reading Pack"
       />
     )
   }

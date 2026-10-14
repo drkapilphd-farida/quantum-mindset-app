@@ -15,7 +15,7 @@ describe('AdaptiveDifficultyController', () => {
     expect(controller.currentLevel).toBe(2)
   })
 
-  it('AI Adaptive Observation™ — a real poor outcome stabilizes instead of advancing', () => {
+  it('AI Adaptive Observation — a real poor outcome stabilizes instead of advancing', () => {
     const controller = new AdaptiveDifficultyController(4)
     controller.recordRoundOutcome(1)
     expect(controller.currentLevel).toBe(1)
@@ -24,7 +24,7 @@ describe('AdaptiveDifficultyController', () => {
     expect(controller.stabilizedRounds).toBe(1)
   })
 
-  it('Anti-Frustration System™ — the real effective level never exceeds the real configured maximum', () => {
+  it('Anti-Frustration System — the real effective level never exceeds the real configured maximum', () => {
     const controller = new AdaptiveDifficultyController(2)
     for (let i = 0; i < 10; i++) controller.recordRoundOutcome(1)
     expect(controller.currentLevel).toBe(2)

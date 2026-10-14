@@ -25,7 +25,7 @@ export const CURRICULUM_CATEGORY_LABELS: Record<CurriculumExerciseCategory, stri
   'brain-gym': 'Focus Warm-Up',
   'right-brain-intuition': 'Visual Focus & Memory',
   visualization: 'Visualization',
-  'reading-intelligence': 'Reading Intelligence',
+  'reading-intelligence': 'Reading',
 }
 
 export type CurriculumCatalogExercise = {
@@ -60,7 +60,7 @@ const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
 
 // ---- Right-Brain / Intuition (Right Brain Hub + Intuition Hub) ----
 const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'photographic-memory', title: 'Deep Visualisation Recall™', href: '/labs/sharp-brain/visual-memory', category: 'right-brain-intuition' },
+  { id: 'photographic-memory', title: 'Deep Visualisation Recall', href: '/labs/sharp-brain/visual-memory', category: 'right-brain-intuition' },
   {
     id: 'pictorial-essence-sprint',
     title: 'Picture Memory Sprint',
@@ -73,10 +73,10 @@ const RIGHT_BRAIN_INTUITION_EXERCISES: readonly CurriculumCatalogExercise[] = [
     href: '/labs/sharp-brain/color-word-sync',
     category: 'right-brain-intuition',
   },
-  { id: 'dot-memory-grid', title: 'Dot Memory Grid™', href: '/labs/sharp-brain/dot-memory-grid', category: 'right-brain-intuition' },
-  { id: 'number-flash-grid', title: 'Number Flash Grid™', href: '/labs/sharp-brain/number-flash-grid', category: 'right-brain-intuition' },
-  { id: 'word-flash-grid', title: 'Word Flash Grid™', href: '/labs/sharp-brain/word-flash-grid', category: 'right-brain-intuition' },
-  { id: 'image-flash-grid', title: 'Image Flash Grid™', href: '/labs/sharp-brain/image-flash-grid', category: 'right-brain-intuition' },
+  { id: 'dot-memory-grid', title: 'Dot Memory Grid', href: '/labs/sharp-brain/dot-memory-grid', category: 'right-brain-intuition' },
+  { id: 'number-flash-grid', title: 'Number Flash Grid', href: '/labs/sharp-brain/number-flash-grid', category: 'right-brain-intuition' },
+  { id: 'word-flash-grid', title: 'Word Flash Grid', href: '/labs/sharp-brain/word-flash-grid', category: 'right-brain-intuition' },
+  { id: 'image-flash-grid', title: 'Image Flash Grid', href: '/labs/sharp-brain/image-flash-grid', category: 'right-brain-intuition' },
   // Memory Studio methods (Release 2) — the memory step of Days 2–10.
   { id: 'story-method', title: 'Story method', href: '/labs/sharp-brain/story-method', category: 'right-brain-intuition' },
   { id: 'peg-method', title: 'Peg method', href: '/labs/sharp-brain/peg-method', category: 'right-brain-intuition' },
@@ -99,7 +99,7 @@ const VISUALIZATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   },
   {
     id: 'color-scene-transformation',
-    title: 'Color & Scene Transformation Journey™',
+    title: 'Color & Scene Transformation Journey',
     href: '/labs/sharp-brain/color-scene-transformation',
     category: 'visualization',
   },
@@ -125,44 +125,44 @@ const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
   },
   {
     id: 'flash-recall-sprint',
-    title: 'Flash Recall & Retention Sprint™',
+    title: 'Flash Recall & Retention Sprint',
     href: '/labs/sharp-brain/flash-recall-sprint',
     category: 'reading-intelligence',
   },
   {
     id: 'vertical-flash-recall',
-    title: 'Vertical Flash Recall & Retention Sprint™',
+    title: 'Vertical Flash Recall & Retention Sprint',
     href: '/labs/sharp-brain/vertical-flash-recall',
     category: 'reading-intelligence',
   },
   {
     id: 'vertical-word-reading',
-    title: 'Vertical Word Reading™',
+    title: 'Vertical Word Reading',
     href: '/labs/sharp-brain/vertical-word-reading',
     category: 'reading-intelligence',
   },
-  { id: 'phrase-reading-mode', title: 'Phrase Reading™', href: '/labs/sharp-brain/phrase-reading-mode', category: 'reading-intelligence' },
+  { id: 'phrase-reading-mode', title: 'Phrase Reading', href: '/labs/sharp-brain/phrase-reading-mode', category: 'reading-intelligence' },
   {
     id: 'sentence-reading-mode',
-    title: 'Sentence Reading™',
+    title: 'Sentence Reading',
     href: '/labs/sharp-brain/sentence-reading-mode',
     category: 'reading-intelligence',
   },
   {
     id: 'paragraph-reading-mode',
-    title: 'Paragraph Reading™',
+    title: 'Paragraph Reading',
     href: '/labs/sharp-brain/paragraph-reading-mode',
     category: 'reading-intelligence',
   },
   {
     id: 'guided-paragraph-reading-mode',
-    title: 'Guided Paragraph Reading™',
+    title: 'Guided Paragraph Reading',
     href: '/labs/sharp-brain/guided-paragraph-reading-mode',
     category: 'reading-intelligence',
   },
   {
     id: 'subvocalization-destroyer',
-    title: 'Inner Voice Control™',
+    title: 'Inner Voice Control',
     href: '/labs/sharp-brain/subvocalization-destroyer',
     category: 'reading-intelligence',
   },
@@ -174,7 +174,7 @@ const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
   },
   {
     id: 'dual-stream-split-reader',
-    title: 'Dual-Stream Split Reader™',
+    title: 'Dual-Stream Split Reader',
     href: '/labs/sharp-brain/dual-stream-split-reader',
     category: 'reading-intelligence',
   },
@@ -190,7 +190,7 @@ const READING_EXPANSION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   { id: 'sentence-reading', title: 'Sentence Reading (Idea Recognition)', href: '/labs/sharp-brain/sentence-reading', category: 'reading-intelligence' },
   {
     id: 'paragraph-reading',
-    title: 'Paragraph Reading (Meaning Block Recognition™)',
+    title: 'Paragraph Reading (Meaning Block Recognition)',
     href: '/labs/sharp-brain/paragraph-reading',
     category: 'reading-intelligence',
   },
@@ -201,7 +201,7 @@ const READING_EXPANSION_EXERCISES: readonly CurriculumCatalogExercise[] = [
 // peripheral-flash (see flashIntelligenceModule.ts). Same ordering
 // discipline as above.
 const FLASH_INTELLIGENCE_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'word-flash', title: 'Rapid Recognition Drill', href: '/labs/sharp-brain/word-flash', category: 'reading-intelligence' },
+  { id: 'word-flash', title: 'Word Flash Reading', href: '/labs/sharp-brain/word-flash', category: 'reading-intelligence' },
   { id: 'number-flash', title: 'Number Flash', href: '/labs/sharp-brain/number-flash', category: 'reading-intelligence' },
   { id: 'symbol-flash', title: 'Symbol Flash', href: '/labs/sharp-brain/symbol-flash', category: 'reading-intelligence' },
   { id: 'mixed-flash', title: 'Mixed Flash', href: '/labs/sharp-brain/mixed-flash', category: 'reading-intelligence' },

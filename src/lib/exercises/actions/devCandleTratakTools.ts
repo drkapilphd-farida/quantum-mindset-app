@@ -23,7 +23,7 @@ const DEV_ANALYZER_ANSWERS: ImageFixationAnalyzerAnswers = {
   afterImageClarity: 'very-clear',
   afterImageDuration: 'more-than-10s',
   centerFocusEase: null,
-  notes: 'Dev Test Mode™ — synthetic answer (Generate Report).',
+  notes: 'Dev Test Mode — synthetic answer (Generate Report).',
 }
 
 function devCorrectObservationAnswers(): Record<string, string> {
@@ -53,5 +53,5 @@ export async function devCompleteCandleTratakSession(): Promise<DevCompleteCandl
     return { success: false, error: result.error }
   }
 
-  return { success: true, message: 'Candle Tratak™ session completed with synthetic Dev Test Mode™ answers.', stats: result.stats, xpEarned: result.xpEarned }
+  return { success: true, message: 'Candle Tratak session completed with synthetic Dev Test Mode answers.', stats: result.stats, xpEarned: result.xpEarned }
 }

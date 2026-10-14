@@ -7,7 +7,7 @@ import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSp
 import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readingExpansionModule'
 
 export const metadata: Metadata = {
-  title: 'Phrase Reading™ — Sharp Brain Lab',
+  title: 'Phrase Reading — Sharp Brain Lab',
   description: 'Recognise the exact meaning of a phrase — not just its topic — among near-identical wording. Pass each level to unlock the next.',
   robots: { index: false, follow: false },
 }

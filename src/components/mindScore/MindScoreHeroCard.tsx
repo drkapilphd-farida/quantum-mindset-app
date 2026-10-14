@@ -62,7 +62,7 @@ export function MindScoreHeroCard({
               {Math.round(animatedScore)}
             </span>
             <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
-              Mind Score™
+              Mind Score
             </span>
           </div>
         </div>

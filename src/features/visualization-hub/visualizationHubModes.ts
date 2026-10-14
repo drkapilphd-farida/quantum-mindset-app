@@ -28,7 +28,7 @@ export const VISUALIZATION_HUB_MODES: readonly VisualizationHubMode[] = [
   },
   {
     id: 'color-scene-transformation',
-    title: 'Color & Scene Transformation Journey™',
+    title: 'Color & Scene Transformation Journey',
     purpose: 'Watch a serene scene transform step by step, hold the final state in mind, then recall what it became.',
     status: 'available',
     href: '/labs/sharp-brain/color-scene-transformation',

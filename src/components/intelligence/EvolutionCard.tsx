@@ -30,7 +30,7 @@ export function EvolutionCard({
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
       <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-        Next Evolution™
+        Next Evolution
       </p>
 
       <div className="mt-4 flex items-start gap-4">

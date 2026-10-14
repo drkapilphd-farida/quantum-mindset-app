@@ -81,7 +81,7 @@ export function SmartNotesWorkspace({ documentId, documentTitle, chunkStrategy, 
   if (initial.kind === 'not-processed') {
     return (
       <div className="animate-in fade-in mx-auto max-w-lg px-6 py-16 duration-(--duration-slow)">
-        <EmptyStateCard icon={NotebookText} title="This document hasn't been prepared for a smart notes session yet" description="Its Universal Learning Object™ hasn't been built yet — check back once processing finishes." />
+        <EmptyStateCard icon={NotebookText} title="This document hasn't been prepared for a smart notes session yet" description="Its Universal Learning Object hasn't been built yet — check back once processing finishes." />
       </div>
     )
   }

@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
 export const metadata: Metadata = {
-  title: 'Visual Intelligence Lab™',
+  title: 'Visual Intelligence Lab',
   description: 'Visual fixation training and Tratak intelligence missions.',
   robots: { index: false, follow: false },
 }
@@ -18,12 +18,12 @@ export const metadata: Metadata = {
 // card.
 const HUB_LINKS = [
   {
-    title: 'Visual Fixation Engine™',
+    title: 'Visual Fixation Engine',
     description: 'Steady-gaze fixation drills that build visual stability and focus.',
     href: '/labs/visual-intelligence/fixation',
   },
   {
-    title: 'Tratak Intelligence Journey™',
+    title: 'Tratak Intelligence Journey',
     description: 'Progressive guided practice that develops stable visual attention and persistence.',
     href: '/labs/visual-intelligence/tratak',
   },
@@ -33,7 +33,7 @@ export default function VisualIntelligenceLabPage(): React.JSX.Element {
   return (
     <div className="mx-auto max-w-2xl px-6 py-16">
       <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Intelligence Journey</p>
-      <h1 className="mt-2 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Visual Intelligence Lab™</h1>
+      <h1 className="mt-2 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Visual Intelligence Lab</h1>
       <p className="mt-3 max-w-md text-base leading-relaxed text-foreground/80">
         Build visual stability and steady attention through guided fixation and Tratak practice.
       </p>

@@ -32,7 +32,7 @@ export function SchulteGridDrillSettings({ onStart }: SchulteGridDrillSettingsPr
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Peripheral Vision Activator™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Peripheral Vision Activator</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           {t('exercises.schulte.desc')}
         </p>

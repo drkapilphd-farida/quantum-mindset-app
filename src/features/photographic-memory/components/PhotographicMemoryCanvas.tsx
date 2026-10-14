@@ -363,7 +363,7 @@ export function PhotographicMemoryCanvas({ categoryFilter, onComplete, onExitReq
 
   return (
     <ReadingLayout maxWidthClassName="max-w-2xl" onExit={() => onExitRequested(elapsedMs)}>
-      <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Deep Visualisation Recall™</p>
+      <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Deep Visualisation Recall</p>
 
       <div className="mt-4 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
         <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${ROUNDS_PER_SESSION}`} />

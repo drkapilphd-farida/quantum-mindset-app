@@ -1,10 +1,10 @@
 {
   "subtitle": "మీ లైవ్ మెదడు స్కోర్ — ప్రతి సెషన్ తర్వాత అప్‌డేట్ అవుతుంది.",
-  "overall": "మొత్తం మేధస్సు",
-  "scoreAria": "Mind Score 1000 లో {score}, చదువు మేధస్సు {reading} శాతం",
+  "overall": "మొత్తం",
+  "scoreAria": "Mind Score 1000 లో {score}, చదవడం {reading} శాతం",
   "scoreProgress": "Mind Score పురోగతి",
-  "dimensions": "మేధస్సు కోణాలు",
-  "dimensionsAria": "మనసు మేధస్సు కోణాలు",
+  "dimensions": "మీ నైపుణ్యాలు",
+  "dimensionsAria": "నైపుణ్య స్కోర్లు",
   "outOf100": "{label}: 100 లో {score}",
   "notAttempted": "{label}: ఇంకా మొదలుపెట్టలేదు",
   "startNow": "ఇప్పుడే మొదలుపెట్టండి",
@@ -33,7 +33,7 @@
   "moduleCompleteBody": "మీరు మొత్తం 30 రోజులు పూర్తి చేశారు. మీ నైపుణ్యాలను పదునుగా ఉంచుకోవడానికి ఏ రోజునైనా మళ్లీ ప్రాక్టీస్ చేయండి.",
   "highestImpact": "అత్యధిక ప్రభావం ఉన్న ప్రాక్టీస్",
   "minutes": "~{n} నిమిషాలు",
-  "plusReading": "+చదువు మేధస్సు",
+  "plusReading": "+చదవడం",
   "firstSession": "వ్యక్తిగత సూచన పొందడానికి మీ మొదటి సెషన్ పూర్తి చేయండి.",
   "review": "మళ్లీ చూడండి",
   "resumeX": "మళ్లీ కొనసాగించండి: {name}",
@@ -90,5 +90,6 @@
     "noSessions": "ఇంకా ఏ సెషన్ పూర్తి కాలేదు.",
     "dayN": "రోజు {day}",
     "completed": "పూర్తయింది"
-  }
+  },
+  "weeklyReport": "వారపు నివేదిక"
 }

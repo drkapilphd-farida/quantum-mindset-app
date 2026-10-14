@@ -1,34 +1,52 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, Eye, SkipForward } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAppT } from '@/lib/app-i18n/client'
+import { useCalmCues, useWakeLock } from '@/features/calm-cues/useCalmCues'
 
 const LOOK_FAR_S = 20
-const TOTAL_S = 30
+const TOTAL_S = 35
 
-// Optional 30-second eye relaxation break, offered before reading exercises:
-// the 20-20-20 habit (look about 6 metres away for 20 seconds), then 10
+// Optional 35-second eye relaxation break, offered before reading exercises:
+// the 20-20-20 habit (look about 6 metres away for 20 seconds), then 15
 // seconds of palming. Always skippable, no score, no claims — just comfort.
+// Voice + chime + vibration announce each phase, so the learner never needs
+// to look at the screen; the screen stays on while it runs.
 export function EyeRelaxationBreak({ onDone }: { onDone: () => void }): React.JSX.Element {
   const t = useAppT()
   const [running, setRunning] = useState(false)
   const [elapsed, setElapsed] = useState(0)
+  const cue = useCalmCues()
+  useWakeLock(running)
+  // The parent re-renders often (practice heartbeat) and passes a new onDone
+  // each time; keeping it in a ref stops the timer from restarting at 20.
+  const onDoneRef = useRef(onDone)
+  onDoneRef.current = onDone
+  const cueRef = useRef(cue)
+  cueRef.current = cue
 
   useEffect(() => {
     if (!running) return undefined
     const startedAt = Date.now()
+    let palming = false
+    cueRef.current('eyeFar')
     const id = setInterval(() => {
       const s = Math.floor((Date.now() - startedAt) / 1000)
       setElapsed(s)
+      if (!palming && s >= LOOK_FAR_S) {
+        palming = true
+        cueRef.current('eyePalm')
+      }
       if (s >= TOTAL_S) {
         clearInterval(id)
-        onDone()
+        cueRef.current('eyeDone')
+        onDoneRef.current()
       }
     }, 250)
     return () => clearInterval(id)
-  }, [running, onDone])
+  }, [running])
 
   const lookFar = elapsed < LOOK_FAR_S
   const left = running ? (lookFar ? LOOK_FAR_S - elapsed : TOTAL_S - elapsed) : TOTAL_S

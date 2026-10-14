@@ -58,7 +58,7 @@ export async function StrengthAreasCard({
   return (
     <div className="glass-premium-card p-6">
       <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-        Strength Areas™
+        Strength Areas
       </p>
 
       <div className="mt-4 grid grid-cols-2 gap-3">

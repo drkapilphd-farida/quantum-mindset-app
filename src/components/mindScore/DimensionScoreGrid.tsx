@@ -136,7 +136,7 @@ export function DimensionScoreGrid({
     },
     {
       id: 'neural-retraining',
-      label: 'Neural Retraining Index',
+      label: 'Practice Progress',
       score: neuralRetrainingIndex,
       trend: null,
       startHref: null,

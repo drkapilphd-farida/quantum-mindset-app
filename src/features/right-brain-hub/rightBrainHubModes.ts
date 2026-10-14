@@ -18,7 +18,7 @@ export type RightBrainHubMode = {
 export const RIGHT_BRAIN_HUB_MODES: readonly RightBrainHubMode[] = [
   {
     id: 'photographic-memory',
-    title: 'Deep Visualisation Recall™',
+    title: 'Deep Visualisation Recall',
     purpose: 'Flash-memorize a mandala, icon cluster, word/number code, or color-shape grid — then pick the exact match.',
     status: 'available',
     href: '/labs/sharp-brain/visual-memory',
@@ -27,7 +27,7 @@ export const RIGHT_BRAIN_HUB_MODES: readonly RightBrainHubMode[] = [
   },
   {
     id: 'pictorial-essence-sprint',
-    title: 'High-Speed Pictorial Essence Sprint™',
+    title: 'High-Speed Pictorial Essence Sprint',
     purpose: 'A glowing icon flashes for barely half a second — name its exact essence from 4 close cousins.',
     status: 'available',
     href: '/labs/sharp-brain/pictorial-essence-sprint',
@@ -45,7 +45,7 @@ export const RIGHT_BRAIN_HUB_MODES: readonly RightBrainHubMode[] = [
   },
   {
     id: 'dot-memory-grid',
-    title: 'Dot Memory Grid™',
+    title: 'Dot Memory Grid',
     purpose: 'A cluster of glowing dots flashes across a grid — memorize their positions, then tap them from memory, 5 escalating rounds.',
     status: 'available',
     href: '/labs/sharp-brain/dot-memory-grid',
@@ -54,7 +54,7 @@ export const RIGHT_BRAIN_HUB_MODES: readonly RightBrainHubMode[] = [
   },
   {
     id: 'number-flash-grid',
-    title: 'Number Flash Grid™',
+    title: 'Number Flash Grid',
     purpose: 'Digits flash briefly across the grid — memorize both where and what they were, then tap and type them back, 5 escalating rounds.',
     status: 'available',
     href: '/labs/sharp-brain/number-flash-grid',
@@ -63,7 +63,7 @@ export const RIGHT_BRAIN_HUB_MODES: readonly RightBrainHubMode[] = [
   },
   {
     id: 'word-flash-grid',
-    title: 'Word Flash Grid™',
+    title: 'Word Flash Grid',
     purpose: 'Short, punchy words flash briefly across the grid — memorize both where and what they said, then tap and pick them back, 5 escalating rounds.',
     status: 'available',
     href: '/labs/sharp-brain/word-flash-grid',
@@ -72,7 +72,7 @@ export const RIGHT_BRAIN_HUB_MODES: readonly RightBrainHubMode[] = [
   },
   {
     id: 'image-flash-grid',
-    title: 'Image Flash Grid™',
+    title: 'Image Flash Grid',
     purpose: 'Vibrant icons flash briefly across the grid — pure visual recall, no words or numbers, 5 escalating rounds.',
     status: 'available',
     href: '/labs/sharp-brain/image-flash-grid',

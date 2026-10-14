@@ -9,7 +9,7 @@
     "backToLab": "Lab க்குத் திரும்பு"
   },
   "rsvp": {
-    "mode": "RSVP Mode™",
+    "mode": "RSVP Mode",
     "speed": "வேகம்: {wpm} WPM"
   },
   "questions": {
@@ -523,7 +523,9 @@
     "your_mind_remembers_pick_up_where_you_left_off": "உங்கள் மனம் நினைவில் வைத்திருக்கிறது — விட்ட இடத்திலிருந்து தொடருங்கள்",
     "your_practice_is_paying_off": "உங்கள் பயிற்சி பலன் தருகிறது",
     "your_transformation_is_ready_to_begin": "உங்கள் மாற்றம் தொடங்கத் தயார்",
-    "your_transformation_starts_here": "உங்கள் மாற்றம் இங்கிருந்து தொடங்குகிறது"
+    "your_transformation_starts_here": "உங்கள் மாற்றம் இங்கிருந்து தொடங்குகிறது",
+    "reading": "வாசிப்பு",
+    "practice_progress": "பயிற்சி முன்னேற்றம்"
   },
   "journey": {
     "title": "வாசிப்புப் பயணம்",

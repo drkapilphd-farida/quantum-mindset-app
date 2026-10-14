@@ -8,7 +8,7 @@ import { getCurriculumWatermarkText } from '@/features/thirty-day-curriculum/act
 import { isCurriculumDayUnlocked } from '@/features/thirty-day-curriculum/curriculumProgress'
 import { getMyClassesDone } from '@/features/live-classes/actions'
 import { getNextDayOpensAt } from '@/features/thirty-day-curriculum/actions/paceActions'
-import { ReminderBanner } from '@/features/reminders/components/ReminderBanner'
+import { getSkillProgress } from '@/features/thirty-day-curriculum/actions/getSkillProgress'
 
 export const metadata: Metadata = {
   title: 'Sharp Brain 30-Day Program Curriculum — Sharp Brain Lab',
@@ -43,12 +43,13 @@ type ThirtyDayCurriculumPageProps = {
 }
 
 export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDayCurriculumPageProps): Promise<React.JSX.Element> {
-  const [isPro, completions, watermarkText, liveClassesDone, nextDayOpensAt] = await Promise.all([
+  const [isPro, completions, watermarkText, liveClassesDone, nextDayOpensAt, skillBars] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
     getCurriculumDayCompletions(),
     getCurriculumWatermarkText(),
     getMyClassesDone(),
     getNextDayOpensAt(),
+    getSkillProgress(),
   ])
   const initialServerCompletedDays = completions.map((completion) => completion.day)
 
@@ -61,9 +62,7 @@ export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDa
     redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
   }
   return (
-    <>
-      {requestedDay === null && <ReminderBanner />}
-      <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} initialNextDayOpensAt={nextDayOpensAt} />
-    </>
+    // The plan page's own Today card replaces the reminder banner here.
+    <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} initialNextDayOpensAt={nextDayOpensAt} initialSkillBars={skillBars} />
   )
 }

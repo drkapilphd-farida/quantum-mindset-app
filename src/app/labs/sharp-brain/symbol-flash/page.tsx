@@ -7,8 +7,8 @@ import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
 
 export const metadata: Metadata = {
-  title: 'Symbol Flash™ — Sharp Brain Lab',
-  description: 'Train ultra-fast visual recognition using symbols instead of words. Mission 3 of the Flash Intelligence Pack™.',
+  title: 'Symbol Flash — Sharp Brain Lab',
+  description: 'Train ultra-fast visual recognition using symbols instead of words. Mission 3 of the Flash Reading Pack.',
   robots: { index: false, follow: false },
 }
 

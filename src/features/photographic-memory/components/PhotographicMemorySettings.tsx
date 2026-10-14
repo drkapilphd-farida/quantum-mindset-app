@@ -43,7 +43,7 @@ export function PhotographicMemorySettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Deep Visualisation Recall™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Deep Visualisation Recall</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Something flashes for under a second. Pick the exact match from 4 nearly-identical options before time runs
           out.

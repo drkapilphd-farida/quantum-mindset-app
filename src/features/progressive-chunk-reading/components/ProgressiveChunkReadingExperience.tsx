@@ -130,7 +130,7 @@ const EXERCISE_ID = 'progressive-chunk-reading'
 const LAB_HREF = '/labs/sharp-brain'
 const NEXT_MISSION_HREF = '/labs/sharp-brain/phrase-reading'
 const NEXT_MISSION_ID = 'phrase-reading'
-const NEXT_MISSION_NAME = 'Phrase Reading™'
+const NEXT_MISSION_NAME = 'Phrase Reading'
 
 const FEEDBACK_MS = 450
 const MIN_CHUNK_DISPLAY_MS = 500
@@ -760,7 +760,7 @@ function ProgressiveChunkReadingSession({
       <div className="flex w-full max-w-lg flex-col items-center gap-8">
         {runtime.phase === 'idle' && (
           <div className="flex flex-col items-center gap-6 text-center w-full">
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">Progressive Chunk Reading™</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">Progressive Chunk Reading</h1>
             <p className="text-sm font-medium text-muted-foreground">See Groups, Not Single Words</p>
             <p className="text-sm text-muted-foreground max-w-xs">
               Train your eyes to read multiple words as one visual chunk instead of one at a time.

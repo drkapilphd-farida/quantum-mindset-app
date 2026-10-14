@@ -34,7 +34,7 @@ export function VerticalWordReadingSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Vertical Word Reading Engine™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Vertical Word Reading</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Real vocabulary glides smoothly down a central focus window at your target pace — a fresh topic every session.
         </p>

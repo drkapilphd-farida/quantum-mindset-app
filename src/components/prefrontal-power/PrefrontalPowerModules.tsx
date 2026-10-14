@@ -18,7 +18,7 @@ const MODULES: readonly Module[] = [
   { number: "03", icon: Crosshair, title: "The Focus Lab", tags: "Attention · Distraction · Focus" },
   { number: "04", icon: RefreshCw, title: "Overthinking → Clarity", tags: "Awareness · Pause · Reframe · Response" },
   { number: "05", icon: GitBranch, title: "The Decision Brain", tags: "Cognitive Load · Deliberate Decisions · Better Choices" },
-  { number: "06", icon: Sparkles, title: "MOVERS™", tags: "Build Your 10-Minute Daily Brain Training Routine" },
+  { number: "06", icon: Sparkles, title: "MOVERS", tags: "Build Your 10-Minute Daily Brain Training Routine" },
 ];
 
 export default function PrefrontalPowerModules(): React.JSX.Element {

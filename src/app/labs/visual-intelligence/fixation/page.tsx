@@ -4,7 +4,7 @@ import { getFixationSessions } from '@/features/visual-intelligence/fixation/que
 import { getFixationStats } from '@/features/visual-intelligence/fixation/queries/getFixationStats'
 
 export const metadata: Metadata = {
-  title: 'Visual Fixation Engine™ — Visual Intelligence Lab™',
+  title: 'Visual Fixation Engine — Visual Intelligence Lab',
   robots: { index: false, follow: false },
 }
 

@@ -67,7 +67,7 @@ export function FeynmanChallengeCard({ challenge }: FeynmanChallengeCardProps): 
         <div className="quantum-icon-chip" aria-hidden="true">
           <Lightbulb className="size-3.5 text-amber-500" />
         </div>
-        <p className="text-sm font-semibold tracking-wide text-foreground">Feynman Challenge™</p>
+        <p className="text-sm font-semibold tracking-wide text-foreground">Feynman Challenge</p>
       </div>
       <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{challenge.topic}</p>
       <p className="mt-1.5 text-sm text-foreground">{challenge.prompt}</p>

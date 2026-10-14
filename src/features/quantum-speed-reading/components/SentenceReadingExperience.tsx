@@ -771,7 +771,7 @@ function SentenceReadingSession({
         {runtime.phase === 'idle' && (
           <div className="flex flex-col items-center gap-6 text-center w-full">
             <ReadingJourney currentStage="sentence" />
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">Sentence Reading™</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">Sentence Reading</h1>
             <p className="text-sm text-muted-foreground max-w-xs">
               {t('exercises.sentence.intro')}
             </p>

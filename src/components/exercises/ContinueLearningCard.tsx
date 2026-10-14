@@ -90,7 +90,7 @@ export function ContinueLearningCard({
       {isHero && (
         <p className="mt-3 text-sm text-muted-foreground">
           {isComplete
-            ? 'All activations complete — Reading Intelligence fully activated.'
+            ? 'All activations complete — reading skills fully activated.'
             : `${completedCount} of ${totalCount} activations complete${
                 remainingCount !== undefined ? ` — ${remainingCount} remaining` : ''
               }`}

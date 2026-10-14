@@ -46,7 +46,7 @@ export async function SmartNotesProgressDashboard(): Promise<React.JSX.Element> 
   return (
     <div className="space-y-8 px-1 pb-4 sm:px-0">
       <div className="animate-in fade-in slide-in-from-top-1 duration-(--duration-base)">
-        <p className={TYPOGRAPHY.label}>Smart Notes™</p>
+        <p className={TYPOGRAPHY.label}>Smart Notes</p>
         <h1 className={cn(TYPOGRAPHY.h1, 'mt-1')}>Your Smart Notes Progress</h1>
       </div>
 

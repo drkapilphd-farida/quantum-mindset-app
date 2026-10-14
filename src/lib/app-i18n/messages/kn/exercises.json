@@ -9,7 +9,7 @@
     "backToLab": "Lab ಗೆ ಹಿಂತಿರುಗಿ"
   },
   "rsvp": {
-    "mode": "RSVP Mode™",
+    "mode": "RSVP Mode",
     "speed": "ವೇಗ: {wpm} WPM"
   },
   "questions": {
@@ -523,7 +523,9 @@
     "your_mind_remembers_pick_up_where_you_left_off": "ನಿಮ್ಮ ಮನಸ್ಸು ನೆನಪಿಡುತ್ತದೆ — ಬಿಟ್ಟಲ್ಲಿಂದ ಮುಂದುವರಿಸಿ",
     "your_practice_is_paying_off": "ನಿಮ್ಮ ಅಭ್ಯಾಸ ಫಲ ನೀಡುತ್ತಿದೆ",
     "your_transformation_is_ready_to_begin": "ನಿಮ್ಮ ಬದಲಾವಣೆ ಆರಂಭಕ್ಕೆ ಸಿದ್ಧ",
-    "your_transformation_starts_here": "ನಿಮ್ಮ ಬದಲಾವಣೆ ಇಲ್ಲಿಂದ ಆರಂಭ"
+    "your_transformation_starts_here": "ನಿಮ್ಮ ಬದಲಾವಣೆ ಇಲ್ಲಿಂದ ಆರಂಭ",
+    "reading": "ಓದು",
+    "practice_progress": "ಅಭ್ಯಾಸ ಪ್ರಗತಿ"
   },
   "journey": {
     "title": "ಓದಿನ ಪಯಣ",

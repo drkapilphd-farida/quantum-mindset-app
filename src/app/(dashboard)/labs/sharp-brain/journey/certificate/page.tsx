@@ -11,7 +11,7 @@ import { createClient } from '@/lib/supabase/server'
 import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: `Your Completion Certificate™ — ${programs.focusStarter.appName}`,
+  title: `Your Completion Certificate — ${programs.focusStarter.appName}`,
   description: `Your official ${programs.focusStarter.appName} completion certificate.`,
   robots: { index: false, follow: false },
 }
@@ -60,7 +60,7 @@ export default async function JourneyCertificatePage(): Promise<React.JSX.Elemen
       <div className="mx-auto max-w-3xl px-6 py-10">
         <LabPageHeader
           eyebrow={programs.focusStarter.appName}
-          title="Your Completion Certificate™"
+          title="Your Completion Certificate"
           subtitle="A real, printable record of your Day 1 to Day 21 growth."
         />
 

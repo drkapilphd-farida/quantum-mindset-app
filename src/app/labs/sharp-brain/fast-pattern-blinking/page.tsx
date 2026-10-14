@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { FastPatternBlinkingExperience } from '@/features/brain-gym/components/FastPatternBlinkingExperience'
 
 export const metadata: Metadata = {
-  title: 'Fast Pattern Blinking™ — Sharp Brain Lab',
+  title: 'Fast Pattern Blinking — Sharp Brain Lab',
   description: 'A symbol blinks for a split second, then vanishes. Catch it before it’s gone.',
   robots: { index: false, follow: false },
 }

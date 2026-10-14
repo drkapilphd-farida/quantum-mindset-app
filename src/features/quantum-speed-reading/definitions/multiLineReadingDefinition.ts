@@ -21,7 +21,7 @@ const MULTI_LINE_READING_DATASET = createDataset({
 export const MULTI_LINE_READING_DEFINITION: ExerciseDefinition = {
   id: 'multi-line-reading',
   labId: 'quantum-speed-reading',
-  title: 'Multi-Line Reading™',
+  title: 'Multi-Line Reading',
   description: 'A real paragraph appears — read it, then recall exactly which line contained what. Trains spatial reading and eye navigation.',
   trainsAbility: 'Spatial reading, eye navigation, and line tracking',
   exerciseType: 'reading',

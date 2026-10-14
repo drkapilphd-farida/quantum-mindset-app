@@ -37,7 +37,7 @@
       "focus": "Start noticing and interrupting your inner voice while reading."
     },
     "d10": {
-      "title": "Flash Intelligence Warm-Up",
+      "title": "Flash Reading Warm-Up",
       "focus": "Sharpen instant recognition speed with flash-based drills."
     },
     "d11": {
@@ -57,7 +57,7 @@
       "focus": "Re-measure WPM and comprehension to confirm real week-two growth."
     },
     "d15": {
-      "title": "Multi-Sensory Visualisation Begins",
+      "title": "Keyword Method Begins",
       "focus": "Make your Memory Palace more vivid: use sight, sound and touch to fix each object in its place."
     },
     "d16": {
@@ -65,7 +65,7 @@
       "focus": "Settle your mind with guided slow breathing, then train focus and memory."
     },
     "d17": {
-      "title": "Mental Mastery Deepens",
+      "title": "Build Your Own Memory Palace",
       "focus": "Layer visualization work on top of your reading gains."
     },
     "d18": {
@@ -81,39 +81,39 @@
       "focus": "Combine calm breathing, memory and reading in one advanced session."
     },
     "d21": {
-      "title": "Checkpoint — Mental Mastery Review",
+      "title": "Checkpoint — Week Three Review",
       "focus": "Re-measure WPM and comprehension to confirm real week-three growth."
     },
     "d22": {
-      "title": "Peak Mastery — Phrase Fluency",
+      "title": "Your Own Book — Phrase Reading",
       "focus": "Read in idea-sized phrases, not single words."
     },
     "d23": {
-      "title": "Peak Mastery — Multi-Line Flow",
+      "title": "Names Review — Multi-Line Reading",
       "focus": "Extend fluency across multiple lines at once."
     },
     "d24": {
-      "title": "Peak Mastery — Sentence Mastery",
+      "title": "Numbers Review — Sentence Reading",
       "focus": "Recognize whole sentences as single ideas."
     },
     "d25": {
-      "title": "Peak Mastery — Paragraph Mastery",
+      "title": "Keyword Review — Paragraph Reading",
       "focus": "Recognize whole paragraphs as single meaning blocks."
     },
     "d26": {
-      "title": "Peak Mastery — Rapid Recognition",
+      "title": "Palace Review — Word Flash Reading",
       "focus": "Recognise words at a glance while keeping accuracy high."
     },
     "d27": {
-      "title": "Peak Mastery — Number Flash",
+      "title": "Your Own Book — Number Flash",
       "focus": "Take in numbers at a glance and keep accuracy high."
     },
     "d28": {
-      "title": "Peak Mastery — Calm Precision",
+      "title": "Your Own Book — Calm & Symbol Flash",
       "focus": "Breathe slowly, then recognise symbols quickly and accurately."
     },
     "d29": {
-      "title": "Peak Mastery — Mixed Recognition",
+      "title": "Final Practice — Mixed Flash",
       "focus": "Words, numbers and symbols at a glance — your sharpest round yet."
     },
     "d30": {
@@ -123,20 +123,20 @@
   },
   "phases": {
     "p1": {
-      "title": "Foundation & Focus Warm-Up",
-      "description": "Establish a true baseline, build steady focus, and wake up visual memory and chunk reading."
+      "title": "Foundation: focus & reading basics",
+      "description": "A fair reading test on Day 1, then focus warm-ups, the Story method and your first reading drills."
     },
     "p2": {
-      "title": "Visual Focus & Inner Voice Control",
-      "description": "Deepen visual, non-verbal recall and break the habit of silently voicing every word."
+      "title": "Memory techniques",
+      "description": "Story, Peg, Names & faces and Number pictures — one method at a time, used on real lists."
     },
     "p3": {
-      "title": "Multi-Sensory Visualisation & Mental Mastery",
-      "description": "Train vivid multi-sensory visualization and sustained focus."
+      "title": "Memory Palace, Keyword & Chapter",
+      "description": "Build your own memory palaces, learn the Keyword method and remember a whole chapter."
     },
     "p4": {
-      "title": "Peak Smart Reading Mastery & Final Certification",
-      "description": "Push every skill to its ceiling and complete the final mastery certification."
+      "title": "Your own book + Day 30 test",
+      "description": "Use the methods on your own book, then take the Day 30 test to see how far you have come."
     }
   },
   "exercises": {
@@ -173,7 +173,7 @@
     "multi-line-reading": "Multi-Line Reading",
     "sentence-reading": "Sentence Reading (Idea Recognition)",
     "paragraph-reading": "Paragraph Reading (Meaning Block Recognition)",
-    "word-flash": "Rapid Recognition Drill",
+    "word-flash": "Word Flash Reading",
     "number-flash": "Number Flash",
     "symbol-flash": "Symbol Flash",
     "mixed-flash": "Mixed Flash",

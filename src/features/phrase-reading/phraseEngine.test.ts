@@ -216,7 +216,7 @@ describe('totalWordsInPhrases', () => {
 // file — Progressive Chunk Reading's Level 4/5 import phraseDataset.ts
 // directly for content. Kept here even though this mission's own engine no
 // longer reads from it, purely as insurance that mission never breaks.
-describe('curated phrase dataset (PHRASE_READING_DATASET — untouched, still feeds Progressive Chunk Reading™)', () => {
+describe('curated phrase dataset (PHRASE_READING_DATASET — untouched, still feeds Progressive Chunk Reading)', () => {
   it('every item is a complete, grammatically whole sentence', () => {
     for (const item of PHRASE_READING_DATASET.items) {
       expect(isVisuallyValid(item.content, 'option')).toBe(true)

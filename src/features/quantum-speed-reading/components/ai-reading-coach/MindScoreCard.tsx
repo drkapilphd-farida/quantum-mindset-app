@@ -15,7 +15,7 @@ type MindScoreCardProps = {
 export function MindScoreCard({ mindScore, label, description }: MindScoreCardProps): React.JSX.Element {
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className={LAB_STAT_LABEL_CLASS}>Mind Score™</p>
+      <p className={LAB_STAT_LABEL_CLASS}>Mind Score</p>
       <div className="mt-3 flex items-baseline gap-2">
         <p className="text-4xl font-bold tabular-nums text-foreground">{mindScore}</p>
         <p className="text-sm text-muted-foreground">/ 1000</p>

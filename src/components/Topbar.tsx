@@ -65,7 +65,7 @@ export function Topbar({
         <SheetContent side="left" className="w-60 gap-0 p-0" showCloseButton={false}>
           <SheetHeader className="flex h-14 shrink-0 flex-row items-center gap-2 border-b px-4 py-0 space-y-0">
             {brandLogoUrl !== null ? (
-              <Image src={brandLogoUrl} alt="" width={22} height={22} className="size-[22px] rounded object-contain" unoptimized />
+              <Image src={brandLogoUrl} alt="" width={22} height={22} className="size-[22px] rounded bg-violet-700 object-contain" unoptimized />
             ) : (
               // Always the plain brand mark, unconditionally — see the
               // matching note on AppSidebar.tsx's own logo: streak-based
@@ -78,7 +78,7 @@ export function Topbar({
               {brandName ?? brand.appName}
             </SheetTitle>
           </SheetHeader>
-          {/* Consistent Branding™ — see AppSidebar.tsx's identical row. */}
+          {/* Consistent Branding — see AppSidebar.tsx's identical row. */}
           {/* The learner app shows no subtitle under the name (founder, 13 Oct 2026); the habit domain keeps its programme name. */}
 {appDomain === 'habit' && <p className="border-b border-border/60 px-4 py-2 text-[11px] font-medium text-muted-foreground">{getDomainTagline(appDomain, t('nav.appTagline'))}</p>}
           <div className="flex-1 overflow-y-auto py-4">
@@ -90,7 +90,7 @@ export function Topbar({
         </SheetContent>
       </Sheet>
 
-      {/* Branding Header™ — always visible on mobile (desktop already has
+      {/* Branding Header — always visible on mobile (desktop already has
           the persistent AppSidebar wordmark, so this stays md:hidden to
           avoid showing the logo twice). Sized at 36px (w-9) — real Android
           device testing found the previous 22px mark read as barely-there
@@ -98,13 +98,13 @@ export function Topbar({
           targets. */}
       <Link href="/dashboard" className="flex shrink-0 items-center gap-2 md:hidden">
         {brandLogoUrl !== null ? (
-          <Image src={brandLogoUrl} alt="" width={36} height={36} className="size-9 shrink-0 rounded object-contain" unoptimized />
+          <Image src={brandLogoUrl} alt="" width={36} height={36} className="size-9 shrink-0 rounded-lg bg-violet-700 object-contain p-0.5" unoptimized />
         ) : (
           // Same "never streak-conditional" rule as this file's other
           // LivingBrainLogo usage above.
           <LivingBrainLogo size={36} className="size-9 shrink-0" decorative={false} animated={false} />
         )}
-        {/* Mobile Viewport Fix™ — the wordmark text is the single widest
+        {/* Mobile Viewport Fix — the wordmark text is the single widest
             item in this header; below 360px (older/smaller phones like an
             iPhone SE 1st-gen at 320px) it's the difference between fitting
             and overflowing, so it drops first, leaving just the logo. The
@@ -117,7 +117,7 @@ export function Topbar({
       <LanguageSwitcher />
       <ThemeToggle />
       <InstallButton />
-      {/* Global Account Dropdown™ (Phase 4) — desktop now shows the fuller
+      {/* Global Account Dropdown (Phase 4) — desktop now shows the fuller
           row-style trigger at the bottom of AppSidebar instead; this
           compact trigger stays for mobile only, which has no persistent
           sidebar to anchor that row to. */}

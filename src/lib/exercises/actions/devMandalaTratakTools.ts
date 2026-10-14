@@ -30,7 +30,7 @@ const DEV_ANALYZER_ANSWERS: ImageFixationAnalyzerAnswers = {
   afterImageClarity: 'very-clear',
   afterImageDuration: 'more-than-10s',
   centerFocusEase: 'yes',
-  notes: 'Dev Test Mode™ — synthetic answer (Complete Mission).',
+  notes: 'Dev Test Mode — synthetic answer (Complete Mission).',
 }
 
 function devCorrectObservationAnswers(levelOrder: MandalaLevelOrder): Record<string, string> {
@@ -83,7 +83,7 @@ export async function devCompleteMandalaMission(): Promise<DevCompleteMandalaMis
     return { success: false, error: 'Mission is already fully complete.' }
   }
 
-  return { success: true, message: 'Mandala Tratak™ mission completed with synthetic Dev Test Mode™ answers.', stats, xpEarned }
+  return { success: true, message: 'Mandala Tratak mission completed with synthetic Dev Test Mode answers.', stats, xpEarned }
 }
 
 export async function devResetMandalaTratakMission(): Promise<DevMandalaToolResult> {
@@ -108,5 +108,5 @@ export async function devResetMandalaTratakMission(): Promise<DevMandalaToolResu
     return { success: false, error: `Failed to reset: ${error.message}` }
   }
 
-  return { success: true, message: 'Mandala Tratak™ progress reset — Level 1 is unlocked again.' }
+  return { success: true, message: 'Mandala Tratak progress reset — Level 1 is unlocked again.' }
 }

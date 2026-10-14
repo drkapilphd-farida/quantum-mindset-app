@@ -314,7 +314,7 @@ export function PeripheralFlashExperience(): React.JSX.Element {
       },
       {
         label: 'Estimated WPM Growth',
-        value: wpmGrowth === null ? 'Building Your Baseline™' : `${wpmGrowth >= 0 ? '+' : ''}${wpmGrowth} WPM`,
+        value: wpmGrowth === null ? 'Building Your Baseline' : `${wpmGrowth >= 0 ? '+' : ''}${wpmGrowth} WPM`,
         hint: 'Change in estimated reading speed versus your last mission — not a measurement of continuous-text reading.',
       },
     ]

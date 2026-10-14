@@ -60,7 +60,7 @@ export function RevisionWorkspace({ documentId, documentTitle, revisionContext, 
   if (initial.kind === 'not-processed') {
     return (
       <div className="animate-in fade-in mx-auto max-w-lg px-6 py-16 duration-(--duration-base)">
-        <EmptyStateCard icon={History} title="This document hasn't been prepared for revision yet" description="Its Universal Learning Object™ hasn't been built yet — check back once processing finishes." />
+        <EmptyStateCard icon={History} title="This document hasn't been prepared for revision yet" description="Its Universal Learning Object hasn't been built yet — check back once processing finishes." />
       </div>
     )
   }

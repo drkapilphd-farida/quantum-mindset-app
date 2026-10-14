@@ -102,7 +102,7 @@ export function TransformationTimeline({ stages, title }: TransformationTimeline
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
       <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-        {title ?? 'Transformation Journey™'}
+        {title ?? 'Transformation Journey'}
       </p>
       <ul className="mt-5 space-y-0" role="list" aria-label={title ?? 'Transformation journey stages'}>
         {stages.map((stage, i) => (

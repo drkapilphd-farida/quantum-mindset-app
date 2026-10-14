@@ -19,7 +19,7 @@ const DIMENSION_LABEL: Record<ReadingDnaDimension, string> = {
 export function ReadingDnaCard({ traits }: ReadingDnaCardProps): React.JSX.Element {
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Reading DNA™</p>
+      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Reading DNA</p>
       <p className="mt-2 text-xs text-muted-foreground">
         These traits describe how your brain reads best — confidence grows the more you practice, it isn&rsquo;t a score to chase.
       </p>

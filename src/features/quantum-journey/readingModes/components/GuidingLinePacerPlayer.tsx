@@ -101,7 +101,7 @@ export function GuidingLinePacerPlayer({ lengthTier, initialTargetWpm, onComplet
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center gap-6 px-6 py-12 text-center">
-      <p className="text-xs font-semibold tracking-widest text-primary uppercase">Guiding Line Pacer™</p>
+      <p className="text-xs font-semibold tracking-widest text-primary uppercase">Guiding Line Pacer</p>
 
       {phase === 'reading' && (
         <div className="flex w-full flex-1 flex-col items-center gap-6">

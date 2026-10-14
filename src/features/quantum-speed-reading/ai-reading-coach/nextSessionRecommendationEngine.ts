@@ -41,7 +41,7 @@ export function recommendNextSession(
     : categoryIntelligence.suggestedNextCategory === category
       ? 'A fresh category keeps your practice well-rounded.'
       : profile.weakestCategory === category
-        ? 'Strengthening your weakest category builds a more balanced Reading DNA™.'
+        ? 'Strengthening your weakest category builds a more balanced Reading DNA.'
         : 'Building on your strongest category while you find your rhythm.'
 
   return { category, difficulty, passage, reason }

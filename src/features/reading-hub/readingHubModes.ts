@@ -39,7 +39,7 @@ export type ReadingHubMode = {
 export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   {
     id: 'dynamic-chunk-sliding',
-    title: 'Dynamic Chunk Sliding™',
+    title: 'Dynamic Chunk Sliding',
     purpose: 'Slide fluidly through meaningful word chunks at your target reading pace.',
     status: 'available',
     href: '/labs/sharp-brain/dynamic-chunk-sliding',
@@ -48,7 +48,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'vertical-chunk-sliding',
-    title: 'Vertical Chunk Sliding™',
+    title: 'Vertical Chunk Sliding',
     purpose: 'Slide fluidly through meaningful word chunks flowing top to bottom, with a fresh topic every session.',
     status: 'available',
     href: '/labs/sharp-brain/vertical-chunk-sliding',
@@ -57,7 +57,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'flash-recall-sprint',
-    title: 'Flash Recall & Retention Sprint™',
+    title: 'Flash Recall & Retention Sprint',
     purpose: 'Flash a short passage, then answer a quick question on what you retained.',
     status: 'available',
     href: '/labs/sharp-brain/flash-recall-sprint',
@@ -66,7 +66,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'vertical-flash-recall',
-    title: 'Vertical Flash Recall & Retention Sprint™',
+    title: 'Vertical Flash Recall & Retention Sprint',
     purpose: 'Words flash down a fixed vertical column at your pace, training rapid vertical eye-span, then a quick retention check.',
     status: 'available',
     href: '/labs/sharp-brain/vertical-flash-recall',
@@ -75,7 +75,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'vertical-word-reading',
-    title: 'Vertical Word Reading™',
+    title: 'Vertical Word Reading',
     purpose: 'Improve instant word recognition and eye movement.',
     status: 'available',
     href: '/labs/sharp-brain/vertical-word-reading',
@@ -84,7 +84,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'phrase-reading-mode',
-    title: 'Phrase Reading™',
+    title: 'Phrase Reading',
     purpose: 'Improve chunk reading and reading flow.',
     status: 'available',
     href: '/labs/sharp-brain/phrase-reading-mode',
@@ -93,7 +93,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'sentence-reading-mode',
-    title: 'Sentence Reading™',
+    title: 'Sentence Reading',
     purpose: 'Improve fluent sentence processing and meaning.',
     status: 'available',
     href: '/labs/sharp-brain/sentence-reading-mode',
@@ -102,7 +102,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'paragraph-reading-mode',
-    title: 'Paragraph Reading™',
+    title: 'Paragraph Reading',
     purpose: 'Improve extended reading endurance and comprehension.',
     status: 'available',
     href: '/labs/sharp-brain/paragraph-reading-mode',
@@ -111,7 +111,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'guided-paragraph-reading-mode',
-    title: 'Guided Paragraph Reading™',
+    title: 'Guided Paragraph Reading',
     purpose: 'Build confident, guided reading across full paragraphs.',
     status: 'available',
     href: '/labs/sharp-brain/guided-paragraph-reading-mode',
@@ -120,7 +120,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'subvocalization-destroyer',
-    title: 'Inner Voice Control™',
+    title: 'Inner Voice Control',
     purpose: 'Ultra-high-speed True RSVP, 600-1200 WPM, to break the habit of silently sounding out every word.',
     status: 'available',
     href: '/labs/sharp-brain/subvocalization-destroyer',
@@ -138,7 +138,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'dual-stream-split-reader',
-    title: 'Dual-Stream Split Reader™',
+    title: 'Dual-Stream Split Reader',
     purpose: 'Two synchronized word streams flow side by side, training bilateral focus and genuinely parallel processing.',
     status: 'available',
     href: '/labs/sharp-brain/dual-stream-split-reader',

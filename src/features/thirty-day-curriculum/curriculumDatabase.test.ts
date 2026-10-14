@@ -55,7 +55,7 @@ describe('getPhaseForDay / getCurriculumPhase', () => {
     expect(() => getPhaseForDay(31)).toThrow()
   })
   it('getCurriculumPhase returns the matching phase descriptor', () => {
-    expect(getCurriculumPhase(3).title).toContain('Multi-Sensory Visualisation')
+    expect(getCurriculumPhase(3).title).toContain('Memory Palace')
   })
 })
 
@@ -208,7 +208,7 @@ describe('buildCurriculumDayPlan', () => {
     }
   })
 
-  it('Flash Intelligence Pack exercises appear on days 26-30 in their exact real prerequisite order', () => {
+  it('Flash Reading Pack exercises appear on days 26-30 in their exact real prerequisite order', () => {
     const expectedOrder = ['word-flash', 'number-flash', 'symbol-flash', 'mixed-flash', 'peripheral-flash']
     for (let i = 0; i < expectedOrder.length; i++) {
       const day = 26 + i

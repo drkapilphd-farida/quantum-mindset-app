@@ -18,7 +18,7 @@ export const CLASS_TOPICS_EN: Record<ClassNumber, string> = {
   2: 'Eye & Focus Training',
   3: 'Inner Voice Control',
   4: 'Memory Systems',
-  5: 'Visualization & Mental Mastery',
+  5: 'Visualisation & imagination',
   6: 'Study & Work Application',
   7: 'Peak Performance',
 }

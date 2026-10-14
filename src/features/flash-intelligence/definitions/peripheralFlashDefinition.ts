@@ -12,7 +12,7 @@ import { WORD_FLASH_DATASET } from '../wordFlashDataset'
 export const PERIPHERAL_FLASH_DEFINITION: ExerciseDefinition = {
   id: 'peripheral-flash',
   labId: 'quantum-speed-reading',
-  title: 'Peripheral Flash™',
+  title: 'Peripheral Flash',
   description: 'Keep your eyes on the center. Recognize what appears around it.',
   trainsAbility: 'Visual span and peripheral awareness',
   exerciseType: 'flash',

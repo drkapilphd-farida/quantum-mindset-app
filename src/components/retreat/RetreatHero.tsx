@@ -33,7 +33,7 @@ export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React
 
       <div className="relative z-10 mx-auto max-w-content">
         <div className="mx-auto max-w-2xl text-center">
-          {/* Founder Trust™ — same real photo as the homepage and QSR
+          {/* Founder Trust — same real photo as the homepage and QSR
               heroes, sized as a circular badge here since this hero's
               layout is centered/single-column rather than a 2-up grid
               with a dedicated photo slot. */}
@@ -102,7 +102,7 @@ export default function RetreatHero({ youtubeVideoId }: RetreatHeroProps): React
 
           <p className="mt-8 text-[13.5px] text-ink-dim">{retreat.hero.trustLine}</p>
 
-          {/* Low-Commitment Entry™ — QSR's hero has a "Preview 7-Day Free
+          {/* Low-Commitment Entry — QSR's hero has a "Preview 7-Day Free
               App" secondary path for hesitant visitors; the retreat has no
               equivalent free-trial asset, so this points to the real,
               already-embedded video testimonials section further down this

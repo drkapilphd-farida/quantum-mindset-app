@@ -482,7 +482,7 @@ export function drawShareImage(canvas: HTMLCanvasElement, input: CertDrawInput):
   y += 7 * u
   font(ctx, 500, 3 * u, F.latinBody)
   ctx.fillStyle = C.goldLight
-  spaced(ctx, 'SHARP BRAIN™', cx, y, 0.9 * u, 'center')
+  spaced(ctx, 'SHARP BRAIN', cx, y, 0.9 * u, 'center')
 
   y += 11 * u
   ctx.textAlign = 'center'

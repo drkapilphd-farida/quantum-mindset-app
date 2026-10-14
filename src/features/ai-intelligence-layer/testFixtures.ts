@@ -35,12 +35,12 @@ export function makeMindContext(overrides: Partial<MindContext> = {}): MindConte
 
 export function makeJourneyContext(overrides: Partial<JourneyContext> = {}): JourneyContext {
   return {
-    currentJourney: 'Quantum Speed Reading™',
-    currentChapter: 'Visual Activation™',
+    currentJourney: 'Quantum Speed Reading',
+    currentChapter: 'Visual Activation',
     currentLesson: 'Breath Awareness',
     currentExercise: 'breath-awareness',
     completionPercent: 40,
-    previousMilestones: ['Visual Activation™ complete'],
+    previousMilestones: ['Visual Activation complete'],
     ...overrides,
   }
 }
@@ -51,7 +51,7 @@ export function makeConversationContext(overrides: Partial<ConversationContext> 
     previousQuestions: ['How do I read faster?'],
     conversationSummary: 'Learner is starting their reading speed journey.',
     learningIntent: 'improve-reading-speed',
-    pendingTasks: ['Complete Reading Preparation™'],
+    pendingTasks: ['Complete Reading Preparation'],
     ...overrides,
   }
 }
@@ -59,7 +59,7 @@ export function makeConversationContext(overrides: Partial<ConversationContext> 
 export function makeMentorPersona(overrides: Partial<MentorPersona> = {}): MentorPersona {
   return {
     id: 'friendly-mentor',
-    displayName: 'Friendly Mentor™',
+    displayName: 'Friendly Mentor',
     tone: 'warm, encouraging, conversational',
     focusAreas: [],
     systemPromptFragment: 'You are a friendly, encouraging learning mentor.',

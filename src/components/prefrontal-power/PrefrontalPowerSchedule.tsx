@@ -3,7 +3,7 @@ import { Eyebrow } from "../ui";
 const COMPACT_PHASES = [
   { label: "Morning", items: "Understand Your Brain · Stress + Focus" },
   { label: "Midday", items: "Overthinking + Emotional Regulation" },
-  { label: "Afternoon", items: "Decision-Making + MOVERS™" },
+  { label: "Afternoon", items: "Decision-Making + MOVERS" },
   { label: "Closing", items: "21-Day Brain Training Plan + Guided Brain Reset" },
 ];
 
@@ -16,7 +16,7 @@ const FULL_SCHEDULE = [
   { time: "1:00 – 2:00", session: "Lunch" },
   { time: "2:00 – 2:45", session: "Emotional Control" },
   { time: "2:45 – 3:30", session: "The Decision Brain" },
-  { time: "3:30 – 4:15", session: "MOVERS™ Protocol" },
+  { time: "3:30 – 4:15", session: "MOVERS Protocol" },
   { time: "4:15 – 5:00", session: "Brain → Real Life" },
   { time: "5:00 – 5:45", session: "Your 21-Day Brain Training Plan" },
   { time: "5:45 – 6:15", session: "Brain Reset Experience" },

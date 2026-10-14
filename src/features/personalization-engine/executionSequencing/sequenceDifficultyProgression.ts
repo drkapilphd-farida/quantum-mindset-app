@@ -20,7 +20,7 @@ export function sequenceDifficultyProgression(
     referenceId: value,
     order: 0,
     priority: 'high',
-    detail: strategyResult ? strategyResult.reason : `Adaptive Learning Planner™ difficulty level: ${value}`,
+    detail: strategyResult ? strategyResult.reason : `Adaptive Learning Planner difficulty level: ${value}`,
   }
   return { type: 'difficulty', steps: [step] }
 }

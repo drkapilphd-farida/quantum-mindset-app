@@ -7,6 +7,7 @@ import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { saveExerciseResult } from '@/features/exercise-core/actions/exerciseResults'
 import { FeedbackSheet, type Feedback } from '@/components/play/FeedbackSheet'
 import { Stars, starsFor } from '@/components/play/Stars'
+import { useCalmCues, useWakeLock } from '@/features/calm-cues/useCalmCues'
 import { getReaderStart, saveReaderPosition } from '../actions'
 import { backOneSentence, BREAK_REMINDER_MS, clampWpm, clusters, effectiveWpm, focusIndex, nextWpm, SMART_READER_EXERCISE_ID, WPM_STEP, wordDurationMs, words, type ReaderMode, type ReaderSection } from '../reader'
 
@@ -43,6 +44,15 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
   const [summary, setSummary] = useState('')
   const [summarySaved, setSummarySaved] = useState(false)
   const [showBreakTip, setShowBreakTip] = useState(false)
+  // The one-minute break is announced by voice + chime + vibration at start and end, with the screen kept on.
+  const cue = useCalmCues()
+  const onBreak = stage.name === 'break'
+  useWakeLock(onBreak)
+  const wasOnBreak = useRef(false)
+  useEffect(() => {
+    if (onBreak && !wasOnBreak.current) cue('breakStart')
+    wasOnBreak.current = onBreak
+  }, [onBreak, cue])
   const readMs = useRef(0)
   const readWords = useRef(0)
   const wpmSum = useRef({ total: 0, n: 0 })
@@ -188,7 +198,7 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
           <span className="font-heading text-5xl text-foreground tabular-nums">{stage.left}</span>
         </div>
         <p className="max-w-xs text-base text-muted-foreground">{t('training.reader.breakHint')}</p>
-        <BreakTimer stage={stage} onTick={(left) => setStage(left <= 0 ? { name: 'reading' } : { name: 'break', left })} />
+        <BreakTimer stage={stage} onTick={(left) => (left <= 0 && cue('breakDone'), setStage(left <= 0 ? { name: 'reading' } : { name: 'break', left }))} />
         <Button size="lg" className="min-h-12 w-full max-w-xs rounded-2xl" onClick={() => setStage({ name: 'reading' })} data-reader-resume="true">
           {t('training.reader.resume')}
         </Button>

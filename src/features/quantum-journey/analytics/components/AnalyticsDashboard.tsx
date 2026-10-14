@@ -39,7 +39,7 @@ export function AnalyticsDashboard({
   if (!hasBaseline) {
     return (
       <div className="rounded-2xl border bg-card p-10 text-center shadow-sm">
-        <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Analytics Dashboard™</p>
+        <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Analytics Dashboard</p>
         <h2 className="mt-2 font-heading text-xl font-bold tracking-tight text-foreground">Your Growth Story Starts With a Baseline</h2>
         <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">Complete your Day 1 Baseline Diagnostic to unlock your analytics here.</p>
       </div>

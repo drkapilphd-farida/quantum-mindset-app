@@ -4,7 +4,7 @@ import { getPersistenceChallengeSessionCount } from '@/features/visual-intellige
 import { selectChallengeForSession } from '@/features/visual-intelligence/persistence-challenge/persistenceChallengeRotation'
 
 export const metadata: Metadata = {
-  title: 'Image Persistence Challenge™ — Visual Intelligence Lab™',
+  title: 'Image Persistence Challenge — Visual Intelligence Lab',
   robots: { index: false, follow: false },
 }
 

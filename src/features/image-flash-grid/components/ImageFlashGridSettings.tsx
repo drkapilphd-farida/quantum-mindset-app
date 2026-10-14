@@ -28,7 +28,7 @@ export function ImageFlashGridSettings({ gridSize, onSelectGridSize, onStart }: 
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Image Flash Grid™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Image Flash Grid</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Vibrant icons flash briefly across the grid. Memorize where they were and what they were, then tap each
           cell to recall them.

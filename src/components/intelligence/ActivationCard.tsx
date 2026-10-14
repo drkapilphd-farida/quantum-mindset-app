@@ -56,7 +56,7 @@ export function ActivationCard({
         )}
         style={!prefersReducedMotion ? { animationDelay: '150ms', animationFillMode: 'backwards' } : undefined}
       >
-        {label} Activated™
+        {label} Activated
       </h2>
 
       <p
@@ -109,7 +109,7 @@ export function ActivationCard({
         )}
         style={!prefersReducedMotion ? { animationDelay: '550ms', animationFillMode: 'backwards' } : undefined}
       >
-        <p className="text-sm font-semibold text-foreground">Your Mind Is Ready™</p>
+        <p className="text-sm font-semibold text-foreground">Your Mind Is Ready</p>
         <Button asChild size="lg" className="gap-2 rounded-full" variant="outline">
           <Link href="/dashboard">
             Explore Next Evolution

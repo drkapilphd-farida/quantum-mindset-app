@@ -13,7 +13,7 @@ import { TratakJourneyLocked } from '@/features/tratak-intelligence/components/T
 import { MandalaTratakExperience } from '@/features/tratak-intelligence/components/mandala/MandalaTratakExperience'
 
 export const metadata: Metadata = {
-  title: 'Mandala Tratak™ — Tratak Intelligence Journey™',
+  title: 'Mandala Tratak — Tratak Intelligence Journey',
   description: 'Train your visual fixation using beautiful symmetrical mandalas.',
   robots: { index: false, follow: false },
 }

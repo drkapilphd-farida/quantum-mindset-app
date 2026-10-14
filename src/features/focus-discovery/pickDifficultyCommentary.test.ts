@@ -20,7 +20,7 @@ describe('pickDifficultyCommentary', () => {
     expect(pickDifficultyCommentary(-1)).toBeNull()
   })
 
-  it('Sprint-1.8 Anti-Frustration System™ — a real stabilized round always gets the real calm stabilize line, never the level-up line', () => {
+  it('Sprint-1.8 Anti-Frustration System — a real stabilized round always gets the real calm stabilize line, never the level-up line', () => {
     expect(pickDifficultyCommentary(2, true)).toBe("Let's keep this pace a little longer.")
     // Even at Level 1 (index 0), a real stabilize event is still real
     // and still worth a real, calm acknowledgment.

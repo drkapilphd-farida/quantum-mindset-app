@@ -72,7 +72,7 @@ export function MindScoreCard({ mindScore, readingScore, memoryScore, focusScore
 
   return (
     <div className="glass-premium-card glass-premium-lift flex h-full flex-col p-5 sm:p-6">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Mind Score™</p>
+      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Mind Score</p>
 
       {/* Main ring */}
       <div className="mt-4 flex flex-col items-center">

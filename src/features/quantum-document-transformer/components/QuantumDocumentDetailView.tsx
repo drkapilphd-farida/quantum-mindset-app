@@ -225,7 +225,7 @@ export function QuantumDocumentDetailView({ document, initialOutcomeProfile }: Q
               </TabsList>
 
               <TabsContent value="summary" className="mt-6 space-y-4">
-                {/* QSR Bridge™ — seamlessly hands the summary off to the
+                {/* QSR Bridge — seamlessly hands the summary off to the
                     speed-reading reader, right at the top of the tab
                     where the summary itself lives. */}
                 <Button
@@ -238,7 +238,7 @@ export function QuantumDocumentDetailView({ document, initialOutcomeProfile }: Q
                   Practice this summary in Smart Reading Mode
                 </Button>
 
-                {/* One-Sentence Summary™ — the single powerful line a
+                {/* One-Sentence Summary — the single powerful line a
                     learner should walk away with, given its own
                     eye-catching card ahead of the fuller ai_summary
                     below rather than folded into it. Null for a document
@@ -319,7 +319,7 @@ export function QuantumDocumentDetailView({ document, initialOutcomeProfile }: Q
               </TabsContent>
 
               <TabsContent value="practice" className="mt-6 space-y-4">
-                {/* Quantum Speed Reading First™ — the primary action sits
+                {/* Quantum Speed Reading First — the primary action sits
                     at the top of this tab, not buried after every
                     deep-dive section, so a learner can launch straight
                     into reading. The quiz+recall session is a genuine

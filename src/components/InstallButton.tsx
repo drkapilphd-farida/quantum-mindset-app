@@ -95,7 +95,7 @@ export function InstallButton(): React.JSX.Element | null {
 
   return (
     <>
-      {/* Mobile Viewport Fix™ — the label collapses to an icon-only button
+      {/* Mobile Viewport Fix — the label collapses to an icon-only button
           below `sm` (640px, the same breakpoint Topbar's own mobile/desktop
           split already uses elsewhere) so it can never push the header's
           theme-toggle/account cluster past the screen edge on a phone.

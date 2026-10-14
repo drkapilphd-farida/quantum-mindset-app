@@ -19,7 +19,7 @@ const PARAGRAPH_READING_DATASET = createDataset({
 export const PARAGRAPH_READING_DEFINITION: ExerciseDefinition = {
   id: 'paragraph-reading',
   labId: 'quantum-speed-reading',
-  title: 'Paragraph Reading™',
+  title: 'Paragraph Reading',
   description: 'A complete paragraph appears at once — recognise it as one meaning block, not a string of sentences. Trains whole-paragraph comprehension.',
   trainsAbility: 'Meaning block recognition and whole-paragraph comprehension',
   exerciseType: 'reading',

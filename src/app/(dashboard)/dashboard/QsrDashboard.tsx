@@ -103,7 +103,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
     <div className="glass-premium relative -m-6 space-y-4 p-6 sm:-m-8 sm:space-y-6 sm:p-8">
       <ReminderBanner />
       <ReviewDueCard />
-      {/* Dashboard Glass™ ambient background — fixed so it stays full-
+      {/* Dashboard Glass ambient background — fixed so it stays full-
           viewport regardless of this page's own scroll position or the
           parent layout's max-w-4xl centering; -z-10 keeps it behind both
           this content and the (opaque, unrelated) sidebar. Scoped to this
@@ -140,11 +140,11 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
         </div>
       </div>
 
-      {/* 3-Tier Value Ladder™ — Tier 1: My Document Tools. AI Document
-          Transformer™ is the anchor target for Choose Your Path™'s
-          "Upload & Learn™" card (/dashboard#upload-document), the direct,
+      {/* 3-Tier Value Ladder — Tier 1: My Document Tools. AI Document
+          Transformer is the anchor target for Choose Your Path's
+          "Upload & Learn" card (/dashboard#upload-document), the direct,
           one-click destination for uploading a document from onboarding.
-          QSR-Bundled Access™ (see the "Upload & Learn / Sharp Brain bundle"
+          QSR-Bundled Access (see the "Upload & Learn / Sharp Brain bundle"
           task) — no longer its own separate ₹499/mo product; it's
           included in the 30-Day Sharp Brain Masterclass, the exact same access
           check every curriculum day already gates on. The widget itself
@@ -156,7 +156,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
         <DashboardSectionHeader
           id="document-tools-heading"
           eyebrow={t('dashboard.documentStudio.eyebrow')}
-          title="📄 Document Mastery Studio™"
+          title="📄 Document Mastery Studio"
           description={t('dashboard.documentStudio.description')}
         />
         <div id="upload-document">
@@ -165,7 +165,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
       </section>
       )}
 
-      {/* Domain Split™ — this used to be "Masterclass & Programs" and also
+      {/* Domain Split — this used to be "Masterclass & Programs" and also
           hosted the 21-Day Habit Builder card (Tier 2). That card now
           lives only on HabitDashboard.tsx, so this section is Tier 3
           only — copy updated to match, not just the card removed. */}
@@ -179,10 +179,10 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
         <ThirtyDayMasterclassHeroCard />
       </section>
 
-      {/* Mind Score™ */}
+      {/* Mind Score */}
       <MindScoreCard mindScore={mindScore} readingScore={completionPercent} memoryScore={memoryScore} focusScore={focusScore} />
 
-      {/* Parent NPS™ — last on the page, deliberately low-priority
+      {/* Parent NPS — last on the page, deliberately low-priority
           placement for a "non-intrusive" prompt; renders nothing for
           the common case (no tenant membership) or for tenant staff. */}
       <ParentFeedbackPrompt />

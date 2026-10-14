@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { MultiDotExperience } from '@/features/visual-intelligence/components/fixation/multi-dot/MultiDotExperience'
 
 export const metadata: Metadata = {
-  title: 'Multi Dot Attention™ — Visual Fixation Engine™',
+  title: 'Multi Dot Attention — Visual Fixation Engine',
   robots: { index: false, follow: false },
 }
 

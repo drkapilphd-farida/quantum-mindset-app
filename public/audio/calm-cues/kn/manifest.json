@@ -1,0 +1,49 @@
+{
+  "exercise": "calm-cues",
+  "lang": "kn",
+  "voice": "shubh",
+  "review": "pending",
+  "createdAt": "2026-10-14T03:31:29.498Z",
+  "lines": {
+    "eyeFar": {
+      "file": "eyeFar.mp3",
+      "durationMs": 4817
+    },
+    "eyePalm": {
+      "file": "eyePalm.mp3",
+      "durationMs": 7065
+    },
+    "eyeDone": {
+      "file": "eyeDone.mp3",
+      "durationMs": 3608
+    },
+    "getReady": {
+      "file": "getReady.mp3",
+      "durationMs": 991
+    },
+    "breatheIn": {
+      "file": "breatheIn.mp3",
+      "durationMs": 1092
+    },
+    "breathePause": {
+      "file": "breathePause.mp3",
+      "durationMs": 736
+    },
+    "breatheOut": {
+      "file": "breatheOut.mp3",
+      "durationMs": 1759
+    },
+    "breatheDone": {
+      "file": "breatheDone.mp3",
+      "durationMs": 1420
+    },
+    "breakStart": {
+      "file": "breakStart.mp3",
+      "durationMs": 5402
+    },
+    "breakDone": {
+      "file": "breakDone.mp3",
+      "durationMs": 5477
+    }
+  }
+}

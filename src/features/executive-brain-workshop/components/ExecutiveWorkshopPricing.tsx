@@ -129,7 +129,7 @@ export function ExecutiveWorkshopPricing(): React.JSX.Element {
                       Reserve — {plan.name}
                     </a>
 
-                    {/* Payer-Entered-Amount Note™ — the Razorpay Payment
+                    {/* Payer-Entered-Amount Note — the Razorpay Payment
                         Link lets the payer type the amount themselves
                         rather than the page fixing it, so this note (and
                         the WhatsApp confirmation below) is the real

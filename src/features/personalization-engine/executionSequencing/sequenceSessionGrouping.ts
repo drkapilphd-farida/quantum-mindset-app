@@ -18,7 +18,7 @@ export function sequenceSessionGrouping(
     referenceId: value,
     order: 0,
     priority: 'normal',
-    detail: strategyResult ? strategyResult.reason : `Adaptive Learning Planner™ session duration: ${value} minutes`,
+    detail: strategyResult ? strategyResult.reason : `Adaptive Learning Planner session duration: ${value} minutes`,
   }
   return { type: 'session', steps: [step] }
 }

@@ -87,7 +87,7 @@ export function MemoryWorkspace({ documentId, documentTitle, chunkStrategy, init
   if (initial.kind === 'not-processed') {
     return (
       <div className="animate-in fade-in mx-auto max-w-lg px-6 py-16 duration-(--duration-slow)">
-        <EmptyStateCard icon={Brain} title="This document hasn't been prepared for a memory session yet" description="Its Universal Learning Object™ hasn't been built yet — check back once processing finishes." />
+        <EmptyStateCard icon={Brain} title="This document hasn't been prepared for a memory session yet" description="Its Universal Learning Object hasn't been built yet — check back once processing finishes." />
       </div>
     )
   }
@@ -99,7 +99,7 @@ export function MemoryWorkspace({ documentId, documentTitle, chunkStrategy, init
         <div className="space-y-1 text-center">
           <Brain className="mx-auto size-8 text-primary" aria-hidden="true" />
           <h1 className="text-lg font-semibold text-foreground">{documentTitle}</h1>
-          <p className="text-sm text-muted-foreground">Choose a Memory Method™ to start your first session for this document.</p>
+          <p className="text-sm text-muted-foreground">Choose a Memory Method to start your first session for this document.</p>
         </div>
         <MemoryMethodPicker disabled={pending} onSelect={(method) => runAction(() => startMemorySession({ documentId, chunkStrategy, method }))} />
       </div>

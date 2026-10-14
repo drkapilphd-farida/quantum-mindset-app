@@ -208,7 +208,7 @@ export function LearningBlueprintExperience({
       <div className="relative mx-auto max-w-3xl space-y-10 px-6 py-12">
         <Link href="/preview/learning-studio" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground">
           <ArrowLeft className={ICON_SIZE.sm} aria-hidden="true" />
-          AI Learning Studio™
+          AI Learning Studio
         </Link>
 
         <BackgroundProcessingStatusStrip documentId={documentId} documentStatus={documentStatus} />
@@ -234,7 +234,7 @@ export function LearningBlueprintExperience({
         </section>
 
         <section>
-          <p className={TYPOGRAPHY.label}>Other Available Learning Modes™</p>
+          <p className={TYPOGRAPHY.label}>Other Available Learning Modes</p>
           {/* QSR-INTEGRATION-1 — "Netflix-style" row: a horizontal,
               snap-scrolling shelf reusing LearningModeCard completely
               unchanged, just laid out narrower and side-by-side instead of
@@ -272,7 +272,7 @@ export function LearningBlueprintExperience({
                 ))}
               </div>
             ) : (
-              <EmptyStateCard icon={Lightbulb} title="No concepts found yet" description="This Learning Blueprint™ doesn't have any concepts to show yet." />
+              <EmptyStateCard icon={Lightbulb} title="No concepts found yet" description="This Learning Blueprint doesn't have any concepts to show yet." />
             )}
           </div>
         </section>
@@ -294,7 +294,7 @@ export function LearningBlueprintExperience({
                 </CardContent>
               </Card>
             ) : (
-              <EmptyStateCard icon={ListTree} title="No chapters found yet" description="This Learning Blueprint™ doesn't have a chapter breakdown yet." />
+              <EmptyStateCard icon={ListTree} title="No chapters found yet" description="This Learning Blueprint doesn't have a chapter breakdown yet." />
             )}
           </div>
         </section>
@@ -311,13 +311,13 @@ export function LearningBlueprintExperience({
                 ))}
               </div>
             ) : (
-              <EmptyStateCard icon={Tags} title="No topics found yet" description="This Learning Blueprint™ doesn't have any topics to show yet." />
+              <EmptyStateCard icon={Tags} title="No topics found yet" description="This Learning Blueprint doesn't have any topics to show yet." />
             )}
           </div>
         </section>
 
         <section>
-          <p className={TYPOGRAPHY.label}>Learning Journey™</p>
+          <p className={TYPOGRAPHY.label}>Learning Journey</p>
           <div className="mt-3">
             <JourneyTimeline steps={journeySteps} />
           </div>

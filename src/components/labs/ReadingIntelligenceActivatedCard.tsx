@@ -47,7 +47,7 @@ export function ReadingIntelligenceActivatedCard({
         )}
         style={!prefersReducedMotion ? { animationFillMode: 'backwards' } : undefined}
       >
-        Reading Intelligence Activated™
+        Reading Skills Activated
       </h2>
 
       <p
@@ -98,7 +98,7 @@ export function ReadingIntelligenceActivatedCard({
         )}
         style={!prefersReducedMotion ? { animationFillMode: 'backwards' } : undefined}
       >
-        <p className="text-sm font-semibold text-foreground">Your Mind Is Ready™</p>
+        <p className="text-sm font-semibold text-foreground">Your Mind Is Ready</p>
         <Button asChild size="lg" className="gap-2 rounded-full" variant="outline">
           <Link href="/dashboard">
             Explore Next Evolution

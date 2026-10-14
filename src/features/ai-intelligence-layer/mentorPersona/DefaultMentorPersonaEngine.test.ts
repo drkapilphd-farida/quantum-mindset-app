@@ -13,7 +13,7 @@ describe('DefaultMentorPersonaEngine', () => {
   })
 
   it('getPersonaById returns the matching persona', () => {
-    expect(engine.getPersonaById('teacher-mode')?.displayName).toBe('Teacher Mode™')
+    expect(engine.getPersonaById('teacher-mode')?.displayName).toBe('Teacher Mode')
   })
 
   it('getPersonaById returns undefined for an unknown id', () => {
@@ -25,32 +25,32 @@ describe('DefaultMentorPersonaEngine', () => {
     expect(persona.id).toBe('teacher-mode')
   })
 
-  it('a child learner routes to Parent Guide™ when teacher mode is not requested', () => {
+  it('a child learner routes to Parent Guide when teacher mode is not requested', () => {
     const persona = engine.selectPersona({ currentLab: null, ageGroup: 'child', teacherModeRequested: false })
     expect(persona.id).toBe('parent-guide')
   })
 
-  it('an adult in the reading lab routes to Reading Coach™', () => {
+  it('an adult in the reading lab routes to Reading Coach', () => {
     const persona = engine.selectPersona({ currentLab: 'quantum-speed-reading', ageGroup: 'adult', teacherModeRequested: false })
     expect(persona.id).toBe('reading-coach')
   })
 
-  it('an adult in the memory lab routes to Memory Coach™', () => {
+  it('an adult in the memory lab routes to Memory Coach', () => {
     const persona = engine.selectPersona({ currentLab: 'memory-discovery', ageGroup: 'adult', teacherModeRequested: false })
     expect(persona.id).toBe('memory-coach')
   })
 
-  it('an adult in the focus lab routes to Focus Coach™', () => {
+  it('an adult in the focus lab routes to Focus Coach', () => {
     const persona = engine.selectPersona({ currentLab: 'focus-discovery', ageGroup: 'adult', teacherModeRequested: false })
     expect(persona.id).toBe('focus-coach')
   })
 
-  it('falls back to Friendly Mentor™ for an unrecognized lab', () => {
+  it('falls back to Friendly Mentor for an unrecognized lab', () => {
     const persona = engine.selectPersona({ currentLab: 'some-unrelated-lab', ageGroup: 'adult', teacherModeRequested: false })
     expect(persona.id).toBe('friendly-mentor')
   })
 
-  it('falls back to Friendly Mentor™ when currentLab is null', () => {
+  it('falls back to Friendly Mentor when currentLab is null', () => {
     const persona = engine.selectPersona({ currentLab: null, ageGroup: 'teen', teacherModeRequested: false })
     expect(persona.id).toBe('friendly-mentor')
   })

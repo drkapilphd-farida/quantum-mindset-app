@@ -19,7 +19,7 @@ export function MnemonicsListView({ mnemonics }: MnemonicsListViewProps): React.
         <div className="quantum-icon-chip" aria-hidden="true">
           <Brain className="size-3.5 text-fuchsia-500" />
         </div>
-        <p className="text-sm font-semibold tracking-wide text-foreground">Smart Mnemonics™</p>
+        <p className="text-sm font-semibold tracking-wide text-foreground">Smart Mnemonics</p>
       </div>
       <ul className="mt-3 space-y-2.5">
         {mnemonics.map((mnemonic) => (

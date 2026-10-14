@@ -17,10 +17,10 @@
   "dayShort": "Day {day}",
   "dayLockedTitle": "Day {day} — enrol to unlock",
   "categories": {
-    "brainGym": "Focus Warm-Up",
-    "visualFocusMemory": "Visual Focus & Memory",
-    "visualization": "Visualisation",
-    "readingIntelligence": "Reading Intelligence"
+    "brainGym": "Focus warm-up",
+    "visualFocusMemory": "Memory",
+    "visualization": "Imagination & calm",
+    "readingIntelligence": "Reading"
   },
   "detail": {
     "backToAll": "All 30 days",
@@ -100,5 +100,43 @@
     "checkinWait": "Spend a few more minutes practising first, so your test reflects a full day's practice.",
     "doLater": "Do this later",
     "error": "Something went wrong while saving your day. Please try again."
+  },
+  "overview": {
+    "today": "Today",
+    "allDone": "All 30 days done — well done!",
+    "viewCertificate": "See your certificate",
+    "dayN": "Day {day}",
+    "dayMeta": "{steps} steps · about {minutes} min",
+    "start": "Start",
+    "opensAt": "Day {day} opens at {time}",
+    "finishPrevious": "Finish the day before first.",
+    "legendDone": "Done",
+    "legendToday": "Today",
+    "legendLocked": "Locked",
+    "skillsTitle": "Your skills",
+    "skillsHint": "The thin line is where you started. The bar is where you are now.",
+    "skillEmpty": "Shows after you practise this skill.",
+    "startNow": "Start {start} → now {now}",
+    "wpm": "{n} wpm",
+    "phasesTitle": "The 4 phases",
+    "phaseDays": "Days {start}–{end}",
+    "about": "About the program",
+    "aboutDayIntro": "Each day has 4 short steps:",
+    "aboutStep1": "Focus warm-up: a short game that trains steady attention.",
+    "aboutStep2": "Memory: learn one memory method and use it.",
+    "aboutStep3": "Imagination and calm: picture things clearly, or breathe slowly.",
+    "aboutStep4": "Reading: a reading drill, then a few questions to check understanding.",
+    "skills": {
+      "focus": "Focus",
+      "memory": "Memory",
+      "reading": "Reading",
+      "retention": "Retention"
+    },
+    "skillHelp": {
+      "focus": "Accuracy in the focus warm-ups (your last 3 tries).",
+      "memory": "Items remembered with the memory methods (your last 3 tries).",
+      "reading": "Reading speed with understanding, in words a minute.",
+      "retention": "Items you still remember a day or more later."
+    }
   }
 }

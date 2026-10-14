@@ -8,11 +8,11 @@ export const FOCUS_MISSION_ORDER = ['attention-lock', 'visual-search', 'reaction
 export type FocusMissionId = (typeof FOCUS_MISSION_ORDER)[number]
 
 export const FOCUS_MISSION_LABEL: Record<FocusMissionId, string> = {
-  'attention-lock': '🎯 Attention Lock™',
-  'visual-search': '👀 Visual Search™',
-  'reaction-focus': '⚡ Reaction Focus™',
-  'sustained-focus': '🧩 Sustained Focus™',
-  'cognitive-flexibility': '🔄 Cognitive Flexibility™',
+  'attention-lock': '🎯 Attention Lock',
+  'visual-search': '👀 Visual Search',
+  'reaction-focus': '⚡ Reaction Focus',
+  'sustained-focus': '🧩 Sustained Focus',
+  'cognitive-flexibility': '🔄 Cognitive Flexibility',
 }
 
 // FIX-07 — "Every mission begins with a short AI introduction... Maximum

@@ -1,10 +1,10 @@
 {
   "subtitle": "আপনার লাইভ ব্রেন স্কোর — প্রতিটি সেশনের পরে আপডেট হয়।",
-  "overall": "সামগ্রিক বুদ্ধিমত্তা",
-  "scoreAria": "Mind Score 1000-এর মধ্যে {score}, Reading Intelligence {reading} শতাংশ",
+  "overall": "সামগ্রিক",
+  "scoreAria": "Mind Score 1000-এর মধ্যে {score}, পড়া {reading} শতাংশ",
   "scoreProgress": "Mind Score-এর অগ্রগতি",
-  "dimensions": "বুদ্ধিমত্তার দিকগুলি",
-  "dimensionsAria": "মনের বুদ্ধিমত্তার দিকগুলি",
+  "dimensions": "আপনার দক্ষতা",
+  "dimensionsAria": "দক্ষতার স্কোর",
   "outOf100": "{label}: 100-এর মধ্যে {score}",
   "notAttempted": "{label}: এখনও চেষ্টা করা হয়নি",
   "startNow": "এখনই শুরু করুন",
@@ -33,7 +33,7 @@
   "moduleCompleteBody": "আপনি 30 দিনই সম্পূর্ণ করেছেন। দক্ষতা ধারালো রাখতে যেকোনো দিন আবার অনুশীলন করুন।",
   "highestImpact": "সবচেয়ে কার্যকর অনুশীলন",
   "minutes": "~{n} মিনিট",
-  "plusReading": "+Reading Intelligence",
+  "plusReading": "+পড়া",
   "firstSession": "ব্যক্তিগত সুপারিশ পেতে আপনার প্রথম সেশন সম্পূর্ণ করুন।",
   "review": "পুনরালোচনা",
   "resumeX": "আবার শুরু: {name}",
@@ -90,5 +90,6 @@
     "noSessions": "এখনও কোনো সম্পূর্ণ সেশন নেই।",
     "dayN": "দিন {day}",
     "completed": "সম্পূর্ণ"
-  }
+  },
+  "weeklyReport": "সাপ্তাহিক রিপোর্ট"
 }

@@ -47,7 +47,7 @@ export function LearningWorkspaceShell({ projectTitle, documentTitle, contentTyp
           {mode.emoji}
         </span>
         <div>
-          <p className={TYPOGRAPHY.label}>Learning Workspace™</p>
+          <p className={TYPOGRAPHY.label}>Learning Workspace</p>
           <h1 className={cn(TYPOGRAPHY.h1, 'mt-1')}>{mode.title}</h1>
           <p className={cn(TYPOGRAPHY.small, 'mt-2')}>{projectTitle}</p>
         </div>
@@ -126,7 +126,7 @@ export function LearningWorkspaceShell({ projectTitle, documentTitle, contentTyp
           <Link href={backHref}>Back to Learning Blueprint</Link>
         </Button>
         <Button asChild variant="ghost" size="sm">
-          <Link href="/preview/learning-studio">Back to AI Learning Studio™</Link>
+          <Link href="/preview/learning-studio">Back to AI Learning Studio</Link>
         </Button>
       </div>
     </div>

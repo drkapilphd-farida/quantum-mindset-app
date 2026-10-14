@@ -66,7 +66,7 @@ export function QuantumReadingLanding({
 
       <div className={fadeClass} style={fadeStyle(160)}>
         <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
-          Reading Intelligence Lab™
+          Reading Lab
         </p>
         <h1 className="mt-3 font-heading text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl">
           Sharp Brain™
@@ -96,11 +96,11 @@ export function QuantumReadingLanding({
         style={fadeStyle(320)}
       >
         <div className="rounded-xl bg-muted/40 px-3 py-4">
-          <p className={LAB_STAT_LABEL_CLASS}>Reading Intelligence™</p>
+          <p className={LAB_STAT_LABEL_CLASS}>Reading</p>
           <p className="mt-1 text-sm font-semibold text-foreground">{mindScoreLabel}</p>
         </div>
         <div className="rounded-xl bg-muted/40 px-3 py-4">
-          <p className={LAB_STAT_LABEL_CLASS}>Mind Score™</p>
+          <p className={LAB_STAT_LABEL_CLASS}>Mind Score</p>
           <p className="mt-1 text-xl font-bold tabular-nums text-foreground">{mindScore}</p>
         </div>
         <div className="rounded-xl bg-muted/40 px-3 py-4">

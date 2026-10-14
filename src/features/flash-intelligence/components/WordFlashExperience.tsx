@@ -227,7 +227,7 @@ export function WordFlashExperience({ definition, contentPool, onComplete }: Wor
       },
       {
         label: 'Estimated WPM Growth',
-        value: estimatedWpmGrowth === null ? 'Building Your Baseline™' : `${estimatedWpmGrowth > 0 ? '+' : ''}${estimatedWpmGrowth}`,
+        value: estimatedWpmGrowth === null ? 'Building Your Baseline' : `${estimatedWpmGrowth > 0 ? '+' : ''}${estimatedWpmGrowth}`,
         hint: 'Estimated from recognition speed and accuracy trends — not a direct reading measurement.',
       },
       {

@@ -54,7 +54,7 @@ describe('gated module pools preserve their real, server-enforced internal order
     ])
   })
 
-  it('Flash Intelligence Pack order matches flashIntelligenceModule.ts', () => {
+  it('Flash Reading Pack order matches flashIntelligenceModule.ts', () => {
     expect(FLASH_INTELLIGENCE_POOL.map((exercise) => exercise.id)).toEqual([
       'word-flash',
       'number-flash',

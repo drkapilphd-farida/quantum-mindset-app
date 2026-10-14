@@ -56,7 +56,7 @@ export function ResearchWorkspace({ documentId, documentTitle, initial, projectI
   if (initial.kind === 'not-processed') {
     return (
       <div className="animate-in fade-in mx-auto max-w-lg px-6 py-16 duration-(--duration-base)">
-        <EmptyStateCard icon={Microscope} title="This document hasn't been prepared for research yet" description="Its Universal Learning Object™ hasn't been built yet — check back once processing finishes." />
+        <EmptyStateCard icon={Microscope} title="This document hasn't been prepared for research yet" description="Its Universal Learning Object hasn't been built yet — check back once processing finishes." />
       </div>
     )
   }

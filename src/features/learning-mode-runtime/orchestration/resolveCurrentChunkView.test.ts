@@ -18,7 +18,7 @@ describe('resolveCurrentChunkView', () => {
     expect(view?.content).toBe(ulo.knowledge.chunks[0]?.content)
   })
 
-  it('resolves the real chunk title and section heading too (ALS-15 — Memory Method™ framings read these)', async () => {
+  it('resolves the real chunk title and section heading too (ALS-15 — Memory Method framings read these)', async () => {
     const ulo = await makeULO()
     const started = startRuntime(ulo, 'learner-1', 'reading', 'sequential', { now: FIXED_NOW, idFactory: makeIdFactory() })
     if (!started.success) throw new Error('fixture failed')
@@ -62,7 +62,7 @@ describe('resolveCurrentChunkView', () => {
     expect(view?.chunkNodeId).toBeDefined()
   })
 
-  it('threads the real chunk enrichment through, ALS-24 — Research Mode™/MCQs™/Memory Mode™ read this', async () => {
+  it('threads the real chunk enrichment through, ALS-24 — Research Mode/MCQs/Memory Mode read this', async () => {
     const ulo = await makeULO()
     const started = startRuntime(ulo, 'learner-1', 'reading', 'sequential', { now: FIXED_NOW, idFactory: makeIdFactory() })
     if (!started.success) throw new Error('fixture failed')

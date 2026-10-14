@@ -5,7 +5,7 @@ import { SYMBOL_FLASH_DATASET } from '../symbolFlashDataset'
 export const SYMBOL_FLASH_DEFINITION: ExerciseDefinition = {
   id: 'symbol-flash',
   labId: 'quantum-speed-reading',
-  title: 'Symbol Flash™',
+  title: 'Symbol Flash',
   description: 'A symbol or small symbol group flashes briefly — identify it before it disappears.',
   trainsAbility: 'Instant visual symbol recognition',
   exerciseType: 'flash',

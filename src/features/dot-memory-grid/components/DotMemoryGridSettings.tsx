@@ -29,7 +29,7 @@ export function DotMemoryGridSettings({ gridSize, onSelectGridSize, onStart }: D
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Dot Memory Grid™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Dot Memory Grid</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           {t('exercises.dotMemory.desc', { rounds: DOT_MEMORY_GRID_ROUNDS_PER_SESSION })}
         </p>

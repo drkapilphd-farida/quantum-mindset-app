@@ -5,7 +5,7 @@ import type { FocusIntelligenceReport } from './focusIntelligenceEngine'
 const sampleReport: FocusIntelligenceReport = {
   profileName: 'Selective Observer',
   profileDescription: 'You naturally filter distractions well.',
-  heroMetricLabel: 'Attention Stability™',
+  heroMetricLabel: 'Attention Stability',
   heroMetricPercent: 88,
   focusEfficiencyPercent: 91,
   reactionPrecisionPercent: 90,

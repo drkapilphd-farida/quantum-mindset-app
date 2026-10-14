@@ -80,7 +80,7 @@ export function ComprehensionResultsScreen({
 
       <div className={cn('flex flex-col items-center gap-2', fadeClass)} style={fadeStyle(300)}>
         <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">{getPerformanceMessage(accuracyPercent)}</p>
-        <p className="text-xs font-medium text-muted-foreground/70">Reading Intelligence Score: {readingIntelligenceScore}/100</p>
+        <p className="text-xs font-medium text-muted-foreground/70">Reading Score: {readingIntelligenceScore}/100</p>
       </div>
 
       <div className={cn('flex w-full flex-col gap-2', fadeClass)} style={fadeStyle(380)}>

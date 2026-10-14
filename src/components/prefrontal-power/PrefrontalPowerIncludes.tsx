@@ -7,7 +7,7 @@ import { Eyebrow } from "../ui";
 // a paid ₹3,500 seat. Add it here (and nowhere else) once confirmed.
 const INCLUDES = [
   "Brain Training Workbook",
-  "MOVERS™ 10-Minute Protocol",
+  "MOVERS 10-Minute Protocol",
   "21-Day Tracker",
   "Guided Practice Audio",
   "Personal Brain Training Plan",

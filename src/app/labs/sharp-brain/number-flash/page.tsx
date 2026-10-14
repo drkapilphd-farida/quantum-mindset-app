@@ -7,8 +7,8 @@ import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
 
 export const metadata: Metadata = {
-  title: 'Number Flash™ — Sharp Brain Lab',
-  description: 'Train your brain to recognize numbers instantly. Mission 2 of the Flash Intelligence Pack™.',
+  title: 'Number Flash — Sharp Brain Lab',
+  description: 'Train your brain to recognize numbers instantly. Mission 2 of the Flash Reading Pack.',
   robots: { index: false, follow: false },
 }
 

@@ -1,10 +1,10 @@
 {
   "subtitle": "तुमचा लाइव्ह मेंदू स्कोअर — प्रत्येक सत्रानंतर अपडेट होतो.",
-  "overall": "एकूण बुद्धिमत्ता",
-  "scoreAria": "Mind Score 1000 पैकी {score}, वाचन बुद्धिमत्ता {reading} टक्के",
+  "overall": "एकूण",
+  "scoreAria": "Mind Score 1000 पैकी {score}, वाचन {reading} टक्के",
   "scoreProgress": "Mind Score प्रगती",
-  "dimensions": "बुद्धिमत्तेचे पैलू",
-  "dimensionsAria": "मनाच्या बुद्धिमत्तेचे पैलू",
+  "dimensions": "तुमची कौशल्ये",
+  "dimensionsAria": "कौशल्य स्कोअर",
   "outOf100": "{label}: 100 पैकी {score}",
   "notAttempted": "{label}: अजून सुरू केले नाही",
   "startNow": "आता सुरू करा",
@@ -33,7 +33,7 @@
   "moduleCompleteBody": "तुम्ही सर्व 30 दिवस पूर्ण केले आहेत. तुमची कौशल्ये धारदार ठेवण्यासाठी कोणत्याही दिवसाचा पुन्हा सराव करा.",
   "highestImpact": "सर्वात परिणामकारक सराव",
   "minutes": "~{n} मिनिटे",
-  "plusReading": "+वाचन बुद्धिमत्ता",
+  "plusReading": "+वाचन",
   "firstSession": "वैयक्तिक सल्ला मिळवण्यासाठी तुमचे पहिले सत्र पूर्ण करा.",
   "review": "पुन्हा पाहा",
   "resumeX": "पुन्हा सुरू करा: {name}",
@@ -90,5 +90,6 @@
     "noSessions": "अजून एकही सत्र पूर्ण झाले नाही.",
     "dayN": "दिवस {day}",
     "completed": "पूर्ण"
-  }
+  },
+  "weeklyReport": "साप्ताहिक अहवाल"
 }

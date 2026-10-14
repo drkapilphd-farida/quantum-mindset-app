@@ -318,7 +318,7 @@ export function WordFlashGridCanvas({ gridSize, onComplete, onExitRequested }: W
   return (
     <ReadingLayout maxWidthClassName="max-w-lg" onExit={() => onExitRequested(elapsedMs)}>
       <div className="w-full max-w-md">
-        <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Word Flash Grid™</p>
+        <p className="mb-3 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Word Flash Grid</p>
         <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-4 sm:gap-4">
           <ReadingStatTile label={t('exercises.stats.round')} value={`${roundIndex + 1} / ${WORD_FLASH_GRID_ROUNDS_PER_SESSION}`} />
           <ReadingStatTile label={t('exercises.stats.score')} value={scoreLabel} />

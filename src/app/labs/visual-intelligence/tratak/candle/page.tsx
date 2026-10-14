@@ -11,7 +11,7 @@ import { TratakJourneyLocked } from '@/features/tratak-intelligence/components/T
 import { CandleTratakExperience } from '@/features/tratak-intelligence/components/candle-tratak/CandleTratakExperience'
 
 export const metadata: Metadata = {
-  title: 'Candle Tratak™ — Tratak Intelligence Journey™',
+  title: 'Candle Tratak — Tratak Intelligence Journey',
   description: 'Train steady gaze using a realistic candle flame.',
   robots: { index: false, follow: false },
 }

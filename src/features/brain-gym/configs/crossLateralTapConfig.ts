@@ -9,7 +9,7 @@ import type { BrainGymDrillConfig } from '../types'
 export const CROSS_LATERAL_TAP_CONFIG: BrainGymDrillConfig = {
   exerciseId: 'cross-lateral-tap',
   labId: 'quantum-speed-reading',
-  title: 'Cross-Lateral Tap™',
+  title: 'Cross-Lateral Tap',
   instructions: 'A side lights up — LEFT or RIGHT. Your job: tap the OPPOSITE side, every time. It trains you to hold back the first impulse and respond correctly.',
   roundCount: 16,
   stimulusDurationMs: 0,

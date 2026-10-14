@@ -84,13 +84,13 @@ describe('computeFocusIntelligenceReport', () => {
     expect(report.recommendation).toBe('Memory Mode is recommended because improving rule adaptation will help you retain more information under distraction.')
   })
 
-  it('Sprint-2.0 PROFILE DESCRIPTION™ — a real, non-empty, real two-sentence-or-fewer description always accompanies the real profile name', () => {
+  it('Sprint-2.0 PROFILE DESCRIPTION — a real, non-empty, real two-sentence-or-fewer description always accompanies the real profile name', () => {
     const report = computeFocusIntelligenceReport(baseInputs())
     expect(report.profileDescription.length).toBeGreaterThan(0)
     expect(report.profileDescription.split('.').filter(Boolean).length).toBeLessThanOrEqual(2)
   })
 
-  it('Sprint-2.0 ATTENTION JOURNEY SUMMARY™ — one real, bounded bar per real mission, in the real locked order', () => {
+  it('Sprint-2.0 ATTENTION JOURNEY SUMMARY — one real, bounded bar per real mission, in the real locked order', () => {
     const report = computeFocusIntelligenceReport(baseInputs())
     expect(report.journey.map((entry) => entry.mission)).toEqual([
       'attention-lock',
@@ -105,7 +105,7 @@ describe('computeFocusIntelligenceReport', () => {
     }
   })
 
-  it('Sprint-2.0 PREMIUM SCORE CARD™ — every real secondary score stays within a real 0-100 bound', () => {
+  it('Sprint-2.0 PREMIUM SCORE CARD — every real secondary score stays within a real 0-100 bound', () => {
     const report = computeFocusIntelligenceReport(baseInputs())
     for (const value of [report.reactionPrecisionPercent, report.visualSearchAccuracyPercent, report.ruleAdaptationPercent]) {
       expect(value).toBeGreaterThanOrEqual(0)
@@ -113,14 +113,14 @@ describe('computeFocusIntelligenceReport', () => {
     }
   })
 
-  it('Sprint-2.0 LEARNING POTENTIAL MESSAGE™ — a real, non-empty, hopeful line that never exaggerates', () => {
+  it('Sprint-2.0 LEARNING POTENTIAL MESSAGE — a real, non-empty, hopeful line that never exaggerates', () => {
     const report = computeFocusIntelligenceReport(baseInputs())
     expect(report.learningPotentialMessage.length).toBeGreaterThan(0)
     expect(report.learningPotentialMessage.toLowerCase()).not.toContain('guarantee')
     expect(report.learningPotentialMessage.toLowerCase()).not.toContain('perfect')
   })
 
-  it('Sprint-2.0 LEARNING POTENTIAL MESSAGE™ — a real high-efficiency session reads as already excellent, never generic', () => {
+  it('Sprint-2.0 LEARNING POTENTIAL MESSAGE — a real high-efficiency session reads as already excellent, never generic', () => {
     const inputs = baseInputs()
     inputs.sustainedFocus = { ...inputs.sustainedFocus, earlyAccuracy: 0.95, midAccuracy: 0.92, lateAccuracy: 0.9 }
     const report = computeFocusIntelligenceReport(inputs)

@@ -22,7 +22,7 @@ export function HabitCompletionCard({ sessionsCompleted, completionPercent }: Ha
 
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Habit Completion Rate™</p>
+      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Habit Completion Rate</p>
       <p className="mt-1 text-sm text-muted-foreground">
         {sessionsCompleted} of {TOTAL_JOURNEY_DAYS} days complete
       </p>

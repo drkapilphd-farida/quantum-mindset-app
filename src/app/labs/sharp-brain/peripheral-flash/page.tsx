@@ -7,7 +7,7 @@ import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
 
 export const metadata: Metadata = {
-  title: 'Peripheral Flash™ — Sharp Brain Lab',
+  title: 'Peripheral Flash — Sharp Brain Lab',
   description: 'Visual Span Training. Keep your eyes on the center — recognize what appears around it, without moving your eyes.',
   robots: { index: false, follow: false },
 }

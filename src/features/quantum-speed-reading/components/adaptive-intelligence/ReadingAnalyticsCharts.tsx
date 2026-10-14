@@ -80,7 +80,7 @@ export function ReadingAnalyticsCharts({ sessions, categoryPerformance }: Readin
       <MetricBarChart title="Reading Speed (WPM)" values={chronological.map((s) => s.wpm)} />
       <MetricBarChart title="Accuracy" values={chronological.map((s) => s.accuracyPercent)} />
       <MetricBarChart title="Comprehension" values={chronological.map((s) => s.comprehensionPercent)} />
-      <MetricBarChart title="Reading Intelligence Score" values={chronological.map((s) => s.readingIntelligenceScore)} />
+      <MetricBarChart title="Reading Score" values={chronological.map((s) => s.readingIntelligenceScore)} />
       {categoryPerformance.length > 0 && <CategoryPerformanceChart performance={categoryPerformance} />}
     </div>
   )

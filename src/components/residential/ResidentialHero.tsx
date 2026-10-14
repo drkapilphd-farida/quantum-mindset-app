@@ -16,7 +16,7 @@ export default function ResidentialHero(): React.JSX.Element {
 
   return (
     <section className="relative overflow-hidden border-b border-line px-6 pb-16 pt-14 sm:px-8 sm:pt-20 lg:pb-24">
-      {/* Hero Background™ — full-bleed photo slot behind the hero
+      {/* Hero Background — full-bleed photo slot behind the hero
           content. Renders a subtle, unobtrusive wash today (no real
           photo yet); once RESIDENTIAL_PHOTOS.heroBackground is set, this
           becomes a real photo with a readability wash on top so the
@@ -40,7 +40,7 @@ export default function ResidentialHero(): React.JSX.Element {
 
       <div className="relative z-10 mx-auto max-w-content">
         <div className="mx-auto max-w-2xl text-center">
-          {/* Founder Trust™ — same real photo as the homepage, QSR, and
+          {/* Founder Trust — same real photo as the homepage, QSR, and
               Online Retreat heroes. */}
           <div className="mb-6 flex justify-center">
             <div className="relative h-20 w-20 overflow-hidden rounded-full border-2 border-gold/50">

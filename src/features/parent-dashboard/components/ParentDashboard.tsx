@@ -1,5 +1,6 @@
 import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
 import { getAppT } from '@/lib/app-i18n/server'
+import { features } from '@/config/site.config'
 import { computeDailyStreak, computeTodaysProgress } from '@/lib/exercises/practiceHistory'
 import { getDailyQuantumSessionHistory } from '@/app/unified-session-preview/actions/getDailyQuantumSessionHistory'
 import { getQuantumDocumentSessionHistory } from '@/features/quantum-document-transformer/actions/getQuantumDocumentSessionHistory'
@@ -61,11 +62,11 @@ export async function ParentDashboard({ userId }: ParentDashboardProps): Promise
 
         {/* Strict order per spec — only adjacent items (comprehension and
             consistency) are paired side by side; nothing else is reordered
-            to fit a grid. Transparent Comprehension Scoring™ (Phase 4)
+            to fit a grid. Transparent Comprehension Scoring (Phase 4)
             adds Chapter Scores right after Document Mastery — the same
             aggregate-then-drill-down order those two cards already have
             (avg. comprehension % → the exact per-chapter numbers behind
-            it). Two-Pillar Simplification™ adds Daily Curriculum Progress
+            it). Two-Pillar Simplification adds Daily Curriculum Progress
             and Session History right after Consistency — the 30-Day
             Masterclass's own real, cross-device progress (see
             curriculum_day_completions / completeCurriculumDay.ts),
@@ -86,7 +87,8 @@ export async function ParentDashboard({ userId }: ParentDashboardProps): Promise
 
         <CurriculumSessionHistoryCard completions={curriculumCompletions} />
 
-        <DocumentMasteryCard documentsCompleted={masterySummary.documentsCompleted} averageComprehensionPercent={masterySummary.averageComprehensionPercent} />
+        {/* Own documents (Upload & Learn) is hidden while that feature is off. */}
+        {features.uploadAndLearn && <DocumentMasteryCard documentsCompleted={masterySummary.documentsCompleted} averageComprehensionPercent={masterySummary.averageComprehensionPercent} />}
 
         <ChapterScoresCard chapters={chapterScores} />
 

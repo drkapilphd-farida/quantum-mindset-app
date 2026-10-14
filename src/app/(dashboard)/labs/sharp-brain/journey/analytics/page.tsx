@@ -10,7 +10,7 @@ import { computeConsistencyPercent, computeAverageAccuracyPercent, computeHabitC
 import { programs } from '@/config/site.config'
 
 export const metadata: Metadata = {
-  title: `Analytics Dashboard™ — ${programs.focusStarter.appName}`,
+  title: `Analytics Dashboard — ${programs.focusStarter.appName}`,
   description: 'Your habit completion rate, streak, consistency, and Mind Score breakdown.',
   robots: { index: false, follow: false },
 }
@@ -52,7 +52,7 @@ export default async function JourneyAnalyticsPage(): Promise<React.JSX.Element>
       <div className="mx-auto max-w-3xl px-6 py-10">
         <LabPageHeader
           eyebrow={programs.focusStarter.appName}
-          title="Analytics Dashboard™"
+          title="Analytics Dashboard"
           subtitle="Your real growth story — Day 1 Baseline through today."
         />
 

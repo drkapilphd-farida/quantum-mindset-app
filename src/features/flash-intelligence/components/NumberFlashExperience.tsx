@@ -150,7 +150,7 @@ export function NumberFlashExperience(): React.JSX.Element {
       },
       {
         label: 'Estimated Visual Processing Growth',
-        value: growth === null ? 'Building Your Baseline™' : `${growth > 0 ? '+' : ''}${growth}`,
+        value: growth === null ? 'Building Your Baseline' : `${growth > 0 ? '+' : ''}${growth}`,
         hint: 'Estimated from recognition speed trends — not a direct measurement.',
       },
       {

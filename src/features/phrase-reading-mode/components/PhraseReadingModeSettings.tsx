@@ -61,7 +61,7 @@ export function PhraseReadingModeSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Phrase Reading Mode™</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Phrase Reading Mode</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Read in natural chunks, not word by word. One calm phrase at a time.
         </p>

@@ -6,12 +6,12 @@
 // line that was just shown; it doesn't need to remember more than that —
 // the brief asks for variety, not a strict no-repeat-ever guarantee.
 export const MICRO_VICTORY_HEADLINES: readonly string[] = [
-  'Neural Pathways Strengthening™',
-  'Excellent Focus™',
-  'Brain Response Improved™',
-  'Reading Rhythm Improving™',
-  'Visual System Activated™',
-  "You're Building Reading Momentum™",
+  'Neural Pathways Strengthening',
+  'Excellent Focus',
+  'Brain Response Improved',
+  'Reading Rhythm Improving',
+  'Visual System Activated',
+  "You're Building Reading Momentum",
 ]
 
 export const MICRO_VICTORY_MESSAGES: readonly string[] = [

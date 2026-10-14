@@ -1,10 +1,10 @@
 {
   "subtitle": "Your live brain score — updated after every session.",
-  "overall": "Overall intelligence",
-  "scoreAria": "Mind Score {score} out of 1000, Reading Intelligence {reading} percent",
+  "overall": "Overall",
+  "scoreAria": "Mind Score {score} out of 1000, Reading {reading} percent",
   "scoreProgress": "Mind Score progress",
-  "dimensions": "Intelligence dimensions",
-  "dimensionsAria": "Mind intelligence dimensions",
+  "dimensions": "Your skills",
+  "dimensionsAria": "Skill scores",
   "outOf100": "{label}: {score} out of 100",
   "notAttempted": "{label}: not yet attempted",
   "startNow": "Start now",
@@ -33,7 +33,7 @@
   "moduleCompleteBody": "You’ve finished all 30 days. Use Practice again on any day to keep your skills sharp.",
   "highestImpact": "Highest-impact practice",
   "minutes": "~{n} minutes",
-  "plusReading": "+Reading Intelligence",
+  "plusReading": "+Reading",
   "firstSession": "Complete your first session to get a personal recommendation.",
   "review": "Review",
   "resumeX": "Resume: {name}",
@@ -90,5 +90,6 @@
     "noSessions": "No completed sessions yet.",
     "dayN": "Day {day}",
     "completed": "Completed"
-  }
+  },
+  "weeklyReport": "Weekly report"
 }

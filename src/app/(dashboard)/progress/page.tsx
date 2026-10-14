@@ -43,7 +43,7 @@ import { CurriculumMilestoneTimeline } from '@/components/mindScore/CurriculumMi
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 
 export const metadata: Metadata = {
-  title: 'Mind Score™',
+  title: 'Mind Score',
   robots: { index: false, follow: false },
 }
 
@@ -160,12 +160,12 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
 
   const strengthSummary = buildStrengthSummary(
     [
-      { label: 'Reading Intelligence', score: readingScore, trendPercent: weeklyTrend },
+      { label: 'Reading', score: readingScore, trendPercent: weeklyTrend },
       { label: 'Reading Speed (WPM Growth)', score: readingSpeedScore, trendPercent: wpmGrowth?.growthPercent ?? null },
       { label: 'Comprehension Accuracy', score: comprehensionScore, trendPercent: null },
       { label: 'Visualization Depth', score: visualizationDepthScore, trendPercent: null },
       { label: 'Consistency & Streak Momentum', score: consistencyScore, trendPercent: null },
-      { label: 'Neural Retraining Index', score: neuralRetrainingIndex, trendPercent: null },
+      { label: 'Practice Progress', score: neuralRetrainingIndex, trendPercent: null },
     ],
     labStreak.currentStreak,
   )
@@ -175,7 +175,7 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
     { id: 'comprehension', label: 'Comprehension', score: comprehensionScore, trend: comprehensionScore === null ? null : 'stable' },
     { id: 'visualization', label: 'Visualization', score: visualizationDepthScore, trend: visualizationDepthScore === null ? null : 'stable' },
     { id: 'consistency', label: 'Consistency', score: consistencyScore, trend: consistencyScore === null ? null : 'stable' },
-    { id: 'neural-retraining', label: 'Neural Retraining', score: neuralRetrainingIndex, trend: neuralRetrainingIndex === null ? null : 'stable' },
+    { id: 'neural-retraining', label: 'Practice Progress', score: neuralRetrainingIndex, trend: neuralRetrainingIndex === null ? null : 'stable' },
   ]
 
   const personalBestMs = Math.max(...labSessions.map((s) => s.durationMs), 0)
@@ -185,7 +185,7 @@ export default async function MindScorePage(): Promise<React.JSX.Element> {
     <div className="space-y-5">
       {/* Page heading */}
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Mind Score™</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Mind Score</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {t('progress.subtitle')}
         </p>

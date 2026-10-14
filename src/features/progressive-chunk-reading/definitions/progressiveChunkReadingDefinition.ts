@@ -12,7 +12,7 @@ import { CHUNK_READING_DATASET } from '../../chunk-reading/chunkDataset'
 export const PROGRESSIVE_CHUNK_READING_DEFINITION: ExerciseDefinition = {
   id: 'progressive-chunk-reading',
   labId: 'quantum-speed-reading',
-  title: 'Progressive Chunk Reading™',
+  title: 'Progressive Chunk Reading',
   description: 'Word groups appear automatically, in flow — read naturally, then answer two quick recognition questions per block.',
   trainsAbility: 'Sustained reading rhythm at an expanding chunk size',
   exerciseType: 'reading',

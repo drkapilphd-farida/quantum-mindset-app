@@ -1,10 +1,10 @@
 {
   "subtitle": "आपका लाइव ब्रेन स्कोर — हर सेशन के बाद अपडेट होता है।",
-  "overall": "कुल इंटेलिजेंस",
-  "scoreAria": "Mind Score 1000 में से {score}, रीडिंग इंटेलिजेंस {reading} प्रतिशत",
+  "overall": "कुल मिलाकर",
+  "scoreAria": "Mind Score 1000 में से {score}, पढ़ना {reading} प्रतिशत",
   "scoreProgress": "Mind Score प्रगति",
-  "dimensions": "इंटेलिजेंस के पहलू",
-  "dimensionsAria": "दिमाग की इंटेलिजेंस के पहलू",
+  "dimensions": "आपके कौशल",
+  "dimensionsAria": "कौशल स्कोर",
   "outOf100": "{label}: 100 में से {score}",
   "notAttempted": "{label}: अभी शुरू नहीं किया",
   "startNow": "अभी शुरू करें",
@@ -33,7 +33,7 @@
   "moduleCompleteBody": "आपने सभी 30 दिन पूरे कर लिए हैं। अपनी स्किल्स तेज़ रखने के लिए किसी भी दिन को फिर से अभ्यास करें।",
   "highestImpact": "सबसे असरदार प्रैक्टिस",
   "minutes": "~{n} मिनट",
-  "plusReading": "+रीडिंग इंटेलिजेंस",
+  "plusReading": "+पढ़ना",
   "firstSession": "अपनी निजी सलाह पाने के लिए पहला सेशन पूरा करें।",
   "review": "दोहराएँ",
   "resumeX": "फिर से शुरू करें: {name}",
@@ -90,5 +90,6 @@
     "noSessions": "अभी कोई सेशन पूरा नहीं हुआ।",
     "dayN": "दिन {day}",
     "completed": "पूरा"
-  }
+  },
+  "weeklyReport": "साप्ताहिक रिपोर्ट"
 }

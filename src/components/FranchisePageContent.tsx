@@ -164,7 +164,7 @@ export default function FranchisePageContent(): React.JSX.Element {
               </p>
             )}
 
-            {/* First-Screen Trust Strip™ — reuses the same verified
+            {/* First-Screen Trust Strip — reuses the same verified
                 credentials already stated in the Founder section below
                 (no new claim introduced), surfaced here too so a visitor
                 sees "why trust this" without needing to scroll first. */}
@@ -518,7 +518,7 @@ export default function FranchisePageContent(): React.JSX.Element {
           </div>
         </section>
 
-        {/* 12. Apply — WhatsApp-First, No-Form™ (see this component's own
+        {/* 12. Apply — WhatsApp-First, No-Form (see this component's own
             top-of-file doc comment). A single instant-apply CTA replaces
             the old name/phone/city form; no typed fields are required to
             start the conversation. */}
@@ -557,7 +557,7 @@ export default function FranchisePageContent(): React.JSX.Element {
         </section>
       </main>
       <Footer />
-      {/* Compact-Button-First™ (same pattern as QsrWhatsAppWidget.tsx) —
+      {/* Compact-Button-First (same pattern as QsrWhatsAppWidget.tsx) —
           this page now has screenshot- and video-heavy proof sections
           below the fold; auto-dismissing the explanatory bubble after 6s
           keeps the compact round button available everywhere without it

@@ -110,7 +110,7 @@ const EXERCISE_ID = 'phrase-reading'
 const LAB_HREF = '/labs/sharp-brain'
 const NEXT_MISSION_HREF = '/labs/sharp-brain/multi-line-reading'
 const NEXT_MISSION_ID = 'multi-line-reading'
-const NEXT_MISSION_NAME = 'Multi-Line Reading™'
+const NEXT_MISSION_NAME = 'Multi-Line Reading'
 
 const FEEDBACK_MS = 450
 const MIN_PHRASE_DISPLAY_MS = 500
@@ -774,7 +774,7 @@ function PhraseReadingSession({
           <div className="flex flex-col items-center gap-6 text-center w-full">
             <ReadingJourney currentStage="phrase" />
             <div className="flex flex-col items-center gap-1.5">
-              <h1 className="text-2xl font-bold tracking-tight text-foreground">Phrase Reading™</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-foreground">Phrase Reading</h1>
               <p className="text-sm font-medium text-muted-foreground">{t('exercises.phrase.tagline')}</p>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs">

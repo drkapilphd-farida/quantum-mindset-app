@@ -3,7 +3,7 @@ import { AiVoiceMemory } from './aiVoiceMemory'
 import { pickFocusEncouragement } from './pickFocusEncouragement'
 
 describe('pickFocusEncouragement', () => {
-  it('AI Trust™ — a real clean Attention Lock result reads as strong, never mentioning failure', () => {
+  it('AI Trust — a real clean Attention Lock result reads as strong, never mentioning failure', () => {
     const line = pickFocusEncouragement(
       { type: 'attention_lock_result', roundsCompleted: 6, totalTargets: 20, correctTaps: 20, falseTaps: 0, avgReactionMs: 500, highestLevelReached: 4, stabilizedRounds: 0 },
       new AiVoiceMemory(),
@@ -15,7 +15,7 @@ describe('pickFocusEncouragement', () => {
     expect(line!.toLowerCase()).not.toContain('poor')
   })
 
-  it('Recovery Intelligence™ — a real struggling Attention Lock result reads as recovery, never punitive', () => {
+  it('Recovery Intelligence — a real struggling Attention Lock result reads as recovery, never punitive', () => {
     const line = pickFocusEncouragement(
       { type: 'attention_lock_result', roundsCompleted: 6, totalTargets: 20, correctTaps: 20, falseTaps: 5, avgReactionMs: 500, highestLevelReached: 2, stabilizedRounds: 1 },
       new AiVoiceMemory(),
@@ -56,7 +56,7 @@ describe('pickFocusEncouragement', () => {
     expect(third).toBeNull()
   })
 
-  it('Behavioural Memory™ — a real improving cross-mission trend earns its own real, prioritized line', () => {
+  it('Behavioural Memory — a real improving cross-mission trend earns its own real, prioritized line', () => {
     const memory = new AiVoiceMemory()
     memory.recordMissionRatio(0.3)
     memory.recordMissionRatio(0.9)
@@ -67,7 +67,7 @@ describe('pickFocusEncouragement', () => {
     expect(line).toBe("You're adapting quickly.")
   })
 
-  it('Recovery Intelligence™ — a real declining cross-mission trend earns a real, calm, non-punitive line', () => {
+  it('Recovery Intelligence — a real declining cross-mission trend earns a real, calm, non-punitive line', () => {
     const memory = new AiVoiceMemory()
     memory.recordMissionRatio(0.9)
     memory.recordMissionRatio(0.3)

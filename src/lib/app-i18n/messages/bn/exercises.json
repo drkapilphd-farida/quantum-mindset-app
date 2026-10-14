@@ -9,7 +9,7 @@
     "backToLab": "Lab-এ ফিরে যান"
   },
   "rsvp": {
-    "mode": "RSVP Mode™",
+    "mode": "RSVP Mode",
     "speed": "গতি: {wpm} WPM"
   },
   "questions": {
@@ -451,7 +451,7 @@
     "this_phrase_is_mainly_about": "এই শব্দগুচ্ছ মূলত কী নিয়ে:",
     "track_it": "অনুসরণ করুন",
     "train_again": "আবার ট্রেনিং করুন",
-    "training_complete": "Training Complete™",
+    "training_complete": "Training Complete",
     "very_good": "খুব ভালো",
     "visual_recall": "দৃষ্টি-স্মৃতি",
     "visual_span_and_peripheral_awareness": "দৃষ্টি-পরিসর ও পাশের দৃষ্টি",
@@ -487,7 +487,9 @@
     "your_mind_remembers_pick_up_where_you_left_off": "আপনার মন মনে রেখেছে — যেখানে থেমেছিলেন সেখান থেকে শুরু করুন",
     "your_practice_is_paying_off": "আপনার অনুশীলনের ফল মিলছে",
     "your_transformation_is_ready_to_begin": "আপনার রূপান্তর শুরু হওয়ার জন্য তৈরি",
-    "your_transformation_starts_here": "আপনার রূপান্তর এখান থেকেই শুরু"
+    "your_transformation_starts_here": "আপনার রূপান্তর এখান থেকেই শুরু",
+    "reading": "পড়া",
+    "practice_progress": "অনুশীলনের অগ্রগতি"
   },
   "sentence": {
     "intro": "পূর্ণ বাক্যের একটি ছোট বিষয়ভিত্তিক অধ্যায় পড়ুন, তারপর পুরো ভাবনাটি চিনুন।",

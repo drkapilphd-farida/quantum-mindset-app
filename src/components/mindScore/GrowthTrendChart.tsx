@@ -49,7 +49,7 @@ export function GrowthTrendChart({
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Growth Trend™
+            Growth Trend
           </p>
           {hasTrend && (
             <p className={cn(

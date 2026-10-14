@@ -59,7 +59,7 @@ function TraitTrend({ trait }: { trait: DnaEvolutionTrait }): React.JSX.Element 
 export function ReadingDnaEvolutionCard({ traits }: ReadingDnaEvolutionCardProps): React.JSX.Element {
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Reading DNA™ Evolution</p>
+      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">Reading DNA Evolution</p>
       <div className="mt-4 space-y-5">
         {traits.map((trait) => (
           <TraitTrend key={trait.dimension} trait={trait} />

@@ -17,6 +17,8 @@ import { MasterclassPaywallModal } from './MasterclassPaywallModal'
 import { FinishPreviousDayModal } from './FinishPreviousDayModal'
 import { ThirtyDayCurriculumDayDetail } from './ThirtyDayCurriculumDayDetail'
 import { ThirtyDayCurriculumOverview } from './ThirtyDayCurriculumOverview'
+import { getSkillProgress } from '../actions/getSkillProgress'
+import type { SkillBar } from '../skillProgress'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
 import { curriculumDayAccess, EMPTY_PROGRESS, isCurriculumDayUnlocked, loadCurriculumProgress, recordCurriculumCheckpoint, type CurriculumCheckpointResult, type CurriculumProgress } from '../curriculumProgress'
 import { completeCurriculumDay } from '../actions/completeCurriculumDay'
@@ -44,11 +46,8 @@ function parseValidDay(rawDay: string | null): number | null {
 // Root client orchestrator — a single route, client-state-driven view
 // machine (Overview <-> Day Detail <-> Assessment) rather than per-day
 // dynamic routes, mirroring QuantumJourneySession.tsx's own
-// local-`level`-state approach. `refreshKey` forces the Overview to
-// re-read localStorage after any mutation (mark-complete or a recorded
-// checkpoint) without needing a shared store — the same "bump a key to
-// force a re-read" trick this project already uses wherever a sibling
-// component owns the write.
+// local-`level`-state approach. Coming back to the Overview re-reads the
+// server completions, the next-day time and the skill bars.
 //
 // In-Page Step-by-Step Master Player™ — this is also the landing point a
 // real browser navigation returns to whenever DayMasterPlayer had to hand
@@ -61,8 +60,10 @@ function parseValidDay(rawDay: string | null): number | null {
 // real page round-trip. Every other, embeddable exercise never leaves
 // this route at all; see DayMasterPlayer.tsx.
 type ThirtyDayCurriculumExperienceProps = {
-  /** Live classes done (x of 7), shown as a small link above the plan. */
+  /** Live classes done (x of 7), shown as a small link below the plan. */
   liveClassesDone?: number
+  /** Focus / Memory / Reading / Retention bars, first practice → now. Resolved on the server. */
+  initialSkillBars: readonly SkillBar[]
   /** Pace control: when the learner's next day opens (null = open now). Resolved on the server. */
   initialNextDayOpensAt?: string | null
   // 30-Day Masterclass Paywall™ — resolved server-side (see this
@@ -86,7 +87,7 @@ type ThirtyDayCurriculumExperienceProps = {
   watermarkText: string | null
 }
 
-export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, liveClassesDone = 0, initialNextDayOpensAt = null }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
+export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, liveClassesDone = 0, initialNextDayOpensAt = null, initialSkillBars }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
   const router = useRouter()
   // Practice text is English until a language gets its own passages; WPM is compared only within one language.
@@ -133,7 +134,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   const closedAccess = closedDay === null ? 'open' : curriculumDayAccess(closedDay, initialServerCompletedDays, isPro, initialNextDayOpensAt)
   const [paywallDay, setPaywallDay] = useState<number | null>(closedAccess === 'needs_enrolment' ? closedDay : null)
   const [finishPreviousDay, setFinishPreviousDay] = useState<number | null>(closedAccess === 'finish_previous' || closedAccess === 'opens_later' ? closedDay : null)
-  const [refreshKey, setRefreshKey] = useState(0)
+  const [skillBars, setSkillBars] = useState(initialSkillBars)
 
   // Re-reads both the local optimistic cache (streaks/checkpoints/brain
   // score) AND the server-authoritative completion list — called after
@@ -143,10 +144,10 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // from this component's very first mount.
   async function refreshProgress(): Promise<void> {
     setProgress(loadCurriculumProgress())
-    setRefreshKey((key) => key + 1)
-    const [records, opensAt] = await Promise.all([getCurriculumDayCompletions(), getNextDayOpensAt()])
+    const [records, opensAt, bars] = await Promise.all([getCurriculumDayCompletions(), getNextDayOpensAt(), getSkillProgress()])
     setServerCompletedDays(records.map((record) => record.day))
     setNextDayOpensAt(opensAt)
+    setSkillBars(bars)
   }
 
   function handleClosedDay(day: number): void {
@@ -227,7 +228,6 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
       router.refresh()
     }
     setProgress(loadCurriculumProgress())
-    setRefreshKey((key) => key + 1)
     setView('day-detail')
   }
 
@@ -316,7 +316,6 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   return (
     <>
       {serverCompletedDays.includes(TOTAL_CURRICULUM_DAYS) && <CertificateReadyCard />}
-      {isPro && <LiveClassesProgressLink classesDone={liveClassesDone} />}
       <ThirtyDayCurriculumOverview
         onSelectDay={handleSelectDay}
         onLockedDayClick={handleClosedDay}
@@ -324,8 +323,9 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
         isPro={isPro}
         serverCompletedDays={serverCompletedDays}
         nextDayOpensAt={nextDayOpensAt}
-        refreshKey={refreshKey}
+        skillBars={skillBars}
       />
+      {isPro && <LiveClassesProgressLink classesDone={liveClassesDone} />}
       <MasterclassPaywallModal open={paywallDay !== null} onOpenChange={(open) => { if (!open) setPaywallDay(null) }} day={paywallDay === 0 ? null : paywallDay} />
       <FinishPreviousDayModal
         day={finishPreviousDay}

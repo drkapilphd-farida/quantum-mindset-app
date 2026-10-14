@@ -26,7 +26,7 @@ const DEV_ANALYZER_ANSWERS: ImageFixationAnalyzerAnswers = {
   afterImageClarity: 'very-clear',
   afterImageDuration: 'more-than-10s',
   centerFocusEase: null,
-  notes: 'Dev Test Mode™ — synthetic answer (Complete Today’s Sequence).',
+  notes: 'Dev Test Mode — synthetic answer (Complete Today’s Sequence).',
 }
 
 function devCorrectObservationAnswers(imageId: string): Record<string, string> {
@@ -79,7 +79,7 @@ export async function devCompleteTodaysSequence(): Promise<DevCompleteImagePersi
     return { success: false, error: "Today's 5 images are already complete." }
   }
 
-  return { success: true, message: "Today's Image Persistence Challenge™ sequence completed with synthetic Dev Test Mode™ answers.", stats, xpEarned }
+  return { success: true, message: "Today's Image Persistence Challenge sequence completed with synthetic Dev Test Mode answers.", stats, xpEarned }
 }
 
 // Deletes only TODAY's rows for this mission (reuses the existing
@@ -110,5 +110,5 @@ export async function devResetTodaysProgress(): Promise<DevResetTodaysProgressRe
     return { success: false, error: `Failed to reset: ${error.message}` }
   }
 
-  return { success: true, message: "Today's Image Persistence Challenge™ progress reset." }
+  return { success: true, message: "Today's Image Persistence Challenge progress reset." }
 }

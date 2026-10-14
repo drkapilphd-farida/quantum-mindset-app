@@ -10,8 +10,8 @@ import { TratakJourneyLocked } from '@/features/tratak-intelligence/components/T
 import { ReportHistoryScreen } from '@/features/tratak-intelligence/components/mandala/ReportHistoryScreen'
 
 export const metadata: Metadata = {
-  title: 'Report History — Mandala Tratak™',
-  description: 'Your Visual Intelligence Report™ history across every completed Mandala Tratak™ session.',
+  title: 'Report History — Mandala Tratak',
+  description: 'Your Visual Intelligence Report history across every completed Mandala Tratak session.',
   robots: { index: false, follow: false },
 }
 

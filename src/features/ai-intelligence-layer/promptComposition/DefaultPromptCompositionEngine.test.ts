@@ -36,7 +36,7 @@ describe('DefaultPromptCompositionEngine', () => {
   })
 
   it('carries the given persona through unchanged', () => {
-    const persona = makeMentorPersona({ id: 'teacher-mode', displayName: 'Teacher Mode™' })
+    const persona = makeMentorPersona({ id: 'teacher-mode', displayName: 'Teacher Mode' })
     const pkg = engine.compose({ ...baseInput(), persona })
     expect(pkg.persona).toBe(persona)
   })

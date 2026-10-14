@@ -1,10 +1,10 @@
 {
   "subtitle": "તમારો લાઇવ મગજ સ્કોર — દરેક સેશન પછી અપડેટ થાય છે.",
-  "overall": "કુલ બુદ્ધિ",
-  "scoreAria": "Mind Score 1000 માંથી {score}, વાંચન બુદ્ધિ {reading} ટકા",
+  "overall": "કુલ",
+  "scoreAria": "Mind Score 1000 માંથી {score}, વાંચન {reading} ટકા",
   "scoreProgress": "Mind Score પ્રગતિ",
-  "dimensions": "બુદ્ધિના પાસાં",
-  "dimensionsAria": "મનની બુદ્ધિના પાસાં",
+  "dimensions": "તમારી કુશળતાઓ",
+  "dimensionsAria": "કુશળતા સ્કોર",
   "outOf100": "{label}: 100 માંથી {score}",
   "notAttempted": "{label}: હજી શરૂ નથી કર્યું",
   "startNow": "હમણાં શરૂ કરો",
@@ -33,7 +33,7 @@
   "moduleCompleteBody": "તમે બધા 30 દિવસ પૂર્ણ કર્યા છે. તમારી કુશળતા તેજ રાખવા કોઈપણ દિવસનો ફરી અભ્યાસ કરો.",
   "highestImpact": "સૌથી અસરકારક પ્રેક્ટિસ",
   "minutes": "~{n} મિનિટ",
-  "plusReading": "+વાંચન બુદ્ધિ",
+  "plusReading": "+વાંચન",
   "firstSession": "વ્યક્તિગત સલાહ મેળવવા તમારું પહેલું સેશન પૂરું કરો.",
   "review": "ફરી જુઓ",
   "resumeX": "ફરી શરૂ કરો: {name}",
@@ -90,5 +90,6 @@
     "noSessions": "હજી કોઈ સેશન પૂરું નથી થયું.",
     "dayN": "દિવસ {day}",
     "completed": "પૂરું"
-  }
+  },
+  "weeklyReport": "સાપ્તાહિક અહેવાલ"
 }

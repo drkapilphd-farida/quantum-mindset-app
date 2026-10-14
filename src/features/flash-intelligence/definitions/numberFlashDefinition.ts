@@ -5,7 +5,7 @@ import { NUMBER_FLASH_DATASET } from '../numberFlashDataset'
 export const NUMBER_FLASH_DEFINITION: ExerciseDefinition = {
   id: 'number-flash',
   labId: 'quantum-speed-reading',
-  title: 'Number Flash™',
+  title: 'Number Flash',
   description: 'Train your brain to recognize numbers instantly.',
   trainsAbility: 'Instant numerical recognition',
   exerciseType: 'flash',

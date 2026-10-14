@@ -67,7 +67,7 @@ export function BlueprintHero({
   return (
     <section>
       <div className="flex items-center gap-2">
-        <p className={TYPOGRAPHY.label}>Learning Blueprint™</p>
+        <p className={TYPOGRAPHY.label}>Learning Blueprint</p>
         <Badge variant="outline">{currentStageLabel}</Badge>
       </div>
 

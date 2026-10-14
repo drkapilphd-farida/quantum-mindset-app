@@ -6,8 +6,8 @@ import { getWordFlashUnlock } from '@/features/flash-intelligence/wordFlashAcces
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 
 export const metadata: Metadata = {
-  title: 'Rapid Recognition Drill™ — Sharp Brain Lab',
-  description: 'A word flashes briefly — identify it before it disappears. The entry game of the Flash Intelligence Pack™, training instant word recognition.',
+  title: 'Rapid Recognition Drill — Sharp Brain Lab',
+  description: 'A word flashes briefly — identify it before it disappears. The entry game of the Flash Reading Pack, training instant word recognition.',
   robots: { index: false, follow: false },
 }
 

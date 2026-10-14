@@ -57,7 +57,7 @@ export function TodaysProgress({
         {roundedCompletedStageCount} of {totalStageCount} Stages Complete
       </p>
       <p className="text-xs text-muted-foreground">
-        Mind Score™ {roundedMindScore} · {mindScoreLabel}
+        Mind Score {roundedMindScore} · {mindScoreLabel}
       </p>
     </div>
   )

@@ -70,7 +70,7 @@ export function FocusWorkspace({ documentId, documentTitle, initial, projectId }
   if (initial.kind === 'not-processed') {
     return (
       <div className="animate-in fade-in mx-auto max-w-lg px-6 py-16 duration-(--duration-base)">
-        <EmptyStateCard icon={Target} title="This document hasn't been prepared for a focus session yet" description="Its Universal Learning Object™ hasn't been built yet — check back once processing finishes." />
+        <EmptyStateCard icon={Target} title="This document hasn't been prepared for a focus session yet" description="Its Universal Learning Object hasn't been built yet — check back once processing finishes." />
       </div>
     )
   }
@@ -82,7 +82,7 @@ export function FocusWorkspace({ documentId, documentTitle, initial, projectId }
         <div className="space-y-1 text-center">
           <Target className="mx-auto size-8 text-primary" aria-hidden="true" />
           <h1 className="text-lg font-semibold text-foreground">{documentTitle}</h1>
-          <p className="text-sm text-muted-foreground">Choose a Focus Mode™ to start your first session for this document.</p>
+          <p className="text-sm text-muted-foreground">Choose a Focus Mode to start your first session for this document.</p>
         </div>
         <FocusVariantPicker disabled={pending} onSelect={(config) => runAction(() => startFocusSession({ documentId, config }))} />
       </div>

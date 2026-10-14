@@ -575,7 +575,7 @@ function MultiLineReadingSession({
         {runtime.phase === 'idle' && (
           <div className="flex flex-col items-center gap-6 text-center w-full">
             <ReadingJourney currentStage="multi-line" />
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">Multi-Line Reading™</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">Multi-Line Reading</h1>
             <p className="text-sm font-medium text-muted-foreground">Know Where To Look Next</p>
             <p className="text-sm text-muted-foreground max-w-xs">
               Train your brain to know exactly where to move your eyes across a paragraph.

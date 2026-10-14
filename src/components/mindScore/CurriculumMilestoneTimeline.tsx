@@ -73,7 +73,7 @@ export function CurriculumMilestoneTimeline(): React.JSX.Element {
   return (
     <div className="glass-premium-card p-6">
       <div className="flex items-baseline justify-between gap-3">
-        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">30-Day Milestone Timeline™</p>
+        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">30-Day Milestone Timeline</p>
         <Link href={CURRICULUM_ROUTE} className="text-xs font-medium text-primary hover:underline">
           {t('progress.viewRoadmap')}
         </Link>

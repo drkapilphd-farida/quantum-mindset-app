@@ -23,7 +23,7 @@ export function StreakConsistencyCard({
 
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Consistency & Streak™</p>
+      <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Consistency & Streak</p>
 
       <div className="mt-4 flex items-center gap-4 rounded-xl bg-gradient-to-br from-orange-500/10 via-orange-500/5 to-transparent px-5 py-4">
         <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-orange-500/15">

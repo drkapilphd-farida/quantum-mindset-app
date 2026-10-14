@@ -64,7 +64,7 @@ export function JourneyHero({
 
       {isJourneyComplete || currentStageTitle === null ? (
         <p className="mx-auto mt-6 max-w-sm text-base leading-relaxed text-foreground/80">
-          Your Brain Transformation™ journey is complete. Revisit any stage below whenever you like.
+          Your Brain Transformation journey is complete. Revisit any stage below whenever you like.
         </p>
       ) : (
         <>
@@ -90,7 +90,7 @@ export function JourneyHero({
 
           <Button asChild size="lg" className="mt-8 min-w-[220px] rounded-full shadow-sm">
             <Link href={currentStageRequiresPro ? '/programs/sharp-brain#enrol' : continueHref}>
-              {currentStageRequiresPro ? 'Join the Sharp Brain Program' : 'Continue Your Journey™'}
+              {currentStageRequiresPro ? 'Join the Sharp Brain Program' : 'Continue Your Journey'}
             </Link>
           </Button>
 

@@ -238,7 +238,7 @@ export function ThirtyDayCurriculumDayDetail({
         )}
       </div>
 
-      {/* Upload & Learn Masterclass Integration™ — weaves the AI Document
+      {/* Upload & Learn Masterclass Integration — weaves the AI Document
           Supercharger into the daily practice workflow itself rather than
           leaving it as a separate, disconnected dashboard utility. Shown
           only once a day's real exercise queue is done — a calmer, review-
