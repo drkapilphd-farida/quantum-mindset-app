@@ -274,7 +274,7 @@
     "complexityLabel": "वाक्य की कठिनाई: {label}",
     "stars": "5 में से {n} सितारे",
     "nextRecommendation": "अगली सलाह:",
-    "themeMastered": "{theme} में महारत",
+    "themeMastered": "{theme} — पूरा हुआ",
     "themeInProgress": "{theme} जारी है",
     "todaysGoal": "आज का लक्ष्य",
     "goalValue": "पूरे विचार समझना",
@@ -525,7 +525,12 @@
     "your_transformation_is_ready_to_begin": "आपका बदलाव शुरू होने को तैयार है",
     "your_transformation_starts_here": "आपका बदलाव यहीं से शुरू होता है",
     "reading": "पढ़ना",
-    "practice_progress": "प्रैक्टिस प्रगति"
+    "practice_progress": "प्रैक्टिस प्रगति",
+    "full_idea": "पूरा विचार",
+    "full_length_sentences_the_whole_idea_in_a_single_visual_span": "पूरे वाक्य — एक नज़र में पूरा विचार।",
+    "theme": "विषय",
+    "outstanding_progress": "शानदार प्रगति",
+    "outstanding_steady_practice": "शानदार, लगातार प्रैक्टिस"
   },
   "journey": {
     "title": "पढ़ने की यात्रा",

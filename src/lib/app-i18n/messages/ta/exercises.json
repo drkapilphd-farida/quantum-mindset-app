@@ -274,7 +274,7 @@
     "complexityLabel": "வாக்கியக் கடினம்: {label}",
     "stars": "5 இல் {n} நட்சத்திரங்கள்",
     "nextRecommendation": "அடுத்த பரிந்துரை:",
-    "themeMastered": "{theme} இல் தேர்ச்சி",
+    "themeMastered": "{theme} — முடிந்தது",
     "themeInProgress": "{theme} நடைபெறுகிறது",
     "todaysGoal": "இன்றைய இலக்கு",
     "goalValue": "முழுக் கருத்துகளைப் புரிந்துகொள்ளுதல்",
@@ -525,7 +525,12 @@
     "your_transformation_is_ready_to_begin": "உங்கள் மாற்றம் தொடங்கத் தயார்",
     "your_transformation_starts_here": "உங்கள் மாற்றம் இங்கிருந்து தொடங்குகிறது",
     "reading": "வாசிப்பு",
-    "practice_progress": "பயிற்சி முன்னேற்றம்"
+    "practice_progress": "பயிற்சி முன்னேற்றம்",
+    "full_idea": "முழுக் கருத்து",
+    "full_length_sentences_the_whole_idea_in_a_single_visual_span": "முழு வாக்கியங்கள் — ஒரே பார்வையில் முழுக் கருத்து.",
+    "theme": "தலைப்பு",
+    "outstanding_progress": "சிறப்பான முன்னேற்றம்",
+    "outstanding_steady_practice": "சிறப்பான, தொடர்ந்த பயிற்சி"
   },
   "journey": {
     "title": "வாசிப்புப் பயணம்",

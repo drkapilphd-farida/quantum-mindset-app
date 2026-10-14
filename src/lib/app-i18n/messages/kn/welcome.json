@@ -20,16 +20,23 @@
     "line1": "ಯಾವುದೇ ಪುಸ್ತಕವನ್ನು ಚೆನ್ನಾಗಿ ಕಲಿಯಿರಿ — Dr. Kapil Dev Sharma ಅವರ ಲೈವ್ ಮಾರ್ಗದರ್ಶನದಲ್ಲಿ.",
     "line2": "7 ಲೈವ್ ತರಗತಿಗಳು. ಒಬ್ಬ ಮಾರ್ಗದರ್ಶಕ.",
     "line3": "ನಿಜವಾದ ಪ್ರಗತಿ.",
-    "sharpBrainDesc": "30 ದಿನಗಳ ಕ್ರಮಬದ್ಧ ಕಾರ್ಯಕ್ರಮ — Dr. Kapil Dev Sharma ಅವರ ಲೈವ್ ಮಾರ್ಗದರ್ಶನದಲ್ಲಿ.",
-    "sharpBrainPoint1": "Peripheral Vision Activator, Rapid Recognition Drill, Chunk Reading",
-    "sharpBrainPoint2": "Dr. Kapil Dev Sharma ಅವರೊಂದಿಗೆ 7 ಲೈವ್ ತರಗತಿಗಳು",
-    "start": "ತರಬೇತಿ ಆರಂಭಿಸಿ →",
     "uploadTitle": "ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ಕಲಿಯಿರಿ",
     "uploadDesc": "ಯಾವುದೇ PDF ಅಥವಾ ಪಠ್ಯಪುಸ್ತಕವನ್ನು ವೇಗದ ಓದು ಡ್ರಿಲ್, ಮೈಂಡ್ ಮ್ಯಾಪ್ ಮತ್ತು ಸ್ಮಾರ್ಟ್ ಸಾರಾಂಶಗಳಾಗಿ ಮಾಡಿ.",
     "uploadPoint1": "AI ತಯಾರಿಸಿದ ವೇಗದ ಓದು ಡ್ರಿಲ್",
     "uploadPoint2": "ಮೈಂಡ್ ಮ್ಯಾಪ್ ಮತ್ತು ಸ್ಮಾರ್ಟ್ ಸಾರಾಂಶ",
     "uploadPoint3": "ಯಾವುದೇ PDF ಅಥವಾ ಪಠ್ಯಪುಸ್ತಕದೊಂದಿಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ",
-    "uploadCta": "ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ಕಲಿಯಿರಿ →"
+    "uploadCta": "ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ಕಲಿಯಿರಿ →",
+    "card": {
+      "line": "ಅರ್ಥ ಮಾಡಿಕೊಂಡು ವೇಗವಾಗಿ ಓದಿ. ಹೆಚ್ಚು ಹೊತ್ತು ಗಮನ ಕೊಡಿ. ಹೆಚ್ಚು ನೆನಪಿಡಿ.",
+      "point1": "ಪ್ರತಿದಿನ 10–15 ನಿಮಿಷಗಳ guided ಅಭ್ಯಾಸ",
+      "point2": "ನೆನಪಿಡುವ 8 ತಂತ್ರಗಳು — ಹೆಸರುಗಳು, ಸಂಖ್ಯೆಗಳು, ಅಧ್ಯಾಯಗಳು ಮತ್ತು ಇನ್ನಷ್ಟು",
+      "point3": "Smart Reading — ಅರ್ಥ ಕಳೆದುಕೊಳ್ಳದೆ ವೇಗವಾಗಿ ಓದುವುದು",
+      "point4": "Dr. Kapil Dev Sharma ಅವರೊಂದಿಗೆ 7 live classes",
+      "point5": "ನಿಮ್ಮ Day 1 → Day 30 ಪ್ರಗತಿ ವರದಿ",
+      "startDay": "Day {day} ಪ್ರಾರಂಭಿಸಿ →",
+      "continueDay": "Day {day} ಮುಂದುವರಿಸಿ →",
+      "openPlan": "ನಿಮ್ಮ ಯೋಜನೆ ತೆರೆಯಿರಿ →"
+    }
   },
   "lock": {
     "partOf": "{title}, {program} ನ ಭಾಗ",

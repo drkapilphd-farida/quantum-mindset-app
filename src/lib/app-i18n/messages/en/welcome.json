@@ -20,16 +20,23 @@
     "line1": "Master any book — guided live by Dr. Kapil Dev Sharma.",
     "line2": "7 live classes. One mentor.",
     "line3": "Real progress.",
-    "sharpBrainDesc": "A structured 30-day program — guided live by Dr. Kapil Dev Sharma.",
-    "sharpBrainPoint1": "Peripheral Vision Activator, Rapid Recognition Drill, Chunk Reading",
-    "sharpBrainPoint2": "7 live classes with Dr. Kapil Dev Sharma",
-    "start": "Start training →",
     "uploadTitle": "Upload & Learn",
     "uploadDesc": "Turn any PDF or textbook into speed-reading drills, mind maps and smart summaries.",
     "uploadPoint1": "AI-made speed-reading drills",
     "uploadPoint2": "Mind maps & smart summaries",
     "uploadPoint3": "Works with any PDF or textbook",
-    "uploadCta": "Upload & Learn →"
+    "uploadCta": "Upload & Learn →",
+    "card": {
+      "line": "Read faster with understanding. Focus longer. Remember more.",
+      "point1": "10–15 minutes of guided practice every day",
+      "point2": "8 memory techniques — for names, numbers, chapters and more",
+      "point3": "Smart Reading — read faster without losing understanding",
+      "point4": "7 live classes with Dr. Kapil Dev Sharma",
+      "point5": "Your Day 1 → Day 30 progress report",
+      "startDay": "Start Day {day} →",
+      "continueDay": "Continue Day {day} →",
+      "openPlan": "Open your plan →"
+    }
   },
   "lock": {
     "partOf": "{title} is part of the {program}",

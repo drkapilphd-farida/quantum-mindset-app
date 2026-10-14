@@ -274,7 +274,7 @@
     "complexityLabel": "వాక్య కష్టం: {label}",
     "stars": "5 లో {n} నక్షత్రాలు",
     "nextRecommendation": "తదుపరి సూచన:",
-    "themeMastered": "{theme} లో నైపుణ్యం",
+    "themeMastered": "{theme} — పూర్తయింది",
     "themeInProgress": "{theme} కొనసాగుతోంది",
     "todaysGoal": "ఈరోజు లక్ష్యం",
     "goalValue": "పూర్తి ఆలోచనలను అర్థం చేసుకోవడం",
@@ -525,7 +525,12 @@
     "your_transformation_is_ready_to_begin": "మీ మార్పు మొదలవడానికి సిద్ధం",
     "your_transformation_starts_here": "మీ మార్పు ఇక్కడి నుంచే మొదలు",
     "reading": "చదవడం",
-    "practice_progress": "అభ్యాస పురోగతి"
+    "practice_progress": "అభ్యాస పురోగతి",
+    "full_idea": "పూర్తి భావం",
+    "full_length_sentences_the_whole_idea_in_a_single_visual_span": "పూర్తి వాక్యాలు — ఒక్క చూపులో పూర్తి భావం.",
+    "theme": "అంశం",
+    "outstanding_progress": "అద్భుతమైన పురోగతి",
+    "outstanding_steady_practice": "అద్భుతమైన, నిరంతర అభ్యాసం"
   },
   "journey": {
     "title": "చదువు ప్రయాణం",

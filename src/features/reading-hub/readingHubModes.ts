@@ -57,7 +57,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'flash-recall-sprint',
-    title: 'Flash Recall & Retention Sprint',
+    title: 'Flash Recall',
     purpose: 'Flash a short passage, then answer a quick question on what you retained.',
     status: 'available',
     href: '/labs/sharp-brain/flash-recall-sprint',
@@ -66,7 +66,7 @@ export const READING_HUB_MODES: readonly ReadingHubMode[] = [
   },
   {
     id: 'vertical-flash-recall',
-    title: 'Vertical Flash Recall & Retention Sprint',
+    title: 'Vertical Flash Recall',
     purpose: 'Words flash down a fixed vertical column at your pace, training rapid vertical eye-span, then a quick retention check.',
     status: 'available',
     href: '/labs/sharp-brain/vertical-flash-recall',

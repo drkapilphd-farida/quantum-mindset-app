@@ -164,7 +164,7 @@ export type MindScoreLabel = {
 }
 
 export function getMindScoreLabel(score: number): MindScoreLabel {
-  if (score >= 900) return { label: 'Peak Performance', description: 'Exceptional consistency and mastery' }
+  if (score >= 900) return { label: 'Outstanding Progress', description: 'Outstanding, steady practice' }
   if (score >= 800) return { label: 'Excellent Progress', description: 'Your mind is performing at a high level' }
   if (score >= 600) return { label: 'Strong Progress', description: 'Solid habits are forming' }
   if (score >= 400) return { label: 'Growing Consistently', description: 'Your practice is paying off' }

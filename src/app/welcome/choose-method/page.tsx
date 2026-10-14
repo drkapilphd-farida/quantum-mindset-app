@@ -7,6 +7,7 @@ import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/ha
 import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { sharpBrainEnrolment } from '@/config/site.config'
 import { istDayMonth } from '@/features/sharp-brain-enrol/copy'
+import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
 
 // Belt-and-suspenders against edge/CDN caching serving the wrong
 // domain's card — same reasoning and same fix as
@@ -45,6 +46,9 @@ export default async function ChooseLearningMethodPage(): Promise<React.JSX.Elem
   } = await supabase.auth.getUser()
   const appDomain = await getAppDomain()
   const hasStartedJourney = user !== null && appDomain === 'habit' ? await hasStartedPracticeJourney(user.id) : false
+  // App card button: "Start Day 1" for a new learner, "Continue Day N" once they have begun.
+  const progress = user !== null && appDomain === 'app' ? await getProgramProgress() : null
+  const planStep = progress === null ? { day: 1, started: false } : { day: progress.nextDay, started: progress.completedDays > 0 }
 
   const next = pricingSnapshot(Date.now()).batches[0]
   const programPrice = {
@@ -61,6 +65,7 @@ export default async function ChooseLearningMethodPage(): Promise<React.JSX.Elem
         appDomain={appDomain}
         hasStartedJourney={hasStartedJourney}
         programPrice={programPrice}
+        planStep={planStep}
       />
     </AppI18nRoot>
   )

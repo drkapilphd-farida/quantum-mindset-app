@@ -31,7 +31,7 @@ export function ColorSceneTransformationSettings({ onStart }: ColorSceneTransfor
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Color & Scene Transformation Journey</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Colour Scene Imagination</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           A serene scene transforms step by step. Watch closely, then say what it became once it fades and
           reappears.

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { ColorSceneTransformationExperience } from '@/features/color-scene-transformation/components/ColorSceneTransformationExperience'
 
 export const metadata: Metadata = {
-  title: 'Color & Scene Transformation Journey — Sharp Brain Lab',
+  title: 'Colour Scene Imagination — Sharp Brain Lab',
   robots: { index: false, follow: false },
 }
 

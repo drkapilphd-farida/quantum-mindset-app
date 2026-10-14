@@ -44,11 +44,11 @@ export type CurriculumCatalogExercise = {
 // training does not improve reading, and long no-blink staring is
 // uncomfortable. Their routes still exist; they are just no longer scheduled.
 const BRAIN_GYM_EXERCISES: readonly CurriculumCatalogExercise[] = [
-  { id: 'schulte-grid-speed-drill', title: 'Peripheral Vision Activator', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
+  { id: 'schulte-grid-speed-drill', title: 'Number Hunt', href: '/labs/sharp-brain/brain-gym', category: 'brain-gym' },
   { id: 'cross-lateral-tap', title: 'Cross-Lateral Tap', href: '/labs/sharp-brain/cross-lateral-tap', category: 'brain-gym' },
-  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', href: '/labs/sharp-brain/visual-span', category: 'brain-gym' },
+  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span', href: '/labs/sharp-brain/visual-span', category: 'brain-gym' },
   { id: 'fast-pattern-blinking', title: 'Fast Pattern Blinking', href: '/labs/sharp-brain/fast-pattern-blinking', category: 'brain-gym' },
-  { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', href: '/labs/sharp-brain/peripheral-glimpse', category: 'brain-gym' },
+  { id: 'peripheral-flash-expander', title: 'Peripheral Flash', href: '/labs/sharp-brain/peripheral-glimpse', category: 'brain-gym' },
   {
     id: 'quantum-tachistoscope-multi-word-blast',
     title: 'Multi-Word Flash',
@@ -99,7 +99,7 @@ const VISUALIZATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
   },
   {
     id: 'color-scene-transformation',
-    title: 'Color & Scene Transformation Journey',
+    title: 'Colour Scene Imagination',
     href: '/labs/sharp-brain/color-scene-transformation',
     category: 'visualization',
   },
@@ -125,13 +125,13 @@ const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
   },
   {
     id: 'flash-recall-sprint',
-    title: 'Flash Recall & Retention Sprint',
+    title: 'Flash Recall',
     href: '/labs/sharp-brain/flash-recall-sprint',
     category: 'reading-intelligence',
   },
   {
     id: 'vertical-flash-recall',
-    title: 'Vertical Flash Recall & Retention Sprint',
+    title: 'Vertical Flash Recall',
     href: '/labs/sharp-brain/vertical-flash-recall',
     category: 'reading-intelligence',
   },

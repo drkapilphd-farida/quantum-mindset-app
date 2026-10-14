@@ -16,9 +16,9 @@ type Item = { id: string; title: string; purposeKey: MessageKey; href?: string }
 // stretches, staring drills and watch-only flashes back to back.
 const ITEMS: readonly Item[] = [
   { id: 'calm-breathing', title: 'Calm Breathing', purposeKey: 'training.breathing.purpose', href: '/labs/sharp-brain/calm-breathing' },
-  { id: 'schulte-grid-speed-drill', title: 'Peripheral Vision Activator', purposeKey: 'training.focusHub.schulte' },
-  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span Expander', purposeKey: 'training.glimpse.span.purpose' },
-  { id: 'peripheral-flash-expander', title: 'Peripheral Flash Expander', purposeKey: 'training.glimpse.peripheral.purpose' },
+  { id: 'schulte-grid-speed-drill', title: 'Number Hunt', purposeKey: 'training.focusHub.schulte' },
+  { id: 'rapid-visual-span-expander', title: 'Rapid Visual Span', purposeKey: 'training.glimpse.span.purpose' },
+  { id: 'peripheral-flash-expander', title: 'Peripheral Flash', purposeKey: 'training.glimpse.peripheral.purpose' },
   { id: 'quantum-tachistoscope-multi-word-blast', title: 'Multi-Word Flash', purposeKey: 'training.glimpse.phrase.purpose' },
   { id: 'blink-trigger-micro-recall', title: 'Blink Recall', purposeKey: 'training.glimpse.blink.purpose' },
   { id: 'cross-lateral-tap', title: 'Cross-Lateral Tap', purposeKey: 'training.focusHub.crossLateral', href: '/labs/sharp-brain/cross-lateral-tap' },

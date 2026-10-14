@@ -20,16 +20,23 @@
     "line1": "कोई भी किताब अच्छे से पढ़ें — Dr. Kapil Dev Sharma के लाइव मार्गदर्शन में।",
     "line2": "7 लाइव क्लास। एक मेंटर।",
     "line3": "असली प्रगति।",
-    "sharpBrainDesc": "30 दिन का तय प्रोग्राम — Dr. Kapil Dev Sharma के लाइव मार्गदर्शन में।",
-    "sharpBrainPoint1": "Peripheral Vision Activator, Rapid Recognition Drill, Chunk Reading",
-    "sharpBrainPoint2": "Dr. Kapil Dev Sharma के साथ 7 लाइव क्लास",
-    "start": "ट्रेनिंग शुरू करें →",
     "uploadTitle": "अपलोड करें और सीखें",
     "uploadDesc": "किसी भी PDF या किताब को स्पीड-रीडिंग ड्रिल, माइंड मैप और स्मार्ट सारांश में बदलें।",
     "uploadPoint1": "AI से बने स्पीड-रीडिंग ड्रिल",
     "uploadPoint2": "माइंड मैप और स्मार्ट सारांश",
     "uploadPoint3": "किसी भी PDF या किताब के साथ काम करता है",
-    "uploadCta": "अपलोड करें और सीखें →"
+    "uploadCta": "अपलोड करें और सीखें →",
+    "card": {
+      "line": "समझ के साथ तेज़ पढ़ें। लंबे समय तक ध्यान लगाएँ। ज़्यादा याद रखें।",
+      "point1": "रोज़ सिर्फ़ 10–15 मिनट की guided practice",
+      "point2": "याद रखने की 8 तकनीकें — नाम, अंक, chapters और बहुत कुछ",
+      "point3": "Smart Reading — समझ खोए बिना तेज़ पढ़ना",
+      "point4": "Dr. Kapil Dev Sharma के साथ 7 live classes",
+      "point5": "आपकी Day 1 → Day 30 progress report",
+      "startDay": "Day {day} शुरू करें →",
+      "continueDay": "Day {day} जारी रखें →",
+      "openPlan": "अपनी योजना खोलें →"
+    }
   },
   "lock": {
     "partOf": "{title}, {program} का हिस्सा है",

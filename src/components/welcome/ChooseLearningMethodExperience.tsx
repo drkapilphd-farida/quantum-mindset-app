@@ -59,6 +59,8 @@ type ChooseLearningMethodExperienceProps = {
    * regular, next batch) — the same logic as the program page and checkout.
    */
   programPrice: { amountInr: number; regularInr: number; earlyBird: boolean; batchLabel: string }
+  /** app host: the learner's next plan day (null = all 30 done) and whether they have begun. */
+  planStep: { day: number | null; started: boolean }
 }
 
 const inr = (amount: number): string => `₹${amount.toLocaleString('en-IN')}`
@@ -102,7 +104,50 @@ function PathCard({ emoji, title, description, points, ctaLabel, onSelect }: Pat
   )
 }
 
-export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, hasStartedJourney, programPrice }: ChooseLearningMethodExperienceProps): React.JSX.Element {
+const SKILL_CHIPS = [
+  // Deep shades of the skill colours, so white chip text passes WCAG AA.
+  { key: 'memory', colour: '#6d28d9' },
+  { key: 'focus', colour: '#4338ca' },
+  { key: 'reading', colour: '#c2410c' },
+  { key: 'retention', colour: '#0f766e' },
+] as const
+
+// The app's one program card (play design, Oct 2026): benefits in plain
+// words, the 4 skill chips, and a big gradient button that starts Day 1 or
+// continues the learner's next day.
+function SharpBrainCard({ planStep, onStart }: { planStep: { day: number | null; started: boolean }; onStart: (day: number | null) => void }): React.JSX.Element {
+  const t = useAppT()
+  const points = [t('welcome.app.card.point1'), t('welcome.app.card.point2'), t('welcome.app.card.point3'), t('welcome.app.card.point4'), t('welcome.app.card.point5')]
+  const label = planStep.day === null ? t('welcome.app.card.openPlan') : planStep.started ? t('welcome.app.card.continueDay', { day: planStep.day }) : t('welcome.app.card.startDay', { day: planStep.day })
+  return (
+    <div className="flex w-full flex-col gap-5 rounded-3xl border-2 border-violet-300 bg-card px-6 py-8 text-left shadow-sm dark:border-violet-800" data-sharp-brain-card="true">
+      <div className="text-center">
+        <p className="text-[1.75rem] leading-tight text-foreground">Sharp Brain™</p>
+        <p className="mt-2 text-base text-muted-foreground">{t('welcome.app.card.line')}</p>
+      </div>
+      <ul className="flex flex-wrap justify-center gap-2" aria-label={t('curriculum.overview.skillsTitle')}>
+        {SKILL_CHIPS.map((chip) => (
+          <li key={chip.key} className="rounded-full px-3 py-1 text-sm font-bold text-white" style={{ background: chip.colour }}>
+            {t(`curriculum.overview.skills.${chip.key}`)}
+          </li>
+        ))}
+      </ul>
+      <ul className="flex flex-col gap-2.5">
+        {points.map((point) => (
+          <li key={point} className="flex items-start gap-2.5">
+            <Check className="mt-1 size-4 shrink-0 text-primary" aria-hidden="true" />
+            <span className="text-base text-foreground">{point}</span>
+          </li>
+        ))}
+      </ul>
+      <button type="button" onClick={() => onStart(planStep.day)} className="btn-finish inline-flex min-h-14 w-full items-center justify-center rounded-2xl px-6 text-lg font-bold" data-welcome-start={planStep.day ?? 'plan'}>
+        {label}
+      </button>
+    </div>
+  )
+}
+
+export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, hasStartedJourney, programPrice, planStep }: ChooseLearningMethodExperienceProps): React.JSX.Element {
   const t = useAppT()
   const { lang } = useAppI18n()
   const programPriceLine = programPrice.earlyBird
@@ -148,6 +193,9 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
           <AIPresenceLogo size={84} />
           <p className="brand-gradient-text text-xl font-bold tracking-tight">{brand.appName}</p>
         </div>
+
+        {/* Language first: everything below appears in the chosen language. */}
+        <LanguagePicker className="w-full max-w-xl text-left" />
 
         {showJourney ? (
           <div>
@@ -204,13 +252,9 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
             </div>
           ) : (
             <div className={`grid w-full gap-6 ${features.uploadAndLearn ? 'max-w-3xl grid-cols-1 sm:grid-cols-2' : 'max-w-md grid-cols-1'}`}>
-              <PathCard
-                emoji="⚡"
-                title="Sharp Brain"
-                description={t('welcome.app.sharpBrainDesc')}
-                points={[t('welcome.app.sharpBrainPoint1'), t('welcome.app.sharpBrainPoint2')]}
-                ctaLabel={t('welcome.app.start')}
-                onSelect={() => handleSelect('/labs/sharp-brain/thirty-day-curriculum')}
+              <SharpBrainCard
+                planStep={planStep}
+                onStart={(day) => handleSelect(day === null ? '/labs/sharp-brain/thirty-day-curriculum' : `/labs/sharp-brain/thirty-day-curriculum?view=day&day=${day}`)}
               />
               {features.uploadAndLearn && (
               <PathCard
@@ -225,8 +269,6 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
             </div>
           )}
         </div>
-
-        <LanguagePicker className="w-full max-w-xl text-left" />
       </div>
 
       <GatewayAuthModal

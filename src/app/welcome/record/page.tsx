@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { RecordAndLearnExperience } from '@/components/welcome/RecordAndLearnExperience'
+import { features } from '@/config/site.config'
 
 export const metadata: Metadata = {
   title: 'Record & Learn',
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
 // (src/middleware.ts). Reached from Choose Learning Method™'s Record &
 // Learn™ card.
 export default async function RecordPage(): Promise<React.JSX.Element> {
+  // Record & Learn belongs to Upload & Learn, hidden while that feature is off.
+  if (!features.uploadAndLearn) redirect('/welcome/choose-method')
   const supabase = await createClient()
   const {
     data: { user },

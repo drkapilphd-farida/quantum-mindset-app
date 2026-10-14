@@ -264,7 +264,7 @@ export function ColorSceneTransformationCanvas({ onComplete, onExitRequested }: 
           can ever visually escape to the right on narrow mobile
           viewports. */}
       <div className="w-full overflow-x-hidden">
-        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Color & Scene Transformation Journey</p>
+        <p className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Colour Scene Imagination</p>
 
         <div className="mt-4 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
           <ReadingStatTile label="Round" value={`${roundIndex + 1} / ${ROUNDS_PER_SESSION}`} />

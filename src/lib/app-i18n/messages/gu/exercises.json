@@ -274,7 +274,7 @@
     "complexityLabel": "વાક્યની મુશ્કેલી: {label}",
     "stars": "5 માંથી {n} તારા",
     "nextRecommendation": "આગલી સલાહ:",
-    "themeMastered": "{theme} માં પ્રભુત્વ",
+    "themeMastered": "{theme} — પૂરું",
     "themeInProgress": "{theme} ચાલુ છે",
     "todaysGoal": "આજનું લક્ષ્ય",
     "goalValue": "આખા વિચારો સમજવા",
@@ -525,7 +525,12 @@
     "your_transformation_is_ready_to_begin": "તમારો બદલાવ શરૂ થવા તૈયાર છે",
     "your_transformation_starts_here": "તમારો બદલાવ અહીંથી શરૂ થાય છે",
     "reading": "વાંચન",
-    "practice_progress": "અભ્યાસ પ્રગતિ"
+    "practice_progress": "અભ્યાસ પ્રગતિ",
+    "full_idea": "પૂરો વિચાર",
+    "full_length_sentences_the_whole_idea_in_a_single_visual_span": "પૂરા વાક્યો — એક નજરમાં આખો વિચાર.",
+    "theme": "વિષય",
+    "outstanding_progress": "ઉત્તમ પ્રગતિ",
+    "outstanding_steady_practice": "ઉત્તમ, નિયમિત અભ્યાસ"
   },
   "journey": {
     "title": "વાંચન યાત્રા",

@@ -712,7 +712,7 @@ function SentenceReadingSession({
       { label: 'Idea Recognition', value: `${result.metrics.accuracyPercent}%`, hint: 'The share of Brain Challenges answered correctly.' },
       { label: 'Best Streak', value: `${completedSummary.bestStreak}`, hint: 'Your longest run of consecutive correct answers this session.' },
       { label: 'Current Level', value: `${completedSummary.levelsCompleted} · ${tl(SENTENCE_READING_LEVEL_NAME[completedSummary.levelsCompleted])}`, hint: 'The highest level you reached this session.' },
-      { label: 'Theme Mastery', value: t(passedAnyLevelThisSessionRef.current ? 'exercises.sentence.themeMastered' : 'exercises.sentence.themeInProgress', { theme: tl(SENTENCE_THEME_NAME[SENTENCE_THEME_BY_LEVEL[completedSummary.levelsCompleted]]) }), hint: "This session's theme and whether it was fully cleared." },
+      { label: 'Theme', value: t(passedAnyLevelThisSessionRef.current ? 'exercises.sentence.themeMastered' : 'exercises.sentence.themeInProgress', { theme: tl(SENTENCE_THEME_NAME[SENTENCE_THEME_BY_LEVEL[completedSummary.levelsCompleted]]) }), hint: "This session's theme and whether it was fully cleared." },
     ]
 
     extraContent = (

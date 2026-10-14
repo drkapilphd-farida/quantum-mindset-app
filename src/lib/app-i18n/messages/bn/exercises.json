@@ -489,7 +489,12 @@
     "your_transformation_is_ready_to_begin": "আপনার রূপান্তর শুরু হওয়ার জন্য তৈরি",
     "your_transformation_starts_here": "আপনার রূপান্তর এখান থেকেই শুরু",
     "reading": "পড়া",
-    "practice_progress": "অনুশীলনের অগ্রগতি"
+    "practice_progress": "অনুশীলনের অগ্রগতি",
+    "full_idea": "পুরো ভাবনা",
+    "full_length_sentences_the_whole_idea_in_a_single_visual_span": "পুরো বাক্য — এক নজরে পুরো ভাবনা।",
+    "theme": "বিষয়",
+    "outstanding_progress": "দুর্দান্ত অগ্রগতি",
+    "outstanding_steady_practice": "দুর্দান্ত, নিয়মিত অনুশীলন"
   },
   "sentence": {
     "intro": "পূর্ণ বাক্যের একটি ছোট বিষয়ভিত্তিক অধ্যায় পড়ুন, তারপর পুরো ভাবনাটি চিনুন।",
@@ -504,7 +509,7 @@
     "complexityLabel": "বাক্যের জটিলতা: {label}",
     "stars": "5টির মধ্যে {n}টি তারা",
     "nextRecommendation": "পরের পরামর্শ:",
-    "themeMastered": "{theme} আয়ত্ত হয়েছে",
+    "themeMastered": "{theme} — সম্পূর্ণ",
     "themeInProgress": "{theme} চলছে",
     "todaysGoal": "আজকের লক্ষ্য",
     "goalValue": "পুরো ভাবনা বুঝুন",

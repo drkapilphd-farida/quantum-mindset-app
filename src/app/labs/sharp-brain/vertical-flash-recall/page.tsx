@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { VerticalFlashRecallExperience } from '@/features/vertical-flash-recall/components/VerticalFlashRecallExperience'
 
 export const metadata: Metadata = {
-  title: 'Vertical Flash Recall & Retention Sprint — Sharp Brain Lab',
+  title: 'Vertical Flash Recall — Sharp Brain Lab',
   robots: { index: false, follow: false },
 }
 

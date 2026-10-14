@@ -274,7 +274,7 @@
     "complexityLabel": "वाक्याची अवघडता: {label}",
     "stars": "5 पैकी {n} तारे",
     "nextRecommendation": "पुढचा सल्ला:",
-    "themeMastered": "{theme} मध्ये प्रभुत्व",
+    "themeMastered": "{theme} — पूर्ण",
     "themeInProgress": "{theme} सुरू आहे",
     "todaysGoal": "आजचे ध्येय",
     "goalValue": "संपूर्ण कल्पना समजून घेणे",
@@ -525,7 +525,12 @@
     "your_transformation_is_ready_to_begin": "तुमचा बदल सुरू होण्यास तयार आहे",
     "your_transformation_starts_here": "तुमचा बदल इथून सुरू होतो",
     "reading": "वाचन",
-    "practice_progress": "सराव प्रगती"
+    "practice_progress": "सराव प्रगती",
+    "full_idea": "संपूर्ण विचार",
+    "full_length_sentences_the_whole_idea_in_a_single_visual_span": "पूर्ण वाक्ये — एका नजरेत संपूर्ण विचार.",
+    "theme": "विषय",
+    "outstanding_progress": "उत्कृष्ट प्रगती",
+    "outstanding_steady_practice": "उत्कृष्ट, नियमित सराव"
   },
   "journey": {
     "title": "वाचन प्रवास",

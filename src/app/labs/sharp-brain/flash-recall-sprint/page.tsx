@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { FlashRecallSprintExperience } from '@/features/flash-recall-sprint/components/FlashRecallSprintExperience'
 
 export const metadata: Metadata = {
-  title: 'Flash Recall & Retention Sprint — Sharp Brain Lab',
+  title: 'Flash Recall — Sharp Brain Lab',
   robots: { index: false, follow: false },
 }
 

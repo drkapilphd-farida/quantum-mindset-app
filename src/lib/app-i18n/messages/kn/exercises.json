@@ -274,7 +274,7 @@
     "complexityLabel": "ವಾಕ್ಯದ ಕಷ್ಟ: {label}",
     "stars": "5 ರಲ್ಲಿ {n} ನಕ್ಷತ್ರಗಳು",
     "nextRecommendation": "ಮುಂದಿನ ಸಲಹೆ:",
-    "themeMastered": "{theme} ಪಾಂಡಿತ್ಯ ಸಾಧಿಸಿದಿರಿ",
+    "themeMastered": "{theme} — ಪೂರ್ಣ",
     "themeInProgress": "{theme} ಪ್ರಗತಿಯಲ್ಲಿದೆ",
     "todaysGoal": "ಇಂದಿನ ಗುರಿ",
     "goalValue": "ಸಂಪೂರ್ಣ ವಿಚಾರಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ",
@@ -525,7 +525,12 @@
     "your_transformation_is_ready_to_begin": "ನಿಮ್ಮ ಬದಲಾವಣೆ ಆರಂಭಕ್ಕೆ ಸಿದ್ಧ",
     "your_transformation_starts_here": "ನಿಮ್ಮ ಬದಲಾವಣೆ ಇಲ್ಲಿಂದ ಆರಂಭ",
     "reading": "ಓದು",
-    "practice_progress": "ಅಭ್ಯಾಸ ಪ್ರಗತಿ"
+    "practice_progress": "ಅಭ್ಯಾಸ ಪ್ರಗತಿ",
+    "full_idea": "ಪೂರ್ಣ ಆಶಯ",
+    "full_length_sentences_the_whole_idea_in_a_single_visual_span": "ಪೂರ್ಣ ವಾಕ್ಯಗಳು — ಒಂದೇ ನೋಟದಲ್ಲಿ ಪೂರ್ಣ ಆಶಯ.",
+    "theme": "ವಿಷಯ",
+    "outstanding_progress": "ಅದ್ಭುತ ಪ್ರಗತಿ",
+    "outstanding_steady_practice": "ಅದ್ಭುತ, ನಿಯಮಿತ ಅಭ್ಯಾಸ"
   },
   "journey": {
     "title": "ಓದಿನ ಪಯಣ",

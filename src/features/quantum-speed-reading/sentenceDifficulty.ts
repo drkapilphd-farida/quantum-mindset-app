@@ -90,7 +90,7 @@ export const SENTENCE_READING_LEVEL_NAME: Record<SentenceReadingLevel, string> =
   2: 'Building Comprehension',
   3: 'Fluent Recognition',
   4: 'Complex Ideas',
-  5: 'Full Idea Mastery',
+  5: 'Full Idea',
 }
 
 export const SENTENCE_READING_LEVEL_DESCRIPTION: Record<SentenceReadingLevel, string> = {
@@ -98,7 +98,7 @@ export const SENTENCE_READING_LEVEL_DESCRIPTION: Record<SentenceReadingLevel, st
   2: 'Slightly longer sentences — holding one complete thought in mind.',
   3: 'Fuller sentences — recognizing the idea without reading every word.',
   4: 'Complex sentences — multiple details, one central idea.',
-  5: 'Full-length sentences — complete idea mastery in a single visual span.',
+  5: 'Full-length sentences — the whole idea in a single visual span.',
 }
 
 // Compact "Sentence Length" readout for the Mission Home / HUD.
