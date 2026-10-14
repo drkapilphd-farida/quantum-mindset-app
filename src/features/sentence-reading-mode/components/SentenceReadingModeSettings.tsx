@@ -62,7 +62,7 @@ export function SentenceReadingModeSettings({
       )}
 
       <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sentence Reading Mode</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">Sentence Reading</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Read one complete sentence at a time, at a natural, comfortable rhythm.
         </p>

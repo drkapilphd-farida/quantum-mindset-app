@@ -120,9 +120,9 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Meaning Recognition Strengthened',
   correctLabel: 'Recognition Accuracy',
   speedLabel: 'Reading Pace',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   reactionLabel: 'Avg Response Time',
-  practiceAgainLabel: 'Retry Mission',
+  practiceAgainLabel: 'Try again',
   nextLabel: 'Continue →',
 }
 
@@ -817,7 +817,7 @@ function PhraseReadingSession({
         )}
 
         {runtime.phase === 'countdown' && (
-          <ExerciseCountdown onComplete={runtime.beginPlaying} readyLabel="Mission Ready" goLabel="Begin Reading" />
+          <ExerciseCountdown onComplete={runtime.beginPlaying} readyLabel="Ready" goLabel="Begin Reading" />
         )}
 
         {runtime.phase === 'playing' && (

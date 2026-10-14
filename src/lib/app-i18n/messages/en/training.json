@@ -1050,5 +1050,13 @@
     "sectionsN": "{n} sections",
     "libraryLangNote": "Passages are in English and Hindi for now.",
     "preparing": "Getting your chapter ready to read…"
+  },
+  "player": {
+    "exit": "Exit",
+    "pause": "Pause",
+    "resume": "Resume",
+    "paused": "Paused",
+    "start": "Start",
+    "ready": "Ready"
   }
 }

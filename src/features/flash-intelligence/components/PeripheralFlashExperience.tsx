@@ -75,11 +75,11 @@ const EXERCISE_ID = 'peripheral-flash'
 const NEXT_EXERCISE_HREF = '/labs/sharp-brain/progressive-chunk-reading'
 
 const PLAYER_COPY_BASE = {
-  exit: 'Exit Mission',
-  begin: 'Start Mission',
-  paused: 'Mission Paused',
+  exit: 'Exit',
+  begin: 'Start',
+  paused: 'Paused',
   gap: 'Next Flash',
-  ready: 'Mission Ready',
+  ready: 'Ready',
   go: 'Eyes on center',
   itemNoun: 'Challenge',
 }
@@ -88,10 +88,10 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Visual Span Expanded',
   correctLabel: 'Recognition Accuracy',
   speedLabel: 'Flash Speed',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   reactionLabel: 'Average Response Time',
-  practiceAgainLabel: 'Retry Mission',
-  nextLabel: 'Continue to Next Mission',
+  practiceAgainLabel: 'Try again',
+  nextLabel: 'Next exercise',
 }
 
 // Unit direction vectors per position — the actual pixel offsets are
@@ -353,7 +353,7 @@ export function PeripheralFlashExperience(): React.JSX.Element {
     const missionChain = analytics.totalSessions + 1
     return (
       <div className="space-y-1 text-xs text-muted-foreground">
-        <p>Mission Chain: <span className="font-medium text-foreground">{missionChain} mission{missionChain === 1 ? '' : 's'} completed</span></p>
+        <p>Exercise chain: <span className="font-medium text-foreground">{missionChain} round{missionChain === 1 ? '' : 's'} completed</span></p>
         <p>Personal Best — Peripheral Awareness: <span className="font-medium text-foreground">{personalBest}</span></p>
         <p>Reading Readiness: <span className="font-medium text-foreground">{readiness}</span></p>
       </div>
@@ -399,7 +399,7 @@ export function PeripheralFlashExperience(): React.JSX.Element {
       key={sessionKey}
       definition={{
         ...PERIPHERAL_FLASH_DEFINITION,
-        metaLine: `${PERIPHERAL_LEVEL_NAME[trainingLevel]} · ${peripheralFlashUiLevel(state.currentDifficultyTier)} · ${peripheralFlashPaceDescriptor(state.currentDifficultyTier)} pace · Keep your eyes on the center dot — never chase the words${analytics.totalSessions > 0 ? ` · Mission ${analytics.totalSessions + 1}` : ''}`,
+        metaLine: `${PERIPHERAL_LEVEL_NAME[trainingLevel]} · ${peripheralFlashUiLevel(state.currentDifficultyTier)} · ${peripheralFlashPaceDescriptor(state.currentDifficultyTier)} pace · Keep your eyes on the center dot — never chase the words${analytics.totalSessions > 0 ? ` · Round ${analytics.totalSessions + 1}` : ''}`,
       }}
       items={items}
       renderStimulus={renderStimulus}

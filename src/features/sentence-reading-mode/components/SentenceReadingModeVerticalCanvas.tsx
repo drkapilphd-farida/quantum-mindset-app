@@ -309,7 +309,7 @@ export function SentenceReadingModeVerticalCanvas({
         onFocus={revealChromeAndScheduleHide}
       >
         <div className={`w-full max-w-md ${chromeClassName}`}>
-          <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Sentence Reading Mode · Vertical</p>
+          <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-muted-foreground uppercase">Sentence Reading · Vertical</p>
           {categoryLabel && <p className="mb-3 text-center text-xs text-muted-foreground">Reading: {categoryLabel}</p>}
 
           <div className="grid grid-cols-3 gap-x-4 text-center">

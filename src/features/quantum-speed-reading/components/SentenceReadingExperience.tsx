@@ -114,11 +114,11 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Idea Recognition Strengthened',
   correctLabel: 'Correct Answers',
   speedLabel: 'Reading Pace',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   // Doubles as the brief's "Processing Speed" field — no separate
   // extraStats tile duplicates this same number under a second label.
   reactionLabel: 'Processing Speed',
-  practiceAgainLabel: 'Retry Mission',
+  practiceAgainLabel: 'Try again',
   nextLabel: 'Back to Lab →',
 }
 

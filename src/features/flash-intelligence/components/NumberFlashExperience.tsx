@@ -38,11 +38,11 @@ const NEXT_EXERCISE_HREF = '/labs/sharp-brain/symbol-flash'
 const LEVEL_COUNT = RAMP_LEVEL_TIERS.length // 5 — Beginner..Master
 
 const PLAYER_COPY = {
-  exit: 'Exit Mission',
-  begin: 'Start Mission',
-  paused: 'Mission Paused',
+  exit: 'Exit',
+  begin: 'Start',
+  paused: 'Paused',
   gap: 'Next Flash',
-  ready: 'Mission Ready',
+  ready: 'Ready',
   go: 'FLASH',
   prompt: 'Brain Challenge',
   itemNoun: 'Challenge', // Fix 4: "Challenge 3 / 20" — "Mission" now names the whole session
@@ -52,10 +52,10 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Numerical Recognition Sharpened',
   correctLabel: 'Recognition Accuracy',
   speedLabel: 'Flash Speed',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   reactionLabel: 'Average Response Time',
-  practiceAgainLabel: 'Retry Mission',
-  nextLabel: 'Continue to Next Mission',
+  practiceAgainLabel: 'Try again',
+  nextLabel: 'Next exercise',
 }
 
 export function NumberFlashExperience(): React.JSX.Element {
@@ -219,7 +219,7 @@ export function NumberFlashExperience(): React.JSX.Element {
       key={sessionKey}
       definition={{
         ...NUMBER_FLASH_DEFINITION,
-        metaLine: `${numberFlashUiLevel(state.currentDifficultyTier)} · ${numberFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} numbers per mission, difficulty rises as you go${analytics.totalSessions > 0 ? ` · Mission ${analytics.totalSessions + 1}` : ''}`,
+        metaLine: `${numberFlashUiLevel(state.currentDifficultyTier)} · ${numberFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} numbers per mission, difficulty rises as you go${analytics.totalSessions > 0 ? ` · Round ${analytics.totalSessions + 1}` : ''}`,
       }}
       items={items}
       onRestart={handleRestart}

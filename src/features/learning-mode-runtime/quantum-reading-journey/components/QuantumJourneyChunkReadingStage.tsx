@@ -67,7 +67,7 @@ export function QuantumJourneyChunkReadingStage({ projectId, chunkAssets, onComp
         correctLabel: 'Correct',
         incorrectLabel: 'Not quite',
         completedLabel: 'Complete',
-        practiceAgainLabel: 'Retry Mission',
+        practiceAgainLabel: 'Try again',
         questionPrompt: 'Which of these did you just read?',
         keyboardHint: 'Use 1-4 to answer',
       },

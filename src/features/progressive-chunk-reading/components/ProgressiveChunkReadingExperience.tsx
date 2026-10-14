@@ -141,10 +141,10 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Chunk Recognition Strengthened',
   correctLabel: 'Recognition Accuracy',
   speedLabel: 'Reading Pace',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   reactionLabel: 'Avg Response Time',
-  practiceAgainLabel: 'Retry Mission',
-  nextLabel: 'Next Mission →',
+  practiceAgainLabel: 'Try again',
+  nextLabel: 'Next round →',
 }
 
 function wordCountOf(text: string): number {
@@ -259,7 +259,7 @@ function LevelHud({
   return (
     <div className="absolute top-4 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1.5 text-center">
       <p className="text-xs font-medium tabular-nums text-muted-foreground">
-        Mission {missionNumber} • Level {level}
+        Round {missionNumber} • Level {level}
       </p>
       <LevelMap currentLevel={level} />
       <div className="flex items-center gap-3 text-[10px] text-muted-foreground/70">
@@ -691,7 +691,7 @@ function ProgressiveChunkReadingSession({
         <p>Estimated WPM: <span className="font-medium text-foreground">{estimatedWpm}</span></p>
         <p>Next Level: <span className="font-medium text-foreground">{PROGRESSIVE_CHUNK_READING_LEVEL_NAME[completedSummary.nextLevel]}</span></p>
         <p>Reading Readiness: <span className="font-medium text-foreground">{completedSummary.readiness}</span></p>
-        {onComplete === undefined && <p>Next Mission: <span className="font-medium text-foreground">{NEXT_MISSION_NAME}</span></p>}
+        {onComplete === undefined && <p>Next round: <span className="font-medium text-foreground">{NEXT_MISSION_NAME}</span></p>}
       </div>
     )
   }
@@ -769,7 +769,7 @@ function ProgressiveChunkReadingSession({
               Pass each level to unlock the next — starting at {PROGRESSIVE_CHUNK_READING_LEVEL_NAME[startingLevel]}.
             </p>
             <p className="text-xs text-muted-foreground/70">
-              Level {startingLevel} needs {getProgressiveChunkReadingLevelRequirement(startingLevel).passCount} of {getProgressiveChunkReadingLevelRequirement(startingLevel).challengesRequired} Brain Challenges correct{analytics.totalSessions > 0 ? ` · Mission ${analytics.totalSessions + 1}` : ''}
+              Level {startingLevel} needs {getProgressiveChunkReadingLevelRequirement(startingLevel).passCount} of {getProgressiveChunkReadingLevelRequirement(startingLevel).challengesRequired} Brain Challenges correct{analytics.totalSessions > 0 ? ` · Round ${analytics.totalSessions + 1}` : ''}
             </p>
             <button
               onClick={runtime.startSession}
@@ -781,7 +781,7 @@ function ProgressiveChunkReadingSession({
         )}
 
         {runtime.phase === 'countdown' && (
-          <ExerciseCountdown onComplete={runtime.beginPlaying} readyLabel="Mission Ready" goLabel="Begin Reading" />
+          <ExerciseCountdown onComplete={runtime.beginPlaying} readyLabel="Ready" goLabel="Begin Reading" />
         )}
 
         {runtime.phase === 'playing' && (

@@ -52,11 +52,11 @@ const EXERCISE_ID = 'mixed-flash'
 const NEXT_EXERCISE_HREF = '/labs/sharp-brain/peripheral-flash'
 
 const PLAYER_COPY = {
-  exit: 'Exit Mission',
-  begin: 'Start Mission',
-  paused: 'Mission Paused',
+  exit: 'Exit',
+  begin: 'Start',
+  paused: 'Paused',
   gap: 'Next Flash',
-  ready: 'Mission Ready',
+  ready: 'Ready',
   go: 'FLASH',
   prompt: 'Brain Challenge',
   itemNoun: 'Challenge',
@@ -66,10 +66,10 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Recognition Switching Strengthened',
   correctLabel: 'Recognition Accuracy',
   speedLabel: 'Flash Speed',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   reactionLabel: 'Average Response Time',
-  practiceAgainLabel: 'Retry Mission',
-  nextLabel: 'Continue to Next Mission',
+  practiceAgainLabel: 'Try again',
+  nextLabel: 'Next exercise',
 }
 
 const TYPE_DISPLAY_LABEL: Record<MixedFlashStimulusType, string> = {
@@ -239,7 +239,7 @@ export function MixedFlashExperience(): React.JSX.Element {
       key={sessionKey}
       definition={{
         ...MIXED_FLASH_DEFINITION,
-        metaLine: `${mixedFlashUiLevel(state.currentDifficultyTier)} · ${mixedFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} challenges per mission — word, number, or symbol, never announced${analytics.totalSessions > 0 ? ` · Mission ${analytics.totalSessions + 1}` : ''}`,
+        metaLine: `${mixedFlashUiLevel(state.currentDifficultyTier)} · ${mixedFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} challenges per round — word, number, or symbol, never announced${analytics.totalSessions > 0 ? ` · Round ${analytics.totalSessions + 1}` : ''}`,
       }}
       items={items}
       onRestart={handleRestart}

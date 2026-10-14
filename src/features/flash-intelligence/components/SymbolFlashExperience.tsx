@@ -40,11 +40,11 @@ const NEXT_EXERCISE_HREF = '/labs/sharp-brain/mixed-flash'
 const STAGE_COUNT = SYMBOL_GROUP_STAGES.length // 4 — single/two/three/mixed
 
 const PLAYER_COPY = {
-  exit: 'Exit Mission',
-  begin: 'Start Mission',
-  paused: 'Mission Paused',
+  exit: 'Exit',
+  begin: 'Start',
+  paused: 'Paused',
   gap: 'Next Flash',
-  ready: 'Mission Ready',
+  ready: 'Ready',
   go: 'FLASH',
   prompt: 'Brain Challenge',
   itemNoun: 'Challenge',
@@ -54,10 +54,10 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Pattern Recognition Sharpened',
   correctLabel: 'Recognition Accuracy',
   speedLabel: 'Flash Speed',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   reactionLabel: 'Average Response Time',
-  practiceAgainLabel: 'Retry Mission',
-  nextLabel: 'Continue to Next Mission',
+  practiceAgainLabel: 'Try again',
+  nextLabel: 'Next exercise',
 }
 
 export function SymbolFlashExperience(): React.JSX.Element {
@@ -219,7 +219,7 @@ export function SymbolFlashExperience(): React.JSX.Element {
       key={sessionKey}
       definition={{
         ...SYMBOL_FLASH_DEFINITION,
-        metaLine: `${symbolFlashUiLevel(state.currentDifficultyTier)} · ${symbolFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} symbols per mission, groups grow as you go${analytics.totalSessions > 0 ? ` · Mission ${analytics.totalSessions + 1}` : ''}`,
+        metaLine: `${symbolFlashUiLevel(state.currentDifficultyTier)} · ${symbolFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} symbols per mission, groups grow as you go${analytics.totalSessions > 0 ? ` · Round ${analytics.totalSessions + 1}` : ''}`,
       }}
       items={items}
       onRestart={handleRestart}

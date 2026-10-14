@@ -50,11 +50,11 @@ const LEVEL_COUNT = RAMP_LEVEL_TIERS.length // 5 — Beginner..Master
 // Locked language system — "Mission," not "Session"; "Brain Challenge," not
 // "Question"; never Quiz/Score/Correct/Wrong/Practice/Next/Test/Marks.
 const PLAYER_COPY = {
-  exit: 'Exit Mission',
-  begin: 'Start Mission',
-  paused: 'Mission Paused',
+  exit: 'Exit',
+  begin: 'Start',
+  paused: 'Paused',
   gap: 'Next Flash',
-  ready: 'Mission Ready',
+  ready: 'Ready',
   go: 'FLASH',
   prompt: 'Brain Challenge',
   itemNoun: 'Challenge', // Fix 4: "Challenge 3 / 20" — "Mission" names the whole session
@@ -66,8 +66,8 @@ const RESULT_LABELS: RuntimeResultLabels = {
   speedLabel: 'Flash Speed',
   scoreLabel: 'Brain Performance',
   reactionLabel: 'Reaction Time',
-  practiceAgainLabel: 'Replay Mission',
-  nextLabel: 'Continue to Next Mission',
+  practiceAgainLabel: 'Play again',
+  nextLabel: 'Next exercise',
 }
 
 // Shared, pure derivation used by every result-screen surface (extra
@@ -288,7 +288,7 @@ export function WordFlashExperience({ definition, contentPool, onComplete }: Wor
     return (
       <div className="space-y-1 text-xs text-muted-foreground">
         <p>Reading Readiness: <span className="font-medium text-foreground">{readiness}</span></p>
-        <p>Personal Best: <span className="font-medium text-foreground">{personalBest} wpm</span> · Weekly Progress: <span className="font-medium text-foreground">{weeklyMissions} mission{weeklyMissions === 1 ? '' : 's'}</span></p>
+        <p>Personal Best: <span className="font-medium text-foreground">{personalBest} wpm</span> · Weekly Progress: <span className="font-medium text-foreground">{weeklyMissions} round{weeklyMissions === 1 ? '' : 's'}</span></p>
         <p>Current Level: <span className="font-medium text-foreground">{level}</span> · {pace} pace</p>
         {todaysImprovement !== null && (
           <p>Today&rsquo;s Improvement: <span className="font-medium text-foreground">{todaysImprovement > 0 ? '+' : ''}{todaysImprovement} wpm</span></p>
@@ -351,7 +351,7 @@ export function WordFlashExperience({ definition, contentPool, onComplete }: Wor
         // Dynamic caption shows the current level, pace, and mission info
         // on the idle screen — kept separate from `description` so the
         // definition's static "why" copy still reaches the screen.
-        metaLine: `${wordFlashUiLevel(state.currentDifficultyTier)} · ${wordFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} words per mission${analytics.totalSessions > 0 ? ` · Mission ${analytics.totalSessions + 1}` : ''}`,
+        metaLine: `${wordFlashUiLevel(state.currentDifficultyTier)} · ${wordFlashPaceDescriptor(state.currentDifficultyTier)} pace · ${profile.itemsPerSession} words per mission${analytics.totalSessions > 0 ? ` · Round ${analytics.totalSessions + 1}` : ''}`,
       }}
       items={items}
       onRestart={handleRestart}

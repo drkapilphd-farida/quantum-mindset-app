@@ -108,7 +108,7 @@ const RESULT_LABELS: RuntimeResultLabels = {
   completeSuffix: 'Comprehension Strengthened',
   correctLabel: 'Correct Answers',
   speedLabel: 'Pace',
-  scoreLabel: 'Mission Score',
+  scoreLabel: 'Score',
   reactionLabel: 'Avg Response',
   practiceAgainLabel: 'Start New Session',
   nextLabel: 'Back to Lab →',

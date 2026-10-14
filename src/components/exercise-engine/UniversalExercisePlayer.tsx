@@ -8,6 +8,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { useAppT } from '@/lib/app-i18n/client'
 import { usePrefersReducedMotion } from '@/hooks/exercises/usePrefersReducedMotion'
 import { savePracticeSession } from '@/lib/exercises/actions/savePracticeSession'
 import {
@@ -183,6 +184,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
   onNext,
 }: UniversalExercisePlayerProps<TConfig>): React.JSX.Element {
   const router = useRouter()
+  const t = useAppT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const isVictoryRevealed = useMicroVictoryReveal()
 
@@ -383,34 +385,25 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
         />
       )}
 
-      {/* Exit */}
-      <button
-        onClick={() => { clearTimer(); router.push(getCurriculumSmartExitHref(definition.id, definition.labHref)) }}
-        className="absolute top-4 right-6 text-xs text-muted-foreground transition-colors hover:text-foreground"
-        aria-label={copy?.exit ?? 'Exit exercise'}
-      >
-        {copy?.exit ?? 'Exit'}
-      </button>
-
-      {/* Pause / Resume */}
-      {isPlaying && (
+      {/* Pause and Exit side by side in one row, so they never overlap; plain words, same in every exercise. */}
+      <div className="absolute top-3 right-4 z-10 flex items-center gap-2">
+        {(isPlaying || isPaused) && (
+          <button
+            onClick={isPlaying ? runtime.pause : runtime.resume}
+            className="min-h-11 rounded-full border border-border bg-card px-4 text-sm font-semibold text-foreground"
+            data-player-pause={isPlaying ? 'pause' : 'resume'}
+          >
+            {isPlaying ? t('training.player.pause') : t('training.player.resume')}
+          </button>
+        )}
         <button
-          onClick={runtime.pause}
-          className="absolute top-4 right-20 text-xs text-muted-foreground transition-colors hover:text-foreground"
-          aria-label="Pause exercise"
+          onClick={() => { clearTimer(); router.push(getCurriculumSmartExitHref(definition.id, definition.labHref)) }}
+          className="min-h-11 rounded-full px-3 text-sm font-semibold text-muted-foreground hover:text-foreground"
+          data-player-exit="true"
         >
-          {copy?.pause ?? 'Pause'}
+          {t('training.player.exit')}
         </button>
-      )}
-      {isPaused && (
-        <button
-          onClick={runtime.resume}
-          className="absolute top-4 right-20 text-xs text-muted-foreground transition-colors hover:text-foreground"
-          aria-label="Resume exercise"
-        >
-          {copy?.resume ?? 'Resume'}
-        </button>
-      )}
+      </div>
 
       <div className="flex w-full max-w-sm flex-col items-center gap-8">
 
@@ -432,7 +425,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
               onClick={runtime.startSession}
               className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
             >
-              {copy?.begin ?? 'Begin'}
+              {t('training.player.start')}
             </button>
           </div>
         )}
@@ -441,7 +434,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
         {runtime.phase === 'countdown' && (
           <ExerciseCountdown
             onComplete={runtime.beginPlaying}
-            {...(copy?.ready !== undefined ? { readyLabel: copy.ready } : {})}
+            readyLabel={t('training.player.ready')}
             {...(copy?.go !== undefined ? { goLabel: copy.go } : {})}
           />
         )}
@@ -511,7 +504,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
         {/* ── Paused — show Speed Control ── */}
         {isPaused && (
           <div className="flex flex-col items-center gap-5 text-center w-full">
-            <p className="text-lg font-semibold text-foreground">{copy?.paused ?? 'Paused'}</p>
+            <p className="text-lg font-semibold text-foreground">{t('training.player.paused')}</p>
             <p className="text-sm text-muted-foreground">
               {runtime.currentIndex} of {runtime.totalItems} {copy?.itemNoun !== undefined ? `${copy.itemNoun.toLowerCase()}s` : 'items'} complete ·{' '}
               {runtime.runningAccuracy > 0 && `${runtime.runningAccuracy}% accuracy`}
@@ -527,7 +520,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
               onClick={runtime.resume}
               className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-background"
             >
-              {copy?.resume ?? 'Resume'}
+              {t('training.player.resume')}
             </button>
           </div>
         )}

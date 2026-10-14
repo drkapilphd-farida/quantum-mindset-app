@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { ParagraphReadingModeExperience } from '@/features/paragraph-reading-mode/components/ParagraphReadingModeExperience'
 
 export const metadata: Metadata = {
-  title: 'Paragraph Reading Mode — Sharp Brain Lab',
+  title: 'Paragraph Reading — Sharp Brain Lab',
   robots: { index: false, follow: false },
 }
 
