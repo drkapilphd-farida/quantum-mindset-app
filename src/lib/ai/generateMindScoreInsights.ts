@@ -32,9 +32,9 @@ function fallbackInsights(input: MindScoreInsightsInput): string[] {
   if (completedCount > 0) {
     const remaining = totalCount - completedCount
     if (remaining > 0) {
-      insights.push(`Reading Intelligence: ${readingScore}/100. ${remaining} day${remaining !== 1 ? 's' : ''} left in your 30-day plan — each one raises your score.`)
+      insights.push(`Reading score: ${readingScore}/100. ${remaining} day${remaining !== 1 ? 's' : ''} left in your 30-day plan — each one raises your score.`)
     } else {
-      insights.push(`Reading Intelligence: ${readingScore}/100. All 30 days complete — keep your streak going to keep the score growing.`)
+      insights.push(`Reading score: ${readingScore}/100. All 30 days complete — keep your streak going to keep the score growing.`)
     }
   }
 
@@ -75,13 +75,13 @@ export async function generateMindScoreInsights(input: MindScoreInsightsInput): 
     const { studentName, mindScore, readingScore, weeklyTrend, currentStreak, completedCount, totalCount, journeyStatus } = input
     const first = studentName.split(' ').at(0) ?? studentName
 
-    const prompt = `You are the AI Intelligence Analyst for ${brand.appName} — a premium brain transformation platform.
+    const prompt = `You are a calm practice coach for ${brand.appName}, a daily focus, memory and reading practice app.
 
-Generate exactly 3 concise, specific intelligence insights for ${first}.
+Write exactly 3 short, specific tips for ${first}.
 
 Data:
 - Mind Score: ${mindScore}/1000
-- Reading Intelligence: ${readingScore}/100
+- Reading score: ${readingScore}/100
 - 30-day plan days completed: ${completedCount}/${totalCount}
 - Streak: ${currentStreak} days
 - Weekly trend: ${weeklyTrend !== null ? `${weeklyTrend > 0 ? '+' : ''}${weeklyTrend}% vs prior period` : 'insufficient data'}
@@ -90,10 +90,10 @@ Data:
 Rules:
 - Each insight is 1–2 sentences maximum
 - Reference the actual numbers — not generic encouragement
-- Focus on transformation and intelligence growth, not content completion
+- Say what to practise next and why, in plain words a school student understands
 - Tone: calm, intelligent, data-driven mentor — never cheerleader
-- Never use: course, lesson, chapter, curriculum, video, content, completion
-- Use: practice, intelligence, score, session, growth, momentum, transformation
+- Never use: course, lesson, curriculum, video, content, intelligence, mastery, neural, transformation
+- Use: practice, score, day, focus, memory, reading, steady progress
 - Return each insight as a separate line, no bullets or numbering`
 
     const response = await client.messages.create({
