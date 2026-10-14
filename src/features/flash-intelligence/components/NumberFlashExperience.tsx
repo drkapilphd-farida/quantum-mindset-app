@@ -215,6 +215,7 @@ export function NumberFlashExperience(): React.JSX.Element {
 
   return (
     <UniversalExercisePlayer
+      paperStage
       key={sessionKey}
       definition={{
         ...NUMBER_FLASH_DEFINITION,

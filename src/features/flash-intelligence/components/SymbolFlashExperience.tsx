@@ -215,6 +215,7 @@ export function SymbolFlashExperience(): React.JSX.Element {
 
   return (
     <UniversalExercisePlayer
+      paperStage
       key={sessionKey}
       definition={{
         ...SYMBOL_FLASH_DEFINITION,

@@ -12,6 +12,7 @@ import { MethodHome } from './MethodHome'
 import { MethodLesson, type LessonLine } from './MethodLesson'
 import { NameFaceOwnList } from './NameFaceOwnList'
 import { NameFaceRound } from './NameFaceRound'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'practice' | 'own'
@@ -41,7 +42,7 @@ export function NameFaceExperience({ onComplete, onExit }: { onComplete?: () => 
     if (inPlan && mode === null && progress.ready) setMode(progress.isFirstTime ? 'lesson' : 'practice')
   }, [inPlan, mode, progress.ready, progress.isFirstTime])
 
-  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (mode === null) return <LoadingSkeleton />
 
   if (mode === 'lesson') return <MethodLesson narrationId={NAME_FACE_LESSON_ID} title={t('training.studio.nameFaceTitle')} lines={lesson} onDone={() => setMode('practice')} />
 

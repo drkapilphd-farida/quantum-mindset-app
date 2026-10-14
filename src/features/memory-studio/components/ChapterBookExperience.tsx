@@ -18,6 +18,7 @@ import { ChapterMindMap } from './ChapterMindMap'
 import { ChapterWalk } from './ChapterWalk'
 import { MethodHome } from './MethodHome'
 import { MethodLesson } from './MethodLesson'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 type Mode = { name: 'home' } | { name: 'lesson' } | { name: 'new' } | { name: 'read'; map: ChapterMap; sections: ReaderSection[] | null; text: string } | { name: 'list' } | { name: 'edit'; map: ChapterMap } | { name: 'view'; map: ChapterMap } | { name: 'walk'; map: ChapterMap; journey: boolean }
 
@@ -53,7 +54,7 @@ export function ChapterBookExperience({ onComplete, onExit }: { onComplete?: () 
     </div>
   )
 
-  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (mode === null) return <LoadingSkeleton />
   if (mode.name === 'lesson') return <MethodLesson narrationId={CHAPTER_LESSON_ID} title={t('training.studio.chapterTitle')} lines={lesson} onDone={() => setMode({ name: 'new' })} />
   if (mode.name === 'new') return wrap(t('training.studio.chapterNew'), <NewChapter sample={inPlan} onCreated={(map, text) => (reload(), setMode(text === SAMPLE_CHAPTER.en.text || text === SAMPLE_CHAPTER.hi.text ? { name: 'edit', map } : { name: 'read', map, sections: null, text }))} onBack={home} />)
   if (mode.name === 'read') {
@@ -195,12 +196,12 @@ function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated:
       }}
       data-chapter-new="true"
     >
-      <p className="text-sm text-muted-foreground">{t('training.studio.chapterNewIntro')}</p>
+      {/* The quickest start comes first: one tap fills in the sample chapter. */}
       {sample && (
         <Button
           type="button"
-          variant="outline"
-          className="min-h-11 self-start rounded-full"
+          size="lg"
+          className="min-h-12 w-full rounded-2xl"
           onClick={() => {
             const s = SAMPLE_CHAPTER[uiLang === 'hi' ? 'hi' : 'en']
             setTitle(s.title)
@@ -212,6 +213,7 @@ function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated:
           {t('training.studio.chapterUseSample')}
         </Button>
       )}
+      <p className="text-sm text-muted-foreground">{t('training.studio.chapterNewIntro')}</p>
       <label className="flex flex-col gap-1">
         <span className="text-sm font-semibold text-foreground">{t('training.studio.chapterName')}</span>
         <input value={title} maxLength={120} onChange={(e) => setTitle(e.target.value)} className="min-h-12 rounded-xl border border-border bg-background px-3 text-base" data-chapter-title="true" />

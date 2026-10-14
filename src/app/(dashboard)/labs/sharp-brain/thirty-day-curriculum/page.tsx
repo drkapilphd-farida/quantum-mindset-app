@@ -6,7 +6,7 @@ import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSp
 import { getCurriculumDayCompletions } from '@/features/thirty-day-curriculum/actions/getCurriculumDayCompletions'
 import { getCurriculumWatermarkText } from '@/features/thirty-day-curriculum/actions/getCurriculumWatermarkText'
 import { isCurriculumDayUnlocked } from '@/features/thirty-day-curriculum/curriculumProgress'
-import { getMyClassesDone } from '@/features/live-classes/actions'
+import { NextClassCard } from '@/features/live-classes/components/NextClassCard'
 import { getNextDayOpensAt } from '@/features/thirty-day-curriculum/actions/paceActions'
 import { getSkillProgress } from '@/features/thirty-day-curriculum/actions/getSkillProgress'
 
@@ -43,11 +43,10 @@ type ThirtyDayCurriculumPageProps = {
 }
 
 export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDayCurriculumPageProps): Promise<React.JSX.Element> {
-  const [isPro, completions, watermarkText, liveClassesDone, nextDayOpensAt, skillBars] = await Promise.all([
+  const [isPro, completions, watermarkText, nextDayOpensAt, skillBars] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
     getCurriculumDayCompletions(),
     getCurriculumWatermarkText(),
-    getMyClassesDone(),
     getNextDayOpensAt(),
     getSkillProgress(),
   ])
@@ -62,7 +61,14 @@ export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDa
     redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
   }
   return (
-    // The plan page's own Today card replaces the reminder banner here.
-    <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} liveClassesDone={liveClassesDone} initialNextDayOpensAt={nextDayOpensAt} initialSkillBars={skillBars} />
+    // The plan page's own Today card replaces the reminder banner here; the next live class sits below the plan.
+    <>
+      <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} initialNextDayOpensAt={nextDayOpensAt} initialSkillBars={skillBars} />
+      {requestedDay === null && (
+        <div className="mx-auto mt-4 w-full max-w-3xl">
+          <NextClassCard />
+        </div>
+      )}
+    </>
   )
 }

@@ -79,6 +79,9 @@ type DayMasterPlayerProps = {
 // directly — a skip and a real completion advance the wizard identically
 // (including correctly triggering finishDay() if skipping happens to be
 // the final step), the only difference is which UI element triggered it.
+// Flash drills: their flash area is its own centred paper card (UniversalExercisePlayer paperStage).
+const FLASH_PACK: ReadonlySet<string> = new Set(['word-flash', 'number-flash', 'symbol-flash', 'mixed-flash', 'peripheral-flash'])
+
 export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyForCheckpoint, isReplay = false }: DayMasterPlayerProps): React.JSX.Element {
   const t = useAppT()
   const router = useRouter()
@@ -519,8 +522,9 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
           ) : isGated ? (
             <GatedStepHandoff exercise={exercise} onContinue={() => handleGatedHandoff(exercise, playIndex!)} />
           ) : EmbeddedComponent !== undefined ? (
-            // Reading steps sit on a light "paper" surface in both themes (play design).
-            <div className={exercise.category === 'reading-intelligence' ? 'play-paper min-h-full' : 'contents'}>
+            // Reading steps sit on a light "paper" surface in both themes (play design);
+            // the flash drills keep the theme and show only the flash on a paper card.
+            <div className={exercise.category === 'reading-intelligence' && !FLASH_PACK.has(exercise.id) ? 'play-paper min-h-full' : 'contents'}>
               <EmbeddedComponent key={`${currentExerciseId}-${playIndex}-${mode}`} onComplete={handleStepComplete} onExit={handleExitWizard} />
             </div>
           ) : (

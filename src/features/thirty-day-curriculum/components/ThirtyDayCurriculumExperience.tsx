@@ -10,7 +10,6 @@ import { FairReadingTest } from '@/features/fair-reading-test/components/FairRea
 import type { FairResult } from '@/features/fair-reading-test/fairTest'
 import { MemoryCheck } from '@/features/memory-check/components/MemoryCheck'
 import { CertificateReadyCard } from '@/features/certificate/components/CertificateReadyCard'
-import { LiveClassesProgressLink } from '@/features/live-classes/components/LiveClassesExperience'
 import { ReminderOptInPrompt } from '@/features/reminders/components/ReminderOptInPrompt'
 import { CurriculumWatermarkOverlay } from './CurriculumWatermarkOverlay'
 import { MasterclassPaywallModal } from './MasterclassPaywallModal'
@@ -60,8 +59,6 @@ function parseValidDay(rawDay: string | null): number | null {
 // real page round-trip. Every other, embeddable exercise never leaves
 // this route at all; see DayMasterPlayer.tsx.
 type ThirtyDayCurriculumExperienceProps = {
-  /** Live classes done (x of 7), shown as a small link below the plan. */
-  liveClassesDone?: number
   /** Focus / Memory / Reading / Retention bars, first practice → now. Resolved on the server. */
   initialSkillBars: readonly SkillBar[]
   /** Pace control: when the learner's next day opens (null = open now). Resolved on the server. */
@@ -87,7 +84,7 @@ type ThirtyDayCurriculumExperienceProps = {
   watermarkText: string | null
 }
 
-export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, liveClassesDone = 0, initialNextDayOpensAt = null, initialSkillBars }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
+export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, initialNextDayOpensAt = null, initialSkillBars }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
   const router = useRouter()
   // Practice text is English until a language gets its own passages; WPM is compared only within one language.
@@ -325,7 +322,6 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
         nextDayOpensAt={nextDayOpensAt}
         skillBars={skillBars}
       />
-      {isPro && <LiveClassesProgressLink classesDone={liveClassesDone} />}
       <MasterclassPaywallModal open={paywallDay !== null} onOpenChange={(open) => { if (!open) setPaywallDay(null) }} day={paywallDay === 0 ? null : paywallDay} />
       <FinishPreviousDayModal
         day={finishPreviousDay}

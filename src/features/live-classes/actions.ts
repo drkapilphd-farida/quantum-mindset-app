@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
-import { canRegister, classesDone, type AttendanceMark, type Session } from './liveClasses'
+import { canRegister, classesDone, nextClassToJoin, type AttendanceMark, type Session } from './liveClasses'
 
 export type LiveClassesView = {
   enrolled: boolean
@@ -57,6 +57,27 @@ export async function getMyClassesDone(): Promise<number> {
   if (!user) return 0
   const { data } = await supabase.from('live_class_attendance').select('class_number, kind, counts').eq('user_id', user.id)
   return classesDone((data ?? []).map((m) => ({ classNumber: m.class_number, kind: m.kind as AttendanceMark['kind'], counts: m.counts }))).size
+}
+
+export type NextClass = { classNumber: number; startsAt: string; endsAt: string; registered: boolean } | null
+
+/** The dashboard's "Next class" card: the soonest class this learner still has to join (null = none scheduled yet). */
+export async function getNextClass(): Promise<NextClass> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return null
+  const [sessions, marks, registrations] = await Promise.all([
+    supabase.from('live_class_sessions').select('id, class_number, topic_override, starts_at, ends_at, status').gte('starts_at', new Date().toISOString()).order('starts_at').limit(30),
+    supabase.from('live_class_attendance').select('class_number, kind, counts').eq('user_id', user.id),
+    supabase.from('live_class_registrations').select('session_id').eq('user_id', user.id).is('cancelled_at', null),
+  ])
+  if (sessions.error) logger.error('getNextClass: sessions read failed', { code: sessions.error.code })
+  const done = classesDone((marks.data ?? []).map((m) => ({ classNumber: m.class_number, kind: m.kind as AttendanceMark['kind'], counts: m.counts })))
+  const next = nextClassToJoin((sessions.data ?? []).map(toSession), done, Date.now())
+  if (next === null) return null
+  return { classNumber: next.classNumber, startsAt: next.startsAt, endsAt: next.endsAt, registered: (registrations.data ?? []).some((r) => r.session_id === next.id) }
 }
 
 type RegisterResult = { ok: true } | { ok: false; error: 'unauthenticated' | 'not-enrolled' | 'closed' | 'invalid' | 'db' }

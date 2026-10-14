@@ -15,6 +15,7 @@ import { NumberLearn } from './NumberLearn'
 import { NumberOwnList } from './NumberOwnList'
 import { NumberPictureCard } from './NumberPictureCard'
 import { NumberRound } from './NumberRound'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'pictures' | 'practice' | 'dates' | 'own'
@@ -69,7 +70,7 @@ export function NumberCodeExperience({ onComplete, onExit }: { onComplete?: () =
     </div>
   )
 
-  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (mode === null) return <LoadingSkeleton />
   if (inPlan && mode === 'pictures' && planSet !== null) return wrap(t('training.studio.numberPicturesTitle'), <NumberLearn list={list} planSet={planSet} onBack={() => onExit?.()} onPlanDone={() => onComplete?.()} />)
   if (mode === 'lesson') return <MethodLesson narrationId={NUMBER_LESSON_ID[list]} title={t('training.studio.numberTitle')} lines={lesson} onDone={() => setMode('pictures')} />
   if (mode === 'pictures') return wrap(t('training.studio.numberPicturesTitle'), <NumberLearn list={list} onBack={() => setMode('home')} />)

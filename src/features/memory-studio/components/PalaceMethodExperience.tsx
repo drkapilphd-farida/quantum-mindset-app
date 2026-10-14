@@ -13,6 +13,7 @@ import { MethodLesson } from './MethodLesson'
 import { MyPalaces } from './MyPalaces'
 import { PalaceOwnList } from './PalaceOwnList'
 import { PalaceRound } from './PalaceRound'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'palaces' | 'practice' | 'own'
@@ -50,12 +51,12 @@ export function PalaceMethodExperience({ onComplete, onExit }: { onComplete?: ()
     </div>
   )
 
-  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (mode === null) return <LoadingSkeleton />
   if (mode === 'lesson') return <MethodLesson narrationId={PALACE_LESSON_ID} title={t('training.studio.myPalacesTitle')} lines={lesson} onDone={() => setMode('palaces')} />
   if (mode === 'palaces' || ((mode === 'practice' || mode === 'own') && palaces !== null && palaces.length === 0))
     return wrap(
       t('training.studio.myPalacesTitle'),
-      palaces === null ? <p className="text-sm text-muted-foreground">{t('training.shell.loading')}</p> : (
+      palaces === null ? <LoadingSkeleton /> : (
 <MyPalaces palaces={palaces} lang={lang} onChanged={reload} onBack={() => (inPlan ? onExit?.() : setMode('home'))} />
       ),
     )

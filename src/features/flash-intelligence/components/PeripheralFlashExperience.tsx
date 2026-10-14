@@ -395,6 +395,7 @@ export function PeripheralFlashExperience(): React.JSX.Element {
 
   return (
     <UniversalExercisePlayer
+      paperStage
       key={sessionKey}
       definition={{
         ...PERIPHERAL_FLASH_DEFINITION,

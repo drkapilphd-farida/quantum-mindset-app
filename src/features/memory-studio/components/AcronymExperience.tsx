@@ -13,6 +13,7 @@ import { MethodHome } from './MethodHome'
 import { MethodLesson } from './MethodLesson'
 import { OrderRecall } from './OrderRecall'
 import { SuggestButton } from './SuggestButton'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Stage = { name: 'plan' } | { name: 'try'; index: number } | { name: 'home' } | { name: 'lesson' } | { name: 'make' } | { name: 'test'; items: string[]; code: string; sentence: string } | { name: 'result'; correct: number; total: number }
@@ -68,7 +69,7 @@ export function AcronymExperience({ onComplete, onExit }: { onComplete?: () => v
     </div>
   )
 
-  if (stage.name === 'plan') return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (stage.name === 'plan') return <LoadingSkeleton />
   if (stage.name === 'lesson') return <MethodLesson narrationId={ACRONYM_LESSON_ID} title={t('training.studio.acronymTitle')} lines={lesson} onDone={() => setStage(inPlan ? { name: 'try', index: 0 } : { name: 'make' })} />
   if (stage.name === 'try') {
     const lists = ACRONYM_READY_LISTS[exampleLang]

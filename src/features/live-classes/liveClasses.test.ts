@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { canRegister, classesDone, copyCycle, csvCell, evaluateGuarantee, formatSessionDate, formatSessionTime, isoToIst, istToIso, lastCycle, nextSessionFor, toCsv, upcomingSessions, type GuaranteeReading, type Session } from './liveClasses'
+import { canRegister, classesDone, copyCycle, csvCell, evaluateGuarantee, formatSessionDate, formatSessionTime, isoToIst, istToIso, lastCycle, nextClassToJoin, nextSessionFor, toCsv, upcomingSessions, type GuaranteeReading, type Session } from './liveClasses'
 
 const session = (over: Partial<Session>): Session => ({ id: 's', classNumber: 1, topicOverride: null, startsAt: istToIso('2026-10-18', '19:00'), endsAt: istToIso('2026-10-18', '21:00'), status: 'published', ...over })
 const NOW = Date.parse('2026-10-14T06:00:00Z')
@@ -84,5 +84,19 @@ describe('CSV for Excel', () => {
     expect(csv.startsWith('﻿')).toBe(true)
     expect(csv).toContain('विकास यादव,"a, b"')
     expect(csvCell('=1+1')).toBe("'=1+1")
+  })
+})
+
+describe('next class to join (dashboard card)', () => {
+  const now = Date.parse('2026-10-15T10:00:00Z')
+  const s = (classNumber: number, startsAt: string, status: Session['status'] = 'published'): Pick<Session, 'classNumber' | 'startsAt' | 'status'> => ({ classNumber, startsAt, status })
+  it('is the soonest open class the learner has not done', () => {
+    const sessions = [s(2, '2026-10-25T13:30:00Z'), s(1, '2026-10-18T13:30:00Z'), s(3, '2026-10-20T13:30:00Z')]
+    expect(nextClassToJoin(sessions, new Set(), now)?.classNumber).toBe(1)
+    expect(nextClassToJoin(sessions, new Set([1]), now)?.classNumber).toBe(3)
+  })
+  it('skips cancelled, draft and already-started sessions', () => {
+    const sessions = [s(1, '2026-10-18T13:30:00Z', 'cancelled'), s(2, '2026-10-14T13:30:00Z'), s(3, '2026-10-19T13:30:00Z', 'draft')]
+    expect(nextClassToJoin(sessions, new Set(), now)).toBeNull()
   })
 })

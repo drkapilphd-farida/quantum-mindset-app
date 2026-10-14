@@ -235,6 +235,7 @@ export function MixedFlashExperience(): React.JSX.Element {
 
   return (
     <UniversalExercisePlayer
+      paperStage
       key={sessionKey}
       definition={{
         ...MIXED_FLASH_DEFINITION,

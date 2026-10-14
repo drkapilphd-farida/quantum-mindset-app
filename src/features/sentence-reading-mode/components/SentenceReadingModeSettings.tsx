@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
 import { Button } from '@/components/ui/button'
+import { TargetWpmPicker } from '@/components/play/TargetWpmPicker'
 
 const TARGET_WPM_OPTIONS = [100, 150, 200, 250, 300, 350, 400, 450, 500] as const
 
@@ -96,16 +97,7 @@ export function SentenceReadingModeSettings({
         </div>
       </div>
 
-      <div className="w-full">
-        <p className="mb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">Target WPM</p>
-        <div className="flex flex-wrap justify-center gap-2">
-          {TARGET_WPM_OPTIONS.map((wpm) => (
-            <Button key={wpm} variant={wpm === targetWpm ? 'default' : 'outline'} size="sm" onClick={() => onSelectTargetWpm(wpm)}>
-              {wpm}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <TargetWpmPicker options={TARGET_WPM_OPTIONS} value={targetWpm} onChange={onSelectTargetWpm} />
 
       <div className="w-full">
         <p className="mb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">Sentence Width</p>

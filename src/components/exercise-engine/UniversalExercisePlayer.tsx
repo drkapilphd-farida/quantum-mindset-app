@@ -60,6 +60,8 @@ type UniversalExercisePlayerProps<TConfig> = {
   nextExerciseId?: string | null
   nextExerciseHref?: string | null
   renderStimulus?: (stimulus: string) => React.ReactNode
+  /** Show the flash and the gap on a centred light "paper" card (reading drills), even in dark mode. */
+  paperStage?: boolean
   // Optional separate renderer for ChoiceGrid options. Defaults to reusing
   // renderStimulus (correct for exercises where an option is just the same
   // kind of content at a smaller size — chunks, phrases, icons). Provide
@@ -164,6 +166,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
   nextExerciseId = null,
   nextExerciseHref = null,
   renderStimulus,
+  paperStage = false,
   renderOption,
   onRestart,
   onResultReady,
@@ -446,7 +449,24 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
         {/* ── Playing ── */}
         {isPlaying && currentItem !== null && (
           <>
-            {itemPhase === 'flash' && (
+            {(itemPhase === 'flash' || itemPhase === 'gap') && paperStage ? (
+              <div className="play-paper mx-auto flex w-full max-w-sm flex-col items-center justify-center rounded-2xl border border-border px-4 py-8 shadow-sm" data-paper-stage="true">
+                {itemPhase === 'flash' ? (
+                  <FlashStimulus
+                    stimulus={currentItem.stimulus}
+                    {...(currentItem.renderAs !== undefined ? { renderAs: currentItem.renderAs } : {})}
+                    durationMs={currentItemSpeedMs}
+                    onHide={handleFlashEnd}
+                    {...(renderStimulus !== undefined ? { renderStimulus } : {})}
+                  />
+                ) : (
+                  <div className="flex min-h-[140px] items-center justify-center" aria-hidden="true">
+                    <div className="size-2 rounded-full bg-muted-foreground/30" />
+                  </div>
+                )}
+              </div>
+            ) : null}
+            {itemPhase === 'flash' && !paperStage && (
               <FlashStimulus
                 stimulus={currentItem.stimulus}
                 {...(currentItem.renderAs !== undefined ? { renderAs: currentItem.renderAs } : {})}
@@ -455,7 +475,7 @@ export function UniversalExercisePlayer<TConfig = Record<string, unknown>>({
                 {...(renderStimulus !== undefined ? { renderStimulus } : {})}
               />
             )}
-            {itemPhase === 'gap' && (
+            {itemPhase === 'gap' && !paperStage && (
               <div
                 className={cn(
                   'flex min-h-[140px] flex-col items-center justify-center gap-2',

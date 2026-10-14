@@ -10,6 +10,7 @@ import { KeywordOwnList } from './KeywordOwnList'
 import { KeywordRound } from './KeywordRound'
 import { MethodHome } from './MethodHome'
 import { MethodLesson } from './MethodLesson'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'practice' | 'own'
@@ -33,7 +34,7 @@ export function KeywordExperience({ onComplete, onExit }: { onComplete?: () => v
     if (inPlan && mode === null && progress.ready) setMode(progress.isFirstTime ? 'lesson' : 'practice')
   }, [inPlan, mode, progress.ready, progress.isFirstTime])
 
-  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (mode === null) return <LoadingSkeleton />
 
   if (mode === 'lesson') return <MethodLesson narrationId={KEYWORD_LESSON_ID[list]} title={t('training.studio.keywordTitle')} lines={lesson} onDone={() => setMode('practice')} />
   if (mode === 'own')

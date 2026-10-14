@@ -15,6 +15,7 @@ import { PegLearn } from './PegLearn'
 import { PegPicture } from './PegPicture'
 import { PegRound } from './PegRound'
 import { StudioPicture } from './StudioPicture'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'learn' | 'practice' | 'own'
@@ -41,7 +42,7 @@ export function PegMethodExperience({ onComplete, onExit }: { onComplete?: () =>
     if (inPlan && mode === null && learned.ready && progress.ready) setMode(learned.isFirstTime ? 'lesson' : 'practice')
   }, [inPlan, mode, learned.ready, learned.isFirstTime, progress.ready])
 
-  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (mode === null) return <LoadingSkeleton />
 
   const wrap = (children: React.ReactNode, title: string): React.JSX.Element => (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-4 py-6">

@@ -14,6 +14,7 @@ import { applyPalaceSession, encodeObjects, levelConfig, MEMORY_PALACE_EXERCISE_
 import { loadLastObjects, saveLastObjects, saveTodayPalace } from '../todayPalace'
 import { ObjectPicture, objectNameKey, placeNameKey, RecallBoard } from './RecallBoard'
 import { PalaceRecallStep } from './PalaceRecallStep'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 type Stage = 'loading' | 'next-day' | 'intro' | 'guided' | 'recall' | 'result' | 'closing'
 
@@ -146,7 +147,7 @@ export function MemoryPalaceExperience({ onComplete, onExit }: MemoryPalaceExper
     </div>
   )
 
-  if (stage === 'loading' || script === null) return shell(<p className="text-sm text-muted-foreground">{t('training.shell.loading')}</p>)
+  if (stage === 'loading' || script === null) return shell(<LoadingSkeleton />)
 
   if (stage === 'next-day' && pending) {
     return (

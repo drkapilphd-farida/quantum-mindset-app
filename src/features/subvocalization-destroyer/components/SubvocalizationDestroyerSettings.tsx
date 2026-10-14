@@ -5,8 +5,8 @@ import { PracticeTextNote } from '@/lib/app-i18n/PracticeTextNote'
 import { useAppT } from '@/lib/app-i18n/client'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
-import { Button } from '@/components/ui/button'
 import { WhyThisDrillWorks } from '@/components/exercises/WhyThisDrillWorks'
+import { TargetWpmPicker } from '@/components/play/TargetWpmPicker'
 
 // Deliberately its own 600-1200 band, not the standard 100-500 every other
 // Reading Mode offers — the whole premise of this exercise is forcing
@@ -61,16 +61,7 @@ export function SubvocalizationDestroyerSettings({
         <PracticeTextNote kind="rsvp" className="mx-auto mt-3 inline-block" />
       </div>
 
-      <div className="w-full">
-        <p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">{t('exercises.stats.targetWpm')}</p>
-        <div className="flex flex-wrap justify-center gap-2">
-          {TARGET_WPM_OPTIONS.map((wpm) => (
-            <Button key={wpm} variant={wpm === targetWpm ? 'default' : 'outline'} size="sm" onClick={() => onSelectTargetWpm(wpm)}>
-              {wpm}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <TargetWpmPicker options={TARGET_WPM_OPTIONS} value={targetWpm} onChange={onSelectTargetWpm} />
 
       <WhyThisDrillWorks>
         600 to 1200 words per minute — fast enough to force your eyes to process meaning directly, without

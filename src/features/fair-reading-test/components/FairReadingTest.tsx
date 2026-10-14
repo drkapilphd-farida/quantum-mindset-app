@@ -12,6 +12,7 @@ import { finishFairReading, getFairTestContext, startFairTest, submitFairAnswers
 import { beforeAfter, percentChange, type FairResult } from '../fairTest'
 import { drawBeforeAfterCard } from '../beforeAfterCard'
 import type { FairLang } from '../forms'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 type CheckpointDay = 1 | 7 | 14 | 21 | 30
 
@@ -101,7 +102,7 @@ export function FairReadingTest({ day, onComplete, onPostpone }: FairReadingTest
     </div>
   )
 
-  if (stage.name === 'loading') return shell(<p className="text-sm text-muted-foreground">{t('training.shell.loading')}</p>)
+  if (stage.name === 'loading') return shell(<LoadingSkeleton />)
 
   if (stage.name === 'error')
     return shell(

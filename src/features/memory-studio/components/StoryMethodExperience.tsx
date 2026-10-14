@@ -13,6 +13,7 @@ import { MethodLesson } from './MethodLesson'
 import { OwnList } from './OwnList'
 import { StoryRound } from './StoryRound'
 import { StudioPicture } from './StudioPicture'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 const rng = (n: number): number => Math.floor(Math.random() * n)
 type Mode = 'home' | 'lesson' | 'practice' | 'own'
@@ -36,7 +37,7 @@ export function StoryMethodExperience({ onComplete, onExit }: { onComplete?: () 
     if (inPlan && mode === null && progress.ready) setMode(progress.isFirstTime ? 'lesson' : 'practice')
   }, [inPlan, mode, progress.ready, progress.isFirstTime])
 
-  if (mode === null) return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (mode === null) return <LoadingSkeleton />
 
   if (mode === 'lesson') return <MethodLesson narrationId={STORY_LESSON_ID} title={t('training.studio.storyTitle')} lines={lesson} onDone={() => setMode('practice')} />
 

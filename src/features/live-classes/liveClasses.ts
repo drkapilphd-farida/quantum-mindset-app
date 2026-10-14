@@ -50,6 +50,11 @@ export function nextSessionFor<S extends Pick<Session, 'classNumber' | 'status' 
   return sessions.filter((s) => s.classNumber === classNumber && canRegister(s, now)).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt))[0] ?? null
 }
 
+/** The learner's next class to join: the soonest open session of a class they haven't done yet. */
+export function nextClassToJoin<S extends Pick<Session, 'classNumber' | 'status' | 'startsAt'>>(sessions: readonly S[], done: ReadonlySet<number>, now: number): S | null {
+  return sessions.filter((s) => !done.has(s.classNumber) && canRegister(s, now)).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt))[0] ?? null
+}
+
 const IST = 'Asia/Kolkata'
 
 /** "Thu, 29 Oct" in the learner's language, 0–9 digits, India time. */

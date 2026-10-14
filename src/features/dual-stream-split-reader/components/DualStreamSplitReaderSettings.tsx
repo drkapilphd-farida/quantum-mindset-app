@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { BrandWatermark } from '@/components/brand/BrandWatermark'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
-import { Button } from '@/components/ui/button'
+import { TargetWpmPicker } from '@/components/play/TargetWpmPicker'
 
 // The same standard 100-500 band every other Reading Mode offers — this
 // exercise's core challenge isn't raw speed, it's genuinely parallel
@@ -51,16 +51,7 @@ export function DualStreamSplitReaderSettings({
         {categoryLabel && <p className="mt-2 text-xs font-medium text-muted-foreground">Today&rsquo;s reading: {categoryLabel}</p>}
       </div>
 
-      <div className="w-full">
-        <p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">Target WPM</p>
-        <div className="flex flex-wrap justify-center gap-2">
-          {TARGET_WPM_OPTIONS.map((wpm) => (
-            <Button key={wpm} variant={wpm === targetWpm ? 'default' : 'outline'} size="sm" onClick={() => onSelectTargetWpm(wpm)}>
-              {wpm}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <TargetWpmPicker options={TARGET_WPM_OPTIONS} value={targetWpm} onChange={onSelectTargetWpm} />
 
       <button
         onClick={onStart}

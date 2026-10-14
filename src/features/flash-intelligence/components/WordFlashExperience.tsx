@@ -344,6 +344,7 @@ export function WordFlashExperience({ definition, contentPool, onComplete }: Wor
 
   return (
     <UniversalExercisePlayer
+      paperStage
       key={sessionKey}
       definition={{
         ...resolvedDefinition,

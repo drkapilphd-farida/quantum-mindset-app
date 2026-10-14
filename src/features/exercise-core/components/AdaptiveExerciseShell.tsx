@@ -13,6 +13,7 @@ import { useExerciseSession } from '@/hooks/exercises/useExerciseSession'
 import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
 import { useIsEmbeddedExercise } from '@/features/thirty-day-curriculum/embeddedExerciseContext'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 import {
   applyRound,
   DEFAULT_THRESHOLDS,
@@ -221,7 +222,7 @@ export function AdaptiveExerciseShell(props: AdaptiveExerciseShellProps): React.
 
   let body: React.ReactNode
   if (!progress.ready) {
-    body = <p className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</p>
+    body = <LoadingSkeleton />
   } else if (phase === 'intro') {
     body = (
       <IntroScreen

@@ -159,12 +159,3 @@ export function LiveClassesExperience({ view, now }: { view: LiveClassesView; no
 }
 
 /** For the 30-day plan page: "4 of 7 live classes" with a link. */
-export function LiveClassesProgressLink({ classesDone: count }: { classesDone: number }): React.JSX.Element {
-  const t = useAppT()
-  return (
-    <a href="/masterclasses" className="mx-auto mt-4 flex w-full max-w-3xl items-center justify-between gap-3 rounded-2xl border bg-card px-5 py-3 text-sm shadow-sm hover:bg-muted/40" data-live-classes-link="true">
-      <span className="font-medium text-foreground">{fillTemplate(t('training.liveClasses.planLine'), { classes: count })}</span>
-      <span className="font-semibold text-primary">{t('training.liveClasses.planLink')} →</span>
-    </a>
-  )
-}

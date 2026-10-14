@@ -520,7 +520,13 @@
       "c5": "Visualisation & imagination",
       "c6": "Study & Work Application",
       "c7": "Day 30 Review & Your Next Plan"
-    }
+    },
+    "nextTitle": "Next class",
+    "nextLine": "Class {n} · {topic}",
+    "nextWhen": "{date}, {time}",
+    "registerCta": "Register →",
+    "registeredCta": "Registered ✓",
+    "tbaLine": "Next class: date to be announced"
   },
   "memoryCheck": {
     "offerTitle": "Take your memory baseline",
@@ -996,7 +1002,8 @@
     "quizScore": "You got {score} of {total}",
     "quizPerfect": "Perfect — you understood every key idea.",
     "quizGood": "Good reading — most of the ideas stayed with you.",
-    "quizTry": "Read a little slower next time — understanding comes first."
+    "quizTry": "Read a little slower next time — understanding comes first.",
+    "recommendedForYou": "Recommended for you"
   },
   "reader": {
     "close": "Close",

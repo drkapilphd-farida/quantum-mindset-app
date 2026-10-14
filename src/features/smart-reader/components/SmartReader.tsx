@@ -10,6 +10,7 @@ import { Stars, starsFor } from '@/components/play/Stars'
 import { useCalmCues, useWakeLock } from '@/features/calm-cues/useCalmCues'
 import { getReaderStart, saveReaderPosition } from '../actions'
 import { backOneSentence, BREAK_REMINDER_MS, clampWpm, clusters, effectiveWpm, focusIndex, nextWpm, SMART_READER_EXERCISE_ID, WPM_STEP, wordDurationMs, words, type ReaderMode, type ReaderSection } from '../reader'
+import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
 
 type Stage =
   | { name: 'loading' }
@@ -188,7 +189,7 @@ export function SmartReader({ title, sections, source, sourceRef, onFinished, on
     </div>
   )
 
-  if (stage.name === 'loading') return <div className="py-24 text-center text-sm text-muted-foreground">{t('training.shell.loading')}</div>
+  if (stage.name === 'loading') return <LoadingSkeleton />
 
   if (stage.name === 'break')
     return (
