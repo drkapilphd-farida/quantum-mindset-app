@@ -1,17 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { dayTitle } from '@/lib/app-i18n/curriculumText'
 import { useAppT } from '@/lib/app-i18n/client'
 import Link from 'next/link'
 import { Flame, GraduationCap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-  computeConsistencyPercent,
-  computeDailyCurriculumStreak,
-  getHighestUnlockedDay,
-  loadCurriculumProgress,
-} from '@/features/thirty-day-curriculum/curriculumProgress'
 import { programs } from '@/config/site.config'
 
 const CURRICULUM_ROUTE = '/labs/sharp-brain/thirty-day-curriculum'
@@ -23,20 +16,14 @@ const CURRICULUM_ROUTE = '/labs/sharp-brain/thirty-day-curriculum'
 // already-signed-in members on their own dashboard, is now purely their
 // own real 30-Day Masterclass progress and a direct way back into
 // today's mission.
-export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
-  const [nextDay, setNextDay] = useState<number | null>(null)
-  const [hasStarted, setHasStarted] = useState(false)
-  const [consistencyPercent, setConsistencyPercent] = useState(0)
-  const [currentStreak, setCurrentStreak] = useState(0)
+//
+// Progress comes from the server's record of finished days (the same as the
+// plan page), never from this browser's own cache — so a learner on a new
+// phone sees their real day, not "Day 1".
+export function ThirtyDayMasterclassHeroCard({ nextDay, completedDays, currentStreak }: { nextDay: number | null; completedDays: number; currentStreak: number }): React.JSX.Element {
   const t = useAppT()
-
-  useEffect(() => {
-    const progress = loadCurriculumProgress()
-    setHasStarted(progress.completedDays.length > 0)
-    setNextDay(getHighestUnlockedDay(progress))
-    setConsistencyPercent(computeConsistencyPercent(progress))
-    setCurrentStreak(computeDailyCurriculumStreak(progress))
-  }, [])
+  const hasStarted = completedDays > 0
+  const percentDone = Math.round((completedDays / 30) * 100)
 
   const themeTitle = nextDay !== null ? dayTitle(t, nextDay) : null
 
@@ -77,13 +64,13 @@ export function ThirtyDayMasterclassHeroCard(): React.JSX.Element {
             <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t('dashboard.curriculumCard.progress')}</p>
             <p className="mt-0.5 text-sm font-medium text-foreground" data-curriculum-status={hasStarted ? 'in-progress' : 'not-started'}>
               {nextDay === null
-                ? t('common.actions.loading')
+                ? t('dashboard.program.complete')
                 : hasStarted && themeTitle !== null
                   ? t('dashboard.curriculumCard.dayTheme', { day: nextDay, title: themeTitle })
                   : t('dashboard.curriculumCard.readyDay1')}
             </p>
             {hasStarted && (
-              <p className="text-xs text-muted-foreground">{t('dashboard.curriculumCard.percentComplete', { percent: consistencyPercent })}</p>
+              <p className="text-xs text-muted-foreground">{t('dashboard.curriculumCard.percentComplete', { percent: percentDone })}</p>
             )}
           </div>
           <Button

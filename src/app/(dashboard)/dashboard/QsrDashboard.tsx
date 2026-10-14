@@ -6,6 +6,8 @@ import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile'
 import { getPracticeSessions } from '@/lib/exercises/queries/getPracticeSessions'
 import { computeDailyStreak, computeTodaysProgress, computeTotalPracticeStats } from '@/lib/exercises/practiceHistory'
 import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
+import { getCurriculumDayCompletions } from '@/features/thirty-day-curriculum/actions/getCurriculumDayCompletions'
+import { streakDays } from '@/features/reminders/reminders'
 import { computeMemoryScore } from '@/lib/exercises/mindScore'
 import { GreetingHeading } from '@/components/dashboard/GreetingHeading'
 import { AIMentorSection, AIMentorSkeleton } from '@/components/dashboard/AIMentorSection'
@@ -83,6 +85,8 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
 
   // The higher of the 30-day plan and the old Eye Foundation module, so no learner's score drops.
   const completionPercent = program.scorePercent
+  // Days in a row with a finished plan day (India time), from the server's record.
+  const programStreak = streakDays((await getCurriculumDayCompletions()).map((c) => ({ day: c.day, completedAt: c.completedAt })), Date.now())
 
   // ── New computations (all from real data) ────────────────────────────────
   const mindScore = computeMindScore(completionPercent, labStreak.currentStreak)
@@ -178,7 +182,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           title={programs.sharpBrain.name}
           description={t('dashboard.flagship.description')}
         />
-        <ThirtyDayMasterclassHeroCard />
+        <ThirtyDayMasterclassHeroCard nextDay={program.nextDay} completedDays={program.completedDays} currentStreak={programStreak} />
       </section>
 
       {/* Mind Score */}

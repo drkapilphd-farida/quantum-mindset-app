@@ -214,14 +214,8 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
             </p>
           </div>
         ) : (
-          <div>
-            <h1 className={TYPOGRAPHY.display}>{t('welcome.app.title')}</h1>
-            <p className="mt-6 flex flex-col gap-1 text-2xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-3xl md:text-4xl">
-              <span>{t('welcome.app.line1')}</span>
-              <span>{t('welcome.app.line2')}</span>
-              <span>{t('welcome.app.line3')}</span>
-            </p>
-          </div>
+          // The card below says what the program gives; the heading stays short.
+          <h1 className="text-[1.75rem] leading-tight text-foreground sm:text-4xl">{t('welcome.app.title')}</h1>
         )}
 
         <div className="flex w-full justify-center">

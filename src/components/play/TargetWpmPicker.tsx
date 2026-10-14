@@ -43,8 +43,7 @@ export function TargetWpmPicker({ options, value, onChange }: { options: readonl
           type="button"
           onClick={() => onChange(recommended)}
           aria-pressed={value === recommended}
-          className="play-option mb-3 flex min-h-16 w-full flex-col items-center justify-center gap-0.5 px-4 py-2"
-          data-state={value === recommended ? 'chosen' : 'idle'}
+          className={`mb-3 flex min-h-16 w-full flex-col items-center justify-center gap-0.5 rounded-2xl border-2 px-4 py-2 ${value === recommended ? 'border-primary bg-primary/10' : 'border-border bg-card'}`}
           data-wpm-recommended="true"
         >
           <span className="flex items-center gap-1 text-xs font-bold tracking-wider text-primary uppercase">
