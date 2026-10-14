@@ -3,8 +3,9 @@ import { MAX_VALID_WPM, type ReadingTestStatus } from '@/features/reading-speed-
 // Reading & Memory Test rules (founder, 14 Oct 2026). Pure — used by the
 // server action and the tests.
 export const RETENTION_TOTAL = 4
-/** Fewer than 2 of 4 remembered: the result isn't shown as a score (no price, no offer). */
+/** Fewer than 2 of 4 remembered counts as skimming only above this speed (founder, 15 Oct 2026). */
 export const MIN_RETENTION = 2
+export const SKIM_WPM = 450
 export const MEMORY_TOTAL = 8
 
 export type MemoryTestScore = {
@@ -26,6 +27,8 @@ export function scoreMemoryTest(input: { wordCount: number; elapsedMs: number; r
   const ratio = retention / RETENTION_TOTAL
   let status: ReadingTestStatus = 'valid'
   if (wpm > MAX_VALID_WPM) status = 'too_fast'
-  else if (retention < MIN_RETENTION) status = 'low_comprehension'
+  // Skimming: very fast and almost nothing kept. At a normal pace, low
+  // retention is a real result (and exactly what a memory method fixes).
+  else if (wpm > SKIM_WPM && retention < MIN_RETENTION) status = 'low_comprehension'
   return { status, wpm, retention, comprehensionPercent: Math.round(ratio * 100), effectiveWpm: Math.round(wpm * ratio), memory }
 }

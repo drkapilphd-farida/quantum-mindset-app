@@ -133,7 +133,9 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     yourType: 'Your profile',
     tip: 'Try this today',
     painLine: (x, fast) =>
-      x >= 4
+      x <= 1
+        ? `You kept ${x} of 4 facts after a minute — that's exactly what memory methods fix. Try the 30-second trick below.`
+        : x >= 4
         ? 'You kept all 4 facts after a minute — well done. The real test is keeping them for days, not minutes: that is what a memory method is for.'
         : `${fast ? 'You read fast' : 'You read carefully'} — but kept only ${x} of 4 facts after a minute. That's normal: most of what we read fades unless we use a method.`,
     bonusStory: '🎁 Double your memory in 30 seconds →',
@@ -177,7 +179,7 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     seeProgram: 'See the 30-day program →',
     invalidTitle: 'Let’s try again with a new passage',
     invalidTooFast: 'That was faster than a passage can really be read — it may have been skimmed. Read the next one at your normal pace.',
-    invalidLow: (x) => `Only ${x} of 4 facts came back this time. It happens — read the next passage once, at your normal pace.`,
+    invalidLow: (x) => `That was very fast, and only ${x} of 4 facts came back — the passage was probably skimmed. Read the next one once, at your normal pace.`,
     tryAgain: 'Try again with a new passage',
     error: 'Something went wrong. Please try again.',
   },
@@ -223,7 +225,9 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     yourType: 'आपकी प्रोफ़ाइल',
     tip: 'आज यह आज़माएँ',
     painLine: (x, fast) =>
-      x >= 4
+      x <= 1
+        ? `1 मिनट बाद 4 में से सिर्फ़ ${x} बातें याद रहीं — यही वह चीज़ है जो memory methods ठीक करते हैं। नीचे 30 सेकंड की trick आज़माइए।`
+        : x >= 4
         ? 'एक मिनट बाद भी आपको चारों बातें याद रहीं — बहुत अच्छा। असली परीक्षा उन्हें मिनटों नहीं, दिनों तक याद रखना है: इसी के लिए याद रखने का तरीका होता है।'
         : `${fast ? 'आप तेज़ पढ़ते हैं' : 'आप ध्यान से पढ़ते हैं'} — पर 1 मिनट बाद 4 में से सिर्फ़ ${x} बातें याद रहीं। यह आम है: बिना तरीके के पढ़ा हुआ जल्दी भूल जाता है।`,
     bonusStory: '🎁 30 सेकंड में अपनी याददाश्त दोगुनी करें →',
@@ -267,7 +271,7 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     seeProgram: '30 दिन का प्रोग्राम देखें →',
     invalidTitle: 'चलिए, एक नए लेख के साथ फिर से कोशिश करते हैं',
     invalidTooFast: 'यह इतनी तेज़ी थी कि लेख सच में पढ़ा नहीं जा सकता — शायद सरसरी नज़र डाली गई। अगला लेख अपनी सामान्य रफ़्तार से पढ़ें।',
-    invalidLow: (x) => `इस बार 4 में से सिर्फ़ ${x} बातें याद आईं। ऐसा होता है — अगला लेख एक बार, अपनी सामान्य रफ़्तार से पढ़ें।`,
+    invalidLow: (x) => `यह बहुत तेज़ था, और 4 में से सिर्फ़ ${x} बातें याद आईं — शायद लेख पर सरसरी नज़र डाली गई। अगला लेख एक बार, अपनी सामान्य रफ़्तार से पढ़ें।`,
     tryAgain: 'नए लेख के साथ फिर से कोशिश करें',
     error: 'कुछ गड़बड़ हो गई। कृपया फिर से कोशिश करें।',
   },
