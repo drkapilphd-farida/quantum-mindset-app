@@ -20,7 +20,7 @@ export const CLASS_TOPICS_EN: Record<ClassNumber, string> = {
   4: 'Memory Systems',
   5: 'Visualisation & imagination',
   6: 'Study & Work Application',
-  7: 'Peak Performance',
+  7: 'Day 30 Review & Your Next Plan',
 }
 
 export function isClassNumber(n: number): n is ClassNumber {
