@@ -433,11 +433,12 @@ export function programForCheckoutHref(href: string): (typeof programs)[ProgramI
 /**
  * Analytics IDs — loaded site-wide only when set. Leave empty until the
  * real IDs are supplied; never put a placeholder here.
- * TODO(content): GA4 measurement ID (G-…) and Meta Pixel ID not provided yet.
+ * TODO(content): GA4 measurement ID (G-…) not provided yet.
+ * Meta Pixel: founder's pixel (16 Oct 2026); NEXT_PUBLIC_META_PIXEL_ID overrides it.
  */
 export const analytics: { readonly ga4MeasurementId: string; readonly metaPixelId: string } = {
   ga4MeasurementId: '',
-  metaPixelId: '',
+  metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '2813779008994609',
 }
 
 /** The first checkout/enquiry link of a program — throws at module load if the registry entry has none. */

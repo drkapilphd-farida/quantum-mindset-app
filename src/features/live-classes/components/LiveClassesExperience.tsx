@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
 import { LANGUAGES } from '@/lib/app-i18n/languages'
 import { waLink } from '@/config/site.config'
+import { trackWhatsAppContact } from '@/lib/analytics/conversions'
 import { cancelClassRegistration, registerForClass, type LiveClassesView } from '../actions'
 import { canRegister, CLASS_NUMBERS, CLASS_TOPICS_EN, classesDone, fillTemplate, formatSessionDate, formatSessionTime, isClassNumber, nextSessionFor, upcomingSessions, type Session } from '../liveClasses'
 
@@ -42,6 +43,7 @@ export function LiveClassesExperience({ view, now }: { view: LiveClassesView; no
   // round-trip); the registration is saved alongside and undone on failure.
   function register(s: Session): void {
     setError(null)
+    trackWhatsAppContact('Live class registration')
     window.open(whatsappUrl(s), '_blank', 'noopener')
     setRegistered((prev) => new Set(prev).add(s.id))
     void registerForClass({ sessionId: s.id }).then((res) => {

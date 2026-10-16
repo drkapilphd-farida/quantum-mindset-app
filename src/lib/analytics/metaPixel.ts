@@ -1,22 +1,10 @@
-// Meta Pixel — site-wide, loaded by components/analytics/MetaPixel.tsx
-// only when site.config.ts `analytics.metaPixelId` is set; never fetches
-// or calls fbq() otherwise.
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void
-  }
-}
+// Meta Pixel events for the site's conversion helpers (conversions.ts).
+// The pixel itself is loaded by components/analytics/MetaPixel.tsx; the
+// safe call lives in lib/fbq.ts.
+import { track, type FbqParams } from '@/lib/fbq'
 
-export type MetaPixelStandardEvent = 'ViewContent' | 'InitiateCheckout' | 'Lead'
+export type MetaPixelStandardEvent = 'ViewContent' | 'InitiateCheckout' | 'Lead' | 'Contact'
 
-// No-ops when the pixel script hasn't loaded (or was never configured) —
-// mirrors trackGaEvent's own "never throws, never blocks a real click"
-// posture.
-export function trackMetaPixelEvent(event: MetaPixelStandardEvent, params?: Record<string, string>): void {
-  if (typeof window === 'undefined' || typeof window.fbq !== 'function') return
-  try {
-    window.fbq('track', event, params)
-  } catch {
-    // A tracking call must never be able to break a real conversion click.
-  }
+export function trackMetaPixelEvent(event: MetaPixelStandardEvent, params?: FbqParams): void {
+  track(event, params)
 }

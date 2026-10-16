@@ -12,15 +12,22 @@ export function trackViewContent(contentName: string): void {
   trackGaEvent('view_item', { content_name: contentName })
 }
 
-export function trackInitiateCheckout(contentName: string): void {
-  trackMetaPixelEvent('InitiateCheckout', { content_name: contentName, currency: 'INR' })
+/** valueInr: the price shown on the button that was clicked (omitted when the page doesn't know it). */
+export function trackInitiateCheckout(contentName: string, valueInr?: number): void {
+  trackMetaPixelEvent('InitiateCheckout', { content_name: contentName, currency: 'INR', ...(valueInr !== undefined ? { value: valueInr } : {}) })
   trackGaEvent('begin_checkout', { content_name: contentName })
 }
 
-/** WhatsApp clicks, form submits and free tests started. */
+/** Form submits and finished free tests. */
 export function trackLead(contentName: string, method: string): void {
   trackMetaPixelEvent('Lead', { content_name: contentName, method })
   trackGaEvent('generate_lead', { content_name: contentName, method })
+}
+
+/** A tap on any WhatsApp link or button: Meta "Contact"; GA keeps its lead event as before. */
+export function trackWhatsAppContact(contentName: string): void {
+  trackMetaPixelEvent('Contact', { content_name: contentName })
+  trackGaEvent('generate_lead', { content_name: contentName, method: 'whatsapp' })
 }
 
 const CHECKOUT_HOSTS = ['rzp.io', 'razorpay.me', 'pages.razorpay.com', 'courses.store', 'classplusapp.com']

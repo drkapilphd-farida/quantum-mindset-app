@@ -4,16 +4,16 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { programForPath } from "@/config/site.config";
 import { captureUtmParams, withUtmInWhatsAppHref } from "@/lib/analytics/utm";
-import { classifyHref, contentNameFor, trackInitiateCheckout, trackLead, trackViewContent } from "@/lib/analytics/conversions";
+import { classifyHref, contentNameFor, trackInitiateCheckout, trackViewContent, trackWhatsAppContact } from "@/lib/analytics/conversions";
+import { programs } from "@/config/site.config";
 
 // Site-wide conversion tracking (root layout), so no individual button has
 // to remember it:
 // - ViewContent on every program page (pages listed in the programs registry);
 // - InitiateCheckout on any click to a payment link (Razorpay, Classplus);
-// - Lead on any WhatsApp link click, whose pre-filled message also gets the
+// - Contact on any WhatsApp link click, whose pre-filled message also gets the
 //   visitor's UTM params appended.
-// - Lead on a click to the free starter's sign-up link.
-// Form submits and free tests call trackLead themselves.
+// Form submits and finished free tests call trackLead themselves.
 export default function ConversionTracker(): null {
   const pathname = usePathname();
 
@@ -23,7 +23,8 @@ export default function ConversionTracker(): null {
 
   useEffect(() => {
     const program = programForPath(pathname);
-    if (program !== null) trackViewContent(program.name);
+    // The Sharp Brain page reports as "Sharp Brain" (Meta ad reporting name).
+    if (program !== null) trackViewContent(program === programs.sharpBrain ? "Sharp Brain" : program.name);
   }, [pathname]);
 
   useEffect(() => {
@@ -41,7 +42,9 @@ export default function ConversionTracker(): null {
       }
       // Rewrite before the browser follows the link, so the message carries UTM params.
       anchor.href = withUtmInWhatsAppHref(anchor.href);
-      trackLead(contentNameFor(path, anchor.href, "WhatsApp enquiry"), "whatsapp");
+      // Buttons that already counted this Contact themselves (the free test's "Send on WhatsApp").
+      if (anchor.dataset.contactTracked !== undefined) return;
+      trackWhatsAppContact(contentNameFor(path, anchor.href, "WhatsApp enquiry"));
     }
 
     document.addEventListener("click", onClick, { capture: true });

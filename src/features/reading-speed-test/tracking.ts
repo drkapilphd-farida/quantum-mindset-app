@@ -2,7 +2,7 @@
 // source (utm_* tags), so the funnel can be read per video or ad; the
 // WhatsApp lead itself also stores those tags (saveSpeedTestResult).
 import { trackGaEvent, type GaEventName } from '@/lib/analytics/ga4'
-import { trackLead } from '@/lib/analytics/conversions'
+import { trackLead, trackWhatsAppContact } from '@/lib/analytics/conversions'
 import { readUtmParams } from '@/lib/analytics/utm'
 
 export type SpeedTestEvent =
@@ -31,6 +31,7 @@ export function trackSpeedTest(event: SpeedTestEvent): void {
   if (name === 'completed') params.valid = event.name === 'completed' && event.status === 'valid' ? 'yes' : 'no'
   trackGaEvent(GA_NAME[name], params)
   // Existing Meta/GA lead events, as before: a test started, a number left.
-  if (name === 'started') trackLead('Free Reading Speed Test', 'free_test_started')
-  if (name === 'whatsapp_submitted') trackLead('Free Reading Speed Test', 'speed_test_whatsapp')
+  // Kept in step with the Reading & Memory Test (this old test now redirects there).
+  if (event.name === 'completed' && event.status === 'valid') trackLead('Free Reading Speed Test', 'test_completed')
+  if (name === 'whatsapp_submitted') trackWhatsAppContact('Free Reading Speed Test')
 }
