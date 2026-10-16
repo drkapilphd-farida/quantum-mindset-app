@@ -604,7 +604,7 @@ function LeadCapture({
             href={waUrl ?? "#"}
             onClick={() => trackSpeedTest({ name: "whatsapp_opened", how: "button" })}
             className="mt-3 flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-[18px] font-bold text-white"
-            data-lead-send-whatsapp
+            data-lead-send-whatsapp data-contact-tracked
           >
             {lm.leadSendButton}
           </a>

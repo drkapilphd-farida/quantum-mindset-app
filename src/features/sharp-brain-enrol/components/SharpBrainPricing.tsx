@@ -166,7 +166,7 @@ export function BatchCheckout({
   async function pay(selected: PricedBatch): Promise<void> {
     setPending(true);
     setError(null);
-    trackInitiateCheckout("Sharp Brain 30-Day Program");
+    trackInitiateCheckout("Sharp Brain 30-Day Program", selected.amountInr);
     trackGaEvent("razorpay_checkout_click", { location, offer: selected.offer, batch: selected.start });
     const result = await startSharpBrainCheckout({ batch: selected.start, email, name, offerId, simulateNow });
     if (result.ok) {

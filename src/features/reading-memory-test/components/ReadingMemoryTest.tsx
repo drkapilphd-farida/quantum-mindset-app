@@ -517,7 +517,7 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
       {state === 'saved' ? (
         <div className="flex flex-col gap-3" data-lead-saved>
           <p className="text-lg font-bold text-foreground">{lm.leadSendTitle}</p>
-          <a href={waUrl ?? '#'} onClick={() => trackMemoryTest({ name: 'whatsapp_opened', how: 'button' })} className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-lg font-bold text-white" data-lead-send-whatsapp>
+          <a href={waUrl ?? '#'} onClick={() => trackMemoryTest({ name: 'whatsapp_opened', how: 'button' })} className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-lg font-bold text-white" data-lead-send-whatsapp data-contact-tracked>
             {lm.leadSendButton}
           </a>
           <p className="text-sm text-muted-foreground">{lm.leadSendNote}</p>

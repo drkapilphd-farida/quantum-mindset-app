@@ -1,5 +1,5 @@
 import { trackGaEvent, type GaEventName } from '@/lib/analytics/ga4'
-import { trackLead } from '@/lib/analytics/conversions'
+import { trackLead, trackWhatsAppContact } from '@/lib/analytics/conversions'
 import { readUtmParams } from '@/lib/analytics/utm'
 
 // Funnel for the Free Reading & Memory Test: where people drop off (each step
@@ -32,6 +32,7 @@ export function trackMemoryTest(event: MemoryTestEvent): void {
   const params: Record<string, string> = { ...readUtmParams() }
   for (const [key, value] of Object.entries(rest)) if (value !== null && value !== undefined) params[key] = String(value)
   trackGaEvent(GA_NAME[name], params)
-  if (name === 'started') trackLead('Free Reading & Memory Test', 'free_test_started')
-  if (name === 'lead_submitted') trackLead('Free Reading & Memory Test', 'memory_test_whatsapp')
+  // Meta: Lead once per finished test, when the Brain Profile is shown (not the retry screen); Contact once per WhatsApp lead.
+  if (event.name === 'result_shown' && event.status === 'valid') trackLead('Free Reading & Memory Test', 'test_completed')
+  if (name === 'lead_submitted') trackWhatsAppContact('Free Reading & Memory Test')
 }

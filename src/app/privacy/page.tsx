@@ -118,7 +118,11 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
           Our website uses Google Analytics 4 and the Meta Pixel to understand how visitors use the site and to
           measure the results of our advertising. These tools set cookies or similar identifiers in your browser and
           record events such as page views, clicks on WhatsApp or payment buttons, form submissions (not the form
-          contents) and free tests started.
+          contents) and free tests completed.
+        </p>
+        <p className={legalStyles.p}>
+          This site uses the Meta Pixel (cookies) to measure the performance of our ads and to show relevant ads on
+          Facebook and Instagram. You can control this in your Facebook ad settings.
         </p>
         <p className={legalStyles.p}>
           If you arrive from a link with campaign tags (utm_source, utm_medium, utm_campaign …), we keep those tags in

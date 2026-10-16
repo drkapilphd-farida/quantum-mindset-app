@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { executiveBrainWorkshopConfig } from '@/config/executiveBrainWorkshopConfig'
 import { buildWhatsAppLink, readUtmParams } from '@/features/executive-brain-workshop/utmTracking'
 import { trackGaEvent } from '@/lib/analytics/ga4'
-import { trackLead } from '@/lib/analytics/conversions'
+import { trackLead, trackWhatsAppContact } from '@/lib/analytics/conversions'
 
 // Corporate / school enquiry form, shared by /executive-brain-workshop
 // (#corporate) and /corporate. Posts to executiveBrainWorkshopConfig
@@ -127,6 +127,7 @@ export function CorporateEnquiryForm({
     trackLead(page === 'corporate' ? 'Corporate & school enquiry' : 'Executive workshop corporate enquiry', 'form')
 
     if (config.corporateFormEndpoint === '') {
+      trackWhatsAppContact(page === 'corporate' ? 'Corporate & school enquiry' : 'Executive workshop corporate enquiry')
       window.open(buildWhatsAppLink(config.whatsappNumber, whatsappMessage()), '_blank', 'noopener,noreferrer')
       setStatus('success')
       return

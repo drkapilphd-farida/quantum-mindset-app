@@ -76,6 +76,8 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
     if (questionIndex < totalQuestions - 1) {
       setQuestionIndex((index) => index + 1);
     } else {
+      // Meta/GA Lead once per finished test, as the results appear.
+      trackLead("Free Overthinking Test", "test_completed");
       setStage("results");
     }
   }
@@ -112,10 +114,7 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
           <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-dim">{section.hero.sub}</p>
           <button
             type="button"
-            onClick={() => {
-              trackLead("Free Overthinking Test", "free_test_started");
-              setStage("quiz");
-            }}
+            onClick={() => setStage("quiz")}
             className="group mt-9 inline-flex items-center gap-2.5 rounded-sm bg-rose px-8 py-[17px] text-[15px] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#b8757e]"
           >
             {section.hero.startCta}

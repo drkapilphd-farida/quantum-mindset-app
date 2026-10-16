@@ -13,7 +13,7 @@ import type { AppDomain } from '@/lib/domains/appDomain'
 import { AIPresenceLogo } from './AIPresenceLogo'
 import { GatewayAuthModal } from './GatewayAuthModal'
 import { brand, features, primaryCheckoutHref, programs } from '@/config/site.config'
-import { trackInitiateCheckout } from '@/lib/analytics/conversions'
+import { trackViewContent } from '@/lib/analytics/conversions'
 
 const PROGRAM_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
 
@@ -239,7 +239,8 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
                 points={[t('welcome.program.format'), programPriceLine]}
                 ctaLabel={enrolT(lang)('enrolNow', { price: inr(programPrice.amountInr) })}
                 onSelect={() => {
-                  trackInitiateCheckout(programs.sharpBrain.name)
+                  // InitiateCheckout fires only on the batch picker's Pay button, just before Razorpay.
+                  trackViewContent('Sharp Brain Batch Picker')
                   window.open(PROGRAM_CHECKOUT_HREF, '_blank', 'noopener,noreferrer')
                 }}
               />

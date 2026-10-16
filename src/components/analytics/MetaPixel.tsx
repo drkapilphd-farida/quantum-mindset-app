@@ -1,17 +1,30 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import Script from 'next/script'
+import { track } from '@/lib/fbq'
 
 type MetaPixelProps = {
   pixelId: string
 }
 
 // Site-wide Meta Pixel loader (root layout) — renders nothing when
-// pixelId is empty (site.config.ts `analytics.metaPixelId`). Standard Meta base code, fires
-// PageView automatically on load; trackMetaPixelEvent (metaPixel.ts)
-// fires the rest (ViewContent/InitiateCheckout/Lead) via
-// src/lib/analytics/conversions.ts.
+// pixelId is empty (site.config.ts `analytics.metaPixelId`). Standard Meta base code: init +
+// PageView on first load, then a PageView on every client-side route change
+// (the first render is skipped, so the first page isn't counted twice). The
+// other events go through lib/fbq.ts (see lib/analytics/conversions.ts).
 export function MetaPixel({ pixelId }: MetaPixelProps): React.JSX.Element | null {
+  const pathname = usePathname()
+  const firstRender = useRef(true)
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
+    if (pixelId !== '') track('PageView')
+  }, [pathname, pixelId])
+
   if (pixelId === '') return null
 
   return (
