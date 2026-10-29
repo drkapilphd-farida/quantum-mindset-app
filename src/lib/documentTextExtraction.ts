@@ -1,3 +1,4 @@
+import { mammothInput } from './mammothInput'
 export type TextExtractionResult = { success: true; text: string } | { success: false; error: string }
 
 // Universal Upload Experience™ (Sprint LW-1C.2) — real, client-side text
@@ -43,7 +44,7 @@ export async function extractTextFromDocx(file: File): Promise<TextExtractionRes
   try {
     const arrayBuffer = await file.arrayBuffer()
     const { default: mammoth } = await import('mammoth')
-    const result = await mammoth.extractRawText({ arrayBuffer })
+    const result = await mammoth.extractRawText(mammothInput(arrayBuffer))
     if (result.value.trim().length === 0) {
       return { success: false, error: "We couldn't find any text in this document." }
     }

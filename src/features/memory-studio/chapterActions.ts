@@ -8,13 +8,13 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { isAppLang } from '@/lib/app-i18n/languages'
 import { capChapterText, cleanChapterText, IdeaSchema, istDayStart, looksGarbled, MAX_IDEAS, MIN_IDEAS, wordCount, type ChapterIdea, type ChapterQuestion } from './chapterBook'
-import { generateChapterMap } from './generateChapterMap'
+import { generateChapterMap, type ChapterMapFailure } from './generateChapterMap'
 import { firstDue } from './reviewSchedule'
 
 // Chapter & Book (Group A): server side. Learners read their own maps; the
 // server writes them and calls the AI (at most 3 new chapters a day).
 
-type Fail = { ok: false; error: 'unauthenticated' | 'invalid' | 'too-short' | 'garbled' | 'limit' | 'unavailable' | 'db' }
+type Fail = { ok: false; error: 'unauthenticated' | 'invalid' | 'too-short' | 'garbled' | 'limit' | ChapterMapFailure | 'db' }
 export type ChapterMap = { id: string; title: string; bookTitle: string | null; ideas: ChapterIdea[]; questions: ChapterQuestion[]; palaceId: string | null; createdAt: string }
 
 async function userId(): Promise<string | null> {
@@ -57,7 +57,7 @@ export async function createChapterMap(input: unknown): Promise<({ ok: true; cut
   if ((count ?? 0) >= memoryStudio.chapterMapsPerDay) return { ok: false, error: 'limit' }
 
   const ai = await generateChapterMap(uid, parsed.data.title, text)
-  if (!ai.ok) return { ok: false, error: 'unavailable' }
+  if (!ai.ok) return { ok: false, error: ai.error }
   const { data, error } = await db
     .from('chapter_maps')
     .insert({ user_id: uid, title: parsed.data.title, book_title: parsed.data.bookTitle || null, source: parsed.data.source, text_hash: hash, lang: parsed.data.lang, ideas: ai.ideas, questions: ai.questions })

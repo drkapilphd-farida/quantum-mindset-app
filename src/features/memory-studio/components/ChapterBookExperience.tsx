@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAppT, useUiLang } from '@/lib/app-i18n/client'
+import type { MessageKey } from '@/lib/app-i18n/translate'
+import { memoryStudio } from '@/config/site.config'
 import type { StudioLang } from '../content'
 import type { ChapterIdea } from '../chapterBook'
 import { createChapterMap, deleteChapterMap, listChapterMaps, type ChapterMap } from '../chapterActions'
@@ -19,6 +21,16 @@ import { ChapterWalk } from './ChapterWalk'
 import { MethodHome } from './MethodHome'
 import { MethodLesson } from './MethodLesson'
 import { LoadingSkeleton } from '@/components/play/LoadingSkeleton'
+
+/** Why the key ideas couldn't be made → what the learner is told (anything else: the general "try again in a minute"). */
+const CHAPTER_ERROR_MESSAGE: Partial<Record<string, MessageKey>> = {
+  garbled: 'training.studio.chapterGarbled',
+  'too-short': 'training.studio.chapterTooShort',
+  limit: 'training.studio.chapterLimit',
+  busy: 'training.studio.chapterBusy',
+  timeout: 'training.studio.chapterTooLong',
+  unusable: 'training.studio.chapterUnusable',
+}
 
 type Mode = { name: 'home' } | { name: 'lesson' } | { name: 'new' } | { name: 'read'; map: ChapterMap; sections: ReaderSection[] | null; text: string } | { name: 'list' } | { name: 'edit'; map: ChapterMap } | { name: 'view'; map: ChapterMap } | { name: 'walk'; map: ChapterMap; journey: boolean }
 
@@ -156,6 +168,8 @@ function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated:
   const [busy, setBusy] = useState<'reading' | 'thinking' | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const words = text.split(/\s+/).filter(Boolean).length
+  // Over the server's length cap only the start is used: say so before the learner taps "Make".
+  const usedWords = text.length > memoryStudio.maxChapterChars ? text.slice(0, memoryStudio.maxChapterChars).split(/\s+/).filter(Boolean).length : null
 
   const upload = async (file: File): Promise<void> => {
     setBusy('reading')
@@ -181,17 +195,7 @@ function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated:
         void createChapterMap({ title: title.trim(), bookTitle: book.trim() || undefined, text, source, lang: uiLang }).then((res) => {
           setBusy(null)
           if (res.ok) return onCreated(res.map, text)
-          setMessage(
-            t(
-              res.error === 'garbled'
-                ? 'training.studio.chapterGarbled'
-                : res.error === 'too-short'
-                  ? 'training.studio.chapterTooShort'
-                  : res.error === 'limit'
-                    ? 'training.studio.chapterLimit'
-                    : 'training.studio.chapterUnavailable',
-            ),
-          )
+          setMessage(t(CHAPTER_ERROR_MESSAGE[res.error] ?? 'training.studio.chapterUnavailable'))
         })
       }}
       data-chapter-new="true"
@@ -236,6 +240,11 @@ function NewChapter({ sample, onCreated, onBack }: { sample: boolean; onCreated:
           data-chapter-text="true"
         />
         <span className="text-xs text-muted-foreground tabular-nums">{t('training.studio.wordsN', { count: words })}</span>
+        {usedWords !== null && (
+          <span className="text-xs text-foreground" data-chapter-long="true">
+            {t('training.studio.chapterVeryLong', { count: usedWords })}
+          </span>
+        )}
       </label>
       <p className="text-xs text-muted-foreground">{t('training.studio.chapterRights')}</p>
       {message && (

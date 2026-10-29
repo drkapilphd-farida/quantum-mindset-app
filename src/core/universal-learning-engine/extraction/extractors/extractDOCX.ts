@@ -1,4 +1,5 @@
 import mammoth from 'mammoth'
+import { mammothInput } from '@/lib/mammothInput'
 import type { UniversalSource } from '@/core/universal-learning-engine/upload'
 import type { ExtractionResult } from '../errors/ExtractionError'
 import { buildUniversalLearningDocument } from '../services/buildUniversalLearningDocument'
@@ -25,7 +26,7 @@ const MARK_IMAGE_ELEMENT = mammoth.images.imgElement(async (element: { contentTy
 
 async function defaultConvertToHtml(file: File): Promise<string> {
   const arrayBuffer = await file.arrayBuffer()
-  const result = await mammoth.convertToHtml({ arrayBuffer }, { convertImage: MARK_IMAGE_ELEMENT })
+  const result = await mammoth.convertToHtml(mammothInput(arrayBuffer), { convertImage: MARK_IMAGE_ELEMENT })
   return result.value
 }
 
