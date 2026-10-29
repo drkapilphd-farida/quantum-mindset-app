@@ -14,7 +14,7 @@ export function ProblemSection({ lang }: { lang: Lang }): React.JSX.Element {
   return (
     <Section tone="warm" labelledBy="tw-problem">
       <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-        <Photo src={TELEPATHY_IMAGES.problem} alt={pick(c.imageAlt, lang)} sizes={HALF} className="tw-reveal aspect-[4/3] lg:aspect-[4/5]" />
+        <Photo src={TELEPATHY_IMAGES.problem} alt={pick(c.imageAlt, lang)} sizes={HALF} className="tw-reveal aspect-[4/3]" />
         <div className="tw-reveal">
           <Heading id="tw-problem">{pick(c.heading, lang)}</Heading>
           <p className="tw-body mt-5 text-ink">{pick(c.intro, lang)}</p>
@@ -55,10 +55,11 @@ export function GuruSection({ lang }: { lang: Lang }): React.JSX.Element {
             {pick(c.highlight, lang)}
           </p>
         </div>
-        <div className="tw-reveal relative order-1 mx-auto w-full max-w-[420px] lg:order-2">
-          <div className="tw-aura absolute -inset-[18%] rounded-full" aria-hidden="true" />
+        <div className="tw-reveal relative order-1 mx-auto w-full lg:order-2">
+          <div className="tw-aura absolute -inset-[12%] rounded-full" aria-hidden="true" />
           <div className="tw-float relative">
-            <Photo src={TELEPATHY_IMAGES.guruWithin} alt={pick(c.imageAlt, lang)} sizes="(min-width: 1024px) 420px, 80vw" frame="tw-frame-glow" className="aspect-[4/5] !rounded-full" />
+            {/* Shown whole (16:9): the picture carries its own title text. */}
+            <Photo src={TELEPATHY_IMAGES.guruWithin} alt={pick(c.imageAlt, lang)} sizes="(min-width: 1024px) 520px, 100vw" frame="tw-frame-glow" className="aspect-[2752/1536]" />
           </div>
         </div>
       </div>

@@ -1,20 +1,20 @@
-import Image from 'next/image'
 import type { Lang } from '@/lib/i18n'
-import { TELEPATHY_IMAGES, TELEPATHY_PRICE } from '@/config/telepathyWorkshopConfig'
+import { TELEPATHY_PRICE } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
+import { HeroCrossfade } from './HeroCrossfade'
 import { Starfield } from './Starfield'
 import { WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
 
 const c = telepathyCopy.hero
 
-// S1 — full-height hero: photo + dark overlay, drifting starfield, a
+// S1 — full-height hero: crossfading photos + dark overlay, drifting starfield, a
 // breathing gold aura behind the headline. `id="tw-hero"` is what the
 // sticky WhatsApp bar watches to know when the hero has scrolled away.
 export function HeroSection({ lang }: { lang: Lang }): React.JSX.Element {
   return (
     <section id="tw-hero" aria-labelledby="tw-hero-heading" className="relative isolate flex min-h-[calc(100svh-61px)] items-center overflow-hidden px-4 pb-16 pt-14 sm:px-8 sm:pb-24 sm:pt-20">
-      <Image src={TELEPATHY_IMAGES.hero} alt={pick(c.imageAlt, lang)} fill priority fetchPriority="high" sizes="100vw" className="-z-30 object-cover" />
+      <HeroCrossfade alt={pick(c.imageAlt, lang)} />
       <div className="tw-hero-overlay absolute inset-0 -z-20" />
       <Starfield className="absolute inset-0 -z-10 h-full w-full" />
       <div className="tw-aura pointer-events-none absolute left-1/2 top-[44svh] -z-10 aspect-square w-[min(150vw,980px)] -translate-x-1/2 -translate-y-1/2 rounded-full" aria-hidden="true" />

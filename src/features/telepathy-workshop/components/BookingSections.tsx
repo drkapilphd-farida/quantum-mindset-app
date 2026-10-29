@@ -12,7 +12,7 @@ import { Heading, Ornament, Section } from './ui'
 export function DatesSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = telepathyCopy.dates
   return (
-    <Section id="dates" tone="dark" labelledBy="tw-dates">
+    <Section id="dates" tone="warm" labelledBy="tw-dates">
       <div className="tw-reveal mx-auto max-w-3xl text-center">
         <Ornament className="mb-5 justify-center" />
         <Heading id="tw-dates">{pick(c.heading, lang)}</Heading>
@@ -96,7 +96,7 @@ export function DatesSection({ lang }: { lang: Lang }): React.JSX.Element {
 export function FaqSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = telepathyCopy.faq
   return (
-    <Section tone="warm" labelledBy="tw-faq">
+    <Section tone="dark" labelledBy="tw-faq">
       <div className="mx-auto max-w-3xl">
         <Heading id="tw-faq" className="tw-reveal text-center">
           {pick(c.heading, lang)}

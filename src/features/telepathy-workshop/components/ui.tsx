@@ -51,6 +51,7 @@ export function Photo({
   className = '',
   frame = 'tw-frame',
   priority = false,
+  position,
 }: {
   src: string
   alt: string
@@ -58,10 +59,12 @@ export function Photo({
   className?: string
   frame?: 'tw-frame' | 'tw-frame-glow'
   priority?: boolean
+  /** CSS object-position: which part stays in view when cropped. */
+  position?: string
 }): React.JSX.Element {
   return (
     <div className={`${frame} relative overflow-hidden rounded-[28px] bg-panel ${className}`}>
-      <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+      <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" style={position === undefined ? undefined : { objectPosition: position }} />
     </div>
   )
 }

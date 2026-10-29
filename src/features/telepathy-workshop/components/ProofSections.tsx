@@ -1,5 +1,5 @@
 import type { Lang } from '@/lib/i18n'
-import { TELEPATHY_IMAGES, YOUTUBE_CHANNEL_URL } from '@/config/telepathyWorkshopConfig'
+import { PORTRAIT_POSITION, TELEPATHY_IMAGES, YOUTUBE_CHANNEL_URL } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
 import { CountUp } from './CountUp'
@@ -10,11 +10,11 @@ import { CheckDot, Heading, Ornament, Photo, Section } from './ui'
 export function AboutSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = telepathyCopy.about
   return (
-    <Section tone="warm" labelledBy="tw-about">
+    <Section tone="dark" labelledBy="tw-about">
       <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div className="tw-reveal relative mx-auto w-full max-w-[400px]">
           <div className="tw-aura absolute -inset-[14%] rounded-full" aria-hidden="true" />
-          <Photo src={TELEPATHY_IMAGES.portrait} alt={pick(c.imageAlt, lang)} sizes="(min-width: 1024px) 400px, 80vw" frame="tw-frame-glow" className="aspect-[4/5]" />
+          <Photo src={TELEPATHY_IMAGES.portrait} alt={pick(c.imageAlt, lang)} sizes="(min-width: 1024px) 400px, 80vw" frame="tw-frame-glow" position={PORTRAIT_POSITION} className="aspect-[4/5]" />
         </div>
         <div className="tw-reveal">
           <Heading id="tw-about">{pick(c.heading, lang)}</Heading>
@@ -44,7 +44,7 @@ export function ReviewsSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = telepathyCopy.reviews
   const channelReady = YOUTUBE_CHANNEL_URL.startsWith('https://')
   return (
-    <Section tone="dark" labelledBy="tw-reviews">
+    <Section tone="warm" labelledBy="tw-reviews">
       <div className="tw-reveal mx-auto max-w-3xl text-center">
         <Ornament className="mb-5 justify-center" />
         <Heading id="tw-reviews">{pick(c.heading, lang)}</Heading>
@@ -73,7 +73,7 @@ export function ReviewsSection({ lang }: { lang: Lang }): React.JSX.Element {
 export function WhoForSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = telepathyCopy.whoFor
   return (
-    <Section tone="warm" labelledBy="tw-whofor">
+    <Section tone="dark" labelledBy="tw-whofor">
       <div className="mx-auto max-w-3xl">
         <Heading id="tw-whofor" className="tw-reveal text-center">
           {pick(c.heading, lang)}

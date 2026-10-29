@@ -12,6 +12,7 @@ import { HeroSection } from './HeroSection'
 import { GuruSection, MuseSection, ProblemSection, RelationshipsSection, SkillsSection, TradersSection } from './StorySections'
 import { AboutSection, ReviewsSection, WhoForSection } from './ProofSections'
 import { DatesSection, Disclaimer, FaqSection, FinalCtaSection } from './BookingSections'
+import { GallerySection } from './GallerySection'
 import { StickyWhatsApp } from './StickyWhatsApp'
 import { trackTelepathyLead } from './WhatsAppLink'
 
@@ -49,6 +50,7 @@ export function TelepathyWorkshop({ urlLang }: { urlLang: Lang | null }): React.
         <RelationshipsSection lang={lang} />
         <TradersSection lang={lang} />
         <MuseSection lang={lang} />
+        <GallerySection lang={lang} />
         <AboutSection lang={lang} />
         <ReviewsSection lang={lang} />
         <WhoForSection lang={lang} />

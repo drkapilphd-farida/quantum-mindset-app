@@ -80,24 +80,40 @@ export const TELEPATHY_WORKSHOP_DATES: readonly TelepathyWorkshopDate[] = [
 // Captions are optional: leave "" to show none. An ID still starting with
 // "VIDEO_ID" shows a placeholder card instead of a thumbnail.
 export const REVIEW_VIDEOS: readonly { id: string; captionEn: string; captionHi: string }[] = [
-  { id: 'VIDEO_ID_1', captionEn: '', captionHi: '' },
-  { id: 'VIDEO_ID_2', captionEn: '', captionHi: '' },
-  { id: 'VIDEO_ID_3', captionEn: '', captionHi: '' },
-  { id: 'VIDEO_ID_4', captionEn: '', captionHi: '' },
-  { id: 'VIDEO_ID_5', captionEn: '', captionHi: '' },
-  { id: 'VIDEO_ID_6', captionEn: '', captionHi: '' },
+  { id: 'WZMSSuRTr78', captionEn: '', captionHi: '' },
+  { id: 'uNWLFqACpDU', captionEn: '', captionHi: '' },
+  { id: 'NubHGGlQdo8', captionEn: '', captionHi: '' },
+  { id: 'pRG3sdsXiHM', captionEn: '', captionHi: '' },
+  { id: '8fFMNvaH__Q', captionEn: '', captionHi: '' },
+  { id: 'eFskqwYdrw4', captionEn: '', captionHi: '' },
 ]
 
-// "Watch All Reviews on YouTube" button. While this still says
-// YOUTUBE_CHANNEL_URL the button is hidden.
-export const YOUTUBE_CHANNEL_URL = 'YOUTUBE_CHANNEL_URL'
+// "Watch All Reviews on YouTube" button (hidden unless this is an https:// link).
+export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@innershiftWithDrKapil/videos'
 
 // ── Images ──────────────────────────────────────────────────────────
-// Replace the files in public/images/telepathy-workshop/ with your own
-// photos under the SAME names (any size; they are cropped to fit).
+// All photos live in public/images/telepathy-workshop/. To swap a photo,
+// replace the file under the SAME name. `position` is the CSS
+// object-position: which part of the photo stays in view when it is
+// cropped to fit (x% y%; "50% 50%" = centre).
 const IMG = '/images/telepathy-workshop'
+
+export type TelepathyPhoto = { src: string; width: number; height: number; position: string }
+
+// Hero crossfade, in order. The first one loads first and is the og:image.
+// Add or remove entries to change how many photos rotate.
+export const HERO_IMAGES: readonly TelepathyPhoto[] = [
+  { src: `${IMG}/hero-1.jpg`, width: 6528, height: 4896, position: '29% 60%' },
+  { src: `${IMG}/hero-2.jpg`, width: 1440, height: 1080, position: '50% 50%' },
+  { src: `${IMG}/hero-3.jpg`, width: 4096, height: 3072, position: '50% 50%' },
+  { src: `${IMG}/hero-4.jpg`, width: 4000, height: 1824, position: '50% 50%' },
+  { src: `${IMG}/hero-5.jpg`, width: 4000, height: 1824, position: '50% 50%' },
+]
+// Seconds each hero photo stays, and the fade between them.
+export const HERO_SLIDE_SECONDS = 6
+export const HERO_FADE_SECONDS = 1.5
+
 export const TELEPATHY_IMAGES = {
-  hero: `${IMG}/hero-workshop.jpg`,
   problem: `${IMG}/problem.jpg`,
   guruWithin: `${IMG}/guru-within.jpg`,
   relationships: `${IMG}/relationships.jpg`,
@@ -107,5 +123,17 @@ export const TELEPATHY_IMAGES = {
   finalCta: `${IMG}/final-cta.jpg`,
 } as const
 
-// og:image (WhatsApp/Facebook link preview). Size of the current file.
-export const TELEPATHY_OG_IMAGE = { url: TELEPATHY_IMAGES.hero, width: 1920, height: 1080 } as const
+// About photo: keeps Dr. Kapil's face in view in the 4:5 frame.
+export const PORTRAIT_POSITION = '6% 50%'
+
+// Gallery strip + lightbox, in order (up to 20). width/height = the file's size.
+const g = (n: number, width: number, height: number): TelepathyPhoto => ({ src: `${IMG}/gallery-${String(n).padStart(2, '0')}.jpg`, width, height, position: '50% 50%' })
+export const GALLERY_IMAGES: readonly TelepathyPhoto[] = [
+  g(1, 4032, 3024), g(2, 2400, 1800), g(3, 1280, 960), g(4, 4096, 3072), g(5, 4096, 3072),
+  g(6, 4096, 3072), g(7, 4096, 3072), g(8, 1440, 656), g(9, 1440, 656), g(10, 1440, 656),
+  g(11, 4000, 1824), g(12, 4000, 1824), g(13, 4000, 1824), g(14, 4000, 1824), g(15, 1824, 4000),
+  g(16, 4032, 3024), g(17, 4032, 3024), g(18, 5712, 4284), g(19, 4032, 3024), g(20, 4032, 3024),
+]
+
+// og:image (WhatsApp/Facebook link preview) = the first hero photo.
+export const TELEPATHY_OG_IMAGE = { url: HERO_IMAGES[0]?.src ?? `${IMG}/hero-1.jpg`, width: HERO_IMAGES[0]?.width ?? 6528, height: HERO_IMAGES[0]?.height ?? 4896 } as const

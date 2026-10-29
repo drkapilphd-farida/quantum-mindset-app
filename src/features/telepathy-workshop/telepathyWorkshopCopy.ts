@@ -202,13 +202,25 @@ export const telepathyCopy = {
     imageAlt: { en: 'Dr. Kapil Dev Sharma', hi: 'डॉ. कपिल देव शर्मा' },
   },
 
+  // ── Gallery (between Muse 2 and About; photo list in telepathyWorkshopConfig.ts) ──
+  gallery: {
+    heading: { en: 'Moments From 12 Years of Workshops', hi: '12 साल की वर्कशॉप की झलकियाँ' },
+    imageAlt: { en: 'A moment from The Telepathy Workshop', hi: 'The Telepathy Workshop का एक पल' },
+    // Screen-reader labels for the photo viewer. REVIEW
+    open: { en: 'Open photo {n} of {total}', hi: 'फ़ोटो {n} / {total} खोलें' },
+    close: { en: 'Close', hi: 'बंद करें' },
+    previous: { en: 'Previous photo', hi: 'पिछली फ़ोटो' },
+    next: { en: 'Next photo', hi: 'अगली फ़ोटो' },
+    viewer: { en: 'Workshop photos', hi: 'वर्कशॉप की फ़ोटो' },
+  },
+
   // ── S9: Video reviews (video IDs are in telepathyWorkshopConfig.ts) ──
   reviews: {
     heading: { en: 'Hear It From Them, in Their Own Words', hi: 'उन्हीं से सुनिए, उन्हीं के शब्दों में' },
     sub: { en: '200+ participants have shared their experience on camera. Here are a few.', hi: '200+ प्रतिभागियों ने कैमरे पर अपना अनुभव साझा किया है। इनमें से कुछ यहाँ हैं।' },
     button: { en: 'Watch All Reviews on YouTube', hi: 'YouTube पर सभी रिव्यू देखें' },
     playLabel: { en: 'Play video review', hi: 'वीडियो रिव्यू चलाएँ' }, // REVIEW (screen readers only)
-    placeholder: { en: 'Video coming soon', hi: 'वीडियो जल्द' }, // REVIEW (shown only until real IDs are added)
+    placeholder: { en: 'Video coming soon', hi: 'वीडियो जल्द आ रहा है' }, // shown only for an ID still set to VIDEO_ID…
   },
 
   // ── S10: Who is this for ──────────────────────────────────────────
@@ -278,7 +290,7 @@ export const telepathyCopy = {
 
   // ── S12: FAQ ──────────────────────────────────────────────────────
   faq: {
-    heading: { en: 'FAQ', hi: 'FAQ' },
+    heading: { en: 'FAQ', hi: 'अक्सर पूछे जाने वाले सवाल' },
     items: [
       { q: { en: 'Do I need prior meditation experience?', hi: 'क्या ध्यान का पहले से अनुभव ज़रूरी है?' }, a: { en: 'No. Everything is taught from the beginning.', hi: 'नहीं। सब कुछ शुरुआत से सिखाया जाता है।' } },
       {
