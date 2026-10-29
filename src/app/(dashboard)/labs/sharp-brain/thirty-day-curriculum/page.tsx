@@ -42,6 +42,10 @@ type ThirtyDayCurriculumPageProps = {
   searchParams: Promise<{ view?: string | undefined; day?: string | undefined }>
 }
 
+// Chapter & Book also runs inside the 30-day player: its "make the key ideas"
+// server action needs room for one AI call plus one retry (see generateChapterMap).
+export const maxDuration = 60
+
 export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDayCurriculumPageProps): Promise<React.JSX.Element> {
   const [isPro, completions, watermarkText, nextDayOpensAt, skillBars] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
