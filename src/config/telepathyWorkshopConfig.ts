@@ -120,8 +120,15 @@ export const TELEPATHY_IMAGES = {
   trader: `${IMG}/trader.jpg`,
   muse: `${IMG}/muse2-demo.jpg`,
   portrait: `${IMG}/dr-kapil-portrait.jpg`,
+  ctaPortrait: `${IMG}/dr-kapil-cta.jpg`,
   finalCta: `${IMG}/final-cta.jpg`,
 } as const
+
+// Final call to action: Dr. Kapil's photo is shown whole (never cropped) at
+// this size. Set FINAL_CTA_BACKGROUND to false to drop the soft
+// final-cta.jpg background behind the section.
+export const CTA_PORTRAIT_SIZE = { width: 1374, height: 1145 } as const
+export const FINAL_CTA_BACKGROUND = true
 
 // About photo: keeps Dr. Kapil's face in view in the 4:5 frame.
 export const PORTRAIT_POSITION = '6% 50%'

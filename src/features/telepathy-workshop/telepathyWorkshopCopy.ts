@@ -330,7 +330,7 @@ export const telepathyCopy = {
     heading: { en: 'Stop Searching Outside. Start Listening Within.', hi: 'बाहर ढूँढना बंद कीजिए। भीतर सुनना शुरू कीजिए।' },
     body: { en: 'Seats are limited, and the {price} fee is only for this batch.', hi: 'सीटें सीमित हैं, और {price} की फ़ीस सिर्फ़ इस बैच के लिए है।' },
     button: { en: 'Message on WhatsApp: {phone}', hi: 'WhatsApp पर मैसेज करें: {phone}' },
-    imageAlt: { en: 'Sunrise over the horizon', hi: 'क्षितिज पर उगता सूरज' }, // REVIEW
+    portraitAlt: { en: 'Dr. Kapil Dev Sharma inviting you to the workshop', hi: 'डॉ. कपिल देव शर्मा आपको वर्कशॉप में आमंत्रित करते हुए' },
   },
 
   // ── Disclaimer (above the site footer) ────────────────────────────

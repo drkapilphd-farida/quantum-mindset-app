@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { CalendarPlus, CalendarDays, MapPin, Plus } from 'lucide-react'
 import type { Lang } from '@/lib/i18n'
-import { TELEPATHY_IMAGES, TELEPATHY_PRICE, TELEPATHY_WORKSHOP_DATES } from '@/config/telepathyWorkshopConfig'
+import { CTA_PORTRAIT_SIZE, FINAL_CTA_BACKGROUND, TELEPATHY_IMAGES, TELEPATHY_PRICE, TELEPATHY_WORKSHOP_DATES } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { googleCalendarUrl, pick } from '../telepathyWorkshop'
 import { Countdown } from './Countdown'
@@ -120,27 +120,48 @@ export function FaqSection({ lang }: { lang: Lang }): React.JSX.Element {
 }
 
 // S13 — final call to action, sunrise photo with a big glow
+// S13 — final call to action. Desktop: Dr. Kapil's photo (pointing at the
+// visitor) on the left, heading + button on the right. Mobile: photo on
+// top, shown whole. Optional soft final-cta.jpg background (config).
 export function FinalCtaSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = telepathyCopy.finalCta
   return (
-    <section aria-labelledby="tw-final" className="relative isolate overflow-hidden px-4 py-24 sm:px-8 sm:py-36">
-      <Image src={TELEPATHY_IMAGES.finalCta} alt={pick(c.imageAlt, lang)} fill sizes="100vw" className="-z-20 object-cover" />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--color-void)_0%,rgba(7,8,24,0.6)_35%,rgba(7,8,24,0.7)_70%,var(--color-void)_100%)]" />
-      <div className="tw-aura pointer-events-none absolute left-1/2 top-1/2 -z-10 aspect-square w-[min(140vw,900px)] -translate-x-1/2 -translate-y-1/2 rounded-full" aria-hidden="true" />
-      <div className="tw-reveal mx-auto max-w-3xl text-center">
-        <Ornament className="mb-6 justify-center" />
-        <h2 id="tw-final" className="tw-display tw-h2 text-ink">
-          <span className="tw-gold-text">{pick(c.heading, lang)}</span>
-        </h2>
-        <p className="tw-body mx-auto mt-5 max-w-xl text-ink/90">{pick(c.body, lang)}</p>
-        <WhatsAppLink
-          topic="general"
-          location="final_cta"
-          className="tw-btn-gold mt-9 inline-flex min-h-16 w-full max-w-md items-center justify-center gap-3 rounded-full px-7 py-4 text-[18px] font-bold sm:w-auto sm:max-w-none sm:px-10 sm:text-[20px]"
-        >
-          <WhatsAppGlyph className="size-7 flex-none" />
-          {pick(c.button, lang)}
-        </WhatsAppLink>
+    <section aria-labelledby="tw-final" className="tw-section-warm relative isolate overflow-hidden px-4 py-20 sm:px-8 sm:py-28">
+      {FINAL_CTA_BACKGROUND && (
+        <>
+          <Image data-cta-bg src={TELEPATHY_IMAGES.finalCta} alt="" fill sizes="100vw" quality={60} className="-z-20 object-cover opacity-40" />
+          <div data-cta-bg className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--color-void)_0%,rgba(7,8,24,0.78)_30%,rgba(7,8,24,0.82)_70%,var(--color-void)_100%)]" />
+        </>
+      )}
+      <div className="mx-auto grid max-w-content items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+        <div className="tw-reveal relative mx-auto w-full max-w-[520px]">
+          <div className="tw-aura absolute -inset-[14%] rounded-full" aria-hidden="true" />
+          <div className="tw-frame-glow relative overflow-hidden rounded-[28px] bg-panel">
+            <Image
+              src={TELEPATHY_IMAGES.ctaPortrait}
+              alt={pick(c.portraitAlt, lang)}
+              width={CTA_PORTRAIT_SIZE.width}
+              height={CTA_PORTRAIT_SIZE.height}
+              sizes="(min-width: 1024px) 520px, (min-width: 560px) 520px, 92vw"
+              className="block h-auto w-full"
+            />
+          </div>
+        </div>
+        <div className="tw-reveal text-center lg:text-left">
+          <Ornament className="mb-6 justify-center lg:justify-start" />
+          <h2 id="tw-final" className="tw-display tw-h2 text-ink">
+            <span className="tw-gold-text">{pick(c.heading, lang)}</span>
+          </h2>
+          <p className="tw-body mx-auto mt-5 max-w-xl text-ink/90 lg:mx-0">{pick(c.body, lang)}</p>
+          <WhatsAppLink
+            topic="general"
+            location="final_cta"
+            className="tw-btn-gold mt-9 inline-flex min-h-16 w-full max-w-md items-center justify-center gap-3 rounded-full px-7 py-4 text-[18px] font-bold sm:w-auto sm:max-w-none sm:px-10 sm:text-[20px]"
+          >
+            <WhatsAppGlyph className="size-7 flex-none" />
+            {pick(c.button, lang)}
+          </WhatsAppLink>
+        </div>
       </div>
     </section>
   )
