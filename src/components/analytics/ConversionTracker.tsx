@@ -14,6 +14,12 @@ import { programs } from "@/config/site.config";
 // - Contact on any WhatsApp link click, whose pre-filled message also gets the
 //   visitor's UTM params appended.
 // Form submits and finished free tests call trackLead themselves.
+
+// Pages whose WhatsApp messages are sent exactly as written (no UTM line):
+// /telepathy-workshop's "TELEPATHY - …" messages trigger WhatsApp auto-replies.
+// The Contact event still fires there.
+const KEEP_WHATSAPP_MESSAGE_PATHS = ["/telepathy-workshop"];
+
 export default function ConversionTracker(): null {
   const pathname = usePathname();
 
@@ -40,8 +46,9 @@ export default function ConversionTracker(): null {
         trackInitiateCheckout(contentNameFor(path, anchor.href, "Checkout"));
         return;
       }
-      // Rewrite before the browser follows the link, so the message carries UTM params.
-      anchor.href = withUtmInWhatsAppHref(anchor.href);
+      // Rewrite before the browser follows the link, so the message carries UTM params —
+      // except on pages whose pre-filled messages are auto-reply keywords and must stay exact.
+      if (!KEEP_WHATSAPP_MESSAGE_PATHS.includes(path)) anchor.href = withUtmInWhatsAppHref(anchor.href);
       // Buttons that already counted this Contact themselves (the free test's "Send on WhatsApp").
       if (anchor.dataset.contactTracked !== undefined) return;
       trackWhatsAppContact(contentNameFor(path, anchor.href, "WhatsApp enquiry"));

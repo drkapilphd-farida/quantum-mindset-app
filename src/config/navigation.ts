@@ -48,6 +48,7 @@ export function programGroups(lang: Lang): NavGroup[] {
       links: [
         { label: hi ? 'ऑनलाइन रिट्रीट' : 'Online Retreat', href: programs.onlineRetreat.url },
         { label: hi ? 'रेजिडेंशियल रिट्रीट्स' : 'Residential Retreats', href: programs.residentialRetreat.url },
+        { label: 'Telepathy Workshop', href: programs.telepathyWorkshop.url },
       ],
     },
   ]

@@ -2,11 +2,13 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { retiredPageRedirect } from '@/config/retiredPages'
 import { updateSession } from '@/lib/supabase/middleware'
 import { APP_DOMAIN_HEADER, resolveAppDomain, isAppSubdomain, type AppDomain } from '@/lib/domains/appDomain'
+import { SITE_URL } from '@/lib/seo/siteUrl'
 import { ACTIVE_SESSION_COOKIE, ACTIVE_SESSION_COOKIE_MAX_AGE_SECONDS, resolveActiveSession } from '@/lib/activeSessions/activeSessionGate'
 import { DEVICE_CHECK_COOKIE, DEVICE_CHECK_INTERVAL_MS, deviceCheckIsFresh, makeDeviceCheckStamp } from '@/lib/activeSessions/deviceCheckStamp'
 
 const PROTECTED_PATHS = ['/dashboard', '/labs', '/practice', '/progress', '/memory-studio', '/settings', '/admin', '/preview', '/parent-dashboard', '/school-admin', '/partner-admin']
 const AUTH_PATHS = ['/login', '/signup']
+const WEBSITE_ONLY_PATHS = ['/telepathy-workshop']
 
 // Domain Split™ — checked independently of PROTECTED_PATHS/auth state,
 // since /unified-session-preview is intentionally login-optional
@@ -69,6 +71,26 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   // already uses, for the same reason.
   const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host')
   const appDomain = resolveAppDomain(host)
+
+  // Website-only campaign pages: on app.mindurmind.org.in, send them to the
+  // same address on www (query string — ?lang, utm_* — kept).
+  if (isAppSubdomain(host) && WEBSITE_ONLY_PATHS.includes(pathname)) {
+    return NextResponse.redirect(new URL(`${pathname}${request.nextUrl.search}`, SITE_URL), 308)
+  }
+
+  // /telepathy-workshop?lang=hi|en (ad links) → its pre-built static copy;
+  // the copies' own addresses go back to the ?lang link.
+  const telepathyLang = request.nextUrl.searchParams.get('lang')
+  if (pathname === '/telepathy-workshop' && (telepathyLang === 'hi' || telepathyLang === 'en')) {
+    return NextResponse.rewrite(new URL(`/telepathy-workshop/${telepathyLang}${request.nextUrl.search}`, request.url))
+  }
+  const telepathyCopyPath = /^\/telepathy-workshop\/(en|hi)\/?$/.exec(pathname)
+  if (telepathyCopyPath !== null) {
+    const target = new URL('/telepathy-workshop', request.url)
+    target.search = request.nextUrl.search
+    target.searchParams.set('lang', telepathyCopyPath[1] ?? 'en')
+    return NextResponse.redirect(target, 308)
+  }
 
   const { response: sessionResponse, user, supabase } = await updateSession(request)
 
