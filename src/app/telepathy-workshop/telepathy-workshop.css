@@ -1,0 +1,343 @@
+/*
+ * The Telepathy Workshop™ (/telepathy-workshop) — "cosmic + sacred" palette,
+ * loaded by this route's layout only. Like .warm-light, it remaps the site
+ * colour tokens inside one wrapper, so the shared header and footer turn
+ * midnight-and-gold here without any change to those components.
+ */
+.tw-cosmic {
+  --color-void: #070818;
+  --color-panel: #10122b;
+  --color-panel-2: #171a3a;
+  --color-panel2: #171a3a;
+  --color-ink: #f4efe2;
+  --color-ink-dim: #c9c5dc;
+  --color-ink-faint: #a9a5c2;
+  --color-gold: #e8c46e;
+  --color-gold-dim: #c9a24a;
+  --color-gold-soft: rgba(232, 196, 110, 0.12);
+  --color-teal: #8fe3d6;
+  --color-teal-light: #b5efe6;
+  --color-teal-soft: rgba(143, 227, 214, 0.1);
+  --color-line: rgba(244, 239, 226, 0.1);
+  --color-line-strong: rgba(244, 239, 226, 0.2);
+
+  --tw-violet: #8b6cf0;
+  --tw-aqua: #6fd9d0;
+  --tw-warm: #1a1129;
+
+  /* English: Inter body + Cormorant Garamond headlines (no Devanagari font
+     in this stack, so English visitors never download it). */
+  --font-sans: var(--font-homepage-sans), var(--font-homepage-devanagari), system-ui, sans-serif;
+  --tw-display: var(--font-tw-serif), Georgia, serif;
+
+  background-color: var(--color-void);
+  color: var(--color-ink);
+  overflow-x: clip;
+}
+
+/* Hindi: Noto Sans Devanagari body + Noto Serif Devanagari headlines, taller lines. */
+.tw-cosmic[data-lang='hi'] {
+  --font-sans: var(--font-homepage-devanagari), var(--font-homepage-sans), system-ui, sans-serif;
+  --tw-display: 'TW Noto Serif Devanagari', 'TW Noto Serif Devanagari Fallback', Georgia, serif;
+}
+
+/* Hindi headline font, self-hosted as two small subsets (see
+   public/fonts/telepathy-workshop/README.txt). A browser downloads a file
+   only when Hindi headline text needs it; ?lang=hi links also preload the
+   Devanagari file (telepathyWorkshopPage.tsx). */
+@font-face {
+  font-family: 'TW Noto Serif Devanagari';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/telepathy-workshop/noto-serif-devanagari-600-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+20B9, U+200C-200D, U+25CC;
+}
+@font-face {
+  font-family: 'TW Noto Serif Devanagari';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/telepathy-workshop/noto-serif-devanagari-600-latin.woff2') format('woff2');
+  unicode-range: U+0020-007E, U+00A0-00FF, U+2013-2014, U+2018-201D, U+2022, U+2026, U+2122;
+}
+/* Same metric overrides next/font generated, so the swap doesn't shift text. */
+@font-face {
+  font-family: 'TW Noto Serif Devanagari Fallback';
+  src: local('Times New Roman');
+  ascent-override: 78.38%;
+  descent-override: 52.68%;
+  line-gap-override: 0%;
+  size-adjust: 118.65%;
+}
+
+.tw-cosmic ::selection {
+  background-color: rgba(232, 196, 110, 0.3);
+  color: #fff;
+}
+
+.tw-cosmic :focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.tw-display {
+  font-family: var(--tw-display);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.12;
+  text-wrap: balance;
+  /* Cormorant's default old-style figures wobble in prices and stats. */
+  font-variant-numeric: lining-nums;
+}
+/* Devanagari has no true italic — never let the browser fake-slant it. */
+.tw-cosmic[data-lang='hi'] .tw-display {
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+/* Wide letter-spacing breaks Devanagari conjuncts apart. */
+.tw-cosmic[data-lang='hi'] main [class*='tracking-'] {
+  letter-spacing: 0;
+}
+
+.tw-h1 { font-size: clamp(2.6rem, 10.5vw, 5rem); }
+.tw-h2 { font-size: clamp(2.15rem, 7.4vw, 3.5rem); }
+/* Hindi strings run longer and Devanagari is taller: a step smaller. */
+.tw-cosmic[data-lang='hi'] .tw-h1 { font-size: clamp(2rem, 8.2vw, 3.9rem); }
+.tw-cosmic[data-lang='hi'] .tw-h2 { font-size: clamp(1.65rem, 6vw, 2.7rem); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.tw-cosmic) { scroll-behavior: smooth; }
+}
+
+.tw-body {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-ink-dim);
+}
+@media (min-width: 768px) {
+  .tw-body { font-size: 18.5px; }
+}
+.tw-cosmic[data-lang='hi'] .tw-body {
+  line-height: 1.8;
+}
+.tw-cosmic[data-lang='hi'] .tw-hi-loose {
+  line-height: 1.75;
+}
+
+.tw-gold-text {
+  background: linear-gradient(100deg, #f7e2a6 0%, #e8c46e 40%, #fff1c9 55%, #d9a948 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Section surfaces ──────────────────────────────────────────── */
+.tw-section-dark {
+  background:
+    radial-gradient(ellipse 60% 40% at 85% 0%, rgba(139, 108, 240, 0.14), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(111, 217, 208, 0.08), transparent 70%),
+    var(--color-void);
+}
+.tw-section-warm {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(232, 196, 110, 0.12), transparent 70%),
+    linear-gradient(180deg, #120d22 0%, var(--tw-warm) 50%, #120d22 100%);
+}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+.tw-hero-overlay {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 45%, rgba(7, 8, 24, 0.5), rgba(7, 8, 24, 0.82) 80%),
+    linear-gradient(180deg, rgba(7, 8, 24, 0.7) 0%, rgba(7, 8, 24, 0.4) 40%, var(--color-void) 100%);
+}
+.tw-aura {
+  background: radial-gradient(circle, rgba(232, 196, 110, 0.3) 0%, rgba(139, 108, 240, 0.18) 38%, rgba(111, 217, 208, 0.06) 60%, transparent 72%);
+}
+
+/* ── Glass cards ───────────────────────────────────────────────── */
+.tw-glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(244, 239, 226, 0.12);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+.tw-glass-hover:hover {
+  border-color: rgba(232, 196, 110, 0.45);
+  box-shadow: 0 0 0 1px rgba(232, 196, 110, 0.15), 0 18px 60px -18px rgba(232, 196, 110, 0.35), 0 0 80px -30px rgba(139, 108, 240, 0.6);
+  transform: translateY(-3px);
+}
+.tw-icon-glow {
+  filter: drop-shadow(0 0 10px rgba(232, 196, 110, 0.55)) drop-shadow(0 0 22px rgba(139, 108, 240, 0.35));
+}
+
+/* Image frames */
+.tw-frame {
+  box-shadow: 0 0 0 1px rgba(232, 196, 110, 0.25), 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+}
+.tw-frame-glow {
+  box-shadow: 0 0 0 1px rgba(232, 196, 110, 0.55), 0 0 40px rgba(232, 196, 110, 0.28), 0 0 120px rgba(139, 108, 240, 0.3);
+}
+
+/* ── Buttons ───────────────────────────────────────────────────── */
+.tw-btn-gold {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(135deg, #f6dc94 0%, #e8c46e 45%, #d1a446 100%);
+  color: #1b1405;
+  box-shadow: 0 10px 30px -10px rgba(232, 196, 110, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.tw-btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.65) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.tw-btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -12px rgba(232, 196, 110, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.tw-btn-wa {
+  background: #25d366;
+  color: #062b14;
+  box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.tw-btn-wa:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Ticket cards ──────────────────────────────────────────────── */
+/* Two parts — details on top, a tear-off stub with the button below —
+   each with half-circle notches where they meet. */
+.tw-ticket-top,
+.tw-ticket-stub {
+  background: linear-gradient(165deg, #1c1a3e 0%, #121331 100%);
+}
+.tw-ticket-top {
+  border-radius: 20px 20px 0 0;
+  -webkit-mask:
+    radial-gradient(circle 14px at 0 100%, transparent 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 14px at 100% 100%, transparent 97%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle 14px at 0 100%, transparent 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 14px at 100% 100%, transparent 97%, #000) right / 51% 100% no-repeat;
+}
+.tw-ticket-stub {
+  border-radius: 0 0 20px 20px;
+  background-image:
+    linear-gradient(90deg, rgba(232, 196, 110, 0.5) 50%, transparent 0),
+    linear-gradient(165deg, #17163a 0%, #0f1029 100%);
+  background-size: 12px 1px, 100% 100%;
+  background-position: 0 0, 0 0;
+  background-repeat: repeat-x, no-repeat;
+  -webkit-mask:
+    radial-gradient(circle 14px at 0 0, transparent 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 14px at 100% 0, transparent 97%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle 14px at 0 0, transparent 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 14px at 100% 0, transparent 97%, #000) right / 51% 100% no-repeat;
+}
+.tw-ticket {
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.45));
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+.tw-ticket:hover {
+  filter: drop-shadow(0 0 1px rgba(232, 196, 110, 0.8)) drop-shadow(0 18px 50px rgba(232, 196, 110, 0.28));
+  transform: translateY(-4px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tw-ticket { transition: none; }
+  .tw-ticket:hover { transform: none; }
+}
+
+/* ── FAQ ───────────────────────────────────────────────────────── */
+.tw-faq summary::-webkit-details-marker { display: none; }
+.tw-faq summary { list-style: none; }
+.tw-faq[open] .tw-faq-icon { transform: rotate(45deg); }
+.tw-faq-icon { transition: transform 0.3s ease; }
+
+/* ── Brain wave (Muse 2): jagged → smooth when scrolled into view ─ */
+.tw-wave-jagged,
+.tw-wave-smooth {
+  transition: opacity 1.4s ease, stroke-dashoffset 2.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.tw-wave-smooth {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+.tw-wave.is-calm .tw-wave-jagged { opacity: 0.08; }
+.tw-wave.is-calm .tw-wave-smooth { stroke-dashoffset: 0; opacity: 1; transition-delay: 0.5s; }
+
+/* ── Video carousel (mobile swipe) ─────────────────────────────── */
+.tw-snap {
+  scrollbar-width: none;
+}
+.tw-snap::-webkit-scrollbar { display: none; }
+
+/* ── Motion (only for visitors who haven't asked for less) ─────── */
+@media (prefers-reduced-motion: no-preference) {
+  .tw-btn-gold::after {
+    animation: tw-shimmer 4.5s ease-in-out 1.5s infinite;
+  }
+  .tw-aura {
+    animation: tw-breathe 7s ease-in-out infinite;
+  }
+  .tw-float {
+    animation: tw-float 9s ease-in-out infinite;
+  }
+
+  /* Scroll reveal without JavaScript: content is always visible where
+     scroll-driven animations aren't supported. */
+  @supports (animation-timeline: view()) {
+    .tw-reveal {
+      animation: tw-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-wave-jagged,
+  .tw-wave-smooth,
+  .tw-glass,
+  .tw-btn-gold,
+  .tw-btn-wa,
+  .tw-faq-icon {
+    transition: none;
+  }
+  .tw-glass-hover:hover,
+  .tw-btn-gold:hover,
+  .tw-btn-wa:hover {
+    transform: none;
+  }
+}
+
+@keyframes tw-shimmer {
+  0% { transform: translateX(-120%); }
+  35%, 100% { transform: translateX(120%); }
+}
+@keyframes tw-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+@keyframes tw-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes tw-reveal {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -241,6 +241,14 @@ const nextConfig: NextConfig = {
         hostname: '*.supabase.co',
         pathname: '/storage/v1/object/public/**',
       },
+      // YouTube thumbnails for /telepathy-workshop's video reviews — fetched
+      // by the image optimizer and served from our own domain, so the
+      // page's img-src CSP stays unchanged.
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+        pathname: '/vi/**',
+      },
     ],
   },
 

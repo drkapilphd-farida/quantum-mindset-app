@@ -372,6 +372,23 @@ const programsData = {
     },
     pillar: 'brain',
   },
+  // The Telepathy Workshop™ — 2-day offline workshop, booked on WhatsApp.
+  // Dates, prices and venues are owned by telepathyWorkshopConfig.ts (the
+  // page's own config). No `event` here on purpose: the page lists several
+  // cities, so it stays out of the homepage's single-date "upcoming" strip.
+  telepathyWorkshop: {
+    id: 'telepathyWorkshop',
+    name: 'The Telepathy Workshop',
+    nameHi: 'The Telepathy Workshop',
+    outcome: 'Telepathy, Intuition Development, Cosmic Fusion and Heart-Brain Coherence in a 2-day experiential workshop.',
+    audience: 'Anyone drawn to meditation, energy and the power of the mind',
+    format: 'In person · Mumbai, Ahmedabad, Vadodara · 2 days, 9:30 AM – 6:00 PM',
+    prices: [{ label: 'Per person', amountInr: 4999 }],
+    checkout: [{ label: 'Book on WhatsApp', href: waLink('TELEPATHY - I want to know about the workshop') }],
+    url: '/telepathy-workshop',
+    status: 'active',
+    pillar: 'meditation',
+  },
 
   franchise: {
     id: 'franchise',

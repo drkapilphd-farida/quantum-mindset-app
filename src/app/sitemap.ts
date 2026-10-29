@@ -25,6 +25,7 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/franchise-individual', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/executive-brain-workshop', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/prefrontal-power-mumbai', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/telepathy-workshop', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/mind-assessment', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/programs/sharp-brain', changeFrequency: 'weekly', priority: 1 },
   { path: '/reading-memory-test', changeFrequency: 'monthly', priority: 0.8 },
