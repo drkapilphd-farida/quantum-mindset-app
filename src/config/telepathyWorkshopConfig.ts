@@ -1,16 +1,42 @@
-import { SITE_CONFIG_WHATSAPP_NUMBER, TELEPATHY_WORKSHOP_FEE } from './site.config'
+import { SITE_CONFIG_WHATSAPP_NUMBER, TELEPATHY_SEAT_PAYMENT_LINK, TELEPATHY_WORKSHOP_FEE } from './site.config'
 
 // The Telepathy Workshop™ — every editable VALUE on /telepathy-workshop
 // lives here: WhatsApp number and messages, batches (dates, venues — each
 // hides itself after its last day), YouTube video IDs, image paths and
-// gallery captions. The fee lives in site.config.ts (TELEPATHY_WORKSHOP_FEE).
+// gallery captions. The fee and the ₹1,000 Razorpay link live in
+// site.config.ts (TELEPATHY_WORKSHOP_FEE, TELEPATHY_SEAT_PAYMENT_LINK).
 // All page WORDING (English + Hindi side by side) lives in
 // src/features/telepathy-workshop/telepathyWorkshopCopy.ts.
 //
-// Tracking: the site-wide Meta Pixel (root layout) counts the page view and
-// every WhatsApp tap as "Contact"; this page adds a Meta "Lead" and a GA4
-// "telepathy_whatsapp_click" (with the batch and utm_source) per tap, and
-// GA4 "telepathy_video_play" for the free session and review videos.
+// Booking: "Book your seat — ₹1,000" opens the Razorpay link; after paying,
+// Razorpay sends the visitor to /telepathy-workshop/booked, where they send
+// their booking on WhatsApp. "Pay full ₹5,999 now" and "Questions?" are
+// WhatsApp messages.
+//
+// Tracking: the site-wide Meta Pixel (root layout) counts the page view,
+// every Razorpay tap as "InitiateCheckout" and every WhatsApp tap as
+// "Contact"; this page adds GA4 "telepathy_book_seat_click" (₹1,000 taps),
+// a Meta "Lead" + GA4 "telepathy_whatsapp_click" per WhatsApp tap (with
+// the batch, the kind — question / pay_full / booked — and utm_source),
+// GA4 "telepathy_booked_visit" on the thank-you page, and GA4
+// "telepathy_video_play" for the free session and review videos.
+
+// ── Booking (Razorpay) ──────────────────────────────────────────────
+export const TELEPATHY_BOOKING_URL = TELEPATHY_SEAT_PAYMENT_LINK
+/** The thank-you page Razorpay redirects to after the ₹1,000 payment. */
+export const TELEPATHY_BOOKED_PATH = '/telepathy-workshop/booked'
+
+// ── Fee (from site.config.ts) ───────────────────────────────────────
+const inr = (n: number): string => `₹${n.toLocaleString('en-IN')}`
+// Filled into every "{price}" / "{earlier}" / "{deposit}" / "{balance}" in the copy file.
+export const TELEPATHY_PRICE = {
+  earlier: inr(TELEPATHY_WORKSHOP_FEE.earlierInr), // shown struck through
+  offer: inr(TELEPATHY_WORKSHOP_FEE.currentInr),
+  offerInr: TELEPATHY_WORKSHOP_FEE.currentInr,
+  deposit: inr(TELEPATHY_WORKSHOP_FEE.depositInr),
+  depositInr: TELEPATHY_WORKSHOP_FEE.depositInr,
+  balance: inr(TELEPATHY_WORKSHOP_FEE.currentInr - TELEPATHY_WORKSHOP_FEE.depositInr),
+} as const
 
 // ── WhatsApp ────────────────────────────────────────────────────────
 // Number in international format, no "+" or spaces. Same number as the rest of the site.
@@ -18,36 +44,55 @@ export const TELEPATHY_WHATSAPP_NUMBER = SITE_CONFIG_WHATSAPP_NUMBER // '9195401
 // Shown on the final button.
 export const TELEPATHY_WHATSAPP_DISPLAY = '+91 95401 23161'
 
-// Pre-filled messages — English in both languages, always starting with
-// "TELEPATHY - " (the WhatsApp auto-reply keyword), then naming the workshop and batch.
-export const TELEPATHY_WHATSAPP_MESSAGES = {
-  general: 'TELEPATHY - Hi Dr. Kapil, I want to book the Telepathy Workshop.',
-  mumbai: 'TELEPATHY - Hi Dr. Kapil, I want to book the Telepathy Workshop — Mumbai, 14–15 Nov.',
-  ahmedabad: 'TELEPATHY - Hi Dr. Kapil, I want to book the Telepathy Workshop — Ahmedabad, 21–22 Nov.',
-  vadodara: 'TELEPATHY - Hi Dr. Kapil, I want to book the Telepathy Workshop — Vadodara. Please share the date and venue.',
-} as const
+export type TelepathyBatchId = 'mumbai' | 'ahmedabad' | 'vadodara' | 'pune'
 
-export type TelepathyWhatsAppTopic = keyof typeof TELEPATHY_WHATSAPP_MESSAGES
-
-export function telepathyWhatsAppHref(topic: TelepathyWhatsAppTopic): string {
-  return `https://wa.me/${TELEPATHY_WHATSAPP_NUMBER}?text=${encodeURIComponent(TELEPATHY_WHATSAPP_MESSAGES[topic])}`
+// How each batch is named inside the (English) WhatsApp messages.
+export const TELEPATHY_BATCH_MESSAGE_LABELS: Record<TelepathyBatchId, string> = {
+  mumbai: 'Mumbai, 14–15 Nov 2026',
+  ahmedabad: 'Ahmedabad, 21–22 Nov 2026',
+  vadodara: 'Vadodara (please share the date and venue)',
+  pune: 'Pune (please share the date and venue)',
 }
 
-// ── Fee (from site.config.ts) ───────────────────────────────────────
-const inr = (n: number): string => `₹${n.toLocaleString('en-IN')}`
-// Filled into every "{price}" / "{earlier}" in the copy file.
-export const TELEPATHY_PRICE = {
-  earlier: inr(TELEPATHY_WORKSHOP_FEE.earlierInr), // shown struck through
-  offer: inr(TELEPATHY_WORKSHOP_FEE.currentInr),
-  offerInr: TELEPATHY_WORKSHOP_FEE.currentInr,
-} as const
+/** WhatsApp messages before booking: a question, or paying the full fee. */
+export type TelepathyMessageKind = 'question' | 'pay_full'
+
+// Pre-filled messages — English in both languages. The pre-booking ones
+// start with "TELEPATHY - " (the WhatsApp auto-reply keyword); the
+// "I've paid" message from the thank-you page does not, so a learner who
+// has already paid doesn't get the sales auto-reply.
+export function telepathyWhatsAppMessage(kind: TelepathyMessageKind, batch: TelepathyBatchId | null): string {
+  const about = batch === null ? '' : ` — ${TELEPATHY_BATCH_MESSAGE_LABELS[batch]}`
+  return kind === 'pay_full'
+    ? `TELEPATHY - Hi Dr. Kapil, I want to pay the full ${TELEPATHY_PRICE.offer} for the Telepathy Workshop${about}.`
+    : `TELEPATHY - Hi Dr. Kapil, I have a question about the Telepathy Workshop${about}.`
+}
+
+/**
+ * The thank-you page's "Send my booking on WhatsApp" message. The Razorpay
+ * payment id (from the redirect) is added when known, so the team can match the payment.
+ */
+export function telepathyBookedMessage(name: string, batch: TelepathyBatchId | null, paymentId: string | null = null): string {
+  const cityBatch = batch === null ? '__' : TELEPATHY_BATCH_MESSAGE_LABELS[batch].replace(/ \(please share the date and venue\)$/, '')
+  const lines = [
+    `Hi Dr. Kapil, I've paid ${TELEPATHY_PRICE.deposit} to book my seat for the Telepathy Workshop.`,
+    `Name: ${name.trim() === '' ? '__' : name.trim()}`,
+    `City/batch: ${cityBatch}`,
+    ...(paymentId === null ? [] : [`Payment ID: ${paymentId}`]),
+  ]
+  return lines.join('\n')
+}
+
+export function telepathyWhatsAppHref(message: string): string {
+  return `https://wa.me/${TELEPATHY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+}
 
 // ── Batches ─────────────────────────────────────────────────────────
 // The visible city/date/venue text is in the copy file (cities[].id must
 // match). A dated batch disappears from the page after `endISO` (its last
 // day, 6 pm IST) and the countdown moves to the next one. Times are IST.
 export type TelepathyBatch = {
-  id: 'mumbai' | 'ahmedabad' | 'vadodara'
+  id: TelepathyBatchId
   /** First day 9:30 am — null while the date is shared on WhatsApp. */
   startISO: string | null
   /** Last day 6 pm — after this the batch is hidden. null = always shown. */
@@ -79,6 +124,7 @@ export const TELEPATHY_BATCHES: readonly TelepathyBatch[] = [
     calendarLocation: 'Hotel Silver Cloud, Ashram Road, Ahmedabad',
   },
   { id: 'vadodara', startISO: null, endISO: null, days: 2, dailyStart: '09:30', dailyEnd: '18:00', calendarLocation: '' },
+  { id: 'pune', startISO: null, endISO: null, days: 2, dailyStart: '09:30', dailyEnd: '18:00', calendarLocation: '' },
 ]
 
 // ── Videos ──────────────────────────────────────────────────────────
@@ -99,7 +145,7 @@ export const SHORT_REVIEW_VIDEOS: readonly string[] = [
 ]
 export const SHORTS_IN_MIDDLE_STRIP = 6
 
-// "Watch 200+ more reviews on YouTube →"
+// "Watch 300+ more reviews on YouTube →"
 export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@innershiftWithDrKapil'
 
 // ── Images ──────────────────────────────────────────────────────────
