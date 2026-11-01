@@ -40,6 +40,13 @@ export function waLink(message: string): string {
   return `https://wa.me/${SITE_CONFIG_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
 
+/**
+ * The Telepathy Workshop fee — the single source for /telepathy-workshop
+ * (header, hero, batch cards, sticky button, final CTA, FAQ, SEO) and the
+ * programs registry. `earlierInr` is shown struck through.
+ */
+export const TELEPATHY_WORKSHOP_FEE = { earlierInr: 7999, currentInr: 5999 } as const
+
 const brandData = {
   name: 'Mind Ur Mind',
   positioning: 'Brain, Mind & Meditation Coach',
@@ -373,6 +380,7 @@ const programsData = {
     pillar: 'brain',
   },
   // The Telepathy Workshop™ — 2-day offline workshop, booked on WhatsApp.
+  // Fee: TELEPATHY_WORKSHOP_FEE (top of this file) is the one place to change it.
   // Dates, prices and venues are owned by telepathyWorkshopConfig.ts (the
   // page's own config). No `event` here on purpose: the page lists several
   // cities, so it stays out of the homepage's single-date "upcoming" strip.
@@ -383,8 +391,8 @@ const programsData = {
     outcome: 'Telepathy, Intuition Development, Cosmic Fusion and Heart-Brain Coherence in a 2-day experiential workshop.',
     audience: 'Anyone drawn to meditation, energy and the power of the mind',
     format: 'In person · Mumbai, Ahmedabad, Vadodara · 2 days, 9:30 AM – 6:00 PM',
-    prices: [{ label: 'Per person', amountInr: 4999 }],
-    checkout: [{ label: 'Book on WhatsApp', href: waLink('TELEPATHY - I want to know about the workshop') }],
+    prices: [{ label: 'Per person', amountInr: TELEPATHY_WORKSHOP_FEE.currentInr }],
+    checkout: [{ label: 'Book on WhatsApp', href: waLink('TELEPATHY - Hi Dr. Kapil, I want to know about the Telepathy Workshop.') }],
     url: '/telepathy-workshop',
     status: 'active',
     pillar: 'meditation',

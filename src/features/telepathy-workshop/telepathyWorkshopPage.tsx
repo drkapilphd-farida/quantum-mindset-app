@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { preload } from 'react-dom'
 import type { Lang } from '@/lib/i18n'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
@@ -25,20 +24,13 @@ export function buildTelepathyMetadata(lang: Lang): Metadata {
   }
 }
 
-/** Hindi headline font files (telepathy-workshop.css) — preloaded on the ?lang=hi copy only (Latin: the price digits). */
-const HINDI_HEADLINE_FONTS = [
-  '/fonts/telepathy-workshop/noto-serif-devanagari-600-devanagari.woff2',
-  '/fonts/telepathy-workshop/noto-serif-devanagari-600-latin.woff2',
-]
-
 export function TelepathyWorkshopPage({ urlLang }: { urlLang: Lang | null }): React.JSX.Element {
-  if (urlLang === 'hi') HINDI_HEADLINE_FONTS.forEach((href) => preload(href, { as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' }))
   const faqLang = urlLang ?? 'en'
   const faqSchema = buildFaqPageSchema(telepathyCopy.faq.items.map((item) => ({ question: pick(item.q, faqLang), answer: pick(item.a, faqLang) })))
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
-      <TelepathyWorkshop urlLang={urlLang} />
+      <TelepathyWorkshop urlLang={urlLang} renderedAt={Date.now()} />
     </>
   )
 }
