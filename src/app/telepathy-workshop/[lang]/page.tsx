@@ -12,6 +12,9 @@ type Props = { params: Promise<{ lang: string }> }
 // of their own.
 export const dynamicParams = false
 
+// Rebuilt every hour, so a batch drops off the page soon after its last day.
+export const revalidate = 3600
+
 export function generateStaticParams(): { lang: string }[] {
   return [{ lang: 'en' }, { lang: 'hi' }]
 }

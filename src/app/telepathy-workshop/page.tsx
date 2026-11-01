@@ -3,6 +3,9 @@ import { buildTelepathyMetadata, TelepathyWorkshopPage } from '@/features/telepa
 
 export const metadata: Metadata = buildTelepathyMetadata('en')
 
+// Rebuilt every hour, so a batch drops off the page soon after its last day.
+export const revalidate = 3600
+
 // The Telepathy Workshop™ — a bilingual (EN/हिंदी) campaign page whose one
 // goal is a WhatsApp message. Wording: telepathyWorkshopCopy.ts. Values
 // (prices, dates, number, video IDs, images): telepathyWorkshopConfig.ts.
