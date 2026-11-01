@@ -2,24 +2,38 @@
 
 import type { ReactNode } from 'react'
 import { programs } from '@/config/site.config'
-import { TELEPATHY_PRICE, telepathyWhatsAppHref, type TelepathyWhatsAppTopic } from '@/config/telepathyWorkshopConfig'
+import { TELEPATHY_BOOKING_URL, TELEPATHY_PRICE, telepathyWhatsAppHref, type TelepathyBatchId } from '@/config/telepathyWorkshopConfig'
 import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
 import { trackGaEvent } from '@/lib/analytics/ga4'
 import { readUtmParams } from '@/lib/analytics/utm'
 
+/** Which batch a button is for ('general' = no batch: header, hero, final CTA…). */
+export type TelepathyBatchTag = TelepathyBatchId | 'general'
+/** What a WhatsApp button is for. */
+export type TelepathyWhatsAppKind = 'question' | 'pay_full' | 'booked'
+
+const utmSource = (): string => readUtmParams().utm_source ?? '(none)'
+
 /**
- * A WhatsApp tap on this page: Meta "Lead" + GA4 "telepathy_whatsapp_click",
- * both naming the batch (general / mumbai / ahmedabad / vadodara), where on
- * the page it was, and the visitor's utm_source.
+ * A WhatsApp tap on these pages: GA4 "telepathy_whatsapp_click" with the
+ * batch, the kind, where on the page it was and the visitor's utm_source;
+ * before booking (question / pay full) also a Meta "Lead".
  */
-export function trackTelepathyLead(topic: TelepathyWhatsAppTopic, location: string): void {
-  const utmSource = readUtmParams().utm_source ?? '(none)'
-  trackMetaPixelEvent('Lead', { content_name: programs.telepathyWorkshop.name, method: 'whatsapp', batch: topic, location, utm_source: utmSource, currency: 'INR', value: TELEPATHY_PRICE.offerInr })
-  trackGaEvent('telepathy_whatsapp_click', { batch: topic, location, utm_source: utmSource })
+export function trackTelepathyWhatsApp(batch: TelepathyBatchTag, kind: TelepathyWhatsAppKind, location: string): void {
+  const source = utmSource()
+  if (kind !== 'booked') {
+    trackMetaPixelEvent('Lead', { content_name: programs.telepathyWorkshop.name, method: 'whatsapp', kind, batch, location, utm_source: source, currency: 'INR', value: TELEPATHY_PRICE.offerInr })
+  }
+  trackGaEvent('telepathy_whatsapp_click', { batch, kind, location, utm_source: source })
 }
 
-type WhatsAppLinkProps = {
-  topic: TelepathyWhatsAppTopic
+/** A tap on "Book your seat — ₹1,000" (the site-wide tracker adds Meta "InitiateCheckout"). */
+export function trackTelepathyBookSeat(batch: TelepathyBatchTag, location: string): void {
+  trackGaEvent('telepathy_book_seat_click', { batch, location, utm_source: utmSource(), value: String(TELEPATHY_PRICE.depositInr), currency: 'INR' })
+}
+
+type LinkProps = {
+  batch: TelepathyBatchTag
   /** Where on the page the button is (sent with the events). */
   location: string
   className?: string
@@ -29,16 +43,26 @@ type WhatsAppLinkProps = {
 
 // Every WhatsApp button on /telepathy-workshop. The site-wide
 // ConversionTracker also counts the tap as "Contact" (and leaves this page's
-// "TELEPATHY - …" messages exactly as written).
-export function WhatsAppLink({ topic, location, className = '', ariaLabel, children }: WhatsAppLinkProps): React.JSX.Element {
+// messages exactly as written).
+export function WhatsAppLink({ message, kind, batch, location, className = '', ariaLabel, children }: LinkProps & { message: string; kind: TelepathyWhatsAppKind }): React.JSX.Element {
   return (
-    <a href={telepathyWhatsAppHref(topic)} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel} onClick={() => trackTelepathyLead(topic, location)} className={className}>
+    <a href={telepathyWhatsAppHref(message)} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel} onClick={() => trackTelepathyWhatsApp(batch, kind, location)} className={className}>
       {children}
     </a>
   )
 }
 
-/** The site's primary gold button, with the WhatsApp mark. */
+// "Book your seat — ₹1,000": the Razorpay payment link, in the same tab so
+// Razorpay can bring the visitor back to the thank-you page.
+export function BookSeatLink({ batch, location, className = '', ariaLabel, children }: LinkProps): React.JSX.Element {
+  return (
+    <a href={TELEPATHY_BOOKING_URL} aria-label={ariaLabel} onClick={() => trackTelepathyBookSeat(batch, location)} className={className}>
+      {children}
+    </a>
+  )
+}
+
+/** The site's primary gold button. */
 export const GOLD_BUTTON =
   'inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-sm bg-gold px-6 py-3.5 text-center text-[16px] font-semibold leading-snug text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]'
 

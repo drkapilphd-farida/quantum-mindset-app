@@ -43,9 +43,20 @@ export function waLink(message: string): string {
 /**
  * The Telepathy Workshop fee — the single source for /telepathy-workshop
  * (header, hero, batch cards, sticky button, final CTA, FAQ, SEO) and the
- * programs registry. `earlierInr` is shown struck through.
+ * programs registry. `earlierInr` is shown struck through. A seat is
+ * booked by paying `depositInr` online (TELEPATHY_SEAT_PAYMENT_LINK); the
+ * balance (currentInr − depositInr) is paid at the venue.
  */
-export const TELEPATHY_WORKSHOP_FEE = { earlierInr: 7999, currentInr: 5999 } as const
+export const TELEPATHY_WORKSHOP_FEE = { earlierInr: 7999, currentInr: 5999, depositInr: 1000 } as const
+
+/**
+ * Razorpay Payment Link for the ₹1,000 seat booking (created in the
+ * Razorpay Dashboard). Its "redirect after payment" is set there to
+ * https://www.mindurmind.org.in/telepathy-workshop/booked. This payment never
+ * grants app access: the Sharp Brain webhook only acts on its own links
+ * (see src/features/sharp-brain-enrol/programPayment.ts).
+ */
+export const TELEPATHY_SEAT_PAYMENT_LINK = 'https://rzp.io/rzp/elNaxRB'
 
 const brandData = {
   name: 'Mind Ur Mind',
@@ -379,7 +390,8 @@ const programsData = {
     },
     pillar: 'brain',
   },
-  // The Telepathy Workshop™ — 2-day offline workshop, booked on WhatsApp.
+  // The Telepathy Workshop™ — 2-day offline workshop: seat booked with a
+  // ₹1,000 Razorpay payment (balance at the venue), or on WhatsApp.
   // Fee: TELEPATHY_WORKSHOP_FEE (top of this file) is the one place to change it.
   // Dates, prices and venues are owned by telepathyWorkshopConfig.ts (the
   // page's own config). No `event` here on purpose: the page lists several
@@ -390,9 +402,13 @@ const programsData = {
     nameHi: 'The Telepathy Workshop',
     outcome: 'Telepathy, Intuition Development, Cosmic Fusion and Heart-Brain Coherence in a 2-day experiential workshop.',
     audience: 'Anyone drawn to meditation, energy and the power of the mind',
-    format: 'In person · Mumbai, Ahmedabad, Vadodara · 2 days, 9:30 AM – 6:00 PM',
+    format: 'In person · Mumbai, Ahmedabad, Vadodara, Pune · 2 days, 9:30 AM – 6:00 PM',
     prices: [{ label: 'Per person', amountInr: TELEPATHY_WORKSHOP_FEE.currentInr }],
-    checkout: [{ label: 'Book on WhatsApp', href: waLink('TELEPATHY - Hi Dr. Kapil, I want to know about the Telepathy Workshop.') }],
+    checkout: [
+      { label: 'Book on WhatsApp', href: waLink('TELEPATHY - Hi Dr. Kapil, I want to know about the Telepathy Workshop.') },
+      // Listed so the site-wide tracker names the Razorpay click "The Telepathy Workshop".
+      { label: 'Book your seat', href: TELEPATHY_SEAT_PAYMENT_LINK },
+    ],
     url: '/telepathy-workshop',
     status: 'active',
     pillar: 'meditation',

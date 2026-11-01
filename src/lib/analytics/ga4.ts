@@ -58,9 +58,12 @@ export type GaEventName =
   | 'memory_test_lead_submitted'
   | 'memory_test_whatsapp_opened'
   | 'memory_test_shared'
-  // /telepathy-workshop: free-session / review video plays and WhatsApp taps per batch
+  // /telepathy-workshop: free-session / review video plays, ₹1,000 seat-booking
+  // taps and WhatsApp taps per batch, and thank-you page visits
   | 'telepathy_video_play'
   | 'telepathy_whatsapp_click'
+  | 'telepathy_book_seat_click'
+  | 'telepathy_booked_visit'
 
 // No-ops when GA isn't configured (NEXT_PUBLIC_GA_MEASUREMENT_ID unset)
 // or gtag.js hasn't loaded yet — never throws, since a tracking call

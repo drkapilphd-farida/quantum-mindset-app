@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { CalendarPlus, CalendarDays, MapPin, Plus } from 'lucide-react'
 import type { Lang } from '@/lib/i18n'
-import { CTA_PORTRAIT_SIZE, FINAL_CTA_BACKGROUND, TELEPATHY_BATCHES, TELEPATHY_IMAGES, TELEPATHY_PRICE } from '@/config/telepathyWorkshopConfig'
+import { CTA_PORTRAIT_SIZE, FINAL_CTA_BACKGROUND, TELEPATHY_BATCHES, TELEPATHY_IMAGES, TELEPATHY_PRICE, telepathyWhatsAppMessage } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { googleCalendarUrl, pick, visibleBatches } from '../telepathyWorkshop'
 import { Countdown } from './Countdown'
-import { GOLD_BUTTON, WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
+import { WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
+import { BookSeatCta, QuestionsLink } from './BookSeat'
 import { CheckDot, Heading, PriceLine, Section } from './ui'
 
 /**
@@ -17,13 +18,14 @@ import { CheckDot, Heading, PriceLine, Section } from './ui'
  * every hour — see page.tsx); after load it re-checks the visitor's clock,
  * so a batch is hidden right after its last day.
  */
-function useVisibleBatches(renderedAt: number): typeof TELEPATHY_BATCHES {
+export function useVisibleBatches(renderedAt: number): typeof TELEPATHY_BATCHES {
   const [batches, setBatches] = useState(() => visibleBatches(renderedAt))
   useEffect(() => setBatches(visibleBatches(Date.now())), [])
   return batches
 }
 
-// K — batches: one card per city, each with its own WhatsApp booking button
+// K — batches: one card per city, each with the ₹1,000 booking button,
+// "Pay full ₹5,999 now" and "Questions?" on WhatsApp (pre-filled with the batch)
 export function BatchesSection({ lang, renderedAt }: { lang: Lang; renderedAt: number }): React.JSX.Element {
   const c = telepathyCopy.batches
   const batches = useVisibleBatches(renderedAt)
@@ -38,7 +40,7 @@ export function BatchesSection({ lang, renderedAt }: { lang: Lang; renderedAt: n
         <Countdown lang={lang} />
       </div>
 
-      <ul className="mt-8 grid gap-5 lg:grid-cols-3">
+      <ul className="mt-8 grid gap-5 md:grid-cols-2">
         {batches.map((batch) => {
           const card = c.cities.find((x) => x.id === batch.id)
           if (card === undefined) return null
@@ -64,16 +66,26 @@ export function BatchesSection({ lang, renderedAt }: { lang: Lang; renderedAt: n
               </dl>
               <PriceLine earlier={TELEPATHY_PRICE.earlier} offer={TELEPATHY_PRICE.offer} className="mt-5" />
               <div className="mt-auto pt-6">
-                <WhatsAppLink topic={batch.id} location={`batch_${batch.id}`} className={`${GOLD_BUTTON} w-full`}>
-                  <WhatsAppGlyph className="size-5 flex-none" />
-                  {pick(c.button, lang)}
+                <BookSeatCta lang={lang} batch={batch.id} location={`batch_${batch.id}`} buttonClassName="w-full !px-3 whitespace-nowrap" />
+                <WhatsAppLink
+                  message={telepathyWhatsAppMessage('pay_full', batch.id)}
+                  kind="pay_full"
+                  batch={batch.id}
+                  location={`batch_${batch.id}`}
+                  className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-sm border border-line-strong px-5 py-3 text-center text-[15.5px] font-semibold text-ink transition-colors hover:border-gold hover:bg-gold-soft"
+                >
+                  <WhatsAppGlyph className="size-5 flex-none text-[#1f9d55]" />
+                  {pick(telepathyCopy.booking.payFull, lang)}
                 </WhatsAppLink>
-                {calendar !== null && (
-                  <a href={calendar} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-[14.5px] font-medium text-ink-dim underline underline-offset-4 hover:text-ink">
-                    <CalendarPlus className="size-4" aria-hidden="true" />
-                    {pick(c.calendarLink, lang)}
-                  </a>
-                )}
+                <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4">
+                  <QuestionsLink lang={lang} batch={batch.id} location={`batch_${batch.id}`} className="text-[14.5px]" />
+                  {calendar !== null && (
+                    <a href={calendar} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 text-[14.5px] font-medium text-ink-dim underline underline-offset-4 hover:text-ink">
+                      <CalendarPlus className="size-4" aria-hidden="true" />
+                      {pick(c.calendarLink, lang)}
+                    </a>
+                  )}
+                </div>
               </div>
             </li>
           )
@@ -180,10 +192,8 @@ export function FinalCtaSection({ lang }: { lang: Lang }): React.JSX.Element {
           </h2>
           <PriceLine earlier={TELEPATHY_PRICE.earlier} offer={TELEPATHY_PRICE.offer} note={pick(telepathyCopy.hero.seats, lang)} className="mt-6 justify-center lg:justify-start" />
           <p className="tw-body mt-3">{pick(c.body, lang)}</p>
-          <WhatsAppLink topic="general" location="final_cta" className={`${GOLD_BUTTON} mt-8 w-full max-w-md text-[17px] sm:w-auto`}>
-            <WhatsAppGlyph className="size-6 flex-none" />
-            {pick(telepathyCopy.bookButton, lang)}
-          </WhatsAppLink>
+          <BookSeatCta lang={lang} batch="general" location="final_cta" className="mx-auto mt-8 w-full max-w-md lg:mx-0" buttonClassName="w-full text-[17px]" />
+          <QuestionsLink lang={lang} batch="general" location="final_cta" className="mt-3" />
         </div>
       </div>
     </section>

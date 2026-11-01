@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import SiteNav from '@/components/site/SiteNav'
 import Footer from '@/components/Footer'
 import { useLanguage } from '@/context/LanguageContext'
-import { telepathyWhatsAppHref } from '@/config/telepathyWorkshopConfig'
+import { TELEPATHY_BOOKING_URL } from '@/config/telepathyWorkshopConfig'
 import type { Lang } from '@/lib/i18n'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
@@ -14,8 +14,8 @@ import { LearnSection, MuseSection, ScheduleSection, ShortStripSection } from '.
 import { AboutSection, ReviewsSection } from './ProofSections'
 import { GallerySection } from './GallerySection'
 import { BatchesSection, Disclaimer, FaqSection, FinalCtaSection, IncludedSection } from './BookingSections'
-import { StickyWhatsApp } from './StickyWhatsApp'
-import { trackTelepathyLead } from './WhatsAppLink'
+import { StickyBooking } from './StickyBooking'
+import { trackTelepathyBookSeat } from './WhatsAppLink'
 
 // /telepathy-workshop — the site's light workshop-page look (.warm-light),
 // dark and starry only in the hero and the Muse 2 section. Uses the site's
@@ -39,9 +39,8 @@ export function TelepathyWorkshop({ urlLang, renderedAt }: { urlLang: Lang | nul
       <SiteNav
         cta={{
           label: pick(telepathyCopy.bookButton, lang),
-          href: telepathyWhatsAppHref('general'),
-          external: true,
-          onClick: () => trackTelepathyLead('general', 'nav'),
+          href: TELEPATHY_BOOKING_URL,
+          onClick: () => trackTelepathyBookSeat('general', 'nav'),
         }}
       />
       <main>
@@ -67,7 +66,7 @@ export function TelepathyWorkshop({ urlLang, renderedAt }: { urlLang: Lang | nul
       </main>
       <Disclaimer lang={lang} />
       <Footer />
-      <StickyWhatsApp lang={lang} />
+      <StickyBooking lang={lang} />
     </div>
   )
 }

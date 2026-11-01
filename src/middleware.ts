@@ -8,7 +8,7 @@ import { DEVICE_CHECK_COOKIE, DEVICE_CHECK_INTERVAL_MS, deviceCheckIsFresh, make
 
 const PROTECTED_PATHS = ['/dashboard', '/labs', '/practice', '/progress', '/memory-studio', '/settings', '/admin', '/preview', '/parent-dashboard', '/school-admin', '/partner-admin']
 const AUTH_PATHS = ['/login', '/signup']
-const WEBSITE_ONLY_PATHS = ['/telepathy-workshop']
+const WEBSITE_ONLY_PATHS = ['/telepathy-workshop', '/telepathy-workshop/booked']
 
 // Domain Split™ — checked independently of PROTECTED_PATHS/auth state,
 // since /unified-session-preview is intentionally login-optional

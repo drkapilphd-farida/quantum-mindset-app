@@ -2,7 +2,8 @@
 // side. Edit text here only; components read it through `pick()`.
 //
 // Placeholders filled in automatically:
-//   {price} → current fee   {earlier} → earlier fee (struck through)   — from site.config.ts (TELEPATHY_WORKSHOP_FEE)
+//   {price} → current fee   {earlier} → earlier fee (struck through)
+//   {deposit} → seat booking amount   {balance} → paid at the venue   — all from site.config.ts (TELEPATHY_WORKSHOP_FEE)
 //   {phone} → WhatsApp number (telepathyWorkshopConfig.ts)
 // Honest-language rule: participants' experiences ("many participants
 // share…"), never promised results.
@@ -16,17 +17,30 @@ export const telepathyCopy = {
       hi: 'Telepathy और Intuition वर्कशॉप — डॉ. कपिल देव शर्मा के साथ 2 दिन (ऑफ़लाइन) | Mind Ur Mind',
     },
     description: {
-      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day offline workshop researched, developed and taught by Dr. Kapil Dev Sharma — to 10,000+ people over 12 years. {price} (earlier {earlier}). Mumbai, Ahmedabad, Vadodara. Limited seats.',
-      hi: '2 दिन की ऑफ़लाइन वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — डॉ. कपिल देव शर्मा की रिसर्च से बनी, 12 साल में 10,000+ लोगों को सिखाई गई। फ़ीस {price} (पहले {earlier})। मुंबई, अहमदाबाद, वडोदरा। सीमित seats।',
+      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day offline workshop researched, developed and taught by Dr. Kapil Dev Sharma — to 10,000+ people over 12 years, with 300+ video reviews. {price} (earlier {earlier}); book your seat for {deposit}. Mumbai, Ahmedabad, Vadodara, Pune. Limited seats.',
+      hi: '2 दिन की ऑफ़लाइन वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — डॉ. कपिल देव शर्मा की रिसर्च से बनी, 12 साल में 10,000+ लोगों को सिखाई गई, 300+ वीडियो रिव्यू। फ़ीस {price} (पहले {earlier}); {deposit} देकर seat book करें। मुंबई, अहमदाबाद, वडोदरा, पुणे। सीमित seats।',
     },
   },
 
-  // Header button, sticky phone button and floating button.
-  bookButton: { en: 'Book on WhatsApp — {price}', hi: 'WhatsApp पर बुक करें — {price}' },
+  // The main button everywhere (header, hero, batch cards, sticky phone
+  // button, final CTA) → the ₹1,000 Razorpay link.
+  bookButton: { en: 'Book your seat — {deposit}', hi: '{deposit} देकर अपनी seat book करें' },
+  booking: {
+    // Small text under the main button.
+    note: {
+      en: 'Balance {balance} at the venue (UPI / cash). {deposit} is non-refundable but can be moved to a later batch.',
+      hi: 'बाकी {balance} venue पर (UPI / cash)। {deposit} वापस नहीं होगा, लेकिन अगले batch में transfer हो सकता है।',
+    },
+    // Under the sticky phone button (short).
+    noteShort: { en: 'Balance {balance} at the venue', hi: 'बाकी {balance} venue पर' },
+    // Second option on each batch card → WhatsApp.
+    payFull: { en: 'Pay full {price} now', hi: 'पूरे {price} अभी दें' },
+    questions: { en: 'Questions? Chat on WhatsApp', hi: 'सवाल हैं? WhatsApp पर बात करें' },
+  },
 
   // ── A. Hero ───────────────────────────────────────────────────────
   hero: {
-    eyebrow: { en: '2-DAY OFFLINE EXPERIENTIAL WORKSHOP · MUMBAI · AHMEDABAD · VADODARA', hi: '2 दिन की ऑफ़लाइन अनुभव-आधारित वर्कशॉप · मुंबई · अहमदाबाद · वडोदरा' },
+    eyebrow: { en: '2-DAY OFFLINE EXPERIENTIAL WORKSHOP · MUMBAI · AHMEDABAD · VADODARA · PUNE', hi: '2 दिन की ऑफ़लाइन अनुभव-आधारित वर्कशॉप · मुंबई · अहमदाबाद · वडोदरा · पुणे' },
     workshopName: { en: 'The Telepathy Workshop™', hi: 'The Telepathy Workshop™' },
     headline: { en: 'The Guru You Are Searching For Is Already Inside You', hi: 'जिस गुरु को आप बाहर खोज रहे हैं, वह आपके भीतर ही है' },
     subheadline: {
@@ -42,8 +56,8 @@ export const telepathyCopy = {
   trust: [
     { value: '12', label: { en: 'years of workshops', hi: 'साल से वर्कशॉप' } },
     { value: '10,000+', label: { en: 'people trained', hi: 'लोग प्रशिक्षित' } },
-    { value: '200+', label: { en: 'video reviews', hi: 'वीडियो रिव्यू' } },
-    { value: '3', label: { en: 'cities', hi: 'शहर' } },
+    { value: '300+', label: { en: 'video reviews', hi: 'वीडियो रिव्यू' } },
+    { value: '4', label: { en: 'cities', hi: 'शहर' } },
   ],
 
   // ── C. Free session video ─────────────────────────────────────────
@@ -196,9 +210,9 @@ export const telepathyCopy = {
   // ── H. Full video reviews ─────────────────────────────────────────
   reviews: {
     heading: { en: 'Hear it from them, in their own words', hi: 'उन्हीं से सुनिए, उन्हीं के शब्दों में' },
-    sub: { en: '200+ participants have shared their experience on camera.', hi: '200+ प्रतिभागियों ने कैमरे पर अपना अनुभव साझा किया है।' },
+    sub: { en: '300+ participants have shared their experience on camera.', hi: '300+ प्रतिभागियों ने कैमरे पर अपना अनुभव साझा किया है।' },
     shortsLabel: { en: 'Short reviews', hi: 'छोटे रिव्यू' },
-    channel: { en: 'Watch 200+ more reviews on YouTube →', hi: 'YouTube पर 200+ और रिव्यू देखें →' },
+    channel: { en: 'Watch 300+ video reviews on YouTube →', hi: 'YouTube पर 300+ वीडियो रिव्यू देखें →' },
     playLabel: { en: 'Play video review', hi: 'वीडियो रिव्यू चलाएँ' },
   },
 
@@ -231,8 +245,8 @@ export const telepathyCopy = {
         hi: 'डॉ. कपिल देव शर्मा Mind Ur Mind के संस्थापक हैं, और दो दशक से ज़्यादा अनुभव वाले मन, दिमाग और ध्यान के कोच हैं।',
       },
       {
-        en: 'He researched and developed this workshop himself and has been teaching it for 12 years. In that time, more than 10,000 people have learned Telepathy, Intuition and Cosmic Fusion from him, making him one of the pioneers of teaching these skills in India.',
-        hi: 'यह वर्कशॉप उन्होंने खुद रिसर्च करके विकसित की है और पिछले 12 साल से सिखा रहे हैं। इस दौरान 10,000 से ज़्यादा लोग उनसे Telepathy, Intuition और Cosmic Fusion सीख चुके हैं, और वो भारत में इन skills को सिखाने वाले अग्रणी लोगों में से एक हैं।',
+        en: 'He researched and developed this workshop himself and has been teaching it for 12 years. In that time, more than 10,000 people have learned Telepathy, Intuition and Cosmic Fusion from him, making him one of the pioneers of teaching these skills in India. Participants have shared their experience in 300+ video reviews.',
+        hi: 'यह वर्कशॉप उन्होंने खुद रिसर्च करके विकसित की है और पिछले 12 साल से सिखा रहे हैं। इस दौरान 10,000 से ज़्यादा लोग उनसे Telepathy, Intuition और Cosmic Fusion सीख चुके हैं, और वो भारत में इन skills को सिखाने वाले अग्रणी लोगों में से एक हैं। प्रतिभागियों ने 300+ वीडियो रिव्यू में अपना अनुभव साझा किया है।',
       },
     ],
     imageAlt: { en: 'Dr. Kapil Dev Sharma teaching a workshop', hi: 'वर्कशॉप में सिखाते हुए डॉ. कपिल देव शर्मा' },
@@ -244,7 +258,6 @@ export const telepathyCopy = {
     sub: { en: 'Same timings and inclusions in every city.', hi: 'हर शहर में समय और सुविधाएँ एक जैसी।' },
     datesLabel: { en: 'Dates', hi: 'तारीख़' },
     venueLabel: { en: 'Venue', hi: 'स्थान' },
-    button: { en: 'Book this batch', hi: 'यह batch बुक करें' },
     // id must match TELEPATHY_BATCHES in telepathyWorkshopConfig.ts (dates there hide a batch after it ends).
     cities: [
       {
@@ -262,6 +275,12 @@ export const telepathyCopy = {
       {
         id: 'vadodara',
         city: { en: 'Vadodara', hi: 'वडोदरा' },
+        dates: { en: 'Date on WhatsApp', hi: 'तारीख़ WhatsApp पर' },
+        venue: { en: 'Venue on WhatsApp', hi: 'स्थान WhatsApp पर' },
+      },
+      {
+        id: 'pune',
+        city: { en: 'Pune', hi: 'पुणे' },
         dates: { en: 'Date on WhatsApp', hi: 'तारीख़ WhatsApp पर' },
         venue: { en: 'Venue on WhatsApp', hi: 'स्थान WhatsApp पर' },
       },
@@ -343,10 +362,24 @@ export const telepathyCopy = {
         a: { en: 'Yes. Breakfast, lunch and high tea are included on both days.', hi: 'हाँ। दोनों दिन नाश्ता, लंच और हाई टी शामिल है।' },
       },
       {
-        q: { en: 'How do I book and pay?', hi: 'बुकिंग और पेमेंट कैसे करें?' },
+        q: { en: 'How do I book?', hi: 'बुकिंग कैसे करें?' },
         a: {
-          en: 'Tap "Book on WhatsApp" (or "Book this batch"). Our team will share the payment details on WhatsApp and confirm your seat. The fee is {price}.',
-          hi: '"WhatsApp पर बुक करें" (या "यह batch बुक करें") दबाइए। हमारी टीम WhatsApp पर पेमेंट की जानकारी भेजकर आपकी सीट कन्फ़र्म करेगी। फ़ीस {price} है।',
+          en: 'Tap "Book your seat — {deposit}" and pay {deposit} online to reserve your seat. Pay the balance {balance} at the venue (UPI / cash). The fee is {price}. You can also pay the full {price} now: tap "Pay full {price} now" on your batch and we will send the details on WhatsApp.',
+          hi: '"{deposit} देकर अपनी seat book करें" दबाइए और {deposit} online देकर अपनी seat पक्की कीजिए। बाकी {balance} venue पर (UPI / cash)। फ़ीस {price} है। पूरे {price} अभी भी दे सकते हैं: अपने batch पर "पूरे {price} अभी दें" दबाइए, हम WhatsApp पर जानकारी भेज देंगे।',
+        },
+      },
+      {
+        q: { en: 'Can I get a refund?', hi: 'क्या पैसे वापस मिल सकते हैं?' },
+        a: {
+          en: 'The {deposit} booking amount is non-refundable, but it can be moved to a later batch. Message us on WhatsApp to move it.',
+          hi: '{deposit} की booking राशि वापस नहीं होगी, लेकिन इसे अगले batch में transfer किया जा सकता है। Transfer के लिए हमें WhatsApp पर मैसेज करें।',
+        },
+      },
+      {
+        q: { en: 'Can I hear from past participants?', hi: 'क्या पहले के प्रतिभागियों के अनुभव सुन सकते हैं?' },
+        a: {
+          en: 'Yes. Participants have shared their experience in 300+ video reviews — watch them on our YouTube channel.',
+          hi: 'हाँ। प्रतिभागियों ने 300+ वीडियो रिव्यू में अपना अनुभव साझा किया है — इन्हें हमारे YouTube चैनल पर देखिए।',
         },
       },
     ],
@@ -358,6 +391,22 @@ export const telepathyCopy = {
     heading: { en: 'Stop Searching Outside. Start Listening Within.', hi: 'बाहर ढूँढना बंद कीजिए। भीतर सुनना शुरू कीजिए।' },
     body: { en: 'Seats are limited in every batch.', hi: 'हर batch में सीटें सीमित हैं।' },
     portraitAlt: { en: 'Dr. Kapil Dev Sharma inviting you to the workshop', hi: 'डॉ. कपिल देव शर्मा आपको वर्कशॉप में आमंत्रित करते हुए' },
+  },
+
+  // ── Thank-you page (/telepathy-workshop/booked) ───────────────────
+  booked: {
+    metaTitle: { en: 'Seat booked — The Telepathy Workshop™ | Mind Ur Mind', hi: 'Seat book हो गई — The Telepathy Workshop™ | Mind Ur Mind' },
+    heading: { en: '🎉 Your seat is booked!', hi: '🎉 आपकी seat book हो गई है!' },
+    body: {
+      en: "I'll message you on WhatsApp with the venue details and a reminder before the workshop.",
+      hi: 'WhatsApp पर आपको venue की जानकारी और वर्कशॉप से पहले एक reminder भेजा जाएगा।',
+    },
+    chooseBatch: { en: 'Which batch did you book?', hi: 'आपने कौन-सा batch book किया?' },
+    nameLabel: { en: 'Your name', hi: 'आपका नाम' },
+    sendButton: { en: 'Send my booking on WhatsApp', hi: 'मेरी booking WhatsApp पर भेजें' },
+    chooseFirst: { en: 'Choose your batch above first.', hi: 'पहले ऊपर अपना batch चुनिए।' },
+    balance: { en: 'Balance {balance} at the venue (UPI / cash)', hi: 'बाकी {balance} venue पर (UPI / cash)' },
+    back: { en: '← Back to the workshop page', hi: '← वर्कशॉप पेज पर वापस' },
   },
 
   // ── Disclaimer (above the site footer) ────────────────────────────

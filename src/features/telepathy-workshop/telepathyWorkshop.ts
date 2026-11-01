@@ -2,9 +2,9 @@ import type { Lang } from '@/lib/i18n'
 import { TELEPATHY_BATCHES, TELEPATHY_PRICE, TELEPATHY_WHATSAPP_DISPLAY, type TelepathyBatch } from '@/config/telepathyWorkshopConfig'
 import type { Bi } from './telepathyWorkshopCopy'
 
-/** One language's text, with {price}/{earlier}/{phone} filled from the config. */
+/** One language's text, with {price}/{earlier}/{deposit}/{balance}/{phone} filled from the config. */
 export function pick(text: Bi, lang: Lang, vars: Record<string, string> = {}): string {
-  const all: Record<string, string> = { price: TELEPATHY_PRICE.offer, earlier: TELEPATHY_PRICE.earlier, phone: TELEPATHY_WHATSAPP_DISPLAY, ...vars }
+  const all: Record<string, string> = { price: TELEPATHY_PRICE.offer, earlier: TELEPATHY_PRICE.earlier, deposit: TELEPATHY_PRICE.deposit, balance: TELEPATHY_PRICE.balance, phone: TELEPATHY_WHATSAPP_DISPLAY, ...vars }
   return text[lang].replace(/\{(\w+)\}/g, (match, key: string) => all[key] ?? match)
 }
 

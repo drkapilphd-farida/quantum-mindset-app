@@ -4,13 +4,13 @@ import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
 import { HeroCrossfade } from './HeroCrossfade'
 import { Starfield } from './Starfield'
-import { GOLD_BUTTON, WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
+import { BookSeatCta } from './BookSeat'
 
 const c = telepathyCopy.hero
 
 // A — dark, starry hero: crossfading workshop photos under a dark overlay,
 // a drifting starfield and a soft aura. `id="tw-hero"` is what the sticky
-// WhatsApp bar watches to know when the hero has scrolled away.
+// booking bar watches to know when the hero has scrolled away.
 export function HeroSection({ lang }: { lang: Lang }): React.JSX.Element {
   return (
     <section id="tw-hero" aria-labelledby="tw-hero-heading" className="tw-dark relative isolate flex min-h-[calc(100svh-61px)] items-center overflow-hidden px-5 pb-14 pt-12 sm:px-8 sm:pb-20 sm:pt-16">
@@ -35,11 +35,8 @@ export function HeroSection({ lang }: { lang: Lang }): React.JSX.Element {
           <span className="text-[15px] font-semibold text-gold">· {pick(c.seats, lang)}</span>
         </p>
 
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <WhatsAppLink topic="general" location="hero" className={`${GOLD_BUTTON} w-full max-w-sm sm:w-auto`}>
-            <WhatsAppGlyph className="size-5 flex-none" />
-            {pick(telepathyCopy.bookButton, lang)}
-          </WhatsAppLink>
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:items-start">
+          <BookSeatCta lang={lang} batch="general" location="hero" className="w-full max-w-sm sm:w-auto sm:max-w-[22rem]" buttonClassName="w-full" />
           <a
             href="#free-session"
             className="inline-flex min-h-[52px] w-full max-w-sm items-center justify-center rounded-sm border border-line-strong px-6 py-3.5 text-[16px] font-semibold text-ink transition-colors hover:bg-white/5 sm:w-auto"
