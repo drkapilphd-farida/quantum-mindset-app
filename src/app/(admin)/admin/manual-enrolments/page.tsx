@@ -33,7 +33,7 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
       <div>
         <h1 className="text-2xl font-semibold">Manual enrolments</h1>
         <p className="text-sm text-muted-foreground">
-          Sharp Brain 30-Day Program payments by GPay, cash or bank transfer. “Give full access” switches the program and app on now if they already have an account (any sign-in, including Google) — otherwise as soon as they sign up or log in with this email. One active entry per email: use Edit to correct it, Delete for an entry made by mistake. Every entry is a sale (also listed in Sharp Brain Enrolments) with a
+          Sharp Brain 30-Day Program payments by GPay, cash or bank transfer. “Give full access” switches the program and app on now if they already have an account (any sign-in, including Google) — otherwise as soon as they sign up or log in with this email. After saving, the page checks access the same way the app does and shows “✅ Access verified” or a red warning with the reason; “Check access” on an entry runs that check again. One active entry per email: use Edit to correct it, Delete for an entry made by mistake. Every entry is a sale (also listed in Sharp Brain Enrolments) with a
           7-day refund window.
         </p>
       </div>

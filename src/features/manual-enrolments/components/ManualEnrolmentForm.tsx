@@ -3,7 +3,8 @@
 import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { recordManualEnrolment } from '../actions'
-import { PAYMENT_MODE_LABEL, PAYMENT_MODES, SEAT_LABEL, SEAT_OFFERS, type PaymentMode, type SeatOffer } from '../rules'
+import { AccessVerdictNote } from './AccessVerdictNote'
+import { PAYMENT_MODE_LABEL, PAYMENT_MODES, SEAT_LABEL, SEAT_OFFERS, type AccessVerdict, type PaymentMode, type SeatOffer } from '../rules'
 
 const field = 'min-h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground'
 
@@ -11,6 +12,7 @@ const field = 'min-h-11 w-full rounded-lg border border-border bg-background px-
 export function ManualEnrolmentForm({ defaultSeat, defaultAmount, today }: { defaultSeat: SeatOffer; defaultAmount: number; today: string }): React.JSX.Element {
   const [pending, start] = useTransition()
   const [result, setResult] = useState<{ ok: boolean; text: string } | null>(null)
+  const [access, setAccess] = useState<AccessVerdict | null>(null)
   const [mode, setMode] = useState<PaymentMode>('gpay')
   const [form, setForm] = useState({ email: '', name: '', phone: '', amount: '', paidOn: today, seat: defaultSeat as string, note: '' })
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => setForm((f) => ({ ...f, [k]: e.target.value }))
@@ -21,6 +23,7 @@ export function ManualEnrolmentForm({ defaultSeat, defaultAmount, today }: { def
       onSubmit={(e) => {
         e.preventDefault()
         setResult(null)
+        setAccess(null)
         start(async () => {
           const res = await recordManualEnrolment({
             email: form.email,
@@ -33,6 +36,7 @@ export function ManualEnrolmentForm({ defaultSeat, defaultAmount, today }: { def
             note: form.note || undefined,
           })
           setResult(res.ok ? { ok: true, text: res.message } : { ok: false, text: res.error })
+          setAccess(res.access ?? null)
           if (res.ok) setForm((f) => ({ ...f, email: '', name: '', phone: '', amount: '', note: '' }))
         })
       }}
@@ -85,13 +89,14 @@ export function ManualEnrolmentForm({ defaultSeat, defaultAmount, today }: { def
       </label>
       <div className="flex flex-col gap-2 sm:col-span-2">
         <Button type="submit" size="lg" disabled={pending} data-manual-save="true">
-          {pending ? 'Saving…' : 'Give full access'}
+          {pending ? 'Saving and checking access…' : 'Give full access'}
         </Button>
         {result && (
           <p role="status" className={`text-sm ${result.ok ? 'text-emerald-700 dark:text-emerald-400' : 'text-destructive'}`} data-manual-result={result.ok ? 'ok' : 'error'}>
             {result.text}
           </p>
         )}
+        {access && <AccessVerdictNote verdict={access} />}
       </div>
     </form>
   )

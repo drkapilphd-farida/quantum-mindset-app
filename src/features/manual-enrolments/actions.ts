@@ -6,25 +6,18 @@ import { z } from 'zod'
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { currentAdminEmail } from '@/features/live-classes/admin/data'
-import { normaliseEmail, PAYMENT_MODES, SEAT_OFFERS, todayIst } from './rules'
+import { normaliseEmail, PAYMENT_MODES, SEAT_OFFERS, todayIst, type AccessVerdict } from './rules'
+import { lookupAccount, verifyLearnerAccess } from './verifyAccess'
 
 // Admin-only: record a Sharp Brain 30-Day Program payment taken by GPay, cash
 // or bank transfer, and give access. If the learner hasn't signed up yet, the
 // existing sign-up routine claims the payment (same as a Razorpay payment).
 
 type Result = { ok: true; message: string } | { ok: false; error: string }
+/** After "Give full access": the save result plus the app's own access check for that learner. */
+type GrantResult = { ok: true; message: string; access: AccessVerdict } | { ok: false; error: string; access?: AccessVerdict }
 
 const PAGE = '/admin/manual-enrolments'
-
-/** The account for an email, from the real sign-in accounts (profiles.email is empty for many older Google accounts). */
-async function accountIdForEmail(email: string): Promise<string | null> {
-  const { data, error } = await createServiceClient().rpc('user_id_by_email', { p_email: email })
-  if (error) {
-    logger.error('manual enrolment: account lookup failed', { code: error.code })
-    return null
-  }
-  return typeof data === 'string' ? data : null
-}
 
 async function cancelProgramAccessIfNoOtherPayment(db: ReturnType<typeof createServiceClient>, userId: string, exceptId: string): Promise<void> {
   const { count } = await db.from('masterclass_payments').select('id', { count: 'exact', head: true }).eq('user_id', userId).is('refunded_at', null).neq('id', exceptId)
@@ -44,7 +37,7 @@ const RecordSchema = z.object({
   note: z.string().trim().max(300).optional(),
 })
 
-export async function recordManualEnrolment(input: unknown): Promise<Result> {
+export async function recordManualEnrolment(input: unknown): Promise<GrantResult> {
   const admin = await currentAdminEmail()
   if (admin === null) return { ok: false, error: 'Not authorized.' }
   const parsed = RecordSchema.safeParse(input)
@@ -62,7 +55,10 @@ export async function recordManualEnrolment(input: unknown): Promise<Result> {
     const e = existing[0]!
     return { ok: false, error: `This email already has an active manual enrolment (₹${((e.amount_cents ?? 0) / 100).toLocaleString('en-IN')}, ${e.paid_on}). Use Edit on that entry instead.` }
   }
-  const userId = await accountIdForEmail(email)
+  // A failed lookup saves the payment as waiting; the access check below (and
+  // the app at their next page load) claims it, so access still switches on.
+  const account = await lookupAccount(db, email)
+  const userId = account.ok ? account.userId : null
   const now = new Date().toISOString()
 
   const { error } = await db.from('masterclass_payments').insert({
@@ -90,11 +86,27 @@ export async function recordManualEnrolment(input: unknown): Promise<Result> {
       .upsert({ user_id: userId, plan_id: plan.id, status: 'active', current_period_start: now, canceled_at: null }, { onConflict: 'user_id,plan_id' })
     if (subError) {
       logger.error('recordManualEnrolment: access failed', { code: subError.code })
-      return { ok: false, error: 'Payment saved, but access could not be switched on. Please tell support.' }
+      revalidatePath(PAGE)
+      return { ok: false, error: 'Payment saved, but access could not be switched on. Press “Check access” on the entry.', access: await verifyLearnerAccess(email) }
     }
   }
   revalidatePath(PAGE)
-  return { ok: true, message: userId !== null ? 'Saved. Access is on now.' : 'Saved. Access switches on when they sign up with this email.' }
+  // Never trust the write alone: check access exactly the way the app does.
+  return { ok: true, message: 'Saved.', access: await verifyLearnerAccess(email) }
+}
+
+/** "Check access" on an entry: runs the same check the app uses for that learner's email. */
+export async function checkManualAccess(input: unknown): Promise<{ ok: true; access: AccessVerdict } | { ok: false; error: string }> {
+  const admin = await currentAdminEmail()
+  if (admin === null) return { ok: false, error: 'Not authorized.' }
+  const parsed = z.object({ id: z.string().uuid() }).safeParse(input)
+  if (!parsed.success) return { ok: false, error: 'Invalid entry.' }
+  const { data: row } = await createServiceClient().from('masterclass_payments').select('email, source, refunded_at').eq('id', parsed.data.id).maybeSingle()
+  if (!row || row.source !== 'manual' || !row.email) return { ok: false, error: 'Entry not found.' }
+  if (row.refunded_at !== null) return { ok: false, error: 'This entry is refunded, so access is off by design.' }
+  const access = await verifyLearnerAccess(row.email)
+  revalidatePath(PAGE)
+  return { ok: true, access }
 }
 
 export async function refundManualEnrolment(input: unknown): Promise<Result> {

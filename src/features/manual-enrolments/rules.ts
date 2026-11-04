@@ -41,3 +41,34 @@ export const SEAT_LABEL: Record<SeatOffer | 'none', string> = {
   parent_3999: '₹3,999 seat',
   none: 'Other (not counted as a seat)',
 }
+
+// ── Access check after "Give full access" ─────────────────────────────────
+// What the admin page learned about one learner. `paid` is the app's own
+// check (getIsPaidUser), the same one every gated page uses.
+export type AccessFacts =
+  | { account: 'lookup-failed' }
+  | { account: 'none'; pendingPayment: boolean }
+  | {
+      account: 'found'
+      paid: boolean
+      blocked: boolean
+      /** The learner's Sharp Brain program subscription, if any. */
+      programSubscription: { status: string } | null
+    }
+
+export type AccessVerdict = { ok: true; when: 'now' | 'first-sign-in'; text: string } | { ok: false; text: string }
+
+/** Turns the facts into "✅ Access verified" or a red warning with the reason. */
+export function accessVerdict(facts: AccessFacts, email: string): AccessVerdict {
+  if (facts.account === 'lookup-failed') return { ok: false, text: 'Could not look up the learner’s account, so access is not verified. Press “Check access” again.' }
+  if (facts.account === 'none') {
+    return facts.pendingPayment
+      ? { ok: true, when: 'first-sign-in', text: `✅ Access verified — no account yet; full access switches on the moment they first sign in with ${email}.` }
+      : { ok: false, text: `No account and no open payment for ${email}, so access would NOT switch on at sign-in. Check the entry is not refunded or deleted.` }
+  }
+  if (facts.blocked) return { ok: false, text: 'Their login is blocked (banned) in Supabase Auth, so they cannot sign in. Unblock the user first.' }
+  if (facts.paid) return { ok: true, when: 'now', text: '✅ Access verified — full access is on now on every page (one page reload if they have the app open).' }
+  if (facts.programSubscription === null) return { ok: false, text: 'Access is NOT on: their account has no Sharp Brain program subscription. Press “Check access” to retry; if it stays red, tell support.' }
+  if (facts.programSubscription.status !== 'active') return { ok: false, text: `Access is NOT on: their program subscription is “${facts.programSubscription.status}”, not active.` }
+  return { ok: false, text: 'Access is NOT on: the app’s access check says no. Tell support.' }
+}
