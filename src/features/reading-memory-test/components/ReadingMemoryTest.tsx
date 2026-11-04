@@ -11,7 +11,7 @@ import { waLink } from '@/config/site.config'
 import { leadMagnetCopy } from '@/features/reading-speed-test/leadMagnetCopy'
 import { leadWhatsappMessage } from '@/features/reading-speed-test/leadMessage'
 import { drawShareCard, shareOrDownload } from '@/features/reading-speed-test/shareCard'
-import { saveSpeedTestResult, startPracticeDemo, submitPracticeAnswers, type SpeedTestOffer } from '@/features/reading-speed-test/actions'
+import { saveSpeedTestResult, startPracticeDemo, submitPracticeAnswers } from '@/features/reading-speed-test/actions'
 import { finishMemoryReading, startMemoryTest, submitMemoryTest, type MemoryTestResult } from '../actions'
 import { memoryTestCopy, type MemoryTestCopy } from '../copy'
 import { memoryRound, pictureSrc, scoreRecall, SHOW_COUNT, SHOW_SECONDS, STORY_PICTURES, storyRecallGrid, type TestPicture } from '../pictures'
@@ -473,7 +473,6 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
   const [state, setState] = useState<'idle' | 'saving' | 'saved'>('idle')
   const [error, setError] = useState<string | null>(null)
   const [waUrl, setWaUrl] = useState<string | null>(null)
-  const [offer, setOffer] = useState<SpeedTestOffer | null>(null)
   const lm = leadMagnetCopy[lang]
 
   async function save(): Promise<void> {
@@ -488,8 +487,7 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
       setState('idle')
       return setError(res.error)
     }
-    setOffer(res.offer)
-    trackMemoryTest({ name: 'lead_submitted', status: result.status, offer: res.offer !== null })
+    trackMemoryTest({ name: 'lead_submitted', status: result.status })
     const url = waLink(
       leadWhatsappMessage({
         lang,
@@ -500,7 +498,6 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
         retention: { correct: result.retention, total: result.retentionTotal },
         memory: { correct: result.memory, total: result.memoryTotal },
         profileName,
-        offer: res.offer === null ? null : { code: res.offer.code, expiresAtMs: res.offer.expiresAtMs },
       }),
     )
     setWaUrl(url)
@@ -521,11 +518,9 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
             {lm.leadSendButton}
           </a>
           <p className="text-sm text-muted-foreground">{lm.leadSendNote}</p>
-          {offer !== null && (
-            <Link href={`/programs/sharp-brain/offer/${offer.id}`} className="text-base font-bold text-primary underline underline-offset-4" data-use-offer>
-              {lm.useOffer}
-            </Link>
-          )}
+          <Link href="/programs/sharp-brain" className="text-base font-bold text-primary underline underline-offset-4" data-parents-offer>
+            {lm.parentsOffer}
+          </Link>
         </div>
       ) : (
         <form

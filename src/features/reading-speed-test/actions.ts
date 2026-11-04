@@ -8,11 +8,8 @@ import { MEASURED_PASSAGES, PRACTICE_PASSAGES } from './passages'
 import { countWords, practiceStartingPace, readingProfile, scoreReadingTest, speedBand, type ReadingProfileType, type ReadingTestStatus, type SpeedBand } from './scoring'
 import { signTestToken, verifyTestToken } from './testToken'
 import { countCorrect, findPassage, pickPassage, showQuestions, shuffledOrder, type ShownQuestion } from './quiz'
-import { activeOffer, discountsChargeable, getOrCreateTestOffer, pricingSnapshot, resolveNow } from '@/features/sharp-brain-enrol/server'
-import type { PricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { sendTestLeadNotification } from '@/lib/email/sendTestLeadNotification'
 import { leadMagnetCopy } from './leadMagnetCopy'
-import { offerCode } from './leadMessage'
 
 // Free Reading Speed Test — every number in a result is computed here.
 // Reading time = the server's own clock between "Start" and "Done"; answers
@@ -172,14 +169,7 @@ const SaveSchema = z.object({
     .optional(),
 })
 
-/**
- * The Reading Speed Test offer, as the result screen shows it. `pricing`
- * carries the server clock and the prices with the offer applied, so the
- * countdown is the same on every device.
- */
-export type SpeedTestOffer = { id: string; code: string; expiresAtMs: number; pricing: PricingSnapshot }
-
-export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; offer: SpeedTestOffer | null } | Fail> {
+export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true } | Fail> {
   const parsed = SaveSchema.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Enter a valid WhatsApp number.' }
   const ip = await getClientIp()
@@ -225,9 +215,7 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; o
       logger.error('saveSpeedTestResult: insert failed', { code: error?.code })
       return { ok: false, error: GENERIC_ERROR }
     }
-    // ₹1,000 off for 48 hours — only after a VALID test, one per number ever.
-    const now = resolveNow(parsed.data.simulateNow)
-    const offer = result.status === 'valid' && discountsChargeable() ? activeOffer(await getOrCreateTestOffer(phone, saved.id), now) : null
+    // No test offer since 4 Nov 2026: offers don't stack on the parents price.
     const profile = withLeadSource.profile_type
     // Every lead is emailed to the founder at once (never blocks the visitor).
     await sendTestLeadNotification({
@@ -240,11 +228,10 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; o
       retention: memoryTest ? `${result.rt} of 4` : null,
       memory: memoryTest ? `${result.mem} of 8` : null,
       profile: profile === null ? null : leadMagnetCopy.en.profiles[profile].name,
-      offer: offer === null ? null : `${offerCode(offer.id)}, expires ${new Date(offer.expiresAtMs).toISOString()}`,
+      offer: null,
       utmSource: withLeadSource.utm_source,
     })
-    if (offer === null) return { ok: true, offer: null }
-    return { ok: true, offer: { id: offer.id, code: offerCode(offer.id), expiresAtMs: offer.expiresAtMs, pricing: pricingSnapshot(now, offer.expiresAtMs) } }
+    return { ok: true }
   } catch {
     return { ok: false, error: GENERIC_ERROR }
   }

@@ -1,3 +1,5 @@
+import { LIVE_CLASS_CYCLE } from '@/config/liveClassCycle'
+
 // Pure rules of the live-class cycle (Phase 3, item 3) and the refund
 // guarantee checks shown to the trainer. No guarantee wording reaches learners.
 
@@ -8,9 +10,9 @@ export const TOTAL_DAYS = 30
 /** A refund must be claimed within this many days after completing Day 30. */
 export const CLAIM_WINDOW_DAYS = 7
 
-/** Default class time: 7:00–9:00 pm IST. */
-export const DEFAULT_START_IST = '19:00'
-export const DEFAULT_END_IST = '21:00'
+/** Default class time: 8:00–9:00 pm IST (the Mon & Thu cycle, src/config/liveClassCycle.ts). */
+export const DEFAULT_START_IST = LIVE_CLASS_CYCLE.startIst
+export const DEFAULT_END_IST = LIVE_CLASS_CYCLE.endIst
 
 /** The fixed English topic per class number (the app shows translated names). */
 export const CLASS_TOPICS_EN: Record<ClassNumber, string> = {
@@ -79,23 +81,55 @@ export function isoToIst(iso: string): { date: string; time: string } {
   return { date: `${get('year')}-${get('month')}-${get('day')}`, time: `${get('hour')}:${get('minute')}` }
 }
 
-/** "Copy last cycle": the same 7 sessions, 28 days later, as drafts for the trainer to adjust. */
-export function copyCycle(last: readonly Pick<Session, 'classNumber' | 'topicOverride' | 'startsAt' | 'endsAt'>[], shiftDays = 28): Pick<Session, 'classNumber' | 'topicOverride' | 'startsAt' | 'endsAt'>[] {
-  const shift = shiftDays * 86_400_000
-  return [...last]
-    .sort((a, b) => a.classNumber - b.classNumber)
-    .map((s) => ({ classNumber: s.classNumber, topicOverride: s.topicOverride, startsAt: new Date(Date.parse(s.startsAt) + shift).toISOString(), endsAt: new Date(Date.parse(s.endsAt) + shift).toISOString() }))
+// ── The Mon & Thu cycle (src/config/liveClassCycle.ts) ────────────────────
+
+export type CyclePattern = { weekdays: readonly number[]; startIst: string; endIst: string; firstCycleStart: string; skipDates: readonly string[] }
+export type CycleSlot = { classNumber: ClassNumber; date: string; startsAt: string; endsAt: string }
+
+const MAX_SCAN_DAYS = 400
+
+function addDays(date: string, days: number): string {
+  return new Date(Date.parse(`${date}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10)
 }
 
-/** The most recent cycle: for each class number, its latest published session. */
-export function lastCycle<S extends Pick<Session, 'classNumber' | 'startsAt' | 'status'>>(sessions: readonly S[]): S[] {
-  const latest = new Map<number, S>()
-  for (const s of sessions) {
-    if (s.status !== 'published') continue
-    const current = latest.get(s.classNumber)
-    if (!current || Date.parse(s.startsAt) > Date.parse(current.startsAt)) latest.set(s.classNumber, s)
+function isClassDay(date: string, pattern: CyclePattern): boolean {
+  return pattern.weekdays.includes(new Date(`${date}T00:00:00Z`).getUTCDay()) && !pattern.skipDates.includes(date)
+}
+
+/**
+ * The class slots of the cycle, in order from its first class: slot k is
+ * Class (k mod 7) + 1. Skipped dates move the cycle on to the next class
+ * day, so the numbering never jumps. Returns the `count` slots that start
+ * at or after `fromMs`.
+ */
+export function cycleSlots(fromMs: number, count: number, pattern: CyclePattern = LIVE_CLASS_CYCLE): CycleSlot[] {
+  const result: CycleSlot[] = []
+  let index = 0
+  for (let offset = 0; offset < MAX_SCAN_DAYS * 4 && result.length < count; offset++) {
+    const date = addDays(pattern.firstCycleStart, offset)
+    if (!isClassDay(date, pattern)) continue
+    const startsAt = istToIso(date, pattern.startIst)
+    if (Date.parse(startsAt) >= fromMs) {
+      result.push({ classNumber: ((index % TOTAL_CLASSES) + 1) as ClassNumber, date, startsAt, endsAt: istToIso(date, pattern.endIst) })
+    }
+    index += 1
   }
-  return CLASS_NUMBERS.map((n) => latest.get(n)).filter((s): s is S => s !== undefined)
+  return result
+}
+
+/** The next live class of the cycle that hasn't started at `now` (website: "Next live class"). */
+export function nextCycleSlot(now: number, pattern: CyclePattern = LIVE_CLASS_CYCLE): CycleSlot | null {
+  return cycleSlots(now, 1, pattern)[0] ?? null
+}
+
+/**
+ * "Create next cycle": the 7 slots that follow the latest scheduled session
+ * (or start at the next class from `now` when nothing later is scheduled),
+ * one full cycle of Classes 1–7 in the order the pattern gives them.
+ */
+export function nextCycleSessions(latestStartsAt: string | null, now: number, pattern: CyclePattern = LIVE_CLASS_CYCLE): CycleSlot[] {
+  const from = Math.max(now, latestStartsAt === null ? 0 : Date.parse(latestStartsAt) + 60_000)
+  return cycleSlots(from, TOTAL_CLASSES, pattern)
 }
 
 /** Fills {name} placeholders. */

@@ -1,5 +1,5 @@
 import { createServiceClient } from '@/lib/supabase/service'
-import { manualStatus, refundBy, type ManualStatus, type PaymentMode } from './rules'
+import { manualStatus, refundBy, SEAT_OFFERS, type ManualStatus, type PaymentMode, type SeatOffer } from './rules'
 
 export type ManualEnrolment = {
   id: string
@@ -11,6 +11,7 @@ export type ManualEnrolment = {
   paidOn: string
   refundBy: string
   batchStart: string | null
+  offer: SeatOffer | null
   recordedBy: string | null
   note: string | null
   status: ManualStatus
@@ -20,7 +21,7 @@ export type ManualEnrolment = {
 export async function listManualEnrolments(): Promise<ManualEnrolment[]> {
   const { data } = await createServiceClient()
     .from('masterclass_payments')
-    .select('id, email, customer_name, phone, amount_cents, payment_mode, paid_on, batch_start, recorded_by, note, refunded_at, user_id, granted_at')
+    .select('id, email, customer_name, phone, amount_cents, payment_mode, paid_on, batch_start, offer, recorded_by, note, refunded_at, user_id, granted_at')
     .eq('source', 'manual')
     .order('paid_on', { ascending: false })
     .order('created_at', { ascending: false })
@@ -35,6 +36,7 @@ export async function listManualEnrolments(): Promise<ManualEnrolment[]> {
     paidOn: r.paid_on ?? '',
     refundBy: r.paid_on ? refundBy(r.paid_on) : '',
     batchStart: r.batch_start,
+    offer: (SEAT_OFFERS as readonly (string | null)[]).includes(r.offer) ? (r.offer as SeatOffer) : null,
     recordedBy: r.recorded_by,
     note: r.note,
     status: manualStatus(r),

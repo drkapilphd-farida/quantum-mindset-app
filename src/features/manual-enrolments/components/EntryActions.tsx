@@ -3,20 +3,20 @@
 import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { deleteManualEnrolment, updateManualEnrolment } from '../actions'
-import { PAYMENT_MODE_LABEL, PAYMENT_MODES, type PaymentMode } from '../rules'
+import { PAYMENT_MODE_LABEL, PAYMENT_MODES, SEAT_LABEL, SEAT_OFFERS, type PaymentMode, type SeatOffer } from '../rules'
 import { RefundButton } from './RefundButton'
 
-type Entry = { id: string; amountInr: number | null; mode: PaymentMode; paidOn: string; batchStart: string | null; refunded: boolean; inWindow: boolean }
+type Entry = { id: string; amountInr: number | null; mode: PaymentMode; paidOn: string; offer: SeatOffer | null; refunded: boolean; inWindow: boolean }
 
 const field = 'min-h-9 rounded-md border border-border bg-background px-2 text-sm'
 
-// Per entry: Edit (amount, mode, date, batch), Delete (entered by mistake —
+// Per entry: Edit (amount, mode, date, seat), Delete (entered by mistake —
 // two taps; not a refund) and Refund.
-export function EntryActions({ entry, batches, today }: { entry: Entry; batches: { start: string; label: string }[]; today: string }): React.JSX.Element {
+export function EntryActions({ entry, today }: { entry: Entry; today: string }): React.JSX.Element {
   const [mode, setMode] = useState<'idle' | 'edit' | 'delete'>('idle')
   const [pending, start] = useTransition()
   const [error, setError] = useState<string | null>(null)
-  const [form, setForm] = useState({ amount: String(entry.amountInr ?? ''), payMode: entry.mode, paidOn: entry.paidOn, batch: entry.batchStart ?? '' })
+  const [form, setForm] = useState({ amount: String(entry.amountInr ?? ''), payMode: entry.mode, paidOn: entry.paidOn, seat: (entry.offer ?? '') as string })
 
   if (mode === 'edit')
     return (
@@ -25,7 +25,7 @@ export function EntryActions({ entry, batches, today }: { entry: Entry; batches:
         onSubmit={(e) => {
           e.preventDefault()
           start(async () => {
-            const res = await updateManualEnrolment({ id: entry.id, amountInr: Number(form.amount.replace(/[^\d]/g, '')), mode: form.payMode, paidOn: form.paidOn, batchStart: form.batch || null })
+            const res = await updateManualEnrolment({ id: entry.id, amountInr: Number(form.amount.replace(/[^\d]/g, '')), mode: form.payMode, paidOn: form.paidOn, offer: form.seat === '' ? null : (form.seat as SeatOffer) })
             if (res.ok) setMode('idle')
             else setError(res.error)
           })
@@ -41,14 +41,13 @@ export function EntryActions({ entry, batches, today }: { entry: Entry; batches:
           ))}
         </div>
         <input type="date" max={today} value={form.paidOn} onChange={(e) => setForm((f) => ({ ...f, paidOn: e.target.value }))} aria-label="Payment date" className={field} />
-        <select value={form.batch} onChange={(e) => setForm((f) => ({ ...f, batch: e.target.value }))} aria-label="Batch" className={field}>
-          {entry.batchStart && !batches.some((b) => b.start === entry.batchStart) && <option value={entry.batchStart}>{entry.batchStart}</option>}
-          {batches.map((b) => (
-            <option key={b.start} value={b.start}>
-              {b.label}
+        <select value={form.seat} onChange={(e) => setForm((f) => ({ ...f, seat: e.target.value }))} aria-label="Seat" className={field}>
+          {SEAT_OFFERS.map((o) => (
+            <option key={o} value={o}>
+              {SEAT_LABEL[o]}
             </option>
           ))}
-          <option value="">Not decided</option>
+          <option value="">{SEAT_LABEL.none}</option>
         </select>
         <div className="flex gap-2">
           <Button type="submit" size="sm" disabled={pending} data-manual-edit-save="true">

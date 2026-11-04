@@ -1,7 +1,6 @@
 import { LANGUAGES, type AppLang } from '@/lib/app-i18n/languages'
-import { IST_OFFSET_MS } from './batches'
 
-// Price and date formatting for the batch / price / countdown UI. Dates are
+// Price and date formatting for the price / seat / next-class UI. Dates are
 // always shown in IST, whatever the visitor's own time zone. The words are in
 // src/lib/app-i18n/messages/<lang>/enrol.json (see enrolT).
 
@@ -9,32 +8,33 @@ export function inr(amount: number): string {
   return `₹${amount.toLocaleString('en-IN')}`
 }
 
-const MONTHS = {
-  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  hi: ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'],
-} as const
+const IST = 'Asia/Kolkata'
 
-/** "15 Oct" / "15 अक्टूबर" / "15 ಅಕ್ಟೋಬರ್" … for an instant, in IST. */
-export function istDayMonth(ms: number, lang: AppLang): string {
-  if (lang === 'en' || lang === 'hi') {
-    const d = new Date(ms + IST_OFFSET_MS)
-    return `${d.getUTCDate()} ${MONTHS[lang][d.getUTCMonth()]}`
+/**
+ * A live class start, the way the page says it: "Mon, 9 Nov, 8 pm" /
+ * "सोमवार, 9 नवंबर, रात 8 बजे"; other app languages use their own date and
+ * time format. Always India time, 0–9 digits.
+ */
+export function classWhen(iso: string, lang: AppLang): string {
+  const at = new Date(iso)
+  const parts = new Intl.DateTimeFormat('en-GB', { timeZone: IST, hour: 'numeric', minute: '2-digit', hourCycle: 'h23' }).formatToParts(at)
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? '0')
+  const minute = parts.find((p) => p.type === 'minute')?.value ?? '00'
+  const h12 = hour % 12 === 0 ? 12 : hour % 12
+  const clock = minute === '00' ? `${h12}` : `${h12}:${minute}`
+  if (lang === 'en') {
+    const date = new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short', timeZone: IST }).format(at)
+    return `${date}, ${clock} ${hour < 12 ? 'am' : 'pm'}`
   }
-  return new Intl.DateTimeFormat(LANGUAGES[lang].htmlLang, { day: 'numeric', month: 'long', timeZone: 'Asia/Kolkata' }).format(ms)
-}
-
-/** The last IST day an offer ending (exclusively) at `endsAtMs` is still on, e.g. "10 Oct, 11:59 PM IST". */
-export function istDeadline(endsAtMs: number, lang: AppLang): string {
-  const last = endsAtMs - 60_000
-  if (lang === 'en' || lang === 'hi') {
-    const d = new Date(last + IST_OFFSET_MS)
-    const h = d.getUTCHours()
-    const m = String(d.getUTCMinutes()).padStart(2, '0')
-    const h12 = h % 12 === 0 ? 12 : h % 12
-    return `${istDayMonth(last, lang)}, ${h12}:${m} ${h < 12 ? 'AM' : 'PM'} IST`
+  if (lang === 'hi') {
+    const date = new Intl.DateTimeFormat('hi-IN-u-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', timeZone: IST }).format(at)
+    const part = hour < 12 ? 'सुबह' : hour < 17 ? 'दोपहर' : hour < 19 ? 'शाम' : 'रात'
+    return `${date}, ${part} ${clock} बजे`
   }
-  const time = new Intl.DateTimeFormat(LANGUAGES[lang].htmlLang, { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' }).format(last)
-  return `${istDayMonth(last, lang)}, ${time} IST`
+  const htmlLang = LANGUAGES[lang].htmlLang
+  const date = new Intl.DateTimeFormat(`${htmlLang}-IN-u-nu-latn`, { weekday: 'short', day: 'numeric', month: 'short', timeZone: IST }).format(at)
+  const time = new Intl.DateTimeFormat(`${htmlLang}-IN-u-nu-latn`, { hour: 'numeric', minute: '2-digit', timeZone: IST }).format(at)
+  return `${date}, ${time}`
 }
 
 export function countdownParts(remainingMs: number): { d: number; h: number; m: number; s: number } {

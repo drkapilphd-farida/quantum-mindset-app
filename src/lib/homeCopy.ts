@@ -30,7 +30,7 @@ export type ProblemCard = {
   pillar: string
   pain: string
   audience: string
-  /** `livePrice`: the price line is the server-decided Sharp Brain price (early-bird / regular + next batch). */
+  /** `livePrice`: the price line is the server-decided Sharp Brain price (first 100 seats, then the later price). */
   programs: { name: string; href: string; priceLine: string | null; livePrice?: boolean }[]
   cta: { label: string; href: string }
   extras: { label: string; href: string }[]

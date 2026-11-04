@@ -4,7 +4,7 @@ import { verifyRazorpayWebhookSignature } from '@/lib/razorpay/verifyWebhookSign
 import { createServiceClient } from '@/lib/supabase/service'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
-import { sharpBrainEnrolment } from '@/config/site.config'
+import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from '@/config/masterclassPaymentLink'
 import { linkIdsFromEnv } from '@/lib/razorpay/paymentLinkEvent'
 import { SHARP_BRAIN_PROGRAM_NOTE, programPaymentFromEvent, type FixedProgramLink, type ProgramPayment } from '@/features/sharp-brain-enrol/programPayment'
 import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
@@ -42,12 +42,12 @@ import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 // was paid. An already-active subscription (e.g. granted by hand) is never
 // overwritten; the payment is still recorded against that learner.
 //
-// Batches and offers (1 Oct 2026): the program is now also sold through
-// links our server creates per checkout (Razorpay Payment Links API) —
-// recognised by notes.program = "sharp_brain_30" — and an optional fixed
-// ₹8,999 link. The buyer name, offer (earlybird | regular | test1000) and
-// chosen batch are saved with the payment, and a redeemed Reading Speed
-// Test offer is marked used. See src/features/sharp-brain-enrol.
+// Offers (since 4 Nov 2026: parents offer, rolling admission): the program
+// is sold through links our server creates per checkout (Razorpay Payment
+// Links API), recognised by notes.program = "sharp_brain_30". The buyer
+// name and offer (parent_2999 | parent_3999; older links also earlybird |
+// regular | test1000 and a batch) are saved with the payment — the offer
+// feeds the real "Seats left" counter. See src/features/sharp-brain-enrol.
 const WEBHOOK_RATE_LIMIT = { max: 60, windowMs: 60_000 }
 
 // Razorpay's documented refund.processed shape — the refund entity
@@ -173,9 +173,9 @@ async function handleRefundProcessed(json: unknown): Promise<NextResponse> {
   return NextResponse.json({ received: true })
 }
 
+/** The old fixed ₹9,999 link — no longer offered, still honoured if someone pays it. */
 function fixedProgramLinks(): FixedProgramLink[] {
-  const { regular, discounted } = sharpBrainEnrolment.fallbackLinks
-  return [{ url: regular, offer: 'regular' }, ...(discounted !== null ? [{ url: discounted, offer: 'earlybird' as const }] : [])]
+  return [{ url: RAZORPAY_MASTERCLASS_PAYMENT_LINK, offer: 'regular' }]
 }
 
 async function handlePaymentLinkPaid(json: unknown): Promise<NextResponse> {

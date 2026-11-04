@@ -3,16 +3,16 @@
 import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { recordManualEnrolment } from '../actions'
-import { PAYMENT_MODE_LABEL, PAYMENT_MODES, type PaymentMode } from '../rules'
+import { PAYMENT_MODE_LABEL, PAYMENT_MODES, SEAT_LABEL, SEAT_OFFERS, type PaymentMode, type SeatOffer } from '../rules'
 
 const field = 'min-h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground'
 
 // Founder-only: record a GPay / cash / bank payment for the Sharp Brain 30-Day Program.
-export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches: { start: string; label: string }[]; defaultBatch: string; today: string }): React.JSX.Element {
+export function ManualEnrolmentForm({ defaultSeat, defaultAmount, today }: { defaultSeat: SeatOffer; defaultAmount: number; today: string }): React.JSX.Element {
   const [pending, start] = useTransition()
   const [result, setResult] = useState<{ ok: boolean; text: string } | null>(null)
   const [mode, setMode] = useState<PaymentMode>('gpay')
-  const [form, setForm] = useState({ email: '', name: '', phone: '', amount: '', paidOn: today, batch: defaultBatch, note: '' })
+  const [form, setForm] = useState({ email: '', name: '', phone: '', amount: '', paidOn: today, seat: defaultSeat as string, note: '' })
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => setForm((f) => ({ ...f, [k]: e.target.value }))
 
   return (
@@ -29,7 +29,7 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
             amountInr: Number(form.amount.replace(/[^\d]/g, '')),
             mode,
             paidOn: form.paidOn,
-            batchStart: form.batch || null,
+            offer: form.seat === '' ? null : (form.seat as SeatOffer),
             note: form.note || undefined,
           })
           setResult(res.ok ? { ok: true, text: res.message } : { ok: false, text: res.error })
@@ -48,7 +48,7 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
       </label>
       <label className="flex flex-col gap-1 text-sm font-medium">
         Amount (₹) *
-        <input inputMode="numeric" required value={form.amount} onChange={set('amount')} placeholder="8999" className={field} data-manual-amount="true" />
+        <input inputMode="numeric" required value={form.amount} onChange={set('amount')} placeholder={String(defaultAmount)} className={field} data-manual-amount="true" />
       </label>
       <fieldset className="flex flex-col gap-1 text-sm font-medium">
         <legend className="mb-1">Payment mode *</legend>
@@ -69,14 +69,14 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
         <input value="Sharp Brain 30-Day Program" readOnly className={`${field} text-muted-foreground`} />
       </label>
       <label className="flex flex-col gap-1 text-sm font-medium">
-        Batch
-        <select value={form.batch} onChange={set('batch')} className={field} data-manual-batch="true">
-          {batches.map((b) => (
-            <option key={b.start} value={b.start}>
-              {b.label}
+        Seat
+        <select value={form.seat} onChange={set('seat')} className={field} data-manual-seat="true">
+          {SEAT_OFFERS.map((o) => (
+            <option key={o} value={o}>
+              {SEAT_LABEL[o]}
             </option>
           ))}
-          <option value="">Not decided</option>
+          <option value="">{SEAT_LABEL.none}</option>
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm font-medium">

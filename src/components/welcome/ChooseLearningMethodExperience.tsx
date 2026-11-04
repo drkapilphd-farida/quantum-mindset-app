@@ -55,10 +55,10 @@ type ChooseLearningMethodExperienceProps = {
   // already started it; everyone else is offered the Sharp Brain program.
   hasStartedJourney: boolean
   /**
-   * The Sharp Brain price right now, decided on the server (early-bird /
-   * regular, next batch) — the same logic as the program page and checkout.
+   * The Sharp Brain price right now, decided on the server from the real
+   * seat count — the same logic as the program page and checkout.
    */
-  programPrice: { amountInr: number; regularInr: number; earlyBird: boolean; batchLabel: string }
+  programPrice: { amountInr: number; struckInr: number; introSeats: number | null }
   /** app host: the learner's next plan day (null = all 30 done) and whether they have begun. */
   planStep: { day: number | null; started: boolean }
 }
@@ -150,9 +150,8 @@ function SharpBrainCard({ planStep, onStart }: { planStep: { day: number | null;
 export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, hasStartedJourney, programPrice, planStep }: ChooseLearningMethodExperienceProps): React.JSX.Element {
   const t = useAppT()
   const { lang } = useAppI18n()
-  const programPriceLine = programPrice.earlyBird
-    ? t('welcome.program.earlyBirdLine', { date: programPrice.batchLabel, price: inr(programPrice.amountInr), regular: inr(programPrice.regularInr) })
-    : t('welcome.program.regularLine', { price: inr(programPrice.amountInr), date: programPrice.batchLabel })
+  const et = enrolT(lang)
+  const programPriceLine = [`${inr(programPrice.amountInr)}${programPrice.introSeats !== null ? ` · ${et('firstSeats', { n: programPrice.introSeats })}` : ''}`, et('startToday')].join(' · ')
   const router = useRouter()
   const showJourney = appDomain === 'habit' && hasStartedJourney
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -237,10 +236,10 @@ export function ChooseLearningMethodExperience({ isAuthenticated, appDomain, has
                 title={programs.sharpBrain.name}
                 description={t('welcome.program.outcome')}
                 points={[t('welcome.program.format'), programPriceLine]}
-                ctaLabel={enrolT(lang)('enrolNow', { price: inr(programPrice.amountInr) })}
+                ctaLabel={et('bookSeat', { price: inr(programPrice.amountInr) })}
                 onSelect={() => {
-                  // InitiateCheckout fires only on the batch picker's Pay button, just before Razorpay.
-                  trackViewContent('Sharp Brain Batch Picker')
+                  // InitiateCheckout fires only on the checkout's Pay button, just before Razorpay.
+                  trackViewContent('Sharp Brain Checkout')
                   window.open(PROGRAM_CHECKOUT_HREF, '_blank', 'noopener,noreferrer')
                 }}
               />

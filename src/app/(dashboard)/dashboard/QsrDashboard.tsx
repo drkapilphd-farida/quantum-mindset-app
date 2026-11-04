@@ -25,6 +25,7 @@ import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDa
 import { features, programs } from '@/config/site.config'
 import { ReminderBanner } from '@/features/reminders/components/ReminderBanner'
 import { NextClassCard } from '@/features/live-classes/components/NextClassCard'
+import { StartHereCard } from '@/features/thirty-day-curriculum/components/StartHereCard'
 import { ReviewDueCard } from '@/features/memory-studio/components/ReviewDueCard'
 
 // Mind Score: weighted blend of 30-day plan progress (60%) and streak
@@ -107,6 +108,7 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
   return (
     <div className="glass-premium relative -m-6 space-y-4 p-6 sm:-m-8 sm:space-y-6 sm:p-8">
       <ReminderBanner />
+      <StartHereCard completedDays={program.completedDays} />
       <NextClassCard />
       <ReviewDueCard />
       {/* Dashboard Glass ambient background — fixed so it stays full-

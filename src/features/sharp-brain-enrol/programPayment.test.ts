@@ -31,3 +31,15 @@ describe('Telepathy Workshop seat payment', () => {
     expect(programPaymentFromEvent(linkPaid(RAZORPAY_MASTERCLASS_PAYMENT_LINK), options).ok).toBe(true)
   })
 })
+
+describe('parents offer payments (4 Nov 2026)', () => {
+  it('a server-made ₹2,999 / ₹3,999 link grants and records its offer (no batch)', () => {
+    for (const offer of ['parent_2999', 'parent_3999'] as const) {
+      const result = programPaymentFromEvent(linkPaid('https://rzp.io/rzp/NEW1', { program: SHARP_BRAIN_PROGRAM_NOTE, offer }), options)
+      expect(result).toMatchObject({ ok: true, payment: { offer, batchStart: null } })
+    }
+  })
+  it('an unknown offer value is saved as null, never passed through', () => {
+    expect(programPaymentFromEvent(linkPaid('https://rzp.io/rzp/NEW2', { program: SHARP_BRAIN_PROGRAM_NOTE, offer: 'free' }), options)).toMatchObject({ ok: true, payment: { offer: null } })
+  })
+})

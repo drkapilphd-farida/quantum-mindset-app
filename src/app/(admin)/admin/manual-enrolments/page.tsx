@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { sharpBrainEnrolment } from '@/config/site.config'
-import { upcomingBatches } from '@/features/sharp-brain-enrol/batches'
+import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { listManualEnrolments } from '@/features/manual-enrolments/data'
-import { inRefundWindow, PAYMENT_MODE_LABEL, todayIst } from '@/features/manual-enrolments/rules'
+import { inRefundWindow, PAYMENT_MODE_LABEL, SEAT_LABEL, todayIst } from '@/features/manual-enrolments/rules'
 import { ManualEnrolmentForm } from '@/features/manual-enrolments/components/ManualEnrolmentForm'
 import { EntryActions } from '@/features/manual-enrolments/components/EntryActions'
 
@@ -24,9 +23,8 @@ const STATUS: Record<string, { label: string; className: string }> = {
 export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element> {
   const today = todayIst()
   const rows = await listManualEnrolments()
-  // A batch that started in the last 10 days (late joiners) and the next ones; the next batch is preselected.
-  const batches = upcomingBatches(Date.now() - 10 * 86_400_000, sharpBrainEnrolment, 5).map((b) => ({ start: b.start, label: `Batch starting ${fmt(b.start)}${b.start < today ? ' (started)' : ''}` }))
-  const nextBatch = batches.find((b) => b.start >= today)?.start ?? batches[0]?.start ?? ''
+  // The seat on sale now is preselected (₹2,999 until the first 100 are paid).
+  const { price, seatsKnown } = await pricingSnapshot()
   const active = rows.filter((r) => r.status !== 'refunded')
   const total = active.reduce((sum, r) => sum + (r.amountInr ?? 0), 0)
 
@@ -39,7 +37,10 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
           7-day refund window.
         </p>
       </div>
-      <ManualEnrolmentForm batches={batches} defaultBatch={nextBatch} today={today} />
+      <p className="text-sm" data-seats-left={price.seatsLeft}>
+        {seatsKnown ? (price.seatsLeft > 0 ? `Seats left at ₹${price.introInr.toLocaleString('en-IN')}: ${price.seatsLeft} of ${price.introSeats}` : `₹${price.introInr.toLocaleString('en-IN')} seats are full — now ₹${price.laterInr.toLocaleString('en-IN')}`) : 'Seat count unavailable right now.'}
+      </p>
+      <ManualEnrolmentForm defaultSeat={price.offer} defaultAmount={price.amountInr} today={today} />
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">
           All manual enrolments{' '}
@@ -59,7 +60,7 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
                   <TableHead>Mode</TableHead>
                   <TableHead>Paid</TableHead>
                   <TableHead>Refund by</TableHead>
-                  <TableHead>Batch</TableHead>
+                  <TableHead>Seat</TableHead>
                   <TableHead>Access</TableHead>
                   <TableHead />
                 </TableRow>
@@ -76,12 +77,11 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
                     <TableCell>{PAYMENT_MODE_LABEL[r.mode]}</TableCell>
                     <TableCell className="whitespace-nowrap">{fmt(r.paidOn)}</TableCell>
                     <TableCell className="whitespace-nowrap">{fmt(r.refundBy)}</TableCell>
-                    <TableCell className="whitespace-nowrap">{r.batchStart ? fmt(r.batchStart) : 'Not decided'}</TableCell>
+                    <TableCell className="whitespace-nowrap">{r.offer !== null ? SEAT_LABEL[r.offer] : r.batchStart ? `Batch ${fmt(r.batchStart)}` : '—'}</TableCell>
                     <TableCell className={`whitespace-nowrap ${STATUS[r.status]!.className}`}>{STATUS[r.status]!.label}</TableCell>
                     <TableCell>
                       <EntryActions
-                        entry={{ id: r.id, amountInr: r.amountInr, mode: r.mode, paidOn: r.paidOn, batchStart: r.batchStart, refunded: r.status === 'refunded', inWindow: inRefundWindow(r.paidOn, today) }}
-                        batches={batches}
+                        entry={{ id: r.id, amountInr: r.amountInr, mode: r.mode, paidOn: r.paidOn, offer: r.offer, refunded: r.status === 'refunded', inWindow: inRefundWindow(r.paidOn, today) }}
                         today={today}
                       />
                     </TableCell>

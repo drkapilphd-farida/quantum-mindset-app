@@ -4,7 +4,7 @@ import { programs } from '@/config/site.config'
 import { useAppT } from '@/lib/app-i18n/client'
 import { Lock } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
-import { BatchCheckout, PriceLine, SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
+import { PriceLine, SeatCheckout, SeatCounter, SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 
 const PROGRAM_NAME = programs.sharpBrain.name
 
@@ -20,9 +20,9 @@ type MasterclassPaywallModalProps = {
 // 30-Day Masterclass Paywall™ — every locked day cell opens this instead
 // of navigating anywhere (see ThirtyDayCurriculumOverview.tsx /
 // ThirtyDayCurriculumExperience.tsx). Same real, hosted Razorpay
-// Same price logic as the website (1 Oct 2026): the server decides the
-// early-bird / regular price and creates the Razorpay link for the batch
-// the learner picks here (BatchCheckout). Fetched only while open.
+// Same price logic as the website (4 Nov 2026): the server decides the
+// price from the real seat count and creates the Razorpay link
+// (SeatCheckout). Fetched only while open.
 export function MasterclassPaywallModal({ open, onOpenChange, day }: MasterclassPaywallModalProps): React.JSX.Element {
   const t = useAppT()
   return (
@@ -46,8 +46,9 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
             <SharpBrainPricingProvider initial={null}>
               <div className="w-full rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-left">
                 <PriceLine tone="app" />
+                <SeatCounter className="mt-1 text-xs font-medium text-emerald-700 dark:text-emerald-400" />
                 <div className="mt-4" data-enroll-button="true">
-                  <BatchCheckout location="app_paywall_modal" tone="app" />
+                  <SeatCheckout location="app_paywall_modal" tone="app" />
                 </div>
               </div>
             </SharpBrainPricingProvider>

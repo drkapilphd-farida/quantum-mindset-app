@@ -114,5 +114,15 @@
       "adminOff": "Reminders are paused for your account. Message us on WhatsApp if you'd like them back.",
       "error": "Something went wrong. Please try again."
     }
+  },
+  "startHere": {
+    "title": "Start here",
+    "intro": "A quick guide before Day 1.",
+    "p1": "Each day is one short session in the app — about 15 minutes. Do it at the same time every day.",
+    "p2": "Do the Day 1 reading & memory test first: it is your own starting point, compared on Day 30.",
+    "p3": "Live classes are on Zoom, Mon & Thu, 8–9 pm. Register for the next one under Live classes — a missed class repeats in the next cycle.",
+    "p4": "Parents can see progress in the parent view.",
+    "cta": "Start Day 1 →",
+    "video": "Watch the 10-minute orientation"
   }
 }

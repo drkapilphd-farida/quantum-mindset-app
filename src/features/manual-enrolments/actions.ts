@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { currentAdminEmail } from '@/features/live-classes/admin/data'
-import { normaliseEmail, PAYMENT_MODES, todayIst } from './rules'
+import { normaliseEmail, PAYMENT_MODES, SEAT_OFFERS, todayIst } from './rules'
 
 // Admin-only: record a Sharp Brain 30-Day Program payment taken by GPay, cash
 // or bank transfer, and give access. If the learner hasn't signed up yet, the
@@ -40,7 +40,7 @@ const RecordSchema = z.object({
   amountInr: z.number().int().min(1).max(1_000_000),
   mode: z.enum(PAYMENT_MODES),
   paidOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  batchStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
+  offer: z.enum(SEAT_OFFERS).nullable(),
   note: z.string().trim().max(300).optional(),
 })
 
@@ -75,7 +75,7 @@ export async function recordManualEnrolment(input: unknown): Promise<Result> {
     currency: 'INR',
     payment_mode: d.mode,
     paid_on: d.paidOn,
-    batch_start: d.batchStart,
+    offer: d.offer,
     recorded_by: admin,
     note: d.note || null,
     ...(userId !== null ? { user_id: userId, granted_at: now } : {}),
@@ -125,10 +125,10 @@ const EditSchema = z.object({
   amountInr: z.number().int().min(1).max(1_000_000),
   mode: z.enum(PAYMENT_MODES),
   paidOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  batchStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
+  offer: z.enum(SEAT_OFFERS).nullable(),
 })
 
-/** Correct an entry's amount, mode, date or batch (access is unchanged). */
+/** Correct an entry's amount, mode, date or seat (access is unchanged). */
 export async function updateManualEnrolment(input: unknown): Promise<Result> {
   const admin = await currentAdminEmail()
   if (admin === null) return { ok: false, error: 'Not authorized.' }
@@ -138,7 +138,7 @@ export async function updateManualEnrolment(input: unknown): Promise<Result> {
   if (d.paidOn > todayIst()) return { ok: false, error: 'The payment date can’t be in the future.' }
   const { data, error } = await createServiceClient()
     .from('masterclass_payments')
-    .update({ amount_cents: d.amountInr * 100, payment_mode: d.mode, paid_on: d.paidOn, batch_start: d.batchStart })
+    .update({ amount_cents: d.amountInr * 100, payment_mode: d.mode, paid_on: d.paidOn, offer: d.offer })
     .eq('id', d.id)
     .eq('source', 'manual')
     .select('id')

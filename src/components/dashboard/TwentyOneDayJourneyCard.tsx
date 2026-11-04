@@ -127,7 +127,7 @@ export async function TwentyOneDayJourneyCard({
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-foreground">Day {currentDay}</p>
             <p className="truncate text-xs text-slate-700 dark:text-slate-300">
-              Part of the {programs.sharpBrain.name} · {currentProgramPriceLabel()}
+              Part of the {programs.sharpBrain.name} · {await currentProgramPriceLabel()}
             </p>
           </div>
           <span className="shrink-0 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:from-indigo-500 hover:to-indigo-400 active:scale-95">

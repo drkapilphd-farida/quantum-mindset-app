@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { addLearnerToSession, copyLastCycle, createSession, markAllRegisteredPresent, publishDrafts, setPaceControl, setPresent, setRecording, updateSession } from '../actions'
+import { addLearnerToSession, createNextCycle, createSession, markAllRegisteredPresent, publishDrafts, setPaceControl, setPresent, setRecording, updateSession } from '../actions'
 import { CLASS_NUMBERS, CLASS_TOPICS_EN, DEFAULT_END_IST, DEFAULT_START_IST, type ClassNumber } from '../../liveClasses'
 
 // The trainer's live-class controls (admin, English). Every change goes
@@ -174,8 +174,8 @@ export function CycleButtons({ drafts }: { drafts: number }): React.JSX.Element 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap gap-2">
-        <Button variant="outline" disabled={pending} onClick={() => run(copyLastCycle)}>
-          Copy last cycle (as drafts, +4 weeks)
+        <Button variant="outline" disabled={pending} onClick={() => run(createNextCycle)}>
+          Create next cycle (Mon & Thu, as drafts)
         </Button>
         {drafts > 0 &&
           (confirmPublish ? (

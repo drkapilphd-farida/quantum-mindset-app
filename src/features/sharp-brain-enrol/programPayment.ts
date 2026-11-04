@@ -1,12 +1,12 @@
 import { normaliseShortUrl, parsePaymentLinkPaid, type LinkPayment } from '@/lib/razorpay/paymentLinkEvent'
-import type { OfferKind } from './batches'
+import { isOfferKind, type OfferKind } from './offer'
 
 // Which payment_link.paid events are Sharp Brain 30-Day Program payments.
 // Razorpay webhooks are account-wide, so everything else is ignored:
-// - links our server created: notes.program === "sharp_brain_30" (regular,
-//   early-bird or test offer), with the batch and offer in the notes;
-// - the fixed links in site.config (regular ₹9,999 and the ₹8,999 one),
-//   which carry no batch;
+// - links our server created: notes.program === "sharp_brain_30", with the
+//   offer in the notes (parent_2999 / parent_3999 since 4 Nov 2026; older
+//   links also carry a batch and earlybird / regular / test1000);
+// - the old fixed ₹9,999 link (RAZORPAY_MASTERCLASS_PAYMENT_LINK), no batch;
 // - optional extra link ids from RAZORPAY_MASTERCLASS_EXTRA_LINK_IDS.
 
 /** notes.program on every payment link our server creates for the 30-Day Program. */
@@ -18,7 +18,6 @@ export type ProgramPayment = LinkPayment & { offer: OfferKind | null; batchStart
 
 export type ProgramPaymentResult = { ok: true; payment: ProgramPayment } | { ok: false; reason: 'not_payment_link_paid' | 'invalid_payload' | 'other_link' }
 
-const OFFERS: readonly OfferKind[] = ['earlybird', 'regular', 'test1000']
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
@@ -43,7 +42,7 @@ export function programPaymentFromEvent(
       ok: true,
       payment: {
         ...payment,
-        offer: offer !== null && (OFFERS as readonly string[]).includes(offer) ? (offer as OfferKind) : null,
+        offer: offer !== null && isOfferKind(offer) ? offer : null,
         batchStart: batch !== null && DATE.test(batch) ? batch : null,
         offerId: offerId !== null && UUID.test(offerId) ? offerId : null,
       },

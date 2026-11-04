@@ -3,7 +3,7 @@
 import { z } from 'zod'
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
-import { copyCycle, istToIso, lastCycle } from '../liveClasses'
+import { istToIso, nextCycleSessions } from '../liveClasses'
 import { currentAdminEmail, listSessions, userIdByEmail } from './data'
 
 // Trainer-only writes for live classes. The admin layout gates the pages, but
@@ -55,16 +55,20 @@ export async function updateSession(input: unknown): Promise<Result> {
   return { ok: true }
 }
 
-/** "Copy last cycle": the latest published Classes 1–7, four weeks later, as drafts to adjust and publish. */
-export async function copyLastCycle(): Promise<Result> {
+/**
+ * "Create next cycle": Classes 1–7 on the Mon & Thu pattern
+ * (src/config/liveClassCycle.ts), right after the latest scheduled session,
+ * as drafts to check and publish.
+ */
+export async function createNextCycle(): Promise<Result> {
   if (!(await guard())) return { ok: false, error: 'Not authorized.' }
   const sessions = await listSessions()
-  const source = lastCycle(sessions)
-  if (source.length === 0) return { ok: false, error: 'There is no published cycle to copy yet.' }
-  const rows = copyCycle(source).map((s) => ({ class_number: s.classNumber, topic_override: s.topicOverride, starts_at: s.startsAt, ends_at: s.endsAt, status: 'draft' }))
+  const latest = sessions.filter((s) => s.status !== 'cancelled').reduce<string | null>((max, s) => (max === null || Date.parse(s.startsAt) > Date.parse(max) ? s.startsAt : max), null)
+  const rows = nextCycleSessions(latest, Date.now()).map((s) => ({ class_number: s.classNumber, topic_override: null, starts_at: s.startsAt, ends_at: s.endsAt, status: 'draft' }))
+  if (rows.length === 0) return { ok: false, error: 'No class days found in the cycle settings.' }
   const { error } = await createServiceClient().from('live_class_sessions').insert(rows)
-  if (error) return { ok: false, error: 'Could not copy the cycle.' }
-  return { ok: true, message: `${rows.length} draft sessions added, four weeks after the last cycle. Check the dates, then publish.` }
+  if (error) return { ok: false, error: 'Could not create the cycle.' }
+  return { ok: true, message: `${rows.length} draft sessions added (Mon & Thu, from ${rows[0]?.starts_at.slice(0, 10)}). Check the dates, then publish.` }
 }
 
 /** Publishes every draft at once (after the trainer has adjusted the dates). */

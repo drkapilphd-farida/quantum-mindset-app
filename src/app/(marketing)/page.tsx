@@ -87,7 +87,7 @@ export const revalidate = 3600
 // Problem-first homepage (site-rebuild Phase 4): who Dr. Kapil Dev Sharma
 // is, which problem he solves for the visitor, and the first step — in
 // that order. All names, stats, prices and links come from site.config.ts.
-export default function HomePage(): React.JSX.Element {
+export default async function HomePage(): Promise<React.JSX.Element> {
   const organizationSchema = buildOrganizationSchema()
   const personSchema = buildPersonSchema()
   const faqSchema = buildFaqPageSchema(homeCopy.en.faq.items)
@@ -102,7 +102,7 @@ export default function HomePage(): React.JSX.Element {
       <SiteNav />
       <main>
         <HomeHero />
-        <SharpBrainPricingProvider initial={pricingSnapshot(Date.now())}>
+        <SharpBrainPricingProvider initial={await pricingSnapshot()}>
           <HomeProblems />
         </SharpBrainPricingProvider>
         <HomeStartFree />

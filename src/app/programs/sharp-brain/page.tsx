@@ -10,77 +10,81 @@ import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 import SharpBrainNav from '@/components/sharp-brain/SharpBrainNav'
 import {
-  SharpBrainApp,
-  SharpBrainAudiences,
   SharpBrainCertificate,
-  SharpBrainClasses,
+  SharpBrainDay30,
   SharpBrainFaq,
   SharpBrainFinal,
   SharpBrainHero,
   SharpBrainHow,
+  SharpBrainIncluded,
   SharpBrainOffer,
-  SharpBrainOutcomes,
-  SharpBrainProblems,
+  SharpBrainPain,
+  SharpBrainParents,
   SharpBrainProof,
+  SharpBrainReframe,
+  SharpBrainScrollDepth,
+  SharpBrainSkills,
   SharpBrainStickyBar,
   SharpBrainTrainer,
-  SharpBrainWhy,
 } from '@/components/sharp-brain/SharpBrainSections'
 import Footer from '@/components/Footer'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 
-const description =
-  'A 30-day brain-skills program for students, exam aspirants and working professionals: 7 live classes with Dr. Kapil Dev Sharma + 10–15 minutes of daily app practice, with your progress measured from Day 1 to Day 30.'
+// Description = the hero sub (EN), word for word.
+const description = sharpBrainCopy.en.hero.sub
 
 export const metadata: Metadata = buildPageMetadata({
   path: programs.sharpBrain.url,
-  title: 'Sharp Brain™ — 30-Day Brain Skills Program for Focus, Memory & Reading | Mind Ur Mind',
+  title: 'Sharp Brain — 30-day focus, reading & memory training for Class 6–12 | Mind Ur Mind',
   description,
   ownOgImage: true,
 })
 
-// Re-rendered every minute so the server-rendered price and batch are
-// never stale for long; the browser then refreshes them from the server
-// clock (SharpBrainPricingProvider).
+// Re-rendered every minute so the server-rendered price, seat counter and
+// next class are never stale for long; the browser then refreshes them from
+// the server (SharpBrainPricingProvider).
 export const revalidate = 60
 
-// Sharp Brain™ — one universal positioning, one offer (rewritten 1 Oct 2026).
-// Section order: see SharpBrainSections.tsx.
-export default function SharpBrainPage(): React.JSX.Element {
+// Sharp Brain™ for parents of Class 6–12 children (rewritten 4 Nov 2026):
+// rolling admission, ₹2,999 for the first 100 seats. Section order: see
+// SharpBrainSections.tsx.
+export default async function SharpBrainPage(): Promise<React.JSX.Element> {
   const faqSchema = buildFaqPageSchema(sharpBrainCopy.en.faq.items)
   const courseSchema = buildCourseSchema({
-    name: 'Sharp Brain™ — 30-Day Brain Skills Program',
+    name: 'Sharp Brain™ — 30-day focus, reading & memory training',
     description,
     url: absoluteUrl(programs.sharpBrain.url),
-    audienceType: 'School and college students, competitive-exam aspirants, working professionals and parents',
+    audienceType: 'Parents of Class 6–12 school children; also college students, exam aspirants and professionals',
   })
 
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: courseSchema }} />
-      <SharpBrainPricingProvider initial={pricingSnapshot(Date.now())}>
+      <SharpBrainPricingProvider initial={await pricingSnapshot()}>
         <SharpBrainNav />
         <main>
           <SharpBrainHero />
-          <SharpBrainProblems />
-          <SharpBrainWhy />
-          <SharpBrainOutcomes />
-          <SharpBrainApp />
-          <SharpBrainClasses />
-          <SharpBrainAudiences />
+          <SharpBrainPain />
+          <SharpBrainReframe />
+          <SharpBrainSkills />
+          <SharpBrainDay30 />
           <SharpBrainHow />
+          <SharpBrainParents />
           <SharpBrainCertificate />
           <SharpBrainProof />
           <SharpBrainTrainer />
+          <SharpBrainIncluded />
           <SharpBrainOffer />
           <SharpBrainFaq />
           <SharpBrainFinal />
         </main>
         <Footer />
         <SharpBrainStickyBar />
+        <SharpBrainScrollDepth />
       </SharpBrainPricingProvider>
-      <WhatsAppWidget href={WHATSAPP_MASTERCLASS_INQUIRY_LINK} analyticsLocation="sharp_brain_widget" bottomClassName="bottom-24 sm:bottom-7" />
+      {/* Phones: the sticky bar already has a WhatsApp button, and the floating one covered the hero. */}
+      <WhatsAppWidget href={WHATSAPP_MASTERCLASS_INQUIRY_LINK} analyticsLocation="sharp_brain_widget" bottomClassName="max-sm:!hidden sm:bottom-7" />
     </div>
   )
 }

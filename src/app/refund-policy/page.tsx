@@ -13,11 +13,10 @@ import { programs, qsrGuarantee, waLink } from '@/config/site.config'
 // same phase to link here instead of /terms#billing). That contradictory
 // line has been removed from /terms.
 //
-// The Masterclass section below is written to be the EXACT eligibility
-// condition already advertised site-wide — completing the full 30-day
-// protocol (every app session, all 7 live masterclasses) with no
-// measurable WPM/comprehension improvement — not a new, different, or
-// narrower promise. The specific numeric windows (7 days to request,
+// The Sharp Brain section below repeats the guarantee word for word
+// (qsrGuarantee.en.statement, founder's final text of 4 Nov 2026 — the
+// same words the program page shows) and only explains its terms; it never
+// adds or drops a condition. The specific numeric windows (7 days to request,
 // 5-10 business days to process) are reasonable defaults I've authored
 // since no such timeframe existed anywhere in the codebase — flagged in
 // the task summary as adjustable, not presented as a pre-existing fact.
@@ -27,7 +26,7 @@ export const metadata: Metadata = buildPageMetadata({
   description: `Refund and cancellation terms for the ${programs.sharpBrain.name}, retreats, and other Mind Ur Mind programs.`,
 })
 
-const LAST_UPDATED = '29 September 2026'
+const LAST_UPDATED = '4 November 2026'
 
 export default function RefundPolicyPage(): React.JSX.Element {
   return (
@@ -40,30 +39,26 @@ export default function RefundPolicyPage(): React.JSX.Element {
 
       <section>
         <h2 className={legalStyles.h2}>{programs.sharpBrain.name} — {qsrGuarantee.en.title}</h2>
-        <p className={legalStyles.p}>{qsrGuarantee.en.intro}</p>
-        <ol className={`${legalStyles.p} list-decimal space-y-1 pl-6`}>
-          {qsrGuarantee.en.conditions.map((condition) => (
-            <li key={condition}>{condition}</li>
-          ))}
-        </ol>
-        <p className={legalStyles.p}>{qsrGuarantee.en.retest}</p>
+        <p className={legalStyles.p} data-guarantee-statement>
+          {qsrGuarantee.en.statement}
+        </p>
         <ul className={legalStyles.list}>
           <li>
-            <strong>Eligibility:</strong> you must have completed all 30 days, all 7 classes (live, or a recording Dr. Kapil approves) and both reading tests. Partial
-            completion, or stopping partway through, isn&rsquo;t covered by this guarantee — see &ldquo;Cancelling
-            before finishing&rdquo; below for that case instead.
+            <strong>Eligibility:</strong> all 30 days of app practice, all 7 live classes (attended live, or its recording watched) and
+            both the Day 1 and the Day 30 reading tests. Partial completion, or stopping partway through, isn&rsquo;t covered by this guarantee — see
+            &ldquo;Cancelling before finishing&rdquo; below for that case instead.
           </li>
           <li>
-            <strong>What &ldquo;results&rdquo; means:</strong> your own effective reading speed and retention
-            (comprehension in the fair reading test), recorded by the app in your Day 1 and Day 30 reading tests. We
-            use this real, recorded data to evaluate every guarantee claim — not a subjective judgment call.
+            <strong>What &ldquo;no improvement&rdquo; means:</strong> the app records reading speed (effective reading speed) and recall (how much is
+            remembered from the test passage) in the Day 1 and Day 30 reading tests. A claim qualifies when Day 30 shows no improvement in either of
+            them over Day 1. We use this real, recorded data to evaluate every claim — not a subjective judgment call.
           </li>
           <li>
             <strong>How to request it:</strong> message us on WhatsApp or email{' '}
             <a href="mailto:info@mindurmind.org.in" className="text-foreground underline underline-offset-2">
               info@mindurmind.org.in
             </a>{' '}
-            within 7 days of completing Day 30, referencing the email or phone number you enrolled with. We&rsquo;ll
+            within 7 days of your Day 30, referencing the email or phone number you enrolled with. We&rsquo;ll
             verify your checkpoint data and confirm the outcome within 3 business days.
           </li>
           <li>
@@ -74,8 +69,7 @@ export default function RefundPolicyPage(): React.JSX.Element {
         <p className={legalStyles.p}>
           <strong>Cancelling before finishing:</strong> if you stop before completing all 30 days and 7 classes, the
           results guarantee above doesn&rsquo;t apply. Message us — we handle these on a case-by-case basis and may
-          offer a partial refund or credit toward a future batch, depending on how much of the program you&rsquo;ve
-          used.
+          offer a partial refund or a later restart, depending on how much of the program you&rsquo;ve used.
         </p>
       </section>
 

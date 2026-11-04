@@ -1,176 +1,116 @@
-import { programs, qsrGuarantee, sharpBrainEnrolment, trainer } from '@/config/site.config'
+import { trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
-// Copy for /programs/sharp-brain, EN + HI (rewritten 1 Oct 2026: one
-// universal positioning, one offer). Sharp Brain™ is a 30-day brain-skills
-// training for anyone who learns — not a kids' program, not a speed-reading
-// course. Prices, batch dates and countdowns are NOT here: they come from
-// the server (src/features/sharp-brain-enrol).
+// Copy for /programs/sharp-brain, EN + HI — Sharp Brain for Indian parents
+// of Class 6–12 children (founder's final text, 4 Nov 2026; used word for
+// word). Short, plain, concrete. Prices, seats and the next class date are
+// NOT written here as fixed numbers: they come from the server
+// (src/features/sharp-brain-enrol) and are passed in.
 // Claims rule: no multipliers, no "100%", no left/right-brain or midbrain
-// language; improvement is always "measured from your own Day 1".
-// "Quantum" appears only in the last FAQ.
+// claims; improvement is always measured against the child's own Day 1.
 
-export type SkillRow = { skill: string; wrong: string; train: string; change: string }
-export type ExerciseGroup = { id: 'focus' | 'reading' | 'memory' | 'visual' | 'calm'; skill: string; exercises: string[] }
+export type SkillCard = { title: string; quote: string; method: string }
 
 export type SharpBrainCopy = {
-  hero: { eyebrow: string; h1: string; sub: string; speedTest: string; trust: (nextBatch: string) => string }
-  problems: { eyebrow: string; title: string; cards: string[]; line: string }
-  why: {
-    eyebrow: string
-    title: string
-    intro: string
-    headings: { skill: string; wrong: string; train: string; change: string }
-    rows: SkillRow[]
-    footer: string
+  hero: {
+    h1: string
+    sub: string
+    /** "Book a seat for ₹2,999 — first 100 seats"; without the seat line once the intro seats are gone. */
+    book: (price: string, firstSeats: number | null) => string
+    demo: string
+    forWho: string
+    /** "Join today — start today · Next live class: Mon, 9 Nov, 8 pm". */
+    startToday: (nextClass: string | null) => string
+    guarantee: string
+    strip: string[]
   }
-  outcomes: { eyebrow: string; title: string; items: string[] }
-  app: { eyebrow: string; title: string; note: string; groups: ExerciseGroup[]; shotAlt: Record<ExerciseGroup['id'], string> }
-  classes: { eyebrow: string; title: string; items: { title: string; desc: string }[]; note: string }
-  audiences: { eyebrow: string; title: string; cards: { title: string; desc: string }[]; line: string }
-  how: { eyebrow: string; title: string; steps: { title: string; desc: string }[] }
+  pain: { title: string; items: string[] }
+  reframe: { title: string; body: string }
+  skills: { title: string; cards: SkillCard[] }
+  day30: { title: string; items: string[] }
+  how: { title: string; steps: string[] }
+  parents: { title: string; body: string }
   /** "Your Sharp Brain certificate" — samples only, no speed or percentage promises (see sharpBrainCopy.test.ts). */
   certificate: { eyebrow: string; title: string; intro: string; points: { title: string; desc: string }[]; vary: string; caption: string; certAlt: string; shareAlt: string; enlarge: string }
-  proof: { eyebrow: string; title: string; oldLabel: string; playlistCta: string }
-  trainer: { eyebrow: string; readStory: string }
-  offer: { eyebrow: string; title: string; items: string[]; questions: string }
-  faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] }
-  final: { title: string; speedTest: string }
-  sticky: { cta: string }
+  proof: { eyebrow: string; title: string; oldLabel: string; playlistCta: string; more: string; fewer: string }
+  trainer: { eyebrow: string; title: string; line: string; method: string; readStory: string }
+  included: { title: string; items: string[]; memoryKit: string }
+  offer: {
+    title: (firstSeats: number | null) => string
+    oneTime: string
+    instalments: string
+    perDay: (price: string) => string
+    book: (price: string) => string
+    questions: string
+  }
+  faq: { title: string; items: { question: string; answer: string }[] }
+  final: { body: (price: string) => string; book: string; ask: string }
+  alsoFor: { title: string; lines: string[]; ask: string }
+  freeTest: string
+  /** The weekly live Q&A line (LIVE_QA in src/config/liveClassCycle.ts). */
+  liveQa: string
+  sticky: { book: string; whatsapp: string }
   reviews: { metaTitle: string; eyebrow: string; h1: string; sub: string; programLink: string }
 }
 
-// "15th and 25th" — from the batch schedule in site.config.
-const ord = (d: number): string => `${d}${d % 10 === 1 && d !== 11 ? 'st' : d % 10 === 2 && d !== 12 ? 'nd' : d % 10 === 3 && d !== 13 ? 'rd' : 'th'}`
-const batchDaysEn = sharpBrainEnrolment.batchStartDays.map(ord).join(' and ')
-const batchDaysHi = sharpBrainEnrolment.batchStartDays.join(' और ')
-
-const regular = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
-
 const en: SharpBrainCopy = {
   hero: {
-    eyebrow: 'Brain skills training · 30 days · Live + App',
-    h1: 'Sharp Brain™ — Read faster. Focus longer. Remember more.',
-    sub: `A 30-day brain-skills program for students, exam aspirants and working professionals. 7 live classes with ${trainer.name} + 10–15 minutes of daily app practice — with your progress measured from Day 1 to Day 30.`,
-    speedTest: 'Take the free Reading & Memory Test →',
-    trust: (nextBatch) => `${trainer.years.total} years in education & mind training · ${trainer.learners} learners · Next batch: ${nextBatch}`,
+    h1: 'Your child studies for two hours — and still can’t recall it the next day?',
+    sub: `30 days, 15 minutes a day. Training for focus, reading speed and memory — 7 live classes with ${trainer.name}. Measured on Day 1 and Day 30.`,
+    book: (price, firstSeats) => (firstSeats === null ? `Book a seat for ${price}` : `Book a seat for ${price} — first ${firstSeats} seats`),
+    demo: 'Watch the free demo',
+    forWho: 'For Class 6 to 12. Classes at 8 pm, one hour. Parents don’t have to sit with them.',
+    startToday: (nextClass) => (nextClass === null ? 'Join today — start today' : `Join today — start today · Next live class: ${nextClass}`),
+    guarantee: 'Complete all 30 days. No improvement? Full refund.',
+    strip: [`${trainer.years.total} years of experience`, `${trainer.learners} learners`, `${trainer.workshops} workshops`, 'Start any day', 'Classes in Hindi'],
   },
-  problems: {
-    eyebrow: 'Sound familiar?',
-    title: 'Reading, focus and memory — the everyday struggles',
-    cards: [
-      'You read a page — and can’t recall it a minute later.',
-      'You sit down to study or work, and your mind wanders in minutes.',
-      'Too much to read — books, notes, reports — and never enough time.',
-      'Your phone breaks your focus again and again.',
+  pain: {
+    title: 'Sound familiar?',
+    items: [
+      'He sits with the book for two hours. Next day it’s gone.',
+      'Reading one page and the mind wanders off — every single time.',
+      'Re-reads the same line four times.',
+      'Phone in hand within ten minutes.',
+      'Marks aren’t the problem. The effort isn’t turning into results.',
     ],
-    line: 'This isn’t about intelligence. Reading, focus and memory are skills — and skills can be trained.',
   },
-  why: {
-    eyebrow: 'Why it happens — and what we train',
+  reframe: {
+    title: 'This isn’t about intelligence.',
+    body: 'Reading, focus and memory are skills — and skills are trained, not born. Your child’s brain gets better at whatever it practises for 30 days straight. Right now it’s practising switching, scrolling and re-reading. We give it 30 days of the right practice instead.',
+  },
+  skills: {
     title: 'Five skills, trained every day',
-    intro: 'Your brain gets better at whatever it practises. Sharp Brain gives it 30 days of the right practice.',
-    headings: { skill: 'Skill', wrong: 'What usually goes wrong', train: 'What we train', change: 'What changes for you' },
-    rows: [
-      {
-        skill: 'Focus',
-        wrong: 'Attention jumps every few minutes; constant switching.',
-        train: 'Short daily attention drills that train you to hold attention and ignore distractions.',
-        change: 'You stay with one task longer.',
-      },
-      {
-        skill: 'Smart Reading',
-        wrong: 'Reading word by word, saying every word in your head, re-reading lines.',
-        train: 'Reading in meaningful phrases, controlling the inner voice, fewer re-reads.',
-        change: 'You read faster while keeping understanding.',
-      },
-      {
-        skill: 'Memory',
-        wrong: 'Information is only “read”, not stored.',
-        train: 'Memory techniques — visual images, association, memory palace, peg system, acronyms.',
-        change: 'What you study stays.',
-      },
-      {
-        skill: 'Retention',
-        wrong: 'No revision method; you forget in days.',
-        train: 'Active recall after reading, mind maps, spaced revision.',
-        change: 'You remember for exams and work, not just today.',
-      },
-      {
-        skill: 'Mobile Discipline',
-        wrong: 'Notifications break attention.',
-        train: 'Focus sessions, phone-away habits, 20-20-20 eye care.',
-        change: 'Longer, calmer study and work blocks.',
-      },
-    ],
-    footer:
-      'Repeated practice strengthens the brain networks you use. That’s why the program is daily, short and measured — not a one-time motivation session.',
-  },
-  outcomes: {
-    eyebrow: 'After 30 days',
-    title: 'What you’ll be able to do after 30 days',
-    items: [
-      'Read with a method: faster, with understanding — and know your Effective Reading Speed.',
-      'Hold focus for longer study and work sessions.',
-      'Use 4–5 memory techniques for formulas, facts, names and presentations.',
-      'Revise in a way that makes information stay.',
-      'Control phone distraction with simple daily habits.',
-      'Compare your own reading numbers from Day 1 and Day 30.',
-    ],
-  },
-  app: {
-    eyebrow: 'Inside the app',
-    title: 'Your daily practice in the Mind Ur Mind App',
-    note: '10–15 minutes a day. Progress tracked automatically.',
-    groups: [
-      { id: 'focus', skill: 'Focus', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
-      { id: 'reading', skill: 'Smart Reading', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Dynamic Chunk Sliding', 'Vertical Chunk Sliding'] },
-      { id: 'memory', skill: 'Memory', exercises: ['Dot Memory Grid', 'Word Flash Grid', 'Visual Memory Reading', 'Mental Object Rotation'] },
-      { id: 'visual', skill: 'Visualisation', exercises: ['Sensory Imagery Builder', 'Deep Visualisation Recall'] },
-      { id: 'calm', skill: 'Calm & Discipline', exercises: ['Calm Breathing', 'Eye relaxation break'] },
-    ],
-    shotAlt: {
-      focus: 'Color-Word Sync Grid exercise in the Mind Ur Mind App',
-      reading: 'Phrase Reading exercise in the Mind Ur Mind App',
-      memory: 'Dot Memory Grid exercise in the Mind Ur Mind App',
-      visual: 'Sensory Imagery Builder exercise in the Mind Ur Mind App',
-      calm: 'Calm Breath Balance exercise in the Mind Ur Mind App',
-    },
-  },
-  classes: {
-    eyebrow: 'The main value',
-    title: 'The 7 live classes',
-    items: [
-      { title: 'Foundation', desc: 'How attention, reading and memory work, and how your 30 days are planned.' },
-      { title: 'Eye & Focus Training', desc: 'Eye-movement and attention drills for steady focus while you read and study.' },
-      { title: 'Inner Voice Control', desc: 'Reading without saying every word in your head, so you read faster and still understand.' },
-      { title: 'Memory Systems', desc: 'Memory palace, association and other methods for facts, formulas and names.' },
-      { title: 'Visualisation & Imagination', desc: 'Using mental pictures to understand, remember and stay calm under pressure.' },
-      { title: 'Study & Work Application', desc: 'Using the methods for exams, revision and reading at work.' },
-      { title: 'Day 30 Review & Your Next Plan', desc: 'Habits, phone discipline and your plan after the 30 days.' },
-    ],
-    note: `Live on Zoom with ${trainer.name}, 7:00–9:00 pm IST, one full cycle every month. Missed a class? Join it in a later month, or watch the recording on Classplus.`,
-  },
-  audiences: {
-    eyebrow: 'Who it’s for',
-    title: 'For anyone who reads, studies or learns',
     cards: [
-      { title: 'School & college students', desc: 'Study less time, remember more, score with less stress.' },
-      { title: 'Competitive-exam aspirants (UPSC, SSC, banking, NEET, JEE, CA…)', desc: 'Cover a large syllabus faster and revise so it stays.' },
-      { title: 'Working professionals', desc: 'Read reports and emails faster, focus in deep-work blocks, remember what matters.' },
-      { title: 'Parents', desc: 'Enrol your child (from about Class 6 upward) to build focus, memory and study habits — and see their progress.' },
+      { title: 'Focus', quote: 'The mind jumps off after one page. Now it will stay put for 20 minutes.', method: 'Short daily attention drills.' },
+      { title: 'Speed', quote: 'Re-reading every line stops. Same understanding, half the time.', method: 'Phrase reading, inner-voice control.' },
+      { title: 'Memory', quote: 'Formulas, names, dates — locked in with visual technique.', method: 'Memory palace, association, pegs.' },
+      { title: 'Revision', quote: 'What’s studied before the exam stays till the exam.', method: 'Active recall, mind maps, spaced revision.' },
+      { title: 'Phone discipline', quote: 'The notification habit breaks. Phone stays away while studying.', method: 'Focus sessions, 20-20-20 eye care.' },
     ],
-    line: 'If you read, study or learn for your work — this program is for you.',
+  },
+  day30: {
+    title: 'What your child will be able to do on Day 30',
+    items: [
+      'Read with a method — faster, with understanding, and know their own reading number.',
+      'Hold focus through a longer study block.',
+      'Use 4–5 memory techniques for formulas, facts and names.',
+      'Revise in a way that makes things stay.',
+      'Keep the phone away on their own.',
+      'Compare their own Day 1 and Day 30 numbers, in writing.',
+    ],
   },
   how: {
-    eyebrow: 'How it works',
-    title: 'Measure, train, practise, re-measure',
+    title: 'Measure. Train. Practise. Re-measure.',
     steps: [
-      { title: 'Fair reading test on Day 1', desc: 'A self-paced reading test in the app: your reading speed and comprehension — your own starting point.' },
-      { title: '7 live classes', desc: `Live on Zoom with ${trainer.name} across the 30 days.` },
-      { title: 'Daily app practice', desc: '10–15 minutes a day in the Mind Ur Mind App, tracked automatically.' },
-      { title: 'Fair reading test on Day 30', desc: 'An equally hard passage, compared with your Day 1 result.' },
+      'Join today — Day 1 reading & memory test in the app, your child’s own starting point.',
+      '7 live classes on Zoom with Dr. Kapil (Mon & Thu, 8 pm) — recordings in the app if one is missed.',
+      '15 minutes of app practice a day, tracked automatically.',
+      'Day 30 test on an equally hard passage. Numbers compared with Day 1.',
     ],
+  },
+  parents: {
+    title: 'What parents actually have to do: nothing.',
+    body: 'No teaching. No sitting alongside. No checking homework. 15 minutes on the app, one hour of class at 8 pm. You see progress in the parent view and get the Day 1 and Day 30 numbers at the end.',
   },
   certificate: {
     eyebrow: 'Your certificate',
@@ -193,63 +133,60 @@ const en: SharpBrainCopy = {
     title: 'Video reviews',
     oldLabel: 'From earlier batches',
     playlistCta: 'See all videos on YouTube',
+    more: 'Watch more videos',
+    fewer: 'Show fewer',
   },
-  trainer: { eyebrow: 'Your trainer', readStory: 'Read his full story →' },
-  offer: {
-    eyebrow: 'Enrol',
-    title: 'Everything in the Sharp Brain 30-Day Program',
+  trainer: {
+    eyebrow: 'Your trainer',
+    title: `${trainer.name} — Brain, mind and meditation coach.`,
+    line: `${trainer.years.total} years in education · Training reading, focus and memory since ${trainer.skillsTrainingSinceYear} · ${trainer.learners} learners · ${trainer.workshops} workshops · Based in Vadodara.`,
+    method: 'No blindfolds. No ‘midbrain activation’. Methods you can measure.',
+    readStory: 'Read his full story →',
+  },
+  included: {
+    title: 'What’s included',
     items: [
-      `7 live classes with ${trainer.name}`,
-      '30 days of guided app practice (all exercises)',
-      'Fair reading test on Day 1 and Day 30',
-      'Memory & revision methods for exams and work',
-      'Certificate of completion',
-      'WhatsApp support during the program',
+      `7 live classes with Dr. Kapil (one hour each, 8–9 pm, Mon & Thu) + recordings`,
+      '30 days of app practice, all exercises',
+      'Day 1 and Day 30 tests',
+      'Memory and revision methods for exams',
+      'Certificate with your child’s own numbers',
+      'WhatsApp support through the 30 days',
     ],
+    memoryKit: 'Memory Kit ₹999 optional',
+  },
+  offer: {
+    title: (firstSeats) => (firstSeats === null ? 'Sharp Brain for parents' : `Sharp Brain for parents — first ${firstSeats} seats`),
+    oneTime: 'one time',
+    instalments: 'or ₹1,499 × 2',
+    perDay: (price) => `About ${price} a day for 30 days · Secure Razorpay checkout`,
+    book: (price) => `Book a seat — ${price}`,
     questions: 'Questions? Chat on WhatsApp',
   },
   faq: {
-    eyebrow: 'Questions',
-    title: 'Before you enrol',
+    title: 'Questions',
     items: [
-      {
-        question: 'Who is this for?',
-        answer:
-          'School and college students, competitive-exam aspirants and working professionals — anyone who reads, studies or learns for work. Parents can enrol their child from about Class 6 upward; younger children can join with a parent.',
-      },
-      {
-        question: 'Is this science-based?',
-        answer:
-          'Yes. It uses well-established learning methods — attention training, reading-skill practice, visual memory techniques, active recall and spaced revision. No blindfolds, no “midbrain activation”, no magic claims. Your improvement is measured, not promised.',
-      },
-      {
-        question: 'How much time does it take each day?',
-        answer: '10–15 minutes of app practice a day, plus 7 live classes on Zoom spread across the 30 days. You get the class times with your batch schedule when you enrol.',
-      },
-      {
-        question: 'Is it in Hindi or English?',
-        answer: 'Classes are taught in simple Hindi with English terms; the app is available in English and Hindi.',
-      },
-      {
-        question: 'What if I miss a live class?',
-        answer: `Join the same class free in the next batch — batches start on the ${batchDaysEn} of every month.`,
-      },
-      {
-        question: `What do I get for ${regular}?`,
-        answer: `7 live classes with ${trainer.name}, 30 days of guided app practice with all exercises, a fair reading test on Day 1 and Day 30, memory and revision methods for exams and work, a certificate of completion and WhatsApp support during the program. One-time payment — no subscription, no instalments.`,
-      },
-      {
-        question: 'What if it doesn’t work for me?',
-        answer: qsrGuarantee.en.statement,
-      },
-      {
-        question: 'What happened to Quantum Speed Reading?',
-        answer: 'It is now Sharp Brain — the same core training under a clearer name, with a stronger focus on memory and focus.',
-      },
+      { question: 'My child is in Class 8. Too young?', answer: 'From Class 6 it works. Below that, join with a parent.' },
+      { question: 'Classes in which language?', answer: 'Simple Hindi with English terms. App in 8 languages.' },
+      { question: 'Time per day?', answer: '15 minutes practice + two live classes a week (Mon & Thu, 8–9 pm).' },
+      { question: 'Missed a class?', answer: 'Every class repeats in the next cycle, and the recording is in the app.' },
+      { question: 'What if it doesn’t work?', answer: 'Full refund: complete all 30 days, all 7 classes (live or recording) and both tests; claim within 7 days of your Day 30.' },
+      { question: 'Any subscription?', answer: 'None. One payment, no auto-debit.' },
     ],
   },
-  final: { title: 'Your brain can learn better. Start in the next batch.', speedTest: 'Take the free Reading & Memory Test →' },
-  sticky: { cta: 'Enrol' },
+  final: {
+    body: (price) => `Start today. A month from now the numbers will be on paper either way — better, or the same. For ${price} and 15 minutes a day, it’s worth finding out.`,
+    book: 'Book a seat',
+    ask: 'Ask on WhatsApp',
+  },
+  alsoFor: {
+    title: 'Also for',
+    lines: ['College students', 'Exam aspirants', 'Professionals'],
+    ask: 'Ask on WhatsApp',
+  },
+  freeTest: 'Not sure yet? Take the free Reading & Memory Test →',
+  liveQa: 'Sunday 7 pm — 30-minute live Q&A',
+  sticky: { book: 'Book a seat', whatsapp: 'WhatsApp' },
   reviews: {
     metaTitle: 'Video Reviews — Sharp Brain™ | Mind Ur Mind',
     eyebrow: 'Real learners',
@@ -261,127 +198,62 @@ const en: SharpBrainCopy = {
 
 const hi: SharpBrainCopy = {
   hero: {
-    eyebrow: 'ब्रेन स्किल्स ट्रेनिंग · 30 दिन · लाइव + ऐप',
-    h1: 'Sharp Brain™ — तेज़ पढ़ें। ज़्यादा देर फोकस करें। ज़्यादा याद रखें।',
-    sub: `विद्यार्थियों, प्रतियोगी परीक्षा की तैयारी करने वालों और कामकाजी लोगों के लिए 30 दिन का ब्रेन-स्किल्स प्रोग्राम। ${trainer.nameHi} के साथ 7 लाइव क्लासेस + रोज़ 10–15 मिनट ऐप पर अभ्यास — और Day 1 से Day 30 तक आपकी प्रगति नापी जाती है।`,
-    speedTest: 'मुफ़्त Reading और Memory Test दें →',
-    trust: (nextBatch) => `शिक्षा और माइंड ट्रेनिंग में ${trainer.years.total} वर्ष · ${trainer.learners} विद्यार्थी · अगला बैच: ${nextBatch}`,
+    h1: 'आपका बच्चा दो घंटे पढ़ता है — और अगले दिन फिर भी याद नहीं रहता?',
+    sub: `30 दिन, रोज़ 15 मिनट। ध्यान, पढ़ने की स्पीड और याद रखने की ट्रेनिंग — 7 लाइव क्लास, ${trainer.nameHi} के साथ। Day 1 और Day 30 पर नापा जाता है।`,
+    book: (price, firstSeats) => (firstSeats === null ? `${price} में सीट बुक करें` : `${price} में सीट बुक करें — पहली ${firstSeats} सीट`),
+    demo: 'फ्री डेमो देखें',
+    forWho: 'क्लास 6 से 12 तक। क्लास रात 8 बजे, एक घंटा। पैरेंट को साथ बैठना नहीं है।',
+    startToday: (nextClass) => (nextClass === null ? 'आज join करें, आज से शुरू' : `आज join करें, आज से शुरू · अगली लाइव क्लास: ${nextClass}`),
+    guarantee: '30 दिन पूरे करें। सुधार न मिले तो पूरा पैसा वापस।',
+    strip: [`${trainer.years.total} साल का अनुभव`, `${trainer.learners} लोग सीख चुके`, `${trainer.workshops} वर्कशॉप`, 'किसी भी दिन शुरू करें', 'क्लास हिंदी में'],
   },
-  problems: {
-    eyebrow: 'क्या ये आपके साथ भी होता है?',
-    title: 'पढ़ना, फोकस और याददाश्त — रोज़ की मुश्किलें',
-    cards: [
-      'पूरा पेज पढ़ लिया — और एक मिनट बाद कुछ याद नहीं।',
-      'पढ़ने या काम करने बैठते हैं, और कुछ ही मिनटों में मन भटक जाता है।',
-      'पढ़ने को बहुत कुछ है — किताबें, नोट्स, रिपोर्ट्स — पर समय कभी पूरा नहीं पड़ता।',
-      'फ़ोन बार-बार आपका ध्यान तोड़ देता है।',
+  pain: {
+    title: 'जानी-पहचानी बात लगी?',
+    items: [
+      'दो घंटे किताब लेकर बैठा रहता है। अगले दिन सब गया।',
+      'एक पन्ना पढ़ते-पढ़ते दिमाग भाग जाता है — हर बार।',
+      'वही लाइन चार बार पढ़ता है।',
+      'दस मिनट में फोन हाथ में।',
+      'नंबर समस्या नहीं है। मेहनत नतीजे में नहीं बदल रही।',
     ],
-    line: 'बात बुद्धि की नहीं है। पढ़ना, फोकस और याददाश्त स्किल्स हैं — और स्किल्स सिखाई जा सकती हैं।',
   },
-  why: {
-    eyebrow: 'ऐसा क्यों होता है — और हम क्या सिखाते हैं',
+  reframe: {
+    title: 'ये बुद्धि का मामला नहीं है।',
+    body: 'पढ़ना, ध्यान और याद रखना — ये हुनर हैं। हुनर सीखे जाते हैं, पैदा नहीं होते। बच्चे का दिमाग 30 दिन जिसकी प्रैक्टिस करेगा, उसमें बेहतर हो जाएगा। अभी वो स्क्रॉल करना, ध्यान भटकाना और लाइन दोबारा पढ़ना प्रैक्टिस कर रहा है। हम उसे 30 दिन सही प्रैक्टिस देते हैं।',
+  },
+  skills: {
     title: 'पाँच स्किल्स, हर दिन का अभ्यास',
-    intro: 'दिमाग़ जिस चीज़ का अभ्यास करता है, उसी में बेहतर होता जाता है। Sharp Brain उसे 30 दिन का सही अभ्यास देता है।',
-    headings: { skill: 'स्किल', wrong: 'आम तौर पर क्या गड़बड़ होता है', train: 'हम क्या सिखाते हैं', change: 'आपके लिए क्या बदलता है' },
-    rows: [
-      {
-        skill: 'फोकस',
-        wrong: 'ध्यान हर कुछ मिनट में भटकता है; बार-बार एक काम से दूसरे पर।',
-        train: 'रोज़ के छोटे ध्यान-अभ्यास, जो ध्यान टिकाना और भटकावों को अनदेखा करना सिखाते हैं।',
-        change: 'आप एक काम पर ज़्यादा देर टिके रहते हैं।',
-      },
-      {
-        skill: 'स्मार्ट रीडिंग',
-        wrong: 'शब्द-शब्द पढ़ना, मन में हर शब्द बोलना, लाइनें दोबारा पढ़ना।',
-        train: 'अर्थपूर्ण वाक्यांशों में पढ़ना, मन की आवाज़ पर नियंत्रण, कम दोहराव।',
-        change: 'समझ बनाए रखते हुए आप तेज़ पढ़ते हैं।',
-      },
-      {
-        skill: 'याददाश्त',
-        wrong: 'जानकारी सिर्फ़ “पढ़ी” जाती है, दिमाग़ में बैठती नहीं।',
-        train: 'मेमोरी तकनीकें — विज़ुअल इमेज, एसोसिएशन, मेमोरी पैलेस, पेग सिस्टम, एक्रोनिम।',
-        change: 'जो पढ़ते हैं, वह याद रहता है।',
-      },
-      {
-        skill: 'लंबे समय तक याद',
-        wrong: 'दोहराने का कोई तरीका नहीं; कुछ ही दिनों में भूल जाते हैं।',
-        train: 'पढ़ने के बाद एक्टिव रिकॉल, माइंड मैप, अंतराल पर दोहराव (spaced revision)।',
-        change: 'आज ही नहीं, परीक्षा और काम के समय भी याद रहता है।',
-      },
-      {
-        skill: 'मोबाइल अनुशासन',
-        wrong: 'नोटिफ़िकेशन ध्यान तोड़ते रहते हैं।',
-        train: 'फोकस सेशन, फ़ोन दूर रखने की आदतें, आँखों के लिए 20-20-20 नियम।',
-        change: 'पढ़ाई और काम के लंबे, शांत सत्र।',
-      },
-    ],
-    footer: 'बार-बार का अभ्यास उन ब्रेन नेटवर्क्स को मज़बूत करता है जिनका आप इस्तेमाल करते हैं। इसीलिए प्रोग्राम रोज़ का, छोटा और नापा हुआ है — एक बार का मोटिवेशन सेशन नहीं।',
-  },
-  outcomes: {
-    eyebrow: '30 दिन बाद',
-    title: '30 दिन बाद आप क्या कर पाएँगे',
-    items: [
-      'तरीके से पढ़ना: तेज़, समझ के साथ — और अपनी Effective Reading Speed जानना।',
-      'पढ़ाई और काम के लंबे सत्रों में फोकस बनाए रखना।',
-      'फ़ॉर्मूले, तथ्य, नाम और प्रेज़ेंटेशन याद रखने के लिए 4–5 मेमोरी तकनीकों का इस्तेमाल।',
-      'ऐसे दोहराना कि जानकारी याद रहे।',
-      'आसान रोज़ की आदतों से फ़ोन के भटकाव पर काबू।',
-      'Day 1 और Day 30 के अपने रीडिंग आँकड़ों की तुलना करना।',
-    ],
-  },
-  app: {
-    eyebrow: 'ऐप के अंदर',
-    title: 'Mind Ur Mind App में आपका रोज़ का अभ्यास',
-    note: 'रोज़ 10–15 मिनट। प्रगति अपने-आप ट्रैक होती है।',
-    groups: [
-      { id: 'focus', skill: 'फोकस', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
-      { id: 'reading', skill: 'स्मार्ट रीडिंग', exercises: ['Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Dynamic Chunk Sliding', 'Vertical Chunk Sliding'] },
-      { id: 'memory', skill: 'याददाश्त', exercises: ['Dot Memory Grid', 'Word Flash Grid', 'Visual Memory Reading', 'Mental Object Rotation'] },
-      { id: 'visual', skill: 'विज़ुअलाइज़ेशन', exercises: ['Sensory Imagery Builder', 'Deep Visualisation Recall'] },
-      { id: 'calm', skill: 'शांति और अनुशासन', exercises: ['Calm Breathing', 'आँखों को आराम का ब्रेक'] },
-    ],
-    shotAlt: {
-      focus: 'Mind Ur Mind App में Color-Word Sync Grid अभ्यास',
-      reading: 'Mind Ur Mind App में Phrase Reading अभ्यास',
-      memory: 'Mind Ur Mind App में Dot Memory Grid अभ्यास',
-      visual: 'Mind Ur Mind App में Sensory Imagery Builder अभ्यास',
-      calm: 'Mind Ur Mind App में Calm Breath Balance अभ्यास',
-    },
-  },
-  classes: {
-    eyebrow: 'प्रोग्राम की असली ताक़त',
-    title: '7 लाइव क्लासेस',
-    items: [
-      { title: 'Foundation (बुनियाद)', desc: 'ध्यान, पढ़ना और याददाश्त कैसे काम करते हैं, और आपके 30 दिनों की योजना।' },
-      { title: 'Eye & Focus Training', desc: 'पढ़ते और पढ़ाई करते समय स्थिर ध्यान के लिए आँखों और फ़ोकस के अभ्यास।' },
-      { title: 'Inner Voice Control', desc: 'मन में हर शब्द बोले बिना पढ़ना, ताकि आप तेज़ पढ़ें और समझ भी बनी रहे।' },
-      { title: 'Memory Systems', desc: 'तथ्य, फ़ॉर्मूले और नाम याद रखने के लिए मेमोरी पैलेस, एसोसिएशन और दूसरे तरीके।' },
-      { title: 'Visualisation & Imagination', desc: 'समझने, याद रखने और दबाव में शांत रहने के लिए मन की तस्वीरों का उपयोग।' },
-      { title: 'Study & Work Application', desc: 'परीक्षा, रिवीज़न और काम की रीडिंग में इन तरीकों का उपयोग।' },
-      { title: 'Day 30 Review & Your Next Plan', desc: 'आदतें, फ़ोन अनुशासन और 30 दिनों के बाद की आपकी योजना।' },
-    ],
-    note: `${trainer.nameHi} के साथ Zoom पर लाइव, शाम 7:00–9:00 बजे (IST), हर महीने एक पूरा चक्र। कोई क्लास छूट गई? उसे अगले महीने के चक्र में जॉइन करें, या Classplus पर रिकॉर्डिंग देखें।`,
-  },
-  audiences: {
-    eyebrow: 'यह किसके लिए है',
-    title: 'हर उस व्यक्ति के लिए जो पढ़ता, पढ़ाई करता या सीखता है',
     cards: [
-      { title: 'स्कूल और कॉलेज के विद्यार्थी', desc: 'कम समय पढ़ें, ज़्यादा याद रखें, कम तनाव में अच्छे अंक लाएँ।' },
-      { title: 'प्रतियोगी परीक्षा की तैयारी करने वाले (UPSC, SSC, बैंकिंग, NEET, JEE, CA…)', desc: 'बड़ा सिलेबस जल्दी कवर करें और ऐसे दोहराएँ कि याद रहे।' },
-      { title: 'कामकाजी लोग', desc: 'रिपोर्ट्स और ईमेल तेज़ पढ़ें, डीप-वर्क में फोकस करें, ज़रूरी बातें याद रखें।' },
-      { title: 'अभिभावक', desc: 'अपने बच्चे (लगभग कक्षा 6 से ऊपर) का नामांकन करें — फोकस, याददाश्त और पढ़ाई की आदतें बनाने के लिए — और उसकी प्रगति देखें।' },
+      { title: 'ध्यान', quote: 'एक पन्ना पढ़ते ही दिमाग भाग जाता है। अब 20 मिनट तक एक जगह रुकेगा।', method: 'रोज़ छोटे अटेंशन ड्रिल।' },
+      { title: 'स्पीड', quote: 'हर लाइन दोबारा पढ़ना बंद। वही समझ, आधा समय।', method: 'फ्रेज़ रीडिंग, अंदर की आवाज़ पर काबू।' },
+      { title: 'याद', quote: 'फ़ॉर्मूले, नाम, तारीखें — विज़ुअल तकनीक से पक्का याद।', method: 'मेमोरी पैलेस, एसोसिएशन, पेग।' },
+      { title: 'रिवीज़न', quote: 'परीक्षा से पहले जो पढ़ा, वो परीक्षा तक रहता है।', method: 'एक्टिव रिकॉल, माइंड मैप, स्पेस्ड रिवीज़न।' },
+      { title: 'फोन पर काबू', quote: 'नोटिफिकेशन की लत टूटेगी। पढ़ते वक्त फोन दूर रहेगा।', method: 'फोकस सेशन, 20-20-20 आँखों की देखभाल।' },
     ],
-    line: 'अगर आप पढ़ते हैं, पढ़ाई करते हैं या काम के लिए सीखते हैं — यह प्रोग्राम आपके लिए है।',
+  },
+  day30: {
+    title: 'Day 30 पर आपका बच्चा क्या कर पाएगा',
+    items: [
+      'तरीके से पढ़ना — तेज़, समझ के साथ, और अपना पढ़ने का नंबर खुद जानना।',
+      'लंबे समय तक एक जगह ध्यान टिकाना।',
+      'फ़ॉर्मूले, तथ्य और नाम के लिए 4–5 याद रखने की तकनीक।',
+      'ऐसा रिवीज़न जिससे चीज़ें टिकती हैं।',
+      'खुद से फोन दूर रखना।',
+      'अपने Day 1 और Day 30 के नंबर लिखित में तुलना करना।',
+    ],
   },
   how: {
-    eyebrow: 'यह कैसे काम करता है',
-    title: 'नापें, सीखें, अभ्यास करें, फिर नापें',
+    title: 'नापो। सिखाओ। अभ्यास कराओ। फिर नापो।',
     steps: [
-      { title: 'Day 1 पर निष्पक्ष रीडिंग टेस्ट', desc: 'ऐप में अपनी गति से पढ़ने वाला टेस्ट: आपकी रीडिंग स्पीड और समझ — आपकी अपनी शुरुआत।' },
-      { title: '7 लाइव क्लासेस', desc: `30 दिनों में ${trainer.nameHi} के साथ Zoom पर लाइव।` },
-      { title: 'रोज़ ऐप पर अभ्यास', desc: 'Mind Ur Mind App में रोज़ 10–15 मिनट, अपने-आप ट्रैक।' },
-      { title: 'Day 30 पर निष्पक्ष रीडिंग टेस्ट', desc: 'बराबर कठिन पैराग्राफ़, आपके Day 1 नतीजे से तुलना के साथ।' },
+      'आज join करें — Day 1 पर ऐप में पढ़ने और याद का टेस्ट, बच्चे की अपनी शुरुआत।',
+      'Zoom पर डॉ. कपिल के साथ 7 लाइव क्लास (सोम और गुरु, रात 8 बजे) — छूटे तो रिकॉर्डिंग ऐप में।',
+      'रोज़ 15 मिनट ऐप प्रैक्टिस, अपने आप ट्रैक।',
+      'Day 30 पर बराबर कठिनाई वाले पैसेज का टेस्ट। नंबरों की तुलना Day 1 से।',
     ],
+  },
+  parents: {
+    title: 'पैरेंट को असल में करना क्या है: कुछ नहीं।',
+    body: 'पढ़ाना नहीं। साथ बैठना नहीं। होमवर्क चेक करना नहीं। ऐप पर 15 मिनट, रात 8 बजे एक घंटा क्लास। पैरेंट व्यू में प्रगति दिखेगी और अंत में Day 1 और Day 30 के नंबर आपको मिलेंगे।',
   },
   certificate: {
     eyebrow: 'आपका प्रमाणपत्र',
@@ -404,57 +276,60 @@ const hi: SharpBrainCopy = {
     title: 'वीडियो रिव्यूज़',
     oldLabel: 'पहले के बैचों से',
     playlistCta: 'YouTube पर सभी वीडियो देखें',
+    more: 'और वीडियो देखें',
+    fewer: 'कम दिखाएं',
   },
-  trainer: { eyebrow: 'आपके ट्रेनर', readStory: 'पूरी कहानी पढ़ें →' },
-  offer: {
-    eyebrow: 'नामांकन',
-    title: 'Sharp Brain 30-दिवसीय प्रोग्राम में सब कुछ',
+  trainer: {
+    eyebrow: 'आपके ट्रेनर',
+    title: `${trainer.nameHi} — ब्रेन, माइंड और मेडिटेशन कोच।`,
+    line: `शिक्षा में ${trainer.years.total} साल · ${trainer.skillsTrainingSinceYear} से पढ़ने, ध्यान और याद रखने की ट्रेनिंग · ${trainer.learners} लोग सीख चुके · ${trainer.workshops} वर्कशॉप · वडोदरा।`,
+    method: 'पट्टी नहीं। ‘मिडब्रेन एक्टिवेशन’ नहीं। ऐसे तरीके जिन्हें नापा जा सके।',
+    readStory: 'पूरी कहानी पढ़ें →',
+  },
+  included: {
+    title: 'क्या-क्या मिलेगा',
     items: [
-      `${trainer.nameHi} के साथ 7 लाइव क्लासेस`,
-      '30 दिन का गाइडेड ऐप अभ्यास (सभी एक्सरसाइज़)',
-      'Day 1 और Day 30 पर निष्पक्ष रीडिंग टेस्ट',
-      'परीक्षा और काम के लिए याद रखने और दोहराने के तरीके',
-      'कोर्स पूरा करने का सर्टिफ़िकेट',
-      'प्रोग्राम के दौरान WhatsApp सपोर्ट',
+      'डॉ. कपिल के साथ 7 लाइव क्लास (एक-एक घंटा, रात 8–9, सोम और गुरु) + रिकॉर्डिंग',
+      '30 दिन ऐप प्रैक्टिस, सारे एक्सरसाइज़',
+      'Day 1 और Day 30 के टेस्ट',
+      'परीक्षा के लिए याद और रिवीज़न के तरीके',
+      'बच्चे के अपने नंबरों वाला सर्टिफिकेट',
+      '30 दिन WhatsApp सपोर्ट',
     ],
+    memoryKit: 'मेमोरी किट ₹999 (वैकल्पिक)',
+  },
+  offer: {
+    title: (firstSeats) => (firstSeats === null ? 'पैरेंट्स के लिए Sharp Brain' : `पैरेंट्स के लिए Sharp Brain — पहली ${firstSeats} सीट`),
+    oneTime: 'एक बार',
+    instalments: 'या ₹1,499 × 2',
+    perDay: (price) => `30 दिन का लगभग ${price} रोज़ · सुरक्षित Razorpay चेकआउट`,
+    book: (price) => `सीट बुक करें — ${price}`,
     questions: 'सवाल हैं? WhatsApp पर बात करें',
   },
   faq: {
-    eyebrow: 'सवाल',
-    title: 'नामांकन से पहले',
+    title: 'सवाल',
     items: [
-      {
-        question: 'यह किसके लिए है?',
-        answer:
-          'स्कूल और कॉलेज के विद्यार्थी, प्रतियोगी परीक्षा की तैयारी करने वाले और कामकाजी लोग — हर वह व्यक्ति जो पढ़ता, पढ़ाई करता या काम के लिए सीखता है। अभिभावक लगभग कक्षा 6 से ऊपर के बच्चे का नामांकन कर सकते हैं; छोटे बच्चे अभिभावक के साथ जुड़ सकते हैं।',
-      },
-      {
-        question: 'क्या यह विज्ञान पर आधारित है?',
-        answer:
-          'हाँ। इसमें सीखने के जाने-माने तरीके इस्तेमाल होते हैं — ध्यान का प्रशिक्षण, रीडिंग स्किल का अभ्यास, विज़ुअल मेमोरी तकनीकें, एक्टिव रिकॉल और अंतराल पर दोहराव। न आँखों पर पट्टी, न “मिडब्रेन एक्टिवेशन”, न कोई जादुई दावा। आपका सुधार नापा जाता है, उसका वादा नहीं किया जाता।',
-      },
-      {
-        question: 'रोज़ कितना समय लगता है?',
-        answer: 'रोज़ 10–15 मिनट ऐप पर अभ्यास, और 30 दिनों में फैली Zoom पर 7 लाइव क्लासेस। क्लास का समय नामांकन के बाद बैच शेड्यूल के साथ मिलता है।',
-      },
-      {
-        question: 'यह हिंदी में है या अंग्रेज़ी में?',
-        answer: 'क्लासेस आसान हिंदी में होती हैं, ज़रूरी अंग्रेज़ी शब्दों के साथ; ऐप अंग्रेज़ी और हिंदी दोनों में उपलब्ध है।',
-      },
-      {
-        question: 'अगर कोई लाइव क्लास छूट जाए तो?',
-        answer: `वही क्लास अगले बैच में मुफ़्त में जॉइन करें — बैच हर महीने की ${batchDaysHi} तारीख़ को शुरू होते हैं।`,
-      },
-      {
-        question: `${regular} में क्या मिलता है?`,
-        answer: `${trainer.nameHi} के साथ 7 लाइव क्लासेस, सभी एक्सरसाइज़ के साथ 30 दिन का गाइडेड ऐप अभ्यास, Day 1 और Day 30 पर निष्पक्ष रीडिंग टेस्ट, परीक्षा और काम के लिए याद रखने व दोहराने के तरीके, सर्टिफ़िकेट और प्रोग्राम के दौरान WhatsApp सपोर्ट। एकमुश्त भुगतान — न सब्सक्रिप्शन, न किश्तें।`,
-      },
-      { question: 'अगर यह मेरे लिए काम न करे तो?', answer: qsrGuarantee.hi.statement },
-      { question: 'Quantum Speed Reading का क्या हुआ?', answer: 'अब इसका नाम Sharp Brain है — वही मूल प्रशिक्षण, साफ़ नाम, और फोकस व याददाश्त पर ज़्यादा ज़ोर।' },
+      { question: 'बच्चा क्लास 8 में है। बहुत छोटा?', answer: 'क्लास 6 से चलता है। उससे नीचे पैरेंट के साथ जोड़ें।' },
+      { question: 'क्लास किस भाषा में?', answer: 'सरल हिंदी, अंग्रेज़ी शब्दों के साथ। ऐप 8 भाषाओं में।' },
+      { question: 'रोज़ कितना समय?', answer: '15 मिनट प्रैक्टिस + हफ्ते में दो लाइव क्लास (सोम और गुरु, रात 8–9)।' },
+      { question: 'क्लास छूट गई?', answer: 'हर क्लास अगले चक्र में दोबारा होती है, और रिकॉर्डिंग ऐप में है।' },
+      { question: 'काम न किया तो?', answer: 'पूरा रिफंड: 30 दिन, सातों क्लास (लाइव या रिकॉर्डिंग) और दोनों टेस्ट पूरे करें; अपने Day 30 के 7 दिन में दावा करें।' },
+      { question: 'सब्सक्रिप्शन है?', answer: 'नहीं। एक बार का भुगतान, कोई ऑटो-डेबिट नहीं।' },
     ],
   },
-  final: { title: 'आपका दिमाग़ बेहतर सीख सकता है। अगले बैच से शुरू करें।', speedTest: 'मुफ़्त Reading और Memory Test दें →' },
-  sticky: { cta: 'नामांकन' },
+  final: {
+    body: (price) => `आज से शुरू करें। एक महीने बाद नंबर कागज़ पर होंगे — बेहतर, या वही। ${price} और रोज़ 15 मिनट के लिए जान लेना बनता है।`,
+    book: 'सीट बुक करें',
+    ask: 'WhatsApp पर पूछें',
+  },
+  alsoFor: {
+    title: 'इनके लिए भी',
+    lines: ['कॉलेज के विद्यार्थी', 'प्रतियोगी परीक्षा की तैयारी करने वाले', 'प्रोफ़ेशनल'],
+    ask: 'WhatsApp पर पूछें',
+  },
+  freeTest: 'अभी तय नहीं? मुफ़्त Reading और Memory Test दें →',
+  liveQa: 'रविवार शाम 7 बजे — 30 मिनट का लाइव Q&A',
+  sticky: { book: 'सीट बुक करें', whatsapp: 'WhatsApp' },
   reviews: {
     metaTitle: 'Video Reviews — Sharp Brain™ | Mind Ur Mind',
     eyebrow: 'असली विद्यार्थी',
@@ -465,3 +340,35 @@ const hi: SharpBrainCopy = {
 }
 
 export const sharpBrainCopy: Record<Lang, SharpBrainCopy> = { en, hi }
+
+// Pre-filled WhatsApp texts (English, like every pre-filled WhatsApp message).
+export const LIVE_QA_WHATSAPP = 'Hi, I want to join the Sunday 7 pm live Q&A about Sharp Brain. My child is in Class __'
+export const DEMO_WATCHED_WHATSAPP = 'Hi, I watched the demo. My child is in Class __'
+
+/** /sharp-brain/demo — the on-demand demo video page. */
+export const sharpBrainDemoCopy: Record<Lang, { metaTitle: string; h1: string; videoSoon: string; call: string; or: string; lines: [string, string, string] }> = {
+  en: {
+    metaTitle: 'Sharp Brain — free demo | Mind Ur Mind',
+    h1: 'Sharp Brain — watch the free demo',
+    videoSoon: 'The demo video will be here soon.',
+    call: 'WhatsApp / Call: +91 95401 23161',
+    or: 'or call',
+    lines: [
+      '30 days, 15 minutes a day — focus, reading speed and memory for Class 6–12.',
+      '7 live classes with Dr. Kapil (Mon & Thu, 8 pm) — recordings in the app if one is missed.',
+      'Measured on Day 1 and Day 30 — your child’s own numbers, in writing.',
+    ],
+  },
+  hi: {
+    metaTitle: 'Sharp Brain — फ्री डेमो | Mind Ur Mind',
+    h1: 'Sharp Brain — फ्री डेमो देखें',
+    videoSoon: 'डेमो वीडियो जल्द ही यहाँ होगा।',
+    call: 'WhatsApp / कॉल: +91 95401 23161',
+    or: 'या कॉल करें',
+    lines: [
+      '30 दिन, रोज़ 15 मिनट — क्लास 6–12 के लिए ध्यान, पढ़ने की स्पीड और याद।',
+      'डॉ. कपिल के साथ 7 लाइव क्लास (सोम और गुरु, रात 8 बजे) — छूटे तो रिकॉर्डिंग ऐप में।',
+      'Day 1 और Day 30 पर नापा जाता है — बच्चे के अपने नंबर, लिखित में।',
+    ],
+  },
+}

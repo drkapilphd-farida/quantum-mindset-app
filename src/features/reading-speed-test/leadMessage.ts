@@ -1,3 +1,5 @@
+import { sharpBrainOffer } from '@/config/site.config'
+
 // The WhatsApp message a test taker sends to Dr. Kapil's number right after
 // leaving their number, so every lead reaches the founder even if the
 // saved row is never looked at. Only the person's own results.
@@ -10,17 +12,10 @@ export type LeadMessageInput = {
   retention: { correct: number; total: number } | null
   memory: { correct: number; total: number } | null
   profileName: string | null
-  offer: { code: string; expiresAtMs: number } | null
 }
 
-/** A short code the founder can read back from the chat: SB- + the first 6 characters of the offer id. */
-export function offerCode(offerId: string): string {
-  return `SB-${offerId.replace(/-/g, '').slice(0, 6).toUpperCase()}`
-}
-
-function expiry(ms: number, lang: 'en' | 'hi'): string {
-  return new Intl.DateTimeFormat(lang === 'hi' ? 'hi-IN-u-nu-latn' : 'en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(ms))
-}
+const PRICE = `₹${sharpBrainOffer.introInr.toLocaleString('en-IN')}`
+const SEATS = sharpBrainOffer.introSeats
 
 export function leadWhatsappMessage(m: LeadMessageInput): string {
   const name = m.firstName.trim()
@@ -32,7 +27,7 @@ export function leadWhatsappMessage(m: LeadMessageInput): string {
       m.retention ? `Retention: ${m.retention.total} में से ${m.retention.correct}` : null,
       m.memory ? `Memory: ${m.memory.total} में से ${m.memory.correct}` : null,
       m.profileName ? `Profile: ${m.profileName}` : null,
-      m.offer ? `ऑफ़र: Sharp Brain पर ₹1,000 की छूट — कोड ${m.offer.code}, ${expiry(m.offer.expiresAtMs, 'hi')} तक` : null,
+      `पैरेंट्स के लिए Sharp Brain — पहली ${SEATS} सीट ${PRICE} में`,
       `कृपया मेरी पूरी रिपोर्ट और टिप्स भेजें।`,
     ]
       .filter((l): l is string => l !== null)
@@ -45,7 +40,7 @@ export function leadWhatsappMessage(m: LeadMessageInput): string {
     m.retention ? `Retention: ${m.retention.correct} of ${m.retention.total}` : null,
     m.memory ? `Memory: ${m.memory.correct} of ${m.memory.total}` : null,
     m.profileName ? `Profile: ${m.profileName}` : null,
-    m.offer ? `Offer: ₹1,000 off Sharp Brain — code ${m.offer.code}, valid till ${expiry(m.offer.expiresAtMs, 'en')}` : null,
+    `Sharp Brain for parents — ${PRICE} for the first ${SEATS} seats`,
     `Please send my full report and tips.`,
   ]
     .filter((l): l is string => l !== null)

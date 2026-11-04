@@ -5,8 +5,6 @@ import { getAppDomain } from '@/lib/domains/appDomain'
 import { ChooseLearningMethodExperience } from '@/components/welcome/ChooseLearningMethodExperience'
 import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/hasStartedPracticeJourney'
 import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
-import { sharpBrainEnrolment } from '@/config/site.config'
-import { istDayMonth } from '@/features/sharp-brain-enrol/copy'
 import { getProgramProgress } from '@/features/thirty-day-curriculum/programProgress'
 
 // Belt-and-suspenders against edge/CDN caching serving the wrong
@@ -50,13 +48,8 @@ export default async function ChooseLearningMethodPage(): Promise<React.JSX.Elem
   const progress = user !== null && appDomain === 'app' ? await getProgramProgress() : null
   const planStep = progress === null ? { day: 1, started: false } : { day: progress.nextDay, started: progress.completedDays > 0 }
 
-  const next = pricingSnapshot(Date.now()).batches[0]
-  const programPrice = {
-    amountInr: next?.amountInr ?? sharpBrainEnrolment.regularInr,
-    regularInr: next?.regularInr ?? sharpBrainEnrolment.regularInr,
-    earlyBird: next?.offer === 'earlybird',
-    batchLabel: next === undefined ? '' : istDayMonth(next.startsAtMs, 'en'),
-  }
+  const { price } = await pricingSnapshot()
+  const programPrice = { amountInr: price.amountInr, struckInr: price.struckInr, introSeats: price.seatsLeft > 0 ? price.introSeats : null }
 
   return (
     <AppI18nRoot>

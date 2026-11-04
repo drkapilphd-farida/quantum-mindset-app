@@ -40,7 +40,7 @@ export default function HomeProblems(): React.JSX.Element {
                         {program.name}
                       </Link>
                       {program.livePrice === true ? (
-                        <PriceLine className="w-full" />
+                        <PriceLine className="w-full" startToday />
                       ) : (
                         program.priceLine !== null && <span className="font-mono text-[13px] text-ink-dim">{program.priceLine}</span>
                       )}

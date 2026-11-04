@@ -22,7 +22,7 @@ type ProLockedScreenProps = {
 // Name, price and links from the programs registry (site.config.ts).
 export async function ProLockedScreen({ title }: ProLockedScreenProps): Promise<React.JSX.Element> {
   const { t } = await getAppT()
-  const price = currentProgramPriceLabel()
+  const price = await currentProgramPriceLabel()
   return (
     <div className={EXERCISE_SCREEN_CLASSNAME}>
       <div className="mx-auto max-w-sm">

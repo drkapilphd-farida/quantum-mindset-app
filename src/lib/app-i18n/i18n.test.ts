@@ -143,8 +143,9 @@ describe('engine labels translated by value', () => {
 
 describe('enrol strings (website + app)', () => {
   it('translates and interpolates, English fallback per string', () => {
-    expect(enrolT('ta')('enrolNow', { price: '₹8,999' })).toContain('₹8,999')
-    expect(enrolT('en')('earlyBirdFor', { date: '15 Oct' })).toBe('Early-bird for the 15 Oct batch')
+    expect(enrolT('ta')('bookSeat', { price: '₹2,999' })).toContain('₹2,999')
+    expect(enrolT('en')('seatsLeft', { price: '₹2,999', n: 63 })).toBe('Seats left at ₹2,999: 63')
+    expect(enrolT('hi')('seatsLeft', { price: '₹2,999', n: 63 })).toBe('₹2,999 पर बची सीट: 63')
   })
 })
 

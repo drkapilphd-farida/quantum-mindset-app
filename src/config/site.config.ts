@@ -1,4 +1,3 @@
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from './masterclassPaymentLink'
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from './overthinkingCoursePaymentLink'
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from './retreatPaymentLink'
 
@@ -191,15 +190,15 @@ const programsData = {
     nameHi: 'Sharp Brain 30-दिवसीय प्रोग्राम',
     shortName: 'Sharp Brain',
     shortNameHi: 'Sharp Brain',
-    outcome: 'Read faster with understanding, focus longer, remember more — measured from your own Day 1 to Day 30.',
-    audience: 'School and college students, competitive-exam aspirants, working professionals — and parents enrolling their child',
-    format: 'Online · 7 live classes + 30 days of app practice',
-    prices: [{ label: 'One-time enrolment', amountInr: 9999 }],
-    // Every "Enrol" button leads to the batch picker on the program page;
-    // the price (early-bird / regular / test offer) and the Razorpay link
-    // are decided on the server there — see sharpBrainEnrolment below and
+    outcome: 'Focus, reading speed and memory for Class 6–12 — 15 minutes a day, measured on Day 1 and Day 30.',
+    audience: 'Parents of Class 6–12 children (also college students, exam aspirants and professionals)',
+    format: 'Online · 7 live classes + 30 days of app practice · start any day',
+    prices: [{ label: 'First 100 seats', amountInr: 2999 }],
+    // Every "Book a seat" button leads to the checkout on the program page;
+    // the price (first 100 seats, then the later price) and the Razorpay
+    // link are decided on the server there — see sharpBrainOffer below and
     // src/features/sharp-brain-enrol.
-    checkout: [{ label: 'Choose your batch', href: '/programs/sharp-brain#enrol' }],
+    checkout: [{ label: 'Book a seat', href: '/programs/sharp-brain#enrol' }],
     url: '/programs/sharp-brain',
     status: 'active',
     pillar: 'brain',
@@ -535,57 +534,25 @@ export const franchisePartnerFormats: readonly string[] | null = null
 
 /**
  * Sharp Brain Results Guarantee — the single wording used on the Sharp Brain
- * page, the FAQs, the Refund & Cancellation Policy page and the test-offer
- * page, so the conditions can never differ between them (approved by the
- * founder, 8 Oct 2026). `conditions` + `retest` are the binding terms;
- * `statement` is the same terms as one paragraph for FAQ answers; `short` is
- * the line under the payment button (it must not add or drop a condition).
- * Never "100%". Retention = comprehension in the fair reading test.
+ * page, the FAQs and the Refund & Cancellation Policy page, so it can never
+ * differ between them (founder's final text, 4 Nov 2026). `statement` is the
+ * binding term, word for word. Never "100%". "Recall" = comprehension in
+ * the fair reading test; "reading speed" = effective reading speed. A claim
+ * qualifies only when neither improved (see evaluateGuarantee).
  */
-const GUARANTEE_EN = {
-  intro: 'You get a full refund of your fee only if all of these are true:',
-  conditions: [
-    'You completed all 30 days of practice in the app.',
-    'You completed all 7 classes, live or by watching a recording that Dr. Kapil approves.',
-    'You took both the Day 1 and the Day 30 reading tests.',
-    'You ask for the refund within 7 days of completing Day 30. After that, the guarantee no longer applies.',
-    'On Day 30, both your effective reading speed and your retention (how much you remember from the test passage) show no improvement over Day 1.',
-  ],
-  retest: 'Before a refund, we may ask you to repeat the Day 30 test with Dr. Kapil on Zoom.',
-} as const
-
-const GUARANTEE_HI = {
-  intro: 'आपको अपनी फ़ीस का पूरा रिफंड तभी मिलेगा जब ये सभी बातें सही हों:',
-  conditions: [
-    'आपने ऐप में 30 दिनों का पूरा अभ्यास किया हो।',
-    'आपने सभी 7 क्लासेस पूरी की हों — लाइव, या ऐसी रिकॉर्डिंग देखकर जिसे डॉ. कपिल स्वीकार करें।',
-    'आपने Day 1 और Day 30, दोनों रीडिंग टेस्ट दिए हों।',
-    'आप Day 30 पूरा करने के 7 दिनों के भीतर रिफंड माँगें। इसके बाद गारंटी लागू नहीं होगी।',
-    'Day 30 पर आपकी प्रभावी पढ़ने की गति और रिटेंशन (टेस्ट के पैराग्राफ़ से आपको कितना याद रहा), दोनों में Day 1 के मुकाबले कोई सुधार न हो।',
-  ],
-  retest: 'रिफंड से पहले, हम आपसे डॉ. कपिल के साथ Zoom पर Day 30 टेस्ट दोबारा देने के लिए कह सकते हैं।',
-} as const
-
-const asParagraph = (g: { intro: string; conditions: readonly string[]; retest: string }): string =>
-  `${g.intro} ${g.conditions.map((c, i) => `(${i + 1}) ${c}`).join(' ')} ${g.retest}`
-
 const qsrGuaranteeData = {
   en: {
     title: 'Results Guarantee',
     label: 'Results Guarantee',
-    ...GUARANTEE_EN,
-    statement: asParagraph(GUARANTEE_EN),
-    short:
-      'Results Guarantee: a full refund if you complete all 30 days and all 7 classes, take both reading tests, and on Day 30 neither your effective reading speed nor your retention has improved. Claim within 7 days of Day 30.',
+    statement:
+      'Complete all 30 days, all 7 classes (live or recording) and both tests. If Day 30 shows no improvement in reading speed or recall, full refund. Claim within 7 days of your Day 30.',
     fullTerms: 'See full terms',
   },
   hi: {
     title: 'परिणाम गारंटी',
     label: 'परिणाम गारंटी',
-    ...GUARANTEE_HI,
-    statement: asParagraph(GUARANTEE_HI),
-    short:
-      'परिणाम गारंटी: अगर आप 30 दिन और सभी 7 क्लासेस पूरी करते हैं, दोनों रीडिंग टेस्ट देते हैं, और Day 30 पर न आपकी प्रभावी पढ़ने की गति सुधरी, न रिटेंशन — तो पूरा रिफंड। Day 30 के 7 दिनों के भीतर दावा करें।',
+    statement:
+      '30 दिन, सातों क्लास (लाइव या रिकॉर्डिंग) और दोनों टेस्ट पूरे करें। Day 30 पर स्पीड या याद में सुधार न मिले तो पूरा पैसा वापस। अपने Day 30 के 7 दिन के अंदर दावा करें।',
     fullTerms: 'पूरी शर्तें देखें',
   },
 }
@@ -593,45 +560,37 @@ const qsrGuaranteeData = {
 export const qsrGuarantee: Widen<typeof qsrGuaranteeData> = qsrGuaranteeData
 
 /**
- * Sharp Brain 30-Day Program — batches, early-bird and the Reading Speed
- * Test offer. All dates are IST and every price is decided on the server
- * (src/features/sharp-brain-enrol), never from the visitor's clock.
+ * Sharp Brain for parents (spec of 4 Nov 2026) — rolling admission, one
+ * price that steps up after the first seats are sold. Every price is
+ * decided on the server (src/features/sharp-brain-enrol), never in the
+ * browser.
  *
- * - Two batches a month, starting on each day in `batchStartDays`.
- * - Early-bird for a batch ends `earlyBirdEndsDaysBefore` days before it
- *   starts, at 23:59 IST (15th → 10th, 25th → 20th).
- * - Test offer: `testOffer.discountInr` off the regular price for
- *   `testOffer.validHours`, one per WhatsApp number, ever.
- * - Offers never stack: the buyer pays the lowest available price, never
- *   below `floorInr`.
- * - `seatsPerBatch: null` = no seat limit is shown anywhere. Only set a
- *   real number.
- *
- * Checkout: with RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET set, each checkout
- * creates its own Razorpay Payment Link (amount, batch and offer in its
- * notes). Without them the fixed links below are used; a discounted price
- * is only offered on production once its fixed link is set.
+ * - `introInr` for the first `introSeats` PAID seats (Razorpay + manual
+ *   enrolments at the intro price; refunds give the seat back), then
+ *   `laterInr` automatically. `struckInr` is shown struck through.
+ * - No batches: payment gives access the same day; Day 1 = the join day.
+ * - Checkout: each checkout creates its own Razorpay Payment Link
+ *   (RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET), valid `linkValidMinutes`, with
+ *   notes program=sharp_brain_30 + offer=parent_2999 | parent_3999. Without
+ *   the keys, checkout sends the buyer to WhatsApp — never to an old link.
+ * - Early-bird and the Reading Speed Test ₹1,000 offer are off: offers
+ *   never stack on this price.
  */
-const sharpBrainEnrolmentData = {
-  batchStartDays: [15, 25],
-  earlyBirdEndsDaysBefore: 5,
-  regularInr: 9999,
-  earlyBirdInr: 8999,
-  floorInr: 8999,
-  testOffer: { discountInr: 1000, validHours: 48 },
-  seatsPerBatch: null as number | null,
-  fallbackLinks: {
-    regular: RAZORPAY_MASTERCLASS_PAYMENT_LINK,
-    // TODO(business): Dr. Kapil to create a fixed ₹8,999 Razorpay link
-    // (used for early-bird and the test offer while the API keys are missing).
-    discounted: null as string | null,
-  },
+const sharpBrainOfferData = {
+  struckInr: 8999,
+  introInr: 2999,
+  introSeats: 100,
+  laterInr: 3999,
+  linkValidMinutes: 30,
 } as const
 
-export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
-  readonly seatsPerBatch: number | null
-  readonly fallbackLinks: { readonly regular: string; readonly discounted: string | null }
-} = sharpBrainEnrolmentData
+export const sharpBrainOffer: Widen<typeof sharpBrainOfferData> = sharpBrainOfferData
+
+/**
+ * Feature switches for the parents offer. ENABLE_MEMORY_KIT: the optional
+ * ₹999 printed Memory Kit (not built yet — stays off).
+ */
+export const ENABLE_MEMORY_KIT = false
 
 export type UpcomingEvent = {
   id: string

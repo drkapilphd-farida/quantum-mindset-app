@@ -17,17 +17,17 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-// Re-rendered every minute so the price follows the batch/early-bird logic.
+// Re-rendered every minute so the price and seat counter stay current.
 export const revalidate = 60
 
 // Video reviews for Sharp Brain™ (rebuilt 2 Oct 2026 in the program page's
 // design): hero with live price → the same video-review section as
 // /programs/sharp-brain ("From earlier batches", YouTube channel) → final CTA.
 // No review counts or other numbers that can't be verified.
-export default function ReviewsPage(): React.JSX.Element {
+export default async function ReviewsPage(): Promise<React.JSX.Element> {
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
-      <SharpBrainPricingProvider initial={pricingSnapshot(Date.now())}>
+      <SharpBrainPricingProvider initial={await pricingSnapshot()}>
         <SharpBrainNav />
         <main>
           <SharpBrainReviewsHero />

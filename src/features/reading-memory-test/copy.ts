@@ -1,10 +1,10 @@
-import { sharpBrainEnrolment } from '@/config/site.config'
+import { sharpBrainOffer } from '@/config/site.config'
 
 // Free Reading & Memory Test — every word on the test page, English and
 // Hindi. Copy rules (founder, 14 Oct 2026): no "100%", "photographic
 // memory", guarantees, ESP or midbrain; every number is the person's own.
-const DISCOUNT = `₹${sharpBrainEnrolment.testOffer.discountInr.toLocaleString('en-IN')}`
-const HOURS = sharpBrainEnrolment.testOffer.validHours
+const PRICE = `₹${sharpBrainOffer.introInr.toLocaleString('en-IN')}`
+const SEATS = sharpBrainOffer.introSeats
 
 export type MemoryTestCopy = {
   name: string
@@ -157,7 +157,7 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     boostResult: (pace, percent) => `You just read at ${pace} WPM and understood ${percent}%.`,
     boostResultSub: 'Guided practice like this is how the 30-day program builds your own speed.',
     backToProfile: 'Back to my Brain Profile',
-    leadTitle: `Get your full report, 3 personal tips and ${DISCOUNT} off Sharp Brain for ${HOURS} hours — on WhatsApp`,
+    leadTitle: `Get your full report and 3 personal tips on WhatsApp. Sharp Brain for parents — ${PRICE} for the first ${SEATS} seats.`,
     leadTitleNoOffer: 'Get your full report and 3 personal tips on WhatsApp',
     leadSub: 'Free. No spam.',
     phone: 'WhatsApp number',
@@ -249,7 +249,7 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     boostResult: (pace, percent) => `आपने अभी ${pace} WPM पर पढ़ा और ${percent}% समझा।`,
     boostResultSub: 'ऐसे गाइडेड अभ्यास से ही 30 दिन का प्रोग्राम आपकी अपनी रफ़्तार बढ़ाता है।',
     backToProfile: 'मेरी Brain Profile पर वापस',
-    leadTitle: `अपनी पूरी रिपोर्ट, 3 निजी टिप्स और ${HOURS} घंटे के लिए Sharp Brain पर ${DISCOUNT} की छूट — WhatsApp पर पाएँ`,
+    leadTitle: `अपनी पूरी रिपोर्ट और 3 निजी टिप्स WhatsApp पर पाएँ। पैरेंट्स के लिए Sharp Brain — पहली ${SEATS} सीट ${PRICE} में।`,
     leadTitleNoOffer: 'अपनी पूरी रिपोर्ट और 3 निजी टिप्स WhatsApp पर पाएँ',
     leadSub: 'मुफ़्त। कोई स्पैम नहीं।',
     phone: 'WhatsApp नंबर',

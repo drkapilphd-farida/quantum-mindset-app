@@ -83,7 +83,7 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
             rel="noopener noreferrer"
             className="mt-4 inline-flex rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-500 hover:to-indigo-400"
           >
-            {enrolT(lang)('enrolNow', { price: currentProgramPriceLabel() })}
+            {enrolT(lang)('bookSeat', { price: await currentProgramPriceLabel() })}
           </a>
         </div>
       )}

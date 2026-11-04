@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { canRegister, classesDone, copyCycle, csvCell, evaluateGuarantee, formatSessionDate, formatSessionTime, isoToIst, istToIso, lastCycle, nextClassToJoin, nextSessionFor, toCsv, upcomingSessions, type GuaranteeReading, type Session } from './liveClasses'
+import { canRegister, classesDone, csvCell, evaluateGuarantee, formatSessionDate, formatSessionTime, isoToIst, istToIso, nextClassToJoin, nextCycleSessions, nextCycleSlot, cycleSlots, nextSessionFor, toCsv, upcomingSessions, type GuaranteeReading, type Session } from './liveClasses'
 
 const session = (over: Partial<Session>): Session => ({ id: 's', classNumber: 1, topicOverride: null, startsAt: istToIso('2026-10-18', '19:00'), endsAt: istToIso('2026-10-18', '21:00'), status: 'published', ...over })
 const NOW = Date.parse('2026-10-14T06:00:00Z')
@@ -42,11 +42,29 @@ describe('schedule', () => {
     expect(formatSessionDate(istToIso('2026-10-29', '19:00'), 'mr')).toMatch(/29/)
     expect(isoToIst(istToIso('2026-11-15', '19:00'))).toEqual({ date: '2026-11-15', time: '19:00' })
   })
-  it('copy last cycle: latest session per class number, 4 weeks later', () => {
-    const cycle = lastCycle([...sessions, session({ id: 'e', classNumber: 1, startsAt: istToIso('2026-09-20', '19:00') })])
-    expect(cycle.map((s) => s.id)).toEqual(['a', 'b'])
-    const next = copyCycle(cycle)
-    expect(isoToIst(next[0]!.startsAt)).toEqual({ date: '2026-11-15', time: '19:00' })
+  it('cycle: Mon & Thu 8–9 pm from Mon 9 Nov, Classes 1–7 in order, then again', () => {
+    const slots = cycleSlots(0, 9)
+    expect(slots.map((s) => [s.classNumber, s.date])).toEqual([
+      [1, '2026-11-09'], [2, '2026-11-12'], [3, '2026-11-16'], [4, '2026-11-19'], [5, '2026-11-23'], [6, '2026-11-26'], [7, '2026-11-30'], [1, '2026-12-03'], [2, '2026-12-07'],
+    ])
+    expect(isoToIst(slots[0]!.startsAt)).toEqual({ date: '2026-11-09', time: '20:00' })
+    expect(isoToIst(slots[0]!.endsAt)).toEqual({ date: '2026-11-09', time: '21:00' })
+  })
+  it('next class: before the first cycle → 9 Nov; during a class day → the next one', () => {
+    expect(nextCycleSlot(Date.parse('2026-11-04T12:00:00+05:30'))?.date).toBe('2026-11-09')
+    expect(nextCycleSlot(Date.parse('2026-11-09T19:59:00+05:30'))?.date).toBe('2026-11-09')
+    expect(nextCycleSlot(Date.parse('2026-11-09T20:01:00+05:30'))).toMatchObject({ date: '2026-11-12', classNumber: 2 })
+  })
+  it('a skipped date moves the cycle on without skipping a class number', () => {
+    const pattern = { weekdays: [1, 4], startIst: '20:00', endIst: '21:00', firstCycleStart: '2026-11-09', skipDates: ['2026-11-12'] }
+    expect(cycleSlots(0, 3, pattern).map((s) => [s.classNumber, s.date])).toEqual([[1, '2026-11-09'], [2, '2026-11-16'], [3, '2026-11-19']])
+  })
+  it('create next cycle: 7 sessions right after the latest one', () => {
+    const now = Date.parse('2026-11-04T12:00:00+05:30')
+    expect(nextCycleSessions(istToIso('2026-11-05', '19:00'), now).map((s) => s.date)).toEqual(['2026-11-09', '2026-11-12', '2026-11-16', '2026-11-19', '2026-11-23', '2026-11-26', '2026-11-30'])
+    const next = nextCycleSessions(istToIso('2026-11-30', '20:00'), now)
+    expect(next.map((s) => [s.classNumber, s.date])[0]).toEqual([1, '2026-12-03'])
+    expect(next).toHaveLength(7)
   })
 })
 

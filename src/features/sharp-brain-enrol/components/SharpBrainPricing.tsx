@@ -1,28 +1,29 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { sharpBrainEnrolment, waLink } from "@/config/site.config";
+import { waLink } from "@/config/site.config";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 import { trackInitiateCheckout } from "@/lib/analytics/conversions";
+import { readUtmParams } from "@/lib/analytics/utm";
 import { getSharpBrainPricing, startSharpBrainCheckout, type CheckoutResult } from "../actions";
-import type { PricedBatch, PricingSnapshot } from "../server";
-import { countdownParts, inr, istDayMonth, istDeadline } from "../copy";
+import type { PricingSnapshot } from "../server";
+import type { CurrentPrice } from "../offer";
+import { classWhen, countdownParts, inr } from "../copy";
 import { enrolT } from "@/lib/app-i18n/enrol";
 import { useUiLang } from "@/lib/app-i18n/client";
 
-// Sharp Brain prices on the page. The server renders a first snapshot;
-// on mount it is refreshed from the server, and the countdown runs on the
-// server's clock (offset = server time − this device's time), so it shows
-// the same remaining time on every device, whatever its own clock says.
-// On preview builds `?now=<ISO date>` simulates another moment.
+// Sharp Brain price, seat counter and checkout. The server renders a first
+// snapshot; on mount it is refreshed from the server (real seat count). On
+// preview builds `?now=<ISO date>` simulates another moment and `?seats=<n>`
+// another seat count; production ignores both.
 
-type PricingState = { snapshot: PricingSnapshot | null; offsetMs: number | null; simulateNow: string | undefined; offerId: string | undefined };
+type PricingState = { snapshot: PricingSnapshot | null; offsetMs: number | null; simulateNow: string | undefined; simulateSeats: string | undefined };
 
 const PricingContext = createContext<PricingState | null>(null);
 
-function readSimulateNow(): string | undefined {
+function readParam(name: string): string | undefined {
   try {
-    return new URLSearchParams(window.location.search).get("now") ?? undefined;
+    return new URLSearchParams(window.location.search).get(name) ?? undefined;
   } catch {
     return undefined;
   }
@@ -30,26 +31,25 @@ function readSimulateNow(): string | undefined {
 
 export function SharpBrainPricingProvider({
   initial,
-  offerId,
   children,
 }: {
   /** Server-rendered snapshot; null where there is none (in-app popup) — fetched on mount. */
   initial: PricingSnapshot | null;
-  offerId?: string;
   children: React.ReactNode;
 }): React.JSX.Element {
-  const [state, setState] = useState<PricingState>({ snapshot: initial, offsetMs: null, simulateNow: undefined, offerId });
+  const [state, setState] = useState<PricingState>({ snapshot: initial, offsetMs: null, simulateNow: undefined, simulateSeats: undefined });
 
   useEffect(() => {
     let cancelled = false;
-    const simulateNow = readSimulateNow();
-    void getSharpBrainPricing({ simulateNow, offerId }).then((snapshot) => {
-      if (!cancelled) setState({ snapshot, offsetMs: snapshot.serverNowMs - Date.now(), simulateNow, offerId });
+    const simulateNow = readParam("now");
+    const simulateSeats = readParam("seats");
+    void getSharpBrainPricing({ simulateNow, simulateSeats }).then((snapshot) => {
+      if (!cancelled) setState({ snapshot, offsetMs: snapshot.serverNowMs - Date.now(), simulateNow, simulateSeats });
     });
     return () => {
       cancelled = true;
     };
-  }, [offerId]);
+  }, []);
 
   return <PricingContext.Provider value={state}>{children}</PricingContext.Provider>;
 }
@@ -60,9 +60,16 @@ export function useSharpBrainPricing(): PricingState {
   return value;
 }
 
-/** The batch every headline price refers to: the next one still open. */
-export function useNextBatch(): PricedBatch | null {
-  return useSharpBrainPricing().snapshot?.batches[0] ?? null;
+/** What a seat costs right now (null until the server has answered, on pages without a first snapshot). */
+export function useCurrentPrice(): CurrentPrice | null {
+  return useSharpBrainPricing().snapshot?.price ?? null;
+}
+
+/** "Next live class: Mon, 9 Nov, 8 pm" — the next class of the Mon & Thu cycle. */
+export function useNextClassLine(): string | null {
+  const lang = useUiLang();
+  const at = useSharpBrainPricing().snapshot?.nextClassAt ?? null;
+  return at === null ? null : enrolT(lang)("nextClass", { when: classWhen(at, lang) });
 }
 
 export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; className?: string }): React.JSX.Element | null {
@@ -80,7 +87,6 @@ export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; clas
   const t = enrolT(lang);
   const u = { d: t("units.d"), h: t("units.h"), m: t("units.m"), s: t("units.s") };
   const pad = (n: number): string => String(n).padStart(2, "0");
-  // "1d 23h" for one-letter units; "1 दिन 23 घं" when the unit is a word.
   const unit = (n: string, label: string): string => (/^[a-z]$/i.test(label) ? `${n}${label}` : `${n} ${label}`);
   return (
     <span className={`font-mono tabular-nums ${className}`} data-countdown suppressHydrationWarning>
@@ -89,53 +95,49 @@ export function Countdown({ endsAtMs, className = "" }: { endsAtMs: number; clas
   );
 }
 
-/** "Enrol now · ₹8,999" — the price of the next batch. */
+/** "Book a seat — ₹2,999" — the current price. */
 export function useEnrolLabel(): string {
   const lang = useUiLang();
-  const next = useNextBatch();
-  return enrolT(lang)("enrolNow", { price: inr(next?.amountInr ?? sharpBrainEnrolment.regularInr) });
+  const price = useCurrentPrice();
+  return enrolT(lang)("bookSeat", { price: price === null ? "" : inr(price.amountInr) }).replace(/ — $/, "");
 }
 
-/**
- * The price line under a call to action: early-bird with the real
- * countdown, or the regular price with the next batch date.
- */
-export function PriceLine({ className = "", tone = "light" }: { className?: string; tone?: "light" | "app" }): React.JSX.Element | null {
+/** "Seats left at ₹2,999: 63" — real, from paid seats — or "₹2,999 seats are full — now ₹3,999". Hidden when the count is unknown. */
+export function SeatCounter({ className = "" }: { className?: string }): React.JSX.Element | null {
   const lang = useUiLang();
-  const next = useNextBatch();
-  if (next === null) return null;
+  const { snapshot } = useSharpBrainPricing();
+  if (snapshot === null || !snapshot.seatsKnown) return null;
   const t = enrolT(lang);
-  const date = istDayMonth(next.startsAtMs, lang);
+  const { price } = snapshot;
+  return (
+    <p className={className} data-seat-counter={price.seatsLeft}>
+      {price.seatsLeft > 0 ? t("seatsLeft", { price: inr(price.introInr), n: price.seatsLeft }) : t("seatsFull", { intro: inr(price.introInr), price: inr(price.laterInr) })}
+    </p>
+  );
+}
+
+/** "~~₹8,999~~ ₹2,999 · first 100 seats" under a call to action. */
+export function PriceLine({ className = "", tone = "light", startToday = false }: { className?: string; tone?: "light" | "app"; startToday?: boolean }): React.JSX.Element | null {
+  const lang = useUiLang();
+  const price = useCurrentPrice();
+  if (price === null) return null;
+  const t = enrolT(lang);
   const strike = tone === "app" ? "text-muted-foreground" : "text-ink-faint";
   const strong = tone === "app" ? "text-foreground" : "text-ink";
-  const accent = tone === "app" ? "text-emerald-600 dark:text-emerald-400" : "text-gold";
-
-  if (next.offer === "regular" || next.endsAtMs === null) {
-    return (
-      <p className={`text-[14px] ${strike} ${className}`} data-price-state="regular">
-        <span className={`font-semibold ${strong}`}>{inr(next.amountInr)}</span> · {t("oneTime")} · {t("regularLine", { date: date })}
-      </p>
-    );
-  }
   return (
-    <div className={`text-[14px] leading-relaxed ${className}`} data-price-state={next.offer}>
-      <p className={strong}>
-        <span className={`font-semibold ${accent}`}>{next.offer === "test1000" ? t("offerTag") : t("earlyBirdFor", { date: date })}:</span>{" "}
-        <s className={strike}>{inr(next.regularInr)}</s> <span className="font-bold">{inr(next.amountInr)}</span>
-      </p>
-      <p className={strike}>
-        {t("endsIn")} <Countdown endsAtMs={next.endsAtMs} className={`font-semibold ${strong}`} />
-        <span className="ml-1">({t("endsOn", { deadline: istDeadline(next.endsAtMs, lang) })})</span>
-      </p>
-    </div>
+    <p className={`text-[14px] ${strike} ${className}`} data-price-state={price.offer}>
+      <s>{inr(price.struckInr)}</s> <span className={`font-bold ${strong}`}>{inr(price.amountInr)}</span>
+      {price.seatsLeft > 0 && ` · ${t("firstSeats", { n: price.introSeats })}`}
+      {startToday && ` · ${t("startToday")}`}
+    </p>
   );
 }
 
 /**
- * Batch picker + pay button. The server re-checks the batch and decides the
- * price, then returns a Razorpay link for this checkout.
+ * Email + name + pay button. The server decides the price from the real
+ * seat count and returns a Razorpay link for this checkout.
  */
-export function BatchCheckout({
+export function SeatCheckout({
   location,
   tone = "light",
   showPerDay = false,
@@ -145,9 +147,8 @@ export function BatchCheckout({
   showPerDay?: boolean;
 }): React.JSX.Element {
   const lang = useUiLang();
-  const { snapshot, simulateNow, offerId } = useSharpBrainPricing();
+  const { snapshot, simulateNow, simulateSeats } = useSharpBrainPricing();
   const t = enrolT(lang);
-  const [chosen, setChosen] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pending, setPending] = useState(false);
@@ -157,19 +158,23 @@ export function BatchCheckout({
     if (viewerEmail !== null) setEmail((current) => (current === "" ? viewerEmail : current));
   }, [viewerEmail]);
   const [error, setError] = useState<Exclude<CheckoutResult, { ok: true }>["reason"] | null>(null);
-  const batches = snapshot?.batches ?? [];
-  const batch = batches.find((b) => b.start === chosen) ?? batches[0] ?? null;
 
-  if (snapshot === null || batch === null) return <div className="h-[168px]" aria-busy="true" />;
-  const date = istDayMonth(batch.startsAtMs, lang);
+  if (snapshot === null) return <div className="h-[168px]" aria-busy="true" />;
+  const price = snapshot.price;
 
-  async function pay(selected: PricedBatch): Promise<void> {
+  async function pay(): Promise<void> {
     setPending(true);
     setError(null);
-    trackInitiateCheckout("Sharp Brain 30-Day Program", selected.amountInr);
-    trackGaEvent("razorpay_checkout_click", { location, offer: selected.offer, batch: selected.start });
-    const result = await startSharpBrainCheckout({ batch: selected.start, email, name, offerId, simulateNow });
+    const result = await startSharpBrainCheckout({ email, name, simulateNow, simulateSeats });
     if (result.ok) {
+      trackInitiateCheckout("Sharp Brain 30-Day Program", result.amountInr);
+      trackGaEvent("razorpay_checkout_click", {
+        location,
+        offer: result.amountInr === price.introInr ? "parent_2999" : "parent_3999",
+        value: String(result.amountInr),
+        seats_left: String(result.seatsLeft),
+        utm_source: readUtmParams().utm_source ?? "(none)",
+      });
       window.location.assign(result.url);
       return;
     }
@@ -178,9 +183,6 @@ export function BatchCheckout({
   }
 
   const app = tone === "app";
-  const optionBase = app ? "rounded-xl border px-4 py-3 text-left text-sm transition-colors" : "rounded-sm border px-4 py-3 text-left text-[14.5px] transition-colors";
-  const optionOn = app ? "border-emerald-500 bg-emerald-500/10 text-foreground" : "border-gold bg-gold-soft text-ink";
-  const optionOff = app ? "border-border text-foreground hover:border-emerald-500/60" : "border-line-strong text-ink hover:border-gold/60";
   const faint = app ? "text-muted-foreground" : "text-ink-faint";
   const input = app
     ? "w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground"
@@ -190,37 +192,12 @@ export function BatchCheckout({
     : "inline-flex w-full items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44] disabled:opacity-60 sm:w-auto";
 
   return (
-    <div data-batch-checkout>
-      <p className={`font-mono text-[11.5px] uppercase tracking-[0.08em] ${faint}`}>{t("chooseBatch")}</p>
-      <div role="radiogroup" aria-label={t("chooseBatch")} className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {batches.map((option) => {
-          const on = option.start === batch.start;
-          return (
-            <button
-              key={option.start}
-              type="button"
-              role="radio"
-              aria-checked={on}
-              onClick={() => setChosen(option.start)}
-              className={`${optionBase} ${on ? optionOn : optionOff}`}
-            >
-              <span className="block font-semibold">{t("batchOption", { date: istDayMonth(option.startsAtMs, lang) })}</span>
-              <span className={`mt-0.5 block text-[13px] ${faint}`}>
-                {option.offer !== "regular" && <s className="mr-1.5">{inr(option.regularInr)}</s>}
-                <span className="font-semibold">{inr(option.amountInr)}</span>
-                {option.offer === "earlybird" && ` · ${t("earlyBirdTag")}`}
-                {option.offer === "test1000" && ` · ${t("offerTag")}`}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-      {snapshot.seatsPerBatch !== null && <p className={`mt-2 text-[12.5px] ${faint}`}>{t("seatsLeft", { n: snapshot.seatsPerBatch })}</p>}
+    <div data-seat-checkout>
       <form
-        className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2"
+        className="grid grid-cols-1 gap-2 sm:grid-cols-2"
         onSubmit={(event) => {
           event.preventDefault();
-          void pay(batch);
+          void pay();
         }}
         id={`enrol-form-${location}`}
       >
@@ -252,16 +229,15 @@ export function BatchCheckout({
         <p className={`text-[12px] sm:col-span-2 ${faint}`}>{t("emailHint")}</p>
       </form>
       <button type="submit" form={`enrol-form-${location}`} disabled={pending} className={`${button} mt-4`} data-enrol-button>
-        {pending ? t("redirecting") : t("enrolNow", { price: inr(batch.amountInr) })}
+        {pending ? t("redirecting") : t("bookSeat", { price: inr(price.amountInr) })}
       </button>
       <p className={`mt-2 text-[12.5px] ${faint}`}>
-        {t("oneTime")}
-        {showPerDay && ` · ${t("perDay", { price: inr(Math.round(batch.amountInr / 30)) })}`} · {t("secure")}
+        {showPerDay ? t("perDay", { price: inr(Math.round(price.amountInr / 30)) }) : t("oneTime")} · {t("secure")}
       </p>
       {error !== null && (
         <p role="alert" className="mt-3 text-[13.5px] text-red-700">
           {t(`errors.${error}`)}{" "}
-          <a href={waLink(t("whatsappEnrol", { date, price: inr(batch.amountInr) }))} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+          <a href={waLink(t("whatsappEnrol", { price: inr(price.amountInr) }))} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
             {t("chatOnWhatsapp")} →
           </a>
         </p>
@@ -271,14 +247,14 @@ export function BatchCheckout({
 }
 
 function LivePriceAmount(): React.JSX.Element {
-  const next = useNextBatch();
-  return <>{next === null ? "" : inr(next.amountInr)}</>;
+  const price = useCurrentPrice();
+  return <>{price === null ? "" : inr(price.amountInr)}</>;
 }
 
 /**
- * The current program price ("₹8,999" during early-bird, else "₹9,999") for
- * client components outside a pricing page. Fetched from the server; empty
- * until it arrives, so no wrong price ever flashes.
+ * The current seat price ("₹2,999", or "₹3,999" once the first 100 seats
+ * are gone) for client components outside a pricing page. Fetched from the
+ * server; empty until it arrives, so no wrong price ever flashes.
  */
 export function LiveProgramPrice(): React.JSX.Element {
   return (

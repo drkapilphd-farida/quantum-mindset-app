@@ -72,6 +72,10 @@ function buildContentSecurityPolicy(): string {
       'https://checkout.razorpay.com',
       'https://www.googletagmanager.com',
       'https://connect.facebook.net',
+      // YouTube IFrame Player API — the Sharp Brain demo video (/sharp-brain/demo)
+      // reports plays and how much was watched.
+      'https://www.youtube.com',
+      'https://s.ytimg.com',
     ],
     'style-src': ["'self'", "'unsafe-inline'"],
     'img-src': [

@@ -12,7 +12,7 @@ export type MemoryTestEvent =
   | { name: 'result_shown'; status: string; profile: string | null; retention: number; memory: number }
   | { name: 'bonus_story'; phase: 'opened' | 'finished'; before?: number; after?: number }
   | { name: 'bonus_boost'; phase: 'opened' | 'finished'; pace?: number; percent?: number }
-  | { name: 'lead_submitted'; status: string; offer: boolean }
+  | { name: 'lead_submitted'; status: string }
   | { name: 'whatsapp_opened'; how: 'auto' | 'button' }
   | { name: 'shared'; method: 'image' | 'whatsapp' }
 

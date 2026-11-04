@@ -32,3 +32,12 @@ export function todayIst(now: number = Date.now()): string {
 export function normaliseEmail(email: string): string {
   return email.trim().toLowerCase()
 }
+
+/** Which seat a manual payment is (counted in the "Seats left at ₹2,999" counter when it is the intro seat). */
+export const SEAT_OFFERS = ['parent_2999', 'parent_3999'] as const
+export type SeatOffer = (typeof SEAT_OFFERS)[number]
+export const SEAT_LABEL: Record<SeatOffer | 'none', string> = {
+  parent_2999: '₹2,999 seat (first 100)',
+  parent_3999: '₹3,999 seat',
+  none: 'Other (not counted as a seat)',
+}

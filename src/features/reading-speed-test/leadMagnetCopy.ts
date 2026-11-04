@@ -1,4 +1,4 @@
-import { sharpBrainEnrolment } from '@/config/site.config'
+import { sharpBrainOffer } from '@/config/site.config'
 import type { ReadingProfileType, SpeedBand } from './scoring'
 
 // Copy for the Reading Profile flow (start screen, steps, profile, share
@@ -6,8 +6,8 @@ import type { ReadingProfileType, SpeedBand } from './scoring'
 // rest of the website. Plain language; no medical or psychological claims —
 // a profile describes how this one passage was read, nothing more.
 
-const DISCOUNT = `₹${sharpBrainEnrolment.testOffer.discountInr.toLocaleString('en-IN')}`
-const HOURS = sharpBrainEnrolment.testOffer.validHours
+const PRICE = `₹${sharpBrainOffer.introInr.toLocaleString('en-IN')}`
+const SEATS = sharpBrainOffer.introSeats
 
 export type ProfileText = { name: string; summary: [string, string]; tips: [string, string, string] }
 
@@ -40,19 +40,16 @@ export type LeadMagnetCopy = {
   boostIntro: (pace: number) => string
   boostResult: (pace: number, percent: number) => string
   boostResultSub: string
-  leadTitle: string
   leadSub: string
   leadSubmit: string
-  leadSaved: string
   leadSendTitle: string
   leadSendButton: string
   leadSendNote: string
   programTitle: string
   programLines: [string, string, string]
   seeProgram: string
-  useOffer: string
-  offerSaved: string
-  offerValid: string
+  /** "Sharp Brain for parents — ₹2,999 for the first 100 seats" (links to the program page). */
+  parentsOffer: string
   invalidTitle: string
 }
 
@@ -139,13 +136,11 @@ export const leadMagnetCopy: Record<'en' | 'hi', LeadMagnetCopy> = {
     boostIntro: (pace) => `Words will appear one at a time at ${pace} WPM — about 20% faster than your test. Keep your eyes on the centre. Then 3 quick questions.`,
     boostResult: (pace, percent) => `You just read at ${pace} WPM and understood ${percent}%.`,
     boostResultSub: 'This is what daily training builds — faster reading that you still understand.',
-    leadTitle: `Get your Reading Profile and personal tips on WhatsApp — and unlock ${DISCOUNT} off Sharp Brain for ${HOURS} hours.`,
     leadSub: 'We’ll send it to your WhatsApp. No spam.',
     leadSubmit: 'Send it to my WhatsApp',
-    leadSaved: 'Done! Dr. Kapil’s team will send your result, reading type, tips and offer link on WhatsApp.',
     leadSendTitle: 'Last step: tap Send in WhatsApp',
     leadSendButton: 'Send on WhatsApp',
-    leadSendNote: 'Your result is ready in the message — just press Send, and Dr. Kapil’s team replies with your full report, tips and offer.',
+    leadSendNote: 'Your result is ready in the message — just press Send, and Dr. Kapil’s team replies with your full report and tips.',
     programTitle: 'Want to train these skills properly?',
     programLines: [
       'Sharp Brain is a 30-day program for reading, focus and memory.',
@@ -153,9 +148,7 @@ export const leadMagnetCopy: Record<'en' | 'hi', LeadMagnetCopy> = {
       'You take a reading test in Class 1 and Class 7 — and see your own change.',
     ],
     seeProgram: 'See the 30-day program',
-    useOffer: `Use my ${DISCOUNT} offer`,
-    offerSaved: `Your ${DISCOUNT} offer is saved. Time left:`,
-    offerValid: `Valid for ${HOURS} hours from now.`,
+    parentsOffer: `Sharp Brain for parents — ${PRICE} for the first ${SEATS} seats →`,
     invalidTitle: 'Let’s try that again',
   },
   hi: {
@@ -228,13 +221,11 @@ export const leadMagnetCopy: Record<'en' | 'hi', LeadMagnetCopy> = {
     boostIntro: (pace) => `शब्द एक-एक करके ${pace} WPM पर दिखेंगे — आपके टेस्ट से लगभग 20% तेज़। नज़र बीच में रखें। फिर 3 छोटे सवाल।`,
     boostResult: (pace, percent) => `आपने अभी ${pace} WPM पर पढ़ा और ${percent}% समझा।`,
     boostResultSub: 'रोज़ की ट्रेनिंग यही बनाती है — तेज़ पढ़ना, और समझ भी बनी रहे।',
-    leadTitle: `अपनी Reading Profile और निजी टिप्स WhatsApp पर पाएँ — और ${HOURS} घंटे के लिए Sharp Brain पर ${DISCOUNT} की छूट पाएँ।`,
     leadSub: 'हम इसे आपके WhatsApp पर भेजेंगे। कोई स्पैम नहीं।',
     leadSubmit: 'मेरे WhatsApp पर भेजें',
-    leadSaved: 'हो गया! डॉ. कपिल की टीम आपका नतीजा, पढ़ने का तरीका, टिप्स और ऑफ़र लिंक WhatsApp पर भेजेगी।',
     leadSendTitle: 'आख़िरी कदम: WhatsApp में Send दबाएँ',
     leadSendButton: 'WhatsApp पर भेजें',
-    leadSendNote: 'आपका नतीजा मैसेज में तैयार है — बस Send दबाएँ, डॉ. कपिल की टीम पूरी रिपोर्ट, टिप्स और ऑफ़र भेजेगी।',
+    leadSendNote: 'आपका नतीजा मैसेज में तैयार है — बस Send दबाएँ, डॉ. कपिल की टीम पूरी रिपोर्ट और टिप्स भेजेगी।',
     programTitle: 'क्या आप ये कौशल ठीक से ट्रेन करना चाहते हैं?',
     programLines: [
       'Sharp Brain पढ़ने, फ़ोकस और याददाश्त का 30 दिन का प्रोग्राम है।',
@@ -242,9 +233,7 @@ export const leadMagnetCopy: Record<'en' | 'hi', LeadMagnetCopy> = {
       'क्लास 1 और क्लास 7 में आप रीडिंग टेस्ट देते हैं — और अपना बदलाव खुद देखते हैं।',
     ],
     seeProgram: '30 दिन का प्रोग्राम देखें',
-    useOffer: `मेरा ${DISCOUNT} ऑफ़र इस्तेमाल करें`,
-    offerSaved: `आपका ${DISCOUNT} ऑफ़र सेव है। बाकी समय:`,
-    offerValid: `अभी से ${HOURS} घंटे के लिए मान्य।`,
+    parentsOffer: `पैरेंट्स के लिए Sharp Brain — पहली ${SEATS} सीट ${PRICE} में →`,
     invalidTitle: 'चलिए, एक बार फिर कोशिश करते हैं',
   },
 }
