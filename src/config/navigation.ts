@@ -86,11 +86,12 @@ export function navLabels(lang: Lang): {
 }
 
 // ── Positioning rework: header + footer from copy/header-footer.md ──────
-// Hindi pages show the Hindi labels, /en and English pages the English ones.
-// English telepathy links open the page's English copy (?lang=en, Phase 4.2).
+// Hindi pages show the Hindi labels, English pages the English ones.
+// Phase 4.3: the workshop pages open in English; Hindi pages link to their
+// Hindi versions (?lang=hi).
 
 function telepathyUrl(lang: Lang, hash = ''): string {
-  return lang === 'hi' ? `${programs.telepathyWorkshop.url}${hash}` : `${programs.telepathyWorkshop.url}?lang=en${hash}`
+  return lang === 'hi' ? `${programs.telepathyWorkshop.url}?lang=hi${hash}` : `${programs.telepathyWorkshop.url}${hash}`
 }
 
 /** Main nav: at most 5 items (copy/header-footer.md). */
@@ -118,7 +119,7 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
       heading: hi ? 'प्रोग्राम' : null,
       links: [
         { label: hi ? 'टेलीपैथी वर्कशॉप' : 'Telepathy Workshop', href: telepathyUrl(lang) },
-        { label: hi ? 'ऑनलाइन संस्करण' : 'Online version', href: '/telepathy-workshop/online' },
+        { label: hi ? 'ऑनलाइन संस्करण' : 'Online version', href: hi ? '/telepathy-workshop/online?lang=hi' : '/telepathy-workshop/online' },
         { label: 'Sharp Brain', href: programs.sharpBrain.url },
         { label: hi ? '21 दिन ओवरथिंकिंग' : '21-Day Overthinking', href: programs.overthinkingReset.url },
         { label: hi ? '11 रात रिट्रीट' : '11-Night Retreat', href: programs.onlineRetreat.url },

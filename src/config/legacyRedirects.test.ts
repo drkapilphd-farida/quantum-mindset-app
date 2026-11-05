@@ -21,6 +21,10 @@ describe('legacy redirects', () => {
     expect(find('/about-us-telepathy')).toMatchObject({ destination: '/about', statusCode: 301 })
   })
 
+  it('sends /en to the English homepage at / (Phase 4.3)', () => {
+    expect(find('/en')).toMatchObject({ destination: '/', statusCode: 301 })
+  })
+
   it('never redirects /courses, which is a real page on this site', () => {
     expect(find('/courses')).toBeUndefined()
   })

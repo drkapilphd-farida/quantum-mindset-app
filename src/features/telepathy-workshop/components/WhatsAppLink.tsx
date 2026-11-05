@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { programs } from '@/config/site.config'
+import { useLanguage } from '@/context/LanguageContext'
 import { TELEPATHY_BOOKING_URL, TELEPATHY_PRICE, telepathyWhatsAppHref, type TelepathyBatchId } from '@/config/telepathyWorkshopConfig'
 import { trackMetaPixelEvent } from '@/lib/analytics/metaPixel'
 import { trackGaEvent } from '@/lib/analytics/ga4'
@@ -52,11 +53,26 @@ export function WhatsAppLink({ message, kind, batch, location, className = '', a
   )
 }
 
+/** sessionStorage key: the language the visitor booked in, so /telepathy-workshop/booked opens in it (Phase 4.3). */
+export const BOOKING_LANG_KEY = 'telepathy_booking_lang'
+
 // "Book your seat — ₹1,000": the Razorpay payment link, in the same tab so
-// Razorpay can bring the visitor back to the thank-you page.
+// Razorpay can bring the visitor back to the thank-you page. Razorpay's
+// redirect URL is fixed in its dashboard, so the page language travels in
+// this tab's sessionStorage (website-only key; the app's stored language is
+// not touched).
 export function BookSeatLink({ batch, location, className = '', ariaLabel, children }: LinkProps): React.JSX.Element {
+  const { lang } = useLanguage()
+  const onClick = (): void => {
+    try {
+      window.sessionStorage.setItem(BOOKING_LANG_KEY, lang)
+    } catch {
+      // Storage unavailable — the thank-you page then uses ?lang or its default.
+    }
+    trackTelepathyBookSeat(batch, location)
+  }
   return (
-    <a href={TELEPATHY_BOOKING_URL} aria-label={ariaLabel} onClick={() => trackTelepathyBookSeat(batch, location)} className={className}>
+    <a href={TELEPATHY_BOOKING_URL} aria-label={ariaLabel} onClick={onClick} className={className}>
       {children}
     </a>
   )

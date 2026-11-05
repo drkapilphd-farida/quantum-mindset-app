@@ -105,6 +105,8 @@ export const telepathyCopy = {
 
   // Traders (kept from the earlier page, with its disclaimer).
   traders: {
+    // Phase 4.3: small line above the heading.
+    eyebrow: { en: 'For traders', hi: 'ट्रेडर्स के लिए' },
     heading: { en: "For Traders: Your Chart Doesn't Take the Trade. Your Mind Does.", hi: 'ट्रेडर्स के लिए — चार्ट नहीं, दिमाग़' },
     body: {
       en: 'Most trading mistakes come from fear and greed, not from lack of knowledge. Fear makes you exit early. Greed makes you stay too long.',
@@ -136,7 +138,7 @@ export const telepathyCopy = {
         icon: 'coherence',
         name: { en: 'Heart-Brain Coherence', hi: 'Heart-Brain Coherence' },
         what: { en: 'Bringing your heart and mind into one rhythm — the foundation for everything else in the workshop.', hi: 'दिल और दिमाग को एक लय में लाना — वर्कशॉप की बाकी हर चीज़ की नींव।' },
-        practise: { en: 'Guided practice that calms fear and creates inner stillness — seen live on the Muse 2 headband.', hi: 'गाइडेड अभ्यास जो डर को शांत करके भीतरी स्थिरता लाता है — Muse 2 हेडबैंड पर लाइव दिखता है।' },
+        practise: { en: 'Guided practice that calms fear and creates inner stillness — seen live on the EEG headband.', hi: 'गाइडेड अभ्यास जो डर को शांत करके भीतरी स्थिरता लाता है — EEG हेडबैंड पर लाइव दिखता है।' },
         helps: { en: 'Feeling calm, overcoming fear, clearer decisions.', hi: 'शांति, डर से बाहर आना, ज़्यादा साफ़ फ़ैसले।' },
       },
       {
@@ -163,18 +165,18 @@ export const telepathyCopy = {
     ],
   },
 
-  // Muse 2 (dark section, part of "What you'll learn")
+  // EEG (dark section, part of "What you'll learn")
   muse: {
-    eyebrow: { en: 'LIVE Muse 2 brain-wave demo', hi: 'LIVE Muse 2 brain-wave डेमो' },
+    eyebrow: { en: 'LIVE EEG brain-wave demo', hi: 'LIVE EEG brain-wave डेमो' },
     heading: { en: "Don't Just Feel the Change. See It on Screen.", hi: 'बदलाव सिर्फ़ महसूस नहीं, स्क्रीन पर देखिए भी।' },
     body: {
-      en: 'See on screen how your brain activity changes when you are distracted, focused or calm. During the workshop, a Muse 2 EEG headband measures brain waves live.',
-      hi: 'स्क्रीन पर देखिए कि जब आप बेचैन, एकाग्र या शांत होते हैं, तो दिमाग की गतिविधि कैसे बदलती है। वर्कशॉप में Muse 2 EEG हेडबैंड brain waves को लाइव मापता है।',
+      en: 'See on screen how your brain activity changes when you are distracted, focused or calm. During the workshop, an EEG headband measures brain waves live.',
+      hi: 'स्क्रीन पर देखिए कि जब आप बेचैन, एकाग्र या शांत होते हैं, तो दिमाग की गतिविधि कैसे बदलती है। वर्कशॉप में EEG हेडबैंड brain waves को लाइव मापता है।',
     },
     waveRestless: { en: 'restless', hi: 'बेचैन' },
     waveCalm: { en: 'calm', hi: 'शांत' },
     tagline: { en: 'Your mind, live on screen.', hi: 'आपका दिमाग, लाइव स्क्रीन पर।' },
-    imageAlt: { en: 'A participant wearing the Muse 2 EEG headband, with brain waves on screen', hi: 'Muse 2 EEG हेडबैंड पहने प्रतिभागी, स्क्रीन पर brain waves' },
+    imageAlt: { en: 'A participant wearing the EEG headband, with brain waves on screen', hi: 'EEG हेडबैंड पहने प्रतिभागी, स्क्रीन पर brain waves' },
   },
 
   // ── F. Short review strip (middle of the page) ────────────────────
@@ -195,7 +197,7 @@ export const telepathyCopy = {
           { en: 'Foundation: how the mind, emotions and the inner voice work', hi: 'नींव: मन, भावनाएँ और अंदर की आवाज़ कैसे काम करते हैं' },
           { en: 'Heart-Brain Coherence', hi: 'Heart-Brain Coherence' },
           { en: 'Intuition Development', hi: 'Intuition Development' },
-          { en: 'Live Muse 2 brain-wave demo', hi: 'Muse 2 brain-wave का लाइव डेमो' },
+          { en: 'Live EEG brain-wave demo', hi: 'EEG brain-wave का लाइव डेमो' },
         ],
       },
       {
@@ -288,7 +290,7 @@ export const telepathyCopy = {
     heading: { en: "What's included", hi: 'इसमें क्या शामिल है' },
     items: [
       { en: '2 full days of live training with Dr. Kapil', hi: 'Dr. Kapil के साथ 2 पूरे दिन की लाइव ट्रेनिंग' },
-      { en: 'Live Muse 2 brain-wave demo', hi: 'Muse 2 brain-wave का लाइव डेमो' },
+      { en: 'Live EEG brain-wave demo', hi: 'EEG brain-wave का लाइव डेमो' },
       { en: 'Practice techniques to continue at home', hi: 'घर पर जारी रखने के लिए अभ्यास की तकनीकें' },
       { en: 'Certificate of participation', hi: 'भागीदारी का सर्टिफ़िकेट' },
       { en: 'Breakfast, lunch & high tea', hi: 'नाश्ता, लंच और हाई टी' },
@@ -308,16 +310,17 @@ export const telepathyCopy = {
       {
         q: { en: 'How do I book?', hi: 'बुकिंग कैसे करें?' },
         a: {
-          // Phase 4.2: new English answer (copy/telepathy-v2.md FAQ 7); no new Hindi answer was given.
+          // Phase 4.2: new English answer (copy/telepathy-v2.md FAQ 7).
           en: v2.faqHowToBookEn,
-          hi: '"{deposit} देकर अपनी seat book करें" दबाइए और {deposit} online देकर अपनी seat पक्की कीजिए। बाकी {balance} venue पर (UPI / cash)। फ़ीस {price} है। पूरे {price} अभी भी दे सकते हैं: अपने batch पर "पूरे {price} अभी दें" दबाइए, हम WhatsApp पर जानकारी भेज देंगे।',
+          // Phase 4.3: new Hindi answer (owner).
+          hi: "'सीट बुक कीजिए — ₹1,000' दबाइए और Razorpay पर पेमेंट कीजिए। जगह और समय के साथ वॉट्सऐप पर पुष्टि आएगी; बाकी ₹4,999 वर्कशॉप के दिन।",
         },
       },
       {
         q: { en: 'Is this scientific?', hi: 'क्या यह वैज्ञानिक है?' },
         a: {
-          en: 'Heart-brain coherence and brain-wave measurement (the Muse 2 demo) are explained in the workshop. Telepathy and Cosmic Fusion are experiential practices. What participants describe are their own experiences — results are not guaranteed.',
-          hi: 'Heart-brain coherence और brain-wave measurement (Muse 2 डेमो) वर्कशॉप में समझाए जाते हैं। Telepathy और Cosmic Fusion अनुभव-आधारित अभ्यास हैं। प्रतिभागी जो बताते हैं, वो उनके अपने अनुभव हैं — परिणाम की गारंटी नहीं है।',
+          en: 'Heart-brain coherence and brain-wave measurement (the EEG demo) are explained in the workshop. Telepathy and Cosmic Fusion are experiential practices. What participants describe are their own experiences — results are not guaranteed.',
+          hi: 'Heart-brain coherence और brain-wave measurement (EEG डेमो) वर्कशॉप में समझाए जाते हैं। Telepathy और Cosmic Fusion अनुभव-आधारित अभ्यास हैं। प्रतिभागी जो बताते हैं, वो उनके अपने अनुभव हैं — परिणाम की गारंटी नहीं है।',
         },
       },
       {
@@ -385,7 +388,7 @@ export const telepathyCopy = {
 
   // ── Disclaimer (above the site footer) ────────────────────────────
   disclaimer: {
-    en: 'Experiences and results vary from person to person. This workshop is a meditation and personal-growth programme. It is not medical or psychological treatment and does not provide financial or investment advice. Muse 2 is used for demonstration and awareness only.',
-    hi: 'अनुभव और परिणाम हर व्यक्ति के लिए अलग हो सकते हैं। यह वर्कशॉप ध्यान और व्यक्तिगत विकास का कार्यक्रम है। यह कोई चिकित्सीय या मनोवैज्ञानिक उपचार नहीं है और कोई वित्तीय या निवेश सलाह नहीं देती। Muse 2 का उपयोग केवल प्रदर्शन और जागरूकता के लिए किया जाता है।',
+    en: 'Experiences and results vary from person to person. This workshop is a meditation and personal-growth programme. It is not medical or psychological treatment and does not provide financial or investment advice. The EEG headband is used for demonstration and awareness only.',
+    hi: 'अनुभव और परिणाम हर व्यक्ति के लिए अलग हो सकते हैं। यह वर्कशॉप ध्यान और व्यक्तिगत विकास का कार्यक्रम है। यह कोई चिकित्सीय या मनोवैज्ञानिक उपचार नहीं है और कोई वित्तीय या निवेश सलाह नहीं देती। EEG हेडबैंड का उपयोग केवल प्रदर्शन और जागरूकता के लिए किया जाता है।',
   },
 } as const

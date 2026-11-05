@@ -12,10 +12,10 @@ import { navLabels, siteNavCta, siteNavLinks, type NavLink } from "@/config/navi
 // at most 5 links + one button on the right. The button defaults to
 // "सीट पक्की कीजिए" / "Hold a seat" (the telepathy batches); a page may
 // pass its own primary action instead (e.g. its enrol link). Hindi pages
-// show Hindi labels, /en and English pages English ones (the page's
-// language, see LanguageOverride). No language toggle any more: `/` links
-// to "English" (/en) and `/en` to "हिंदी" (/); other pages have no
-// language link. Below 1024px the links (and, below 640px, the button)
+// show Hindi labels, English pages English ones (the page's
+// language, see LanguageOverride). No language toggle: `/` links to
+// "हिंदी" (/hi) and /hi to "English" (/); the workshop pages pass their own
+// link (?lang=hi); other pages have none. On Hindi pages the logo goes to /hi. Below 1024px the links (and, below 640px, the button)
 // live in the menu.
 
 export type SiteNavCta = {
@@ -25,9 +25,10 @@ export type SiteNavCta = {
   onClick?: () => void;
 };
 
+// Phase 4.3: the site opens in English. `/` links to "हिंदी" (/hi), /hi to "English" (/).
 const LANGUAGE_LINKS: Record<string, NavLink> = {
-  "/": { label: "English", href: "/en" },
-  "/en": { label: "हिंदी", href: "/" },
+  "/": { label: "हिंदी", href: "/hi" },
+  "/hi": { label: "English", href: "/" },
 };
 
 export default function SiteNav({
@@ -36,7 +37,7 @@ export default function SiteNav({
   languageLink: pageLanguageLink,
 }: {
   cta?: SiteNavCta;
-  /** False hides the "English" / "हिंदी" link (shown only on `/` and `/en`). */
+  /** False hides the "English" / "हिंदी" link (on `/`, `/hi` and the workshop pages). */
   showLanguageToggle?: boolean;
   /** A page's own language link (e.g. /telepathy-workshop ↔ ?lang=en). */
   languageLink?: NavLink;
@@ -66,7 +67,7 @@ export default function SiteNav({
   return (
     <header className={`sticky top-0 ${mobileOpen ? "z-[60]" : "z-50"} border-b border-line bg-void/90 backdrop-blur-md`}>
       <nav ref={navRef} aria-label="Main" className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-3.5 sm:px-8">
-        <Link href="/" className="flex flex-none items-center gap-2.5 font-mono text-sm tracking-[0.06em] text-ink">
+        <Link href={lang === "hi" ? "/hi" : "/"} className="flex flex-none items-center gap-2.5 font-mono text-sm tracking-[0.06em] text-ink">
           <LivingBrainLogo size={24} decorative={false} animated={false} />
           MIND UR MIND
         </Link>

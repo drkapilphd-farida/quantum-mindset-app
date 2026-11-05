@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import type { Lang } from '@/lib/i18n'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
+import { withLanguageAlternates } from '@/lib/seo/languageAlternates'
 import { HERO_VIDEO_PUBLIC_PATH, TELEPATHY_OG_IMAGE } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from './telepathyWorkshopCopy'
 import { pick } from './telepathyWorkshop'
@@ -22,7 +23,7 @@ export function buildTelepathyMetadata(lang: Lang): Metadata {
   const base = buildPageMetadata({ path: '/telepathy-workshop', ownOgImage: true, title, description })
   const images = [{ ...TELEPATHY_OG_IMAGE, alt: pick(telepathyCopy.hero.imageAlt, lang) }]
   return {
-    ...base,
+    ...withLanguageAlternates(base, '/telepathy-workshop'),
     openGraph: { ...base.openGraph, locale: lang === 'hi' ? 'hi_IN' : 'en_IN', images },
     twitter: { ...base.twitter, images },
   }
@@ -34,7 +35,7 @@ function heroVideoExists(): boolean {
 }
 
 export function TelepathyWorkshopPage({ urlLang }: { urlLang: Lang | null }): React.JSX.Element {
-  const faqLang = urlLang ?? 'hi'
+  const faqLang = urlLang ?? 'en'
   const faqSchema = buildFaqPageSchema(telepathyCopy.faq.items.map((item) => ({ question: pick(item.q, faqLang), answer: pick(item.a, faqLang) })))
   return (
     <>

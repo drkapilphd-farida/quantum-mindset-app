@@ -13,7 +13,8 @@ import { Eyebrow } from "../ui";
 
 const SECTION = "border-b border-line px-4 py-16 sm:px-8 sm:py-20";
 
-// 2. "2 दिन बाद क्या बदलता है" — 4 tiles, each one link to the workshop page.
+// 2. "2 दिन बाद क्या बदलता है" — 5 tiles (Phase 4.3: trading first, full width
+// on phones; 2 columns on phones), each one link to the workshop page.
 export function HomeBenefits(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.benefits;
@@ -23,13 +24,13 @@ export function HomeBenefits(): React.JSX.Element {
         <h2 id="home-benefits" className="text-[28px] font-extrabold leading-tight sm:text-[36px]">
           {say(c.heading, lang)}
         </h2>
-        <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {c.tiles.map((tile) => (
-            <li key={tile.title.en}>
-              <Link href={telepathyHref(lang)} className="flex h-full flex-col rounded-sm border border-line-strong bg-void p-6 transition-colors hover:border-gold">
-                <span className="text-[19px] font-bold leading-snug text-ink">{say(tile.title, lang)}</span>
-                <span className="mt-2 text-[14.5px] leading-relaxed text-ink-dim">{say(tile.body, lang)}</span>
-                <span className="mt-auto pt-4 text-[14px] font-semibold text-gold">{say(c.more, lang)}</span>
+        <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
+          {c.tiles.map((tile, i) => (
+            <li key={tile.title.en} className={i === 0 ? "col-span-2 lg:col-span-1" : ""}>
+              <Link href={telepathyHref(lang, "hash" in tile ? tile.hash : "")} className="flex h-full flex-col rounded-sm border border-line-strong bg-void p-4 transition-colors hover:border-gold sm:p-6">
+                <span className="text-[16.5px] font-bold leading-snug text-ink sm:text-[19px]">{say(tile.title, lang)}</span>
+                <span className="mt-2 text-[13.5px] leading-relaxed text-ink-dim sm:text-[14.5px]">{say(tile.body, lang)}</span>
+                <span className="mt-auto pt-3 text-[14px] font-semibold text-gold">{say(c.more, lang)}</span>
               </Link>
             </li>
           ))}
@@ -100,6 +101,9 @@ export function HomeSharpBrainStrip(): React.JSX.Element {
           </Link>
           <Link href={programs.sharpBrain.url} className="text-[14.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
             {say(c.see, lang)}
+          </Link>
+          <Link href="/reviews" className="text-[14.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
+            {say(c.reviews, lang)}
           </Link>
         </div>
       </div>

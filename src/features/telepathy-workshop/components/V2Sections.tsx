@@ -1,4 +1,6 @@
+import Image from 'next/image'
 import Link from 'next/link'
+import { LEARN_CARD_PHOTOS } from '../highlights'
 import type { Lang } from '@/lib/i18n'
 import { LONG_REVIEW_VIDEOS, PORTRAIT_POSITION, TELEPATHY_IMAGES, YOUTUBE_CHANNEL_URL } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
@@ -44,17 +46,26 @@ export function WhySection({ lang }: { lang: Lang }): React.JSX.Element {
   )
 }
 
-// 4 — "2 दिन में आप ये 4 चीज़ें सीखते हैं" (4 large cards).
+// 4 — "2 दिन में आप ये 4 चीज़ें सीखते हैं" (4 large cards). Phase 4.3: a real
+// workshop photo on top of each card that has a matching one (LEARN_CARD_PHOTOS).
 export function LearnFourSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = v2.learn
   return (
-    <Section labelledBy="tw-learn4">
+    <Section tint labelledBy="tw-learn4">
       <Heading id="tw-learn4" className="text-center">
         {pick(c.heading, lang)}
       </Heading>
-      <ul className="mt-10 grid gap-5 md:grid-cols-2">
-        {c.cards.map((card) => (
-          <li key={card.title.en} className="tw-card flex flex-col p-6 sm:p-8">
+      <ul className="mt-10 grid items-start gap-5 md:grid-cols-2">
+        {c.cards.map((card, i) => {
+          const photo = LEARN_CARD_PHOTOS[i] ?? null
+          return (
+          <li key={card.title.en} className="tw-card flex flex-col overflow-hidden">
+            {photo !== null && (
+              <div className="relative aspect-[16/9] bg-panel-2">
+                <Image src={photo.src} alt={pick(photo.caption, lang)} fill sizes="(min-width: 768px) 560px, 100vw" loading="lazy" className="object-cover" style={{ objectPosition: photo.position }} />
+              </div>
+            )}
+            <div className="flex flex-1 flex-col p-6 sm:p-8">
             <h3 className="text-[21px] font-extrabold leading-snug text-ink">{pick(card.title, lang)}</h3>
             <p className="tw-body mt-3">{pick(card.body, lang)}</p>
             {'tag' in card && (
@@ -62,8 +73,10 @@ export function LearnFourSection({ lang }: { lang: Lang }): React.JSX.Element {
                 <span className="inline-flex rounded-full border border-gold/50 bg-gold-soft px-3 py-1 text-[12.5px] font-semibold text-ink">{pick(card.tag, lang)}</span>
               </p>
             )}
+            </div>
           </li>
-        ))}
+          )
+        })}
       </ul>
     </Section>
   )

@@ -12,7 +12,7 @@ import { readUtmParams } from '@/lib/analytics/utm'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { batchDatesText, langFromParam, pick } from '../telepathyWorkshop'
 import { useVisibleBatches } from './BookingSections'
-import { GOLD_BUTTON, WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
+import { BOOKING_LANG_KEY, GOLD_BUTTON, WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
 
 const c = telepathyCopy.booked
 const b = telepathyCopy.batches
@@ -33,7 +33,14 @@ export function BookedPage({ renderedAt }: { renderedAt: number }): React.JSX.El
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const urlLang = langFromParam(params.get('lang'))
+    // ?lang first; otherwise the language the visitor booked in (Phase 4.3).
+    let bookedLang: string | null = null
+    try {
+      bookedLang = window.sessionStorage.getItem(BOOKING_LANG_KEY)
+    } catch {
+      // Storage unavailable.
+    }
+    const urlLang = langFromParam(params.get('lang')) ?? langFromParam(bookedLang)
     if (urlLang !== null) setLang(urlLang)
     const pid = params.get('razorpay_payment_id')
     if (pid !== null && PAYMENT_ID.test(pid)) setPaymentId(pid)
@@ -126,7 +133,7 @@ export function BookedPage({ renderedAt }: { renderedAt: number }): React.JSX.El
           </div>
 
           <p className="mt-10 text-center">
-            <Link href="/telepathy-workshop" className="text-[15px] font-medium text-ink-dim underline underline-offset-4 hover:text-ink">
+            <Link href={lang === "hi" ? "/telepathy-workshop?lang=hi" : "/telepathy-workshop"} className="text-[15px] font-medium text-ink-dim underline underline-offset-4 hover:text-ink">
               {pick(c.back, lang)}
             </Link>
           </p>

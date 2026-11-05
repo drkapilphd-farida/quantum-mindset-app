@@ -4,7 +4,6 @@ import { HERO_PHOTO, HERO_VIDEO_PUBLIC_PATH, telepathyWhatsAppMessage } from '@/
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { v2 } from '../telepathyV2Copy'
 import { pick } from '../telepathyWorkshop'
-import { Starfield } from './Starfield'
 import { GOLD_BUTTON } from './ui'
 import { WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
 
@@ -34,8 +33,16 @@ export function HeroSection({ lang, heroVideo }: { lang: Lang; heroVideo: boolea
       ) : (
         <Image src={HERO_PHOTO.src} alt={pick(telepathyCopy.hero.imageAlt, lang)} fill priority sizes="100vw" className="-z-30 object-cover" style={{ objectPosition: HERO_PHOTO.position }} />
       )}
-      <div className="tw-hero-overlay absolute inset-0 -z-20" />
-      <Starfield className="absolute inset-0 -z-10 h-full w-full" />
+      {/* Phase 4.3: a lighter overlay than .tw-hero-overlay (and no stars), so the
+          people in the photo are clearly visible; darker behind the text block
+          and at the bottom to keep the text readable. */}
+      <div
+        className="absolute inset-0 -z-20"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 55% at 50% 48%, rgba(7, 8, 24, 0.62), rgba(7, 8, 24, 0.28) 75%), linear-gradient(180deg, rgba(7, 8, 24, 0.35) 0%, rgba(7, 8, 24, 0.15) 45%, rgba(7, 8, 24, 0.7) 100%)',
+        }}
+      />
 
       <div className="mx-auto w-full max-w-4xl text-center">
         <p className="tw-eyebrow mx-auto max-w-[40ch] text-gold sm:max-w-none">{pick(c.strip, lang)}</p>

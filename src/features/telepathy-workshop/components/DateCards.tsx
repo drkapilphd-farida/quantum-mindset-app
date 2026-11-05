@@ -77,7 +77,7 @@ function Card({ batch, first, now, lang }: { batch: Batch; first: boolean; now: 
             <a href={LINKS.rzpOnline3999} className={`${GOLD_BUTTON} w-full !px-3 text-[15px]`}>
               {pick(c.online.button, lang)}
             </a>
-            <Link href="/telepathy-workshop/online" className="mt-3 inline-flex min-h-[44px] items-center text-[14.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
+            <Link href={lang === 'hi' ? '/telepathy-workshop/online?lang=hi' : '/telepathy-workshop/online'} className="mt-3 inline-flex min-h-[44px] items-center text-[14.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
               {pick(c.online.more, lang)}
             </Link>
           </>

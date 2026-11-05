@@ -1,19 +1,21 @@
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import { homeV2 } from '@/lib/homeV2Copy'
+import { withLanguageAlternates } from '@/lib/seo/languageAlternates'
 import HomePageContent from '@/components/home/HomePageContent'
 
 // Phase 4.2: title from copy/meta.md, description from the Phase 4.2
 // prompt (all cities + online, no hotel). Keywords unchanged.
-const homeTitle = homeV2.meta.title.hi
-const homeDescription = homeV2.meta.description.hi
+// Phase 4.3: `/` is the English homepage (English by default); Hindi is /hi.
+const homeTitle = homeV2.meta.title.en
+const homeDescription = homeV2.meta.description.en
 
 export const metadata: Metadata = {
-  ...buildPageMetadata({
+  ...withLanguageAlternates(buildPageMetadata({
     path: '/',
     title: homeTitle,
     description: homeDescription,
-  }),
+  }), '/', '/hi'),
   keywords: [
     'speed reading for students',
     'exam preparation reading speed',
@@ -61,9 +63,9 @@ export const metadata: Metadata = {
 // in the browser.
 export const revalidate = 3600
 
-// Positioning rework: `/` is the Hindi homepage (always Hindi, whatever
-// language is stored); /en is the same page in English. The page itself
-// lives in HomePageContent.
+// Phase 4.3: `/` is the English homepage (always English, whatever language
+// is stored); /hi is the same page in Hindi (/en redirects here). The page
+// itself lives in HomePageContent.
 export default function HomePage(): React.JSX.Element {
-  return <HomePageContent lang="hi" />
+  return <HomePageContent lang="en" />
 }

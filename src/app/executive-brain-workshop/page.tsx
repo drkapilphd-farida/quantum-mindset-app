@@ -15,7 +15,6 @@ import { ExecutiveWorkshopAudience } from '@/features/executive-brain-workshop/c
 import { ExecutiveWorkshopBenefits } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopBenefits'
 import { ExecutiveWorkshopScience } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopScience'
 import { ExecutiveWorkshopTrainer } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopTrainer'
-import { ExecutiveWorkshopVenueMap } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopVenueMap'
 import { ExecutiveWorkshopPricing } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopPricing'
 import { ExecutiveWorkshopCorporate } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopCorporate'
 import { ExecutiveWorkshopTestimonials } from '@/features/executive-brain-workshop/components/ExecutiveWorkshopTestimonials'
@@ -59,8 +58,9 @@ export default function ExecutiveBrainWorkshopPage(): React.JSX.Element {
   const pageUrl = absoluteUrl('/executive-brain-workshop')
 
   const eventSchema = buildEventSchema({
-    venueName: config.venueName,
-    venueAddress: config.venueAddress,
+    // Phase 4.3: no hotel name or address on the site (sent on WhatsApp after booking).
+    venueName: config.venueCity,
+    venueAddress: config.venueCity,
     venueCity: config.venueCity,
     startDateIso: `${config.eventDateISO}T${config.eventStartTimeISO}`,
     endDateIso: `${config.eventDateISO}T${config.eventEndTimeISO}`,
@@ -88,12 +88,12 @@ export default function ExecutiveBrainWorkshopPage(): React.JSX.Element {
           <div className="mx-auto max-w-6xl">
             <p className="font-mono text-[12.5px] uppercase tracking-[0.14em] text-teal">The Venue</p>
             <h2 className="mt-3 text-[26px] font-bold tracking-tight text-slate-900 sm:text-[32px]">
-              {config.venueName}, {config.venueCity}
+              {config.venueCity}
             </h2>
             <p className="mt-2 text-[15px] text-slate-600">
               {config.eventDateDisplay} · {config.eventTimeDisplay} · {config.mealsIncludedNote}
             </p>
-            <ExecutiveWorkshopVenueMap />
+            <p className="mt-2 text-[15px] text-slate-600">Venue, timing and directions will be sent to you on WhatsApp.</p>
           </div>
         </section>
         <ExecutiveWorkshopTrainer />

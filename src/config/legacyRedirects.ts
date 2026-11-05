@@ -94,4 +94,7 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   // (legacy) page on this site. With or without a trailing slash: Next.js
   // first strips the slash (308), then this 301 applies.
   ...WORDPRESS_REDIRECTS,
+  // Phase 4.3: the site opens in English at `/`; the short-lived /en homepage
+  // points there (Hindi is /hi).
+  { source: '/en', destination: '/', statusCode: 301 },
 ]

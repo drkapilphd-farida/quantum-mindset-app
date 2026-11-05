@@ -9,7 +9,7 @@ import { LINKS, YOUTUBE_CHANNEL, isPlaceholderLink } from "@/data/links";
 
 // Site-wide footer (positioning rework, copy/header-footer.md): programs ·
 // more · address, then privacy · terms · refund · ©. Hindi pages show the
-// Hindi labels, /en and English pages the English ones. "Google पर रिव्यू"
+// Hindi labels, English pages the English ones. "Google पर रिव्यू"
 // appears once LINKS.googleBusinessProfile is filled in (still a
 // placeholder — a link labelled "Google reviews" must not open WhatsApp).
 export default function Footer(): React.JSX.Element {

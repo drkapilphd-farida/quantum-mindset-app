@@ -7,23 +7,25 @@ import { homeCopy } from '@/lib/homeCopy'
 import SiteNav from '@/components/site/SiteNav'
 import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
 import HomeHero from '@/components/home/HomeHero'
-import HomeProof from '@/components/home/HomeProof'
 import HomePodcastFeature from '@/components/HomePodcastFeature'
 import HomeFaq from '@/components/home/HomeFaq'
 import { HomeBenefits, HomeFranchiseStrip, HomeJourney, HomeMuse, HomeOverthinkingStrip, HomeSharpBrainStrip } from '@/components/home/HomeV2Sections'
 import { DateCards } from '@/features/telepathy-workshop/components/DateCards'
 import { ProofSection } from '@/features/telepathy-workshop/components/V2Sections'
+import { Highlights } from '@/features/telepathy-workshop/components/Highlights'
+import { HOME_HIGHLIGHTS } from '@/features/telepathy-workshop/highlights'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 
-// The homepage, shared by `/` (Hindi) and `/en` (English) — positioning
+// The homepage, shared by `/` (English) and `/hi` (Hindi) — positioning
 // rework. LanguageOverride fixes the page's language whatever language is
 // stored (the stored choice, shared with the app, is left alone).
 // Phase 4.2 order (copy/home-v2.md): hero → what changes after 2 days →
-// date cards (#dates) → proof (3 telepathy videos, then the existing video
-// reviews) → Muse 2 → the journey ahead → Sharp Brain strip (its
+// date cards (#dates) → proof (3 telepathy videos) → workshop highlights
+// (6 photos; Phase 4.3 — the old Learning/Meditation reviews section is no
+// longer rendered here) → EEG → the journey ahead → Sharp Brain strip (its
 // early-bird price/timer lives only there) → overthinking strip → podcast
 // → FAQ → franchise strip → footer. The old #solve 4-card section and the
 // other old sections are no longer rendered.
@@ -48,7 +50,7 @@ export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Ele
           <div className="tw-page" data-lang={lang}>
             <ProofSection lang={lang} tint={false} />
           </div>
-          <HomeProof />
+          <Highlights lang={lang} photos={HOME_HIGHLIGHTS} tint />
           <HomeMuse />
           <HomeJourney />
           <SharpBrainPricingProvider initial={pricingSnapshot(renderedAt)}>

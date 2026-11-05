@@ -61,14 +61,15 @@ export function WhoForSection({ lang }: { lang: Lang }): React.JSX.Element {
   )
 }
 
-// Traders (#traders — the "traders" why-card links here). Phase 4.2: after the Muse 2 section.
+// Traders (#traders — the "traders" why-card links here). Phase 4.3: right after "What brings you here?".
 export function TradersSection({ lang }: { lang: Lang }): React.JSX.Element {
   const t = telepathyCopy.traders
   return (
-    <Section tint labelledBy="tw-traders">
+    <Section labelledBy="tw-traders">
       <div id="traders" className="tw-reveal grid scroll-mt-20 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
         <div className="order-2 lg:order-1">
-          <h2 id="tw-traders" className="tw-h2 text-ink">{pick(t.heading, lang)}</h2>
+          <p className="tw-eyebrow text-gold">{pick(t.eyebrow, lang)}</p>
+          <h2 id="tw-traders" className="tw-h2 mt-3 text-ink">{pick(t.heading, lang)}</h2>
           <p className="tw-body mt-4">{pick(t.body, lang)}</p>
           <p className="mt-5 text-[16.5px] font-semibold text-ink">{pick(t.listIntro, lang)}</p>
           <ul className="mt-3 grid gap-3">

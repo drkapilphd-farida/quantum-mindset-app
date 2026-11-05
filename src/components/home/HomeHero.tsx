@@ -8,7 +8,7 @@ import { homeV2, say, telepathyHref } from "@/lib/homeV2Copy";
 
 // 1. Hero (Phase 4.2, copy/home-v2.md): proof strip, H1, subtitle, "अपनी
 // तारीख चुनिए" (→ the date cards, #dates), "वर्कशॉप में क्या होता है →"
-// (→ /telepathy-workshop; from /en its English copy) and the small booking
+// (→ /telepathy-workshop; from /hi its Hindi version) and the small booking
 // line. The photo is unchanged. The page's only <h1>.
 export default function HomeHero(): React.JSX.Element {
   const { lang } = useLanguage();

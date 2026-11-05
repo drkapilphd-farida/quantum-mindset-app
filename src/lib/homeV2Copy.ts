@@ -1,7 +1,7 @@
-// Phase 4.2 (conversion rework) — homepage wording for `/` (Hindi) and
-// `/en` (English), word for word from copy/home-v2.md; the Muse 2 and
+// Phase 4.2 (conversion rework) — homepage wording for `/` (English, the
+// default since Phase 4.3) and `/hi` (Hindi), from copy/home-v2.md; the EEG and
 // franchise strips from copy/home-hi.md / copy/home-en.md. Telepathy links
-// on /en go to /telepathy-workshop?lang=en (telepathyHref).
+// on /hi go to /telepathy-workshop?lang=hi (telepathyHref).
 
 type Bi = { hi: string; en: string }
 
@@ -28,9 +28,11 @@ export const homeV2 = {
   benefits: {
     heading: { hi: '2 दिन बाद क्या बदलता है', en: 'What changes after 2 days' },
     more: { hi: 'जानिए कैसे →', en: 'See how →' },
+    // Phase 4.3: the trading tile first (it links to the traders section).
     tiles: [
+      { title: { hi: 'डर और लालच के बिना ट्रेड', en: 'Trade without fear and greed' }, body: { hi: 'डर-लालच को हाथ लगाने से पहले पहचानिए — इनट्यूशन और कोहेरेंस', en: 'Spot fear and greed before they act — intuition and coherence' }, hash: '#traders' },
       { title: { hi: 'रिश्तों में बात फिर से पहुँचने लगती है', en: 'Your words start reaching people again' }, body: { hi: 'अपनी भावना बिना कहे भेजने का अभ्यास — टेलीपैथी', en: 'Practise sending feelings without words — telepathy' } },
-      { title: { hi: 'डर उतरता है, मन शांत होता है', en: 'Fear drops, the mind settles' }, body: { hi: 'दिल और दिमाग़ एक ताल में — Muse 2 पर दिखता है', en: 'Heart and mind in one rhythm — visible on a Muse 2' } },
+      { title: { hi: 'डर उतरता है, मन शांत होता है', en: 'Fear drops, the mind settles' }, body: { hi: 'दिल और दिमाग़ एक ताल में — EEG पर दिखता है', en: 'Heart and mind in one rhythm — visible on an EEG' } },
       { title: { hi: 'फैसले साफ़ होते हैं', en: 'Decisions get clear' }, body: { hi: 'अंदर की आवाज़ पहचानना और उस पर भरोसा — इनट्यूशन', en: 'Recognise and trust your inner voice — intuition' } },
       { title: { hi: 'ऊर्जा लौटती है, इरादे पूरे होने लगते हैं', en: 'Energy returns, intentions start to land' }, body: { hi: 'प्राण को ब्रह्मांड की ऊर्जा से जोड़ना — कॉस्मिक फ्यूजन', en: 'Connecting prana to universal energy — Cosmic Fusion' } },
     ],
@@ -38,8 +40,8 @@ export const homeV2 = {
   muse: {
     heading: { hi: 'मानिए मत। देखिए।', en: "Don't believe it. Watch it." },
     body: {
-      hi: 'वर्कशॉप में Muse 2 हेडबैंड लाइव लगता है और स्क्रीन पर दिमाग़ की तरंगें दिखती हैं — बेचैन कैसे शांत होती हैं, 90 सेकंड में। अपनी आँखों से।',
-      en: 'A Muse 2 headband goes on a volunteer, and brain waves appear on screen — how a restless mind settles in 90 seconds. With your own eyes.',
+      hi: 'वर्कशॉप में EEG हेडबैंड लाइव लगता है और स्क्रीन पर दिमाग़ की तरंगें दिखती हैं — बेचैन कैसे शांत होती हैं, 90 सेकंड में। अपनी आँखों से।',
+      en: 'An EEG headband goes on a volunteer, and brain waves appear on screen — how a restless mind settles in 90 seconds. With your own eyes.',
     },
     note: { hi: 'यह कोई मेडिकल टेस्ट नहीं — सबूत है, इलाज नहीं।', en: 'Not a medical test. Proof, not treatment.' },
   },
@@ -59,6 +61,8 @@ export const homeV2 = {
       en: 'Reading speed and recall in 30 days, measured. Start with the free Reading & Memory Test.',
     },
     test: { hi: 'मुफ्त टेस्ट दीजिए', en: 'Take the free test' },
+    // Phase 4.3: Sharp Brain reviews live on /reviews. (Hindi wording not given — see the Phase 4.3 report.)
+    reviews: { hi: 'रिव्यू देखिए →', en: 'See reviews →' },
     see: { hi: 'Sharp Brain देखिए →', en: 'See Sharp Brain →' },
   },
   overthinking: { hi: 'सोच का चक्कर नहीं रुकता? 21 दिन, ₹499 से।', en: "Overthinking won't stop? 21 days, from ₹499." },
@@ -73,7 +77,7 @@ export type HomeLang = 'hi' | 'en'
 
 export const say = (text: Bi, lang: HomeLang): string => text[lang]
 
-/** /telepathy-workshop, or its English copy from /en. */
+/** /telepathy-workshop (English), or its Hindi version from /hi (Phase 4.3). */
 export function telepathyHref(lang: HomeLang, hash = ''): string {
-  return lang === 'en' ? `/telepathy-workshop?lang=en${hash}` : `/telepathy-workshop${hash}`
+  return lang === 'hi' ? `/telepathy-workshop?lang=hi${hash}` : `/telepathy-workshop${hash}`
 }

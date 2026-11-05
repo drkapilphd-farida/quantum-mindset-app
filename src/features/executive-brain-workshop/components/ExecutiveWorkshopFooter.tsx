@@ -24,7 +24,6 @@ export function ExecutiveWorkshopFooter(): React.JSX.Element {
               {config.contactEmail}
             </a>
           </p>
-          <p>{config.venueAddress}</p>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-line-strong pt-6 text-[12.5px]">
