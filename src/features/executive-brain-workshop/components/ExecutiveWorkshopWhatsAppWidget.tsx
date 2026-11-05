@@ -14,9 +14,9 @@ export function ExecutiveWorkshopWhatsAppWidget(): React.JSX.Element {
   return (
     <WhatsAppWidget
       href={buildWhatsAppLink(config.whatsappNumber, 'Hi, I want details of the Executive Brain Performance Workshop in Mumbai')}
-      bubble="Have questions about the workshop? Chat with our team instantly."
+      bubble="Dr. Kapil replies himself, within 24 hours."
       buttonLabel="Chat on WhatsApp"
-      ariaLabel="Chat with our team on WhatsApp about the Executive Brain Performance Workshop"
+      ariaLabel="Ask Dr. Kapil on WhatsApp"
       bottomClassName="bottom-24 sm:bottom-7"
       analyticsLocation="executive_workshop_widget"
       autoDismissBubbleMs={6000}

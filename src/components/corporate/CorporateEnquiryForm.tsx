@@ -42,7 +42,7 @@ const LABELS = {
     sending: 'Sending…',
     error: 'Something went wrong sending your enquiry. Please try WhatsApp instead, or try again.',
     successTitle: 'Thank you — we’ve received your enquiry.',
-    successBody: 'Our team will get back to you shortly. If it’s urgent, message us directly on',
+    successBody: 'Dr. Kapil replies himself, within 24 hours. If it’s urgent, message us directly on',
   },
   hi: {
     name: 'नाम',
@@ -58,7 +58,7 @@ const LABELS = {
     sending: 'भेजा जा रहा है…',
     error: 'आपकी पूछताछ भेजने में समस्या हुई। कृपया WhatsApp पर संपर्क करें, या फिर से कोशिश करें।',
     successTitle: 'धन्यवाद — हमें आपकी पूछताछ मिल गई है।',
-    successBody: 'हमारी टीम जल्द ही आपसे संपर्क करेगी। ज़रूरी हो तो सीधे संदेश भेजें:',
+    successBody: 'डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर। ज़रूरी हो तो सीधे संदेश भेजें:',
   },
 } as const
 

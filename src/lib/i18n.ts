@@ -110,7 +110,7 @@ export const translations = {
           },
           {
             title: "Partner Ecosystem & Support",
-            desc: "Ongoing access to the Mind Ur Mind team whenever you have a question.",
+            desc: "Dr. Kapil replies himself, within 24 hours.",
           },
         ],
       },
@@ -183,7 +183,7 @@ export const translations = {
         steps: [
           { title: "Apply", desc: "Submit your interest through the application form." },
           { title: "Form", desc: "Share your background and why you're interested." },
-          { title: "Screening", desc: "Our team reviews your application." },
+          { title: "Screening", desc: "Dr. Kapil replies himself, within 24 hours." },
           { title: "Call", desc: "A short conversation to understand fit on both sides." },
           { title: "Selection", desc: "Confirmed partners move forward to certification." },
           { title: "Training", desc: "Learn the complete Sharp Brain™ methodology." },
@@ -261,7 +261,7 @@ export const translations = {
           },
           {
             question: "What is the application process?",
-            answer: "Apply through the form below, complete a short background form, go through screening and a call with our team, and — if selected — begin your 7-day training and certification.",
+            answer: "Apply through the form below, complete a short background form, go through screening, and — if selected — begin your 7-day training and certification.",
           },
         ],
       },
@@ -270,18 +270,18 @@ export const translations = {
         title: "Ready to Build Your Sharp Brain™ Training Practice?",
         sub: "Apply to become a certified trainer and explore whether this partnership is right for you.",
         instantApplyCta: "Apply Instantly via WhatsApp",
-        talkToTeamLabel: "Talk to Our Team",
+        talkToTeamLabel: "Ask Dr. Kapil on WhatsApp",
       },
       whatsapp: {
-        bubble: "Have questions about becoming a certified trainer? Chat with our team instantly.",
+        bubble: "Dr. Kapil replies himself, within 24 hours.",
         button: "Chat on WhatsApp",
-        ariaLabel: "Chat with the Mind Ur Mind team on WhatsApp about the trainer partner program",
+        ariaLabel: "Ask Dr. Kapil on WhatsApp",
       },
     },
     whatsapp: {
-      bubble: "Have questions about our programs? Chat directly with Dr. Kapil's team.",
+      bubble: "Dr. Kapil replies himself, within 24 hours.",
       button: "Chat on WhatsApp",
-      ariaLabel: "Chat with Dr. Kapil's team on WhatsApp",
+      ariaLabel: "Ask Dr. Kapil on WhatsApp",
     },
     contactPage: {
       headline: "Get in Touch",
@@ -291,7 +291,7 @@ export const translations = {
       whatsappLabel: "WhatsApp",
       addressLabel: "Address",
       hoursLabel: "Working hours",
-      responseTime: "We respond to all queries within 24 hours.",
+      responseTime: "Dr. Kapil replies himself, within 24 hours.",
       ctaPrimary: "Chat on WhatsApp",
       ctaSecondary: "Or email us at",
     },
@@ -348,7 +348,7 @@ export const translations = {
         ctaMeta: "Secure Checkout via Razorpay",
         badges: [
           { title: "Secure Payment", desc: "Checkout is handled by Razorpay, a trusted payment gateway." },
-          { title: "Personally Confirmed", desc: "A real person on Dr. Kapil's team confirms your batch and schedule — not a bot." },
+          { title: "Personally Confirmed", desc: "Dr. Kapil replies himself, within 24 hours." },
           { title: "Small Cohort", desc: "Each batch is kept deliberately small — limited enrollment, not a mass webinar." },
         ],
       },
@@ -507,7 +507,7 @@ export const translations = {
       finalCta: {
         eyebrow: "Ready When You Are",
         title: "A Calmer Mind Starts With One Decision",
-        desc: "Enrollment is confirmed personally by Dr. Kapil's own team — not an automated system. Since 2014, 150+ real students, one small cohort at a time. Book your spot in the next batch.",
+        desc: "Dr. Kapil replies himself, within 24 hours. Since 2014, 150+ real students, one small cohort at a time. Book your spot in the next batch.",
         cta: "Secure Your Retreat Spot",
       },
       stickyBar: {
@@ -516,9 +516,9 @@ export const translations = {
         cta: "Secure Your Retreat Spot",
       },
       whatsapp: {
-        bubble: "Have questions about the 11-Day Retreat? Chat with Dr. Kapil's team instantly.",
+        bubble: "Dr. Kapil replies himself, within 24 hours.",
         button: "Chat on WhatsApp",
-        ariaLabel: "Chat with Dr. Kapil's team on WhatsApp about the 11-Day Retreat",
+        ariaLabel: "Ask Dr. Kapil on WhatsApp",
       },
     },
     residentialLanding: {
@@ -528,7 +528,7 @@ export const translations = {
         headlineEm: programs.residentialRetreat.name,
         sub: "You've meditated in bed, in traffic, with an app telling you to just breathe. It didn't work — not because you failed at it, but because a 10-minute recording was never built for real depth. This is Dr. Kapil Dev Sharma, in the room with you, for days — traditional Kriya Yoga, pranayama and deep meditation, guided directly, since 2014.",
         ctaPrimary: "Secure Your Residential Seat",
-        ctaPrimaryMeta: "Personally confirmed by Dr. Kapil's team",
+        ctaPrimaryMeta: "Dr. Kapil replies himself, within 24 hours.",
         ctaSecondary: "See the 2026–27 Roadmap",
         trustLine: "For busy professionals, chronic overthinkers and sincere seekers — ready to step away properly, not just log off.",
       },
@@ -683,7 +683,7 @@ export const translations = {
             cta: "Book Private Room",
           },
         ],
-        note: "Seats are confirmed personally by Dr. Kapil's team, not by automated checkout — message us on WhatsApp with your preferred date to begin.",
+        note: "Dr. Kapil replies himself, within 24 hours. Message us on WhatsApp with your preferred date to begin.",
       },
       videoTestimonials: {
         eyebrow: "Watch Real Students",
@@ -751,9 +751,9 @@ export const translations = {
         cta: "Secure Your Seat",
       },
       whatsapp: {
-        bubble: "Have questions about a Residential Retreat? Chat with Dr. Kapil's team instantly.",
+        bubble: "Dr. Kapil replies himself, within 24 hours.",
         button: "Chat on WhatsApp",
-        ariaLabel: `Chat with Dr. Kapil's team on WhatsApp about the ${programs.residentialRetreat.name}`,
+        ariaLabel: "Ask Dr. Kapil on WhatsApp",
       },
     },
     mentoringLanding: {
@@ -909,9 +909,9 @@ export const translations = {
         ],
       },
       whatsapp: {
-        bubble: `Have questions about ${programs.oneOnOneCoaching.name}? Chat with Dr. Kapil's team instantly.`,
+        bubble: "Dr. Kapil replies himself, within 24 hours.",
         button: "Chat on WhatsApp",
-        ariaLabel: `Chat with Dr. Kapil's team about ${programs.oneOnOneCoaching.name} on WhatsApp`,
+        ariaLabel: "Ask Dr. Kapil on WhatsApp",
       },
       stickyBar: {
         text: programs.oneOnOneCoaching.name,
@@ -1169,9 +1169,9 @@ export const translations = {
         ctaSecondary: "Take the Free Overthinking Test",
       },
       whatsapp: {
-        bubble: `Have questions about the ${programs.overthinkingReset.name}? Chat with Dr. Kapil's team instantly.`,
+        bubble: "Dr. Kapil replies himself, within 24 hours.",
         button: "Chat on WhatsApp",
-        ariaLabel: `Chat with Dr. Kapil's team about the ${programs.overthinkingReset.name} on WhatsApp`,
+        ariaLabel: "Ask Dr. Kapil on WhatsApp",
       },
       stickyBar: {
         text: programs.overthinkingReset.name,
@@ -1375,7 +1375,7 @@ export const translations = {
           },
           {
             title: "पार्टनर इकोसिस्टम और सपोर्ट",
-            desc: "जब भी कोई सवाल हो, माइंड उर माइंड टीम का ऑनगोइंग एक्सेस।",
+            desc: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
           },
         ],
       },
@@ -1448,7 +1448,7 @@ export const translations = {
         steps: [
           { title: "आवेदन करें", desc: "एप्लीकेशन फ़ॉर्म के ज़रिए अपनी रुचि बताएं।" },
           { title: "फ़ॉर्म", desc: "अपनी पृष्ठभूमि और रुचि की वजह बताएं।" },
-          { title: "स्क्रीनिंग", desc: "हमारी टीम आपके आवेदन की समीक्षा करती है।" },
+          { title: "स्क्रीनिंग", desc: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।" },
           { title: "कॉल", desc: "दोनों तरफ़ से फ़िट समझने के लिए एक छोटी बातचीत।" },
           { title: "सिलेक्शन", desc: "चुने गए पार्टनर्स सर्टिफिकेशन की ओर बढ़ते हैं।" },
           { title: "ट्रेनिंग", desc: "पूरी Sharp Brain™ मेथडोलॉजी सीखें।" },
@@ -1526,7 +1526,7 @@ export const translations = {
           },
           {
             question: "आवेदन प्रोसेस क्या है?",
-            answer: "नीचे दिए गए फ़ॉर्म से आवेदन करें, एक छोटा background फ़ॉर्म भरें, हमारी टीम के साथ स्क्रीनिंग और कॉल से गुज़रें, और — सिलेक्ट होने पर — अपनी 7-दिन की ट्रेनिंग और सर्टिफिकेशन शुरू करें।",
+            answer: "नीचे दिए गए फ़ॉर्म से आवेदन करें, एक छोटा background फ़ॉर्म भरें, स्क्रीनिंग से गुज़रें, और — सिलेक्ट होने पर — अपनी 7-दिन की ट्रेनिंग और सर्टिफिकेशन शुरू करें।",
           },
         ],
       },
@@ -1535,18 +1535,18 @@ export const translations = {
         title: "अपनी Sharp Brain™ Training Practice बनाने के लिए तैयार हैं?",
         sub: "Certified trainer बनने के लिए आवेदन करें और जानें कि यह पार्टनरशिप आपके लिए सही है या नहीं।",
         instantApplyCta: "WhatsApp पर तुरंत आवेदन करें",
-        talkToTeamLabel: "हमारी टीम से बात करें",
+        talkToTeamLabel: "डॉ. कपिल से वॉट्सऐप पर पूछिए",
       },
       whatsapp: {
-        bubble: "Certified trainer बनने के बारे में सवाल हैं? हमारी टीम से तुरंत चैट करें।",
+        bubble: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
         button: "WhatsApp पर चैट करें",
-        ariaLabel: "Trainer partner प्रोग्राम के बारे में माइंड उर माइंड टीम से WhatsApp पर चैट करें",
+        ariaLabel: "डॉ. कपिल से वॉट्सऐप पर पूछिए",
       },
     },
     whatsapp: {
-      bubble: "हमारे प्रोग्राम्स के बारे में सवाल हैं? डॉ. कपिल की टीम से सीधे बात करें।",
+      bubble: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
       button: "WhatsApp पर चैट करें",
-      ariaLabel: "डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+      ariaLabel: "डॉ. कपिल से वॉट्सऐप पर पूछिए",
     },
     contactPage: {
       headline: "संपर्क करें",
@@ -1556,7 +1556,7 @@ export const translations = {
       whatsappLabel: "WhatsApp",
       addressLabel: "पता",
       hoursLabel: "कार्य समय",
-      responseTime: "हम सभी प्रश्नों का उत्तर 24 घंटों के भीतर देते हैं।",
+      responseTime: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
       ctaPrimary: "WhatsApp पर चैट करें",
       ctaSecondary: "या हमें ईमेल करें",
     },
@@ -1613,7 +1613,7 @@ export const translations = {
         ctaMeta: "Razorpay के ज़रिए सुरक्षित चेकआउट",
         badges: [
           { title: "सुरक्षित भुगतान", desc: "चेकआउट Razorpay द्वारा संभाला जाता है, एक भरोसेमंद पेमेंट गेटवे।" },
-          { title: "व्यक्तिगत रूप से पुष्टि", desc: "डॉ. कपिल की टीम का एक असली व्यक्ति आपके बैच और शेड्यूल की पुष्टि करता है — कोई बॉट नहीं।" },
+          { title: "व्यक्तिगत रूप से पुष्टि", desc: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।" },
           { title: "छोटा समूह", desc: "हर बैच जानबूझकर छोटा रखा जाता है — सीमित नामांकन, कोई बड़ा वेबिनार नहीं।" },
         ],
       },
@@ -1772,7 +1772,7 @@ export const translations = {
       finalCta: {
         eyebrow: "जब आप तैयार हों",
         title: "शांत मन एक फैसले से शुरू होता है",
-        desc: "नामांकन की पुष्टि डॉ. कपिल की अपनी टीम व्यक्तिगत रूप से करती है — कोई ऑटोमेटेड सिस्टम नहीं। 2014 से, 150+ असली विद्यार्थी, एक समय में एक छोटा समूह। अगले बैच में अपनी सीट बुक करें।",
+        desc: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर। 2014 से, 150+ असली विद्यार्थी, एक समय में एक छोटा समूह। अगले बैच में अपनी सीट बुक करें।",
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
       },
       stickyBar: {
@@ -1781,9 +1781,9 @@ export const translations = {
         cta: "अपनी रिट्रीट सीट सुरक्षित करें",
       },
       whatsapp: {
-        bubble: "11-दिवसीय रिट्रीट के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।",
+        bubble: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
         button: "WhatsApp पर चैट करें",
-        ariaLabel: "11-दिवसीय रिट्रीट के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें",
+        ariaLabel: "डॉ. कपिल से वॉट्सऐप पर पूछिए",
       },
     },
     residentialLanding: {
@@ -1793,7 +1793,7 @@ export const translations = {
         headlineEm: programs.residentialRetreat.nameHi,
         sub: "आपने बिस्तर पर मेडिटेशन किया, ट्रैफिक में किया, एक ऐप के साथ किया जो कहता रहा बस सांस लें। यह काम नहीं आया — इसलिए नहीं कि आप असफल हुए, बल्कि इसलिए कि एक 10-मिनट की रिकॉर्डिंग असली गहराई के लिए बनी ही नहीं थी। यह डॉ. कपिल देव शर्मा हैं, आपके साथ उसी कमरे में, कई दिनों तक — पारंपरिक क्रिया योग, प्राणायाम और गहरा ध्यान, सीधे मार्गदर्शन में, 2014 से।",
         ctaPrimary: "अपनी रेजिडेंशियल सीट सुरक्षित करें",
-        ctaPrimaryMeta: "डॉ. कपिल की टीम द्वारा व्यक्तिगत रूप से पुष्टि",
+        ctaPrimaryMeta: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
         ctaSecondary: "2026–27 का शेड्यूल देखें",
         trustLine: "व्यस्त पेशेवरों, लगातार ओवरथिंक करने वालों और सच्चे साधकों के लिए — जो सिर्फ लॉग ऑफ नहीं, सही मायने में कुछ दिन दूर जाने के लिए तैयार हैं।",
       },
@@ -1948,7 +1948,7 @@ export const translations = {
             cta: "प्राइवेट रूम बुक करें",
           },
         ],
-        note: "सीटें डॉ. कपिल की टीम द्वारा व्यक्तिगत रूप से पुष्टि की जाती हैं, ऑटोमेटेड चेकआउट से नहीं — शुरू करने के लिए अपनी पसंदीदा तारीख के साथ हमें WhatsApp पर मैसेज करें।",
+        note: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर। शुरू करने के लिए अपनी पसंदीदा तारीख के साथ हमें WhatsApp पर मैसेज करें।",
       },
       videoTestimonials: {
         eyebrow: "असली विद्यार्थियों को देखें",
@@ -2016,9 +2016,9 @@ export const translations = {
         cta: "अपनी सीट सुरक्षित करें",
       },
       whatsapp: {
-        bubble: `${programs.residentialRetreat.nameHi} के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।`,
+        bubble: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
         button: "WhatsApp पर चैट करें",
-        ariaLabel: `${programs.residentialRetreat.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
+        ariaLabel: "डॉ. कपिल से वॉट्सऐप पर पूछिए",
       },
     },
     mentoringLanding: {
@@ -2174,9 +2174,9 @@ export const translations = {
         ],
       },
       whatsapp: {
-        bubble: `${programs.oneOnOneCoaching.nameHi} के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।`,
+        bubble: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
         button: "WhatsApp पर चैट करें",
-        ariaLabel: `${programs.oneOnOneCoaching.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
+        ariaLabel: "डॉ. कपिल से वॉट्सऐप पर पूछिए",
       },
       stickyBar: {
         text: programs.oneOnOneCoaching.nameHi,
@@ -2426,9 +2426,9 @@ export const translations = {
         ctaSecondary: "मुफ़्त ओवरथिंकिंग टेस्ट लें",
       },
       whatsapp: {
-        bubble: `${programs.overthinkingReset.nameHi} के बारे में सवाल हैं? डॉ. कपिल की टीम से तुरंत बात करें।`,
+        bubble: "डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।",
         button: "WhatsApp पर चैट करें",
-        ariaLabel: `${programs.overthinkingReset.nameHi} के बारे में डॉ. कपिल की टीम से WhatsApp पर चैट करें`,
+        ariaLabel: "डॉ. कपिल से वॉट्सऐप पर पूछिए",
       },
       stickyBar: {
         text: programs.overthinkingReset.nameHi,
