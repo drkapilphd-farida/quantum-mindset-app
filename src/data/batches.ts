@@ -127,3 +127,16 @@ export function upcomingBatches(now: Date = new Date(), batches: readonly Batch[
     .filter((b): b is Batch & { startDate: string } => b.startDate !== null && !isBatchOver(b, now))
     .sort((a, b) => a.startDate.localeCompare(b.startDate))
 }
+
+const MONTHS_HI = ['जनवरी', 'फरवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'] as const
+
+/** "17 नवंबर" — the first day of a dated batch, in Hindi. */
+export function startDayHi(batch: Batch & { startDate: string }): string {
+  const [, month, day] = batch.startDate.split('-').map(Number)
+  return `${day ?? ''} ${MONTHS_HI[(month ?? 1) - 1] ?? ''}`
+}
+
+/** "28–29 नवंबर" — labelHi without the year. */
+export function labelHiNoYear(batch: Batch): string {
+  return batch.labelHi.replace(/\s\d{4}$/, '')
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { BATCHES, FALLBACK_EN, FALLBACK_HI, upcomingBatch, upcomingBatches } from './batches'
+import { BATCHES, FALLBACK_EN, FALLBACK_HI, labelHiNoYear, startDayHi, upcomingBatch, upcomingBatches } from './batches'
 import { LINKS, linkOrWhatsApp, waLink } from './links'
 
 const at = (iso: string): Date => new Date(iso)
@@ -20,6 +20,13 @@ describe('batches', () => {
   it('lists upcoming dated batches earliest first and drops past ones', () => {
     expect(upcomingBatches(at('2026-11-05T12:00:00+05:30')).map((b) => b.id)).toEqual(['mumbai', 'online', 'ahmedabad', 'vadodara'])
     expect(upcomingBatches(at('2026-11-20T12:00:00+05:30')).map((b) => b.id)).toEqual(['ahmedabad', 'vadodara'])
+  })
+
+  it('formats the first day and a label without the year', () => {
+    const online = upcomingBatch('online', at('2026-11-05T12:00:00+05:30'))
+    expect(online !== null && online.startDate !== null ? startDayHi({ ...online, startDate: online.startDate }) : null).toBe('17 नवंबर')
+    const vadodara = upcomingBatch('vadodara', at('2026-11-05T12:00:00+05:30'))
+    expect(vadodara === null ? null : labelHiNoYear(vadodara)).toBe('28–29 नवंबर')
   })
 
   it('never ships a seat count that was not filled in by hand', () => {

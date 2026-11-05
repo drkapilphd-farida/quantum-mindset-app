@@ -62,9 +62,8 @@ export function BookSeatLink({ batch, location, className = '', ariaLabel, child
   )
 }
 
-/** The site's primary gold button. */
-export const GOLD_BUTTON =
-  'inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-sm bg-gold px-6 py-3.5 text-center text-[16px] font-semibold leading-snug text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]'
+// The site's primary gold button (defined in ./ui so server components can use it too).
+export { GOLD_BUTTON } from './ui'
 
 export function WhatsAppGlyph({ className = 'size-5' }: { className?: string }): React.JSX.Element {
   return (
