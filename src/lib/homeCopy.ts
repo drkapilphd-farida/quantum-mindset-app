@@ -159,7 +159,8 @@ const en: HomeCopy = {
       },
       {
         question: 'Online or offline?',
-        answer: `Most programs run online and live. In-person options: offline Sharp Brain Workshops, the ${programs.executiveWorkshop.name} in Mumbai, and residential retreats in Lonavala and Rishikesh.`,
+        // Phase 4.4: same answer as the telepathy page's "Is it available online?".
+        answer: 'Yes — a 3-evening online version for ₹3,999, with the same four practices: telepathy, Cosmic Fusion, heart-brain coherence and intuition. Only the live EEG demo happens offline.',
       },
       {
         question: 'Hindi or English?',
@@ -294,7 +295,7 @@ const hi: HomeCopy = {
       },
       {
         question: 'ऑनलाइन या ऑफलाइन?',
-        answer: `ज़्यादातर प्रोग्राम ऑनलाइन और लाइव चलते हैं। व्यक्तिगत विकल्प: ऑफलाइन Sharp Brain वर्कशॉप, मुंबई में ${programs.executiveWorkshop.nameHi}, और लोनावला व ऋषिकेश में रेजिडेंशियल रिट्रीट्स।`,
+        answer: 'हाँ, 3 शाम का ऑनलाइन संस्करण ₹3,999 में — उसमें भी वही चारों अभ्यास हैं: टेलीपैथी, कॉस्मिक फ्यूजन, हार्ट-ब्रेन कोहेरेंस और इनट्यूशन। सिर्फ EEG का लाइव डेमो ऑफलाइन में होता है।',
       },
       {
         question: 'हिंदी या अंग्रेज़ी?',

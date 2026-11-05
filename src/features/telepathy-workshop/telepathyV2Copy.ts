@@ -137,7 +137,6 @@ export const v2 = {
           hi: 'अपने प्राण को सार्वभौमिक ऊर्जा से जोड़िए और ऊँची, शुद्ध ऊर्जा ग्रहण कीजिए। मैनिफ़ेस्टेशन और हीलिंग के लिए यह सबसे असरदार अभ्यास है।',
           en: 'Connect your prana to universal energy and receive high-vibration, pure energy. The most powerful practice for manifestation and healing.',
         },
-        tag: { hi: 'सिर्फ ऑफलाइन वर्कशॉप में', en: 'Offline workshop only' },
       },
       {
         title: { hi: 'हार्ट-ब्रेन कोहेरेंस — दिल और दिमाग़ एक ताल में', en: 'Heart-brain coherence — heart and mind in one rhythm' },
@@ -172,15 +171,17 @@ export const v2 = {
     columns: { hi: ['ऑफलाइन — 2 दिन', 'ऑनलाइन — 3 शाम'], en: ['Offline — 2 days', 'Online — 3 evenings'] },
     rows: [
       { label: { hi: 'समय', en: 'Duration' }, offline: { hi: '17 घंटे', en: '17 hours' }, online: { hi: '7.5 घंटे', en: '7.5 hours' } },
+      // Phase 4.4: online has the same four practices; the difference is format and the live EEG demo.
+      { label: { hi: 'तरीका', en: 'Format' }, offline: { hi: 'आमने-सामने', en: 'Face to face' }, online: { hi: 'घर से, ज़ूम पर', en: 'From home, on Zoom' } },
       { label: { hi: 'टेलीपैथी अभ्यास', en: 'Telepathy practice' }, offline: { hi: 'आमने-सामने, जोड़ी में', en: 'face to face, in pairs' }, online: { hi: 'ब्रेकआउट रूम में, जोड़ी में', en: 'in breakout rooms, in pairs' } },
       { label: { hi: 'हार्ट-ब्रेन कोहेरेंस, इनट्यूशन', en: 'Heart-brain coherence, intuition' }, offline: { hi: '✓', en: '✓' }, online: { hi: '✓', en: '✓' } },
-      { label: { hi: 'कॉस्मिक फ्यूजन', en: 'Cosmic Fusion' }, offline: { hi: '✓', en: '✓' }, online: { hi: '—', en: '—' } },
+      { label: { hi: 'कॉस्मिक फ्यूजन', en: 'Cosmic Fusion' }, offline: { hi: '✓', en: '✓' }, online: { hi: '✓', en: '✓' } },
       { label: { hi: 'EEG लाइव डेमो', en: 'Live EEG demo' }, offline: { hi: '✓', en: '✓' }, online: { hi: '—', en: '—' } },
       { label: { hi: 'कीमत', en: 'Fee' }, offline: { hi: '₹5,999 (₹1,000 में सीट)', en: '₹5,999 (book with ₹1,000)' }, online: { hi: '₹3,999', en: '₹3,999' } },
     ],
     note: {
-      hi: 'पूरा अनुभव चाहिए तो ऑफलाइन। शहर तक नहीं आ सकते तो ऑनलाइन — 60 दिन में ऑफलाइन आएँ तो ₹1,000 की छूट।',
-      en: "Want the full experience? Go offline. Can't travel? Go online — join an offline batch within 60 days and get ₹1,000 off.",
+      hi: 'आमने-सामने अभ्यास और EEG का लाइव डेमो चाहिए तो ऑफलाइन। शहर तक नहीं आ सकते तो ऑनलाइन — उसमें भी वही चारों अभ्यास हैं, और 60 दिन में ऑफलाइन आएँ तो ₹1,000 की छूट।',
+      en: "Want face-to-face practice and the live EEG demo? Go offline. Can't travel? Online has the same four practices — and if you join an offline batch within 60 days, you get ₹1,000 off.",
     },
   },
 
@@ -219,7 +220,7 @@ export const v2 = {
     { q: { hi: 'जगह कहाँ है?', en: 'Where is the venue?' }, a: { hi: 'बुकिंग के बाद जगह, समय और पहुँचने का तरीका वॉट्सऐप पर भेजा जाता है।', en: 'After booking, the venue, timing and directions are sent to you on WhatsApp.' } },
     {
       q: { hi: 'ऑनलाइन उपलब्ध है?', en: 'Is it available online?' },
-      a: { hi: 'हाँ, 3 शाम का ऑनलाइन संस्करण ₹3,999 में। EEG का लाइव डेमो और कॉस्मिक फ्यूजन सिर्फ ऑफलाइन में है।', en: 'Yes — a 3-evening online version for ₹3,999. The live EEG demo and Cosmic Fusion happen only offline.' },
+      a: { hi: 'हाँ, 3 शाम का ऑनलाइन संस्करण ₹3,999 में — उसमें भी वही चारों अभ्यास हैं: टेलीपैथी, कॉस्मिक फ्यूजन, हार्ट-ब्रेन कोहेरेंस और इनट्यूशन। सिर्फ EEG का लाइव डेमो ऑफलाइन में होता है।', en: 'Yes — a 3-evening online version for ₹3,999, with the same four practices: telepathy, Cosmic Fusion, heart-brain coherence and intuition. Only the live EEG demo happens offline.' },
     },
   ],
   // FAQ 7 = the existing "How do I book?" — new English answer only (copy/telepathy-v2.md).

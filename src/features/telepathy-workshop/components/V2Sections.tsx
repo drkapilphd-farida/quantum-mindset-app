@@ -68,11 +68,6 @@ export function LearnFourSection({ lang }: { lang: Lang }): React.JSX.Element {
             <div className="flex flex-1 flex-col p-6 sm:p-8">
             <h3 className="text-[21px] font-extrabold leading-snug text-ink">{pick(card.title, lang)}</h3>
             <p className="tw-body mt-3">{pick(card.body, lang)}</p>
-            {'tag' in card && (
-              <p className="mt-4">
-                <span className="inline-flex rounded-full border border-gold/50 bg-gold-soft px-3 py-1 text-[12.5px] font-semibold text-ink">{pick(card.tag, lang)}</span>
-              </p>
-            )}
             </div>
           </li>
           )

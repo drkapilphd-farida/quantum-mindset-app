@@ -1,6 +1,7 @@
 // /telepathy-workshop/online — page wording. Hindi word for word from
 // copy/telepathy-online.md (with the Phase 4.3 fixes: no Gujarat/Vadodara-
-// only lines, EEG instead of Muse 2); English (the default since Phase 4.3)
+// only lines, EEG instead of Muse 2; Phase 4.4: the same four practices
+// online); English (the default since Phase 4.3)
 // word for word from PHASE-4.3 part 7. Dates, price and seats are not
 // written here: they come from src/data/batches.ts (batch 'online').
 
@@ -10,14 +11,14 @@ export const onlineCopy = {
   meta: {
     title: { hi: 'घर से टेलीपैथी — 3 शाम ऑनलाइन, 17–19 नवंबर | ₹3,999', en: 'Telepathy from home — 3 evenings online, 17–19 November | ₹3,999' },
     description: {
-      hi: '3 शाम, लाइव, ज़ूम पर, जोड़ी में अभ्यास। हार्ट-ब्रेन कोहेरेंस, इनट्यूशन, टेलीपैथी। 40 सीट, रिकॉर्डिंग नहीं।',
-      en: '3 live evenings on Zoom, practice in pairs. Heart-brain coherence, intuition, telepathy. 40 seats, no recording.',
+      hi: '3 शाम, ज़ूम पर लाइव — टेलीपैथी, कॉस्मिक फ्यूजन, हार्ट-ब्रेन कोहेरेंस, इनट्यूशन। जोड़ी में अभ्यास। 40 सीट, रिकॉर्डिंग नहीं।',
+      en: '3 live evenings on Zoom — telepathy, Cosmic Fusion, heart-brain coherence, intuition. Practice in pairs. 40 seats, no recording.',
     },
   },
   h1: { hi: 'घर से टेलीपैथी — 3 शाम, लाइव ऑनलाइन', en: 'Telepathy from home — 3 evenings, live online' },
   sub: {
-    hi: 'कहीं जाना नहीं। 3 शाम, 2.5-2.5 घंटे, ज़ूम पर लाइव, डॉ. कपिल के साथ। जोड़ी में करके — सुनकर नहीं।',
-    en: 'No travel. 3 evenings, 2.5 hours each, live on Zoom with Dr. Kapil. You learn by doing it in pairs — not by just listening.',
+    hi: 'कहीं जाना नहीं। 3 शाम, 2.5-2.5 घंटे, ज़ूम पर लाइव, डॉ. कपिल के साथ — टेलीपैथी, कॉस्मिक फ्यूजन, हार्ट-ब्रेन कोहेरेंस और इनट्यूशन। जोड़ी में करके — सुनकर नहीं।',
+    en: 'No travel. 3 evenings, 2.5 hours each, live on Zoom with Dr. Kapil — telepathy, Cosmic Fusion, heart-brain coherence and intuition. You learn by doing it in pairs, not by just listening.',
   },
   // Batch block: "{date} · {time} · {venue}" / "{price} · {seats} {seatsSuffix} · {noRecording}".
   // Date and venue from src/data/batches.ts; the Hindi time is the batch's timeHi.
@@ -28,9 +29,9 @@ export const onlineCopy = {
   evenings: {
     heading: { hi: 'तीन शाम में क्या', en: 'What happens in 3 evenings' },
     items: [
-      { label: { hi: 'शाम 1 —', en: 'Evening 1 —' }, text: { hi: 'हार्ट-ब्रेन कोहेरेंस। दिल और दिमाग़ एक ताल पर। अंदर की आवाज़ पहचानने का पहला अभ्यास।', en: 'Heart-brain coherence. Heart and mind in one rhythm. Your first practice in recognising your inner voice.' } },
+      { label: { hi: 'शाम 1 —', en: 'Evening 1 —' }, text: { hi: 'हार्ट-ब्रेन कोहेरेंस और इनट्यूशन। दिल और दिमाग़ एक ताल पर, अंदर की आवाज़ पहचानने का पहला अभ्यास।', en: 'Heart-brain coherence and intuition. Heart and mind in one rhythm; your first practice in recognising your inner voice.' } },
       { label: { hi: 'शाम 2 —', en: 'Evening 2 —' }, text: { hi: 'टेलीपैथी। विधि, फिर जोड़ी में अभ्यास, तीन चक्र।', en: 'Telepathy. The method, then practice in pairs — three rounds.' } },
-      { label: { hi: 'शाम 3 —', en: 'Evening 3 —' }, text: { hi: 'अपना अभ्यास पक्का कीजिए। घर पर 10 मिनट का रोज़ का प्लान। सवाल-जवाब।', en: 'Make your practice stick. A 10-minute daily plan for home. Q&A.' } },
+      { label: { hi: 'शाम 3 —', en: 'Evening 3 —' }, text: { hi: 'कॉस्मिक फ्यूजन, और अभ्यास पक्का। प्राण को ब्रह्मांड की ऊर्जा से जोड़ना, घर पर 10 मिनट का रोज़ का प्लान, सवाल-जवाब।', en: 'Cosmic Fusion, and making it stick. Connecting your prana to universal energy; a 10-minute daily plan for home; Q&A.' } },
     ],
   },
   included: {
@@ -46,8 +47,8 @@ export const onlineCopy = {
   difference: {
     heading: { hi: 'साफ बात — ऑफलाइन से क्या फर्क है', en: 'Straight talk — how it differs from offline' },
     body: {
-      hi: 'ऑफलाइन 2 दिन, 17 घंटे का है, और उसमें EEG का लाइव डेमो और कॉस्मिक फ्यूजन भी है। यह 3 शाम, 7.5 घंटे — इसीलिए सस्ता है, और कॉस्मिक फ्यूजन यहाँ नहीं है।',
-      en: "The offline workshop is 2 days, 17 hours, and includes the live EEG demo and Cosmic Fusion. This is 3 evenings, 7.5 hours — that's why it costs less, and Cosmic Fusion isn't part of it.",
+      hi: 'ऑनलाइन में भी वही चारों अभ्यास हैं। फर्क इतना है: ऑफलाइन 2 दिन, 17 घंटे, आमने-सामने, और उसमें EEG का लाइव डेमो है। ऑनलाइन 3 शाम, 7.5 घंटे, घर से — इसीलिए सस्ता है।',
+      en: "The online version has the same four practices. The difference: offline is 2 days, 17 hours, face to face, with the live EEG demo. Online is 3 evenings, 7.5 hours, from home — that's why it costs less.",
     },
     discount: { hi: '60 दिन के अंदर ऑफलाइन बैच में आएँ तो ₹1,000 की छूट।', en: 'Join an offline batch within 60 days and get ₹1,000 off.' },
   },
@@ -62,8 +63,8 @@ export const onlineCopy = {
   notFor: {
     heading: { hi: 'किसके लिए नहीं', en: "Who it's not for" },
     body: {
-      hi: 'पूरा अनुभव, स्क्रीन पर सबूत और हाथ से करके सीखना चाहते हैं — तो कोई ऑफलाइन बैच चुनिए।',
-      en: 'If you want the full experience, the on-screen proof and hands-on learning — choose an offline batch.',
+      hi: 'आमने-सामने अभ्यास और EEG का लाइव डेमो चाहिए — तो कोई ऑफलाइन बैच चुनिए।',
+      en: 'If you want face-to-face practice and the live EEG demo — choose an offline batch.',
     },
   },
   faq: {
