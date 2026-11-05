@@ -29,8 +29,9 @@ describe('batches', () => {
 
 describe('links', () => {
   it('sends a button to WhatsApp with its own text while its link is still a placeholder', () => {
-    expect(LINKS.rzpTelepathyDeposit1000).toBe('[[RZP_TELEPATHY_1000]]')
-    expect(linkOrWhatsApp('rzpTelepathyDeposit1000', 'सीट पक्की कीजिए — ₹1,000')).toBe(waLink('सीट पक्की कीजिए — ₹1,000'))
+    expect(LINKS.rzpOnline3999).toBe('[[RZP_ONLINE_3999]]')
+    expect(linkOrWhatsApp('rzpOnline3999', 'सीट पक्की कीजिए — ₹3,999')).toBe(waLink('सीट पक्की कीजिए — ₹3,999'))
+    expect(linkOrWhatsApp('rzpTelepathyDeposit1000', 'x')).toBe('https://rzp.io/rzp/elNaxRB')
     expect(waLink('a b')).toBe('https://wa.me/919540123161?text=a%20b')
   })
 })

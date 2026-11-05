@@ -20,7 +20,7 @@ export type Batch = {
   venueHi?: string
   venueEn?: string
   priceInr?: number
-  depositInr?: number // Vadodara: 1000
+  depositInr?: number // offline batches: 1000 (seat booking)
   seatsTotal?: number // Online: 40
   seatsLeft?: number | null // filled by hand. null = show only "40 सीट", no count
   bookingLinkKey?: keyof typeof LINKS
@@ -41,7 +41,9 @@ export const BATCHES: readonly Batch[] = [
     labelEn: '14–15 November 2026',
     timeHi: 'सुबह 9:30 – शाम 6:00',
     venueHi: 'Hotel Better Home International, अंधेरी ईस्ट',
+    venueEn: 'Hotel Better Home International, Sahar Road, opp. Andheri East Railway Station, Andheri East',
     priceInr: 5999,
+    depositInr: 1000,
     bookingLinkKey: 'rzpTelepathyDeposit1000',
   },
   {
@@ -66,7 +68,9 @@ export const BATCHES: readonly Batch[] = [
     labelEn: '21–22 November 2026',
     timeHi: 'सुबह 9:30 – शाम 6:00',
     venueHi: 'Hotel Silver Cloud, आश्रम रोड',
+    venueEn: 'Hotel Silver Cloud, Ashram Road',
     priceInr: 5999,
+    depositInr: 1000,
     bookingLinkKey: 'rzpTelepathyDeposit1000',
   },
   {

@@ -1,4 +1,5 @@
 import type { Lang } from '@/lib/i18n'
+import Link from 'next/link'
 import { FREE_SESSION_VIDEO, TELEPATHY_IMAGES } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
@@ -8,11 +9,11 @@ import { CheckDot, Heading, Photo, Section } from './ui'
 // B — trust strip
 export function TrustStrip({ lang }: { lang: Lang }): React.JSX.Element {
   return (
-    <section aria-label={telepathyCopy.trust.map((t) => `${t.value} ${pick(t.label, lang)}`).join(', ')} className="border-b border-line bg-panel px-5 py-6 sm:px-8">
+    <section aria-label={telepathyCopy.trust.map((t) => `${pick(t.value, lang)} ${pick(t.label, lang)}`).join(', ')} className="border-b border-line bg-panel px-5 py-6 sm:px-8">
       <ul className="mx-auto grid max-w-content grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-4">
         {telepathyCopy.trust.map((t) => (
-          <li key={t.value} className="text-center">
-            <span className="block text-[28px] font-extrabold leading-none text-ink sm:text-[32px]">{t.value}</span>
+          <li key={t.label.en} className="text-center">
+            <span className="block text-[28px] font-extrabold leading-none text-ink sm:text-[32px]">{pick(t.value, lang)}</span>
             <span className="mt-1.5 block text-[14px] text-ink-dim">{pick(t.label, lang)}</span>
           </li>
         ))}
@@ -37,10 +38,9 @@ export function FreeSessionSection({ lang }: { lang: Lang }): React.JSX.Element 
   )
 }
 
-// D — who it's for (5 cards: where you are → what can change), then the trading section
+// D — who it's for (5 cards: where you are → what can change)
 export function WhoForSection({ lang }: { lang: Lang }): React.JSX.Element {
   const c = telepathyCopy.whoFor
-  const t = telepathyCopy.traders
   return (
     <Section tint labelledBy="tw-whofor">
       <Heading id="tw-whofor" className="tw-reveal text-center">
@@ -58,10 +58,33 @@ export function WhoForSection({ lang }: { lang: Lang }): React.JSX.Element {
           </li>
         ))}
       </ul>
+    </Section>
+  )
+}
 
-      <div id="traders" className="tw-reveal mt-14 grid scroll-mt-20 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+// Positioning rework: one-line strip right under the hero → the online version.
+export function OnlineStrip({ lang }: { lang: Lang }): React.JSX.Element {
+  const c = telepathyCopy.onlineStrip
+  return (
+    <div className="border-b border-line bg-gold-soft px-5 py-4 sm:px-8">
+      <p className="mx-auto max-w-content text-center text-[16px] leading-snug text-ink">
+        <strong>{pick(c.lead, lang)}</strong> {pick(c.text, lang)}{' '}
+        <Link href="/telepathy-workshop/online" className="whitespace-nowrap font-semibold text-gold underline underline-offset-4">
+          → {pick(c.link, lang)}
+        </Link>
+      </p>
+    </div>
+  )
+}
+
+// Traders (moved up, right after the online strip — positioning rework).
+export function TradersSection({ lang }: { lang: Lang }): React.JSX.Element {
+  const t = telepathyCopy.traders
+  return (
+    <Section tint labelledBy="tw-traders">
+      <div id="traders" className="tw-reveal grid scroll-mt-20 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
         <div className="order-2 lg:order-1">
-          <h3 className="tw-h2 text-ink">{pick(t.heading, lang)}</h3>
+          <h2 id="tw-traders" className="tw-h2 text-ink">{pick(t.heading, lang)}</h2>
           <p className="tw-body mt-4">{pick(t.body, lang)}</p>
           <p className="mt-5 text-[16.5px] font-semibold text-ink">{pick(t.listIntro, lang)}</p>
           <ul className="mt-3 grid gap-3">
@@ -77,5 +100,14 @@ export function WhoForSection({ lang }: { lang: Lang }): React.JSX.Element {
         <Photo src={TELEPATHY_IMAGES.trader} alt={pick(t.imageAlt, lang)} sizes="(min-width: 1024px) 520px, 100vw" className="order-1 aspect-[4/3] lg:order-2" />
       </div>
     </Section>
+  )
+}
+
+// One line after the traders section: where the workshop came from.
+export function OriginLine({ lang }: { lang: Lang }): React.JSX.Element {
+  return (
+    <div className="border-b border-line bg-void px-5 py-10 sm:px-8">
+      <p className="tw-body mx-auto max-w-2xl text-center !text-ink">{pick(telepathyCopy.originLine, lang)}</p>
+    </div>
   )
 }

@@ -14,7 +14,7 @@ export const VADODARA_MAPS_EMBED = 'https://maps.google.com/maps?q=Hotel%20Surya
 export const YOUTUBE_CHANNEL = 'https://www.youtube.com/@innershiftWithDrKapil'
 
 export const LINKS = {
-  rzpTelepathyDeposit1000: '[[RZP_TELEPATHY_1000]]', // owner confirms from the Phase 0 checkout list
+  rzpTelepathyDeposit1000: 'https://rzp.io/rzp/elNaxRB', // ₹1,000 seat booking (confirmed by the owner, Phase 0)
   rzpOnline3999: '[[RZP_ONLINE_3999]]',
   rzpSharpBrain7Day2999: '[[RZP_SHARPBRAIN_2999]]',
   rzpRetreat11Discount: '[[RZP_RETREAT11_5999]]',

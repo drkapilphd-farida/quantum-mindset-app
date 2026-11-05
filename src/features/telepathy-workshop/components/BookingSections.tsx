@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { CalendarPlus, CalendarDays, MapPin, Plus } from 'lucide-react'
 import type { Lang } from '@/lib/i18n'
-import { CTA_PORTRAIT_SIZE, FINAL_CTA_BACKGROUND, TELEPATHY_BATCHES, TELEPATHY_IMAGES, TELEPATHY_PRICE, telepathyWhatsAppMessage } from '@/config/telepathyWorkshopConfig'
+import { CTA_PORTRAIT_SIZE, FINAL_CTA_BACKGROUND, TELEPATHY_BATCHES, TELEPATHY_IMAGES, TELEPATHY_PRICE, telepathyBatchData } from '@/config/telepathyWorkshopConfig'
+import { waLink } from '@/data/links'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
-import { googleCalendarUrl, pick, visibleBatches } from '../telepathyWorkshop'
+import { batchDatesText, batchVenueText, googleCalendarUrl, pick, visibleBatches } from '../telepathyWorkshop'
 import { Countdown } from './Countdown'
-import { WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
 import { BookSeatCta, QuestionsLink } from './BookSeat'
 import { CheckDot, Heading, PriceLine, Section } from './ui'
 
@@ -24,8 +24,10 @@ export function useVisibleBatches(renderedAt: number): typeof TELEPATHY_BATCHES 
   return batches
 }
 
-// K — batches: one card per city, each with the ₹1,000 booking button,
-// "Pay full ₹5,999 now" and "Questions?" on WhatsApp (pre-filled with the batch)
+// K — batches: the ₹1,000 line (large), then one card per city — dates and
+// venues from src/data/batches.ts, the ₹1,000 booking button and
+// "Questions?" on WhatsApp. A city without a date shows the "next date soon"
+// line (to WhatsApp) instead of a booking button.
 export function BatchesSection({ lang, renderedAt }: { lang: Lang; renderedAt: number }): React.JSX.Element {
   const c = telepathyCopy.batches
   const batches = useVisibleBatches(renderedAt)
@@ -34,6 +36,9 @@ export function BatchesSection({ lang, renderedAt }: { lang: Lang; renderedAt: n
       <div className="tw-reveal mx-auto max-w-2xl text-center">
         <Heading id="tw-batches">{pick(c.heading, lang)}</Heading>
         <p className="tw-body mt-3">{pick(c.sub, lang)}</p>
+        <p className="tw-h2 mt-6 text-ink">
+          <strong>{pick(c.depositLead, lang)}</strong> <span className="font-semibold">{pick(c.depositRest, lang)}</span>
+        </p>
       </div>
 
       <div className="mt-8">
@@ -45,6 +50,9 @@ export function BatchesSection({ lang, renderedAt }: { lang: Lang; renderedAt: n
           const card = c.cities.find((x) => x.id === batch.id)
           if (card === undefined) return null
           const calendar = googleCalendarUrl(batch, pick(c.calendarTitle, 'en', { city: card.city.en }), pick(c.infoTime, 'en'))
+          const data = telepathyBatchData(batch.id)
+          const dated = batch.startISO !== null
+          const venue = batchVenueText(batch.id, lang)
           return (
             <li key={batch.id} className="tw-reveal tw-card flex flex-col border-t-4 !border-t-gold p-6">
               <h3 className="text-[24px] font-extrabold uppercase tracking-tight text-ink">{pick(card.city, lang)}</h3>
@@ -54,39 +62,59 @@ export function BatchesSection({ lang, renderedAt }: { lang: Lang; renderedAt: n
                     <CalendarDays className="size-5" aria-hidden="true" />
                     <span className="sr-only">{pick(c.datesLabel, lang)}</span>
                   </dt>
-                  <dd className="font-semibold text-ink">{pick(card.dates, lang)}</dd>
+                  <dd className="font-semibold text-ink">
+                    {dated ? (
+                      batchDatesText(batch.id, lang)
+                    ) : (
+                      <a href={waLink(batchDatesText(batch.id, lang))} target="_blank" rel="noopener noreferrer" className="underline decoration-gold/60 underline-offset-4 hover:decoration-gold">
+                        {batchDatesText(batch.id, lang)}
+                      </a>
+                    )}
+                  </dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="flex-none pt-0.5 text-gold">
-                    <MapPin className="size-5" aria-hidden="true" />
-                    <span className="sr-only">{pick(c.venueLabel, lang)}</span>
-                  </dt>
-                  <dd className="leading-relaxed text-ink-dim">{pick(card.venue, lang)}</dd>
-                </div>
+                {venue !== '' && (
+                  <div className="flex gap-3">
+                    <dt className="flex-none pt-0.5 text-gold">
+                      <MapPin className="size-5" aria-hidden="true" />
+                      <span className="sr-only">{pick(c.venueLabel, lang)}</span>
+                    </dt>
+                    <dd className="leading-relaxed text-ink-dim">
+                      {venue}
+                      {data?.mapsSearchUrl !== undefined && (
+                        <>
+                          {' · '}
+                          <a href={data.mapsSearchUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-ink underline underline-offset-4">
+                            {pick(c.mapsLink, lang)}
+                          </a>
+                        </>
+                      )}
+                    </dd>
+                  </div>
+                )}
               </dl>
-              <PriceLine earlier={TELEPATHY_PRICE.earlier} offer={TELEPATHY_PRICE.offer} className="mt-5" />
-              <div className="mt-auto pt-6">
-                <BookSeatCta lang={lang} batch={batch.id} location={`batch_${batch.id}`} buttonClassName="w-full !px-3 whitespace-nowrap" />
-                <WhatsAppLink
-                  message={telepathyWhatsAppMessage('pay_full', batch.id)}
-                  kind="pay_full"
-                  batch={batch.id}
-                  location={`batch_${batch.id}`}
-                  className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-sm border border-line-strong px-5 py-3 text-center text-[15.5px] font-semibold text-ink transition-colors hover:border-gold hover:bg-gold-soft"
-                >
-                  <WhatsAppGlyph className="size-5 flex-none text-[#1f9d55]" />
-                  {pick(telepathyCopy.booking.payFull, lang)}
-                </WhatsAppLink>
-                <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4">
-                  <QuestionsLink lang={lang} batch={batch.id} location={`batch_${batch.id}`} className="text-[14.5px]" />
-                  {calendar !== null && (
-                    <a href={calendar} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 text-[14.5px] font-medium text-ink-dim underline underline-offset-4 hover:text-ink">
-                      <CalendarPlus className="size-4" aria-hidden="true" />
-                      {pick(c.calendarLink, lang)}
-                    </a>
-                  )}
-                </div>
-              </div>
+              {dated && (
+                <>
+                  <PriceLine earlier={TELEPATHY_PRICE.earlier} offer={TELEPATHY_PRICE.offer} className="mt-5" />
+                  <div className="mt-auto pt-6">
+                    <BookSeatCta
+                      lang={lang}
+                      batch={batch.id}
+                      location={`batch_${batch.id}`}
+                      buttonClassName="w-full !px-3 whitespace-nowrap"
+                      {...(batch.id === 'vadodara' ? { label: pick(c.vadodaraBook, lang) } : {})}
+                    />
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4">
+                      <QuestionsLink lang={lang} batch={batch.id} location={`batch_${batch.id}`} className="text-[14.5px]" />
+                      {calendar !== null && (
+                        <a href={calendar} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 text-[14.5px] font-medium text-ink-dim underline underline-offset-4 hover:text-ink">
+                          <CalendarPlus className="size-4" aria-hidden="true" />
+                          {pick(c.calendarLink, lang)}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
             </li>
           )
         })}

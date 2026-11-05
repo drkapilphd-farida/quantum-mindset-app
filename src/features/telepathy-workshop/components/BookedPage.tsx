@@ -10,7 +10,7 @@ import { telepathyBookedMessage, type TelepathyBatchId } from '@/config/telepath
 import { trackGaEvent } from '@/lib/analytics/ga4'
 import { readUtmParams } from '@/lib/analytics/utm'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
-import { langFromParam, pick } from '../telepathyWorkshop'
+import { batchDatesText, batchVenueText, langFromParam, pick } from '../telepathyWorkshop'
 import { useVisibleBatches } from './BookingSections'
 import { GOLD_BUTTON, WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
 
@@ -69,7 +69,7 @@ export function BookedPage({ renderedAt }: { renderedAt: number }): React.JSX.El
                     <input type="radio" name="batch" value={batch.id} checked={selected} onChange={() => setBatchId(batch.id)} className="size-5 flex-none accent-[#b8862e]" />
                     <span>
                       <span className="block text-[16.5px] font-bold text-ink">{pick(city.city, lang)}</span>
-                      <span className="block text-[14px] text-ink-dim">{pick(city.dates, lang)}</span>
+                      <span className="block text-[14px] text-ink-dim">{batchDatesText(batch.id, lang)}</span>
                     </span>
                   </label>
                 )
@@ -81,11 +81,11 @@ export function BookedPage({ renderedAt }: { renderedAt: number }): React.JSX.El
             <dl className="tw-card mt-6 grid gap-3 px-5 py-5 text-[16px]" aria-live="polite">
               <Detail icon={<CalendarDays className="size-5" aria-hidden="true" />} label={pick(b.datesLabel, lang)}>
                 <span className="font-semibold text-ink">
-                  {pick(card.city, lang)} · {pick(card.dates, lang)}
+                  {pick(card.city, lang)} · {batchDatesText(chosen.id, lang)}
                 </span>
               </Detail>
               <Detail icon={<MapPin className="size-5" aria-hidden="true" />} label={pick(b.venueLabel, lang)}>
-                {pick(card.venue, lang)}
+                {batchVenueText(chosen.id, lang)}
               </Detail>
               <Detail icon={<Clock className="size-5" aria-hidden="true" />}>{pick(b.infoTime, lang)}</Detail>
               <Detail icon={<Utensils className="size-5" aria-hidden="true" />}>{pick(b.infoMeals, lang)}</Detail>

@@ -9,7 +9,7 @@ import type { Lang } from '@/lib/i18n'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
 import { HeroSection } from './HeroSection'
-import { FreeSessionSection, TrustStrip, WhoForSection } from './TopSections'
+import { FreeSessionSection, OnlineStrip, OriginLine, TradersSection, TrustStrip, WhoForSection } from './TopSections'
 import { LearnSection, MuseSection, ScheduleSection, ShortStripSection } from './LearnSections'
 import { AboutSection, ReviewsSection } from './ProofSections'
 import { GallerySection } from './GallerySection'
@@ -46,6 +46,9 @@ export function TelepathyWorkshop({ urlLang, renderedAt }: { urlLang: Lang | nul
       <main>
         {/* A–C */}
         <HeroSection lang={lang} />
+        <OnlineStrip lang={lang} />
+        <TradersSection lang={lang} />
+        <OriginLine lang={lang} />
         <TrustStrip lang={lang} />
         <FreeSessionSection lang={lang} />
         {/* D–G */}

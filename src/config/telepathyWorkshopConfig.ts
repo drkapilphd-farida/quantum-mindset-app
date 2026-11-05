@@ -1,4 +1,6 @@
-import { SITE_CONFIG_WHATSAPP_NUMBER, TELEPATHY_SEAT_PAYMENT_LINK, TELEPATHY_WORKSHOP_FEE } from './site.config'
+import { SITE_CONFIG_WHATSAPP_NUMBER, TELEPATHY_WORKSHOP_FEE } from './site.config'
+import { BATCHES, type Batch } from '@/data/batches'
+import { LINKS } from '@/data/links'
 
 // The Telepathy Workshop™ — every editable VALUE on /telepathy-workshop
 // lives here: WhatsApp number and messages, batches (dates, venues — each
@@ -22,7 +24,8 @@ import { SITE_CONFIG_WHATSAPP_NUMBER, TELEPATHY_SEAT_PAYMENT_LINK, TELEPATHY_WOR
 // "telepathy_video_play" for the free session and review videos.
 
 // ── Booking (Razorpay) ──────────────────────────────────────────────
-export const TELEPATHY_BOOKING_URL = TELEPATHY_SEAT_PAYMENT_LINK
+// The ₹1,000 seat-booking link, from src/data/links.ts (positioning rework).
+export const TELEPATHY_BOOKING_URL: string = LINKS.rzpTelepathyDeposit1000
 /** The thank-you page Razorpay redirects to after the ₹1,000 payment. */
 export const TELEPATHY_BOOKED_PATH = '/telepathy-workshop/booked'
 
@@ -46,13 +49,22 @@ export const TELEPATHY_WHATSAPP_DISPLAY = '+91 95401 23161'
 
 export type TelepathyBatchId = 'mumbai' | 'ahmedabad' | 'vadodara' | 'pune'
 
-// How each batch is named inside the (English) WhatsApp messages.
-export const TELEPATHY_BATCH_MESSAGE_LABELS: Record<TelepathyBatchId, string> = {
-  mumbai: 'Mumbai, 14–15 Nov 2026',
-  ahmedabad: 'Ahmedabad, 21–22 Nov 2026',
-  vadodara: 'Vadodara (please share the date and venue)',
-  pune: 'Pune (please share the date and venue)',
+// English city names (WhatsApp messages, Google Calendar location).
+const CITY_EN: Record<TelepathyBatchId, string> = { mumbai: 'Mumbai', ahmedabad: 'Ahmedabad', vadodara: 'Vadodara', pune: 'Pune' }
+
+/** The offline batch in src/data/batches.ts for a city (the one source of dates and venues). */
+export function telepathyBatchData(id: TelepathyBatchId): Batch | undefined {
+  return BATCHES.find((b) => b.id === id)
 }
+
+// How each batch is named inside the (English) WhatsApp messages — built
+// from src/data/batches.ts; a city without a date asks for it.
+export const TELEPATHY_BATCH_MESSAGE_LABELS: Record<TelepathyBatchId, string> = Object.fromEntries(
+  (Object.keys(CITY_EN) as TelepathyBatchId[]).map((id) => {
+    const data = telepathyBatchData(id)
+    return [id, data !== undefined && data.startDate !== null ? `${CITY_EN[id]}, ${data.labelEn}` : `${CITY_EN[id]} (please share the date and venue)`]
+  }),
+) as Record<TelepathyBatchId, string>
 
 /** WhatsApp messages before booking: a question, or paying the full fee. */
 export type TelepathyMessageKind = 'question' | 'pay_full'
@@ -88,12 +100,13 @@ export function telepathyWhatsAppHref(message: string): string {
 }
 
 // ── Batches ─────────────────────────────────────────────────────────
-// The visible city/date/venue text is in the copy file (cities[].id must
-// match). A dated batch disappears from the page after `endISO` (its last
-// day, 6 pm IST) and the countdown moves to the next one. Times are IST.
+// Dates and venues come from src/data/batches.ts (positioning rework); this
+// adds the daily times the countdown and Google Calendar link need. A dated
+// batch disappears from the page after `endISO` (its last day, 6 pm IST)
+// and the countdown moves to the next one. Times are IST.
 export type TelepathyBatch = {
   id: TelepathyBatchId
-  /** First day 9:30 am — null while the date is shared on WhatsApp. */
+  /** First day 9:30 am — null while the date is not fixed. */
   startISO: string | null
   /** Last day 6 pm — after this the batch is hidden. null = always shown. */
   endISO: string | null
@@ -104,28 +117,26 @@ export type TelepathyBatch = {
   calendarLocation: string
 }
 
-export const TELEPATHY_BATCHES: readonly TelepathyBatch[] = [
-  {
-    id: 'mumbai',
-    startISO: '2026-11-14T09:30:00+05:30',
-    endISO: '2026-11-15T18:00:00+05:30',
-    days: 2,
-    dailyStart: '09:30',
-    dailyEnd: '18:00',
-    calendarLocation: 'Hotel Better Home International, Sahar Road, Opp. Andheri East Railway Station, Andheri East, Mumbai',
-  },
-  {
-    id: 'ahmedabad',
-    startISO: '2026-11-21T09:30:00+05:30',
-    endISO: '2026-11-22T18:00:00+05:30',
-    days: 2,
-    dailyStart: '09:30',
-    dailyEnd: '18:00',
-    calendarLocation: 'Hotel Silver Cloud, Ashram Road, Ahmedabad',
-  },
-  { id: 'vadodara', startISO: null, endISO: null, days: 2, dailyStart: '09:30', dailyEnd: '18:00', calendarLocation: '' },
-  { id: 'pune', startISO: null, endISO: null, days: 2, dailyStart: '09:30', dailyEnd: '18:00', calendarLocation: '' },
-]
+const DAILY_START = '09:30'
+const DAILY_END = '18:00'
+
+function toTelepathyBatch(id: TelepathyBatchId): TelepathyBatch {
+  const data = telepathyBatchData(id)
+  const startDate = data?.startDate ?? null
+  const endDate = data?.endDate ?? null
+  const days = startDate !== null && endDate !== null ? Math.round((Date.parse(endDate) - Date.parse(startDate)) / 86_400_000) + 1 : 2
+  return {
+    id,
+    startISO: startDate === null ? null : `${startDate}T${DAILY_START}:00+05:30`,
+    endISO: endDate === null ? null : `${endDate}T${DAILY_END}:00+05:30`,
+    days,
+    dailyStart: DAILY_START,
+    dailyEnd: DAILY_END,
+    calendarLocation: startDate !== null && data?.venueEn !== undefined ? `${data.venueEn}, ${CITY_EN[id]}` : '',
+  }
+}
+
+export const TELEPATHY_BATCHES: readonly TelepathyBatch[] = (['mumbai', 'ahmedabad', 'vadodara', 'pune'] as const).map(toTelepathyBatch)
 
 // ── Videos ──────────────────────────────────────────────────────────
 // 11-character YouTube IDs (after "watch?v=", "youtu.be/" or "/shorts/").

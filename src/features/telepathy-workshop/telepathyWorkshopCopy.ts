@@ -10,6 +10,10 @@
 
 export type Bi = { en: string; hi: string }
 
+// Positioning rework: lines that exist only in Hindi (copy/telepathy.md has
+// no English text) show the same Hindi text in both languages.
+const hiOnly = (text: string): Bi => ({ en: text, hi: text })
+
 export const telepathyCopy = {
   meta: {
     title: {
@@ -17,8 +21,8 @@ export const telepathyCopy = {
       hi: 'Telepathy और Intuition वर्कशॉप — डॉ. कपिल देव शर्मा के साथ 2 दिन (ऑफ़लाइन) | Mind Ur Mind',
     },
     description: {
-      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day offline workshop researched, developed and taught by Dr. Kapil Dev Sharma — to 10,000+ people over 12 years, with 300+ video reviews. {price} (earlier {earlier}); book your seat for {deposit}. Mumbai, Ahmedabad, Vadodara, Pune. Limited seats.',
-      hi: '2 दिन की ऑफ़लाइन वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — डॉ. कपिल देव शर्मा की रिसर्च से बनी, 12 साल में 10,000+ लोगों को सिखाई गई, 300+ वीडियो रिव्यू। फ़ीस {price} (पहले {earlier}); {deposit} देकर seat book करें। मुंबई, अहमदाबाद, वडोदरा, पुणे। सीमित seats।',
+      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day offline workshop researched, developed and taught by Dr. Kapil Dev Sharma — to thousands of people since 2017, with 300+ video reviews. {price} (earlier {earlier}); book your seat for {deposit}. Mumbai, Ahmedabad, Vadodara, Pune. Limited seats.',
+      hi: '2 दिन की ऑफ़लाइन वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — डॉ. कपिल देव शर्मा की रिसर्च से बनी, 2017 से हज़ारों लोगों को सिखाई गई, 300+ वीडियो रिव्यू। फ़ीस {price} (पहले {earlier}); {deposit} देकर seat book करें। मुंबई, अहमदाबाद, वडोदरा, पुणे। सीमित seats।',
     },
   },
 
@@ -42,22 +46,34 @@ export const telepathyCopy = {
   hero: {
     eyebrow: { en: '2-DAY OFFLINE EXPERIENTIAL WORKSHOP · MUMBAI · AHMEDABAD · VADODARA · PUNE', hi: '2 दिन की ऑफ़लाइन अनुभव-आधारित वर्कशॉप · मुंबई · अहमदाबाद · वडोदरा · पुणे' },
     workshopName: { en: 'The Telepathy Workshop™', hi: 'The Telepathy Workshop™' },
-    headline: { en: 'The Guru You Are Searching For Is Already Inside You', hi: 'जिस गुरु को आप बाहर खोज रहे हैं, वह आपके भीतर ही है' },
+    // Positioning rework: new H1 (copy/telepathy.md); the old H1 is now the subtitle.
+    headline: hiOnly('2 दिन में टेलीपैथी, इनट्यूशन और हार्ट-ब्रेन कोहेरेंस — लाइव, स्क्रीन पर सबूत के साथ।'),
+    subtitle: { en: 'The Guru You Are Searching For Is Already Inside You', hi: 'जिस गुरु को आप बाहर खोज रहे हैं, वह आपके भीतर ही है' },
     subheadline: {
-      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day workshop researched, developed and taught by Dr. Kapil Dev Sharma — to 10,000+ people over 12 years.',
-      hi: '2 दिन की वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — जिसे डॉ. कपिल देव शर्मा ने खुद रिसर्च करके बनाया है और 12 साल में 10,000+ लोगों को सिखाया है।',
+      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day workshop researched, developed and taught by Dr. Kapil Dev Sharma — to thousands of people since 2017.',
+      hi: '2 दिन की वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — जिसे डॉ. कपिल देव शर्मा ने खुद रिसर्च करके बनाया है और 2017 से हज़ारों लोगों को सिखाया है।',
     },
     seats: { en: 'Limited seats per batch', hi: 'हर batch में सीमित seats' },
     watchCta: { en: '▶ Watch the free session', hi: '▶ Free session देखें' },
     imageAlt: { en: 'Participants at The Telepathy Workshop', hi: 'The Telepathy Workshop में प्रतिभागी' },
   },
 
+  // One-line strip right under the hero → /telepathy-workshop/online.
+  onlineStrip: {
+    lead: hiOnly('शहर तक नहीं आ सकते?'),
+    text: hiOnly('3 शाम का ऑनलाइन संस्करण है — ₹3,999।'),
+    link: hiOnly('ऑनलाइन देखिए'),
+  },
+
+  // One line after the traders section.
+  originLine: hiOnly('यह वर्कशॉप 2016 के बाद बना — हिमालय से लौटने के बाद। जो अंदर हुआ था, उसे दूसरों के लिए विधि में बदलना।'),
+
   // ── B. Trust strip ────────────────────────────────────────────────
   trust: [
-    { value: '12', label: { en: 'years of workshops', hi: 'साल से वर्कशॉप' } },
-    { value: '10,000+', label: { en: 'people trained', hi: 'लोग प्रशिक्षित' } },
-    { value: '300+', label: { en: 'video reviews', hi: 'वीडियो रिव्यू' } },
-    { value: '4', label: { en: 'cities', hi: 'शहर' } },
+    { value: { en: 'Since 2017', hi: '2017 से' }, label: { en: 'workshops', hi: 'वर्कशॉप' } },
+    { value: { en: 'Thousands', hi: 'हज़ारों' }, label: { en: 'people trained', hi: 'लोग प्रशिक्षित' } },
+    { value: { en: '300+', hi: '300+' }, label: { en: 'video reviews', hi: 'वीडियो रिव्यू' } },
+    { value: { en: '4', hi: '4' }, label: { en: 'cities', hi: 'शहर' } },
   ],
 
   // ── C. Free session video ─────────────────────────────────────────
@@ -102,21 +118,21 @@ export const telepathyCopy = {
 
   // Traders (kept from the earlier page, with its disclaimer).
   traders: {
-    heading: { en: "For Traders: Your Chart Doesn't Take the Trade. Your Mind Does.", hi: 'ट्रेडर्स: ट्रेड चार्ट नहीं लेता, आपका दिमाग लेता है।' },
+    heading: { en: "For Traders: Your Chart Doesn't Take the Trade. Your Mind Does.", hi: 'ट्रेडर्स के लिए — चार्ट नहीं, दिमाग़' },
     body: {
       en: 'Most trading mistakes come from fear and greed, not from lack of knowledge. Fear makes you exit early. Greed makes you stay too long.',
-      hi: 'ज़्यादातर ट्रेडिंग गलतियाँ जानकारी की कमी से नहीं, डर और लालच से होती हैं। डर में आप जल्दी exit करते हैं। लालच में ज़रूरत से ज़्यादा देर रुकते हैं।',
+      hi: 'ज़्यादातर ट्रेडिंग गलतियाँ ज्ञान की कमी से नहीं होतीं। डर से होती हैं, और लालच से। डर जल्दी निकाल देता है। लालच ज़्यादा रोक लेता है।',
     },
-    listIntro: { en: 'In this workshop you learn to:', hi: 'इस वर्कशॉप में आप सीखते हैं:' },
+    listIntro: { en: 'In this workshop you learn to:', hi: 'यहाँ सीखते हैं:' },
     items: [
-      { en: 'Stay calm when the market moves against you', hi: 'मार्केट उल्टा चले, तब भी शांत रहना' },
-      { en: 'Recognise fear and greed before they act for you', hi: 'डर और लालच को उनके हावी होने से पहले पहचानना' },
-      { en: 'Combine your analysis with your intuition', hi: 'अपने analysis और intuition को साथ में इस्तेमाल करना' },
-      { en: 'Pause before an impulsive trade', hi: 'impulsive ट्रेड से पहले रुककर सोचना' },
+      { en: 'Stay calm when the market moves against you', hi: 'बाज़ार उलटा जाने पर शांत रहना' },
+      { en: 'Recognise fear and greed before they act for you', hi: 'डर और लालच को हाथ लगाने से पहले पहचानना' },
+      { en: 'Combine your analysis with your intuition', hi: 'अपनी एनालिसिस को अपने अंदर की आवाज़ से मिलाना' },
+      { en: 'Pause before an impulsive trade', hi: 'जल्दबाज़ी के ट्रेड से पहले एक सेकंड रुकना' },
     ],
     note: {
       en: 'This workshop does not give trading tips or investment advice. It works on the mind that makes the decision.',
-      hi: 'यह वर्कशॉप ट्रेडिंग टिप्स या निवेश सलाह नहीं देती। यह उस दिमाग पर काम करती है जो फ़ैसला लेता है।',
+      hi: 'कोई टिप नहीं, कोई निवेश सलाह नहीं। काम सिर्फ दिमाग़ पर है।',
     },
     imageAlt: { en: 'A trader looking at market charts', hi: 'मार्केट चार्ट देखता एक ट्रेडर' },
   },
@@ -218,7 +234,7 @@ export const telepathyCopy = {
 
   // ── I. Workshop photos ────────────────────────────────────────────
   gallery: {
-    heading: { en: 'Moments From 12 Years of Workshops', hi: '12 साल की वर्कशॉप की झलकियाँ' },
+    heading: { en: 'Moments From Workshops Since 2017', hi: '2017 से वर्कशॉप की झलकियाँ' },
     imageAlt: { en: 'A moment from The Telepathy Workshop', hi: 'The Telepathy Workshop का एक पल' },
     cities: {
       mumbai: { en: 'Mumbai', hi: 'मुंबई' },
@@ -245,8 +261,8 @@ export const telepathyCopy = {
         hi: 'डॉ. कपिल देव शर्मा Mind Ur Mind के संस्थापक हैं, और दो दशक से ज़्यादा अनुभव वाले मन, दिमाग और ध्यान के कोच हैं।',
       },
       {
-        en: 'He researched and developed this workshop himself and has been teaching it for 12 years. In that time, more than 10,000 people have learned Telepathy, Intuition and Cosmic Fusion from him, making him one of the pioneers of teaching these skills in India. Participants have shared their experience in 300+ video reviews.',
-        hi: 'यह वर्कशॉप उन्होंने खुद रिसर्च करके विकसित की है और पिछले 12 साल से सिखा रहे हैं। इस दौरान 10,000 से ज़्यादा लोग उनसे Telepathy, Intuition और Cosmic Fusion सीख चुके हैं, और वो भारत में इन skills को सिखाने वाले अग्रणी लोगों में से एक हैं। प्रतिभागियों ने 300+ वीडियो रिव्यू में अपना अनुभव साझा किया है।',
+        en: 'He researched and developed this workshop himself and has been teaching it since 2017. In that time, thousands of people have learned Telepathy, Intuition and Cosmic Fusion from him, making him one of the pioneers of teaching these skills in India. Participants have shared their experience in 300+ video reviews.',
+        hi: 'यह वर्कशॉप उन्होंने खुद रिसर्च करके विकसित की है और 2017 से सिखा रहे हैं। इस दौरान हज़ारों लोग उनसे Telepathy, Intuition और Cosmic Fusion सीख चुके हैं, और वो भारत में इन skills को सिखाने वाले अग्रणी लोगों में से एक हैं। प्रतिभागियों ने 300+ वीडियो रिव्यू में अपना अनुभव साझा किया है।',
       },
     ],
     imageAlt: { en: 'Dr. Kapil Dev Sharma teaching a workshop', hi: 'वर्कशॉप में सिखाते हुए डॉ. कपिल देव शर्मा' },
@@ -258,33 +274,20 @@ export const telepathyCopy = {
     sub: { en: 'Same timings and inclusions in every city.', hi: 'हर शहर में समय और सुविधाएँ एक जैसी।' },
     datesLabel: { en: 'Dates', hi: 'तारीख़' },
     venueLabel: { en: 'Venue', hi: 'स्थान' },
-    // id must match TELEPATHY_BATCHES in telepathyWorkshopConfig.ts (dates there hide a batch after it ends).
+    // id must match TELEPATHY_BATCHES in telepathyWorkshopConfig.ts. Dates and
+    // venues come from src/data/batches.ts (positioning rework).
     cities: [
-      {
-        id: 'mumbai',
-        city: { en: 'Mumbai', hi: 'मुंबई' },
-        dates: { en: '14–15 Nov 2026 (Sat–Sun)', hi: '14–15 नवंबर 2026 (शनि–रवि)' },
-        venue: { en: 'Hotel Better Home International, Sahar Road, opp. Andheri East Railway Station, Andheri East', hi: 'होटल बेटर होम इंटरनेशनल, सहार रोड, अंधेरी ईस्ट रेलवे स्टेशन के सामने, अंधेरी ईस्ट' },
-      },
-      {
-        id: 'ahmedabad',
-        city: { en: 'Ahmedabad', hi: 'अहमदाबाद' },
-        dates: { en: '21–22 Nov 2026 (Sat–Sun)', hi: '21–22 नवंबर 2026 (शनि–रवि)' },
-        venue: { en: 'Hotel Silver Cloud, Ashram Road', hi: 'होटल सिल्वर क्लाउड, आश्रम रोड' },
-      },
-      {
-        id: 'vadodara',
-        city: { en: 'Vadodara', hi: 'वडोदरा' },
-        dates: { en: 'Date on WhatsApp', hi: 'तारीख़ WhatsApp पर' },
-        venue: { en: 'Venue on WhatsApp', hi: 'स्थान WhatsApp पर' },
-      },
-      {
-        id: 'pune',
-        city: { en: 'Pune', hi: 'पुणे' },
-        dates: { en: 'Date on WhatsApp', hi: 'तारीख़ WhatsApp पर' },
-        venue: { en: 'Venue on WhatsApp', hi: 'स्थान WhatsApp पर' },
-      },
+      { id: 'mumbai', city: { en: 'Mumbai', hi: 'मुंबई' } },
+      { id: 'ahmedabad', city: { en: 'Ahmedabad', hi: 'अहमदाबाद' } },
+      { id: 'vadodara', city: { en: 'Vadodara', hi: 'वडोदरा' } },
+      { id: 'pune', city: { en: 'Pune', hi: 'पुणे' } },
     ],
+    // The ₹1,000 line, large (copy/telepathy.md): bold part, then the rest.
+    depositLead: hiOnly('सीट ₹1,000 पर पक्की होती है।'),
+    depositRest: hiOnly('बाकी ₹4,999 मौके पर (UPI या नकद)। ₹1,000 वापस नहीं मिलते, पर अगली बैच में टल सकते हैं।'),
+    // Vadodara card button (copy/telepathy.md).
+    vadodaraBook: hiOnly('सीट पक्की कीजिए'),
+    mapsLink: hiOnly('Google Maps में खोलिए'),
     infoTime: { en: '9:30 am – 6:00 pm (both days)', hi: 'सुबह 9:30 – शाम 6:00 (दोनों दिन)' },
     infoMeals: { en: 'Breakfast, lunch & high tea included', hi: 'नाश्ता, लंच और हाई टी शामिल' },
     calendarLink: { en: 'Add to Google Calendar', hi: 'Google Calendar में जोड़ें' },
@@ -336,11 +339,9 @@ export const telepathyCopy = {
         a: { en: 'No. Everything is taught from the beginning.', hi: 'नहीं। सब कुछ शुरुआत से सिखाया जाता है।' },
       },
       {
-        q: { en: 'Is this available online?', hi: 'क्या यह ऑनलाइन भी है?' },
-        a: {
-          en: 'No. It is offline only, because the practical exercises and the Muse 2 experience happen in person.',
-          hi: 'नहीं। यह सिर्फ़ ऑफ़लाइन है, क्योंकि practical अभ्यास और Muse 2 का अनुभव आमने-सामने ही होता है।',
-        },
+        // Positioning rework: new answer from copy/telepathy.md (Hindi only).
+        q: hiOnly('ऑनलाइन उपलब्ध है?'),
+        a: hiOnly('हाँ, 3 शाम का ऑनलाइन संस्करण ₹3,999 में। पर Muse 2 का लाइव डेमो और कॉस्मिक फ्यूजन सिर्फ ऑफलाइन में है — पूरा अनुभव चाहिए तो ऑफलाइन बैच चुनिए।'),
       },
       {
         q: { en: 'Is this a trading course?', hi: 'क्या यह ट्रेडिंग कोर्स है?' },
@@ -351,11 +352,11 @@ export const telepathyCopy = {
       },
       {
         q: { en: 'Can I change my batch?', hi: 'क्या batch बदला जा सकता है?' },
-        a: { en: 'Message us on WhatsApp — the team will help you with your options.', hi: 'हमें WhatsApp पर मैसेज करें — टीम आपको विकल्पों के बारे में बताएगी।' },
+        a: { en: 'Message us on WhatsApp. Dr. Kapil replies himself, within 24 hours.', hi: 'हमें WhatsApp पर मैसेज करें। डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।' },
       },
       {
         q: { en: 'What if I miss a day?', hi: 'अगर एक दिन छूट जाए तो?' },
-        a: { en: 'Message us on WhatsApp — the team will help you with your options.', hi: 'हमें WhatsApp पर मैसेज करें — टीम आपको विकल्पों के बारे में बताएगी।' },
+        a: { en: 'Message us on WhatsApp. Dr. Kapil replies himself, within 24 hours.', hi: 'हमें WhatsApp पर मैसेज करें। डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।' },
       },
       {
         q: { en: 'Are meals included?', hi: 'क्या खाना शामिल है?' },

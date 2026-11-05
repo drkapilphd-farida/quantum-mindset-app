@@ -24,9 +24,10 @@ export function HeroSection({ lang }: { lang: Lang }): React.JSX.Element {
         <p lang="en" className="mt-5 text-[15px] font-bold uppercase tracking-[0.06em] text-ink">
           {pick(c.workshopName, lang)}
         </p>
-        <h1 id="tw-hero-heading" className="tw-h1 mx-auto mt-3 max-w-[20ch] text-ink">
+        <h1 id="tw-hero-heading" className="tw-h1 mx-auto mt-3 max-w-[24ch] text-ink">
           {pick(c.headline, lang)}
         </h1>
+        <p className="tw-h2 mx-auto mt-5 max-w-[30ch] text-ink">{pick(c.subtitle, lang)}</p>
         <p className="tw-body mx-auto mt-6 max-w-2xl">{pick(c.subheadline, lang)}</p>
 
         <p className="mt-8 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
