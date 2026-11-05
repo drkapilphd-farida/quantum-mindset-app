@@ -16,7 +16,8 @@ export const homeV2 = {
   },
   hero: {
     strip: { hi: '2017 से टेलीपैथी वर्कशॉप · 300+ वीडियो रिव्यू · 12 साल से सिखा रहे हैं', en: 'Telepathy workshop since 2017 · 300+ video reviews · 12 years of teaching' },
-    h1: { hi: 'मन की वो ताकत, जो आपके अंदर पहले से है — अब जगाइए', en: 'The power already inside your mind — now awaken it' },
+    // Phase 5: new H1 (owner).
+    h1: { hi: 'टेलीपैथी सीखिए — और उसके पीछे की मन की ताकत', en: 'Learn telepathy — and the mind power behind it' },
     sub: {
       hi: 'टेलीपैथी से अपनी बात बिना कहे पहुँचाइए, इनट्यूशन से सही फैसले लीजिए, हार्ट-ब्रेन कोहेरेंस से डर उतारिए, और कॉस्मिक फ्यूजन से ऊर्जा भरिए — 2 दिन का लाइव वर्कशॉप, मुंबई, अहमदाबाद, वडोदरा में या घर से ऑनलाइन।',
       en: 'Send your message without words through telepathy, decide right with intuition, drop fear with heart-brain coherence, and refill your energy with Cosmic Fusion — a 2-day live workshop in Mumbai, Ahmedabad, Vadodara, or online from home.',
