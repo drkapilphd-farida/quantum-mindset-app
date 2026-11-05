@@ -30,9 +30,11 @@ const WORDPRESS_REDIRECTS: Redirect[] = [
   ['/personalclass', '/mentoring/personal-class'],
   ['/workshops', '/#upcoming'],
   ['/anxiety', '/mentoring/overthinking-course'],
-  ['/telepathy', '/'],
-  ['/telepathycourse', '/'],
-  ['/about-us-telepathy', '/'],
+  // Positioning rework (Phase 0): the Telepathy Workshop is back on the site.
+  ['/telepathy', '/telepathy-workshop'],
+  ['/telepathycourse', '/telepathy-workshop'],
+  ['/telepathy-mind-reading-offline', '/telepathy-workshop'],
+  ['/about-us-telepathy', '/about'],
   ['/free', '/'],
   ['/elementor-landing-page-1483', '/'],
 ].map(([source, destination]) => ({ source: source as string, destination: destination as string, statusCode: 301 as const }))
@@ -87,8 +89,9 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   },
   { source: '/preview/learning-projects/:id/quantum-journey', destination: '/preview/learning-projects/:id/learning-journey', statusCode: 301 },
   // Old WordPress site (still in Google's index, 28 Sep 2026): each URL to
-  // the closest current page. Discontinued topics (telepathy etc.) go to the
-  // homepage rather than to a program they would misdescribe. /courses is
-  // left alone — that path is a real (legacy) page on this site.
+  // the closest current page; the old telepathy URLs go to
+  // /telepathy-workshop. /courses is left alone — that path is a real
+  // (legacy) page on this site. With or without a trailing slash: Next.js
+  // first strips the slash (308), then this 301 applies.
   ...WORDPRESS_REDIRECTS,
 ]

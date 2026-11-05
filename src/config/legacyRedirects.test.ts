@@ -9,9 +9,16 @@ describe('legacy redirects', () => {
     expect(find('/testimonials')).toMatchObject({ destination: '/#proof', statusCode: 301 })
     expect(find('/personalclass')).toMatchObject({ destination: '/mentoring/personal-class', statusCode: 301 })
     expect(find('/anxiety')).toMatchObject({ destination: '/mentoring/overthinking-course', statusCode: 301 })
-    for (const old of ['/telepathy', '/telepathycourse', '/about-us-telepathy', '/free', '/elementor-landing-page-1483']) {
+    for (const old of ['/free', '/elementor-landing-page-1483']) {
       expect(find(old)).toMatchObject({ destination: '/', statusCode: 301 })
     }
+  })
+
+  it('sends the old telepathy URLs to the Telepathy Workshop page (positioning rework)', () => {
+    for (const old of ['/telepathy', '/telepathycourse', '/telepathy-mind-reading-offline']) {
+      expect(find(old)).toMatchObject({ destination: '/telepathy-workshop', statusCode: 301 })
+    }
+    expect(find('/about-us-telepathy')).toMatchObject({ destination: '/about', statusCode: 301 })
   })
 
   it('never redirects /courses, which is a real page on this site', () => {
