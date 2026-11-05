@@ -4,7 +4,7 @@ import Footer from '@/components/Footer'
 import { LanguageOverride } from '@/context/LanguageContext'
 import { TELEPATHY_WORKSHOP_FEE } from '@/config/site.config'
 import { FALLBACK_HI, labelHiNoYear, upcomingBatch, weekdaysHi, type Batch } from '@/data/batches'
-import { LINKS, VADODARA_MAPS_EMBED, VADODARA_MAPS_SEARCH, waLink } from '@/data/links'
+import { LINKS, waLink } from '@/data/links'
 import { PageHero } from '@/features/telepathy-workshop/components/PageHero'
 import { BookSeatLink } from '@/features/telepathy-workshop/components/WhatsAppLink'
 import { CheckDot, GOLD_BUTTON, Heading, Section } from '@/features/telepathy-workshop/components/ui'
@@ -12,10 +12,13 @@ import { vadodaraCopy as c } from './vadodaraCopy'
 
 // /vadodara — local landing page for the Vadodara Telepathy Workshop batch
 // (Hindi, copy/vadodara.md), built from the /telepathy-workshop page's own
-// pieces. The batch (date, time, venue, price, ₹1,000 deposit) comes from
+// pieces. The batch (date, time, price, ₹1,000 deposit) comes from
 // src/data/batches.ts; once it is over, the "next date soon" line shows.
 // Booking → LINKS.rzpTelepathyDeposit1000 (same tab, so Razorpay brings the
 // visitor back to /telepathy-workshop/booked).
+//
+// Phase 4.2: no hotel, station or map anywhere — venue, timing and
+// directions are sent on WhatsApp after booking.
 //
 // "वडोदरा में पहले कौन आया" (3 local video reviews) reads only from
 // src/data/reviews.csv, which is not in the repo yet — so that section is
@@ -63,11 +66,6 @@ function BatchBlock({ batch }: { batch: Batch | null }): React.JSX.Element {
             <dt className="inline font-bold">{c.batch.timeLabel}</dt> <dd className="inline">{`${batch.timeHi}, ${c.batch.bothDays}`}</dd>
           </div>
         )}
-        {batch.venueHi !== undefined && (
-          <div>
-            <dt className="inline font-bold">{c.batch.venueLabel}</dt> <dd className="inline">{`${batch.venueHi}, ${c.batch.city}`}</dd>
-          </div>
-        )}
       </dl>
       <p className="mt-4 text-[16px] leading-relaxed text-ink-dim">
         {fill(c.batch.priceLine, m)} <strong className="text-ink">{fill(c.batch.depositLine, m)}</strong> {c.batch.meals}
@@ -80,7 +78,6 @@ function BatchBlock({ batch }: { batch: Batch | null }): React.JSX.Element {
 export function VadodaraPage(): React.JSX.Element {
   const batch = upcomingBatch('vadodara')
   const dates = batch === null ? null : labelHiNoYear(batch)
-  const venueName = batch?.venueHi?.split(',')[0] ?? ''
   return (
     <LanguageOverride lang="hi">
       <div className="warm-light tw-page min-h-screen font-sans antialiased" data-lang="hi" lang="hi">
@@ -97,19 +94,6 @@ export function VadodaraPage(): React.JSX.Element {
               {c.batch.dateLabel}
             </h2>
             <BatchBlock batch={batch} />
-          </Section>
-
-          <Section tint labelledBy="vd-why">
-            <div className="mx-auto grid max-w-4xl gap-10 md:grid-cols-2">
-              <div>
-                <Heading id="vd-why">{c.why.heading}</Heading>
-                <p className="tw-body mt-4">{c.why.body}</p>
-              </div>
-              <div>
-                <h2 className="tw-h2 text-ink">{c.station.heading}</h2>
-                <p className="tw-body mt-4">{c.station.body}</p>
-              </div>
-            </div>
           </Section>
 
           <Section labelledBy="vd-forwho">
@@ -149,27 +133,13 @@ export function VadodaraPage(): React.JSX.Element {
             </div>
           </Section>
 
-          <Section labelledBy="vd-map">
-            <h2 id="vd-map" className="sr-only">
-              {c.map.title}
-            </h2>
-            <div className="tw-frame overflow-hidden rounded-sm">
-              <iframe src={VADODARA_MAPS_EMBED} title={c.map.title} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="block h-[360px] w-full border-0" />
-            </div>
-            <p className="mt-4 text-center">
-              <a href={VADODARA_MAPS_SEARCH} target="_blank" rel="noopener noreferrer" className="text-[16px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
-                {c.map.open}
-              </a>
-            </p>
-          </Section>
-
           <Section tint labelledBy="vd-final">
             <div className="mx-auto max-w-2xl text-center">
               {batch === null || dates === null ? (
                 <Fallback />
               ) : (
                 <>
-                  <Heading id="vd-final">{fill(c.finalCta.heading, { dates, venue: venueName })}</Heading>
+                  <Heading id="vd-final">{fill(c.finalCta.heading, { dates })}</Heading>
                   <p className="tw-body mt-4">{fill(c.finalCta.body, money(batch))}</p>
                   <BookButton location="vadodara_final_cta" className="mt-6 w-full max-w-sm" />
                 </>

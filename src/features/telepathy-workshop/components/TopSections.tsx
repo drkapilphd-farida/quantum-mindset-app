@@ -1,5 +1,4 @@
 import type { Lang } from '@/lib/i18n'
-import Link from 'next/link'
 import { FREE_SESSION_VIDEO, TELEPATHY_IMAGES } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
@@ -62,22 +61,7 @@ export function WhoForSection({ lang }: { lang: Lang }): React.JSX.Element {
   )
 }
 
-// Positioning rework: one-line strip right under the hero → the online version.
-export function OnlineStrip({ lang }: { lang: Lang }): React.JSX.Element {
-  const c = telepathyCopy.onlineStrip
-  return (
-    <div className="border-b border-line bg-gold-soft px-5 py-4 sm:px-8">
-      <p className="mx-auto max-w-content text-center text-[16px] leading-snug text-ink">
-        <strong>{pick(c.lead, lang)}</strong> {pick(c.text, lang)}{' '}
-        <Link href="/telepathy-workshop/online" className="whitespace-nowrap font-semibold text-gold underline underline-offset-4">
-          → {pick(c.link, lang)}
-        </Link>
-      </p>
-    </div>
-  )
-}
-
-// Traders (moved up, right after the online strip — positioning rework).
+// Traders (#traders — the "traders" why-card links here). Phase 4.2: after the Muse 2 section.
 export function TradersSection({ lang }: { lang: Lang }): React.JSX.Element {
   const t = telepathyCopy.traders
   return (
@@ -100,14 +84,5 @@ export function TradersSection({ lang }: { lang: Lang }): React.JSX.Element {
         <Photo src={TELEPATHY_IMAGES.trader} alt={pick(t.imageAlt, lang)} sizes="(min-width: 1024px) 520px, 100vw" className="order-1 aspect-[4/3] lg:order-2" />
       </div>
     </Section>
-  )
-}
-
-// One line after the traders section: where the workshop came from.
-export function OriginLine({ lang }: { lang: Lang }): React.JSX.Element {
-  return (
-    <div className="border-b border-line bg-void px-5 py-10 sm:px-8">
-      <p className="tw-body mx-auto max-w-2xl text-center !text-ink">{pick(telepathyCopy.originLine, lang)}</p>
-    </div>
   )
 }

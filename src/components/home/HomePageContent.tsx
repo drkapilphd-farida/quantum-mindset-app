@@ -7,32 +7,31 @@ import { homeCopy } from '@/lib/homeCopy'
 import SiteNav from '@/components/site/SiteNav'
 import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
 import HomeHero from '@/components/home/HomeHero'
-import HomeProblems from '@/components/home/HomeProblems'
-import HomeStartFree from '@/components/home/HomeStartFree'
 import HomeProof from '@/components/home/HomeProof'
-import HomeHowWeWork from '@/components/home/HomeHowWeWork'
-import HomeAbout from '@/components/home/HomeAbout'
 import HomePodcastFeature from '@/components/HomePodcastFeature'
-import HomeUpcoming from '@/components/home/HomeUpcoming'
-import HomeOrganisations from '@/components/home/HomeOrganisations'
 import HomeFaq from '@/components/home/HomeFaq'
+import { HomeBenefits, HomeFranchiseStrip, HomeJourney, HomeMuse, HomeOverthinkingStrip, HomeSharpBrainStrip } from '@/components/home/HomeV2Sections'
+import { DateCards } from '@/features/telepathy-workshop/components/DateCards'
+import { ProofSection } from '@/features/telepathy-workshop/components/V2Sections'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
-import { upcomingEvents } from '@/config/site.config'
 import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 
 // The homepage, shared by `/` (Hindi) and `/en` (English) — positioning
 // rework. LanguageOverride fixes the page's language whatever language is
 // stored (the stored choice, shared with the app, is left alone).
-// Problem-first homepage (site-rebuild Phase 4): who Dr. Kapil Dev Sharma
-// is, which problem he solves for the visitor, and the first step — in
-// that order. All names, stats, prices and links come from site.config.ts.
+// Phase 4.2 order (copy/home-v2.md): hero → what changes after 2 days →
+// date cards (#dates) → proof (3 telepathy videos, then the existing video
+// reviews) → Muse 2 → the journey ahead → Sharp Brain strip (its
+// early-bird price/timer lives only there) → overthinking strip → podcast
+// → FAQ → franchise strip → footer. The old #solve 4-card section and the
+// other old sections are no longer rendered.
 export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Element {
   const organizationSchema = buildOrganizationSchema()
   const personSchema = buildPersonSchema()
   const faqSchema = buildFaqPageSchema(homeCopy.en.faq.items)
-  const events = upcomingEvents().slice(0, 2)
+  const renderedAt = Date.now()
 
   return (
     <LanguageOverride lang={lang}>
@@ -44,17 +43,21 @@ export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Ele
         <SiteNav />
         <main>
           <HomeHero />
-          <SharpBrainPricingProvider initial={pricingSnapshot(Date.now())}>
-            <HomeProblems />
-          </SharpBrainPricingProvider>
-          <HomeStartFree />
+          <HomeBenefits />
+          <DateCards lang={lang} renderedAt={renderedAt} id="dates" />
+          <div className="tw-page" data-lang={lang}>
+            <ProofSection lang={lang} tint={false} />
+          </div>
           <HomeProof />
-          <HomeHowWeWork />
-          <HomeAbout />
+          <HomeMuse />
+          <HomeJourney />
+          <SharpBrainPricingProvider initial={pricingSnapshot(renderedAt)}>
+            <HomeSharpBrainStrip />
+          </SharpBrainPricingProvider>
+          <HomeOverthinkingStrip />
           <HomePodcastFeature />
-          <HomeUpcoming initial={events} />
-          <HomeOrganisations />
           <HomeFaq />
+          <HomeFranchiseStrip />
         </main>
         <Footer />
         <WhatsAppWidget bottomClassName="bottom-24 sm:bottom-7" autoDismissBubbleMs={6000} revealAfterElementId="top" />

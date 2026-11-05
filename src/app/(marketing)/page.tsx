@@ -1,16 +1,12 @@
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/seo/metadata'
-import { trainer } from '@/config/site.config'
+import { homeV2 } from '@/lib/homeV2Copy'
 import HomePageContent from '@/components/home/HomePageContent'
 
-// Site-rebuild Phase 1 — homepage now leads with the founder/brand
-// identity (per explicit brief) rather than the QSR-flagship-only
-// framing the previous title/description used; the QSR program itself
-// is still the first product featured on the page and keeps its own
-// title/description on its own /programs/sharp-brain route.
-const homeTitle = 'Dr. Kapil Dev Sharma — Brain, Mind & Meditation Coach | Mind Ur Mind'
-const homeDescription =
-  `${trainer.name} — brain, mind and meditation coach with ${trainer.years.total} years in education and mind training. Sharp Brain, overthinking reset, meditation retreats, 1-on-1 coaching and corporate brain performance workshops.`
+// Phase 4.2: title from copy/meta.md, description from the Phase 4.2
+// prompt (all cities + online, no hotel). Keywords unchanged.
+const homeTitle = homeV2.meta.title.hi
+const homeDescription = homeV2.meta.description.hi
 
 export const metadata: Metadata = {
   ...buildPageMetadata({

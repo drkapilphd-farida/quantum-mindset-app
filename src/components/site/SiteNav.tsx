@@ -33,10 +33,13 @@ const LANGUAGE_LINKS: Record<string, NavLink> = {
 export default function SiteNav({
   cta,
   showLanguageToggle = true,
+  languageLink: pageLanguageLink,
 }: {
   cta?: SiteNavCta;
   /** False hides the "English" / "हिंदी" link (shown only on `/` and `/en`). */
   showLanguageToggle?: boolean;
+  /** A page's own language link (e.g. /telepathy-workshop ↔ ?lang=en). */
+  languageLink?: NavLink;
 }): React.JSX.Element {
   const { lang } = useLanguage();
   const pathname = usePathname();
@@ -46,7 +49,7 @@ export default function SiteNav({
   const navRef = useRef<HTMLElement>(null);
 
   const button: SiteNavCta = cta ?? siteNavCta(lang);
-  const languageLink = showLanguageToggle ? LANGUAGE_LINKS[pathname] : undefined;
+  const languageLink = !showLanguageToggle ? undefined : (pageLanguageLink ?? LANGUAGE_LINKS[pathname]);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent): void {
@@ -78,7 +81,7 @@ export default function SiteNav({
 
         <div className="flex items-center gap-2.5 sm:gap-3">
           {languageLink !== undefined && (
-            <Link href={languageLink.href} lang={languageLink.href === "/" ? "hi" : "en"} className="rounded-sm px-2 py-1.5 text-[13px] font-semibold text-ink underline decoration-gold/60 underline-offset-4 hover:decoration-gold">
+            <Link href={languageLink.href} lang={languageLink.label === "English" ? "en" : "hi"} className="rounded-sm px-2 py-1.5 text-[13px] font-semibold text-ink underline decoration-gold/60 underline-offset-4 hover:decoration-gold">
               {languageLink.label}
             </Link>
           )}

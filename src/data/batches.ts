@@ -156,3 +156,26 @@ export function dayRange(batch: Batch): string {
   const day = (iso: string): number => Number(iso.slice(8, 10))
   return `${day(batch.startDate)}–${day(batch.endDate)}`
 }
+
+const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as const
+const WEEKDAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const
+
+/** "नवंबर" / "November" — the month a dated batch starts in ('' without a date). */
+export function startMonth(batch: Batch, lang: 'hi' | 'en'): string {
+  if (batch.startDate === null) return ''
+  const m = Number(batch.startDate.slice(5, 7)) - 1
+  return (lang === 'hi' ? MONTHS_HI[m] : MONTHS_EN[m]) ?? ''
+}
+
+/** "(Sat–Sun)" — weekdaysHi in English. */
+export function weekdaysEn(batch: Batch): string {
+  if (batch.startDate === null || batch.endDate === null) return ''
+  const day = (iso: string): string => WEEKDAYS_EN[new Date(`${iso}T12:00:00Z`).getUTCDay()] ?? ''
+  return `(${day(batch.startDate)}–${day(batch.endDate)})`
+}
+
+/** Whole days from today (IST) to a batch's first day: 1 = tomorrow, 0 = today, negative = already started. null without a date. */
+export function daysUntilStart(batch: Batch, now: Date = new Date()): number | null {
+  if (batch.startDate === null) return null
+  return Math.round((Date.parse(`${batch.startDate}T00:00:00Z`) - Date.parse(`${todayIst(now)}T00:00:00Z`)) / 86_400_000)
+}

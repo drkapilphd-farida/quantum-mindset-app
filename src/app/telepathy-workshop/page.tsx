@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { buildTelepathyMetadata, TelepathyWorkshopPage } from '@/features/telepathy-workshop/telepathyWorkshopPage'
 
-export const metadata: Metadata = buildTelepathyMetadata('en')
+export const metadata: Metadata = buildTelepathyMetadata('hi')
 
 // Rebuilt every hour, so a batch drops off the page soon after its last day.
 export const revalidate = 3600

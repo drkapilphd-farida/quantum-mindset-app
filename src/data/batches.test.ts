@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { BATCHES, FALLBACK_EN, FALLBACK_HI, labelHiNoYear, startDayHi, upcomingBatch, upcomingBatches } from './batches'
+import { BATCHES, FALLBACK_EN, FALLBACK_HI, daysUntilStart, labelHiNoYear, startDayHi, startMonth, upcomingBatch, upcomingBatches, weekdaysEn, weekdaysHi } from './batches'
 import { LINKS, linkOrWhatsApp, waLink } from './links'
 
 const at = (iso: string): Date => new Date(iso)
@@ -29,6 +29,17 @@ describe('batches', () => {
     expect(vadodara === null ? null : labelHiNoYear(vadodara)).toBe('28–29 नवंबर')
   })
 
+  it('counts days to the first day in IST, and names month and weekdays', () => {
+    const mumbai = BATCHES[0]!
+    expect(daysUntilStart(mumbai, at('2026-11-05T23:30:00+05:30'))).toBe(9)
+    expect(daysUntilStart(mumbai, at('2026-11-13T00:10:00+05:30'))).toBe(1)
+    expect(daysUntilStart(mumbai, at('2026-11-14T08:00:00+05:30'))).toBe(0)
+    expect(startMonth(mumbai, 'hi')).toBe('नवंबर')
+    expect(startMonth(mumbai, 'en')).toBe('November')
+    expect(weekdaysHi(mumbai)).toBe('(शनि–रवि)')
+    expect(weekdaysEn(mumbai)).toBe('(Sat–Sun)')
+  })
+
   it('never ships a seat count that was not filled in by hand', () => {
     expect(BATCHES.find((b) => b.id === 'online')?.seatsLeft).toBeNull()
   })
@@ -36,8 +47,9 @@ describe('batches', () => {
 
 describe('links', () => {
   it('sends a button to WhatsApp with its own text while its link is still a placeholder', () => {
-    expect(LINKS.rzpOnline3999).toBe('[[RZP_ONLINE_3999]]')
-    expect(linkOrWhatsApp('rzpOnline3999', 'सीट पक्की कीजिए — ₹3,999')).toBe(waLink('सीट पक्की कीजिए — ₹3,999'))
+    expect(LINKS.waGroupOverthinking).toBe('[[WA_GROUP_OVERTHINKING]]')
+    expect(linkOrWhatsApp('waGroupOverthinking', 'ग्रुप में जुड़िए')).toBe(waLink('ग्रुप में जुड़िए'))
+    expect(linkOrWhatsApp('rzpOnline3999', 'x')).toBe('https://rzp.io/rzp/NIZqolHs')
     expect(linkOrWhatsApp('rzpTelepathyDeposit1000', 'x')).toBe('https://rzp.io/rzp/elNaxRB')
     expect(waLink('a b')).toBe('https://wa.me/919540123161?text=a%20b')
   })

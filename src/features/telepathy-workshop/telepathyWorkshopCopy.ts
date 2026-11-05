@@ -8,11 +8,10 @@
 // Honest-language rule: participants' experiences ("many participants
 // share…"), never promised results.
 
+import { v2 } from './telepathyV2Copy'
+
 export type Bi = { en: string; hi: string }
 
-// Positioning rework: lines that exist only in Hindi (copy/telepathy.md has
-// no English text) show the same Hindi text in both languages.
-const hiOnly = (text: string): Bi => ({ en: text, hi: text })
 
 export const telepathyCopy = {
   meta: {
@@ -46,9 +45,7 @@ export const telepathyCopy = {
   hero: {
     eyebrow: { en: '2-DAY OFFLINE EXPERIENTIAL WORKSHOP · MUMBAI · AHMEDABAD · VADODARA · PUNE', hi: '2 दिन की ऑफ़लाइन अनुभव-आधारित वर्कशॉप · मुंबई · अहमदाबाद · वडोदरा · पुणे' },
     workshopName: { en: 'The Telepathy Workshop™', hi: 'The Telepathy Workshop™' },
-    // Positioning rework: new H1 (copy/telepathy.md); the old H1 is now the subtitle.
-    headline: hiOnly('2 दिन में टेलीपैथी, इनट्यूशन और हार्ट-ब्रेन कोहेरेंस — लाइव, स्क्रीन पर सबूत के साथ।'),
-    subtitle: { en: 'The Guru You Are Searching For Is Already Inside You', hi: 'जिस गुरु को आप बाहर खोज रहे हैं, वह आपके भीतर ही है' },
+    // Phase 4.2: the hero's H1, subtitle and buttons are in telepathyV2Copy.ts.
     subheadline: {
       en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day workshop researched, developed and taught by Dr. Kapil Dev Sharma — to thousands of people since 2017.',
       hi: '2 दिन की वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — जिसे डॉ. कपिल देव शर्मा ने खुद रिसर्च करके बनाया है और 2017 से हज़ारों लोगों को सिखाया है।',
@@ -57,16 +54,6 @@ export const telepathyCopy = {
     watchCta: { en: '▶ Watch the free session', hi: '▶ Free session देखें' },
     imageAlt: { en: 'Participants at The Telepathy Workshop', hi: 'The Telepathy Workshop में प्रतिभागी' },
   },
-
-  // One-line strip right under the hero → /telepathy-workshop/online.
-  onlineStrip: {
-    lead: hiOnly('शहर तक नहीं आ सकते?'),
-    text: hiOnly('3 शाम का ऑनलाइन संस्करण है — ₹3,999।'),
-    link: hiOnly('ऑनलाइन देखिए'),
-  },
-
-  // One line after the traders section.
-  originLine: hiOnly('यह वर्कशॉप 2016 के बाद बना — हिमालय से लौटने के बाद। जो अंदर हुआ था, उसे दूसरों के लिए विधि में बदलना।'),
 
   // ── B. Trust strip ────────────────────────────────────────────────
   trust: [
@@ -282,12 +269,6 @@ export const telepathyCopy = {
       { id: 'vadodara', city: { en: 'Vadodara', hi: 'वडोदरा' } },
       { id: 'pune', city: { en: 'Pune', hi: 'पुणे' } },
     ],
-    // The ₹1,000 line, large (copy/telepathy.md): bold part, then the rest.
-    depositLead: hiOnly('सीट ₹1,000 पर पक्की होती है।'),
-    depositRest: hiOnly('बाकी ₹4,999 मौके पर (UPI या नकद)। ₹1,000 वापस नहीं मिलते, पर अगली बैच में टल सकते हैं।'),
-    // Vadodara card button (copy/telepathy.md).
-    vadodaraBook: hiOnly('सीट पक्की कीजिए'),
-    mapsLink: hiOnly('Google Maps में खोलिए'),
     infoTime: { en: '9:30 am – 6:00 pm (both days)', hi: 'सुबह 9:30 – शाम 6:00 (दोनों दिन)' },
     infoMeals: { en: 'Breakfast, lunch & high tea included', hi: 'नाश्ता, लंच और हाई टी शामिल' },
     calendarLink: { en: 'Add to Google Calendar', hi: 'Google Calendar में जोड़ें' },
@@ -318,10 +299,19 @@ export const telepathyCopy = {
   // ── M. FAQ ────────────────────────────────────────────────────────
   faq: {
     heading: { en: 'Frequently asked questions', hi: 'अक्सर पूछे जाने वाले सवाल' },
+    // Phase 4.2: the 6 new questions (copy/telepathy-v2.md) on top, then
+    // "How do I book?" (FAQ 7), then the existing ones. Removed as duplicates
+    // of the new ones: "Is this religious?" (old), "Is this available online?"
+    // (Phase 1 answer) and "Can I get a refund?" (= "₹1,000 का क्या होता है?").
     items: [
+      ...v2.faq,
       {
-        q: { en: 'Is this religious?', hi: 'क्या यह धार्मिक है?' },
-        a: { en: 'No. These are experiential practices, and people of all backgrounds and faiths attend.', hi: 'नहीं। ये अनुभव-आधारित अभ्यास हैं, और हर पृष्ठभूमि और धर्म के लोग इसमें आते हैं।' },
+        q: { en: 'How do I book?', hi: 'बुकिंग कैसे करें?' },
+        a: {
+          // Phase 4.2: new English answer (copy/telepathy-v2.md FAQ 7); no new Hindi answer was given.
+          en: v2.faqHowToBookEn,
+          hi: '"{deposit} देकर अपनी seat book करें" दबाइए और {deposit} online देकर अपनी seat पक्की कीजिए। बाकी {balance} venue पर (UPI / cash)। फ़ीस {price} है। पूरे {price} अभी भी दे सकते हैं: अपने batch पर "पूरे {price} अभी दें" दबाइए, हम WhatsApp पर जानकारी भेज देंगे।',
+        },
       },
       {
         q: { en: 'Is this scientific?', hi: 'क्या यह वैज्ञानिक है?' },
@@ -337,11 +327,6 @@ export const telepathyCopy = {
       {
         q: { en: 'Do I need prior meditation experience?', hi: 'क्या ध्यान का पहले से अनुभव ज़रूरी है?' },
         a: { en: 'No. Everything is taught from the beginning.', hi: 'नहीं। सब कुछ शुरुआत से सिखाया जाता है।' },
-      },
-      {
-        // Positioning rework: new answer from copy/telepathy.md (Hindi only).
-        q: hiOnly('ऑनलाइन उपलब्ध है?'),
-        a: hiOnly('हाँ, 3 शाम का ऑनलाइन संस्करण ₹3,999 में। पर Muse 2 का लाइव डेमो और कॉस्मिक फ्यूजन सिर्फ ऑफलाइन में है — पूरा अनुभव चाहिए तो ऑफलाइन बैच चुनिए।'),
       },
       {
         q: { en: 'Is this a trading course?', hi: 'क्या यह ट्रेडिंग कोर्स है?' },
@@ -361,20 +346,6 @@ export const telepathyCopy = {
       {
         q: { en: 'Are meals included?', hi: 'क्या खाना शामिल है?' },
         a: { en: 'Yes. Breakfast, lunch and high tea are included on both days.', hi: 'हाँ। दोनों दिन नाश्ता, लंच और हाई टी शामिल है।' },
-      },
-      {
-        q: { en: 'How do I book?', hi: 'बुकिंग कैसे करें?' },
-        a: {
-          en: 'Tap "Book your seat — {deposit}" and pay {deposit} online to reserve your seat. Pay the balance {balance} at the venue (UPI / cash). The fee is {price}. You can also pay the full {price} now: tap "Pay full {price} now" on your batch and we will send the details on WhatsApp.',
-          hi: '"{deposit} देकर अपनी seat book करें" दबाइए और {deposit} online देकर अपनी seat पक्की कीजिए। बाकी {balance} venue पर (UPI / cash)। फ़ीस {price} है। पूरे {price} अभी भी दे सकते हैं: अपने batch पर "पूरे {price} अभी दें" दबाइए, हम WhatsApp पर जानकारी भेज देंगे।',
-        },
-      },
-      {
-        q: { en: 'Can I get a refund?', hi: 'क्या पैसे वापस मिल सकते हैं?' },
-        a: {
-          en: 'The {deposit} booking amount is non-refundable, but it can be moved to a later batch. Message us on WhatsApp to move it.',
-          hi: '{deposit} की booking राशि वापस नहीं होगी, लेकिन इसे अगले batch में transfer किया जा सकता है। Transfer के लिए हमें WhatsApp पर मैसेज करें।',
-        },
       },
       {
         q: { en: 'Can I hear from past participants?', hi: 'क्या पहले के प्रतिभागियों के अनुभव सुन सकते हैं?' },
@@ -408,6 +379,8 @@ export const telepathyCopy = {
     chooseFirst: { en: 'Choose your batch above first.', hi: 'पहले ऊपर अपना batch चुनिए।' },
     balance: { en: 'Balance {balance} at the venue (UPI / cash)', hi: 'बाकी {balance} venue पर (UPI / cash)' },
     back: { en: '← Back to the workshop page', hi: '← वर्कशॉप पेज पर वापस' },
+    // Phase 4.2: no venue on the site — it is sent on WhatsApp.
+    venueOnWhatsApp: { en: 'Venue, timing and directions will be sent to you on WhatsApp.', hi: 'जगह, समय और पहुँचने का तरीका आपको वॉट्सऐप पर भेजा जाएगा।' },
   },
 
   // ── Disclaimer (above the site footer) ────────────────────────────

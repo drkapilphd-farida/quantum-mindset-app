@@ -10,7 +10,7 @@ import { telepathyBookedMessage, type TelepathyBatchId } from '@/config/telepath
 import { trackGaEvent } from '@/lib/analytics/ga4'
 import { readUtmParams } from '@/lib/analytics/utm'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
-import { batchDatesText, batchVenueText, langFromParam, pick } from '../telepathyWorkshop'
+import { batchDatesText, langFromParam, pick } from '../telepathyWorkshop'
 import { useVisibleBatches } from './BookingSections'
 import { GOLD_BUTTON, WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
 
@@ -85,7 +85,7 @@ export function BookedPage({ renderedAt }: { renderedAt: number }): React.JSX.El
                 </span>
               </Detail>
               <Detail icon={<MapPin className="size-5" aria-hidden="true" />} label={pick(b.venueLabel, lang)}>
-                {batchVenueText(chosen.id, lang)}
+                {pick(c.venueOnWhatsApp, lang)}
               </Detail>
               <Detail icon={<Clock className="size-5" aria-hidden="true" />}>{pick(b.infoTime, lang)}</Detail>
               <Detail icon={<Utensils className="size-5" aria-hidden="true" />}>{pick(b.infoMeals, lang)}</Detail>

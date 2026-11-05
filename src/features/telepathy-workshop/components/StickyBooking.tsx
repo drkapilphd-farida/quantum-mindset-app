@@ -2,18 +2,25 @@
 
 import { useEffect, useState } from 'react'
 import type { Lang } from '@/lib/i18n'
-import { Ticket } from 'lucide-react'
 import { telepathyWhatsAppMessage } from '@/config/telepathyWorkshopConfig'
+import { dayRange, startMonth } from '@/data/batches'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
+import { v2 } from '../telepathyV2Copy'
 import { pick } from '../telepathyWorkshop'
 import { BookSeatLink, GOLD_BUTTON, WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
+import { nearestOfflineBatch } from './DateCards'
 
-// Phones: a sticky "Book your seat — ₹1,000" bar (Razorpay) with the
-// balance line. Wider screens: a round floating WhatsApp button for
-// questions, bottom-right. Both appear once the hero (#tw-hero) has
-// scrolled out of view.
+// Phones: a sticky bar with the nearest offline batch from
+// src/data/batches.ts ("अगली बैच: मुंबई 14–15 नवंबर · ₹1,000 में सीट") and a
+// "बुक" button (the ₹1,000 Razorpay link). Wider screens: a round floating
+// WhatsApp button for questions, bottom-right. Both appear once the hero
+// (#tw-hero) has scrolled out of view.
 export function StickyBooking({ lang }: { lang: Lang }): React.JSX.Element {
   const [pastHero, setPastHero] = useState(false)
+  const [now, setNow] = useState<Date | null>(null)
+  useEffect(() => setNow(new Date()), [])
+  const nearest = now === null ? null : nearestOfflineBatch(now)
+  const c = v2.dates
 
   useEffect(() => {
     const hero = document.getElementById('tw-hero')
@@ -28,16 +35,24 @@ export function StickyBooking({ lang }: { lang: Lang }): React.JSX.Element {
 
   return (
     <>
-      <div
-        inert={!pastHero}
-        className={`fixed inset-x-0 bottom-0 z-40 border-t border-line bg-void/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md transition-all duration-500 sm:hidden ${hidden}`}
-      >
-        <BookSeatLink batch="general" location="mobile_sticky_bar" className={`${GOLD_BUTTON} w-full text-[17px]`}>
-          <Ticket className="size-5 flex-none" aria-hidden="true" />
-          {pick(telepathyCopy.bookButton, lang)}
-        </BookSeatLink>
-        <p className="mt-1.5 text-center text-[12.5px] text-ink-dim">{pick(telepathyCopy.booking.noteShort, lang)}</p>
-      </div>
+      {nearest !== null && (
+        <div
+          inert={!pastHero}
+          className={`fixed inset-x-0 bottom-0 z-40 border-t border-line bg-void/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md transition-all duration-500 sm:hidden ${hidden}`}
+        >
+          <div className="flex items-center gap-3">
+            <p className="min-w-0 flex-1 text-[14px] font-semibold leading-snug text-ink">
+              {pick(c.sticky, lang, {
+                city: nearest.id === 'mumbai' || nearest.id === 'ahmedabad' || nearest.id === 'vadodara' ? pick(c.cities[nearest.id], lang) : '',
+                date: `${dayRange(nearest)} ${startMonth(nearest, lang)}`,
+              })}
+            </p>
+            <BookSeatLink batch={nearest.id === 'mumbai' || nearest.id === 'ahmedabad' || nearest.id === 'vadodara' ? nearest.id : 'general'} location="mobile_sticky_bar" className={`${GOLD_BUTTON} flex-none !min-h-[44px] !px-5 !py-2`}>
+              {pick(c.stickyButton, lang)}
+            </BookSeatLink>
+          </div>
+        </div>
+      )}
 
       <div inert={!pastHero} className={`fixed bottom-6 right-6 z-40 hidden transition-all duration-500 sm:block ${hidden}`}>
         <WhatsAppLink

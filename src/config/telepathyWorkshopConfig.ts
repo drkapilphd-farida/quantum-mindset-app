@@ -176,6 +176,12 @@ export const HERO_IMAGES: readonly TelepathyPhoto[] = [
   { src: `${IMG}/hero-4.jpg`, width: 4000, height: 1824, position: '50% 50%' },
   { src: `${IMG}/hero-5.jpg`, width: 4000, height: 1824, position: '50% 50%' },
 ]
+// Phase 4.2: the hero shows ONE real workshop photo (participants in
+// practice) — or, once public/telepathy-hero.mp4 exists, that video
+// (autoplay, muted, loop, playsinline) with this photo as its poster.
+export const HERO_PHOTO: TelepathyPhoto = { src: `${IMG}/hero-2.jpg`, width: 1440, height: 1080, position: '50% 45%' }
+export const HERO_VIDEO_PUBLIC_PATH = 'telepathy-hero.mp4'
+
 // Seconds each hero photo stays, and the fade between them.
 export const HERO_SLIDE_SECONDS = 6
 export const HERO_FADE_SECONDS = 1.5

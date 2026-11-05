@@ -14,6 +14,7 @@ import {
 } from '@/config/telepathyWorkshopConfig'
 import { batchDatesText, batchVenueText, countdownParts, googleCalendarUrl, langFromParam, nextBatch, pick, visibleBatches } from './telepathyWorkshop'
 import { telepathyCopy } from './telepathyWorkshopCopy'
+import { v2 } from './telepathyV2Copy'
 
 const at = (iso: string): number => Date.parse(iso)
 
@@ -45,6 +46,7 @@ describe('no stale numbers (page copy and every WhatsApp text, both languages)',
   const batchIds = TELEPATHY_BATCHES.map((b) => b.id)
   const texts = [
     ...filled(telepathyCopy),
+    ...filled(v2),
     telepathyWhatsAppMessage('question', null),
     ...batchIds.flatMap((id) => [telepathyWhatsAppMessage('question', id), telepathyWhatsAppMessage('pay_full', id), telepathyBookedMessage('Asha', id, 'pay_ABCDEFGH12')]),
   ]
@@ -53,7 +55,7 @@ describe('no stale numbers (page copy and every WhatsApp text, both languages)',
   it('₹4,999 appears only as the balance at the venue', () => {
     const balances = all.match(/.{0,12}4,999.{0,16}/g) ?? []
     expect(balances.length).toBeGreaterThan(0)
-    for (const hit of balances) expect(hit).toMatch(/(Balance|balance) ₹4,999 at the venue|बाकी ₹4,999 venue पर|बाकी ₹4,999 मौके पर/)
+    for (const hit of balances) expect(hit).toMatch(/(Balance|balance) ₹4,999 at the venue|बाकी ₹4,999 venue पर|बाकी ₹4,999 मौके पर|बाकी ₹4,999 वर्कशॉप के दिन|₹4,999 (is paid )?on the/)
   })
   it('no ₹500, ₹6,500, 200+, "3 cities" or the old Razorpay link', () => {
     expect(all).not.toMatch(/₹ ?500\b|6,500|6500|200\+|3 cities|3 शहर|sNVbKv9/)
@@ -109,6 +111,9 @@ describe('batches', () => {
   it('every batch in the config has its copy card and vice versa', () => {
     expect(telepathyCopy.batches.cities.map((c) => c.id)).toEqual(TELEPATHY_BATCHES.map((b) => b.id))
     expect(Object.keys(TELEPATHY_BATCH_MESSAGE_LABELS)).toEqual(TELEPATHY_BATCHES.map((b) => b.id))
+  })
+  it('no venue anywhere in the new page copy (sent on WhatsApp after booking)', () => {
+    expect(JSON.stringify(v2)).not.toMatch(/Hotel|Surya|Silver Cloud|Better Home|रेलवे स्टेशन/)
   })
   it('the hero eyebrow names all four cities', () => {
     expect(pick(telepathyCopy.hero.eyebrow, 'en')).toBe('2-DAY OFFLINE EXPERIENTIAL WORKSHOP · MUMBAI · AHMEDABAD · VADODARA · PUNE')
