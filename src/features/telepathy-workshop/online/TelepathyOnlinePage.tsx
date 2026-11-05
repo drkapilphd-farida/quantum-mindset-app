@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import { Plus } from 'lucide-react'
 import { FALLBACK_HI, labelHiNoYear, startDayHi, upcomingBatch, type Batch } from '@/data/batches'
 import { linkOrWhatsApp, waLink } from '@/data/links'
-import { Starfield } from '../components/Starfield'
+import { PageHero } from '../components/PageHero'
 import { CheckDot, GOLD_BUTTON, Heading, Section } from '../components/ui'
 import { onlineCopy as c } from './onlineCopy'
 
@@ -57,19 +57,11 @@ export function TelepathyOnlinePage(): React.JSX.Element {
     <div className="warm-light tw-page min-h-screen font-sans antialiased" data-lang="hi" lang="hi">
       <SiteNav cta={{ label: c.bookButton, href: linkOrWhatsApp('rzpOnline3999', c.bookButton), external: true }} />
       <main>
-        <section aria-labelledby="tw-online-heading" className="tw-dark relative isolate overflow-hidden px-5 pb-14 pt-12 sm:px-8 sm:pb-20 sm:pt-16">
-          <div className="tw-hero-overlay absolute inset-0 -z-20" />
-          <Starfield className="absolute inset-0 -z-10 h-full w-full" />
-          <div className="mx-auto w-full max-w-4xl text-center">
-            <h1 id="tw-online-heading" className="tw-h1 mx-auto max-w-[22ch] text-ink">
-              {c.h1}
-            </h1>
-            <p className="tw-body mx-auto mt-6 max-w-2xl">{c.sub}</p>
-            <div className="mt-8">
-              <BatchBlock batch={batch} />
-            </div>
+        <PageHero id="tw-online-heading" title={c.h1} sub={c.sub}>
+          <div className="mt-8">
+            <BatchBlock batch={batch} />
           </div>
-        </section>
+        </PageHero>
 
         <Section labelledBy="tw-online-evenings">
           <Heading id="tw-online-evenings" className="text-center">

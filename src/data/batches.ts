@@ -140,3 +140,12 @@ export function startDayHi(batch: Batch & { startDate: string }): string {
 export function labelHiNoYear(batch: Batch): string {
   return batch.labelHi.replace(/\s\d{4}$/, '')
 }
+
+const WEEKDAYS_HI = ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'] as const
+
+/** "(शनि–रवि)" — the first and last weekday of a dated batch, in Hindi ('' without dates). */
+export function weekdaysHi(batch: Batch): string {
+  if (batch.startDate === null || batch.endDate === null) return ''
+  const day = (iso: string): string => WEEKDAYS_HI[new Date(`${iso}T12:00:00Z`).getUTCDay()] ?? ''
+  return `(${day(batch.startDate)}–${day(batch.endDate)})`
+}

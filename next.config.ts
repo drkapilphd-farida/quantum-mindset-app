@@ -120,6 +120,8 @@ function buildContentSecurityPolicy(): string {
       'https://www.youtube-nocookie.com',
       // Executive Brain Performance Workshop — the venue Google Maps embed.
       'https://www.google.com',
+      // /vadodara — the Hotel Surya Google Maps embed (VADODARA_MAPS_EMBED).
+      'https://maps.google.com',
     ],
     'worker-src': ["'self'"],
     'object-src': ["'none'"],
