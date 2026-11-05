@@ -18,6 +18,10 @@ type VideoReviewItem = {
   label?: string;
   // Descriptive thumbnail alt text; falls back to the caption.
   alt?: string;
+  // Phase 4.5: optional two-line caption under the card — title (bold)
+  // and name (small, grey). Each line shows only when given.
+  title?: string;
+  name?: string;
 };
 
 type VideoReviewGridProps = {
@@ -119,6 +123,8 @@ export default function VideoReviewGrid({
               {caption !== undefined && (
                 <p className="mt-2 text-center font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{caption}</p>
               )}
+              {video.title !== undefined && <p className="mt-2 text-[14px] font-bold leading-snug text-ink">{video.title}</p>}
+              {video.name !== undefined && <p className="mt-0.5 text-[12.5px] text-ink-faint">{video.name}</p>}
             </div>
           );
         })}

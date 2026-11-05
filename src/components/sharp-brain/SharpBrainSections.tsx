@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
@@ -8,7 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { programs, qsrGuarantee, trainer } from "@/config/site.config";
 import { FREE_TEST_LINKS } from "@/config/navigation";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
-import { QSR_ADULT_VIDEO_REVIEWS, QSR_MORE_VIDEO_REVIEWS, QSR_YOUNG_LEARNER_VIDEO_REVIEWS } from "@/config/qsrVideoReviews";
+import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { trackGaEvent } from "@/lib/analytics/ga4";
@@ -326,9 +325,6 @@ export function SharpBrainCertificate(): React.JSX.Element {
 export function SharpBrainProof(): React.JSX.Element {
   const c = useCopy().proof;
   const testimonials = useProgramTestimonials("sharpBrain").filter((item) => item.quote !== null);
-  const [showMore, setShowMore] = useState(false);
-  const { lang } = useLanguage();
-
   return (
     <section id="testimonials" className={sectionClass}>
       <div className="mx-auto max-w-content">
@@ -349,25 +345,10 @@ export function SharpBrainProof(): React.JSX.Element {
           </div>
         )}
 
-        <p className="mt-8 font-mono text-[11.5px] uppercase tracking-[0.08em] text-ink-faint">{c.oldLabel}</p>
-        <VideoReviewGrid
-          videos={[...QSR_YOUNG_LEARNER_VIDEO_REVIEWS, ...QSR_ADULT_VIDEO_REVIEWS]}
-          aspectRatioClassName="aspect-[9/16]"
-          gridClassName="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6"
-          className="mt-4"
-        />
-        {showMore && (
-          <VideoReviewGrid
-            videos={QSR_MORE_VIDEO_REVIEWS}
-            aspectRatioClassName="aspect-[9/16]"
-            gridClassName="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6"
-            className="mt-4"
-          />
-        )}
+        {/* Phase 4.5: the 7 new Sharp Brain Shorts (sharpBrainVideoReviews.ts)
+            replace the older reviews and their "From earlier batches" label. */}
+        <VideoReviewGrid videos={SHARP_BRAIN_REVIEW_CARDS} aspectRatioClassName="aspect-[9/16]" gridClassName={SHARP_BRAIN_REVIEW_GRID_CLASS} className="mt-8" />
         <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-          <button type="button" onClick={() => setShowMore((value) => !value)} className="text-[14px] font-semibold text-gold hover:underline">
-            {showMore ? (lang === "hi" ? "कम दिखाएं" : "Show fewer") : lang === "hi" ? "और वीडियो देखें" : "Watch more videos"}
-          </button>
           <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-[14px] font-semibold text-gold hover:underline">
             {c.playlistCta} →
           </a>
