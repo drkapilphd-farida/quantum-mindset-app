@@ -19,12 +19,6 @@ const execFrom = minPrice('executiveWorkshop')
 const resetFrom = minPrice('overthinkingReset')
 const residentialFrom = minPrice('residentialRetreat')
 
-function trustLine(lang: Lang): string {
-  return lang === 'hi'
-    ? `${trainer.years.total} वर्ष · ${trainer.learners} विद्यार्थी · ${trainer.workshops} वर्कशॉप्स`
-    : `${trainer.years.total} years · ${trainer.learners} learners · ${trainer.workshops} workshops`
-}
-
 export type ProblemCard = {
   id: 'learning' | 'work' | 'mind' | 'meditation'
   pillar: string
@@ -38,7 +32,10 @@ export type ProblemCard = {
 }
 
 export type HomeCopy = {
-  hero: { h1: string; sub: string; trust: string; ctaPrimary: string; ctaSecondary: string; photoAlt: string }
+  // Positioning rework (copy/home-hi.md, copy/home-en.md): `trust` is the proof strip;
+  // the primary CTA opens /vadodara, the secondary one WhatsApp (free demo);
+  // `cities` names the batches in the city line under the CTAs (dates from src/data/batches.ts).
+  hero: { h1: string; sub: string; trust: string; ctaPrimary: string; ctaSecondary: string; photoAlt: string; cities: Record<'mumbai' | 'online' | 'ahmedabad' | 'vadodara', string> }
   problems: { eyebrow: string; title: string; cards: ProblemCard[] }
   startFree: { eyebrow: string; title: string; items: { title: string; desc: string; href: string; cta: string }[] }
   proof: { eyebrow: string; title: string; desc: string; tabs: { learning: string; meditation: string }; playlistCta: string; learningNote: string }
@@ -51,12 +48,13 @@ export type HomeCopy = {
 
 const en: HomeCopy = {
   hero: {
-    h1: brand.tagline,
-    sub: `${trainer.name} — ${trainer.en.title}. Practical, science-informed training for focus, learning, overthinking and inner calm.`,
-    trust: trustLine('en'),
-    ctaPrimary: 'Find the right program for you',
-    ctaSecondary: 'Talk to us',
+    h1: 'Mind power — the kind you can see on a screen.',
+    sub: 'A 2-day live workshop in Vadodara. 12 years of teaching, 10,000+ people, 300+ video reviews. No blind faith needed — your own brain state shows up live on a Muse 2.',
+    trust: '12 years teaching · 10,000+ people · 300+ video reviews · 4 cities',
+    ctaPrimary: 'Vadodara batch — hold a seat for ₹1,000',
+    ctaSecondary: 'Come to a free demo',
     photoAlt: trainer.photo.alt,
+    cities: { mumbai: 'Mumbai', online: 'Online', ahmedabad: 'Ahmedabad', vadodara: 'Vadodara' },
   },
   problems: {
     eyebrow: 'Start with your problem',
@@ -194,12 +192,13 @@ const en: HomeCopy = {
 
 const hi: HomeCopy = {
   hero: {
-    h1: brand.taglineHi,
-    sub: `${trainer.nameHi} — ${trainer.hi.title}। फोकस, सीखने, ओवरथिंकिंग और आंतरिक शांति के लिए व्यावहारिक, विज्ञान-सूचित प्रशिक्षण।`,
-    trust: trustLine('hi'),
-    ctaPrimary: 'अपने लिए सही प्रोग्राम खोजें',
-    ctaSecondary: 'हमसे बात करें',
+    h1: 'मन की ताकत — जो दिखती है स्क्रीन पर।',
+    sub: '2 दिन का लाइव वर्कशॉप, वडोदरा। 12 साल से सिखा रहे हैं, 10,000+ लोग, 300+ वीडियो। आँख बंद करके मानने की ज़रूरत नहीं — आपके दिमाग़ की हालत Muse 2 पर स्क्रीन पर दिखती है।',
+    trust: '12 साल से सिखा रहे हैं · 10,000+ लोग · 300+ वीडियो रिव्यू · 4 शहर',
+    ctaPrimary: 'वडोदरा बैच — ₹1,000 पर सीट पक्की',
+    ctaSecondary: 'मुफ्त डेमो में आइए',
     photoAlt: trainer.photo.alt,
+    cities: { mumbai: 'मुंबई', online: 'ऑनलाइन', ahmedabad: 'अहमदाबाद', vadodara: 'वडोदरा' },
   },
   problems: {
     eyebrow: 'अपनी समस्या से शुरू करें',

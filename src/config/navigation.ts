@@ -85,35 +85,75 @@ export function navLabels(lang: Lang): {
   }
 }
 
-/** Footer columns: Sharp Brain / Calm Mind / Meditation / Free Tests / For Organisations / For Trainers. */
-export function footerGroups(lang: Lang): NavGroup[] {
+// ── Positioning rework: header + footer from copy/header-footer.md ──────
+// Hindi pages show the Hindi labels, /en and English pages the English ones.
+
+/** Main nav: at most 5 items (copy/header-footer.md). */
+export function siteNavLinks(lang: Lang): NavLink[] {
   const hi = lang === 'hi'
   return [
-    ...programGroups(lang),
-    { heading: hi ? 'फ्री टेस्ट' : 'Free Tests', links: freeTestLinks(lang) },
+    { label: hi ? 'टेलीपैथी वर्कशॉप' : 'Telepathy Workshop', href: programs.telepathyWorkshop.url },
+    { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
+    { label: hi ? 'बच्चों की पढ़ाई' : 'Sharp Brain', href: programs.sharpBrain.url },
+    { label: hi ? 'रिट्रीट' : 'Retreats', href: programs.onlineRetreat.url },
+    { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
+  ]
+}
+
+/** The nav button on pages that don't pass their own: the telepathy batches. */
+export function siteNavCta(lang: Lang): NavLink {
+  return { label: lang === 'hi' ? 'सीट पक्की कीजिए' : 'Hold a seat', href: `${programs.telepathyWorkshop.url}#dates` }
+}
+
+/** Footer column 1 (programs) and column 2 (more). Hindi column headings only — the English copy has none. */
+export function footerColumns(lang: Lang): { heading: string | null; links: NavLink[] }[] {
+  const hi = lang === 'hi'
+  return [
     {
-      heading: hi ? 'संस्थाओं के लिए' : 'For Organisations',
+      heading: hi ? 'प्रोग्राम' : null,
       links: [
-        { label: hi ? 'कॉर्पोरेट टीमें' : 'Corporate teams', href: ORGANISATIONS_HREF },
-        { label: hi ? 'स्कूल व कॉलेज' : 'Schools & colleges', href: SCHOOLS_HREF },
+        { label: hi ? 'टेलीपैथी वर्कशॉप' : 'Telepathy Workshop', href: programs.telepathyWorkshop.url },
+        { label: hi ? 'ऑनलाइन संस्करण' : 'Online version', href: '/telepathy-workshop/online' },
+        { label: 'Sharp Brain', href: programs.sharpBrain.url },
+        { label: hi ? '21 दिन ओवरथिंकिंग' : '21-Day Overthinking', href: programs.overthinkingReset.url },
+        { label: hi ? '11 रात रिट्रीट' : '11-Night Retreat', href: programs.onlineRetreat.url },
+        { label: hi ? 'रेसिडेंशियल रिट्रीट' : 'Residential Retreat', href: programs.residentialRetreat.url },
       ],
     },
     {
-      heading: hi ? 'ट्रेनर्स के लिए' : 'For Trainers',
-      links: [{ label: hi ? 'ट्रेनर पार्टनर बनें' : 'Become a Trainer Partner', href: programs.franchise.url }],
+      heading: hi ? 'और' : null,
+      links: [
+        { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
+        { label: hi ? 'गैलरी' : 'Gallery', href: '/gallery' },
+        { label: hi ? 'मेरी कहानी' : 'My story', href: '/about' },
+        { label: hi ? 'ट्रेनर बनिए' : 'Become a trainer', href: programs.franchise.url },
+        { label: hi ? 'कॉर्पोरेट' : 'Corporate', href: ORGANISATIONS_HREF },
+        { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
+      ],
     },
   ]
 }
 
-export function footerMetaLinks(lang: Lang): NavLink[] {
+/** Footer column 3 (address) — copy/header-footer.md; English uses the existing English address. */
+export function footerAddress(lang: Lang): { heading: string | null; address: string; whatsappSuffix: string; googleReviews: string } {
   const hi = lang === 'hi'
-  return [
-    { label: hi ? 'परिचय' : 'About', href: '/about' },
-    { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
-    { label: hi ? 'प्राइवेसी पॉलिसी' : 'Privacy Policy', href: '/privacy' },
-    { label: hi ? 'सेवा की शर्तें' : 'Terms of Service', href: '/terms' },
-    { label: hi ? 'रिफंड व कैंसिलेशन नीति' : 'Refund & Cancellation Policy', href: '/refund-policy' },
-  ]
+  return {
+    heading: hi ? 'पता' : null,
+    address: hi ? 'Gitanjali Duplex, Novino–Tarsali Road, वडोदरा, गुजरात' : contact.address.en,
+    whatsappSuffix: hi ? '(वॉट्सऐप)' : '(WhatsApp)',
+    googleReviews: hi ? 'Google पर रिव्यू' : 'Reviews on Google',
+  }
 }
 
-export const FOOTER_LOCATION = contact.address
+/** Footer bottom row. */
+export function footerBottom(lang: Lang): { links: NavLink[]; copyright: string } {
+  const hi = lang === 'hi'
+  return {
+    links: [
+      { label: hi ? 'प्राइवेसी' : 'Privacy', href: '/privacy' },
+      { label: hi ? 'शर्तें' : 'Terms', href: '/terms' },
+      { label: hi ? 'रिफंड' : 'Refund', href: '/refund-policy' },
+    ],
+    copyright: hi ? '© मन उर मन 2014–2026' : '© Mind Ur Mind 2014–2026',
+  }
+}

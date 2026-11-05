@@ -149,3 +149,10 @@ export function weekdaysHi(batch: Batch): string {
   const day = (iso: string): string => WEEKDAYS_HI[new Date(`${iso}T12:00:00Z`).getUTCDay()] ?? ''
   return `(${day(batch.startDate)}–${day(batch.endDate)})`
 }
+
+/** "14–15" — the day numbers of a dated batch ('' without dates). */
+export function dayRange(batch: Batch): string {
+  if (batch.startDate === null || batch.endDate === null) return ''
+  const day = (iso: string): number => Number(iso.slice(8, 10))
+  return `${day(batch.startDate)}–${day(batch.endDate)}`
+}
