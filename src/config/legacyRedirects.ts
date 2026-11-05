@@ -90,11 +90,12 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: '/preview/learning-projects/:id/quantum-journey', destination: '/preview/learning-projects/:id/learning-journey', statusCode: 301 },
   // Old WordPress site (still in Google's index, 28 Sep 2026): each URL to
   // the closest current page; the old telepathy URLs go to
-  // /telepathy-workshop. /courses is left alone — that path is a real
-  // (legacy) page on this site. With or without a trailing slash: Next.js
+  // /telepathy-workshop. (/courses: see below — Phase 5.) With or without a trailing slash: Next.js
   // first strips the slash (308), then this 301 applies.
   ...WORDPRESS_REDIRECTS,
   // Phase 4.3: the site opens in English at `/`; the short-lived /en homepage
   // points there (Hindi is /hi).
   { source: '/en', destination: '/', statusCode: 301 },
+  // Phase 5: the empty /courses catalog page was removed.
+  { source: '/courses', destination: '/', statusCode: 301 },
 ]

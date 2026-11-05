@@ -25,8 +25,8 @@ describe('legacy redirects', () => {
     expect(find('/en')).toMatchObject({ destination: '/', statusCode: 301 })
   })
 
-  it('never redirects /courses, which is a real page on this site', () => {
-    expect(find('/courses')).toBeUndefined()
+  it('sends /courses (the removed empty catalog page) home (Phase 5)', () => {
+    expect(find('/courses')).toMatchObject({ destination: '/', statusCode: 301 })
   })
 
   it('uses only unique sources and permanent 301s', () => {
