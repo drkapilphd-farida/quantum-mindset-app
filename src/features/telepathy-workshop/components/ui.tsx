@@ -90,3 +90,4 @@ export function PriceLine({ earlier, offer, note, className = '' }: { earlier: s
 /** The site's primary gold button. */
 export const GOLD_BUTTON =
   'inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-sm bg-gold px-6 py-3.5 text-center text-[16px] font-semibold leading-snug text-[#1B1508] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#cb9a44]'
+
