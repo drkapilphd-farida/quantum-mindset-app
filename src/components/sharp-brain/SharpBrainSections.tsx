@@ -4,26 +4,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { programs, qsrGuarantee, trainer } from "@/config/site.config";
+import { programs, qsrGuarantee, sharpBrainEnrolment, trainer } from "@/config/site.config";
 import { FREE_TEST_LINKS } from "@/config/navigation";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { trackGaEvent } from "@/lib/analytics/ga4";
-import { sharpBrainCopy, type ExerciseGroup } from "@/lib/sharpBrainCopy";
-import { istDayMonth } from "@/features/sharp-brain-enrol/copy";
-import { BatchCheckout, PriceLine, useEnrolLabel, useNextBatch } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
+import { sharpBrainCopy, type ExerciseGroup, type OfferCell } from "@/lib/sharpBrainCopy";
+import { LINKS, waLink } from "@/data/links";
+import { enrolT } from "@/lib/app-i18n/enrol";
+import { useUiLang } from "@/lib/app-i18n/client";
+import { inr, istDayMonth, istDeadline } from "@/features/sharp-brain-enrol/copy";
+import { BatchCheckout, Countdown, PriceLine, useEnrolLabel, useNextBatch } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import { Eyebrow } from "../ui";
 import TrainerBio from "../TrainerBio";
 import GuaranteeBadge from "./GuaranteeBadge";
 import VideoReviewGrid from "../VideoReviewGrid";
 
-// Sections of /programs/sharp-brain (rewritten 1 Oct 2026), in page order:
-// hero → sound familiar? → why it happens / what we train → outcomes →
-// inside the app → 7 live classes → who it's for → how it works → proof →
-// trainer → the offer (#enrol: value stack, batch, price, guarantee) →
-// FAQ → final CTA. Prices and batch dates come from SharpBrainPricingProvider.
+// Sections of /programs/sharp-brain. Page order (Phase 6B): hero → sound
+// familiar? → five skills → inside the app → 7 classes → comparison table →
+// live batch + self-paced (#enrol) → certificate → video reviews → trainer →
+// FAQ → final two buttons. Prices and batch dates come from
+// SharpBrainPricingProvider. /reviews uses the reviews hero, proof and final.
 
 function useCopy(): (typeof sharpBrainCopy)["en"] {
   const { lang } = useLanguage();
@@ -57,31 +60,6 @@ function EnrolAndTestButtons({ speedTest, location, className = "" }: { speedTes
         {speedTest}
       </Link>
     </div>
-  );
-}
-
-export function SharpBrainHero(): React.JSX.Element {
-  const c = useCopy().hero;
-  const { lang } = useLanguage();
-  const next = useNextBatch();
-  return (
-    <section id="top" className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
-      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
-        <div>
-          <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-gold">{c.eyebrow}</p>
-          <h1 className="mt-4 text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px] lg:text-[50px]">{c.h1}</h1>
-          <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
-          <EnrolAndTestButtons speedTest={c.speedTest} location="sharp_brain_hero" className="mt-8" />
-          <PriceLine className="mt-4" />
-          {next !== null && <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint">{c.trust(istDayMonth(next.startsAtMs, lang))}</p>}
-        </div>
-        <div className="relative mx-auto w-full max-w-[480px]">
-          <div className="relative aspect-[1374/1145] w-full overflow-hidden rounded-sm border border-line-strong bg-panel2">
-            <Image src={trainer.photo.src} alt={trainer.photo.alt} fill priority sizes="(min-width: 1024px) 480px, 92vw" className="object-cover object-top" />
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -372,54 +350,6 @@ export function SharpBrainTrainer(): React.JSX.Element {
   );
 }
 
-export function SharpBrainOffer(): React.JSX.Element {
-  const c = useCopy().offer;
-  const { lang } = useLanguage();
-  return (
-    <section id="enrol" className={`scroll-mt-20 ${sectionClass}`}>
-      <div className="mx-auto max-w-content">
-        <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
-        <h2 className={h2Class}>{c.title}</h2>
-        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
-          <ul className="space-y-3">
-            {c.items.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-[16px] leading-relaxed text-ink">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-sm border border-gold bg-panel p-6 sm:p-7">
-            <p className="text-[19px] font-bold text-ink">{lang === "hi" ? programs.sharpBrain.nameHi : programs.sharpBrain.name}</p>
-            <PriceLine className="mt-2" />
-            <div className="mt-6">
-              <BatchCheckout location="sharp_brain_offer" showPerDay />
-            </div>
-            <p className="mt-3 text-[12.5px] leading-relaxed text-ink-dim" data-guarantee-short>
-              {qsrGuarantee[lang].short}{" "}
-              <a href="#guarantee" className="font-medium text-ink underline underline-offset-2">
-                {qsrGuarantee[lang].fullTerms}
-              </a>
-            </p>
-            <a
-              href={WHATSAPP_MASTERCLASS_INQUIRY_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackGaEvent("whatsapp_click", { location: "sharp_brain_offer" })}
-              className="mt-4 inline-flex w-full items-center justify-center rounded-sm border border-line-strong px-7 py-3.5 text-[14.5px] font-semibold text-ink transition-colors hover:bg-panel2 sm:w-auto"
-            >
-              {c.questions}
-            </a>
-          </div>
-        </div>
-        <div className="mt-8 max-w-3xl">
-          <GuaranteeBadge id="guarantee" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function SharpBrainFaq(): React.JSX.Element {
   const c = useCopy().faq;
   return (
@@ -461,7 +391,7 @@ export function SharpBrainFinal(): React.JSX.Element {
   );
 }
 
-export function SharpBrainStickyBar(): React.JSX.Element {
+export function SharpBrainStickyBar({ enrolHref = ENROL_HREF, hideRegularPrice = false }: { enrolHref?: string; hideRegularPrice?: boolean } = {}): React.JSX.Element {
   const { lang } = useLanguage();
   const c = useCopy().sticky;
   const next = useNextBatch();
@@ -472,13 +402,13 @@ export function SharpBrainStickyBar(): React.JSX.Element {
           <p className="truncate text-[13.5px] font-semibold text-ink">{lang === "hi" ? programs.sharpBrain.nameHi : programs.sharpBrain.name}</p>
           {next !== null && (
             <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
-              {next.offer !== "regular" && <s className="mr-1">₹{next.regularInr.toLocaleString("en-IN")}</s>}₹{next.amountInr.toLocaleString("en-IN")} ·{" "}
+              {next.offer !== "regular" && !hideRegularPrice && <s className="mr-1">₹{next.regularInr.toLocaleString("en-IN")}</s>}₹{next.amountInr.toLocaleString("en-IN")} ·{" "}
               {istDayMonth(next.startsAtMs, lang)}
             </p>
           )}
         </div>
         <a
-          href={ENROL_HREF}
+          href={enrolHref}
           onClick={() => trackGaEvent("sharp_brain_enrol_click", { location: "sharp_brain_sticky" })}
           className="inline-flex flex-none items-center rounded-sm bg-gold px-5 py-2.5 text-[13.5px] font-semibold text-[#1B1508]"
         >
@@ -503,6 +433,265 @@ export function SharpBrainReviewsHero(): React.JSX.Element {
         <Link href={programs.sharpBrain.url} className="mt-5 inline-block text-[14px] font-semibold text-gold hover:underline">
           {c.reviews.programLink}
         </Link>
+      </div>
+    </section>
+  );
+}
+
+// ─── Phase 6B — two offers on one page ─────────────────────────────────────
+// Live batch (existing checkout, price from the server) and Self-paced
+// (₹2,999 Razorpay payment link). Hero → comparison table → live block →
+// self-paced block → FAQ → final two buttons. Links are same-page hashes
+// so ?lang=hi is kept.
+
+const LIVE_HASH = "#live-batch";
+const SELF_HASH = "#self-paced";
+
+/** The live batch price shown on the page: the next batch's server price. */
+function useLivePrice(): string {
+  const next = useNextBatch();
+  return inr(next?.amountInr ?? sharpBrainEnrolment.earlyBirdInr);
+}
+
+function OfferButtons({ location, className = "" }: { location: string; className?: string }): React.JSX.Element {
+  const c = useCopy().offers.hero;
+  const price = useLivePrice();
+  return (
+    <div className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${className}`}>
+      <a
+        href={LIVE_HASH}
+        onClick={() => trackGaEvent("sharp_brain_enrol_click", { location })}
+        className="inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
+        data-offer-live
+      >
+        {c.liveButton(price)}
+      </a>
+      <a
+        href={SELF_HASH}
+        className="inline-flex items-center justify-center rounded-sm border border-line-strong px-7 py-[15px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
+        data-offer-self
+      >
+        {c.selfButton}
+      </a>
+    </div>
+  );
+}
+
+export function SharpBrainOffersHero(): React.JSX.Element {
+  const c = useCopy().offers.hero;
+  const { lang } = useLanguage();
+  const next = useNextBatch();
+  return (
+    <section id="top" className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
+      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+        <div>
+          <h1 className="text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px] lg:text-[50px]">{c.h1}</h1>
+          <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
+          <OfferButtons location="sharp_brain_hero" className="mt-8" />
+          {next !== null && (
+            <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint" data-seats-line>
+              {c.seats(istDayMonth(next.startsAtMs, lang))}
+            </p>
+          )}
+        </div>
+        <div className="relative mx-auto w-full max-w-[480px]">
+          <div className="relative aspect-[1374/1145] w-full overflow-hidden rounded-sm border border-line-strong bg-panel2">
+            <Image src={trainer.photo.src} alt={trainer.photo.alt} fill priority sizes="(min-width: 1024px) 480px, 92vw" className="object-cover object-top" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CellMark({ value, included, notIncluded }: { value: OfferCell; included: string; notIncluded: string }): React.JSX.Element {
+  if (typeof value === "string") return <span className="font-semibold text-ink">{value}</span>;
+  return value ? (
+    <span className="text-[17px] font-bold text-teal">
+      ✓<span className="sr-only"> {included}</span>
+    </span>
+  ) : (
+    <span className="text-ink-faint">
+      —<span className="sr-only"> {notIncluded}</span>
+    </span>
+  );
+}
+
+export function SharpBrainCompare(): React.JSX.Element {
+  const c = useCopy().offers;
+  const t = c.table;
+  return (
+    <section id="compare" className={sectionClass}>
+      <div className="mx-auto max-w-3xl">
+        <h2 className={h2Class}>{t.title}</h2>
+        <div className="relative mt-8 overflow-x-auto rounded-sm border border-line" data-compare-scroll>
+          <table className="w-full min-w-[480px] border-collapse text-left text-[15px]" data-compare-table>
+            <caption className="sr-only">{t.title}</caption>
+            <thead>
+              <tr className="border-b border-line-strong">
+                <th scope="col" className="sticky left-0 z-10 bg-panel px-4 py-3 font-mono text-[11.5px] font-semibold uppercase tracking-[0.08em] text-ink-faint">
+                  {t.feature}
+                </th>
+                <th scope="col" className="bg-panel px-4 py-3 text-[15px] font-bold text-ink">
+                  {c.self.name}
+                </th>
+                <th scope="col" className="bg-gold-soft px-4 py-3 text-[15px] font-bold text-ink">
+                  {c.live.name}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {t.rows.map((row) => (
+                <tr key={row.feature} className="border-b border-line last:border-b-0">
+                  <th scope="row" className="sticky left-0 z-10 bg-panel px-4 py-3.5 font-semibold text-ink">
+                    {row.feature}
+                  </th>
+                  <td className="bg-panel px-4 py-3.5">
+                    <CellMark value={row.self} included={t.included} notIncluded={t.notIncluded} />
+                  </td>
+                  <td className="bg-gold-soft px-4 py-3.5">
+                    <CellMark value={row.live} included={t.included} notIncluded={t.notIncluded} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** ✓ / — list for one offer, from the comparison table rows. */
+function OfferFeatureList({ side }: { side: "self" | "live" }): React.JSX.Element {
+  const t = useCopy().offers.table;
+  return (
+    <ul className="space-y-2.5">
+      {t.rows.map((row) => {
+        const value = row[side];
+        const on = value !== false;
+        return (
+          <li key={row.feature} className={`flex items-start gap-3 text-[15.5px] leading-relaxed ${on ? "text-ink" : "text-ink-faint"}`}>
+            <span className={`w-5 flex-none text-center font-bold ${on ? "text-teal" : ""}`} aria-hidden="true">
+              {on ? "✓" : "—"}
+            </span>
+            <span>
+              {row.feature}
+              {typeof value === "string" && <span className="font-semibold"> — {value}</span>}
+              {value === false && <span className="sr-only"> ({t.notIncluded})</span>}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/** The existing early-bird countdown (server clock), without the struck-through price. */
+function LiveEarlyBirdTimer(): React.JSX.Element | null {
+  const lang = useUiLang();
+  const next = useNextBatch();
+  if (next === null || next.offer === "regular" || next.endsAtMs === null) return null;
+  const t = enrolT(lang);
+  const label = next.offer === "test1000" ? t("offerTag") : t("earlyBirdFor", { date: istDayMonth(next.startsAtMs, lang) });
+  return (
+    <div className="mt-4 rounded-sm border border-line-strong px-4 py-3 text-[14px] leading-relaxed" data-early-bird-timer>
+      <p className="font-semibold text-gold">{label}</p>
+      <p className="text-ink-dim">
+        {t("endsIn")} <Countdown endsAtMs={next.endsAtMs} className="font-semibold text-ink" />
+        <span className="ml-1">({t("endsOn", { deadline: istDeadline(next.endsAtMs, lang) })})</span>
+      </p>
+    </div>
+  );
+}
+
+export function SharpBrainOffers(): React.JSX.Element {
+  const all = useCopy();
+  const c = all.offers;
+  const { lang } = useLanguage();
+  const next = useNextBatch();
+  const price = useLivePrice();
+  const perDay = inr(Math.round((next?.amountInr ?? sharpBrainEnrolment.earlyBirdInr) / 30));
+  return (
+    <section id="enrol" className={`scroll-mt-20 ${sectionClass} bg-panel`}>
+      <div className="mx-auto grid max-w-content grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-10">
+        {/* Live batch — primary */}
+        <article id="live-batch" className="warm-dark scroll-mt-20 rounded-sm border-[3px] border-gold p-6 shadow-[0_18px_40px_-18px_rgba(20,32,56,0.45)] sm:p-8" data-offer-block="live">
+          <span className="inline-flex rounded-sm bg-gold px-3 py-1 font-mono text-[11.5px] font-semibold uppercase tracking-[0.08em] text-[#1B1508]">{c.live.badge}</span>
+          <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[32px]">{c.live.name}</h2>
+          <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="text-[44px] font-extrabold leading-none tracking-tight sm:text-[52px]" data-live-price>
+              {price}
+            </span>
+            <span className="text-[15px] font-semibold text-ink-dim">{c.live.perDay(perDay)}</span>
+          </p>
+          <div className="mt-6">
+            <OfferFeatureList side="live" />
+          </div>
+          <div className="mt-7 border-t border-line pt-6">
+            <BatchCheckout location="sharp_brain_offer" buttonLabel={c.live.cta} hideRegularPrice />
+            <LiveEarlyBirdTimer />
+          </div>
+          <p className="mt-4 text-[12.5px] leading-relaxed text-ink-dim" data-guarantee-short>
+            {qsrGuarantee[lang].short}{" "}
+            <a href="#guarantee" className="font-medium text-ink underline underline-offset-2">
+              {qsrGuarantee[lang].fullTerms}
+            </a>
+          </p>
+        </article>
+
+        {/* Self-paced — secondary */}
+        <article id="self-paced" className="scroll-mt-20 rounded-sm border border-line-strong bg-void p-6 sm:p-8" data-offer-block="self">
+          <h2 className="text-[24px] font-extrabold leading-tight sm:text-[28px]">{c.self.name}</h2>
+          <p className="mt-2 text-[15px] font-semibold text-teal" data-no-live>
+            {c.self.noLive}
+          </p>
+          <p className="mt-4 text-[38px] font-extrabold leading-none tracking-tight sm:text-[44px]">{c.self.price}</p>
+          <div className="mt-6">
+            <OfferFeatureList side="self" />
+          </div>
+          <a
+            href={LINKS.rzpSharpBrainSelfPaced2999}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-7 inline-flex w-full items-center justify-center rounded-sm border-2 border-ink px-7 py-[14px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
+            data-self-paced-pay
+          >
+            {c.self.cta}
+          </a>
+          <p className="mt-4 text-[14px] leading-relaxed text-ink-dim">
+            <a href={waLink(c.self.upgrade)} target="_blank" rel="noopener noreferrer" className="underline decoration-gold/60 underline-offset-4 hover:text-ink" data-upgrade-line>
+              {c.self.upgrade}
+            </a>
+          </p>
+        </article>
+      </div>
+
+      <div className="mx-auto mt-8 flex max-w-content flex-col gap-6">
+        <div className="max-w-3xl">
+          <GuaranteeBadge id="guarantee" />
+        </div>
+        <a
+          href={WHATSAPP_MASTERCLASS_INQUIRY_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackGaEvent("whatsapp_click", { location: "sharp_brain_offer" })}
+          className="inline-flex w-full items-center justify-center rounded-sm border border-line-strong px-7 py-3.5 text-[14.5px] font-semibold text-ink transition-colors hover:bg-panel2 sm:w-auto sm:self-start"
+        >
+          {all.offer.questions}
+        </a>
+      </div>
+    </section>
+  );
+}
+
+export function SharpBrainOffersFinal(): React.JSX.Element {
+  const c = useCopy().final;
+  return (
+    <section className={sectionClass}>
+      <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+        <h2 className="text-[26px] font-extrabold leading-tight sm:text-[32px]">{c.title}</h2>
+        <OfferButtons location="sharp_brain_final" className="mt-7 justify-center" />
       </div>
     </section>
   );

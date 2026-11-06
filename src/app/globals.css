@@ -251,6 +251,30 @@
   }
 }
 
+/* Phase 6B — a dark panel inside a .warm-light page (Sharp Brain live batch
+   block): the site's own dark palette values from @theme above. */
+.warm-light .warm-dark {
+  --color-void: #0b0f17;
+  --color-panel: #121826;
+  --color-panel-2: #171f33;
+  --color-ink: #edeef3;
+  --color-ink-dim: #9ca3b8;
+  --color-ink-faint: #9ca3b8;
+  --color-gold: #d4af37;
+  --color-gold-soft: rgba(212, 175, 55, 0.1);
+  --color-line: rgba(237, 238, 243, 0.09);
+  --color-line-strong: rgba(237, 238, 243, 0.2);
+
+  background-color: var(--color-panel);
+  color: var(--color-ink);
+}
+
+@layer utilities {
+  .warm-light .warm-dark .text-gold {
+    color: var(--color-gold);
+  }
+}
+
 .warm-light ::selection {
   background-color: rgba(184, 134, 46, 0.22);
   color: var(--color-ink);
