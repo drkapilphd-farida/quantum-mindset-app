@@ -15,7 +15,8 @@ export const homeV2 = {
     },
   },
   hero: {
-    strip: { hi: '2017 से टेलीपैथी वर्कशॉप · 300+ वीडियो रिव्यू · 12 साल से सिखा रहे हैं', en: 'Telepathy workshop since 2017 · 300+ video reviews · 12 years of teaching' },
+    // Phase 6: "12 years" = mind training since 2014 (owner).
+    strip: { hi: '2017 से टेलीपैथी वर्कशॉप · 300+ वीडियो रिव्यू · 12 साल से माइंड ट्रेनिंग', en: 'Telepathy workshop since 2017 · 300+ video reviews · 12 years of mind training' },
     // Phase 5: new H1 (owner).
     h1: { hi: 'टेलीपैथी सीखिए — और उसके पीछे की मन की ताकत', en: 'Learn telepathy — and the mind power behind it' },
     sub: {
