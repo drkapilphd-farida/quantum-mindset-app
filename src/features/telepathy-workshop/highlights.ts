@@ -35,7 +35,7 @@ function gallery(n: number, caption: Bi): Highlight {
 // Phase 4.4: the owner's uploads in public/ (year from the file name, IMG_YYYYMMDD; no city in the names).
 const upload = (file: string, width: number, height: number, caption: Bi): Highlight => ({ src: `/${file}`, width, height, position: '50% 50%', caption, city: null, year: Number(file.slice(4, 8)) })
 const U_SELFIE = upload('IMG_20220828_123945.jpg', 4000, 1824, C.drKapil)
-const U_SESSION = upload('IMG_20220910_164123.jpg', 4000, 1824, C.session)
+export const U_SESSION = upload('IMG_20220910_164123.jpg', 4000, 1824, C.session)
 const U_SELFIE_2 = upload('IMG_20220910_164131.jpg', 4000, 1824, C.drKapil)
 const U_LYING = upload('IMG_20221121_122722.jpg', 4000, 1824, C.lying)
 const U_STANDING = upload('IMG_20221124_141950.jpg', 4000, 1824, C.standing)

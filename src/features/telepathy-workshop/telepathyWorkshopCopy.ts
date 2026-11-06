@@ -107,6 +107,8 @@ export const telepathyCopy = {
   traders: {
     // Phase 4.3: small line above the heading.
     eyebrow: { en: 'For traders', hi: 'ट्रेडर्स के लिए' },
+    // Phase 6: link to /telepathy-workshop/traders.
+    fullPageLink: { en: 'Trader? See the full page for traders →', hi: 'ट्रेडर हैं? आपके लिए पूरा पेज →' },
     heading: { en: "For Traders: Your Chart Doesn't Take the Trade. Your Mind Does.", hi: 'ट्रेडर्स के लिए — चार्ट नहीं, दिमाग़' },
     body: {
       en: 'Most trading mistakes come from fear and greed, not from lack of knowledge. Fear makes you exit early. Greed makes you stay too long.',

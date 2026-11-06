@@ -1,8 +1,10 @@
+import Link from 'next/link'
 import type { Lang } from '@/lib/i18n'
-import { FREE_SESSION_VIDEO, TELEPATHY_IMAGES } from '@/config/telepathyWorkshopConfig'
+import { FREE_SESSION_VIDEO } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { pick } from '../telepathyWorkshop'
 import { LiteYouTube } from './LiteYouTube'
+import { U_SESSION } from '../highlights'
 import { CheckDot, Heading, Photo, Section } from './ui'
 
 // B — trust strip
@@ -81,8 +83,12 @@ export function TradersSection({ lang }: { lang: Lang }): React.JSX.Element {
             ))}
           </ul>
           <p className="mt-6 text-[15px] italic leading-relaxed text-ink-dim">{pick(t.note, lang)}</p>
+          <Link href={lang === 'hi' ? '/telepathy-workshop/traders?lang=hi' : '/telepathy-workshop/traders'} className="mt-5 inline-flex min-h-[44px] items-center text-[16px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
+            {pick(t.fullPageLink, lang)}
+          </Link>
         </div>
-        <Photo src={TELEPATHY_IMAGES.trader} alt={pick(t.imageAlt, lang)} sizes="(min-width: 1024px) 520px, 100vw" className="order-1 aspect-[4/3] lg:order-2" />
+        {/* Phase 6: a real workshop photo instead of the AI-generated trader.jpg (file kept, no longer shown). */}
+        <Photo src={U_SESSION.src} alt={pick(U_SESSION.caption, lang)} sizes="(min-width: 1024px) 520px, 100vw" position={U_SESSION.position} className="order-1 aspect-[4/3] lg:order-2" />
       </div>
     </Section>
   )
