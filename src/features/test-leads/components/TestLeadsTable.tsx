@@ -16,11 +16,12 @@ const STATUS: { value: TestLeadStatus; label: string }[] = [
 
 const ist = (iso: string): string => new Date(iso).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' })
 
+// Phase 6: the message reaches the learner — it comes from Dr. Kapil himself (no "team").
 function followUp(lead: TestLeadRow): string {
   const name = lead.firstName?.trim() ?? ''
   return lead.lang === 'hi'
-    ? `नमस्ते ${name}, मैं Mind Ur Mind से डॉ. कपिल की टीम से हूँ। मुफ़्त टेस्ट देने के लिए धन्यवाद — आपकी पूरी रिपोर्ट और टिप्स भेज रहे हैं।`
-    : `Hi ${name}, this is Dr. Kapil's team at Mind Ur Mind. Thank you for taking the free test — here are your full report and tips.`
+    ? `नमस्ते ${name}, मैं Mind Ur Mind से डॉ. कपिल हूँ। मुफ़्त टेस्ट देने के लिए धन्यवाद — आपकी पूरी रिपोर्ट और टिप्स भेज रहे हैं।`
+    : `Hi ${name}, this is Dr. Kapil at Mind Ur Mind. Thank you for taking the free test — here are your full report and tips.`
 }
 
 // The founder's follow-up list: every free-test lead with their own results,
