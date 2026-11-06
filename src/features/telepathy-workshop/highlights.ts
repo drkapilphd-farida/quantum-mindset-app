@@ -64,5 +64,8 @@ export const WORKSHOP_HIGHLIGHTS: readonly Highlight[] = [
 /** Homepage: the short version (6 photos). */
 export const HOME_HIGHLIGHTS: readonly Highlight[] = [HERO_2, U_SESSION, U_LYING, U_STANDING, HERO_3, U_SELFIE]
 
+/** Phase 6C (owner): the heart-brain coherence picture (public/heart-coherence.jpg). */
+export const HEART_COHERENCE: Highlight = { src: '/heart-coherence.jpg', width: 2000, height: 1116, position: '50% 40%', caption: { en: 'Heart-brain coherence', hi: 'हार्ट-ब्रेन कोहेरेंस' }, city: null, year: null }
+
 /** Photos for the "4 things you learn" cards, by card index (0 telepathy: no photo shows pair practice clearly). */
-export const LEARN_CARD_PHOTOS: readonly (Highlight | null)[] = [null, HERO_5, HERO_3, HERO_2]
+export const LEARN_CARD_PHOTOS: readonly (Highlight | null)[] = [null, HERO_5, HEART_COHERENCE, HERO_2]

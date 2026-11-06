@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { LEARN_CARD_PHOTOS } from '../highlights'
 import type { Lang } from '@/lib/i18n'
-import { LONG_REVIEW_VIDEOS, PORTRAIT_POSITION, TELEPATHY_IMAGES, YOUTUBE_CHANNEL_URL } from '@/config/telepathyWorkshopConfig'
+import { LONG_REVIEW_VIDEOS, TELEPATHY_IMAGES, YOUTUBE_CHANNEL_URL } from '@/config/telepathyWorkshopConfig'
 import { telepathyCopy } from '../telepathyWorkshopCopy'
 import { v2 } from '../telepathyV2Copy'
 import { pick } from '../telepathyWorkshop'
@@ -150,7 +150,8 @@ export function DrKapilSection({ lang }: { lang: Lang }): React.JSX.Element {
   return (
     <Section labelledBy="tw-drkapil">
       <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
-        <Photo src={TELEPATHY_IMAGES.portrait} alt={pick(telepathyCopy.about.imageAlt, lang)} sizes="(min-width: 1024px) 420px, 100vw" position={PORTRAIT_POSITION} className="mx-auto aspect-[4/5] w-full max-w-[420px]" />
+        {/* Phase 6C (owner): public/dr-kapil-real.jpg, shown whole (its own shape) so the face is never cut. */}
+        <Photo src={TELEPATHY_IMAGES.drKapilReal} alt={pick(telepathyCopy.about.imageAlt, lang)} sizes="(min-width: 1024px) 460px, 100vw" className="mx-auto aspect-[1374/1145] w-full max-w-[460px]" />
         <div>
           <p className="tw-eyebrow text-gold">{pick(c.line, lang)}</p>
           <h2 id="tw-drkapil" className="tw-h2 mt-3 text-ink">

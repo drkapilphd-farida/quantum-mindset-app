@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Plus } from 'lucide-react'
 import SiteNav from '@/components/site/SiteNav'
 import Footer from '@/components/Footer'
@@ -11,6 +12,7 @@ import { MuseSection } from '../components/LearnSections'
 import { ProofSection } from '../components/V2Sections'
 import { StickyBooking } from '../components/StickyBooking'
 import { CheckDot, Heading, Section } from '../components/ui'
+import { HEART_COHERENCE } from '../highlights'
 import { tradersCopy as c } from './tradersCopy'
 
 // /telepathy-workshop/traders — the page for the trader ads (Phase 6).
@@ -67,11 +69,19 @@ export function TradersPage({ lang, renderedAt, heroVideo }: { lang: Lang; rende
             <Heading id="tr-how" className="text-center">
               {pick(c.how.heading, lang)}
             </Heading>
-            <ul className="mt-8 grid gap-5 md:grid-cols-3">
-              {c.how.items.map((item) => (
-                <li key={item.title.en} className="tw-card p-6 sm:p-7">
-                  <h3 className="text-[20px] font-extrabold leading-snug text-ink">{pick(item.title, lang)}</h3>
-                  <p className="tw-body mt-3">{pick(item.body, lang)}</p>
+            <ul className="mt-8 grid items-start gap-5 md:grid-cols-3">
+              {c.how.items.map((item, i) => (
+                <li key={item.title.en} className="tw-card overflow-hidden">
+                  {/* Phase 6C: the heart-brain coherence card gets the owner's picture (same pattern as the telepathy page's learn cards). */}
+                  {i === 0 && (
+                    <div className="relative aspect-[16/9] bg-panel-2">
+                      <Image src={HEART_COHERENCE.src} alt={pick(HEART_COHERENCE.caption, lang)} fill sizes="(min-width: 768px) 380px, 100vw" loading="lazy" className="object-cover" style={{ objectPosition: HEART_COHERENCE.position }} />
+                    </div>
+                  )}
+                  <div className="p-6 sm:p-7">
+                    <h3 className="text-[20px] font-extrabold leading-snug text-ink">{pick(item.title, lang)}</h3>
+                    <p className="tw-body mt-3">{pick(item.body, lang)}</p>
+                  </div>
                 </li>
               ))}
             </ul>

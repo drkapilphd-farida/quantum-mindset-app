@@ -188,6 +188,10 @@ export const HERO_FADE_SECONDS = 1.5
 
 export const TELEPATHY_IMAGES = {
   trader: `${IMG}/trader.jpg`,
+  // Phase 6C (owner): the new multi-screen trader picture; trader.jpg is kept but no longer shown.
+  traderMultiscreen: `${IMG}/trader-multiscreen.jpg`,
+  // Phase 6C (owner): replaces the Dr. Kapil section's dr-kapil-portrait.jpg (kept, no longer shown).
+  drKapilReal: '/dr-kapil-real.jpg',
   muse: `${IMG}/muse2-demo.jpg`,
   portrait: `${IMG}/dr-kapil-portrait.jpg`,
   ctaPortrait: `${IMG}/dr-kapil-cta.jpg`,

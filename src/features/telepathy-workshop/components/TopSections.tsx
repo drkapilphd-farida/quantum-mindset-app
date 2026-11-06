@@ -86,8 +86,8 @@ export function TradersSection({ lang }: { lang: Lang }): React.JSX.Element {
             {pick(t.fullPageLink, lang)}
           </Link>
         </div>
-        {/* Phase 6C (owner): trader.jpg again, no caption; cropped to keep the screens and his face. */}
-        <Photo src={TELEPATHY_IMAGES.trader} alt={pick(t.imageAlt, lang)} sizes="(min-width: 1024px) 520px, 100vw" position="45% 50%" className="order-1 aspect-[4/3] lg:order-2" />
+        {/* Phase 6C (owner): the multi-screen trader picture, no caption; cropped to keep the screens and his face. */}
+        <Photo src={TELEPATHY_IMAGES.traderMultiscreen} alt={pick(t.imageAlt, lang)} sizes="(min-width: 1024px) 520px, 100vw" position="85% 50%" className="order-1 aspect-[4/3] lg:order-2" />
       </div>
     </Section>
   )
