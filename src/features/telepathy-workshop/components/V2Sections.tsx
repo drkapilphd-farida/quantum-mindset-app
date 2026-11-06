@@ -79,13 +79,13 @@ export function LearnFourSection({ lang }: { lang: Lang }): React.JSX.Element {
 
 // 5 — proof: 3 video reviews (no labels: src/data/reviews.csv is not in the
 // repo yet) and the link to all 300+ on YouTube.
-export function ProofSection({ lang, tint = true }: { lang: Lang; tint?: boolean }): React.JSX.Element {
+export function ProofSection({ lang, tint = true, heading }: { lang: Lang; tint?: boolean; heading?: string }): React.JSX.Element {
   const c = v2.proof
   const label = (n: number): string => `${pick(telepathyCopy.reviews.playLabel, lang)} ${n}`
   return (
     <Section id="reviews" tint={tint} labelledBy="tw-proof">
       <div className="mx-auto max-w-2xl text-center">
-        <Heading id="tw-proof">{pick(c.heading, lang)}</Heading>
+        <Heading id="tw-proof">{heading ?? pick(c.heading, lang)}</Heading>
         <p className="tw-body mt-3">{pick(c.sub, lang)}</p>
       </div>
       <div className="mt-10 grid gap-5 md:grid-cols-3">

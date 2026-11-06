@@ -7,7 +7,9 @@ import { pick } from '../telepathyWorkshop'
 import { GOLD_BUTTON } from './ui'
 import { WhatsAppGlyph, WhatsAppLink } from './WhatsAppLink'
 
-const c = v2.hero
+type Bi = { en: string; hi: string }
+/** The hero's wording — /telepathy-workshop uses v2.hero; the traders page passes its own. */
+export type HeroCopy = { strip: Bi; h1: Bi; sub: Bi; ctaPrimary: Bi; ctaSecondary: Bi; smallLine: Bi }
 
 // A — hero (Phase 4.2, copy/telepathy-v2.md): small proof strip, H1,
 // subtitle, "अपनी तारीख चुनिए" (→ the date cards, #dates), "talk first" on
@@ -15,7 +17,8 @@ const c = v2.hero
 // (HERO_PHOTO) under the dark overlay — or public/telepathy-hero.mp4 when
 // it exists (`heroVideo`), muted and looping, with the photo as poster.
 // `id="tw-hero"` is what the sticky booking bar watches.
-export function HeroSection({ lang, heroVideo }: { lang: Lang; heroVideo: boolean }): React.JSX.Element {
+export function HeroSection({ lang, heroVideo, copy = v2.hero }: { lang: Lang; heroVideo: boolean; copy?: HeroCopy }): React.JSX.Element {
+  const c = copy
   return (
     <section id="tw-hero" aria-labelledby="tw-hero-heading" className="tw-dark relative isolate flex min-h-[calc(100svh-61px)] items-center overflow-hidden px-5 pb-12 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
       {heroVideo ? (
