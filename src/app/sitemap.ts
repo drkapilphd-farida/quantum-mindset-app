@@ -22,7 +22,7 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/refund-policy', changeFrequency: 'yearly', priority: 0.2 },
-  { path: '/franchise-individual', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/partner', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/executive-brain-workshop', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/prefrontal-power-mumbai', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/telepathy-workshop', changeFrequency: 'weekly', priority: 0.9 },

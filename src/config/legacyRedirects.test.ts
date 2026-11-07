@@ -29,6 +29,10 @@ describe('legacy redirects', () => {
     expect(find('/courses')).toMatchObject({ destination: '/', statusCode: 301 })
   })
 
+  it('sends the old franchise page to /partner', () => {
+    expect(LEGACY_REDIRECTS).toContainEqual({ source: '/franchise-individual', destination: '/partner', statusCode: 301 })
+  })
+
   it('uses only unique sources and permanent 301s', () => {
     const sources = LEGACY_REDIRECTS.map((r) => r.source)
     expect(new Set(sources).size).toBe(sources.length)

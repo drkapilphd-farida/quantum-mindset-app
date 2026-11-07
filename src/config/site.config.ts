@@ -423,7 +423,7 @@ const programsData = {
     format: 'Application · 7-day certification · ongoing partner support',
     prices: [],
     checkout: [{ label: 'Apply on WhatsApp', href: waLink('Hi Dr. Kapil, I want to apply to become a certified Sharp Brain trainer partner.') }],
-    url: '/franchise-individual',
+    url: '/partner', // was /franchise-individual (301, legacyRedirects.ts)
     status: 'active',
     pillar: 'business',
   },

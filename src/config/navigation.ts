@@ -94,7 +94,7 @@ function telepathyUrl(lang: Lang, hash = ''): string {
   return lang === 'hi' ? `${programs.telepathyWorkshop.url}?lang=hi${hash}` : `${programs.telepathyWorkshop.url}${hash}`
 }
 
-/** Main nav: at most 5 items (copy/header-footer.md). */
+/** Main nav (copy/header-footer.md): 5 items + "Become a Partner" (owner, Nov 2026). */
 export function siteNavLinks(lang: Lang): NavLink[] {
   const hi = lang === 'hi'
   return [
@@ -103,6 +103,7 @@ export function siteNavLinks(lang: Lang): NavLink[] {
     { label: hi ? 'बच्चों की पढ़ाई' : 'Sharp Brain', href: programs.sharpBrain.url },
     { label: hi ? 'रिट्रीट' : 'Retreats', href: programs.onlineRetreat.url },
     { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
+    { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
   ]
 }
 
@@ -132,7 +133,7 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
         { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
         { label: hi ? 'गैलरी' : 'Gallery', href: '/gallery' },
         { label: hi ? 'मेरी कहानी' : 'My story', href: '/about' },
-        { label: hi ? 'ट्रेनर बनिए' : 'Become a trainer', href: programs.franchise.url },
+        { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
         { label: hi ? 'कॉर्पोरेट' : 'Corporate', href: ORGANISATIONS_HREF },
         { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
       ],

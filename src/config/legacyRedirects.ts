@@ -98,4 +98,6 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: '/en', destination: '/', statusCode: 301 },
   // Phase 5: the empty /courses catalog page was removed.
   { source: '/courses', destination: '/', statusCode: 301 },
+  // Partner page (Nov 2026): the old franchise page is replaced by /partner.
+  { source: '/franchise-individual', destination: '/partner', statusCode: 301 },
 ]
