@@ -42,4 +42,20 @@ describe('buildFlashMatrixRound', () => {
       }
     }
   })
+
+  it('never repeats a digit inside a digit code, so the 4 options are always 4 different orders', () => {
+    // A code like "1111" has only one order, so its "decoys" were all
+    // identical (seen as a rare CI failure of the first test above).
+    // Enough rounds that the old generator (≈50% of 4-digit codes had a
+    // repeated digit) fails this test essentially every time.
+    let digitRounds = 0
+    for (let i = 0; i < 400; i += 1) {
+      const { target, options } = buildFlashMatrixRound(new Set())
+      if (!target.monospace) continue
+      digitRounds += 1
+      expect(new Set(target.displayText).size).toBe(target.displayText.length)
+      expect(new Set(options.map((o) => o.displayText)).size).toBe(4)
+    }
+    expect(digitRounds).toBeGreaterThan(0)
+  })
 })
