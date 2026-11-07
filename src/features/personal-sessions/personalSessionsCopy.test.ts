@@ -12,7 +12,7 @@ describe('Personal Sessions copy (owner rules, Nov 2026)', () => {
 
   it('has the three groups, with every topic the owner listed', () => {
     const topics = personalSessionsCopy.groups.items.flatMap((g) => g.topics.map((t) => t.name.toLowerCase()))
-    for (const topic of ['stress', 'anxiety and panic', 'mindset coaching', 'subconscious reprogramming', 'intuition training for traders', 'heart-brain coherence for fear', 'aura reading', 'chakra activation', 'samadhi meditation', 'kundalini meditation', 'astral projection']) {
+    for (const topic of ['stress', 'anxiety and panic', 'mindset coaching', 'subconscious reprogramming', 'intuition training for traders', 'heart-brain coherence for fear', 'telepathy & intuition (1-on-1)', 'aura reading', 'chakra activation', 'samadhi meditation', 'kundalini meditation', 'astral projection']) {
       expect(topics).toContain(topic)
     }
     expect(personalSessionsCopy.groups.items.find((g) => g.id === 'spiritual')?.badge).toBe('1-on-1 only')
@@ -25,5 +25,9 @@ describe('Personal Sessions copy (owner rules, Nov 2026)', () => {
   it('uses the words support and coaching', () => {
     expect(allText).toContain('support')
     expect(allText).toContain('coaching')
+  })
+
+  it('shows the Clarity Session as the one entry price, in the owner’s words', () => {
+    expect(personalSessionsCopy.hero.price).toBe('Clarity Session — ₹2,100 (75 minutes). Your personal plan and package are discussed in this session.')
   })
 })

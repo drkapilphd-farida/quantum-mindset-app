@@ -55,7 +55,7 @@ export type OffersCopy = {
     rows: { feature: string; self: OfferCell; live: OfferCell }[]
   }
   live: { name: string; badge: string; perDay: (price: string) => string; cta: string }
-  self: { name: string; price: string; noLive: string; cta: string; upgrade: string }
+  self: { name: string; price: string; noLive: string; recordings: string; cta: string; upgrade: string }
 }
 
 // Self-paced price (Razorpay payment link LINKS.rzpSharpBrainSelfPaced2999).
@@ -265,6 +265,7 @@ const en: SharpBrainCopy = {
       name: 'Self-paced',
       price: selfPacedPrice,
       noLive: 'No live classes — all 7 classes are recorded.',
+      recordings: 'Class recordings unlock within 48 hours of joining.',
       cta: 'Start self-paced',
       upgrade: 'Upgrade to the live batch within 7 days by paying ₹6,000 — message us on WhatsApp.',
     },
@@ -474,6 +475,7 @@ const hi: SharpBrainCopy = {
       name: 'सेल्फ़-पेस्ड',
       price: selfPacedPrice,
       noLive: 'लाइव क्लास नहीं हैं — सातों क्लास रिकॉर्डेड।',
+      recordings: 'क्लास की रिकॉर्डिंग जॉइन करने के 48 घंटे के भीतर खुल जाती है।',
       cta: 'सेल्फ़-पेस्ड शुरू करें',
       upgrade: '7 दिन के भीतर ₹6,000 देकर लाइव बैच में बदल सकते हैं — वॉट्सऐप पर बताइए।',
     },

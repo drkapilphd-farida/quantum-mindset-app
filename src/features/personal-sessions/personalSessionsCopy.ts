@@ -3,6 +3,12 @@
 // ("cure", "treatment", "therapy"), no promised outcomes. The process and
 // the 7 / 14 / 21-day formats come from the earlier 1-on-1 page.
 
+import { CLARITY_SESSION, EXPERIENCE_LINE } from '@/config/site.config'
+
+/** Owner's wording: "Clarity Session — ₹2,100 (75 minutes). Your personal plan and package are discussed in this session." */
+const clarity = `Clarity Session — ₹${CLARITY_SESSION.priceInr.toLocaleString('en-IN')} (${CLARITY_SESSION.minutes} minutes)`
+const clarityLine = `${clarity}. Your personal plan and package are discussed in this session.`
+
 export const AREA_OPTIONS = ['Mind & emotions', 'Performance', 'Spiritual practices (1-on-1)', 'Not sure yet'] as const
 export type AreaOption = (typeof AREA_OPTIONS)[number]
 
@@ -19,6 +25,7 @@ export const personalSessionsCopy = {
     sub: 'Private, one-on-one support for your mind, your performance and your practice. Online or in person, at your own pace.',
     enquire: 'Send an enquiry',
     areas: 'See what we work on ↓',
+    price: clarityLine,
     photoAlt: 'Dr. Kapil Dev Sharma',
   },
   groups: {
@@ -53,6 +60,7 @@ export const personalSessionsCopy = {
         line: 'Guided personally by Dr. Kapil, one person at a time.',
         badge: '1-on-1 only',
         topics: [
+          { name: 'Telepathy & intuition (1-on-1)', text: 'Practice for sharing feelings and intentions, and for trusting your inner voice — taught for your own purpose.' },
           { name: 'Aura reading', text: 'An introduction to sensing and understanding your own energy.' },
           { name: 'Chakra activation', text: 'Guided practice for working with the chakras, step by step.' },
           { name: 'Samadhi meditation', text: 'Deep meditation guidance at your own pace.' },
@@ -66,7 +74,7 @@ export const personalSessionsCopy = {
     title: 'How it works',
     steps: [
       { title: 'Send an enquiry', text: 'Tell us what you would like to change and why. A few lines are enough.' },
-      { title: 'Short conversation', text: 'A brief call or WhatsApp chat to understand your situation before anything is suggested.' },
+      { title: 'Clarity Session', text: `${clarity}: we understand your situation, and why you want to change it, before anything is suggested.` },
       { title: 'Your plan', text: 'A session plan made for you. You decide whether to go ahead — no pressure.' },
     ],
     formats: [
@@ -74,12 +82,12 @@ export const personalSessionsCopy = {
       { days: '14 days', tag: 'Recommended', text: 'Two weeks for linked issues, with room to adjust.' },
       { days: '21 days', tag: 'In-depth', text: 'Three weeks for deeper, long-standing patterns.' },
     ],
-    feeNote: 'The fee depends on the package — number of days and session timing. We share your plan and fee after the conversation.',
+    feeNote: clarityLine,
   },
   about: {
     eyebrow: 'Your coach',
     name: 'Dr. Kapil Dev Sharma',
-    text: 'Mind, brain and meditation coach for 20+ years. Professor for 15 years. Every session is with Dr. Kapil himself.',
+    text: `${EXPERIENCE_LINE.en}. Every session is with Dr. Kapil himself.`,
   },
   enquiry: {
     title: 'Send an enquiry',
@@ -106,7 +114,7 @@ export const personalSessionsCopy = {
     title: 'Questions',
     items: [
       { question: 'Are sessions online or in person?', answer: 'Both. Choose what suits you — we fix this in the first conversation.' },
-      { question: 'How much does it cost?', answer: 'The fee depends on the package (7, 14 or 21 days) and session timing. We share your plan and fee after a short conversation — no commitment before that.' },
+      { question: 'How much does it cost?', answer: clarityLine },
       {
         question: 'Is this therapy or medical care?',
         answer: 'No. These are coaching and personal-development sessions. If you are under a doctor’s care, please continue it, and tell us so we can plan around it.',

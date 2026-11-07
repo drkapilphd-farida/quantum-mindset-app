@@ -67,7 +67,10 @@ export function HomePaths(): React.JSX.Element {
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex flex-col items-start gap-3 lg:mt-auto lg:pt-6">
+            <p className="mt-5 text-[15.5px] font-semibold" data-home-clarity>
+              {say(ps.price, lang)}
+            </p>
+            <div className="mt-5 flex flex-col items-start gap-3 lg:mt-auto lg:pt-6">
               <Link href={programs.oneOnOneCoaching.url} className={GOLD}>
                 {say(ps.button, lang)}
               </Link>

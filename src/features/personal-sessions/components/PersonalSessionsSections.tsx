@@ -26,6 +26,9 @@ export function SessionsHero(): React.JSX.Element {
               {c.areas}
             </a>
           </div>
+          <p className="text-[15px] font-semibold text-ink" data-clarity-price>
+            {c.price}
+          </p>
         </div>
         <div className="relative mx-auto aspect-[1374/1145] w-full max-w-[480px] overflow-hidden rounded-lg border border-line-strong bg-panel2">
           <Image src="/dr-kapil-real.jpg" alt={c.photoAlt} fill priority sizes="(min-width: 1024px) 480px, 92vw" className="object-cover object-top" />
@@ -95,7 +98,7 @@ export function SessionsProcess(): React.JSX.Element {
             </li>
           ))}
         </ul>
-        <p className="text-[15px] text-ink-dim">{c.feeNote}</p>
+        <p className="rounded-md border border-gold/50 bg-gold-soft px-5 py-4 text-[16px] font-semibold text-ink">{c.feeNote}</p>
       </div>
     </section>
   );

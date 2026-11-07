@@ -646,6 +646,9 @@ export function SharpBrainOffers(): React.JSX.Element {
           <p className="mt-2 text-[15px] font-semibold text-teal" data-no-live>
             {c.self.noLive}
           </p>
+          <p className="mt-1 text-[14px] text-ink-dim" data-recordings-note>
+            {c.self.recordings}
+          </p>
           <p className="mt-4 text-[38px] font-extrabold leading-none tracking-tight sm:text-[44px]">{c.self.price}</p>
           <div className="mt-6">
             <OfferFeatureList side="self" />

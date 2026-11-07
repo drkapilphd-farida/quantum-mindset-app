@@ -16,6 +16,7 @@ export const YOUTUBE_CHANNEL = 'https://www.youtube.com/@innershiftWithDrKapil'
 export const LINKS = {
   rzpTelepathyDeposit1000: 'https://rzp.io/rzp/elNaxRB', // ₹1,000 seat booking (confirmed by the owner, Phase 0)
   rzpOnline3999: 'https://rzp.io/rzp/NIZqolHs', // online, 3 evenings (owner, Phase 4.2)
+  rzpSharpBrainLive8999: 'https://rzp.io/rzp/hx46Vs5f', // Sharp Brain Live batch ₹8,999 (owner, Nov 2026)
   rzpSharpBrainSelfPaced2999: 'https://rzp.io/rzp/9RmomzjS', // Sharp Brain self-paced ₹2,999 (owner, Phase 4.2 → 6B)
   rzpRetreat11Discount: '[[RZP_RETREAT11_5999]]',
   waGroupOverthinking: '[[WA_GROUP_OVERTHINKING]]',

@@ -38,7 +38,7 @@ export function PartnerHero(): React.JSX.Element {
         </div>
         <HeroEarningsCard />
       </div>
-      <ul className={`${wrap} mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4`}>
+      <ul className={`${wrap} mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5`}>
         {c.stats.map((stat) => (
           <li key={stat.value} className="rounded-md border border-line-strong px-4 py-4 sm:px-5">
             <p className="text-[24px] font-extrabold sm:text-[30px]">{stat.value}</p>

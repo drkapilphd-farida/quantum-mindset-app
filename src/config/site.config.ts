@@ -1,4 +1,4 @@
-import { RAZORPAY_MASTERCLASS_PAYMENT_LINK } from './masterclassPaymentLink'
+import { LINKS } from '@/data/links'
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from './overthinkingCoursePaymentLink'
 import { RAZORPAY_RETREAT_PAYMENT_LINK } from './retreatPaymentLink'
 
@@ -26,12 +26,20 @@ type Widen<T> = T extends string
         : T
 
 // Headline numbers — edit here only; bios, stats and trust lines are built from them.
-const YEARS_TOTAL = 26
+// Owner (Nov 2026): the experience line everywhere is
+// "12+ years of mind coaching · 15 years as a professor" (EXPERIENCE_LINE).
+const YEARS_TOTAL = '12+'
 const YEARS_PROFESSOR = 15
 const SKILLS_TRAINING_SINCE = 2015
 const FOUNDED = 2014
 const LEARNERS = '10,000+'
 const WORKSHOPS = '500+'
+
+/** The one experience line, word for word (owner, Nov 2026). */
+export const EXPERIENCE_LINE = {
+  en: `${YEARS_TOTAL} years of mind coaching · ${YEARS_PROFESSOR} years as a professor`,
+  hi: `${YEARS_TOTAL} साल माइंड कोचिंग · ${YEARS_PROFESSOR} साल प्रोफ़ेसर`,
+} as const
 
 export const SITE_CONFIG_WHATSAPP_NUMBER = '919540123161'
 
@@ -108,26 +116,26 @@ const trainerData = {
   },
   en: {
     title: 'Brain, Mind & Meditation Coach',
-    shortBio: `${YEARS_TOTAL} years in education and mind training · Trainer in reading, focus and memory skills since ${SKILLS_TRAINING_SINCE} · ${LEARNERS} learners · ${WORKSHOPS} workshops`,
+    shortBio: `${YEARS_TOTAL} years of mind coaching · ${YEARS_PROFESSOR} years as a professor · Trainer in reading, focus and memory skills since ${SKILLS_TRAINING_SINCE} · ${LEARNERS} learners · ${WORKSHOPS} workshops`,
     longBio:
-      `Dr. Kapil Dev Sharma brings ${YEARS_TOTAL} years of experience — ${YEARS_PROFESSOR} years as a professor and researcher in formal education, and more than a decade as a mind trainer, life coach and meditation teacher. He has trained learners in reading, focus and memory skills since ${SKILLS_TRAINING_SINCE}, and developed his own structured 30-day method, now called Sharp Brain™.`,
+      `Dr. Kapil Dev Sharma has ${YEARS_TOTAL} years of mind coaching and ${YEARS_PROFESSOR} years as a professor and researcher in formal education, and works as a mind trainer, life coach and meditation teacher. He has trained learners in reading, focus and memory skills since ${SKILLS_TRAINING_SINCE}, and developed his own structured 30-day method, now called Sharp Brain™.`,
     stats: [
-      { value: String(YEARS_TOTAL), label: 'Years in education & mind training' },
+      { value: YEARS_TOTAL, label: 'Years of mind coaching' },
+      { value: String(YEARS_PROFESSOR), label: 'Years as a professor' },
       { value: LEARNERS, label: 'Learners' },
       { value: WORKSHOPS, label: 'Workshops' },
-      { value: String(FOUNDED), label: 'Mind Ur Mind founded' },
     ],
   } satisfies TrainerCopy,
   hi: {
     title: 'ब्रेन, माइंड व मेडिटेशन कोच',
-    shortBio: `शिक्षा और माइंड ट्रेनिंग में ${YEARS_TOTAL} वर्ष · ${SKILLS_TRAINING_SINCE} से रीडिंग, फोकस और मेमोरी स्किल्स के ट्रेनर · ${LEARNERS} विद्यार्थी · ${WORKSHOPS} वर्कशॉप्स`,
+    shortBio: `${YEARS_TOTAL} साल माइंड कोचिंग · ${YEARS_PROFESSOR} साल प्रोफ़ेसर · ${SKILLS_TRAINING_SINCE} से रीडिंग, फोकस और मेमोरी स्किल्स के ट्रेनर · ${LEARNERS} विद्यार्थी · ${WORKSHOPS} वर्कशॉप्स`,
     longBio:
-      `डॉ. कपिल देव शर्मा के पास ${YEARS_TOTAL} वर्षों का अनुभव है — ${YEARS_PROFESSOR} वर्ष औपचारिक शिक्षा में प्रोफेसर और शोधकर्ता के रूप में, और एक दशक से अधिक समय से माइंड ट्रेनर, लाइफ कोच और मेडिटेशन शिक्षक के रूप में। वे ${SKILLS_TRAINING_SINCE} से विद्यार्थियों को रीडिंग, फोकस और मेमोरी स्किल्स सिखा रहे हैं, और उन्होंने अपनी खुद की संरचित 30-दिवसीय विधि विकसित की है, जिसे अब Sharp Brain™ कहा जाता है।`,
+      `डॉ. कपिल देव शर्मा के पास ${YEARS_TOTAL} साल का माइंड कोचिंग का अनुभव है और वे ${YEARS_PROFESSOR} साल औपचारिक शिक्षा में प्रोफ़ेसर और शोधकर्ता रहे हैं; वे माइंड ट्रेनर, लाइफ कोच और मेडिटेशन शिक्षक हैं। वे ${SKILLS_TRAINING_SINCE} से विद्यार्थियों को रीडिंग, फोकस और मेमोरी स्किल्स सिखा रहे हैं, और उन्होंने अपनी खुद की संरचित 30-दिवसीय विधि विकसित की है, जिसे अब Sharp Brain™ कहा जाता है।`,
     stats: [
-      { value: String(YEARS_TOTAL), label: 'वर्ष शिक्षा व माइंड ट्रेनिंग में' },
+      { value: YEARS_TOTAL, label: 'साल माइंड कोचिंग' },
+      { value: String(YEARS_PROFESSOR), label: 'साल प्रोफ़ेसर' },
       { value: LEARNERS, label: 'विद्यार्थी' },
       { value: WORKSHOPS, label: 'वर्कशॉप्स' },
-      { value: String(FOUNDED), label: 'Mind Ur Mind की स्थापना' },
     ],
   } satisfies TrainerCopy,
 } as const
@@ -628,7 +636,11 @@ const sharpBrainEnrolmentData = {
   testOffer: { discountInr: 1000, validHours: 48 },
   seatsPerBatch: null as number | null,
   fallbackLinks: {
-    regular: RAZORPAY_MASTERCLASS_PAYMENT_LINK,
+    // Owner (Nov 2026): the Live batch's fixed ₹8,999 link. The program
+    // webhook unlocks the app for payments through this same link (it reads
+    // fallbackLinks). The old ₹9,999 link (masterclassPaymentLink.ts) is no
+    // longer sold.
+    regular: LINKS.rzpSharpBrainLive8999,
     // TODO(business): Dr. Kapil to create a fixed ₹8,999 Razorpay link
     // (used for early-bird and the test offer while the API keys are missing).
     discounted: null as string | null,
@@ -640,7 +652,17 @@ export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
   readonly fallbackLinks: { readonly regular: string; readonly discounted: string | null }
 } = sharpBrainEnrolmentData
 
+/** Personal Sessions entry point (owner, Nov 2026): every booking starts here. */
+export const CLARITY_SESSION = { priceInr: 2100, minutes: 75 } as const
+
 /** Sharp Brain's two offers — the one place these prices are written. */
+/**
+ * The ₹1,000-off offer after a valid Reading & Memory Test. Turned off by
+ * the owner (Nov 2026): the Live batch is one flat price. Offers already
+ * sent keep their page, which now shows the normal price.
+ */
+export const READING_TEST_OFFER_ENABLED = false
+
 export const SHARP_BRAIN_PRICES = {
   selfPacedInr: 2999,
   liveInr: sharpBrainEnrolmentData.regularInr,

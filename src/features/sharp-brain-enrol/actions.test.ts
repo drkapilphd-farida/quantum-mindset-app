@@ -106,7 +106,7 @@ describe('startSharpBrainCheckout', () => {
   it('without API keys uses the fixed regular link', async () => {
     const { actions, created } = await load({ api: false })
     const result = await actions.startSharpBrainCheckout({ email: 'Buyer@Example.com', batch: '2026-10-15', simulateNow: '2026-10-12T10:00:00+05:30' })
-    expect(result).toEqual({ ok: true, url: 'https://rzp.io/rzp/ydVYaANF' })
+    expect(result).toEqual({ ok: true, url: 'https://rzp.io/rzp/hx46Vs5f' })
     expect(created).toHaveLength(0)
   })
 

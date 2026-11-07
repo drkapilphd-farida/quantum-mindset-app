@@ -1,4 +1,5 @@
 import { FOUNDING_PARTNERS, PARTNER_PROGRAM } from '@/config/partnerProgram'
+import { EXPERIENCE_LINE } from '@/config/site.config'
 import { formatInr } from './earnings'
 
 // /partner — Sharp Brain™ Partner Program. English only, simple words.
@@ -30,7 +31,8 @@ export const partnerCopy = {
       note: 'Change it in the calculator below · Example only, not a guarantee',
     },
     stats: [
-      { value: '20+ years', label: 'of experience' },
+      { value: '12+ years', label: 'of mind coaching' },
+      { value: '15 years', label: 'as a professor' },
       { value: '500+', label: 'workshops' },
       { value: '10,000+', label: 'people trained' },
       { value: '0 sq ft', label: 'no shop or centre needed' },
@@ -145,7 +147,7 @@ export const partnerCopy = {
     eyebrow: 'Your mentor',
     name: 'Dr. Kapil Dev Sharma',
     photoAlt: 'Dr. Kapil Dev Sharma',
-    text: 'Mind, brain and meditation coach for 20+ years. Professor for 15 years. 500+ workshops, 10,000+ people trained. Working on Sharp Brain since 2015.',
+    text: `${EXPERIENCE_LINE.en}. 500+ workshops, 10,000+ people trained. Working on Sharp Brain since 2015.`,
     quote: '“I will give you not just a program, but a complete system — so you can change the lives of children in your area and earn well.”',
   },
   apply: {
