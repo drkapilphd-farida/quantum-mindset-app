@@ -59,7 +59,7 @@ export const homeV2 = {
         { title: { hi: 'परफ़ॉर्मेंस', en: 'Performance' }, topics: { hi: 'ट्रेडर्स के लिए इनट्यूशन ट्रेनिंग, डर के लिए हार्ट-ब्रेन कोहेरेंस', en: 'Intuition training for traders, heart-brain coherence for fear' } },
         { title: { hi: 'आध्यात्मिक साधना (सिर्फ़ 1-on-1)', en: 'Spiritual practices (1-on-1 only)' }, topics: { hi: 'टेलीपैथी और इनट्यूशन, ऑरा रीडिंग, चक्र एक्टिवेशन, समाधि मेडिटेशन, कुंडलिनी मेडिटेशन, एस्ट्रल प्रोजेक्शन', en: 'Telepathy & intuition, aura reading, chakra activation, samadhi meditation, kundalini meditation, astral projection' } },
       ],
-      button: { hi: 'पर्सनल सेशन देखिए', en: 'See Personal Sessions' },
+      button: { hi: 'सारे प्रोग्राम देखिए →', en: 'See all programs →' },
       price: { hi: `क्लैरिटी सेशन — ₹${CLARITY_SESSION.priceInr.toLocaleString('en-IN')} (${CLARITY_SESSION.minutes} मिनट)`, en: `Clarity Session — ₹${CLARITY_SESSION.priceInr.toLocaleString('en-IN')} (${CLARITY_SESSION.minutes} minutes)` },
       note: { hi: 'कोचिंग और सपोर्ट — मेडिकल इलाज नहीं।', en: 'Coaching and support — not medical care.' },
     },

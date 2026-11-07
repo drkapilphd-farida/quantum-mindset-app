@@ -23,14 +23,14 @@ export async function sendSessionEnquiryNotification(enquiry: SessionEnquiryNoti
   const { error } = await resend.emails.send({
     from: fromEmail,
     to: notifyEmail,
-    subject: `[1-on-1] New personal session enquiry — ${enquiry.name} (${enquiry.city})`,
+    subject: `[1-on-1] Clarity Session request — ${enquiry.area} — ${enquiry.name} (${enquiry.city})`,
     text: [
-      `New Personal Sessions enquiry (/personal-sessions)`,
+      `New Clarity Session request (/personal-sessions)`,
       ``,
       `Name: ${enquiry.name}`,
       `WhatsApp: ${enquiry.phone}`,
       `City: ${enquiry.city}`,
-      `Kind of session: ${enquiry.area}`,
+      `Program: ${enquiry.area}`,
       ``,
       `What would you like to change in your life, and why?`,
       enquiry.change,

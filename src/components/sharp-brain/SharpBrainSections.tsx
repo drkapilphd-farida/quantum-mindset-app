@@ -380,12 +380,13 @@ export function SharpBrainFaq(): React.JSX.Element {
 
 export function SharpBrainFinal(): React.JSX.Element {
   const c = useCopy().final;
+  const rolling = useCopy().offers.rolling;
   return (
     <section className={sectionClass}>
       <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
         <h2 className="text-[26px] font-extrabold leading-tight sm:text-[32px]">{c.title}</h2>
         <EnrolAndTestButtons speedTest={c.speedTest} location="sharp_brain_final" className="mt-7 justify-center" />
-        <PriceLine className="mt-4" />
+        <PriceLine className="mt-4" rollingText={rolling} />
       </div>
     </section>
   );
@@ -402,8 +403,8 @@ export function SharpBrainStickyBar({ enrolHref = ENROL_HREF, hideRegularPrice =
           <p className="truncate text-[13.5px] font-semibold text-ink">{lang === "hi" ? programs.sharpBrain.nameHi : programs.sharpBrain.name}</p>
           {next !== null && (
             <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
-              {next.offer !== "regular" && !hideRegularPrice && <s className="mr-1">₹{next.regularInr.toLocaleString("en-IN")}</s>}₹{next.amountInr.toLocaleString("en-IN")} ·{" "}
-              {istDayMonth(next.startsAtMs, lang)}
+              {next.offer !== "regular" && !hideRegularPrice && <s className="mr-1">₹{next.regularInr.toLocaleString("en-IN")}</s>}₹{next.amountInr.toLocaleString("en-IN")}
+              {/* Rolling admission (owner, Nov 2026): no batch date. */}
             </p>
           )}
         </div>
@@ -422,6 +423,7 @@ export function SharpBrainStickyBar({ enrolHref = ENROL_HREF, hideRegularPrice =
 // /reviews hero: same look as the program page, one H1, live price.
 export function SharpBrainReviewsHero(): React.JSX.Element {
   const c = useCopy();
+  const rolling = c.offers.rolling;
   return (
     <section id="top" className="border-b border-line px-4 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-16">
       <div className="mx-auto max-w-content">
@@ -429,7 +431,7 @@ export function SharpBrainReviewsHero(): React.JSX.Element {
         <h1 className="mt-4 max-w-3xl text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px]">{c.reviews.h1}</h1>
         <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-ink">{c.reviews.sub}</p>
         <EnrolAndTestButtons speedTest={c.hero.speedTest} location="reviews_hero" className="mt-8" />
-        <PriceLine className="mt-4" />
+        <PriceLine className="mt-4" rollingText={rolling} />
         <Link href={programs.sharpBrain.url} className="mt-5 inline-block text-[14px] font-semibold text-gold hover:underline">
           {c.reviews.programLink}
         </Link>
@@ -479,8 +481,6 @@ function OfferButtons({ location, className = "" }: { location: string; classNam
 
 export function SharpBrainOffersHero(): React.JSX.Element {
   const c = useCopy().offers.hero;
-  const { lang } = useLanguage();
-  const next = useNextBatch();
   return (
     <section id="top" className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
       <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
@@ -488,11 +488,9 @@ export function SharpBrainOffersHero(): React.JSX.Element {
           <h1 className="text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px] lg:text-[50px]">{c.h1}</h1>
           <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
           <OfferButtons location="sharp_brain_hero" className="mt-8" />
-          {next !== null && (
-            <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint" data-seats-line>
-              {c.seats(istDayMonth(next.startsAtMs, lang))}
-            </p>
-          )}
+          <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint" data-seats-line>
+            {c.seats}
+          </p>
         </div>
         <div className="relative mx-auto w-full max-w-[480px]">
           <div className="relative aspect-[1374/1145] w-full overflow-hidden rounded-sm border border-line-strong bg-panel2">
@@ -629,7 +627,7 @@ export function SharpBrainOffers(): React.JSX.Element {
             <OfferFeatureList side="live" />
           </div>
           <div className="mt-7 border-t border-line pt-6">
-            <BatchCheckout location="sharp_brain_offer" buttonLabel={c.live.cta} hideRegularPrice />
+            <BatchCheckout location="sharp_brain_offer" buttonLabel={c.live.cta} hideRegularPrice hidePicker />
             <LiveEarlyBirdTimer />
           </div>
           <p className="mt-4 text-[12.5px] leading-relaxed text-ink-dim" data-guarantee-short>

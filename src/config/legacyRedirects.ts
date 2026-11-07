@@ -27,12 +27,14 @@ function exerciseRedirects(base: string): Redirect[] {
 const WORDPRESS_REDIRECTS: Redirect[] = [
   ['/faq', '/#faq'],
   ['/testimonials', '/#proof'],
-  ['/personalclass', '/mentoring/personal-class'],
-  ['/workshops', '/#upcoming'],
-  ['/anxiety', '/mentoring/overthinking-course'],
-  // /telepathy, /telepathycourse, /telepathy-mind-reading-offline: on hold,
-  // temporary redirects to Personal Sessions (heldPages.ts, Nov 2026).
-  ['/about-us-telepathy', '/about'],
+  // Program pages (owner, Nov 2026): every program is 1-on-1 and has its own
+  // page; old URLs go straight to the matching page (one hop).
+  ['/personalclass', '/personal-sessions'],
+  ['/workshops', '/personal-sessions'],
+  ['/anxiety', '/stress-anxiety-support'],
+  ['/telepathycourse', '/telepathy'],
+  ['/telepathy-mind-reading-offline', '/telepathy'],
+  ['/about-us-telepathy', '/telepathy'],
   ['/free', '/'],
   ['/elementor-landing-page-1483', '/'],
 ].map(([source, destination]) => ({ source: source as string, destination: destination as string, statusCode: 301 as const }))
@@ -100,4 +102,16 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: '/franchise-individual', destination: '/partner', statusCode: 301 },
   // Personal Sessions (Nov 2026): the 1-on-1 page moved to /personal-sessions.
   { source: '/mentoring/personal-class', destination: '/personal-sessions', statusCode: 301 },
+  // Program pages (owner, Nov 2026): the workshop and retreat pages are
+  // replaced by 1-on-1 program pages — permanent redirects to the matching page.
+  { source: '/telepathy-workshop', destination: '/telepathy', statusCode: 301 },
+  { source: '/telepathy-workshop/en', destination: '/telepathy', statusCode: 301 },
+  { source: '/telepathy-workshop/hi', destination: '/telepathy?lang=hi', statusCode: 301 },
+  { source: '/telepathy-workshop/online', destination: '/telepathy', statusCode: 301 },
+  { source: '/telepathy-workshop/booked', destination: '/telepathy', statusCode: 301 },
+  { source: '/telepathy-workshop/traders', destination: '/intuition-for-traders', statusCode: 301 },
+  { source: '/vadodara', destination: '/telepathy', statusCode: 301 },
+  { source: '/retreats', destination: '/personal-retreat', statusCode: 301 },
+  { source: '/retreats/online-11-day', destination: '/personal-retreat', statusCode: 301 },
+  { source: '/retreats/residential', destination: '/personal-retreat', statusCode: 301 },
 ]

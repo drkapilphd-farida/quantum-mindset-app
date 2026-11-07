@@ -46,7 +46,9 @@ export type SharpBrainCopy = {
 export type OfferCell = string | true | false
 
 export type OffersCopy = {
-  hero: { h1: string; sub: string; liveButton: (price: string) => string; selfButton: string; seats: (nextBatch: string) => string }
+  hero: { h1: string; sub: string; liveButton: (price: string) => string; selfButton: string; seats: string }
+  /** Owner (Nov 2026): rolling admission — replaces every batch date. */
+  rolling: string
   table: {
     title: string
     feature: string
@@ -247,8 +249,9 @@ const en: SharpBrainCopy = {
       sub: '10–15 minutes of app practice a day · Your own numbers on Day 1 and Day 30',
       liveButton: (price) => `Live batch · ${price}`,
       selfButton: `Self-paced · ${selfPacedPrice}`,
-      seats: (nextBatch) => `40 seats per live batch · Next batch ${nextBatch}`,
+      seats: '40 seats per live batch · Join anytime — start with the next live class.',
     },
+    rolling: 'Join anytime — start with the next live class.',
     table: {
       title: 'Self-paced or live batch',
       feature: 'Feature',
@@ -457,8 +460,9 @@ const hi: SharpBrainCopy = {
       sub: 'ऐप पर रोज़ 10–15 मिनट अभ्यास · Day 1 और Day 30 पर आपके अपने नंबर',
       liveButton: (price) => `लाइव बैच · ${price}`,
       selfButton: `सेल्फ़-पेस्ड · ${selfPacedPrice}`,
-      seats: (nextBatch) => `हर लाइव बैच में 40 सीट · अगला बैच ${nextBatch}`,
+      seats: 'हर लाइव बैच में 40 सीट · कभी भी जुड़िए — अगली लाइव क्लास से शुरू कीजिए।',
     },
+    rolling: 'कभी भी जुड़िए — अगली लाइव क्लास से शुरू कीजिए।',
     table: {
       title: 'सेल्फ़-पेस्ड या लाइव बैच',
       feature: 'सुविधा',

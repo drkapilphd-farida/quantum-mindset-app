@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/seo/siteUrl'
 import { retiredPageRedirect } from '@/config/retiredPages'
+import { PROGRAM_SLUGS } from '@/features/programs/programs'
 
 // Regenerated hourly so date-retired pages drop out soon after their date.
 export const revalidate = 3600
@@ -25,14 +26,10 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/partner', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/executive-brain-workshop', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/prefrontal-power-mumbai', changeFrequency: 'weekly', priority: 0.9 },
-  // Telepathy workshop and traders pages: on hold (heldPages.ts, Nov 2026).
   { path: '/mind-assessment', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/programs/sharp-brain', changeFrequency: 'weekly', priority: 1 },
   { path: '/reading-memory-test', changeFrequency: 'monthly', priority: 0.8 },
-  { path: '/retreats/residential', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/retreats/online-11-day', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/mentoring/overthinking-course', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/personal-sessions', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/assessments', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/discover-learning-potential', changeFrequency: 'monthly', priority: 0.6 },
 ]
@@ -47,8 +44,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }))
 
+  // Program pages (owner, Nov 2026): the hub and the 15 1-on-1 program
+  // pages, each with its Hindi version (?lang=hi) as an alternate.
+  const programUrls: MetadataRoute.Sitemap = ['/personal-sessions', ...PROGRAM_SLUGS.map((slug) => `/${slug}`)].map((path) => ({
+    url: `${SITE_URL}${path}`,
+    lastModified,
+    changeFrequency: 'weekly',
+    priority: path === '/personal-sessions' ? 0.9 : 0.8,
+    alternates: { languages: { en: `${SITE_URL}${path}`, hi: `${SITE_URL}${path}?lang=hi` } },
+  }))
+
   // The legacy course marketplace (/courses/*) is deliberately NOT
   // listed: it is noindex and disallowed in robots.ts, so listing it only
   // produced "submitted URL marked noindex" errors in Search Console.
-  return staticUrls
+  return [...staticUrls, ...programUrls]
 }

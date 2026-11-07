@@ -100,7 +100,7 @@ export function useEnrolLabel(): string {
  * The price line under a call to action: early-bird with the real
  * countdown, or the regular price with the next batch date.
  */
-export function PriceLine({ className = "", tone = "light" }: { className?: string; tone?: "light" | "app" }): React.JSX.Element | null {
+export function PriceLine({ className = "", tone = "light", rollingText }: { className?: string; tone?: "light" | "app"; /** Rolling admission: this line instead of the batch date. */ rollingText?: string }): React.JSX.Element | null {
   const lang = useUiLang();
   const next = useNextBatch();
   if (next === null) return null;
@@ -113,7 +113,7 @@ export function PriceLine({ className = "", tone = "light" }: { className?: stri
   if (next.offer === "regular" || next.endsAtMs === null) {
     return (
       <p className={`text-[14px] ${strike} ${className}`} data-price-state="regular">
-        <span className={`font-semibold ${strong}`}>{inr(next.amountInr)}</span> · {t("oneTime")} · {t("regularLine", { date: date })}
+        <span className={`font-semibold ${strong}`}>{inr(next.amountInr)}</span> · {t("oneTime")} · {rollingText ?? t("regularLine", { date: date })}
       </p>
     );
   }
@@ -141,6 +141,7 @@ export function BatchCheckout({
   showPerDay = false,
   buttonLabel,
   hideRegularPrice = false,
+  hidePicker = false,
 }: {
   location: string;
   tone?: "light" | "app";
@@ -149,6 +150,8 @@ export function BatchCheckout({
   buttonLabel?: string;
   /** Hide the struck-through regular price on the batch options. */
   hideRegularPrice?: boolean;
+  /** Rolling admission (owner, Nov 2026): no batch picker — the next open batch is used. */
+  hidePicker?: boolean;
 }): React.JSX.Element {
   const lang = useUiLang();
   const { snapshot, simulateNow, offerId } = useSharpBrainPricing();
@@ -197,6 +200,8 @@ export function BatchCheckout({
 
   return (
     <div data-batch-checkout>
+      {!hidePicker && (
+      <>
       <p className={`font-mono text-[11.5px] uppercase tracking-[0.08em] ${faint}`}>{t("chooseBatch")}</p>
       <div role="radiogroup" aria-label={t("chooseBatch")} className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {batches.map((option) => {
@@ -222,6 +227,8 @@ export function BatchCheckout({
         })}
       </div>
       {snapshot.seatsPerBatch !== null && <p className={`mt-2 text-[12.5px] ${faint}`}>{t("seatsLeft", { n: snapshot.seatsPerBatch })}</p>}
+      </>
+      )}
       <form
         className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2"
         onSubmit={(event) => {
