@@ -1,4 +1,4 @@
-import { brand, programs, qsrGuarantee, trainer } from '@/config/site.config'
+import { brand, programs, qsrGuarantee, SHARP_BRAIN_PRICES, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
 // Copy for the problem-first homepage (site-rebuild Phase 4), EN + HI.
@@ -150,25 +150,24 @@ const en: HomeCopy = {
     items: [
       {
         question: 'Which program is right for me?',
-        answer: `Start with the problem you want to solve. Reading and remembering → ${programs.sharpBrain.name}. Overthinking and stress → the ${programs.overthinkingReset.name}, or ${programs.oneOnOneCoaching.name} for personal help. Calm focus at work → the ${programs.executiveWorkshop.name}. Deeper meditation → the retreats. Not sure? Take a free test or message us on WhatsApp.`,
+        answer: `Reading, focus and memory → Sharp Brain: Self-paced (₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}) or the Live batch (₹${SHARP_BRAIN_PRICES.liveInr.toLocaleString('en-IN')}). Stress, anxiety, mindset, performance or a spiritual practice → ${programs.oneOnOneCoaching.name}. Not sure? Take the free Reading & Memory Test or message us on WhatsApp.`,
       },
       {
         question: 'Is this science-based or spiritual?',
         answer:
-          'Both, clearly separated. The brain and mind programs are science-informed training — reading, attention, memory and stress-management techniques, measured from your own baseline. The retreats teach traditional meditation practices. None of it is therapy or medical treatment; if you are in treatment or in crisis, please consult a licensed professional.',
+          'Both, clearly separated. Sharp Brain is science-backed training — reading, attention and memory methods, measured from your own Day 1. Spiritual practices such as aura reading, chakra activation and meditation are offered only in 1-on-1 Personal Sessions. None of it is therapy or medical care; if you are under a doctor’s care or in crisis, please consult a licensed professional.',
       },
       {
         question: 'Online or offline?',
-        // Phase 4.4: same answer as the telepathy page's "Is it available online?".
-        answer: 'Yes — a 3-evening online version for ₹3,999, with the same four practices: telepathy, Cosmic Fusion, heart-brain coherence and intuition. Only the live EEG demo happens offline.',
+        answer: 'Sharp Brain is online: the app plus 7 classes — live on Zoom in the Live batch, recorded in Self-paced. Personal Sessions are online or in person.',
       },
       {
         question: 'Hindi or English?',
-        answer: `The ${programs.overthinkingReset.name} is taught in Hindi. For other programs, message us on WhatsApp to confirm the language of your batch.`,
+        answer: 'Sharp Brain classes are taught in simple Hindi with English terms. For Personal Sessions, tell us your preferred language when you enquire.',
       },
       {
         question: 'What about refunds?',
-        answer: `Each program’s terms are on our Refund & Cancellation Policy page. ${programs.sharpBrain.name} also carries a results guarantee: ${qsrGuarantee.en.statement}`,
+        answer: `Each program’s terms are on our Refund & Cancellation Policy page. The Sharp Brain Live batch also carries a results guarantee: ${qsrGuarantee.en.statement}`,
       },
       {
         question: 'How do I contact you?',
@@ -286,24 +285,24 @@ const hi: HomeCopy = {
     items: [
       {
         question: 'मेरे लिए कौन सा प्रोग्राम सही है?',
-        answer: `उस समस्या से शुरू करें जिसे आप हल करना चाहते हैं। पढ़ना और याद रखना → ${programs.sharpBrain.nameHi}। ओवरथिंकिंग और तनाव → ${programs.overthinkingReset.nameHi}, या व्यक्तिगत मदद के लिए ${programs.oneOnOneCoaching.nameHi}। काम पर शांत फोकस → ${programs.executiveWorkshop.nameHi}। गहरा ध्यान → रिट्रीट्स। तय नहीं? एक फ्री टेस्ट दें या हमें WhatsApp पर संदेश भेजें।`,
+        answer: `पढ़ना, ध्यान और याददाश्त → Sharp Brain: सेल्फ़-पेस्ड (₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}) या लाइव बैच (₹${SHARP_BRAIN_PRICES.liveInr.toLocaleString('en-IN')})। तनाव, एंग्ज़ायटी, माइंडसेट, परफ़ॉर्मेंस या कोई आध्यात्मिक साधना → ${programs.oneOnOneCoaching.nameHi}। तय नहीं? मुफ़्त Reading & Memory Test दें या हमें WhatsApp पर संदेश भेजें।`,
       },
       {
         question: 'यह विज्ञान-आधारित है या आध्यात्मिक?',
         answer:
-          'दोनों, साफ़ तौर पर अलग-अलग। ब्रेन और माइंड प्रोग्राम विज्ञान-सूचित प्रशिक्षण हैं — रीडिंग, ध्यान, याददाश्त और तनाव-प्रबंधन तकनीकें, आपके अपने बेसलाइन से मापी गईं। रिट्रीट्स पारंपरिक ध्यान अभ्यास सिखाते हैं। इनमें से कुछ भी थेरेपी या मेडिकल इलाज नहीं है; अगर आपका इलाज चल रहा है या आप संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर से सलाह लें।',
+          'दोनों, साफ़ तौर पर अलग-अलग। Sharp Brain विज्ञान पर आधारित प्रशिक्षण है — रीडिंग, ध्यान और याददाश्त के तरीके, आपके अपने Day 1 से नापे गए। ऑरा रीडिंग, चक्र एक्टिवेशन और मेडिटेशन जैसी आध्यात्मिक साधनाएँ सिर्फ़ 1-on-1 पर्सनल सेशन में होती हैं। इनमें से कुछ भी थेरेपी या मेडिकल इलाज नहीं है; अगर आपका इलाज चल रहा है या आप संकट में हैं, तो कृपया किसी लाइसेंस-प्राप्त पेशेवर से सलाह लें।',
       },
       {
         question: 'ऑनलाइन या ऑफलाइन?',
-        answer: 'हाँ, 3 शाम का ऑनलाइन संस्करण ₹3,999 में — उसमें भी वही चारों अभ्यास हैं: टेलीपैथी, कॉस्मिक फ्यूजन, हार्ट-ब्रेन कोहेरेंस और इनट्यूशन। सिर्फ EEG का लाइव डेमो ऑफलाइन में होता है।',
+        answer: 'Sharp Brain ऑनलाइन है: ऐप और 7 क्लास — लाइव बैच में Zoom पर लाइव, सेल्फ़-पेस्ड में रिकॉर्डेड। पर्सनल सेशन ऑनलाइन या आमने-सामने होते हैं।',
       },
       {
         question: 'हिंदी या अंग्रेज़ी?',
-        answer: `${programs.overthinkingReset.nameHi} हिंदी में सिखाया जाता है। बाकी प्रोग्राम के लिए अपने बैच की भाषा WhatsApp पर पूछ लें।`,
+        answer: 'Sharp Brain की क्लास आसान हिंदी में होती हैं, ज़रूरी अंग्रेज़ी शब्दों के साथ। पर्सनल सेशन के लिए enquiry में अपनी भाषा बता दीजिए।',
       },
       {
         question: 'रिफंड के बारे में?',
-        answer: `हर प्रोग्राम की शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर हैं। ${programs.sharpBrain.nameHi} के साथ एक रिज़ल्ट गारंटी भी है: ${qsrGuarantee.hi.statement}`,
+        answer: `हर प्रोग्राम की शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर हैं। Sharp Brain लाइव बैच के साथ एक रिज़ल्ट गारंटी भी है: ${qsrGuarantee.hi.statement}`,
       },
       {
         question: 'आपसे संपर्क कैसे करें?',

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
-import { nextBatchLabel, testLeadCopy, workshopHref } from '@/lib/testLeadCopy'
+import { sharpBrainHref, testLeadCopy } from '@/lib/testLeadCopy'
 import { BookOpen, Brain, Check, RotateCcw, Share2, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PlayScope } from '@/components/PlayScope'
@@ -476,7 +476,6 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
   const [waUrl, setWaUrl] = useState<string | null>(null)
   const [offer, setOffer] = useState<SpeedTestOffer | null>(null)
   const lm = leadMagnetCopy[lang]
-  const nextBatch = nextBatchLabel(lang)
 
   async function save(): Promise<void> {
     setState('saving')
@@ -520,14 +519,12 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
         <div className="flex flex-col gap-3" data-lead-saved>
           {/* Phase 5 (copy/tests.md): "Sent" + the nearest batch; the send button stays in case WhatsApp didn't open. */}
           <p className="text-lg font-bold text-foreground">{testLeadCopy[lang].sent}</p>
-          {nextBatch !== null && (
-            <p className="text-base text-foreground">
-              {testLeadCopy[lang].nextBatch} {nextBatch} →{' '}
-              <Link href={workshopHref(lang)} className="font-bold text-primary underline underline-offset-4">
-                {testLeadCopy[lang].seeWorkshop}
-              </Link>
-            </p>
-          )}
+          <p className="text-base text-foreground">
+            {testLeadCopy[lang].nextStep}{' '}
+            <Link href={sharpBrainHref(lang)} className="font-bold text-primary underline underline-offset-4">
+              {testLeadCopy[lang].seeSharpBrain} →
+            </Link>
+          </p>
           <a href={waUrl ?? '#'} onClick={() => trackMemoryTest({ name: 'whatsapp_opened', how: 'button' })} className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-lg font-bold text-white" data-lead-send-whatsapp data-contact-tracked>
             {lm.leadSendButton}
           </a>

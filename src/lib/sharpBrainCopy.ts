@@ -1,4 +1,4 @@
-import { trainer } from '@/config/site.config'
+import { SHARP_BRAIN_PRICES, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
 // Copy for /programs/sharp-brain, EN + HI (rewritten 1 Oct 2026: one
@@ -59,7 +59,7 @@ export type OffersCopy = {
 }
 
 // Self-paced price (Razorpay payment link LINKS.rzpSharpBrainSelfPaced2999).
-const selfPacedPrice = '₹2,999'
+const selfPacedPrice = `₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}`
 
 const en: SharpBrainCopy = {
   hero: {

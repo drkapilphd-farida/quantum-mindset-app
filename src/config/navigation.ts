@@ -40,7 +40,7 @@ export function programGroups(lang: Lang): NavGroup[] {
       heading: hi ? 'शांत मन' : 'Calm Mind',
       links: [
         { label: n('overthinkingReset', lang), href: programs.overthinkingReset.url },
-        { label: hi ? '1-on-1 माइंड कोचिंग' : '1-on-1 Mind Coaching', href: programs.oneOnOneCoaching.url },
+        { label: hi ? 'पर्सनल सेशन (1-on-1)' : 'Personal Sessions (1-on-1)', href: programs.oneOnOneCoaching.url },
       ],
     },
     {
@@ -48,7 +48,6 @@ export function programGroups(lang: Lang): NavGroup[] {
       links: [
         { label: hi ? 'ऑनलाइन रिट्रीट' : 'Online Retreat', href: programs.onlineRetreat.url },
         { label: hi ? 'रेजिडेंशियल रिट्रीट्स' : 'Residential Retreats', href: programs.residentialRetreat.url },
-        { label: 'Telepathy Workshop', href: programs.telepathyWorkshop.url },
       ],
     },
   ]
@@ -90,26 +89,30 @@ export function navLabels(lang: Lang): {
 // Phase 4.3: the workshop pages open in English; Hindi pages link to their
 // Hindi versions (?lang=hi).
 
-function telepathyUrl(lang: Lang, hash = ''): string {
-  return lang === 'hi' ? `${programs.telepathyWorkshop.url}?lang=hi${hash}` : `${programs.telepathyWorkshop.url}${hash}`
+// Owner (Nov 2026): the business focus is Sharp Brain and Personal
+// Sessions. The telepathy workshop is on hold (heldPages.ts) and is no
+// longer linked from the header or footer.
+
+/** Sharp Brain in the visitor's language (its Hindi version is ?lang=hi). */
+function sharpBrainUrl(lang: Lang, hash = ''): string {
+  return lang === 'hi' ? `${programs.sharpBrain.url}?lang=hi${hash}` : `${programs.sharpBrain.url}${hash}`
 }
 
-/** Main nav (copy/header-footer.md): 5 items + "Become a Partner" (owner, Nov 2026). */
+/** Main nav: Sharp Brain · Personal Sessions · Reviews · Become a Partner · Contact. */
 export function siteNavLinks(lang: Lang): NavLink[] {
   const hi = lang === 'hi'
   return [
-    { label: hi ? 'टेलीपैथी वर्कशॉप' : 'Telepathy Workshop', href: telepathyUrl(lang) },
+    { label: 'Sharp Brain', href: sharpBrainUrl(lang) },
+    { label: hi ? 'पर्सनल सेशन' : 'Personal Sessions', href: programs.oneOnOneCoaching.url },
     { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
-    { label: hi ? 'बच्चों की पढ़ाई' : 'Sharp Brain', href: programs.sharpBrain.url },
-    { label: hi ? 'रिट्रीट' : 'Retreats', href: programs.onlineRetreat.url },
-    { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
     { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
+    { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
   ]
 }
 
-/** The nav button on pages that don't pass their own: the telepathy batches. */
+/** The nav button on pages that don't pass their own: the Sharp Brain offers. */
 export function siteNavCta(lang: Lang): NavLink {
-  return { label: lang === 'hi' ? 'सीट पक्की कीजिए' : 'Hold a seat', href: telepathyUrl(lang, '#dates') }
+  return { label: lang === 'hi' ? 'Sharp Brain से जुड़िए' : 'Join Sharp Brain', href: sharpBrainUrl(lang, '#enrol') }
 }
 
 /** Footer column 1 (programs) and column 2 (more). Hindi column headings only — the English copy has none. */
@@ -119,9 +122,8 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
     {
       heading: hi ? 'प्रोग्राम' : null,
       links: [
-        { label: hi ? 'टेलीपैथी वर्कशॉप' : 'Telepathy Workshop', href: telepathyUrl(lang) },
-        { label: hi ? 'ऑनलाइन संस्करण' : 'Online version', href: hi ? '/telepathy-workshop/online?lang=hi' : '/telepathy-workshop/online' },
-        { label: 'Sharp Brain', href: programs.sharpBrain.url },
+        { label: 'Sharp Brain', href: sharpBrainUrl(lang) },
+        { label: hi ? 'पर्सनल सेशन' : 'Personal Sessions', href: programs.oneOnOneCoaching.url },
         { label: hi ? '21 दिन ओवरथिंकिंग' : '21-Day Overthinking', href: programs.overthinkingReset.url },
         { label: hi ? '11 रात रिट्रीट' : '11-Night Retreat', href: programs.onlineRetreat.url },
         { label: hi ? 'रेसिडेंशियल रिट्रीट' : 'Residential Retreat', href: programs.residentialRetreat.url },

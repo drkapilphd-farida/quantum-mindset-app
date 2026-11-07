@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { programs, qsrGuarantee, sharpBrainEnrolment, trainer } from "@/config/site.config";
+import { SHARP_BRAIN_PRICES, programs, qsrGuarantee, trainer } from "@/config/site.config";
 import { FREE_TEST_LINKS } from "@/config/navigation";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
@@ -450,7 +450,7 @@ const SELF_HASH = "#self-paced";
 /** The live batch price shown on the page: the next batch's server price. */
 function useLivePrice(): string {
   const next = useNextBatch();
-  return inr(next?.amountInr ?? sharpBrainEnrolment.earlyBirdInr);
+  return inr(next?.amountInr ?? SHARP_BRAIN_PRICES.liveInr);
 }
 
 function OfferButtons({ location, className = "" }: { location: string; className?: string }): React.JSX.Element {
@@ -611,7 +611,7 @@ export function SharpBrainOffers(): React.JSX.Element {
   const { lang } = useLanguage();
   const next = useNextBatch();
   const price = useLivePrice();
-  const perDay = inr(Math.round((next?.amountInr ?? sharpBrainEnrolment.earlyBirdInr) / 30));
+  const perDay = inr(Math.round((next?.amountInr ?? SHARP_BRAIN_PRICES.liveInr) / 30));
   return (
     <section id="enrol" className={`scroll-mt-20 ${sectionClass} bg-panel`}>
       <div className="mx-auto grid max-w-content grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-10">

@@ -24,8 +24,19 @@ function fakeOffers(rows: Row[]): { from: (t: string) => unknown } {
   }
 }
 
+// The early-bird / regular engine is tested with a two-price fixture
+// (₹9,999 regular, ₹8,999 early-bird). The real config is one flat
+// ₹8,999 since Nov 2026 — see the "real price" test at the bottom.
+function mockTwoPriceConfig(): void {
+  vi.doMock('@/config/site.config', async (importOriginal) => {
+    const original = await importOriginal<typeof import('@/config/site.config')>()
+    return { ...original, sharpBrainEnrolment: { ...original.sharpBrainEnrolment, regularInr: 9999 } }
+  })
+}
+
 async function load(rows: Row[]): Promise<typeof import('./server')> {
   vi.resetModules()
+  mockTwoPriceConfig()
   vi.doMock('@/lib/supabase/service', () => ({ createServiceClient: () => fakeOffers(rows) }))
   return import('./server')
 }
@@ -107,5 +118,20 @@ describe('server clock', () => {
     vi.stubEnv('RAZORPAY_KEY_ID', 'rzp_live_x')
     vi.stubEnv('RAZORPAY_KEY_SECRET', 'secret')
     expect(pricingSnapshot(ist('2026-10-01T10:00:00')).batches[0]).toMatchObject({ amountInr: 8999, offer: 'earlybird' })
+  })
+})
+
+describe('real price (owner, Nov 2026)', () => {
+  it('charges one flat ₹8,999 for the live batch, with no early-bird countdown', async () => {
+    vi.resetModules()
+    vi.doUnmock('@/config/site.config')
+    vi.doMock('@/lib/supabase/service', () => ({ createServiceClient: () => fakeOffers([]) }))
+    vi.stubEnv('VERCEL_ENV', 'preview')
+    const { pricingSnapshot } = await import('./server')
+    for (const at of ['2026-11-07T10:00:00', '2026-11-12T10:00:00', '2026-11-22T10:00:00']) {
+      const batch = pricingSnapshot(new Date(`${at}+05:30`).getTime()).batches[0]
+      expect(batch).toMatchObject({ amountInr: 8999, regularInr: 8999, offer: 'regular' })
+    }
+    vi.unstubAllEnvs()
   })
 })

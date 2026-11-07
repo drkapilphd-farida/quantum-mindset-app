@@ -10,7 +10,7 @@ import { navLabels, siteNavCta, siteNavLinks, type NavLink } from "@/config/navi
 
 // The one site-wide header (positioning rework, copy/header-footer.md):
 // at most 5 links + one button on the right. The button defaults to
-// "सीट पक्की कीजिए" / "Hold a seat" (the telepathy batches); a page may
+// "Sharp Brain से जुड़िए" / "Join Sharp Brain" (the Sharp Brain offers); a page may
 // pass its own primary action instead (e.g. its enrol link). Hindi pages
 // show Hindi labels, English pages English ones (the page's
 // language, see LanguageOverride). No language toggle: `/` links to

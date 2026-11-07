@@ -194,7 +194,12 @@ const programsData = {
     outcome: 'Read faster with understanding, focus longer, remember more — measured from your own Day 1 to Day 30.',
     audience: 'School and college students, competitive-exam aspirants, working professionals — and parents enrolling their child',
     format: 'Online · 7 live classes + 30 days of app practice',
-    prices: [{ label: 'One-time enrolment', amountInr: 9999 }],
+    // Owner (Nov 2026): two offers, one price each, the same everywhere
+    // (SHARP_BRAIN_PRICES below): Self-paced ₹2,999 · Live batch ₹8,999.
+    prices: [
+      { label: 'Live batch', amountInr: 8999 },
+      { label: 'Self-paced', amountInr: 2999 },
+    ],
     // Every "Enrol" button leads to the batch picker on the program page;
     // the price (early-bird / regular / test offer) and the Razorpay link
     // are decided on the server there — see sharpBrainEnrolment below and
@@ -290,14 +295,14 @@ const programsData = {
   },
   oneOnOneCoaching: {
     id: 'oneOnOneCoaching',
-    name: '1-on-1 Mind Coaching with Dr. Kapil',
-    nameHi: 'डॉ. कपिल के साथ 1-on-1 माइंड कोचिंग',
+    name: 'Personal Sessions with Dr. Kapil',
+    nameHi: 'डॉ. कपिल के साथ पर्सनल सेशन',
     outcome: 'Private coaching shaped entirely around your own situation — overthinking, focus or personal growth.',
     audience: 'Individuals who want personal, custom-paced guidance',
     format: 'Private sessions · online or in person · by application',
     prices: [],
-    checkout: [{ label: 'Apply on WhatsApp', href: waLink('Hi Dr. Kapil, I want to apply for 1-on-1 Mind Coaching with Dr. Kapil.') }],
-    url: '/mentoring/personal-class',
+    checkout: [{ label: 'Enquire on WhatsApp', href: waLink('Hi Dr. Kapil, I would like to know about Personal Sessions (1-on-1).') }],
+    url: '/personal-sessions', // was /mentoring/personal-class (301)
     status: 'active',
     // Customised program — no fixed prices. The fee depends on the package
     // (7, 14 or 21 days) and session timing, shared after the application.
@@ -615,7 +620,9 @@ export const qsrGuarantee: Widen<typeof qsrGuaranteeData> = qsrGuaranteeData
 const sharpBrainEnrolmentData = {
   batchStartDays: [15, 25],
   earlyBirdEndsDaysBefore: 5,
-  regularInr: 9999,
+  // Owner (Nov 2026): the live batch is ₹8,999, always — no early-bird or
+  // regular price above it, so no countdown is shown.
+  regularInr: 8999,
   earlyBirdInr: 8999,
   floorInr: 8999,
   testOffer: { discountInr: 1000, validHours: 48 },
@@ -632,6 +639,12 @@ export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
   readonly seatsPerBatch: number | null
   readonly fallbackLinks: { readonly regular: string; readonly discounted: string | null }
 } = sharpBrainEnrolmentData
+
+/** Sharp Brain's two offers — the one place these prices are written. */
+export const SHARP_BRAIN_PRICES = {
+  selfPacedInr: 2999,
+  liveInr: sharpBrainEnrolmentData.regularInr,
+} as const
 
 export type UpcomingEvent = {
   id: string

@@ -25,15 +25,14 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/partner', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/executive-brain-workshop', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/prefrontal-power-mumbai', changeFrequency: 'weekly', priority: 0.9 },
-  { path: '/telepathy-workshop', changeFrequency: 'weekly', priority: 0.9 },
-  { path: '/telepathy-workshop/traders', changeFrequency: 'weekly', priority: 0.8 },
+  // Telepathy workshop and traders pages: on hold (heldPages.ts, Nov 2026).
   { path: '/mind-assessment', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/programs/sharp-brain', changeFrequency: 'weekly', priority: 1 },
   { path: '/reading-memory-test', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/retreats/residential', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/retreats/online-11-day', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/mentoring/overthinking-course', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/mentoring/personal-class', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/personal-sessions', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/assessments', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/discover-learning-potential', changeFrequency: 'monthly', priority: 0.6 },
 ]

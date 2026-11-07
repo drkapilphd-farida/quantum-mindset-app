@@ -14,11 +14,15 @@ describe('legacy redirects', () => {
     }
   })
 
-  it('sends the old telepathy URLs to the Telepathy Workshop page (positioning rework)', () => {
+  it('leaves the old telepathy URLs to the held-pages redirects; /about-us-telepathy goes to /about', () => {
     for (const old of ['/telepathy', '/telepathycourse', '/telepathy-mind-reading-offline']) {
-      expect(find(old)).toMatchObject({ destination: '/telepathy-workshop', statusCode: 301 })
+      expect(find(old)).toBeUndefined()
     }
     expect(find('/about-us-telepathy')).toMatchObject({ destination: '/about', statusCode: 301 })
+  })
+
+  it('sends the old 1-on-1 page to /personal-sessions', () => {
+    expect(find('/mentoring/personal-class')).toMatchObject({ destination: '/personal-sessions', statusCode: 301 })
   })
 
   it('sends /en to the English homepage at / (Phase 4.3)', () => {

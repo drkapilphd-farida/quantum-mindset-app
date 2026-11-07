@@ -6,7 +6,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { submitOverthinkingTestLead } from "@/app/mind-assessment/actions/submitOverthinkingTestLead";
 import { OverthinkingTestLeadInputSchema } from "@/app/mind-assessment/actions/overthinkingTestLeadSchema";
 import { buildOverthinkingTestWhatsAppLink } from "@/config/whatsappSupportLink";
-import { nextBatchLabel, testLeadCopy, workshopHref } from "@/lib/testLeadCopy";
+import { sessionsHref, testLeadCopy } from "@/lib/testLeadCopy";
 
 // Phase 5 — after the Overthinking Test result (copy/tests.md): name +
 // WhatsApp number → the test's own existing lead path
@@ -28,7 +28,6 @@ export default function OverthinkingTestLeadForm({
   const [phone, setPhone] = useState("");
   const [state, setState] = useState<"idle" | "saving" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
-  const nextBatch = nextBatchLabel(lang);
 
   async function send(): Promise<void> {
     const input = {
@@ -59,14 +58,12 @@ export default function OverthinkingTestLeadForm({
     return (
       <div className="mt-5 rounded-sm border border-line-strong bg-panel2 px-7 py-6 sm:px-9" data-lead-saved>
         <p className="text-[17px] font-bold text-ink">{c.sent}</p>
-        {nextBatch !== null && (
-          <p className="mt-2 text-[14.5px] text-ink-dim">
-            {c.nextBatch} {nextBatch} →{" "}
-            <Link href={workshopHref(lang)} className="font-semibold text-ink underline decoration-gold/60 underline-offset-4">
-              {c.seeWorkshop}
-            </Link>
-          </p>
-        )}
+        <p className="mt-2 text-[14.5px] text-ink-dim">
+          {c.nextStep}{" "}
+          <Link href={sessionsHref} className="font-semibold text-ink underline decoration-gold/60 underline-offset-4">
+            {c.seeSessions} →
+          </Link>
+        </p>
       </div>
     );
   }

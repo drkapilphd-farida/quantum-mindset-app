@@ -1,3 +1,5 @@
+import { SHARP_BRAIN_PRICES } from './site.config'
+
 // Sharp Brain™ Partner Program (/partner) — every number on the page lives
 // here, exactly as given by the owner in the partner brief (Nov 2026).
 
@@ -8,8 +10,8 @@ export const PARTNER_PROGRAM = {
   /** Partner + EEG Brain State Demo package, plus GST. */
   eegPackageInr: 89000,
   /** Sharp Brain prices the partner sells. */
-  selfPriceInr: 2999,
-  livePriceInr: 8999,
+  selfPriceInr: SHARP_BRAIN_PRICES.selfPacedInr,
+  livePriceInr: SHARP_BRAIN_PRICES.liveInr,
   /** What the partner keeps per student, after royalty. */
   perStudent: {
     self: 2549, // ₹2,999 − 15% royalty

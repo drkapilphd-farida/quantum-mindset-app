@@ -30,10 +30,8 @@ const WORDPRESS_REDIRECTS: Redirect[] = [
   ['/personalclass', '/mentoring/personal-class'],
   ['/workshops', '/#upcoming'],
   ['/anxiety', '/mentoring/overthinking-course'],
-  // Positioning rework (Phase 0): the Telepathy Workshop is back on the site.
-  ['/telepathy', '/telepathy-workshop'],
-  ['/telepathycourse', '/telepathy-workshop'],
-  ['/telepathy-mind-reading-offline', '/telepathy-workshop'],
+  // /telepathy, /telepathycourse, /telepathy-mind-reading-offline: on hold,
+  // temporary redirects to Personal Sessions (heldPages.ts, Nov 2026).
   ['/about-us-telepathy', '/about'],
   ['/free', '/'],
   ['/elementor-landing-page-1483', '/'],
@@ -100,4 +98,6 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: '/courses', destination: '/', statusCode: 301 },
   // Partner page (Nov 2026): the old franchise page is replaced by /partner.
   { source: '/franchise-individual', destination: '/partner', statusCode: 301 },
+  // Personal Sessions (Nov 2026): the 1-on-1 page moved to /personal-sessions.
+  { source: '/mentoring/personal-class', destination: '/personal-sessions', statusCode: 301 },
 ]
