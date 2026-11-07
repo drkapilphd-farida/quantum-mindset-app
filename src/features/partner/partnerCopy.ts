@@ -51,6 +51,12 @@ export const partnerCopy = {
         { label: 'Live', price: formatInr(PARTNER_PROGRAM.livePriceInr) },
       ],
     },
+    // Owner (Nov 2026): say clearly that Sharp Brain is not Midbrain or
+    // Quantum Speed Reading — respectfully, without running them down.
+    different: {
+      title: 'Not Midbrain Activation. Not Quantum Speed Reading.',
+      text: 'Many parents have heard of those programs — they have their own approach. Sharp Brain is different: a science-backed, 100% results-oriented program. It uses proven learning methods — attention training, reading-skill practice, memory techniques, active recall and revision — and every child is tested on Day 1 and Day 30, so parents see their own child’s progress in numbers.',
+    },
   },
   proof: {
     title: 'Real students. Real results.',
@@ -139,7 +145,7 @@ export const partnerCopy = {
     eyebrow: 'Your mentor',
     name: 'Dr. Kapil Dev Sharma',
     photoAlt: 'Dr. Kapil Dev Sharma',
-    text: 'Mind, brain and meditation coach for 20+ years. Professor for 15 years. 500+ workshops, 10,000+ people trained. Working on Sharp Brain (earlier Quantum Speed Reading) since 2015.',
+    text: 'Mind, brain and meditation coach for 20+ years. Professor for 15 years. 500+ workshops, 10,000+ people trained. Working on Sharp Brain since 2015.',
     quote: '“I will give you not just a program, but a complete system — so you can change the lives of children in your area and earn well.”',
   },
   apply: {
@@ -170,6 +176,11 @@ export const partnerCopy = {
         question: 'Do I need experience?',
         answer:
           'No. The 7-day training teaches you everything — the demo, the test, how to talk to parents and the app. If you already know children or parents, starting is easier.',
+      },
+      {
+        question: 'Is Sharp Brain like Midbrain Activation or Quantum Speed Reading?',
+        answer:
+          'No. Those are different programs with their own approach. Sharp Brain is a science-backed, 100% results-oriented program: proven learning methods, and a Day 1 and Day 30 test that measures every child’s progress.',
       },
       {
         question: 'How much time is needed?',

@@ -78,6 +78,10 @@ export function PartnerProblem(): React.JSX.Element {
             ))}
           </div>
         </div>
+        <div className="rounded-lg border-l-4 border-[#1F3A8A] bg-panel p-6 sm:p-7" data-not-midbrain>
+          <p className="text-[20px] font-extrabold leading-snug sm:text-[22px]">{c.different.title}</p>
+          <p className="mt-2 text-[16.5px] leading-relaxed text-ink-dim">{c.different.text}</p>
+        </div>
       </div>
     </section>
   );
