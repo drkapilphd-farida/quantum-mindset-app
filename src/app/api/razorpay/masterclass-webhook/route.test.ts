@@ -56,7 +56,7 @@ const linkPaid = (shortUrl: string, notes: unknown = [], customer: unknown = nul
     payment: { entity: { id: 'pay_1', amount: 999900, currency: 'INR', email: 'buyer@example.com', contact: null } },
   },
 })
-const PROGRAM = 'https://rzp.io/rzp/ydVYaANF'
+const PROGRAM = 'https://rzp.io/rzp/hx46Vs5f'
 const writes = (calls: Call[], table: string): Call[] => calls.filter((c) => c.table === table && c.op !== 'select')
 
 describe('masterclass webhook — program payments only, manual grants preserved', () => {

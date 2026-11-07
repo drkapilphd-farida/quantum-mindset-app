@@ -12,6 +12,7 @@ import { activeOffer, discountsChargeable, getOrCreateTestOffer, pricingSnapshot
 import type { PricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { sendTestLeadNotification } from '@/lib/email/sendTestLeadNotification'
 import { leadMagnetCopy } from './leadMagnetCopy'
+import { READING_TEST_OFFER_ENABLED } from '@/config/site.config'
 import { offerCode } from './leadMessage'
 
 // Free Reading Speed Test — every number in a result is computed here.
@@ -226,8 +227,9 @@ export async function saveSpeedTestResult(input: unknown): Promise<{ ok: true; o
       return { ok: false, error: GENERIC_ERROR }
     }
     // ₹1,000 off for 48 hours — only after a VALID test, one per number ever.
+    // Off since Nov 2026 (READING_TEST_OFFER_ENABLED): no offer is created.
     const now = resolveNow(parsed.data.simulateNow)
-    const offer = result.status === 'valid' && discountsChargeable() ? activeOffer(await getOrCreateTestOffer(phone, saved.id), now) : null
+    const offer = READING_TEST_OFFER_ENABLED && result.status === 'valid' && discountsChargeable() ? activeOffer(await getOrCreateTestOffer(phone, saved.id), now) : null
     const profile = withLeadSource.profile_type
     // Every lead is emailed to the founder at once (never blocks the visitor).
     await sendTestLeadNotification({

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import { sharpBrainHref, testLeadCopy } from '@/lib/testLeadCopy'
 import { BookOpen, Brain, Check, RotateCcw, Share2, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PlayScope } from '@/components/PlayScope'
@@ -516,7 +517,14 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
       <h2 className="text-xl leading-snug text-foreground">{c.leadTitle}</h2>
       {state === 'saved' ? (
         <div className="flex flex-col gap-3" data-lead-saved>
-          <p className="text-lg font-bold text-foreground">{lm.leadSendTitle}</p>
+          {/* Phase 5 (copy/tests.md): "Sent" + the nearest batch; the send button stays in case WhatsApp didn't open. */}
+          <p className="text-lg font-bold text-foreground">{testLeadCopy[lang].sent}</p>
+          <p className="text-base text-foreground">
+            {testLeadCopy[lang].nextStep}{' '}
+            <Link href={sharpBrainHref(lang)} className="font-bold text-primary underline underline-offset-4">
+              {testLeadCopy[lang].seeSharpBrain} →
+            </Link>
+          </p>
           <a href={waUrl ?? '#'} onClick={() => trackMemoryTest({ name: 'whatsapp_opened', how: 'button' })} className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-lg font-bold text-white" data-lead-send-whatsapp data-contact-tracked>
             {lm.leadSendButton}
           </a>
@@ -536,14 +544,14 @@ function LeadCapture({ c, lang, result, resultToken, profileName }: { c: MemoryT
           }}
         >
           <p className="text-sm text-muted-foreground">{c.leadSub}</p>
-          <label className="sr-only" htmlFor="rm-phone">
-            {c.phone}
-          </label>
-          <input id="rm-phone" type="tel" inputMode="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={c.phone} className="min-h-12 rounded-xl border-2 border-border bg-background px-4 text-base text-foreground" />
           <label className="sr-only" htmlFor="rm-name">
             {c.firstName}
           </label>
           <input id="rm-name" type="text" autoComplete="given-name" maxLength={60} value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder={c.firstName} className="min-h-12 rounded-xl border-2 border-border bg-background px-4 text-base text-foreground" />
+          <label className="sr-only" htmlFor="rm-phone">
+            {c.phone}
+          </label>
+          <input id="rm-phone" type="tel" inputMode="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={c.phone} className="min-h-12 rounded-xl border-2 border-border bg-background px-4 text-base text-foreground" />
           <button type="submit" className={primary} disabled={phone.trim() === '' || state === 'saving'} data-lead-submit>
             {state === 'saving' ? c.saving : c.leadSubmit}
           </button>

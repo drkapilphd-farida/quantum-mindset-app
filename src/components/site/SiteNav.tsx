@@ -2,26 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LivingBrainLogo } from "../brand/LivingBrainLogo";
-import LanguageToggle from "../LanguageToggle";
-import {
-  freeTestLinks,
-  navLabels,
-  ORGANISATIONS_HREF,
-  programGroups,
-  TALK_TO_US_HREF,
-  type NavLink,
-} from "@/config/navigation";
-import { trackGaEvent } from "@/lib/analytics/ga4";
+import { navLabels, siteNavCta, siteNavLinks, type NavLink } from "@/config/navigation";
 
-// The one site-wide header (site-rebuild Phase 4): Programs (grouped by
-// pillar) · Free Tests · For Organisations · About · Contact, plus a
-// single header button. The button defaults to "Talk to Us" (WhatsApp);
-// a program page may pass its own primary action instead (e.g. its
-// enrol link) so the page's conversion path isn't lost. Below 640px the
-// button lives in the menu (program pages also have a sticky bottom bar).
+// The one site-wide header (positioning rework, copy/header-footer.md):
+// at most 5 links + one button on the right. The button defaults to
+// "Sharp Brain से जुड़िए" / "Join Sharp Brain" (the Sharp Brain offers); a page may
+// pass its own primary action instead (e.g. its enrol link). Hindi pages
+// show Hindi labels, English pages English ones (the page's
+// language, see LanguageOverride). No language toggle: `/` links to
+// "हिंदी" (/hi) and /hi to "English" (/); the workshop pages pass their own
+// link (?lang=hi); other pages have none. On Hindi pages the logo goes to /hi. Below 1024px the links (and, below 640px, the button)
+// live in the menu.
 
 export type SiteNavCta = {
   label: string;
@@ -30,135 +25,67 @@ export type SiteNavCta = {
   onClick?: () => void;
 };
 
-type Dropdown = "programs" | "tests" | null;
+// Phase 4.3: the site opens in English. `/` links to "हिंदी" (/hi), /hi to "English" (/).
+const LANGUAGE_LINKS: Record<string, NavLink> = {
+  "/": { label: "हिंदी", href: "/hi" },
+  "/hi": { label: "English", href: "/" },
+};
 
 export default function SiteNav({
   cta,
   showLanguageToggle = true,
+  languageLink: pageLanguageLink,
 }: {
   cta?: SiteNavCta;
-  /** False on English-only pages. */
+  /** False hides the "English" / "हिंदी" link (on `/`, `/hi` and the workshop pages). */
   showLanguageToggle?: boolean;
+  /** A page's own language link (e.g. /telepathy-workshop ↔ ?lang=en). */
+  languageLink?: NavLink;
 }): React.JSX.Element {
   const { lang } = useLanguage();
+  const pathname = usePathname();
   const labels = navLabels(lang);
-  const groups = programGroups(lang);
-  const tests = freeTestLinks(lang);
-  const [open, setOpen] = useState<Dropdown>(null);
+  const links = siteNavLinks(lang);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
-  const button: SiteNavCta = cta ?? {
-    label: labels.talkToUs,
-    href: TALK_TO_US_HREF,
-    external: true,
-    onClick: () => trackGaEvent("whatsapp_click", { location: "site_nav" }),
-  };
+  const button: SiteNavCta = cta ?? siteNavCta(lang);
+  const languageLink = !showLanguageToggle ? undefined : (pageLanguageLink ?? LANGUAGE_LINKS[pathname]);
 
   useEffect(() => {
-    function onPointer(event: PointerEvent): void {
-      if (navRef.current !== null && !navRef.current.contains(event.target as Node)) setOpen(null);
-    }
     function onKey(event: KeyboardEvent): void {
-      if (event.key === "Escape") {
-        setOpen(null);
-        setMobileOpen(false);
-      }
+      if (event.key === "Escape") setMobileOpen(false);
     }
-    document.addEventListener("pointerdown", onPointer);
     document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("pointerdown", onPointer);
-      document.removeEventListener("keydown", onKey);
-    };
+    return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  function linkProps(link: NavLink | SiteNavCta): { target?: string; rel?: string } {
+  function linkProps(link: SiteNavCta): { target?: string; rel?: string } {
     return link.external === true ? { target: "_blank", rel: "noopener noreferrer" } : {};
   }
-
-  const triggerClass =
-    "inline-flex items-center gap-1 rounded-sm py-2 transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold";
-  const panelClass =
-    "absolute left-0 top-full z-50 mt-2 rounded-sm border border-line-strong bg-void p-5 shadow-[0_18px_40px_rgba(0,0,0,0.18)]";
 
   return (
     <header className={`sticky top-0 ${mobileOpen ? "z-[60]" : "z-50"} border-b border-line bg-void/90 backdrop-blur-md`}>
       <nav ref={navRef} aria-label="Main" className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-3.5 sm:px-8">
-        <Link href="/" className="flex flex-none items-center gap-2.5 font-mono text-sm tracking-[0.06em] text-ink">
+        <Link href={lang === "hi" ? "/hi" : "/"} className="flex flex-none items-center gap-2.5 font-mono text-sm tracking-[0.06em] text-ink">
           <LivingBrainLogo size={24} decorative={false} animated={false} />
           MIND UR MIND
         </Link>
 
         <div className="hidden items-center gap-7 text-[13.5px] text-ink-dim lg:flex">
-          <div className="relative">
-            <button
-              type="button"
-              aria-expanded={open === "programs"}
-              aria-controls="nav-programs"
-              onClick={() => setOpen(open === "programs" ? null : "programs")}
-              className={triggerClass}
-            >
-              {labels.programs}
-              <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
-            </button>
-            {open === "programs" && (
-              <div id="nav-programs" className={`${panelClass} grid w-[640px] grid-cols-3 gap-6`}>
-                {groups.map((group) => (
-                  <div key={group.heading}>
-                    <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.1em] text-gold">{group.heading}</p>
-                    <ul className="space-y-2.5">
-                      {group.links.map((link) => (
-                        <li key={link.href}>
-                          <Link href={link.href} onClick={() => setOpen(null)} className="block text-[13.5px] leading-snug text-ink-dim hover:text-ink">
-                            {link.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="relative">
-            <button
-              type="button"
-              aria-expanded={open === "tests"}
-              aria-controls="nav-tests"
-              onClick={() => setOpen(open === "tests" ? null : "tests")}
-              className={triggerClass}
-            >
-              {labels.freeTests}
-              <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
-            </button>
-            {open === "tests" && (
-              <ul id="nav-tests" className={`${panelClass} w-[280px] space-y-2.5`}>
-                {tests.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} onClick={() => setOpen(null)} className="block text-[13.5px] text-ink-dim hover:text-ink">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          <Link href={ORGANISATIONS_HREF} className="transition-colors hover:text-ink">
-            {labels.organisations}
-          </Link>
-          <Link href="/about" className="transition-colors hover:text-ink">
-            {labels.about}
-          </Link>
-          <Link href="/contact" className="transition-colors hover:text-ink">
-            {labels.contact}
-          </Link>
+          {links.map((link) => (
+            <Link key={link.href} href={link.href} className="transition-colors hover:text-ink">
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         <div className="flex items-center gap-2.5 sm:gap-3">
-          {showLanguageToggle && <LanguageToggle />}
+          {languageLink !== undefined && (
+            <Link href={languageLink.href} lang={languageLink.label === "English" ? "en" : "hi"} className="rounded-sm px-2 py-1.5 text-[13px] font-semibold text-ink underline decoration-gold/60 underline-offset-4 hover:decoration-gold">
+              {languageLink.label}
+            </Link>
+          )}
           <a
             href={button.href}
             onClick={button.onClick}
@@ -182,34 +109,9 @@ export default function SiteNav({
 
       {mobileOpen && (
         <div id="nav-mobile" className="max-h-[calc(100vh-64px)] overflow-y-auto border-t border-line bg-void px-4 pb-6 pt-4 sm:px-8 lg:hidden">
-          <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">{labels.programs}</p>
-          <div className="mt-3 space-y-4">
-            {groups.map((group) => (
-              <div key={group.heading}>
-                <p className="mb-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-gold">{group.heading}</p>
-                {group.links.map((link) => (
-                  <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="block py-1.5 text-[14.5px] text-ink-dim hover:text-ink">
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">{labels.freeTests}</p>
-          <div className="mt-2">
-            {tests.map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="block py-1.5 text-[14.5px] text-ink-dim hover:text-ink">
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="mt-6 flex flex-col border-t border-line pt-4">
-            {[
-              { label: labels.organisations, href: ORGANISATIONS_HREF },
-              { label: labels.about, href: "/about" },
-              { label: labels.contact, href: "/contact" },
-            ].map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="py-2 text-[14.5px] text-ink-dim hover:text-ink">
+          <div className="flex flex-col">
+            {links.map((link) => (
+              <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="py-2.5 text-[15px] text-ink-dim hover:text-ink">
                 {link.label}
               </Link>
             ))}

@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs/config'
 import { LEGACY_REDIRECTS } from './src/config/legacyRedirects'
+import { HELD_PAGE_REDIRECTS } from './src/config/heldPages'
 
 // The Supabase project origin is read from the same env var the client
 // SDK itself uses, so the CSP always matches whichever project a given
@@ -225,6 +226,7 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
       ...LEGACY_REDIRECTS,
+      ...HELD_PAGE_REDIRECTS,
     ]
   },
 

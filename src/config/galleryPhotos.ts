@@ -14,17 +14,17 @@ export type GalleryPhotoEntry = {
   category: GalleryCategory;
 };
 
+// Phase 4.4: the owner's real workshop photos (uploaded to public/; the
+// date in each file name gives the year — no city is in the names, so none
+// is written). Captions say only what the photo shows. Which program each
+// photo is from is not certain, so the page shows no filters.
 export const GALLERY_PHOTOS: readonly GalleryPhotoEntry[] = [
-  { id: "workshop-01", src: undefined, alt: "Workshop session in progress", category: "workshops" },
-  { id: "workshop-02", src: undefined, alt: "Workshop group activity", category: "workshops" },
-  { id: "workshop-03", src: undefined, alt: "Workshop Q&A moment", category: "workshops" },
-  { id: "workshop-04", src: undefined, alt: "Workshop closing session", category: "workshops" },
-  { id: "retreat-01", src: undefined, alt: "Retreat group meditation session", category: "retreats" },
-  { id: "retreat-02", src: undefined, alt: "Retreat venue setting", category: "retreats" },
-  { id: "retreat-03", src: undefined, alt: "Retreat participants between sessions", category: "retreats" },
-  { id: "retreat-04", src: undefined, alt: "Retreat closing circle", category: "retreats" },
-  { id: "qsr-01", src: undefined, alt: "Sharp Brain live class", category: "qsr" },
-  { id: "qsr-02", src: undefined, alt: "Sharp Brain live class", category: "qsr" },
-  { id: "qsr-03", src: undefined, alt: "Sharp Brain student practice", category: "qsr" },
-  { id: "qsr-04", src: undefined, alt: "Sharp Brain graduation moment", category: "qsr" },
+  { id: "img-20220828-123945", src: "/IMG_20220828_123945.jpg", alt: "Dr. Kapil with the batch · 2022", category: "workshops" },
+  { id: "img-20220910-164123", src: "/IMG_20220910_164123.jpg", alt: "Workshop session · 2022", category: "workshops" },
+  { id: "img-20220910-164131", src: "/IMG_20220910_164131.jpg", alt: "Dr. Kapil with the batch · 2022", category: "workshops" },
+  { id: "img-20221121-122722", src: "/IMG_20221121_122722.jpg", alt: "Lying-down practice · 2022", category: "workshops" },
+  { id: "img-20221124-141950", src: "/IMG_20221124_141950.jpg", alt: "Standing practice · 2022", category: "workshops" },
+  { id: "img-20221225-192623", src: "/IMG_20221225_192623.jpg", alt: "Certificate presentation · 2022", category: "workshops" },
+  { id: "img-20221225-192728", src: "/IMG_20221225_192728.jpg", alt: "Certificate presentation · 2022", category: "workshops" },
+  { id: "img-20221225-192753", src: "/IMG_20221225_192753.jpg", alt: "Certificate presentation · 2022", category: "workshops" },
 ]

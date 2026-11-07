@@ -30,9 +30,9 @@ const WORDPRESS_REDIRECTS: Redirect[] = [
   ['/personalclass', '/mentoring/personal-class'],
   ['/workshops', '/#upcoming'],
   ['/anxiety', '/mentoring/overthinking-course'],
-  ['/telepathy', '/'],
-  ['/telepathycourse', '/'],
-  ['/about-us-telepathy', '/'],
+  // /telepathy, /telepathycourse, /telepathy-mind-reading-offline: on hold,
+  // temporary redirects to Personal Sessions (heldPages.ts, Nov 2026).
+  ['/about-us-telepathy', '/about'],
   ['/free', '/'],
   ['/elementor-landing-page-1483', '/'],
 ].map(([source, destination]) => ({ source: source as string, destination: destination as string, statusCode: 301 as const }))
@@ -87,8 +87,17 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   },
   { source: '/preview/learning-projects/:id/quantum-journey', destination: '/preview/learning-projects/:id/learning-journey', statusCode: 301 },
   // Old WordPress site (still in Google's index, 28 Sep 2026): each URL to
-  // the closest current page. Discontinued topics (telepathy etc.) go to the
-  // homepage rather than to a program they would misdescribe. /courses is
-  // left alone — that path is a real (legacy) page on this site.
+  // the closest current page; the old telepathy URLs go to
+  // /telepathy-workshop. (/courses: see below — Phase 5.) With or without a trailing slash: Next.js
+  // first strips the slash (308), then this 301 applies.
   ...WORDPRESS_REDIRECTS,
+  // Phase 4.3: the site opens in English at `/`; the short-lived /en homepage
+  // points there (Hindi is /hi).
+  { source: '/en', destination: '/', statusCode: 301 },
+  // Phase 5: the empty /courses catalog page was removed.
+  { source: '/courses', destination: '/', statusCode: 301 },
+  // Partner page (Nov 2026): the old franchise page is replaced by /partner.
+  { source: '/franchise-individual', destination: '/partner', statusCode: 301 },
+  // Personal Sessions (Nov 2026): the 1-on-1 page moved to /personal-sessions.
+  { source: '/mentoring/personal-class', destination: '/personal-sessions', statusCode: 301 },
 ]

@@ -5,9 +5,20 @@ const OFFER_ID = '7f0c2f5e-9a51-4c43-9d8a-2a9c4b1f0e11'
 
 type Offer = { id: string; whatsapp_number: string; expires_at: string; redeemed_at: string | null }
 
+// The early-bird / regular engine is tested with a two-price fixture
+// (₹9,999 regular, ₹8,999 early-bird). The real config is one flat
+// ₹8,999 since Nov 2026 — see the "real price" test at the bottom.
+function mockTwoPriceConfig(): void {
+  vi.doMock('@/config/site.config', async (importOriginal) => {
+    const original = await importOriginal<typeof import('@/config/site.config')>()
+    return { ...original, sharpBrainEnrolment: { ...original.sharpBrainEnrolment, regularInr: 9999 } }
+  })
+}
+
 async function load(options: { api: boolean; offer?: Offer | null }): Promise<{ actions: typeof import('./actions'); created: unknown[] }> {
   const created: unknown[] = []
   vi.resetModules()
+  mockTwoPriceConfig()
   vi.stubEnv('VERCEL_ENV', 'preview')
   vi.doMock('@/lib/rateLimit', () => ({ checkRateLimit: () => ({ allowed: true, retryAfterMs: 0 }), getClientIp: () => Promise.resolve('1.1.1.1') }))
   vi.doMock('@/lib/razorpay/paymentLinksApi', () => ({
@@ -95,7 +106,7 @@ describe('startSharpBrainCheckout', () => {
   it('without API keys uses the fixed regular link', async () => {
     const { actions, created } = await load({ api: false })
     const result = await actions.startSharpBrainCheckout({ email: 'Buyer@Example.com', batch: '2026-10-15', simulateNow: '2026-10-12T10:00:00+05:30' })
-    expect(result).toEqual({ ok: true, url: 'https://rzp.io/rzp/ydVYaANF' })
+    expect(result).toEqual({ ok: true, url: 'https://rzp.io/rzp/hx46Vs5f' })
     expect(created).toHaveLength(0)
   })
 

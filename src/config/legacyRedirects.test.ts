@@ -9,13 +9,32 @@ describe('legacy redirects', () => {
     expect(find('/testimonials')).toMatchObject({ destination: '/#proof', statusCode: 301 })
     expect(find('/personalclass')).toMatchObject({ destination: '/mentoring/personal-class', statusCode: 301 })
     expect(find('/anxiety')).toMatchObject({ destination: '/mentoring/overthinking-course', statusCode: 301 })
-    for (const old of ['/telepathy', '/telepathycourse', '/about-us-telepathy', '/free', '/elementor-landing-page-1483']) {
+    for (const old of ['/free', '/elementor-landing-page-1483']) {
       expect(find(old)).toMatchObject({ destination: '/', statusCode: 301 })
     }
   })
 
-  it('never redirects /courses, which is a real page on this site', () => {
-    expect(find('/courses')).toBeUndefined()
+  it('leaves the old telepathy URLs to the held-pages redirects; /about-us-telepathy goes to /about', () => {
+    for (const old of ['/telepathy', '/telepathycourse', '/telepathy-mind-reading-offline']) {
+      expect(find(old)).toBeUndefined()
+    }
+    expect(find('/about-us-telepathy')).toMatchObject({ destination: '/about', statusCode: 301 })
+  })
+
+  it('sends the old 1-on-1 page to /personal-sessions', () => {
+    expect(find('/mentoring/personal-class')).toMatchObject({ destination: '/personal-sessions', statusCode: 301 })
+  })
+
+  it('sends /en to the English homepage at / (Phase 4.3)', () => {
+    expect(find('/en')).toMatchObject({ destination: '/', statusCode: 301 })
+  })
+
+  it('sends /courses (the removed empty catalog page) home (Phase 5)', () => {
+    expect(find('/courses')).toMatchObject({ destination: '/', statusCode: 301 })
+  })
+
+  it('sends the old franchise page to /partner', () => {
+    expect(LEGACY_REDIRECTS).toContainEqual({ source: '/franchise-individual', destination: '/partner', statusCode: 301 })
   })
 
   it('uses only unique sources and permanent 301s', () => {

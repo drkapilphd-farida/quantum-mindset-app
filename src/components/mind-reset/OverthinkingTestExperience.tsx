@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
+import OverthinkingTestLeadForm from "./OverthinkingTestLeadForm";
 
 type BandKey = "low" | "moderate" | "high";
 
@@ -102,6 +103,13 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
   }, [answers, section.categories]);
 
   const overallScore = scoresByCategory.reduce((sum, category) => sum + category.score, 0);
+  const scoreOf = (key: string): number => scoresByCategory.find((category) => category.key === key)?.score ?? 0;
+  const leadScores = { overthinking: scoreOf("overthinking"), worry: scoreOf("worry"), stress: scoreOf("stress") };
+  const leadBands = {
+    overthinking: section.bands[bandFor(leadScores.overthinking)].label,
+    worry: section.bands[bandFor(leadScores.worry)].label,
+    stress: section.bands[bandFor(leadScores.stress)].label,
+  };
   const overallAverage = Math.round(overallScore / 3);
   const overallBand = bandFor(overallAverage);
 
@@ -199,7 +207,8 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
     );
   }
 
-  // stage === "results" — full report shown immediately, no gate.
+  // stage === "results" — full report shown immediately, no gate. Phase 5:
+  // the name + WhatsApp form comes after the report (OverthinkingTestLeadForm).
   return (
     <section className="border-b border-line px-6 py-16 sm:px-8 sm:py-20">
       <div className="mx-auto max-w-xl">
@@ -233,6 +242,9 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
 
           <p className="mt-5 text-[12px] leading-relaxed text-ink-faint">{section.disclaimer}</p>
         </div>
+
+        {/* Phase 5: name + WhatsApp after the result (copy/tests.md). */}
+        <OverthinkingTestLeadForm scores={leadScores} bands={leadBands} />
 
         <div className="mt-5 rounded-sm border-2 border-rose/50 bg-rose-soft/30 px-7 py-6 text-center">
           <p className="text-[15px] font-bold text-ink">{section.fullReport.courseTitle}</p>

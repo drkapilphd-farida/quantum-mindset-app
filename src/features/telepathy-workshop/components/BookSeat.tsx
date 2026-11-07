@@ -19,6 +19,7 @@ export function BookSeatCta({
   className = '',
   buttonClassName = '',
   noteClassName = '',
+  label,
 }: {
   lang: Lang
   batch: TelepathyBatchTag
@@ -26,12 +27,14 @@ export function BookSeatCta({
   className?: string
   buttonClassName?: string
   noteClassName?: string
+  /** Button text instead of the standard "Book your seat — ₹1,000". */
+  label?: string
 }): React.JSX.Element {
   return (
     <div className={className}>
       <BookSeatLink batch={batch} location={location} className={`${GOLD_BUTTON} ${buttonClassName}`}>
         <Ticket className="size-5 flex-none" aria-hidden="true" />
-        {pick(telepathyCopy.bookButton, lang)}
+        {label ?? pick(telepathyCopy.bookButton, lang)}
       </BookSeatLink>
       <p className={`mt-2.5 text-[13.5px] leading-snug text-ink-dim ${noteClassName}`}>{pick(c.note, lang)}</p>
     </div>

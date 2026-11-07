@@ -8,7 +8,10 @@
 // Honest-language rule: participants' experiences ("many participants
 // share…"), never promised results.
 
+import { v2 } from './telepathyV2Copy'
+
 export type Bi = { en: string; hi: string }
+
 
 export const telepathyCopy = {
   meta: {
@@ -17,8 +20,8 @@ export const telepathyCopy = {
       hi: 'Telepathy और Intuition वर्कशॉप — डॉ. कपिल देव शर्मा के साथ 2 दिन (ऑफ़लाइन) | Mind Ur Mind',
     },
     description: {
-      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day offline workshop researched, developed and taught by Dr. Kapil Dev Sharma — to 10,000+ people over 12 years, with 300+ video reviews. {price} (earlier {earlier}); book your seat for {deposit}. Mumbai, Ahmedabad, Vadodara, Pune. Limited seats.',
-      hi: '2 दिन की ऑफ़लाइन वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — डॉ. कपिल देव शर्मा की रिसर्च से बनी, 12 साल में 10,000+ लोगों को सिखाई गई, 300+ वीडियो रिव्यू। फ़ीस {price} (पहले {earlier}); {deposit} देकर seat book करें। मुंबई, अहमदाबाद, वडोदरा, पुणे। सीमित seats।',
+      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day offline workshop researched, developed and taught by Dr. Kapil Dev Sharma — to thousands of people since 2017, with 300+ video reviews. {price} (earlier {earlier}); book your seat for {deposit}. Mumbai, Ahmedabad, Vadodara, Pune. Limited seats.',
+      hi: '2 दिन की ऑफ़लाइन वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — डॉ. कपिल देव शर्मा की रिसर्च से बनी, 2017 से हज़ारों लोगों को सिखाई गई, 300+ वीडियो रिव्यू। फ़ीस {price} (पहले {earlier}); {deposit} देकर seat book करें। मुंबई, अहमदाबाद, वडोदरा, पुणे। सीमित seats।',
     },
   },
 
@@ -42,10 +45,10 @@ export const telepathyCopy = {
   hero: {
     eyebrow: { en: '2-DAY OFFLINE EXPERIENTIAL WORKSHOP · MUMBAI · AHMEDABAD · VADODARA · PUNE', hi: '2 दिन की ऑफ़लाइन अनुभव-आधारित वर्कशॉप · मुंबई · अहमदाबाद · वडोदरा · पुणे' },
     workshopName: { en: 'The Telepathy Workshop™', hi: 'The Telepathy Workshop™' },
-    headline: { en: 'The Guru You Are Searching For Is Already Inside You', hi: 'जिस गुरु को आप बाहर खोज रहे हैं, वह आपके भीतर ही है' },
+    // Phase 4.2: the hero's H1, subtitle and buttons are in telepathyV2Copy.ts.
     subheadline: {
-      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day workshop researched, developed and taught by Dr. Kapil Dev Sharma — to 10,000+ people over 12 years.',
-      hi: '2 दिन की वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — जिसे डॉ. कपिल देव शर्मा ने खुद रिसर्च करके बनाया है और 12 साल में 10,000+ लोगों को सिखाया है।',
+      en: 'Learn Heart-Brain Coherence, Intuition, Telepathy and Cosmic Fusion in a 2-day workshop researched, developed and taught by Dr. Kapil Dev Sharma — to thousands of people since 2017.',
+      hi: '2 दिन की वर्कशॉप में Heart-Brain Coherence, Intuition, Telepathy और Cosmic Fusion सीखिए — जिसे डॉ. कपिल देव शर्मा ने खुद रिसर्च करके बनाया है और 2017 से हज़ारों लोगों को सिखाया है।',
     },
     seats: { en: 'Limited seats per batch', hi: 'हर batch में सीमित seats' },
     watchCta: { en: '▶ Watch the free session', hi: '▶ Free session देखें' },
@@ -54,10 +57,10 @@ export const telepathyCopy = {
 
   // ── B. Trust strip ────────────────────────────────────────────────
   trust: [
-    { value: '12', label: { en: 'years of workshops', hi: 'साल से वर्कशॉप' } },
-    { value: '10,000+', label: { en: 'people trained', hi: 'लोग प्रशिक्षित' } },
-    { value: '300+', label: { en: 'video reviews', hi: 'वीडियो रिव्यू' } },
-    { value: '4', label: { en: 'cities', hi: 'शहर' } },
+    { value: { en: 'Since 2017', hi: '2017 से' }, label: { en: 'workshops', hi: 'वर्कशॉप' } },
+    { value: { en: 'Thousands', hi: 'हज़ारों' }, label: { en: 'people trained', hi: 'लोग प्रशिक्षित' } },
+    { value: { en: '300+', hi: '300+' }, label: { en: 'video reviews', hi: 'वीडियो रिव्यू' } },
+    { value: { en: '4', hi: '4' }, label: { en: 'cities', hi: 'शहर' } },
   ],
 
   // ── C. Free session video ─────────────────────────────────────────
@@ -102,21 +105,25 @@ export const telepathyCopy = {
 
   // Traders (kept from the earlier page, with its disclaimer).
   traders: {
-    heading: { en: "For Traders: Your Chart Doesn't Take the Trade. Your Mind Does.", hi: 'ट्रेडर्स: ट्रेड चार्ट नहीं लेता, आपका दिमाग लेता है।' },
+    // Phase 4.3: small line above the heading.
+    eyebrow: { en: 'For traders', hi: 'ट्रेडर्स के लिए' },
+    // Phase 6: link to /telepathy-workshop/traders.
+    fullPageLink: { en: 'Trader? See the full page for traders →', hi: 'ट्रेडर हैं? आपके लिए पूरा पेज →' },
+    heading: { en: "For Traders: Your Chart Doesn't Take the Trade. Your Mind Does.", hi: 'ट्रेडर्स के लिए — चार्ट नहीं, दिमाग़' },
     body: {
       en: 'Most trading mistakes come from fear and greed, not from lack of knowledge. Fear makes you exit early. Greed makes you stay too long.',
-      hi: 'ज़्यादातर ट्रेडिंग गलतियाँ जानकारी की कमी से नहीं, डर और लालच से होती हैं। डर में आप जल्दी exit करते हैं। लालच में ज़रूरत से ज़्यादा देर रुकते हैं।',
+      hi: 'ज़्यादातर ट्रेडिंग गलतियाँ ज्ञान की कमी से नहीं होतीं। डर से होती हैं, और लालच से। डर जल्दी निकाल देता है। लालच ज़्यादा रोक लेता है।',
     },
-    listIntro: { en: 'In this workshop you learn to:', hi: 'इस वर्कशॉप में आप सीखते हैं:' },
+    listIntro: { en: 'In this workshop you learn to:', hi: 'यहाँ सीखते हैं:' },
     items: [
-      { en: 'Stay calm when the market moves against you', hi: 'मार्केट उल्टा चले, तब भी शांत रहना' },
-      { en: 'Recognise fear and greed before they act for you', hi: 'डर और लालच को उनके हावी होने से पहले पहचानना' },
-      { en: 'Combine your analysis with your intuition', hi: 'अपने analysis और intuition को साथ में इस्तेमाल करना' },
-      { en: 'Pause before an impulsive trade', hi: 'impulsive ट्रेड से पहले रुककर सोचना' },
+      { en: 'Stay calm when the market moves against you', hi: 'बाज़ार उलटा जाने पर शांत रहना' },
+      { en: 'Recognise fear and greed before they act for you', hi: 'डर और लालच को हाथ लगाने से पहले पहचानना' },
+      { en: 'Combine your analysis with your intuition', hi: 'अपनी एनालिसिस को अपने अंदर की आवाज़ से मिलाना' },
+      { en: 'Pause before an impulsive trade', hi: 'जल्दबाज़ी के ट्रेड से पहले एक सेकंड रुकना' },
     ],
     note: {
       en: 'This workshop does not give trading tips or investment advice. It works on the mind that makes the decision.',
-      hi: 'यह वर्कशॉप ट्रेडिंग टिप्स या निवेश सलाह नहीं देती। यह उस दिमाग पर काम करती है जो फ़ैसला लेता है।',
+      hi: 'कोई टिप नहीं, कोई निवेश सलाह नहीं। काम सिर्फ दिमाग़ पर है।',
     },
     imageAlt: { en: 'A trader looking at market charts', hi: 'मार्केट चार्ट देखता एक ट्रेडर' },
   },
@@ -133,7 +140,7 @@ export const telepathyCopy = {
         icon: 'coherence',
         name: { en: 'Heart-Brain Coherence', hi: 'Heart-Brain Coherence' },
         what: { en: 'Bringing your heart and mind into one rhythm — the foundation for everything else in the workshop.', hi: 'दिल और दिमाग को एक लय में लाना — वर्कशॉप की बाकी हर चीज़ की नींव।' },
-        practise: { en: 'Guided practice that calms fear and creates inner stillness — seen live on the Muse 2 headband.', hi: 'गाइडेड अभ्यास जो डर को शांत करके भीतरी स्थिरता लाता है — Muse 2 हेडबैंड पर लाइव दिखता है।' },
+        practise: { en: 'Guided practice that calms fear and creates inner stillness — seen live on the EEG headband.', hi: 'गाइडेड अभ्यास जो डर को शांत करके भीतरी स्थिरता लाता है — EEG हेडबैंड पर लाइव दिखता है।' },
         helps: { en: 'Feeling calm, overcoming fear, clearer decisions.', hi: 'शांति, डर से बाहर आना, ज़्यादा साफ़ फ़ैसले।' },
       },
       {
@@ -160,18 +167,18 @@ export const telepathyCopy = {
     ],
   },
 
-  // Muse 2 (dark section, part of "What you'll learn")
+  // EEG (dark section, part of "What you'll learn")
   muse: {
-    eyebrow: { en: 'LIVE Muse 2 brain-wave demo', hi: 'LIVE Muse 2 brain-wave डेमो' },
+    eyebrow: { en: 'LIVE EEG brain-wave demo', hi: 'LIVE EEG brain-wave डेमो' },
     heading: { en: "Don't Just Feel the Change. See It on Screen.", hi: 'बदलाव सिर्फ़ महसूस नहीं, स्क्रीन पर देखिए भी।' },
     body: {
-      en: 'See on screen how your brain activity changes when you are distracted, focused or calm. During the workshop, a Muse 2 EEG headband measures brain waves live.',
-      hi: 'स्क्रीन पर देखिए कि जब आप बेचैन, एकाग्र या शांत होते हैं, तो दिमाग की गतिविधि कैसे बदलती है। वर्कशॉप में Muse 2 EEG हेडबैंड brain waves को लाइव मापता है।',
+      en: 'See on screen how your brain activity changes when you are distracted, focused or calm. During the workshop, an EEG headband measures brain waves live.',
+      hi: 'स्क्रीन पर देखिए कि जब आप बेचैन, एकाग्र या शांत होते हैं, तो दिमाग की गतिविधि कैसे बदलती है। वर्कशॉप में EEG हेडबैंड brain waves को लाइव मापता है।',
     },
     waveRestless: { en: 'restless', hi: 'बेचैन' },
     waveCalm: { en: 'calm', hi: 'शांत' },
     tagline: { en: 'Your mind, live on screen.', hi: 'आपका दिमाग, लाइव स्क्रीन पर।' },
-    imageAlt: { en: 'A participant wearing the Muse 2 EEG headband, with brain waves on screen', hi: 'Muse 2 EEG हेडबैंड पहने प्रतिभागी, स्क्रीन पर brain waves' },
+    imageAlt: { en: 'A participant wearing the EEG headband, with brain waves on screen', hi: 'EEG हेडबैंड पहने प्रतिभागी, स्क्रीन पर brain waves' },
   },
 
   // ── F. Short review strip (middle of the page) ────────────────────
@@ -192,7 +199,7 @@ export const telepathyCopy = {
           { en: 'Foundation: how the mind, emotions and the inner voice work', hi: 'नींव: मन, भावनाएँ और अंदर की आवाज़ कैसे काम करते हैं' },
           { en: 'Heart-Brain Coherence', hi: 'Heart-Brain Coherence' },
           { en: 'Intuition Development', hi: 'Intuition Development' },
-          { en: 'Live Muse 2 brain-wave demo', hi: 'Muse 2 brain-wave का लाइव डेमो' },
+          { en: 'Live EEG brain-wave demo', hi: 'EEG brain-wave का लाइव डेमो' },
         ],
       },
       {
@@ -218,7 +225,7 @@ export const telepathyCopy = {
 
   // ── I. Workshop photos ────────────────────────────────────────────
   gallery: {
-    heading: { en: 'Moments From 12 Years of Workshops', hi: '12 साल की वर्कशॉप की झलकियाँ' },
+    heading: { en: 'Moments From Workshops Since 2017', hi: '2017 से वर्कशॉप की झलकियाँ' },
     imageAlt: { en: 'A moment from The Telepathy Workshop', hi: 'The Telepathy Workshop का एक पल' },
     cities: {
       mumbai: { en: 'Mumbai', hi: 'मुंबई' },
@@ -245,8 +252,8 @@ export const telepathyCopy = {
         hi: 'डॉ. कपिल देव शर्मा Mind Ur Mind के संस्थापक हैं, और दो दशक से ज़्यादा अनुभव वाले मन, दिमाग और ध्यान के कोच हैं।',
       },
       {
-        en: 'He researched and developed this workshop himself and has been teaching it for 12 years. In that time, more than 10,000 people have learned Telepathy, Intuition and Cosmic Fusion from him, making him one of the pioneers of teaching these skills in India. Participants have shared their experience in 300+ video reviews.',
-        hi: 'यह वर्कशॉप उन्होंने खुद रिसर्च करके विकसित की है और पिछले 12 साल से सिखा रहे हैं। इस दौरान 10,000 से ज़्यादा लोग उनसे Telepathy, Intuition और Cosmic Fusion सीख चुके हैं, और वो भारत में इन skills को सिखाने वाले अग्रणी लोगों में से एक हैं। प्रतिभागियों ने 300+ वीडियो रिव्यू में अपना अनुभव साझा किया है।',
+        en: 'He researched and developed this workshop himself and has been teaching it since 2017. In that time, thousands of people have learned Telepathy, Intuition and Cosmic Fusion from him, making him one of the pioneers of teaching these skills in India. Participants have shared their experience in 300+ video reviews.',
+        hi: 'यह वर्कशॉप उन्होंने खुद रिसर्च करके विकसित की है और 2017 से सिखा रहे हैं। इस दौरान हज़ारों लोग उनसे Telepathy, Intuition और Cosmic Fusion सीख चुके हैं, और वो भारत में इन skills को सिखाने वाले अग्रणी लोगों में से एक हैं। प्रतिभागियों ने 300+ वीडियो रिव्यू में अपना अनुभव साझा किया है।',
       },
     ],
     imageAlt: { en: 'Dr. Kapil Dev Sharma teaching a workshop', hi: 'वर्कशॉप में सिखाते हुए डॉ. कपिल देव शर्मा' },
@@ -258,32 +265,13 @@ export const telepathyCopy = {
     sub: { en: 'Same timings and inclusions in every city.', hi: 'हर शहर में समय और सुविधाएँ एक जैसी।' },
     datesLabel: { en: 'Dates', hi: 'तारीख़' },
     venueLabel: { en: 'Venue', hi: 'स्थान' },
-    // id must match TELEPATHY_BATCHES in telepathyWorkshopConfig.ts (dates there hide a batch after it ends).
+    // id must match TELEPATHY_BATCHES in telepathyWorkshopConfig.ts. Dates and
+    // venues come from src/data/batches.ts (positioning rework).
     cities: [
-      {
-        id: 'mumbai',
-        city: { en: 'Mumbai', hi: 'मुंबई' },
-        dates: { en: '14–15 Nov 2026 (Sat–Sun)', hi: '14–15 नवंबर 2026 (शनि–रवि)' },
-        venue: { en: 'Hotel Better Home International, Sahar Road, opp. Andheri East Railway Station, Andheri East', hi: 'होटल बेटर होम इंटरनेशनल, सहार रोड, अंधेरी ईस्ट रेलवे स्टेशन के सामने, अंधेरी ईस्ट' },
-      },
-      {
-        id: 'ahmedabad',
-        city: { en: 'Ahmedabad', hi: 'अहमदाबाद' },
-        dates: { en: '21–22 Nov 2026 (Sat–Sun)', hi: '21–22 नवंबर 2026 (शनि–रवि)' },
-        venue: { en: 'Hotel Silver Cloud, Ashram Road', hi: 'होटल सिल्वर क्लाउड, आश्रम रोड' },
-      },
-      {
-        id: 'vadodara',
-        city: { en: 'Vadodara', hi: 'वडोदरा' },
-        dates: { en: 'Date on WhatsApp', hi: 'तारीख़ WhatsApp पर' },
-        venue: { en: 'Venue on WhatsApp', hi: 'स्थान WhatsApp पर' },
-      },
-      {
-        id: 'pune',
-        city: { en: 'Pune', hi: 'पुणे' },
-        dates: { en: 'Date on WhatsApp', hi: 'तारीख़ WhatsApp पर' },
-        venue: { en: 'Venue on WhatsApp', hi: 'स्थान WhatsApp पर' },
-      },
+      { id: 'mumbai', city: { en: 'Mumbai', hi: 'मुंबई' } },
+      { id: 'ahmedabad', city: { en: 'Ahmedabad', hi: 'अहमदाबाद' } },
+      { id: 'vadodara', city: { en: 'Vadodara', hi: 'वडोदरा' } },
+      { id: 'pune', city: { en: 'Pune', hi: 'पुणे' } },
     ],
     infoTime: { en: '9:30 am – 6:00 pm (both days)', hi: 'सुबह 9:30 – शाम 6:00 (दोनों दिन)' },
     infoMeals: { en: 'Breakfast, lunch & high tea included', hi: 'नाश्ता, लंच और हाई टी शामिल' },
@@ -304,7 +292,7 @@ export const telepathyCopy = {
     heading: { en: "What's included", hi: 'इसमें क्या शामिल है' },
     items: [
       { en: '2 full days of live training with Dr. Kapil', hi: 'Dr. Kapil के साथ 2 पूरे दिन की लाइव ट्रेनिंग' },
-      { en: 'Live Muse 2 brain-wave demo', hi: 'Muse 2 brain-wave का लाइव डेमो' },
+      { en: 'Live EEG brain-wave demo', hi: 'EEG brain-wave का लाइव डेमो' },
       { en: 'Practice techniques to continue at home', hi: 'घर पर जारी रखने के लिए अभ्यास की तकनीकें' },
       { en: 'Certificate of participation', hi: 'भागीदारी का सर्टिफ़िकेट' },
       { en: 'Breakfast, lunch & high tea', hi: 'नाश्ता, लंच और हाई टी' },
@@ -315,16 +303,26 @@ export const telepathyCopy = {
   // ── M. FAQ ────────────────────────────────────────────────────────
   faq: {
     heading: { en: 'Frequently asked questions', hi: 'अक्सर पूछे जाने वाले सवाल' },
+    // Phase 4.2: the 6 new questions (copy/telepathy-v2.md) on top, then
+    // "How do I book?" (FAQ 7), then the existing ones. Removed as duplicates
+    // of the new ones: "Is this religious?" (old), "Is this available online?"
+    // (Phase 1 answer) and "Can I get a refund?" (= "₹1,000 का क्या होता है?").
     items: [
+      ...v2.faq,
       {
-        q: { en: 'Is this religious?', hi: 'क्या यह धार्मिक है?' },
-        a: { en: 'No. These are experiential practices, and people of all backgrounds and faiths attend.', hi: 'नहीं। ये अनुभव-आधारित अभ्यास हैं, और हर पृष्ठभूमि और धर्म के लोग इसमें आते हैं।' },
+        q: { en: 'How do I book?', hi: 'बुकिंग कैसे करें?' },
+        a: {
+          // Phase 4.2: new English answer (copy/telepathy-v2.md FAQ 7).
+          en: v2.faqHowToBookEn,
+          // Phase 4.3: new Hindi answer (owner).
+          hi: "'सीट बुक कीजिए — ₹1,000' दबाइए और Razorpay पर पेमेंट कीजिए। जगह और समय के साथ वॉट्सऐप पर पुष्टि आएगी; बाकी ₹4,999 वर्कशॉप के दिन।",
+        },
       },
       {
         q: { en: 'Is this scientific?', hi: 'क्या यह वैज्ञानिक है?' },
         a: {
-          en: 'Heart-brain coherence and brain-wave measurement (the Muse 2 demo) are explained in the workshop. Telepathy and Cosmic Fusion are experiential practices. What participants describe are their own experiences — results are not guaranteed.',
-          hi: 'Heart-brain coherence और brain-wave measurement (Muse 2 डेमो) वर्कशॉप में समझाए जाते हैं। Telepathy और Cosmic Fusion अनुभव-आधारित अभ्यास हैं। प्रतिभागी जो बताते हैं, वो उनके अपने अनुभव हैं — परिणाम की गारंटी नहीं है।',
+          en: 'Heart-brain coherence and brain-wave measurement (the EEG demo) are explained in the workshop. Telepathy and Cosmic Fusion are experiential practices. What participants describe are their own experiences — results are not guaranteed.',
+          hi: 'Heart-brain coherence और brain-wave measurement (EEG डेमो) वर्कशॉप में समझाए जाते हैं। Telepathy और Cosmic Fusion अनुभव-आधारित अभ्यास हैं। प्रतिभागी जो बताते हैं, वो उनके अपने अनुभव हैं — परिणाम की गारंटी नहीं है।',
         },
       },
       {
@@ -336,13 +334,6 @@ export const telepathyCopy = {
         a: { en: 'No. Everything is taught from the beginning.', hi: 'नहीं। सब कुछ शुरुआत से सिखाया जाता है।' },
       },
       {
-        q: { en: 'Is this available online?', hi: 'क्या यह ऑनलाइन भी है?' },
-        a: {
-          en: 'No. It is offline only, because the practical exercises and the Muse 2 experience happen in person.',
-          hi: 'नहीं। यह सिर्फ़ ऑफ़लाइन है, क्योंकि practical अभ्यास और Muse 2 का अनुभव आमने-सामने ही होता है।',
-        },
-      },
-      {
         q: { en: 'Is this a trading course?', hi: 'क्या यह ट्रेडिंग कोर्स है?' },
         a: {
           en: 'No. It works on the mind. Traders use it to handle fear and greed, but no trading tips or investment advice are given.',
@@ -351,29 +342,15 @@ export const telepathyCopy = {
       },
       {
         q: { en: 'Can I change my batch?', hi: 'क्या batch बदला जा सकता है?' },
-        a: { en: 'Message us on WhatsApp — the team will help you with your options.', hi: 'हमें WhatsApp पर मैसेज करें — टीम आपको विकल्पों के बारे में बताएगी।' },
+        a: { en: 'Message us on WhatsApp. Dr. Kapil replies himself, within 24 hours.', hi: 'हमें WhatsApp पर मैसेज करें। डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।' },
       },
       {
         q: { en: 'What if I miss a day?', hi: 'अगर एक दिन छूट जाए तो?' },
-        a: { en: 'Message us on WhatsApp — the team will help you with your options.', hi: 'हमें WhatsApp पर मैसेज करें — टीम आपको विकल्पों के बारे में बताएगी।' },
+        a: { en: 'Message us on WhatsApp. Dr. Kapil replies himself, within 24 hours.', hi: 'हमें WhatsApp पर मैसेज करें। डॉ. कपिल खुद जवाब देते हैं — 24 घंटे के भीतर।' },
       },
       {
         q: { en: 'Are meals included?', hi: 'क्या खाना शामिल है?' },
         a: { en: 'Yes. Breakfast, lunch and high tea are included on both days.', hi: 'हाँ। दोनों दिन नाश्ता, लंच और हाई टी शामिल है।' },
-      },
-      {
-        q: { en: 'How do I book?', hi: 'बुकिंग कैसे करें?' },
-        a: {
-          en: 'Tap "Book your seat — {deposit}" and pay {deposit} online to reserve your seat. Pay the balance {balance} at the venue (UPI / cash). The fee is {price}. You can also pay the full {price} now: tap "Pay full {price} now" on your batch and we will send the details on WhatsApp.',
-          hi: '"{deposit} देकर अपनी seat book करें" दबाइए और {deposit} online देकर अपनी seat पक्की कीजिए। बाकी {balance} venue पर (UPI / cash)। फ़ीस {price} है। पूरे {price} अभी भी दे सकते हैं: अपने batch पर "पूरे {price} अभी दें" दबाइए, हम WhatsApp पर जानकारी भेज देंगे।',
-        },
-      },
-      {
-        q: { en: 'Can I get a refund?', hi: 'क्या पैसे वापस मिल सकते हैं?' },
-        a: {
-          en: 'The {deposit} booking amount is non-refundable, but it can be moved to a later batch. Message us on WhatsApp to move it.',
-          hi: '{deposit} की booking राशि वापस नहीं होगी, लेकिन इसे अगले batch में transfer किया जा सकता है। Transfer के लिए हमें WhatsApp पर मैसेज करें।',
-        },
       },
       {
         q: { en: 'Can I hear from past participants?', hi: 'क्या पहले के प्रतिभागियों के अनुभव सुन सकते हैं?' },
@@ -407,11 +384,13 @@ export const telepathyCopy = {
     chooseFirst: { en: 'Choose your batch above first.', hi: 'पहले ऊपर अपना batch चुनिए।' },
     balance: { en: 'Balance {balance} at the venue (UPI / cash)', hi: 'बाकी {balance} venue पर (UPI / cash)' },
     back: { en: '← Back to the workshop page', hi: '← वर्कशॉप पेज पर वापस' },
+    // Phase 4.2: no venue on the site — it is sent on WhatsApp.
+    venueOnWhatsApp: { en: 'Venue, timing and directions will be sent to you on WhatsApp.', hi: 'जगह, समय और पहुँचने का तरीका आपको वॉट्सऐप पर भेजा जाएगा।' },
   },
 
   // ── Disclaimer (above the site footer) ────────────────────────────
   disclaimer: {
-    en: 'Experiences and results vary from person to person. This workshop is a meditation and personal-growth programme. It is not medical or psychological treatment and does not provide financial or investment advice. Muse 2 is used for demonstration and awareness only.',
-    hi: 'अनुभव और परिणाम हर व्यक्ति के लिए अलग हो सकते हैं। यह वर्कशॉप ध्यान और व्यक्तिगत विकास का कार्यक्रम है। यह कोई चिकित्सीय या मनोवैज्ञानिक उपचार नहीं है और कोई वित्तीय या निवेश सलाह नहीं देती। Muse 2 का उपयोग केवल प्रदर्शन और जागरूकता के लिए किया जाता है।',
+    en: 'Experiences and results vary from person to person. This workshop is a meditation and personal-growth programme. It is not medical or psychological treatment and does not provide financial or investment advice. The EEG headband is used for demonstration and awareness only.',
+    hi: 'अनुभव और परिणाम हर व्यक्ति के लिए अलग हो सकते हैं। यह वर्कशॉप ध्यान और व्यक्तिगत विकास का कार्यक्रम है। यह कोई चिकित्सीय या मनोवैज्ञानिक उपचार नहीं है और कोई वित्तीय या निवेश सलाह नहीं देती। EEG हेडबैंड का उपयोग केवल प्रदर्शन और जागरूकता के लिए किया जाता है।',
   },
 } as const

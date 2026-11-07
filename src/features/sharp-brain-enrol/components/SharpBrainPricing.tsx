@@ -139,10 +139,16 @@ export function BatchCheckout({
   location,
   tone = "light",
   showPerDay = false,
+  buttonLabel,
+  hideRegularPrice = false,
 }: {
   location: string;
   tone?: "light" | "app";
   showPerDay?: boolean;
+  /** Text for the pay button in place of "Enrol now · ₹…" (same checkout). */
+  buttonLabel?: string;
+  /** Hide the struck-through regular price on the batch options. */
+  hideRegularPrice?: boolean;
 }): React.JSX.Element {
   const lang = useUiLang();
   const { snapshot, simulateNow, offerId } = useSharpBrainPricing();
@@ -206,7 +212,7 @@ export function BatchCheckout({
             >
               <span className="block font-semibold">{t("batchOption", { date: istDayMonth(option.startsAtMs, lang) })}</span>
               <span className={`mt-0.5 block text-[13px] ${faint}`}>
-                {option.offer !== "regular" && <s className="mr-1.5">{inr(option.regularInr)}</s>}
+                {option.offer !== "regular" && !hideRegularPrice && <s className="mr-1.5">{inr(option.regularInr)}</s>}
                 <span className="font-semibold">{inr(option.amountInr)}</span>
                 {option.offer === "earlybird" && ` · ${t("earlyBirdTag")}`}
                 {option.offer === "test1000" && ` · ${t("offerTag")}`}
@@ -252,7 +258,7 @@ export function BatchCheckout({
         <p className={`text-[12px] sm:col-span-2 ${faint}`}>{t("emailHint")}</p>
       </form>
       <button type="submit" form={`enrol-form-${location}`} disabled={pending} className={`${button} mt-4`} data-enrol-button>
-        {pending ? t("redirecting") : t("enrolNow", { price: inr(batch.amountInr) })}
+        {pending ? t("redirecting") : (buttonLabel ?? t("enrolNow", { price: inr(batch.amountInr) }))}
       </button>
       <p className={`mt-2 text-[12.5px] ${faint}`}>
         {t("oneTime")}

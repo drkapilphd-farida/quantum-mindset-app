@@ -1,4 +1,4 @@
-import { programs, qsrGuarantee, sharpBrainEnrolment, trainer } from '@/config/site.config'
+import { SHARP_BRAIN_PRICES, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
 // Copy for /programs/sharp-brain, EN + HI (rewritten 1 Oct 2026: one
@@ -38,14 +38,28 @@ export type SharpBrainCopy = {
   final: { title: string; speedTest: string }
   sticky: { cta: string }
   reviews: { metaTitle: string; eyebrow: string; h1: string; sub: string; programLink: string }
+  /** Phase 6B — two offers on one page: live batch and self-paced. */
+  offers: OffersCopy
 }
 
-// "15th and 25th" — from the batch schedule in site.config.
-const ord = (d: number): string => `${d}${d % 10 === 1 && d !== 11 ? 'st' : d % 10 === 2 && d !== 12 ? 'nd' : d % 10 === 3 && d !== 13 ? 'rd' : 'th'}`
-const batchDaysEn = sharpBrainEnrolment.batchStartDays.map(ord).join(' and ')
-const batchDaysHi = sharpBrainEnrolment.batchStartDays.join(' और ')
+/** A comparison-table cell: a short text, or included / not included. */
+export type OfferCell = string | true | false
 
-const regular = `₹${(programs.sharpBrain.prices[0]?.amountInr ?? 0).toLocaleString('en-IN')}`
+export type OffersCopy = {
+  hero: { h1: string; sub: string; liveButton: (price: string) => string; selfButton: string; seats: (nextBatch: string) => string }
+  table: {
+    title: string
+    feature: string
+    included: string
+    notIncluded: string
+    rows: { feature: string; self: OfferCell; live: OfferCell }[]
+  }
+  live: { name: string; badge: string; perDay: (price: string) => string; cta: string }
+  self: { name: string; price: string; noLive: string; recordings: string; cta: string; upgrade: string }
+}
+
+// Self-paced price (Razorpay payment link LINKS.rzpSharpBrainSelfPaced2999).
+const selfPacedPrice = `₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}`
 
 const en: SharpBrainCopy = {
   hero: {
@@ -212,40 +226,10 @@ const en: SharpBrainCopy = {
     eyebrow: 'Questions',
     title: 'Before you enrol',
     items: [
-      {
-        question: 'Who is this for?',
-        answer:
-          'School and college students, competitive-exam aspirants and working professionals — anyone who reads, studies or learns for work. Parents can enrol their child from about Class 6 upward; younger children can join with a parent.',
-      },
-      {
-        question: 'Is this science-based?',
-        answer:
-          'Yes. It uses well-established learning methods — attention training, reading-skill practice, visual memory techniques, active recall and spaced revision. No blindfolds, no “midbrain activation”, no magic claims. Your improvement is measured, not promised.',
-      },
-      {
-        question: 'How much time does it take each day?',
-        answer: '10–15 minutes of app practice a day, plus 7 live classes on Zoom spread across the 30 days. You get the class times with your batch schedule when you enrol.',
-      },
-      {
-        question: 'Is it in Hindi or English?',
-        answer: 'Classes are taught in simple Hindi with English terms; the app is available in English and Hindi.',
-      },
-      {
-        question: 'What if I miss a live class?',
-        answer: `Join the same class free in the next batch — batches start on the ${batchDaysEn} of every month.`,
-      },
-      {
-        question: `What do I get for ${regular}?`,
-        answer: `7 live classes with ${trainer.name}, 30 days of guided app practice with all exercises, a fair reading test on Day 1 and Day 30, memory and revision methods for exams and work, a certificate of completion and WhatsApp support during the program. One-time payment — no subscription, no instalments.`,
-      },
-      {
-        question: 'What if it doesn’t work for me?',
-        answer: qsrGuarantee.en.statement,
-      },
-      {
-        question: 'What happened to Quantum Speed Reading?',
-        answer: 'It is now Sharp Brain — the same core training under a clearer name, with a stronger focus on memory and focus.',
-      },
+      { question: 'Do I get the certificate with self-paced?', answer: 'Yes — the same certificate.' },
+      { question: 'Are there live classes in self-paced?', answer: 'No. All 7 classes are recorded.' },
+      { question: 'How do I upgrade?', answer: 'Within 7 days of buying, pay ₹6,000 and move to the live batch. Message us on WhatsApp for the link.' },
+      { question: 'Can I download the recorded classes?', answer: 'No. You can watch them in the app for 30 days.' },
     ],
   },
   final: { title: 'Your brain can learn better. Start in the next batch.', speedTest: 'Take the free Reading & Memory Test →' },
@@ -256,6 +240,35 @@ const en: SharpBrainCopy = {
     h1: 'Sharp Brain™ video reviews',
     sub: 'Learners from earlier batches talk about their experience in their own words. Watch them here or on our YouTube channel.',
     programLink: 'See what’s in the 30-Day Program →',
+  },
+  offers: {
+    hero: {
+      h1: 'Reading speed, focus and memory — in 30 days, measured.',
+      sub: '10–15 minutes of app practice a day · Your own numbers on Day 1 and Day 30',
+      liveButton: (price) => `Live batch · ${price}`,
+      selfButton: `Self-paced · ${selfPacedPrice}`,
+      seats: (nextBatch) => `40 seats per live batch · Next batch ${nextBatch}`,
+    },
+    table: {
+      title: 'Self-paced or live batch',
+      feature: 'Feature',
+      included: 'Included',
+      notIncluded: 'Not included',
+      rows: [
+        { feature: 'The 7 classes', self: 'Recorded', live: 'Live' },
+        { feature: '30 days of app practice', self: true, live: true },
+        { feature: 'Day 1 / Day 30 test + certificate', self: true, live: true },
+      ],
+    },
+    live: { name: 'Live batch', badge: 'Includes live classes', perDay: (price) => `≈ ${price}/day`, cta: 'Take a seat in the live batch' },
+    self: {
+      name: 'Self-paced',
+      price: selfPacedPrice,
+      noLive: 'No live classes — all 7 classes are recorded.',
+      recordings: 'Class recordings unlock within 48 hours of joining.',
+      cta: 'Start self-paced',
+      upgrade: 'Upgrade to the live batch within 7 days by paying ₹6,000 — message us on WhatsApp.',
+    },
   },
 }
 
@@ -423,34 +436,10 @@ const hi: SharpBrainCopy = {
     eyebrow: 'सवाल',
     title: 'नामांकन से पहले',
     items: [
-      {
-        question: 'यह किसके लिए है?',
-        answer:
-          'स्कूल और कॉलेज के विद्यार्थी, प्रतियोगी परीक्षा की तैयारी करने वाले और कामकाजी लोग — हर वह व्यक्ति जो पढ़ता, पढ़ाई करता या काम के लिए सीखता है। अभिभावक लगभग कक्षा 6 से ऊपर के बच्चे का नामांकन कर सकते हैं; छोटे बच्चे अभिभावक के साथ जुड़ सकते हैं।',
-      },
-      {
-        question: 'क्या यह विज्ञान पर आधारित है?',
-        answer:
-          'हाँ। इसमें सीखने के जाने-माने तरीके इस्तेमाल होते हैं — ध्यान का प्रशिक्षण, रीडिंग स्किल का अभ्यास, विज़ुअल मेमोरी तकनीकें, एक्टिव रिकॉल और अंतराल पर दोहराव। न आँखों पर पट्टी, न “मिडब्रेन एक्टिवेशन”, न कोई जादुई दावा। आपका सुधार नापा जाता है, उसका वादा नहीं किया जाता।',
-      },
-      {
-        question: 'रोज़ कितना समय लगता है?',
-        answer: 'रोज़ 10–15 मिनट ऐप पर अभ्यास, और 30 दिनों में फैली Zoom पर 7 लाइव क्लासेस। क्लास का समय नामांकन के बाद बैच शेड्यूल के साथ मिलता है।',
-      },
-      {
-        question: 'यह हिंदी में है या अंग्रेज़ी में?',
-        answer: 'क्लासेस आसान हिंदी में होती हैं, ज़रूरी अंग्रेज़ी शब्दों के साथ; ऐप अंग्रेज़ी और हिंदी दोनों में उपलब्ध है।',
-      },
-      {
-        question: 'अगर कोई लाइव क्लास छूट जाए तो?',
-        answer: `वही क्लास अगले बैच में मुफ़्त में जॉइन करें — बैच हर महीने की ${batchDaysHi} तारीख़ को शुरू होते हैं।`,
-      },
-      {
-        question: `${regular} में क्या मिलता है?`,
-        answer: `${trainer.nameHi} के साथ 7 लाइव क्लासेस, सभी एक्सरसाइज़ के साथ 30 दिन का गाइडेड ऐप अभ्यास, Day 1 और Day 30 पर निष्पक्ष रीडिंग टेस्ट, परीक्षा और काम के लिए याद रखने व दोहराने के तरीके, सर्टिफ़िकेट और प्रोग्राम के दौरान WhatsApp सपोर्ट। एकमुश्त भुगतान — न सब्सक्रिप्शन, न किश्तें।`,
-      },
-      { question: 'अगर यह मेरे लिए काम न करे तो?', answer: qsrGuarantee.hi.statement },
-      { question: 'Quantum Speed Reading का क्या हुआ?', answer: 'अब इसका नाम Sharp Brain है — वही मूल प्रशिक्षण, साफ़ नाम, और फोकस व याददाश्त पर ज़्यादा ज़ोर।' },
+      { question: 'क्या सेल्फ़-पेस्ड में सर्टिफ़िकेट मिलेगा?', answer: 'हाँ — वही सर्टिफ़िकेट।' },
+      { question: 'क्या सेल्फ़-पेस्ड में लाइव क्लास मिलेंगी?', answer: 'नहीं। सातों क्लास रिकॉर्डेड हैं।' },
+      { question: 'अपग्रेड कैसे करूँ?', answer: 'खरीदने के 7 दिन के भीतर ₹6,000 देकर लाइव बैच में जा सकते हैं। लिंक के लिए वॉट्सऐप कीजिए।' },
+      { question: 'क्या रिकॉर्डेड क्लास डाउनलोड हो सकती हैं?', answer: 'नहीं। 30 दिन तक ऐप में देख सकते हैं।' },
     ],
   },
   final: { title: 'आपका दिमाग़ बेहतर सीख सकता है। अगले बैच से शुरू करें।', speedTest: 'मुफ़्त Reading और Memory Test दें →' },
@@ -461,6 +450,35 @@ const hi: SharpBrainCopy = {
     h1: 'Sharp Brain™ वीडियो रिव्यूज़',
     sub: 'पहले के बैचों के विद्यार्थी अपने शब्दों में अपना अनुभव बताते हैं। यहाँ देखें या हमारे YouTube चैनल पर।',
     programLink: '30-दिवसीय प्रोग्राम में क्या है, देखें →',
+  },
+  offers: {
+    hero: {
+      h1: 'पढ़ने की रफ़्तार, ध्यान और याददाश्त — 30 दिन में, नाप कर।',
+      sub: 'ऐप पर रोज़ 10–15 मिनट अभ्यास · Day 1 और Day 30 पर आपके अपने नंबर',
+      liveButton: (price) => `लाइव बैच · ${price}`,
+      selfButton: `सेल्फ़-पेस्ड · ${selfPacedPrice}`,
+      seats: (nextBatch) => `हर लाइव बैच में 40 सीट · अगला बैच ${nextBatch}`,
+    },
+    table: {
+      title: 'सेल्फ़-पेस्ड या लाइव बैच',
+      feature: 'सुविधा',
+      included: 'शामिल',
+      notIncluded: 'शामिल नहीं',
+      rows: [
+        { feature: 'सातों क्लास', self: 'रिकॉर्डेड', live: 'लाइव' },
+        { feature: '30 दिन ऐप अभ्यास', self: true, live: true },
+        { feature: 'Day 1 / Day 30 टेस्ट + सर्टिफ़िकेट', self: true, live: true },
+      ],
+    },
+    live: { name: 'लाइव बैच', badge: 'लाइव क्लास के साथ', perDay: (price) => `≈ ${price}/दिन`, cta: 'लाइव बैच में सीट लें' },
+    self: {
+      name: 'सेल्फ़-पेस्ड',
+      price: selfPacedPrice,
+      noLive: 'लाइव क्लास नहीं हैं — सातों क्लास रिकॉर्डेड।',
+      recordings: 'क्लास की रिकॉर्डिंग जॉइन करने के 48 घंटे के भीतर खुल जाती है।',
+      cta: 'सेल्फ़-पेस्ड शुरू करें',
+      upgrade: '7 दिन के भीतर ₹6,000 देकर लाइव बैच में बदल सकते हैं — वॉट्सऐप पर बताइए।',
+    },
   },
 }
 

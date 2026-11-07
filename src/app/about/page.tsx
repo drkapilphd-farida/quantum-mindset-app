@@ -10,7 +10,7 @@ export const metadata: Metadata = buildPageMetadata({
   ownOgImage: true,
   title: `About ${trainer.name} — ${trainer.en.title} | ${brand.name}`,
   description:
-    `The story of ${trainer.name} and ${brand.name} (founded ${brand.foundedYear}) — ${trainer.years.total} years in education and mind training, trainer in reading, focus and memory skills since ${trainer.skillsTrainingSinceYear}, based in ${brand.city}.`,
+    `The story of ${trainer.name} and ${brand.name} (founded ${brand.foundedYear}) — ${trainer.years.total} years of mind coaching and ${trainer.years.professor} years as a professor, trainer in reading, focus and memory skills since ${trainer.skillsTrainingSinceYear}, based in ${brand.city}.`,
 })
 
 export default function AboutPage(): React.JSX.Element {

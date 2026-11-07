@@ -5,6 +5,7 @@ import { Check } from 'lucide-react'
 import { executiveBrainWorkshopConfig, hasExecutiveWorkshopEventPassed } from '@/config/executiveBrainWorkshopConfig'
 import { buildWhatsAppLink } from '../utmTracking'
 import { trackGaEvent } from '@/lib/analytics/ga4'
+import { waLink } from '@/data/links'
 import { ExecutiveWorkshopCountdown } from './ExecutiveWorkshopCountdown'
 
 // Registrations Closed™ — once the event's own end time has passed,
@@ -14,23 +15,18 @@ import { ExecutiveWorkshopCountdown } from './ExecutiveWorkshopCountdown'
 // read once) so a page left open across the event's end time updates
 // on its own, same posture as ExecutiveWorkshopCountdown.
 function RegistrationsClosedNotice(): React.JSX.Element {
-  const config = executiveBrainWorkshopConfig
-
   return (
     <div className="mx-auto max-w-xl rounded-3xl border border-slate-200 bg-slate-50 p-10 text-center">
-      <p className="text-[20px] font-bold text-slate-900">Registrations closed — next batch coming soon</p>
-      <p className="mt-2 text-[14.5px] text-slate-600">
-        This batch of the Executive Brain Performance Workshop has concluded. Tell us you&apos;re interested and we&apos;ll message you as soon as
-        the next date is confirmed.
-      </p>
+      {/* Phase 5 wording (owner). */}
+      <p className="text-[20px] font-bold text-slate-900">This batch has finished. Next date soon — ask on WhatsApp.</p>
       <a
-        href={buildWhatsAppLink(config.whatsappNumber, 'Hi, please notify me when the next Executive Brain Performance Workshop batch is announced')}
+        href={waLink('Hi, please notify me when the next Executive Brain Performance Workshop batch is announced')}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackGaEvent('whatsapp_click', { location: 'pricing_closed_notify_me' })}
         className="mt-6 inline-flex items-center justify-center rounded-full bg-teal px-7 py-3.5 text-[14.5px] font-semibold text-white transition-transform hover:-translate-y-0.5"
       >
-        Notify Me on WhatsApp
+        Notify me on WhatsApp
       </a>
     </div>
   )

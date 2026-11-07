@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useHomeCopy } from "./useHomeCopy";
 import { Eyebrow } from "../ui";
 import VideoReviewGrid from "../VideoReviewGrid";
-import { useLanguage } from "@/context/LanguageContext";
-import { HOME_LEARNING_VIDEO_REVIEWS, isEarlierBatchTitle } from "@/config/testimonials";
+import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { RETREAT_VIDEO_REVIEWS, RETREAT_VIDEO_REVIEWS_PLAYLIST_WATCH_URL } from "@/config/retreatVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 
@@ -15,10 +14,7 @@ type Tab = "learning" | "meditation";
 // stay hidden until verified in site.config), in tabs by problem.
 export default function HomeProof(): React.JSX.Element {
   const c = useHomeCopy().proof;
-  const { lang } = useLanguage();
   const [tab, setTab] = useState<Tab>("learning");
-  const learningVideos = HOME_LEARNING_VIDEO_REVIEWS.filter((video) => !video.hidden);
-  const showEarlierBatchNote = learningVideos.some((video) => isEarlierBatchTitle(video.youtubeTitle));
   const tabs: { id: Tab; label: string }[] = [
     { id: "learning", label: c.tabs.learning },
     { id: "meditation", label: c.tabs.meditation },
@@ -51,21 +47,9 @@ export default function HomeProof(): React.JSX.Element {
         </div>
 
         <div id={`proof-panel-${tab}`} role="tabpanel" aria-labelledby={`proof-tab-${tab}`} className="mt-8">
-          {tab === "learning" && showEarlierBatchNote && (
-            <p className="mb-4 font-mono text-[11.5px] uppercase tracking-[0.08em] text-ink-faint">{c.learningNote}</p>
-          )}
           {tab === "learning" ? (
-            <VideoReviewGrid
-              videos={learningVideos.map((video) => {
-                const label = lang === "hi" ? video.captionHi : video.caption;
-                return {
-                  videoId: video.videoId,
-                  thumbnailSrc: video.thumbnailSrc,
-                  label,
-                  alt: lang === "hi" ? `वीडियो: ${label} (Mind Ur Mind YouTube चैनल)` : `Video: ${label} (Mind Ur Mind YouTube channel)`,
-                };
-              })}
-            />
+            // Phase 4.5: the 7 new Sharp Brain Shorts replace the older learning reviews.
+            <VideoReviewGrid videos={SHARP_BRAIN_REVIEW_CARDS} aspectRatioClassName="aspect-[9/16]" gridClassName={SHARP_BRAIN_REVIEW_GRID_CLASS} />
           ) : (
             <VideoReviewGrid videos={RETREAT_VIDEO_REVIEWS} />
           )}

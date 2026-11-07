@@ -7,6 +7,9 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 
 type WhatsAppWidgetProps = {
   href?: string;
+  // Phase 5: the auto-opening text bubble is gone site-wide (only the
+  // WhatsApp button remains). `bubble` / `autoDismissBubbleMs` are still
+  // accepted so existing callers compile, but are ignored.
   bubble?: string;
   buttonLabel?: string;
   ariaLabel?: string;
@@ -48,16 +51,14 @@ type WhatsAppWidgetProps = {
 
 // Floating WhatsApp Widget™ — fixed to the viewport (outside <main>'s
 // document flow) so it stays hyper-visible through every scroll depth,
-// not just near the offers it's attached to. The text bubble is
-// dismissible (not just decorative) so it doesn't permanently block
-// content on small screens once the visitor has read it. Copy/link
+// not just near the offers it's attached to. Phase 5: button only — no
+// auto-opening text bubble. Copy/link
 // default to the homepage's general inquiry; dedicated program pages
 // (e.g. the QSR landing page) override all four so the pre-filled
 // WhatsApp message matches what the visitor is actually looking at, and
 // override `bottomClassName` to clear their own sticky bottom CTA bar.
 export default function WhatsAppWidget({
   href = WHATSAPP_GENERAL_INQUIRY_LINK,
-  bubble,
   buttonLabel,
   ariaLabel,
   // Mobile QA™ — bottom-16 (not bottom-5) below sm: on a typical phone
@@ -68,12 +69,10 @@ export default function WhatsAppWidget({
   // doesn't run this close to the fold.
   bottomClassName = "bottom-16 sm:bottom-7",
   analyticsLocation,
-  autoDismissBubbleMs,
   revealAfterElementId,
   revealAfterScrollPx,
 }: WhatsAppWidgetProps): React.JSX.Element {
   const { t } = useLanguage();
-  const [bubbleDismissed, setBubbleDismissed] = useState(false);
   const revealDisabled = revealAfterElementId === undefined && revealAfterScrollPx === undefined;
   const [revealed, setRevealed] = useState(revealDisabled);
 
@@ -101,55 +100,12 @@ export default function WhatsAppWidget({
     };
   }, [revealDisabled, revealAfterElementId, revealAfterScrollPx]);
 
-  useEffect(() => {
-    if (autoDismissBubbleMs === undefined) return undefined;
-    const timeout = setTimeout(() => setBubbleDismissed(true), autoDismissBubbleMs);
-    return () => clearTimeout(timeout);
-  }, [autoDismissBubbleMs]);
-
-  // Scroll-Aware Dismiss™ — the timer above only covers "the bubble has
-  // been open this long"; a visitor who scrolls straight to the footer
-  // within that window would still see it sitting over footer content
-  // (confirmed happening). Dismissing on the first real scroll covers
-  // that regardless of how fast the visitor scrolls, on every page that
-  // opts into autoDismissBubbleMs.
-  useEffect(() => {
-    if (autoDismissBubbleMs === undefined) return undefined;
-    function handleScroll(): void {
-      setBubbleDismissed(true);
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true, once: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [autoDismissBubbleMs]);
-
   return (
     <div
       className={`fixed right-5 z-50 flex flex-col items-end gap-3 transition-opacity duration-300 sm:right-7 ${bottomClassName} ${
         revealed ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >
-      {!bubbleDismissed && (
-        // Mobile QA™ — hidden below sm: on a typical phone viewport this
-        // bubble sat directly over the hero's primary CTA button on
-        // first paint (before any scroll), since the widget is fixed to
-        // the same bottom-right corner the hero's CTA row often lands in
-        // on shorter viewports. The compact round button stays fully
-        // visible and tappable at every size — only the auto-shown
-        // explanatory text is mobile-hidden, same information a tap on
-        // the button itself leads to.
-        <div className="relative hidden max-w-[240px] rounded-sm border border-line-strong bg-panel2 p-4 text-[13px] leading-relaxed text-ink shadow-[0_8px_30px_rgba(0,0,0,0.35)] sm:block sm:max-w-[260px]">
-          <button
-            type="button"
-            onClick={() => setBubbleDismissed(true)}
-            aria-label="Dismiss"
-            className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-ink-faint transition-colors hover:text-ink"
-          >
-            ×
-          </button>
-          <p className="pr-4">{bubble ?? t.whatsapp.bubble}</p>
-        </div>
-      )}
-
       <a
         href={href}
         target="_blank"

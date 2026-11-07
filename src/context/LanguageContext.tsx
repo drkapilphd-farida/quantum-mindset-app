@@ -102,3 +102,15 @@ export function useLanguage(): LanguageContextValue {
   }
   return ctx;
 }
+
+/**
+ * Website pages with a fixed language (positioning rework: `/` is always
+ * Hindi, `/en` always English, whatever language is stored). Everything
+ * inside reads `lang` / `t` in that language; the stored choice (shared
+ * with the app) is neither read for display nor changed.
+ */
+export function LanguageOverride({ lang, children }: { lang: Lang; children: ReactNode }): React.JSX.Element {
+  const parent = useLanguage();
+  const value = useMemo(() => ({ ...parent, lang, t: translations[lang] }), [parent, lang]);
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+}

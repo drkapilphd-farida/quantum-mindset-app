@@ -1,5 +1,6 @@
 import type { Lang } from '@/lib/i18n'
-import { TELEPATHY_BATCHES, TELEPATHY_PRICE, TELEPATHY_WHATSAPP_DISPLAY, type TelepathyBatch } from '@/config/telepathyWorkshopConfig'
+import { TELEPATHY_BATCHES, TELEPATHY_PRICE, TELEPATHY_WHATSAPP_DISPLAY, telepathyBatchData, type TelepathyBatch, type TelepathyBatchId } from '@/config/telepathyWorkshopConfig'
+import { FALLBACK_EN, FALLBACK_HI } from '@/data/batches'
 import type { Bi } from './telepathyWorkshopCopy'
 
 /** One language's text, with {price}/{earlier}/{deposit}/{balance}/{phone} filled from the config. */
@@ -59,4 +60,18 @@ export function googleCalendarUrl(batch: TelepathyBatch, title: string, details:
   })
   if (batch.days > 1) params.set('recur', `RRULE:FREQ=DAILY;COUNT=${batch.days}`)
   return `https://calendar.google.com/calendar/render?${params.toString()}`
+}
+
+/** A city's dates, from src/data/batches.ts; the "next date soon" line while it has none. */
+export function batchDatesText(id: TelepathyBatchId, lang: Lang): string {
+  const data = telepathyBatchData(id)
+  if (data === undefined || data.startDate === null) return lang === 'hi' ? FALLBACK_HI : FALLBACK_EN
+  return lang === 'hi' ? data.labelHi : data.labelEn
+}
+
+/** A city's venue, from src/data/batches.ts ('' while it has none). English falls back to the Hindi venue text. */
+export function batchVenueText(id: TelepathyBatchId, lang: Lang): string {
+  const data = telepathyBatchData(id)
+  if (data === undefined || data.startDate === null) return ''
+  return (lang === 'hi' ? data.venueHi : (data.venueEn ?? data.venueHi)) ?? ''
 }

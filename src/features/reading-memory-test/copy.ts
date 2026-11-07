@@ -1,10 +1,6 @@
-import { sharpBrainEnrolment } from '@/config/site.config'
-
 // Free Reading & Memory Test — every word on the test page, English and
 // Hindi. Copy rules (founder, 14 Oct 2026): no "100%", "photographic
 // memory", guarantees, ESP or midbrain; every number is the person's own.
-const DISCOUNT = `₹${sharpBrainEnrolment.testOffer.discountInr.toLocaleString('en-IN')}`
-const HOURS = sharpBrainEnrolment.testOffer.validHours
 
 export type MemoryTestCopy = {
   name: string
@@ -157,14 +153,15 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     boostResult: (pace, percent) => `You just read at ${pace} WPM and understood ${percent}%.`,
     boostResultSub: 'Guided practice like this is how the 30-day program builds your own speed.',
     backToProfile: 'Back to my Brain Profile',
-    leadTitle: `Get your full report, 3 personal tips and ${DISCOUNT} off Sharp Brain for ${HOURS} hours — on WhatsApp`,
-    leadTitleNoOffer: 'Get your full report and 3 personal tips on WhatsApp',
-    leadSub: 'Free. No spam.',
+    // Phase 5: the result screen from copy/tests.md (English: PHASE-5 part C).
+    leadTitle: 'Your result is ready',
+    leadTitleNoOffer: 'Your result is ready',
+    leadSub: "Shall we send it on WhatsApp? You'll get the full report and your next step.",
     phone: 'WhatsApp number',
-    firstName: 'First name (optional)',
-    leadSubmit: 'Send it to my WhatsApp',
+    firstName: 'Name',
+    leadSubmit: 'Send my result on WhatsApp',
     saving: 'Saving…',
-    phoneNote: 'We’ll send your report on WhatsApp and may tell you about Sharp Brain. Ask us any time to delete your number.',
+    phoneNote: 'No spam. Never more than one message a day.',
     shareTitle: 'Share your result',
     shareText: (eff, mem, url) => `I read at ${eff} WPM and remembered ${mem}/8 — what’s yours? ${url}`,
     shareCardLine: (mem) => `Remembered ${mem} of 8 pictures`,
@@ -249,14 +246,14 @@ export const memoryTestCopy: Record<'en' | 'hi', MemoryTestCopy> = {
     boostResult: (pace, percent) => `आपने अभी ${pace} WPM पर पढ़ा और ${percent}% समझा।`,
     boostResultSub: 'ऐसे गाइडेड अभ्यास से ही 30 दिन का प्रोग्राम आपकी अपनी रफ़्तार बढ़ाता है।',
     backToProfile: 'मेरी Brain Profile पर वापस',
-    leadTitle: `अपनी पूरी रिपोर्ट, 3 निजी टिप्स और ${HOURS} घंटे के लिए Sharp Brain पर ${DISCOUNT} की छूट — WhatsApp पर पाएँ`,
-    leadTitleNoOffer: 'अपनी पूरी रिपोर्ट और 3 निजी टिप्स WhatsApp पर पाएँ',
-    leadSub: 'मुफ़्त। कोई स्पैम नहीं।',
-    phone: 'WhatsApp नंबर',
-    firstName: 'पहला नाम (वैकल्पिक)',
-    leadSubmit: 'मेरे WhatsApp पर भेजें',
+    leadTitle: 'आपका रिज़ल्ट तैयार है',
+    leadTitleNoOffer: 'आपका रिज़ल्ट तैयार है',
+    leadSub: 'वॉट्सऐप पर भेज दें? पूरी रिपोर्ट और अगला कदम साथ मिलेगा।',
+    phone: 'वॉट्सऐप नंबर',
+    firstName: 'नाम',
+    leadSubmit: 'रिज़ल्ट वॉट्सऐप पर भेजिए',
     saving: 'सेव हो रहा है…',
-    phoneNote: 'हम आपकी रिपोर्ट WhatsApp पर भेजेंगे और Sharp Brain के बारे में बता सकते हैं। आप कभी भी अपना नंबर हटाने को कह सकते हैं।',
+    phoneNote: 'कोई स्पैम नहीं। दिन में एक मैसेज से ज़्यादा नहीं।',
     shareTitle: 'अपना नतीजा शेयर करें',
     shareText: (eff, mem, url) => `मैंने ${eff} WPM पर पढ़ा और 8 में से ${mem} याद रखीं — आपका कितना है? ${url}`,
     shareCardLine: (mem) => `8 में से ${mem} तस्वीरें याद रहीं`,
