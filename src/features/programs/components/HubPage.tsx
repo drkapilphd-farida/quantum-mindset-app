@@ -7,6 +7,7 @@ import { Faq } from "./Faq";
 import { HubBookingForm, HubBookingProvider, HubPrograms, HubQuiz } from "./HubInteractive";
 import { HeroMedia, VideoCard } from "./Media";
 import { StickyBookBar } from "./StickyBookBar";
+import { ClarityCardContent, WhatYouGetSection } from "./SharedBlocks";
 
 // /personal-sessions — built from design-personal-sessions-hub.html (owner,
 // Nov 2026): same section order, text, colours, sizes and spacing.
@@ -15,14 +16,6 @@ const PHOTO = "/dr-kapil-real.jpg";
 const wrap = "mx-auto w-full max-w-[1160px]";
 const sectionPad = "px-4 py-14 sm:px-6 md:py-20";
 const h2 = "text-[28px] font-extrabold leading-[1.2] md:text-[40px]";
-
-export function Tick({ color }: { color: string }): React.JSX.Element {
-  return (
-    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-[3px] flex-none">
-      <path d="M5 12l5 5L20 7" />
-    </svg>
-  );
-}
 
 export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialProgram: ProgramSlug | null }): React.JSX.Element {
   const h = HUB.hero;
@@ -101,6 +94,9 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
         </div>
       </section>
 
+      {/* WHAT YOU GET (shared block, new in the Nov 8 copy) */}
+      <WhatYouGetSection lang={lang} />
+
       {/* WHY 1-ON-1 QUOTE */}
       <section className="bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-20">
         <div className="mx-auto flex max-w-[900px] flex-col items-center gap-[18px] text-center">
@@ -145,20 +141,9 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
       {/* BOOK */}
       <section id="book" className="scroll-mt-16 bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-20">
         <div className={`${wrap} flex flex-wrap gap-10`}>
-          <div className="flex min-w-0 flex-[1_1_340px] flex-col gap-4">
-            <p className="text-[15px] font-semibold tracking-[0.06em] text-[#F2A93B]">{say(HUB.book.eyebrow, lang)}</p>
-            <h2 className={h2}>{say(HUB.book.title, lang)}</h2>
-            <p className="text-[44px] font-extrabold leading-[1.1] text-[#F2A93B]">
-              {COMMON.price} <span className="text-[18px] font-semibold text-[#D6DCE8]">{say(HUB.book.minutes, lang)}</span>
-            </p>
-            <div className="flex flex-col gap-2.5">
-              {HUB.book.ticks.map((tick) => (
-                <p key={tick.en} className="flex gap-2.5 text-[18px]">
-                  <Tick color="#F2A93B" />
-                  {say(tick, lang)}
-                </p>
-              ))}
-            </div>
+          {/* Left: the shared Clarity Session card text (owner: card text left, form right). */}
+          <div className="min-w-0 flex-[1_1_340px]">
+            <ClarityCardContent lang={lang} tone="dark" />
           </div>
           <div className="min-w-0 flex-[999_1_460px]">
             <HubBookingForm lang={lang} source={initialProgram ?? "hub"} />

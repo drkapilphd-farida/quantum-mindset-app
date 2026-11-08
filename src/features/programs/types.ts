@@ -24,29 +24,30 @@ export type ProgramSlug =
 
 export type VideoCard = { id: string; title: Bi }
 
-export type Disclaimer = 'mind' | 'traders'
+/** Small paragraph under the FAQ (from the approved copy). */
+export type Disclaimer = 'mind' | 'traders' | 'foundation'
+
+export type Faq = { q: Bi; a: Bi; /** Shown only when false/absent — the owner's [PLACEHOLDER] answers stay hidden. */ hidden?: boolean }
 
 export type Program = {
   slug: ProgramSlug
   group: GroupId
-  /** Short name (cards, dropdown, related). */
+  /** Short name (cards, dropdown, related, breadcrumb). */
   name: Bi
   /** One line on the hub card. */
   line: Bi
-  h1: Bi
+  /** Google title / description — the search words (owner, Nov 2026). */
   seoTitle: Bi
   seoDescription: Bi
-  heroLine: Bi
-  /** Added after the experience line (Telepathy: "· telepathy taught since 2017"). */
-  experienceSuffix?: Bi
-  usedFor: { title: Bi; text: Bi }[]
-  who: Bi[]
-  how: { lead: Bi; rest: Bi }[]
-  /** "How Dr. Kapil teaches it" (spiritual etc.) or "… works with you" (mind pages). */
-  howHeading: 'teaches' | 'works'
-  quote: Bi
+  /** Visible H1 (problem-led) and subline — word for word from the approved copy. */
+  h1: Bi
+  subline: Bi
+  soundLike: Bi[]
+  /** "Why this happens": the sentence that begins "What is missing" is shown in bold. */
+  why: { before: Bi; missing?: Bi; after?: Bi }
+  changes: Bi[]
   faqTopic: Bi
-  faqs: { q: Bi; a: Bi }[]
+  faqs: Faq[]
   related: [ProgramSlug, ProgramSlug, ProgramSlug]
   /** Review videos (16:9). Hero shows the first; empty → hero shows the photo, reviews section hidden. */
   videos: VideoCard[]

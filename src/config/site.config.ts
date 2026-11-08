@@ -653,7 +653,7 @@ export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
 } = sharpBrainEnrolmentData
 
 /** Personal Sessions entry point (owner, Nov 2026): every booking starts here. */
-export const CLARITY_SESSION = { priceInr: 2100, minutes: 75 } as const
+export const CLARITY_SESSION = { priceInr: 1100, minutes: 60 } as const
 
 /** Sharp Brain's two offers — the one place these prices are written. */
 /**

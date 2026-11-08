@@ -1,25 +1,50 @@
-import { aura, astral, chakra, cosmicFusion, kundalini, manifestation, samadhi, telepathy } from './programsSpiritual'
-import { businessLoss, coherence, mindset, retreat, stress, subconscious, traders } from './programsMind'
+import { PROGRAM_META } from './programMeta'
+import { BUSINESS_LOSS, MINDSET, STRESS, SUBCONSCIOUS } from './copyMind'
+import { COHERENCE, MANIFESTATION, TELEPATHY, TRADERS } from './copyRelPerf'
+import { ASTRAL, AURA, CHAKRA, COSMIC_FUSION, KUNDALINI, RETREAT, SAMADHI } from './copySpiritual'
+import type { ProgramCopy } from './copyTypes'
 import type { GroupId, Program, ProgramSlug } from './types'
 
-// All 15 programs, in the hub's card order (owner's design file).
-export const PROGRAMS: readonly Program[] = [
-  stress,
-  mindset,
-  subconscious,
-  businessLoss,
-  telepathy,
-  coherence,
-  manifestation,
-  traders,
-  cosmicFusion,
-  aura,
-  chakra,
-  samadhi,
-  kundalini,
-  astral,
-  retreat,
+// The approved copy (Nov 8, 2026) for each program, joined with what the
+// copy does not change (names, card lines, SEO, videos) — PROGRAM_META.
+const COPY: Record<ProgramSlug, ProgramCopy> = {
+  'stress-anxiety-support': STRESS,
+  'mindset-coaching': MINDSET,
+  'subconscious-reprogramming': SUBCONSCIOUS,
+  'business-loss-mindset': BUSINESS_LOSS,
+  telepathy: TELEPATHY,
+  'heart-brain-coherence': COHERENCE,
+  manifestation: MANIFESTATION,
+  'intuition-for-traders': TRADERS,
+  'cosmic-fusion': COSMIC_FUSION,
+  'aura-reading': AURA,
+  'chakra-activation': CHAKRA,
+  'samadhi-meditation': SAMADHI,
+  'kundalini-meditation': KUNDALINI,
+  'astral-projection': ASTRAL,
+  'personal-retreat': RETREAT,
+}
+
+/** Hub card order (owner's design file). */
+const ORDER: ProgramSlug[] = [
+  'stress-anxiety-support',
+  'mindset-coaching',
+  'subconscious-reprogramming',
+  'business-loss-mindset',
+  'telepathy',
+  'heart-brain-coherence',
+  'manifestation',
+  'intuition-for-traders',
+  'cosmic-fusion',
+  'aura-reading',
+  'chakra-activation',
+  'samadhi-meditation',
+  'kundalini-meditation',
+  'astral-projection',
+  'personal-retreat',
 ]
+
+export const PROGRAMS: readonly Program[] = ORDER.map((slug) => ({ ...PROGRAM_META[slug], ...COPY[slug] }))
 
 export const PROGRAM_SLUGS: readonly ProgramSlug[] = PROGRAMS.map((p) => p.slug)
 

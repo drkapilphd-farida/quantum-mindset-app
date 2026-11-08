@@ -1,4 +1,7 @@
 import { COMMON } from './common'
+
+const PRICE = COMMON.price
+const MIN = COMMON.minutes
 import type { Bi, GroupId, ProgramSlug } from './types'
 
 // /personal-sessions hub — English exactly as in the owner's design file
@@ -32,8 +35,8 @@ export const HUB = {
       hi: 'डॉ. कपिल देव शर्मा के साथ पर्सनल सेशन — 1-on-1 कोचिंग और आध्यात्मिक साधना | मन उर मन',
     },
     description: {
-      en: 'Mind and emotions, relationships, trading decisions or a deep spiritual practice — 1-on-1 with Dr. Kapil Dev Sharma, online or in person. Start with a Clarity Session (₹2,100, 75 minutes).',
-      hi: 'मन और भावनाएँ, रिश्ते, ट्रेडिंग के फ़ैसले या गहरी आध्यात्मिक साधना — डॉ. कपिल देव शर्मा के साथ 1-on-1, ऑनलाइन या आमने-सामने। क्लैरिटी सेशन (₹2,100, 75 मिनट) से शुरुआत करें।',
+      en: `Mind and emotions, relationships, trading decisions or a deep spiritual practice — 1-on-1 with Dr. Kapil Dev Sharma, online or in person. Start with a Clarity Session (${PRICE}, ${MIN} minutes).`,
+      hi: `मन और भावनाएँ, रिश्ते, ट्रेडिंग के फ़ैसले या गहरी आध्यात्मिक साधना — डॉ. कपिल देव शर्मा के साथ 1-on-1, ऑनलाइन या आमने-सामने। क्लैरिटी सेशन (${PRICE}, ${MIN} मिनट) से शुरुआत करें।`,
     },
   },
   hero: {
@@ -94,9 +97,9 @@ export const HUB = {
   how: {
     title: { en: 'How it works', hi: 'कैसे होता है' },
     steps: [
-      { title: { en: 'Clarity Session', hi: 'क्लैरिटी सेशन' }, text: { en: '75 minutes, ₹2,100. We understand what you want to change, and why.', hi: '75 मिनट, ₹2,100। हम समझते हैं कि आप क्या बदलना चाहते हैं, और क्यों।' } },
+      { title: { en: 'Clarity Session', hi: 'क्लैरिटी सेशन' }, text: { en: `${MIN} minutes, ${PRICE}. We understand what you want to change, and why — and you leave with your first personal guided meditation.`, hi: `${MIN} मिनट, ${PRICE}। हम समझते हैं कि आप क्या बदलना चाहते हैं, और क्यों — और आप अपने पहले पर्सनल गाइडेड मेडिटेशन के साथ लौटते हैं।` } },
       { title: { en: 'Your personal plan', hi: 'आपका पर्सनल प्लान' }, text: { en: 'The right practices and the right package, chosen only for you.', hi: 'सही अभ्यास और सही पैकेज, सिर्फ़ आपके लिए चुने गए।' } },
-      { title: { en: 'Daily practice, guided', hi: 'रोज़ का अभ्यास, मार्गदर्शन के साथ' }, text: { en: 'Live 1-on-1 sessions plus daily practice, with support on WhatsApp.', hi: 'लाइव 1-on-1 सेशन और रोज़ का अभ्यास, WhatsApp पर सपोर्ट के साथ।' } },
+      { title: { en: 'Daily practice, guided', hi: 'रोज़ का अभ्यास, मार्गदर्शन के साथ' }, text: { en: 'Live 1-on-1 sessions, your personal meditations recorded for you, and WhatsApp support.', hi: 'लाइव 1-on-1 सेशन, आपके लिए रिकॉर्ड किए गए आपके पर्सनल मेडिटेशन, और WhatsApp सपोर्ट।' } },
       { title: { en: 'Follow-up & next level', hi: 'फ़ॉलो-अप और अगला लेवल' }, text: { en: 'We review your progress and decide the next step together.', hi: 'हम आपकी प्रगति देखते हैं और साथ मिलकर अगला कदम तय करते हैं।' } },
     ],
   },
@@ -126,14 +129,7 @@ export const HUB = {
     },
   },
   book: {
-    eyebrow: { en: 'START HERE', hi: 'यहाँ से शुरू कीजिए' },
-    title: { en: 'Clarity Session', hi: 'क्लैरिटी सेशन' },
-    minutes: { en: '· 75 minutes', hi: '· 75 मिनट' },
-    ticks: [
-      { en: 'A deep conversation about what you want to change', hi: 'आप क्या बदलना चाहते हैं, इस पर गहरी बातचीत' },
-      { en: 'Your personal plan and the right package', hi: 'आपका पर्सनल प्लान और सही पैकेज' },
-      { en: 'Your first practice to start right away', hi: 'तुरंत शुरू करने के लिए आपका पहला अभ्यास' },
-    ],
+    // Left side: the shared Clarity Session card (common.ts, CLARITY_CARD).
     name: { en: 'Name', hi: 'नाम' },
     phone: { en: 'WhatsApp number', hi: 'WhatsApp नंबर' },
     city: { en: 'City', hi: 'शहर' },
@@ -157,8 +153,15 @@ export const HUB = {
       {
         q: { en: 'What happens in the Clarity Session?', hi: 'क्लैरिटी सेशन में क्या होता है?' },
         a: {
-          en: 'A 75-minute 1-on-1 conversation (₹2,100). We understand what you want to change and why, then Dr. Kapil suggests your personal plan and package.',
-          hi: '75 मिनट की 1-on-1 बातचीत (₹2,100)। हम समझते हैं कि आप क्या बदलना चाहते हैं और क्यों, फिर डॉ. कपिल आपका पर्सनल प्लान और पैकेज सुझाते हैं।',
+          en: `A ${MIN}-minute 1-on-1 conversation (${PRICE}). We understand what you want to change and why. Dr. Kapil suggests your personal plan and records your first guided meditation for you. If you join a program within 7 days, the ${PRICE} is fully adjusted in your fee.`,
+          hi: `${MIN} मिनट की 1-on-1 बातचीत (${PRICE})। हम समझते हैं कि आप क्या बदलना चाहते हैं और क्यों। डॉ. कपिल आपका पर्सनल प्लान सुझाते हैं और आपके लिए आपका पहला गाइडेड मेडिटेशन रिकॉर्ड करते हैं। अगर आप 7 दिन के भीतर कोई प्रोग्राम जॉइन करते हैं, तो ${PRICE} आपकी फ़ीस में पूरी तरह एडजस्ट हो जाते हैं।`,
+        },
+      },
+      {
+        q: { en: 'What are the personal meditation recordings?', hi: 'पर्सनल मेडिटेशन रिकॉर्डिंग क्या हैं?' },
+        a: {
+          en: 'In your sessions Dr. Kapil writes and records guided meditations only for you: your goal, your words, your pace. They are yours to keep and use for life.',
+          hi: 'आपके सेशन में डॉ. कपिल सिर्फ़ आपके लिए गाइडेड मेडिटेशन लिखते और रिकॉर्ड करते हैं: आपका लक्ष्य, आपके शब्द, आपकी गति। ये हमेशा के लिए आपके हैं।',
         },
       },
       {

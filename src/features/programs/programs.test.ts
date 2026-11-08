@@ -1,12 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { COMMON } from './common'
+import { CLARITY_CARD, COMMON, DISCLAIMERS, JOURNEY, QUOTE, WHAT_YOU_GET } from './common'
 import { HUB, QUIZ_RESULTS } from './hubCopy'
 import { PROGRAMS, PROGRAM_SLUGS, bookingHref, getProgram, isProgramSlug } from './programs'
 
-// The owner's content rules (Nov 2026). The required disclaimer sentences
-// themselves contain "treatment"; they are the only place it may appear.
-const REQUIRED = [COMMON.disclaimers.mind.en, COMMON.disclaimers.traders.en, HUB.faq.disclaimer.en]
+// The owner's content rules and approved copy (Nov 8, 2026). The required
+// disclaimer sentences contain "treatment"; that is the only place it may appear.
+const REQUIRED = [
+  DISCLAIMERS.mind.en,
+  HUB.faq.disclaimer.en,
+  // In the owner's approved copy (Stress FAQ "Is this therapy?") — a denial, kept word for word; flagged to the owner.
+  "It is coaching and mind training support, not medical treatment. If you are under a doctor's care, continue it; these sessions can run alongside.",
+]
 const strip = (text: string): string => REQUIRED.reduce((acc, sentence) => acc.split(sentence).join(''), text)
+const ALL_EN = (): string => strip(JSON.stringify([PROGRAMS, HUB, COMMON, CLARITY_CARD, JOURNEY, QUOTE, WHAT_YOU_GET, DISCLAIMERS].map((x) => JSON.parse(JSON.stringify(x, (key, value: unknown) => (key === 'hi' ? undefined : value))))))
 
 describe('program pages content', () => {
   it('has all 15 programs, each with a unique slug', () => {
@@ -14,11 +20,10 @@ describe('program pages content', () => {
     expect(new Set(PROGRAM_SLUGS).size).toBe(15)
   })
 
-  it('follows the Telepathy template: 4 used-for, 4 who, 4 how, 4 FAQs, 3 related', () => {
+  it('follows the approved structure: 5 sound-like points, 5 changes, 4 FAQs, 3 related', () => {
     for (const p of PROGRAMS) {
-      expect(p.usedFor, p.slug).toHaveLength(4)
-      expect(p.who, p.slug).toHaveLength(4)
-      expect(p.how, p.slug).toHaveLength(4)
+      expect(p.soundLike, p.slug).toHaveLength(5)
+      expect(p.changes, p.slug).toHaveLength(5)
       expect(p.faqs, p.slug).toHaveLength(4)
       expect(p.related, p.slug).toHaveLength(3)
       for (const r of p.related) {
@@ -28,33 +33,49 @@ describe('program pages content', () => {
     }
   })
 
+  it('bolds the sentence that begins "What is missing" wherever the copy has one', () => {
+    for (const p of PROGRAMS) {
+      if (p.why.missing !== undefined) expect(p.why.missing.en.startsWith('What is missing'), p.slug).toBe(true)
+      expect(p.why.before.en).not.toContain('What is missing')
+    }
+  })
+
+  it('keeps the Personal Retreat place FAQ hidden until the owner sends the text', () => {
+    const faq = getProgram('personal-retreat').faqs.find((f) => f.q.en === 'Where does it happen?')
+    expect(faq?.hidden).toBe(true)
+    for (const p of PROGRAMS) for (const f of p.faqs) if (f.a.en.includes('PLACEHOLDER')) expect(f.hidden, p.slug).toBe(true)
+  })
+
   it('never says cure, treat, heal, guarantee or blindfold (outside the required disclaimers)', () => {
-    const all = strip(JSON.stringify([PROGRAMS, HUB])).toLowerCase()
+    const all = ALL_EN().toLowerCase()
     // Whole words only: "retreat" and "health" are fine.
-    for (const pattern of [/\bcur(e|es|ed|ing)\b/, /\btreat/, /\bheal(?!th)/, /\bguarantee/, /\bblindfold/, /\bpredict/]) {
+    for (const pattern of [/\bcur(e|es|ed|ing)\b/, /\btreat/, /\bheal(?!th)/, /\bguarantee/, /\bblindfold/]) {
       expect(all, String(pattern)).not.toMatch(pattern)
     }
   })
 
-  it('shows the distress line on every mind page and on Heart-Brain Coherence', () => {
+  it('shows the required disclaimers on the right pages', () => {
     for (const slug of ['stress-anxiety-support', 'mindset-coaching', 'subconscious-reprogramming', 'business-loss-mindset', 'heart-brain-coherence'] as const) {
-      expect(getProgram(slug).disclaimers).toContain('mind')
+      expect(getProgram(slug).disclaimers, slug).toEqual(['mind'])
     }
-    expect(COMMON.disclaimers.mind.en).toBe(
-      'This is not medical treatment. If you are in serious distress or have thoughts of harming yourself, please contact a doctor or a mental health professional immediately.',
+    expect(getProgram('intuition-for-traders').disclaimers).toEqual(['traders'])
+    for (const slug of ['samadhi-meditation', 'kundalini-meditation', 'astral-projection'] as const) {
+      expect(getProgram(slug).disclaimers, slug).toEqual(['foundation'])
+    }
+    expect(DISCLAIMERS.mind.en).toBe(
+      'This is coaching and mind training, not medical treatment. If you are in serious distress or have thoughts of harming yourself, please contact a doctor or a mental health professional immediately.',
     )
+    expect(DISCLAIMERS.traders.en).toBe('Mind and intuition training only. This is not financial or investment advice.')
+    expect(DISCLAIMERS.foundation.en).toBe('Taught only after the foundation level, with personal guidance at every step. Please tell Dr. Kapil about any health conditions before you start.')
   })
 
-  it('shows the trading disclaimer on the traders page', () => {
-    expect(getProgram('intuition-for-traders').disclaimers).toContain('traders')
-    expect(COMMON.disclaimers.traders.en).toBe('Mind and intuition training only. This is not financial or investment advice.')
-  })
-
-  it('says kundalini, samadhi and astral projection are taught only after the foundation level', () => {
-    for (const slug of ['kundalini-meditation', 'samadhi-meditation', 'astral-projection'] as const) {
-      const p = getProgram(slug)
-      expect(JSON.stringify([p.heroLine, p.who, p.how, p.faqs]).toLowerCase()).toContain('only after the foundation level')
-    }
+  it('uses the Clarity Session price and length from the owner: ₹1,100 · 60 minutes', () => {
+    expect(COMMON.bookButton.en).toBe('Book a Clarity Session — ₹1,100')
+    expect(CLARITY_CARD.price.en).toBe('₹1,100 · 60 minutes')
+    expect(CLARITY_CARD.note.en).toBe('Fully adjusted in your fee if you join a program within 7 days.')
+    const all = ALL_EN()
+    expect(all).not.toContain('2,100')
+    expect(all).not.toMatch(/\b75\b/)
   })
 
   it('uses the experience line from the owner', () => {

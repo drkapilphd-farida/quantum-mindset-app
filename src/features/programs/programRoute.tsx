@@ -27,7 +27,7 @@ export async function ProgramRoute({ slug, searchParams }: { slug: ProgramSlug }
   const lang = langFromParam((await searchParams).lang) ?? 'en'
   const p = getProgram(slug)
   const faqSchema = buildFaqPageSchema(p.faqs.map((f) => ({ question: say(f.q, lang), answer: say(f.a, lang) })))
-  const serviceSchema = buildServiceSchema({ name: say(p.h1, lang), description: say(p.seoDescription, lang), path: `/${slug}`, inLanguage: lang })
+  const serviceSchema = buildServiceSchema({ name: say(p.seoTitle, lang).replace(/ \| (Mind Ur Mind|मन उर मन)$/, ''), description: say(p.seoDescription, lang), path: `/${slug}`, inLanguage: lang })
   return (
     <ProgramsShell lang={lang} path={`/${slug}`} ctaHref={bookingHref(slug, lang)} ctaLabel={say(COMMON.bookButton, lang)} schemas={[faqSchema, serviceSchema]}>
       <ProgramPage program={p} lang={lang} />
@@ -37,5 +37,5 @@ export async function ProgramRoute({ slug, searchParams }: { slug: ProgramSlug }
 
 /** Placeholder share image (text only) until designed images arrive. */
 export function programOgImage(slug: ProgramSlug): ReturnType<typeof buildOgImageResponse> {
-  return buildOgImageResponse({ eyebrow: 'Mind Ur Mind · 1-on-1 with Dr. Kapil', heading: getProgram(slug).h1.en })
+  return buildOgImageResponse({ eyebrow: 'Mind Ur Mind · 1-on-1 with Dr. Kapil', heading: getProgram(slug).seoTitle.en.replace(/ \| Mind Ur Mind$/, '') })
 }
