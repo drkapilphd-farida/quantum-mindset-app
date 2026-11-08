@@ -5,6 +5,7 @@ import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
 import { SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 import SharpBrainNav from '@/components/sharp-brain/SharpBrainNav'
 import { SharpBrainFinal, SharpBrainProof, SharpBrainReviewsHero, SharpBrainStickyBar } from '@/components/sharp-brain/SharpBrainSections'
+import { ReviewsPersonalSessions, ReviewsTabs } from '@/features/programs/components/ReviewsPersonalSessions'
 import Footer from '@/components/Footer'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 
@@ -30,8 +31,11 @@ export default function ReviewsPage(): React.JSX.Element {
       <SharpBrainPricingProvider initial={pricingSnapshot(Date.now())}>
         <SharpBrainNav />
         <main>
+          <ReviewsTabs />
           <SharpBrainReviewsHero />
           <SharpBrainProof />
+          {/* Owner (Nov 2026): Personal Sessions reviews, separate from Sharp Brain. */}
+          <ReviewsPersonalSessions />
           <SharpBrainFinal />
         </main>
         <Footer />

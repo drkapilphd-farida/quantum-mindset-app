@@ -8,6 +8,7 @@ import { HubBookingForm, HubBookingProvider, HubPrograms, HubQuiz } from "./HubI
 import { HeroMedia, VideoCard } from "./Media";
 import { StickyBookBar } from "./StickyBookBar";
 import { ClarityCardContent, WhatYouGetSection } from "./SharedBlocks";
+import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
 
 // /personal-sessions — built from design-personal-sessions-hub.html (owner,
 // Nov 2026): same section order, text, colours, sizes and spacing.
@@ -118,7 +119,7 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
               <VideoCard key={v.id} id={v.id} title={say(v.title, lang)} playLabel={say(COMMON.playVideo, lang)} />
             ))}
           </div>
-          <a href="/reviews" className="text-[17px] font-extrabold text-[#1F3A8A] hover:text-[#152a66]">
+          <a href={PERSONAL_SESSIONS_REVIEWS_HREF} className="text-[17px] font-extrabold text-[#1F3A8A] hover:text-[#152a66]" data-see-all-reviews>
             {say(HUB.proof.all, lang)}
           </a>
         </div>

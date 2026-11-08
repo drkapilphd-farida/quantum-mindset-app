@@ -2,6 +2,9 @@
 
 import { createContext, useContext, useState } from "react";
 import { normalizeIndianMobile } from "@/lib/phone/indianMobile";
+import { waLink } from "@/data/links";
+import { cancelWhatsAppHandoff, finishWhatsAppHandoff, openPendingWhatsAppTab } from "@/lib/whatsapp/handoff";
+import { clarityRequestMessage } from "@/lib/whatsapp/leadMessages";
 import { submitSessionEnquiry } from "@/app/personal-sessions/actions/submitSessionEnquiry";
 import { GROUPS, say } from "../common";
 import { HUB, QUIZ_NAMES, QUIZ_RESULTS, type ChipId, type Q1, type Q2 } from "../hubCopy";
@@ -156,12 +159,20 @@ export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: st
       setError(say(c.phoneError, lang));
       return;
     }
+    // Opened during the tap (phones block it later); pointed at WhatsApp once saved.
+    const tab = openPendingWhatsAppTab();
     setPending(true);
     setError(null);
     const result = await submitSessionEnquiry({ ...form, program, source });
     setPending(false);
-    if (result.success) setSent(true);
-    else setError(result.error);
+    if (result.success) {
+      const programName = program === "" || program === "not-sure" ? say(c.notSure, "en") : getProgram(program as ProgramSlug).name.en;
+      finishWhatsAppHandoff(tab, waLink(clarityRequestMessage({ programName, name: form.name, phone: form.phone, city: form.city, change: form.change })));
+      setSent(true);
+    } else {
+      cancelWhatsAppHandoff(tab);
+      setError(result.error);
+    }
   }
 
   return (

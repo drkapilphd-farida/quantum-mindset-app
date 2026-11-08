@@ -6,6 +6,8 @@ import { Faq } from "./Faq";
 import { HeroMedia, ShortsRow, VideoCard } from "./Media";
 import { ClarityCardSection, JourneySection, QuoteSection, WhatYouGetSection } from "./SharedBlocks";
 import { StickyBookBar } from "./StickyBookBar";
+import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
+import { HUB } from "../hubCopy";
 
 // Program page — 10 sections in the owner's order (strict copy brief,
 // Nov 8 2026), design tokens from the earlier design brief:
@@ -142,6 +144,9 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
               ))}
             </div>
             <ShortsRow ids={p.shorts} playLabel={say(COMMON.playVideo, lang)} />
+            <a href={PERSONAL_SESSIONS_REVIEWS_HREF} className="text-[17px] font-extrabold text-[#1F3A8A] hover:text-[#152a66]" data-see-all-reviews>
+              {say(HUB.proof.all, lang)}
+            </a>
           </div>
         </section>
       )}
