@@ -2411,6 +2411,39 @@ export type Database = {
         }
         Relationships: []
       }
+      progress_transfers: {
+        Row: {
+          created_at: string
+          from_email: string
+          from_user_id: string | null
+          id: string
+          summary: Json
+          to_email: string
+          to_user_id: string | null
+          transferred_by: string
+        }
+        Insert: {
+          created_at?: string
+          from_email: string
+          from_user_id?: string | null
+          id?: string
+          summary?: Json
+          to_email: string
+          to_user_id?: string | null
+          transferred_by: string
+        }
+        Update: {
+          created_at?: string
+          from_email?: string
+          from_user_id?: string | null
+          id?: string
+          summary?: Json
+          to_email?: string
+          to_user_id?: string | null
+          transferred_by?: string
+        }
+        Relationships: []
+      }
       qsr_reading_assessments: {
         Row: {
           content_lang: string
@@ -3515,6 +3548,10 @@ export type Database = {
       shares_school_with: {
         Args: { p_target_user_id: string }
         Returns: boolean
+      }
+      transfer_learner_progress: {
+        Args: { p_from: string; p_to: string; p_by: string; p_from_email: string; p_to_email: string }
+        Returns: Json
       }
       user_id_by_email: { Args: { p_email: string }; Returns: string }
       verify_certificate: {
