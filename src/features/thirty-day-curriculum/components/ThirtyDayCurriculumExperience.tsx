@@ -223,6 +223,12 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
       if (result.day === 1) setOfferReminders(true)
       // Clears pre-loaded pages, so the dashboard shows today as done.
       router.refresh()
+    } else {
+      // Never show "Completed" here while the plan stays locked: re-read the
+      // server list, which records a saved test day (dayRules.ts).
+      const records = await getCurriculumDayCompletions().catch(() => null)
+      if (records !== null) setServerCompletedDays(records.map((record) => record.day))
+      router.refresh()
     }
     setProgress(loadCurriculumProgress())
     setView('day-detail')

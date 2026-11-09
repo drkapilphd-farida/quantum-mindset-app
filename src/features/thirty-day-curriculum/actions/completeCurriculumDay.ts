@@ -6,7 +6,8 @@ import { getIsPaidUser } from '@/lib/subscription/getIsPaidUser'
 import { logger } from '@/lib/logger'
 import { createServiceClient } from '@/lib/supabase/service'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
-import { paceVerdict } from '../paceControl'
+import { CHECKPOINT_DAYS, missingRequiredSteps } from '../dayRules'
+import { getCurriculumDayCompletions } from './getCurriculumDayCompletions'
 
 export type CompleteCurriculumDayInput = {
   day: number
@@ -20,10 +21,10 @@ export type CompleteCurriculumDayInput = {
 export type CompleteCurriculumDayResult =
   | { ok: true; completedDays: readonly number[]; paced: boolean }
   | { ok: false; reason: 'unauthenticated' | 'invalid_day' | 'not_pro' | 'previous_day_incomplete' | 'db_error' }
-  // Pace control (Phase 3, item 4): the day isn't open yet, a step is
-  // missing, or there's been less than about 10 minutes of practice.
-  | { ok: false; reason: 'not_yet_open'; opensAt: string }
+  // A required step is still missing (dayRules.ts). The other two are no
+  // longer returned (founder rule, 9 Nov 2026) and stay only for old clients.
   | { ok: false; reason: 'steps_incomplete'; missing: string[] }
+  | { ok: false; reason: 'not_yet_open'; opensAt: string }
   | { ok: false; reason: 'needs_more_practice'; activeSeconds: number }
 
 // The one real write path into `curriculum_day_completions` (see the
@@ -63,17 +64,9 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
 
     if (!user) return { ok: false, reason: 'unauthenticated' }
 
-    const { data: existingRows, error: readError } = await supabase
-      .from('curriculum_day_completions')
-      .select('day, completed_at')
-      .eq('user_id', user.id)
-
-    if (readError) {
-      logger.error('completeCurriculumDay: failed to read existing completions', { error: readError, userId: user.id })
-      return { ok: false, reason: 'db_error' }
-    }
-
-    const completedDaysBefore = (existingRows ?? []).map((row) => row.day)
+    // Same list every page reads (finished-but-unrecorded days included).
+    const existingRows = await getCurriculumDayCompletions()
+    const completedDaysBefore = existingRows.map((row) => row.day)
     const alreadyCompleted = completedDaysBefore.includes(input.day)
 
     // A completion is written once and never changed: replaying a completed
@@ -91,32 +84,15 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
     // Pace control: one new day per calendar day (midnight IST, only after a
     // day completed under pace control), all of the day's steps, and about
     // 10 minutes of active practice — all checked here, on the server.
-    const [{ data: activityRows }, { data: paceSetting }] = await Promise.all([
-      supabase.from('curriculum_day_activity').select('day, active_seconds, steps_done, paced, short_attempts').eq('user_id', user.id).in('day', [input.day, input.day - 1]),
-      supabase.from('curriculum_pace_settings').select('pace_off').eq('user_id', user.id).maybeSingle(),
-    ])
-    const paceOff = paceSetting?.pace_off === true
-    const today = (activityRows ?? []).find((r) => r.day === input.day)
-    const previousActivity = (activityRows ?? []).find((r) => r.day === input.day - 1)
-    const previousCompletion = (existingRows ?? []).find((row) => row.day === input.day - 1)
-    const verdict = paceVerdict({
-      day: input.day,
-      paceOff,
-      prev: previousCompletion ? { completedAt: previousCompletion.completed_at, paced: previousActivity?.paced === true } : null,
-      activeSeconds: today?.active_seconds ?? 0,
-      stepsDone: today?.steps_done ?? [],
-      nowMs: Date.now(),
-    })
-    const service = createServiceClient()
-    if (!verdict.ok) {
-      if (verdict.reason === 'needs_more_practice') {
-        // Counted for the founder's two-week report ("a few more minutes" shown).
-        await service
-          .from('curriculum_day_activity')
-          .upsert({ user_id: user.id, day: input.day, short_attempts: (today?.short_attempts ?? 0) + 1, updated_at: new Date().toISOString() }, { onConflict: 'user_id,day' })
-      }
-      return verdict
+    // The one rule (dayRules.ts): a test day is completed by its reading
+    // test; any other day once its required steps are done. No minimum time,
+    // no midnight wait, no batch or date.
+    const { data: today } = await supabase.from('curriculum_day_activity').select('active_seconds, steps_done').eq('user_id', user.id).eq('day', input.day).maybeSingle()
+    if (!CHECKPOINT_DAYS.has(input.day)) {
+      const missing = missingRequiredSteps(input.day, today?.steps_done ?? [])
+      if (missing.length > 0) return { ok: false, reason: 'steps_incomplete', missing }
     }
+    const service = createServiceClient()
 
     const { error: writeError } = await supabase.from('curriculum_day_completions').insert({
       user_id: user.id,
@@ -138,10 +114,10 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
     // Only a completion under pace control makes the next day wait for midnight.
     await service
       .from('curriculum_day_activity')
-      .upsert({ user_id: user.id, day: input.day, paced: !paceOff, completed_active_seconds: today?.active_seconds ?? 0, updated_at: new Date().toISOString() }, { onConflict: 'user_id,day' })
+      .upsert({ user_id: user.id, day: input.day, paced: false, completed_active_seconds: today?.active_seconds ?? 0, updated_at: new Date().toISOString() }, { onConflict: 'user_id,day' })
 
     const completedDays = [...completedDaysBefore, input.day].sort((a, b) => a - b)
-    return { ok: true, completedDays, paced: !paceOff }
+    return { ok: true, completedDays, paced: false }
   } catch (error) {
     logger.error('completeCurriculumDay: unexpected failure', { error, day: input.day })
     return { ok: false, reason: 'db_error' }

@@ -2,10 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { dayTitle, categoryLabel, exerciseTitle } from '@/lib/app-i18n/curriculumText'
-import { useAppT, useUiLang } from '@/lib/app-i18n/client'
-import { LANGUAGES } from '@/lib/app-i18n/languages'
+import { useAppT } from '@/lib/app-i18n/client'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, Clock, Sparkles, Undo2, X } from 'lucide-react'
+import { ArrowRight, Sparkles, Undo2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getCurriculumExerciseById, type CurriculumCatalogExercise } from '../curriculumExerciseCatalog'
 import { buildCurriculumDayPlan, doneStepIds, isCheckpointDay } from '../curriculumDatabase'
@@ -18,7 +17,7 @@ import { getEmbeddableComponent } from '../curriculumExerciseComponentRegistry'
 import { markCurriculumDayComplete } from '../curriculumProgress'
 import { completeCurriculumDay, type CompleteCurriculumDayResult } from '../actions/completeCurriculumDay'
 import { getDayPace, recordStepDone, type DayPace } from '../actions/paceActions'
-import { AUDIO_GUIDED_STEPS, doLater, formatPracticeTime, nextIstMidnight, PACE_REQUIRED_SECONDS } from '../paceControl'
+import { AUDIO_GUIDED_STEPS, doLater, formatPracticeTime, PACE_REQUIRED_SECONDS } from '../paceControl'
 import { usePracticeHeartbeat } from '../usePracticeHeartbeat'
 import { recordCurriculumDayPractice } from '../actions/curriculumDayPractice'
 import { CurriculumDayProvider, EmbeddedExerciseProvider } from '../embeddedExerciseContext'
@@ -97,10 +96,8 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
   const stepIndex = order === null ? null : (order[0] ?? -1)
   const [doneIds, setDoneIds] = useState<ReadonlySet<string>>(new Set())
   const [pace, setPace] = useState<DayPace | null>(null)
-  const [nextOpensAt, setNextOpensAt] = useState<string | null>(null)
   const [extraIndex, setExtraIndex] = useState<number | null>(null)
   const lastStepSave = useRef<Promise<unknown>>(Promise.resolve())
-  const htmlLang = LANGUAGES[useUiLang()].htmlLang
   const [mode, setMode] = useState<WizardMode>('playing')
   // The optional eye break is offered once before each reading step.
   const [eyeBreakDoneFor, setEyeBreakDoneFor] = useState<number | null>(null)
@@ -189,7 +186,8 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
     (currentId !== undefined && AUDIO_GUIDED_STEPS.has(currentId)) || pendingPalace !== null || sameDayPalace !== null,
     pace?.activeSeconds ?? 0,
   )
-  const enoughPractice = pace?.paceOff === true || practiceSeconds >= PACE_REQUIRED_SECONDS
+  // Founder rule (9 Nov 2026): no minimum practice time — finishing the steps finishes the day.
+  const enoughPractice = true
 
   // See this component's own doc comment — makes even an embedded
   // exercise's own internal Exit/Escape affordance land back on this
@@ -205,7 +203,6 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
       markCurriculumDayComplete(day)
       // Clears pre-loaded pages, so the dashboard and plan show today as done.
       router.refresh()
-      setNextOpensAt(res.paced && day < 30 ? nextIstMidnight(new Date().toISOString()) : null)
       setMode('celebrating')
       return
     }
@@ -377,12 +374,6 @@ export function DayMasterPlayer({ day, onExitToRoadmap, onDayComplete, onReadyFo
         ) : (
           <div className="flex max-w-sm flex-col items-center gap-2">
             <p className="text-base font-bold text-foreground" data-practice-complete="true">{t('training.play.todayComplete')}</p>
-            {nextOpensAt !== null && (
-              <p className="flex w-fit items-center gap-2 rounded-xl bg-muted px-3 py-2 text-sm text-foreground" data-next-day-opens={nextOpensAt}>
-                <Clock className="size-4 text-muted-foreground" aria-hidden="true" />
-                {t('curriculum.pace.opensAt', { time: formatOpenTime(nextOpensAt, htmlLang), date: formatOpenDate(nextOpensAt, htmlLang) })}
-              </p>
-            )}
           </div>
         )}
         <Button onClick={onDayComplete} size="lg" className="btn-finish relative min-h-12 w-full max-w-sm rounded-2xl" data-continue-to-roadmap="true">
@@ -568,16 +559,6 @@ function GatedStepHandoff({
       </Button>
     </div>
   )
-}
-
-const IST = 'Asia/Kolkata'
-/** "12:00 am" in the learner's language, India time. */
-function formatOpenTime(iso: string, htmlLang: string): string {
-  return new Intl.DateTimeFormat(`${htmlLang}-IN-u-nu-latn`, { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: IST }).format(new Date(iso))
-}
-/** "Fri, 16 Oct" in the learner's language, India time. */
-function formatOpenDate(iso: string, htmlLang: string): string {
-  return new Intl.DateTimeFormat(`${htmlLang}-IN-u-nu-latn`, { weekday: 'short', day: 'numeric', month: 'short', timeZone: IST }).format(new Date(iso))
 }
 
 /** Practice time so far, against about 10 minutes. */

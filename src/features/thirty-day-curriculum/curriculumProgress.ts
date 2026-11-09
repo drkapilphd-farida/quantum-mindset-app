@@ -15,6 +15,7 @@
 // deliberately opts in via NEXT_PUBLIC_DEV_UNLOCK; production users keep
 // the real sequential gate.
 import { loadBestColorSceneTransformationStats } from '@/features/color-scene-transformation/colorSceneTransformationLocalHistory'
+import { isDayUnlocked } from './dayRules'
 import type { AppLang } from '@/lib/app-i18n/languages'
 import { sameContentLang } from '@/lib/app-i18n/practiceContent'
 import { loadBestFluidEnergyBalancerStats } from '@/features/fluid-energy-balancer/fluidEnergyBalancerLocalHistory'
@@ -169,15 +170,10 @@ function saveCurriculumProgress(progress: CurriculumProgress): void {
 // localStorage is still written on every completion (markCurriculumDayComplete/
 // recordCurriculumCheckpoint) purely as an optimistic UI cache/analytics
 // source (streaks, checkpoint deltas, brain score) — never consulted here.
-export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readonly number[], isPro: boolean, nextDayOpensAt: string | null = null, nowMs: number = Date.now()): boolean {
+export function isCurriculumDayUnlocked(day: number, serverCompletedDays: readonly number[], isPro: boolean, _nextDayOpensAt: string | null = null, _nowMs: number = Date.now()): boolean {
   if (isDevUnlockEnabled()) return true
-  if (serverCompletedDays.includes(day)) return true
-  // No free days: app practice is for enrolled learners only.
-  if (!isPro) return false
-  if (day === 1) return true
-  if (!serverCompletedDays.includes(day - 1)) return false
-  // Pace control: the next day waits for midnight IST (null = open now).
-  return nextDayOpensAt === null || nowMs >= Date.parse(nextDayOpensAt)
+  // Founder rule (9 Nov 2026): progress only — no midnight wait, batch or date (dayRules.ts).
+  return isDayUnlocked(day, serverCompletedDays, isPro)
 }
 
 /**
@@ -191,7 +187,7 @@ export type CurriculumDayAccess = 'open' | 'needs_enrolment' | 'finish_previous'
 export function curriculumDayAccess(day: number, serverCompletedDays: readonly number[], isPro: boolean, nextDayOpensAt: string | null = null, nowMs: number = Date.now()): CurriculumDayAccess {
   if (isCurriculumDayUnlocked(day, serverCompletedDays, isPro, nextDayOpensAt, nowMs)) return 'open'
   if (!isPro) return 'needs_enrolment'
-  return serverCompletedDays.includes(day - 1) ? 'opens_later' : 'finish_previous'
+  return 'finish_previous'
 }
 
 // The highest day the learner has progressed to by real completion —

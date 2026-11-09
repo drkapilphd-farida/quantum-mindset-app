@@ -6,7 +6,6 @@ import { getAppMessages } from '@/lib/app-i18n/server'
 import { createTranslator } from '@/lib/app-i18n/translate'
 import { ENGLISH } from '@/lib/app-i18n/catalog'
 import { isAppLang } from '@/lib/app-i18n/languages'
-import { dayOpensAt } from '@/features/thirty-day-curriculum/paceControl'
 import { CLASS_TOPICS_EN, isClassNumber } from '@/features/live-classes/liveClasses'
 import { isReminderTime, istDateKey, practiceWaiting, reminderKind, startsTomorrow, todayStatus, type ReminderKind } from './reminders'
 
@@ -56,25 +55,21 @@ export async function sendDueReminders(nowMs: number = Date.now()): Promise<RunS
 type Db = ReturnType<typeof createServiceClient>
 
 async function remindOne(db: Db, uid: string, today: string, nowMs: number): Promise<'sent' | 'failed' | 'skipped'> {
-  const [{ data: subs }, { data: completions }, { data: profile }, { data: pace }, { data: regs }] = await Promise.all([
+  const [{ data: subs }, { data: completions }, { data: profile }, { data: regs }] = await Promise.all([
     db.from('push_subscriptions').select('id, endpoint, p256dh, auth, failed_count').eq('user_id', uid),
     db.from('curriculum_day_completions').select('day, completed_at').eq('user_id', uid),
     db.from('profiles').select('preferred_language').eq('id', uid).maybeSingle(),
-    db.from('curriculum_pace_settings').select('pace_off').eq('user_id', uid).maybeSingle(),
     db.from('live_class_registrations').select('session_id, live_class_sessions(class_number, topic_override, starts_at, status)').eq('user_id', uid).is('cancelled_at', null),
   ])
   if (!subs || subs.length === 0) return 'skipped'
   // The job has no signed-in learner: check enrolment with the service client.
   if (!(await getIsPaidUser(uid, db))) return 'skipped'
 
-  // Today's status, with the same midnight rule as the app (pace control).
+  // Today's status. Days open on progress only (no midnight wait), so a
+  // learner who already completed a day today is not nudged again.
   const list = (completions ?? []).map((c) => ({ day: c.day, completedAt: c.completed_at }))
-  const last = list.reduce<(typeof list)[number] | null>((a, b) => (a === null || b.day > a.day ? b : a), null)
-  let opensAt: string | null = null
-  if (last !== null && last.day < 30) {
-    const { data: activity } = await db.from('curriculum_day_activity').select('paced').eq('user_id', uid).eq('day', last.day).maybeSingle()
-    opensAt = dayOpensAt({ completedAt: last.completedAt, paced: activity?.paced === true }, pace?.pace_off === true)
-  }
+  if (list.some((c) => istDateKey(Date.parse(c.completedAt)) === today)) return 'skipped'
+  const opensAt: string | null = null
   const status = todayStatus(list, opensAt, nowMs)
   if (!practiceWaiting(status)) return 'skipped'
 

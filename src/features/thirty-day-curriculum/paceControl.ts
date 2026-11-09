@@ -30,13 +30,12 @@ export function nextIstMidnight(iso: string): string {
 }
 
 /**
- * When the day after `prev` opens: null = open now. Only a completion made
- * under pace control makes the next day wait for midnight, so every day that
- * was completed or open before launch stays open.
+ * When the day after `prev` opens: always now. Founder rule (9 Nov 2026):
+ * the next day opens the moment a day is completed — no midnight wait.
+ * Kept so callers (reminders, plan page) need no special case.
  */
-export function dayOpensAt(prev: { completedAt: string; paced: boolean } | null, paceOff: boolean): string | null {
-  if (prev === null || paceOff || !prev.paced) return null
-  return nextIstMidnight(prev.completedAt)
+export function dayOpensAt(_prev: { completedAt: string; paced: boolean } | null, _paceOff: boolean): string | null {
+  return null
 }
 
 /** Seconds a heartbeat adds: the time since the last one, capped; nothing after a long gap. */
@@ -56,30 +55,6 @@ export function dayStepIds(day: number): readonly string[] {
 export function missingSteps(day: number, done: readonly string[]): string[] {
   const finished = doneStepIds(day, done)
   return dayStepIds(day).filter((id) => !finished.has(id))
-}
-
-export type PaceVerdict =
-  | { ok: true }
-  | { ok: false; reason: 'not_yet_open'; opensAt: string }
-  | { ok: false; reason: 'steps_incomplete'; missing: string[] }
-  | { ok: false; reason: 'needs_more_practice'; activeSeconds: number }
-
-/** Whether a day may be completed now (the previous day's order is checked separately). */
-export function paceVerdict(input: {
-  day: number
-  paceOff: boolean
-  prev: { completedAt: string; paced: boolean } | null
-  activeSeconds: number
-  stepsDone: readonly string[]
-  nowMs: number
-}): PaceVerdict {
-  if (input.paceOff) return { ok: true }
-  const opensAt = dayOpensAt(input.prev, false)
-  if (opensAt !== null && input.nowMs < Date.parse(opensAt)) return { ok: false, reason: 'not_yet_open', opensAt }
-  const missing = missingSteps(input.day, input.stepsDone)
-  if (missing.length > 0) return { ok: false, reason: 'steps_incomplete', missing }
-  if (input.activeSeconds < PACE_REQUIRED_SECONDS) return { ok: false, reason: 'needs_more_practice', activeSeconds: input.activeSeconds }
-  return { ok: true }
 }
 
 /** "Do this later": the current step moves to the end of what's left. */
