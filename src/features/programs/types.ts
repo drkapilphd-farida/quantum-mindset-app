@@ -22,8 +22,6 @@ export type ProgramSlug =
   | 'astral-projection'
   | 'personal-retreat'
 
-export type VideoCard = { id: string; title: Bi }
-
 /** Small paragraph under the FAQ (from the approved copy). */
 export type Disclaimer = 'mind' | 'traders' | 'foundation'
 
@@ -49,9 +47,7 @@ export type Program = {
   faqTopic: Bi
   faqs: Faq[]
   related: [ProgramSlug, ProgramSlug, ProgramSlug]
-  /** Review videos (16:9). Hero shows the first; empty → hero shows the photo, reviews section hidden. */
-  videos: VideoCard[]
-  /** YouTube Shorts (9:16) for the sideways row under the cards. */
-  shorts: string[]
+  /** Review video IDs (reviewVideos.ts): first 3 = large cards, the rest = sideways row. Hero shows the first; none → photo, section hidden. */
+  reviews: string[]
   disclaimers: Disclaimer[]
 }

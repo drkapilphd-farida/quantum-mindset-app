@@ -5,7 +5,8 @@ import { bookingHref } from "../programs";
 import type { ProgramLang, ProgramSlug } from "../types";
 import { Faq } from "./Faq";
 import { HubBookingForm, HubBookingProvider, HubPrograms, HubQuiz } from "./HubInteractive";
-import { HeroMedia, VideoCard } from "./Media";
+import { HeroMedia, ReviewStrip } from "./Media";
+import { HUB_REVIEWS } from "../reviewVideos";
 import { StickyBookBar } from "./StickyBookBar";
 import { ClarityCardContent, WhatYouGetSection } from "./SharedBlocks";
 import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
@@ -44,7 +45,7 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
           </div>
           <div className="min-w-0 flex-[1_1_400px]">
             {/* Owner: the intro video is not ready — the box shows the photo as its poster. */}
-            <HeroMedia videoId={null} photoSrc={PHOTO} photoAlt={say(COMMON.photoAlt, lang)} playLabel={say(h.videoAria, lang)} caption={say(h.videoTitle, lang)} />
+            <HeroMedia videoId={null} photoSrc={PHOTO} photoAlt={say(COMMON.photoAlt, lang)} lang={lang} caption={say(h.videoTitle, lang)} />
           </div>
         </div>
         <div className={`${wrap} mt-12 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4`}>
@@ -114,11 +115,7 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
             <h2 className={h2}>{say(HUB.proof.title, lang)}</h2>
             <p className="mt-1.5 text-[19px] text-[#4A5568]">{say(HUB.proof.sub, lang)}</p>
           </div>
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
-            {HUB.proof.videos.map((v) => (
-              <VideoCard key={v.id} id={v.id} title={say(v.title, lang)} playLabel={say(COMMON.playVideo, lang)} />
-            ))}
-          </div>
+          <ReviewStrip ids={HUB_REVIEWS} lang={lang} />
           <a href={PERSONAL_SESSIONS_REVIEWS_HREF} className="text-[17px] font-extrabold text-[#1F3A8A] hover:text-[#152a66]" data-see-all-reviews>
             {say(HUB.proof.all, lang)}
           </a>

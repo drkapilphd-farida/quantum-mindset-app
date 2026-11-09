@@ -113,11 +113,7 @@ export const HUB = {
   proof: {
     title: { en: 'What people experienced', hi: 'लोगों के अनुभव' },
     sub: { en: 'Real participants, in their own words.', hi: 'असली प्रतिभागी, उनके अपने शब्दों में।' },
-    videos: [
-      { id: 'pRG3sdsXiHM', title: { en: 'Telepathy & Mind Reading', hi: 'टेलीपैथी और माइंड रीडिंग' } },
-      { id: 'WZMSSuRTr78', title: { en: 'Cosmic Fusion', hi: 'कॉस्मिक फ्यूज़न' } },
-      { id: 'ZyD_iQTOR60', title: { en: '7-Day Retreat', hi: '7 दिन का रिट्रीट' } },
-    ],
+    // Videos: HUB_REVIEWS in reviewVideos.ts (owner's reviews brief).
     all: { en: 'See all reviews →', hi: 'सारे रिव्यू देखिए →' },
   },
   about: {

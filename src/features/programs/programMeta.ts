@@ -1,11 +1,10 @@
-import { SHORT_REVIEW_VIDEOS } from '@/config/telepathyWorkshopConfig'
-import type { Bi, GroupId, ProgramSlug, VideoCard } from './types'
+import type { Bi, GroupId, ProgramSlug } from './types'
 
 // Per-program facts that the new copy does not change: card name and line,
 // Google title and description (search words, owner Nov 2026), FAQ heading
-// topic, and the review videos.
+// topic. Review videos: reviewVideos.ts.
 
-export type ProgramMeta = { slug: ProgramSlug; group: GroupId; name: Bi; line: Bi; seoTitle: Bi; seoDescription: Bi; faqTopic: Bi; videos: VideoCard[]; shorts: string[] }
+export type ProgramMeta = { slug: ProgramSlug; group: GroupId; name: Bi; line: Bi; seoTitle: Bi; seoDescription: Bi; faqTopic: Bi }
 
 export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
   'stress-anxiety-support': {
@@ -16,8 +15,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Stress, Anxiety & Panic Attack Support — 1-on-1 Coaching with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "तनाव, एंग्ज़ायटी और पैनिक अटैक में सपोर्ट — डॉ. कपिल देव शर्मा के साथ 1-on-1 कोचिंग | मन उर मन" },
     seoDescription: { en: "Support and coaching for stress, anxiety, panic attacks and low mood, alongside medical care where needed. The approach is chosen for each person.", hi: "तनाव, एंग्ज़ायटी, पैनिक अटैक और उदासी में सपोर्ट और कोचिंग, ज़रूरत हो तो मेडिकल देखभाल के साथ। तरीका हर व्यक्ति के लिए अलग चुना जाता है।" },
     faqTopic: { en: "stress and anxiety support", hi: "तनाव और एंग्ज़ायटी सपोर्ट" },
-    videos: [],
-    shorts: [],
   },
   'mindset-coaching': {
     slug: 'mindset-coaching',
@@ -27,8 +24,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Mindset Coaching — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "माइंडसेट कोचिंग — डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "1-on-1 coaching to build a stronger, clearer mindset for life and work. Start with a Clarity Session.", hi: "ज़िंदगी और काम के लिए मज़बूत, साफ़ माइंडसेट बनाने की 1-on-1 कोचिंग। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "mindset coaching", hi: "माइंडसेट कोचिंग" },
-    videos: [],
-    shorts: [],
   },
   'subconscious-reprogramming': {
     slug: 'subconscious-reprogramming',
@@ -38,8 +33,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Subconscious Reprogramming — 1-on-1 Coaching with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "सबकॉन्शियस माइंड रीप्रोग्रामिंग — डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "1-on-1 coaching to change old inner patterns and beliefs that hold you back. Start with a Clarity Session.", hi: "उन पुराने अंदरूनी पैटर्न और मान्यताओं को बदलने की 1-on-1 कोचिंग जो आपको रोकती हैं। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "subconscious reprogramming", hi: "सबकॉन्शियस रीप्रोग्रामिंग" },
-    videos: [],
-    shorts: [],
   },
   'business-loss-mindset': {
     slug: 'business-loss-mindset',
@@ -49,8 +42,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Mindset After a Business Loss — 1-on-1 Coaching with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "बिज़नेस में नुकसान के बाद माइंडसेट — डॉ. कपिल देव शर्मा के साथ 1-on-1 कोचिंग | मन उर मन" },
     seoDescription: { en: "1-on-1 coaching to rebuild confidence, clarity and decision-making after a financial or business setback.", hi: "आर्थिक या बिज़नेस झटके के बाद आत्मविश्वास, साफ़ी और फ़ैसले लेने की क्षमता फिर से बनाने की 1-on-1 कोचिंग।" },
     faqTopic: { en: "mindset after a business loss", hi: "बिज़नेस नुकसान के बाद माइंडसेट" },
-    videos: [],
-    shorts: [],
   },
   'telepathy': {
     slug: 'telepathy',
@@ -60,8 +51,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Learn Telepathy — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "टेलीपैथी कैसे सीखें — डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Learn telepathy 1-on-1: share your feelings and intentions, deepen your relationships and build a spiritual connection — taught through Kriya Yoga and prana. Start with a Clarity Session.", hi: "टेलीपैथी 1-on-1 सीखिए: अपनी भावनाएँ और इरादे साझा कीजिए, रिश्ते गहरे कीजिए और आध्यात्मिक जुड़ाव बनाइए — क्रिया योग और प्राण के ज़रिए। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "telepathy", hi: "टेलीपैथी" },
-    videos: [{ id: "pRG3sdsXiHM", title: { en: "Telepathy & Mind Reading — Colombo", hi: "टेलीपैथी और माइंड रीडिंग — कोलंबो" } }, { id: "l_3qAC_pgPI", title: { en: "Online Telepathy review", hi: "ऑनलाइन टेलीपैथी रिव्यू" } }, { id: "iEpjmpMe4qw", title: { en: "Participant experience", hi: "प्रतिभागी का अनुभव" } }],
-    shorts: [...SHORT_REVIEW_VIDEOS],
   },
   'heart-brain-coherence': {
     slug: 'heart-brain-coherence',
@@ -71,8 +60,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Heart-Brain Coherence — 1-on-1 Practice with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "हार्ट-ब्रेन कोहेरेंस — डॉ. कपिल देव शर्मा के साथ 1-on-1 अभ्यास | मन उर मन" },
     seoDescription: { en: "A practice for people who live with fear or constant tension, to reach a calm, steady state — taught 1-on-1. Start with a Clarity Session.", hi: "उन लोगों के लिए अभ्यास जो डर या लगातार तनाव में रहते हैं — शांत, स्थिर अवस्था तक पहुँचने के लिए, 1-on-1। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "heart-brain coherence", hi: "हार्ट-ब्रेन कोहेरेंस" },
-    videos: [],
-    shorts: [],
   },
   'manifestation': {
     slug: 'manifestation',
@@ -82,8 +69,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Manifestation Practice — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "मैनिफ़ेस्टेशन कैसे करें — डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Work with intention, telepathy and Cosmic Fusion to bring clarity and focus to what you want to create in life — taught 1-on-1.", hi: "इरादे, टेलीपैथी और कॉस्मिक फ्यूज़न के साथ काम कीजिए, ताकि ज़िंदगी में जो बनाना चाहते हैं उस पर साफ़ी और फ़ोकस आए — 1-on-1।" },
     faqTopic: { en: "manifestation", hi: "मैनिफ़ेस्टेशन" },
-    videos: [{ id: "WZMSSuRTr78", title: { en: "Cosmic Fusion — workshop review", hi: "कॉस्मिक फ्यूज़न — वर्कशॉप रिव्यू" } }],
-    shorts: [],
   },
   'intuition-for-traders': {
     slug: 'intuition-for-traders',
@@ -93,8 +78,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Intuition Training for Traders — 1-on-1 Mind Coaching with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "ट्रेडर्स के लिए इनट्यूशन ट्रेनिंग — डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Clarity in decisions, control over fear and greed, and intuition practice for entry and exit — paper trading first. Mind training only, not investment advice.", hi: "फ़ैसलों में साफ़ी, डर और लालच पर काबू, और एंट्री-एग्ज़िट के लिए इनट्यूशन का अभ्यास — पहले पेपर ट्रेडिंग। सिर्फ़ मन की ट्रेनिंग, निवेश सलाह नहीं।" },
     faqTopic: { en: "intuition for traders", hi: "ट्रेडर्स के लिए इनट्यूशन" },
-    videos: [],
-    shorts: [],
   },
   'cosmic-fusion': {
     slug: 'cosmic-fusion',
@@ -104,8 +87,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Cosmic Fusion Meditation — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "कॉस्मिक फ्यूज़न मेडिटेशन — डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Unite your prana with universal energy and bring your mind into a higher, universal state — a deeply calming practice, taught 1-on-1. Start with a Clarity Session.", hi: "अपने प्राण को ब्रह्मांड की ऊर्जा से जोड़िए और मन को ऊँची, सार्वभौमिक अवस्था में ले जाइए — गहराई से शांत करने वाला अभ्यास, 1-on-1। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "Cosmic Fusion", hi: "कॉस्मिक फ्यूज़न" },
-    videos: [{ id: "WZMSSuRTr78", title: { en: "Cosmic Fusion — workshop review", hi: "कॉस्मिक फ्यूज़न — वर्कशॉप रिव्यू" } }],
-    shorts: [],
   },
   'aura-reading': {
     slug: 'aura-reading',
@@ -115,8 +96,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Aura Reading & Body Scanning — Learn 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "ऑरा कैसे देखें — ऑरा रीडिंग 1-on-1 सीखें, डॉ. कपिल देव शर्मा के साथ | मन उर मन" },
     seoDescription: { en: "Learn to see your own or another person's aura, its colours and its positive or negative energy — taught 1-on-1 through Kriya Yoga. Start with a Clarity Session.", hi: "अपना या किसी और का ऑरा, उसके रंग और उसमें सकारात्मक या नकारात्मक ऊर्जा देखना सीखिए — क्रिया योग के ज़रिए 1-on-1। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "aura reading", hi: "ऑरा रीडिंग" },
-    videos: [],
-    shorts: [],
   },
   'chakra-activation': {
     slug: 'chakra-activation',
@@ -126,8 +105,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Chakra Activation through Kriya Yoga — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "चक्र जागरण कैसे करें — क्रिया योग से, डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Chakra activation through Kriya Yoga and the movement of prana, taught 1-on-1 with personal guidance. Start with a Clarity Session.", hi: "क्रिया योग और प्राण की गति के ज़रिए चक्र जागरण, व्यक्तिगत मार्गदर्शन के साथ 1-on-1। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "chakra activation", hi: "चक्र जागरण" },
-    videos: [],
-    shorts: [],
   },
   'samadhi-meditation': {
     slug: 'samadhi-meditation',
@@ -137,8 +114,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Samadhi Meditation through Kriya Yoga — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "समाधि ध्यान — क्रिया योग से, डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Samadhi meditation through Kriya Yoga, taught 1-on-1 only after the foundation level, with personal guidance. Start with a Clarity Session.", hi: "क्रिया योग के ज़रिए समाधि मेडिटेशन, फ़ाउंडेशन लेवल के बाद ही, व्यक्तिगत मार्गदर्शन के साथ 1-on-1। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "samadhi meditation", hi: "समाधि मेडिटेशन" },
-    videos: [],
-    shorts: [],
   },
   'kundalini-meditation': {
     slug: 'kundalini-meditation',
@@ -148,8 +123,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Kundalini Meditation through Kriya Yoga — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "कुंडलिनी जागरण — क्रिया योग से, डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Kundalini meditation through Kriya Yoga and the movement of prana, taught 1-on-1 only after the foundation level, with personal guidance at every step.", hi: "क्रिया योग और प्राण की गति के ज़रिए कुंडलिनी मेडिटेशन, फ़ाउंडेशन लेवल के बाद ही, हर कदम पर व्यक्तिगत मार्गदर्शन के साथ 1-on-1।" },
     faqTopic: { en: "kundalini meditation", hi: "कुंडलिनी मेडिटेशन" },
-    videos: [],
-    shorts: [],
   },
   'astral-projection': {
     slug: 'astral-projection',
@@ -159,8 +132,6 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Astral Projection through Kriya Yoga — 1-on-1 with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "एस्ट्रल प्रोजेक्शन कैसे सीखें — क्रिया योग से, डॉ. कपिल देव शर्मा के साथ 1-on-1 | मन उर मन" },
     seoDescription: { en: "Astral projection through Kriya Yoga, taught 1-on-1 only after the foundation level, with personal guidance. Start with a Clarity Session.", hi: "क्रिया योग के ज़रिए एस्ट्रल प्रोजेक्शन, फ़ाउंडेशन लेवल के बाद ही, व्यक्तिगत मार्गदर्शन के साथ 1-on-1। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "astral projection", hi: "एस्ट्रल प्रोजेक्शन" },
-    videos: [],
-    shorts: [],
   },
   'personal-retreat': {
     slug: 'personal-retreat',
@@ -170,7 +141,5 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
     seoTitle: { en: "Personal Retreat — 1-on-1 Multi-Day Intensive with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "पर्सनल रिट्रीट — डॉ. कपिल देव शर्मा के साथ कई दिनों का 1-on-1 इंटेंसिव | मन उर मन" },
     seoDescription: { en: "A deep, personal, multi-day 1-on-1 intensive with Dr. Kapil Dev Sharma, in place of group retreats. Start with a Clarity Session.", hi: "डॉ. कपिल देव शर्मा के साथ गहरा, व्यक्तिगत, कई दिनों का 1-on-1 इंटेंसिव, ग्रुप रिट्रीट की जगह। क्लैरिटी सेशन से शुरुआत करें।" },
     faqTopic: { en: "the personal retreat", hi: "पर्सनल रिट्रीट" },
-    videos: [{ id: "ZyD_iQTOR60", title: { en: "7-Day Retreat", hi: "7 दिन का रिट्रीट" } }, { id: "vbNGdtGRxeQ", title: { en: "Retreat experience", hi: "रिट्रीट का अनुभव" } }, { id: "8a3vd3ep7QY", title: { en: "Retreat experience", hi: "रिट्रीट का अनुभव" } }],
-    shorts: [],
   },
 }

@@ -1,45 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { COMMON, GROUPS, say } from "../common";
+import { COMMON, say } from "../common";
 import { HUB } from "../hubCopy";
-import { PROGRAMS, programHref } from "../programs";
-import type { Program } from "../types";
-import { ShortsRow, VideoCard } from "./Media";
+import { REVIEW_CHIPS, REVIEW_LINE, REVIEW_VIDEOS, type ReviewTopic } from "../reviewVideos";
+import { ReviewCard } from "./Media";
 
-// /reviews (owner, Nov 2026): Sharp Brain and Personal Sessions reviews are
-// kept apart. "See all reviews" on the hub and program pages links to
-// /reviews#personal-sessions. One block per program that has review videos;
-// a program's videos appear once, even when another page reuses them.
+// /reviews#personal-sessions (owner's reviews brief, Nov 2026): every
+// Personal Sessions review video with its caption, filter chips at the
+// top, long videos first, then Shorts. Kept apart from the Sharp Brain
+// reviews; "See all reviews" on the hub and program pages links here.
 
 export const PERSONAL_SESSIONS_REVIEWS_HREF = "/reviews#personal-sessions";
 
-/**
- * Each video shows once, under the program it belongs to: the program named
- * in its title (e.g. "Cosmic Fusion — workshop review"), otherwise the first
- * program that lists it.
- */
-function programsWithOwnVideos(): { program: Program; videos: Program["videos"] }[] {
-  const owner = new Map<string, string>();
-  for (const p of PROGRAMS) {
-    for (const v of p.videos) {
-      if (v.title.en.toLowerCase().includes(p.name.en.toLowerCase())) owner.set(v.id, p.slug);
-      else if (!owner.has(v.id) && !PROGRAMS.some((q) => q.videos.some((w) => w.id === v.id) && v.title.en.toLowerCase().includes(q.name.en.toLowerCase()))) owner.set(v.id, p.slug);
-    }
-  }
-  return PROGRAMS.map((program) => ({ program, videos: program.videos.filter((v) => owner.get(v.id) === program.slug) })).filter((b) => b.videos.length > 0);
-}
-
 export function ReviewsTabs(): React.JSX.Element {
   const { lang } = useLanguage();
-  const tab = "inline-flex min-h-11 items-center rounded-full border-2 px-5 text-[15px] font-semibold";
+  const tab = "inline-flex min-h-11 items-center rounded-full border-2 border-line-strong px-5 text-[15px] font-semibold text-ink hover:bg-panel2";
   return (
     <nav aria-label={lang === "hi" ? "रिव्यू" : "Reviews"} className="border-b border-line px-4 py-4 sm:px-8">
       <div className="mx-auto flex max-w-content flex-wrap gap-2.5">
-        <a href="#top" className={`${tab} border-line-strong text-ink hover:bg-panel2`}>
+        <a href="#top" className={tab}>
           Sharp Brain
         </a>
-        <a href="#personal-sessions" className={`${tab} border-line-strong text-ink hover:bg-panel2`}>
+        <a href="#personal-sessions" className={tab}>
           {say(COMMON.breadcrumbHub, lang)}
         </a>
       </div>
@@ -47,13 +31,19 @@ export function ReviewsTabs(): React.JSX.Element {
   );
 }
 
+const pill = (on: boolean): string =>
+  `min-h-11 rounded-full border-2 px-[18px] py-2 text-[15px] ${on ? "border-[#0E1B2C] bg-[#0E1B2C] font-extrabold text-white" : "border-[#C5CCD8] bg-white font-semibold text-[#0E1B2C]"}`;
+
 export function ReviewsPersonalSessions(): React.JSX.Element {
   const { lang } = useLanguage();
-  const blocks = programsWithOwnVideos();
+  const [chip, setChip] = useState<ReviewTopic | "all">("all");
+  const shown = REVIEW_VIDEOS.filter((v) => chip === "all" || v.topics.includes(chip));
+  const long = shown.filter((v) => v.type === "L");
+  const shorts = shown.filter((v) => v.type === "S");
   const hubHref = lang === "hi" ? "/personal-sessions?lang=hi" : "/personal-sessions";
   return (
     <section id="personal-sessions" className="scroll-mt-20 border-b border-line bg-[#FBFAF7] px-4 py-16 text-[#0E1B2C] sm:px-8 sm:py-20" data-reviews-personal-sessions>
-      <div className="mx-auto flex max-w-content flex-col gap-12">
+      <div className="mx-auto flex max-w-content flex-col gap-8">
         <div>
           <a href={hubHref} className="text-[15px] font-semibold tracking-[0.06em] text-[#1F3A8A] hover:underline">
             {say(COMMON.breadcrumbHub, lang)}
@@ -61,28 +51,30 @@ export function ReviewsPersonalSessions(): React.JSX.Element {
           <h2 className="mt-1 text-[28px] font-extrabold leading-[1.2] md:text-[40px]">{say(COMMON.reviewsHeading, lang)}</h2>
           <p className="mt-1.5 text-[18px] text-[#4A5568]">{say(HUB.proof.sub, lang)}</p>
         </div>
-        {blocks.map(({ program: p, videos }) => {
-          const g = GROUPS[p.group];
-          return (
-            <div key={p.slug} className="flex flex-col gap-5" data-reviews-program={p.slug}>
-              <div className="flex flex-wrap items-center gap-3">
-                <h3 className="text-[24px] font-extrabold">{say(p.name, lang)}</h3>
-                <span className="rounded-full px-2.5 py-0.5 text-[12px] font-extrabold" style={{ background: g.tagBg, color: g.tagFg }}>
-                  {say(g.label, lang)}
-                </span>
-                <a href={programHref(p.slug, lang)} className="text-[15px] font-extrabold text-[#1F3A8A] hover:underline">
-                  {say(COMMON.learnMore, lang)}
-                </a>
-              </div>
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
-                {videos.map((v) => (
-                  <VideoCard key={v.id} id={v.id} title={say(v.title, lang)} playLabel={say(COMMON.playVideo, lang)} />
-                ))}
-              </div>
-              <ShortsRow ids={p.shorts} playLabel={say(COMMON.playVideo, lang)} />
-            </div>
-          );
-        })}
+        <div role="group" aria-label={lang === "hi" ? "रिव्यू फ़िल्टर करें" : "Filter reviews"} className="flex flex-wrap gap-2.5" data-review-chips>
+          {REVIEW_CHIPS.map((c) => (
+            <button key={c.id} type="button" aria-pressed={chip === c.id} onClick={() => setChip(c.id)} className={pill(chip === c.id)} data-review-chip={c.id}>
+              {say(c.label, lang)}
+            </button>
+          ))}
+        </div>
+        {long.length > 0 && (
+          <div className="grid grid-cols-1 items-start gap-5 sm:grid-cols-2 lg:grid-cols-3" data-reviews-long>
+            {long.map((video) => (
+              <ReviewCard key={video.id} video={video} lang={lang} />
+            ))}
+          </div>
+        )}
+        {shorts.length > 0 && (
+          <div className="grid grid-cols-2 items-start gap-3.5 sm:grid-cols-3 lg:grid-cols-5" data-reviews-shorts>
+            {shorts.map((video) => (
+              <ReviewCard key={video.id} video={video} lang={lang} size="tile" />
+            ))}
+          </div>
+        )}
+        <p className="text-[14px] text-[#4A5568]" data-review-line>
+          {say(REVIEW_LINE, lang)}
+        </p>
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import { PROGRAM_META } from './programMeta'
+import { PROGRAM_REVIEWS } from './reviewVideos'
 import { BUSINESS_LOSS, MINDSET, STRESS, SUBCONSCIOUS } from './copyMind'
 import { COHERENCE, MANIFESTATION, TELEPATHY, TRADERS } from './copyRelPerf'
 import { ASTRAL, AURA, CHAKRA, COSMIC_FUSION, KUNDALINI, RETREAT, SAMADHI } from './copySpiritual'
@@ -44,7 +45,7 @@ const ORDER: ProgramSlug[] = [
   'personal-retreat',
 ]
 
-export const PROGRAMS: readonly Program[] = ORDER.map((slug) => ({ ...PROGRAM_META[slug], ...COPY[slug] }))
+export const PROGRAMS: readonly Program[] = ORDER.map((slug) => ({ ...PROGRAM_META[slug], ...COPY[slug], reviews: PROGRAM_REVIEWS[slug] }))
 
 export const PROGRAM_SLUGS: readonly ProgramSlug[] = PROGRAMS.map((p) => p.slug)
 
@@ -72,6 +73,10 @@ const LOCAL_THUMBS: Record<string, string> = {
   s87Pxs0EP58: '/learner-videos/s87Pxs0EP58-thumb.jpg',
   vbNGdtGRxeQ: '/retreat-videos/vbNGdtGRxeQ-thumb.jpg',
   '8a3vd3ep7QY': '/retreat-videos/8a3vd3ep7QY-thumb.jpg',
+  NubHGGlQdo8: '/retreat-videos/NubHGGlQdo8-thumb.jpg',
+  X66b3WfrsZw: '/retreat-videos/X66b3WfrsZw-thumb.jpg',
+  'Dp2aE_-aZ0g': '/retreat-videos/Dp2aE_-aZ0g-thumb.jpg',
+  uNWLFqACpDU: '/learner-videos/uNWLFqACpDU-thumb.jpg',
 }
 
 export function videoThumb(id: string): string {

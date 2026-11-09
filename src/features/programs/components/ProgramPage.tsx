@@ -3,7 +3,7 @@ import { COMMON, DISCLAIMERS, GROUPS, say } from "../common";
 import { bookingHref, getProgram, programHref } from "../programs";
 import type { Program, ProgramLang } from "../types";
 import { Faq } from "./Faq";
-import { HeroMedia, ShortsRow, VideoCard } from "./Media";
+import { HeroMedia, ReviewStrip } from "./Media";
 import { ClarityCardSection, JourneySection, QuoteSection, WhatYouGetSection } from "./SharedBlocks";
 import { StickyBookBar } from "./StickyBookBar";
 import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
@@ -23,7 +23,7 @@ const h2 = "text-[28px] font-extrabold leading-[1.2] md:text-[40px]";
 
 export function ProgramPage({ program: p, lang }: { program: Program; lang: ProgramLang }): React.JSX.Element {
   const g = GROUPS[p.group];
-  const hasVideos = p.videos.length > 0;
+  const hasVideos = p.reviews.length > 0;
   const book = bookingHref(p.slug, lang);
   const hubHref = lang === "hi" ? "/personal-sessions?lang=hi" : "/personal-sessions";
   const afterFoundation = p.disclaimers.includes("foundation");
@@ -71,12 +71,7 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
             <p className="text-[15px] text-[#AEB8CA]">{say(COMMON.experience, lang)}</p>
           </div>
           <div className="min-w-0 flex-[1_1_380px]">
-            <HeroMedia
-              videoId={p.videos[0]?.id ?? null}
-              photoSrc={PHOTO}
-              photoAlt={say(COMMON.photoAlt, lang)}
-              playLabel={`${say(COMMON.playVideo, lang)}: ${p.videos[0] === undefined ? "" : say(p.videos[0].title, lang)}`}
-            />
+            <HeroMedia videoId={p.reviews[0] ?? null} photoSrc={PHOTO} photoAlt={say(COMMON.photoAlt, lang)} lang={lang} />
           </div>
         </div>
       </section>
@@ -138,12 +133,7 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
         <section id="reviews" className={`scroll-mt-20 ${sectionPad}`}>
           <div className={`${wrap} flex flex-col gap-7`}>
             <h2 className={h2}>{say(COMMON.reviewsHeading, lang)}</h2>
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
-              {p.videos.map((v) => (
-                <VideoCard key={v.id} id={v.id} title={say(v.title, lang)} playLabel={say(COMMON.playVideo, lang)} />
-              ))}
-            </div>
-            <ShortsRow ids={p.shorts} playLabel={say(COMMON.playVideo, lang)} />
+            <ReviewStrip ids={p.reviews} lang={lang} />
             <a href={PERSONAL_SESSIONS_REVIEWS_HREF} className="text-[17px] font-extrabold text-[#1F3A8A] hover:text-[#152a66]" data-see-all-reviews>
               {say(HUB.proof.all, lang)}
             </a>
