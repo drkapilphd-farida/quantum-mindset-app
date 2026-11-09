@@ -86,6 +86,7 @@ import { increaseDifficulty, decreaseDifficulty } from '@/lib/exercise-engine/di
 import { computeFlashXp } from '../../flash-intelligence/wordFlashEngine'
 import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
+import { LevelEndPlanExit } from '@/features/thirty-day-curriculum/components/LevelEndPlanExit'
 
 const EXERCISE_ID = 'sentence-reading'
 const LAB_HREF = '/labs/sharp-brain'
@@ -832,6 +833,7 @@ function SentenceReadingSession({
                 >
                   {evalData.level < 5 ? t('exercises.sentence.continue') : t('exercises.sentence.viewResults')}
                 </button>
+                <LevelEndPlanExit exerciseId="sentence-reading" labHref={LAB_HREF} failed={false} />
               </div>
             )}
             {subPhase === 'failScreen' && evalData && (
@@ -849,6 +851,7 @@ function SentenceReadingSession({
                 >
                   {t('exercises.sentence.retry')}
                 </button>
+                <LevelEndPlanExit exerciseId="sentence-reading" labHref={LAB_HREF} failed={true} />
               </div>
             )}
             {subPhase === 'topicIntro' && currentBlock && (

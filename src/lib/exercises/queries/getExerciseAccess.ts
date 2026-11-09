@@ -2,6 +2,7 @@ import type { LabId } from '../types'
 import type { ExerciseSequenceItem } from '../sequence'
 import { getModuleProgress } from './getModuleProgress'
 import { findGatingSequence } from './exerciseGatingRegistry'
+import { isExerciseOpenInPlan } from '@/features/thirty-day-curriculum/planExerciseAccess'
 
 export type ExerciseAccess = { allowed: true } | { allowed: false; nextExercise: ExerciseSequenceItem | null }
 
@@ -17,7 +18,10 @@ export async function getExerciseAccess(
   const orderedExerciseIds = sequence.map((item) => item.exerciseId)
   const progress = await getModuleProgress(labId, orderedExerciseIds)
 
-  if (progress.availabilityByExerciseId[exerciseId] === 'locked') {
+  // A step of an open 30-day plan day is never locked by the module order
+  // (founder rule, 9 Nov 2026 — see planExerciseAccess.ts). Checked only
+  // when the module order would lock it, for both the page and the save.
+  if (progress.availabilityByExerciseId[exerciseId] === 'locked' && !(await isExerciseOpenInPlan(exerciseId))) {
     const nextExercise = sequence.find((item) => item.exerciseId === progress.nextRecommendedExerciseId) ?? null
     return { allowed: false, nextExercise }
   }

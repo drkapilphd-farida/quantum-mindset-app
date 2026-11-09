@@ -166,7 +166,8 @@
     "nextAt": "அடுத்து — {wpm} WPM",
     "tryAgain": "மீண்டும் முயல்",
     "checkUnderstanding": "உங்கள் புரிதலைச் சோதியுங்கள்",
-    "questionN": "கேள்வி {n} / {total}"
+    "questionN": "கேள்வி {n} / {total}",
+    "backToPlan": "இன்றைய திட்டத்துக்குத் திரும்பு"
   },
   "reading": {
     "avgPace": "சராசரி வாசிப்பு வேகம்",

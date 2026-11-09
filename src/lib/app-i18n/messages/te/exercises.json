@@ -166,7 +166,8 @@
     "nextAt": "తర్వాత — {wpm} WPM",
     "tryAgain": "మళ్లీ ప్రయత్నించండి",
     "checkUnderstanding": "మీ అవగాహనను పరీక్షించండి",
-    "questionN": "ప్రశ్న {n} / {total}"
+    "questionN": "ప్రశ్న {n} / {total}",
+    "backToPlan": "ఈరోజు ప్రణాళికకు తిరిగి వెళ్ళండి"
   },
   "reading": {
     "avgPace": "సగటు చదువు వేగం",

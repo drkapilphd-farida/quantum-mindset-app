@@ -166,7 +166,8 @@
     "nextAt": "এরপর — {wpm} WPM",
     "tryAgain": "আবার চেষ্টা করুন",
     "checkUnderstanding": "আপনার বোঝা যাচাই করুন",
-    "questionN": "প্রশ্ন {n} / {total}"
+    "questionN": "প্রশ্ন {n} / {total}",
+    "backToPlan": "আজকের পরিকল্পনায় ফিরুন"
   },
   "reading": {
     "avgPace": "গড় পড়ার গতি",

@@ -83,6 +83,7 @@ import {
   getWizardAwareBackHref,
   isCurriculumSessionCurrentExercise,
 } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
+import { LevelEndPlanExit } from '@/features/thirty-day-curriculum/components/LevelEndPlanExit'
 
 const EXERCISE_ID = 'paragraph-reading'
 const LAB_HREF = '/labs/sharp-brain'
@@ -666,6 +667,7 @@ function ParagraphReadingSession({
                 >
                   {evalData.mission < TOTAL_MISSIONS ? 'Continue →' : 'View Results →'}
                 </button>
+                <LevelEndPlanExit exerciseId="paragraph-reading" labHref={LAB_HREF} failed={false} />
               </div>
             )}
             {subPhase === 'failScreen' && evalData && (
@@ -683,6 +685,7 @@ function ParagraphReadingSession({
                 >
                   Retry →
                 </button>
+                <LevelEndPlanExit exerciseId="paragraph-reading" labHref={LAB_HREF} failed={true} />
               </div>
             )}
             {subPhase === 'missionIntro' && currentBlock && (

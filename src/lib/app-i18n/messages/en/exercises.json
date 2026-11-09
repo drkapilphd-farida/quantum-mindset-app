@@ -166,7 +166,8 @@
     "nextAt": "Next — {wpm} WPM",
     "tryAgain": "Try again",
     "checkUnderstanding": "Check your understanding",
-    "questionN": "Question {n} of {total}"
+    "questionN": "Question {n} of {total}",
+    "backToPlan": "Back to today’s plan"
   },
   "reading": {
     "avgPace": "Average reading pace",

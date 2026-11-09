@@ -7,6 +7,7 @@ import { getExerciseAccess } from '@/lib/exercises/queries/getExerciseAccess'
 import { getModuleProgress } from '@/lib/exercises/queries/getModuleProgress'
 import { READING_EXPANSION_MODULE } from '@/features/quantum-speed-reading/readingExpansionModule'
 import { FLASH_INTELLIGENCE_MODULE } from '@/features/flash-intelligence/flashIntelligenceModule'
+import { isExerciseOpenInPlan } from '@/features/thirty-day-curriculum/planExerciseAccess'
 
 export const metadata: Metadata = {
   title: 'Progressive Chunk Reading — Sharp Brain Lab',
@@ -26,8 +27,11 @@ export default async function ProgressiveChunkReadingPage(): Promise<React.JSX.E
   // Progressive Chunk Reading is the entry point of Core Reading Journey™
   // (Stage 4) — it additionally requires Flash Intelligence Pack™ (Stage 3)
   // to be fully complete, mirroring every earlier cross-stage gate.
-  const flashPackProgress = await getModuleProgress('quantum-speed-reading', FLASH_INTELLIGENCE_EXERCISE_IDS)
-  const isFlashPackComplete = flashPackProgress.totalCount > 0 && flashPackProgress.completedCount === flashPackProgress.totalCount
+  // Day 30 of the 30-day plan: an open plan day skips the "whole Flash pack
+  // first" order too (founder rule, 9 Nov 2026 — planExerciseAccess.ts).
+  const openInPlan = await isExerciseOpenInPlan('progressive-chunk-reading')
+  const flashPackProgress = openInPlan ? null : await getModuleProgress('quantum-speed-reading', FLASH_INTELLIGENCE_EXERCISE_IDS)
+  const isFlashPackComplete = flashPackProgress === null || (flashPackProgress.totalCount > 0 && flashPackProgress.completedCount === flashPackProgress.totalCount)
 
   if (!isFlashPackComplete) {
     return (

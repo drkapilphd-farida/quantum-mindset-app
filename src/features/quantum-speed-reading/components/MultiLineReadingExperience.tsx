@@ -64,6 +64,7 @@ import {
   isCurriculumSessionCurrentExercise,
 } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 import { computeReadingReadiness } from '../../flash-intelligence/wordFlashInsights'
+import { LevelEndPlanExit } from '@/features/thirty-day-curriculum/components/LevelEndPlanExit'
 
 const EXERCISE_ID = 'multi-line-reading'
 const LAB_HREF = '/labs/sharp-brain'
@@ -632,6 +633,7 @@ function MultiLineReadingSession({
                 >
                   {evalData.level < 5 ? 'Continue to Next Level' : 'View Results'}
                 </button>
+                <LevelEndPlanExit exerciseId="multi-line-reading" labHref={LAB_HREF} failed={false} />
               </div>
             )}
             {subPhase === 'failScreen' && evalData && (
@@ -652,6 +654,7 @@ function MultiLineReadingSession({
                 >
                   Try Again
                 </button>
+                <LevelEndPlanExit exerciseId="multi-line-reading" labHref={LAB_HREF} failed={true} />
               </div>
             )}
             {subPhase === 'reading' && currentBlock && readingPhase && (

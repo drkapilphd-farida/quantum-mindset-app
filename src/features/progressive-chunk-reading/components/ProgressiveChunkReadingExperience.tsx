@@ -125,6 +125,7 @@ import '../../chunk-reading/chunkDataset'
 import '../../phrase-reading/phraseDataset'
 import { getCurriculumSmartExitHref, getWizardAwareBackHref } from '@/features/thirty-day-curriculum/curriculumReturnRouting'
 import { useCurriculumSessionCompletion } from '@/features/thirty-day-curriculum/useCurriculumSessionCompletion'
+import { LevelEndPlanExit } from '@/features/thirty-day-curriculum/components/LevelEndPlanExit'
 
 const EXERCISE_ID = 'progressive-chunk-reading'
 const LAB_HREF = '/labs/sharp-brain'
@@ -809,6 +810,7 @@ function ProgressiveChunkReadingSession({
                 >
                   {evalData.level < 5 ? 'Continue to Next Level' : 'View Results'}
                 </button>
+                <LevelEndPlanExit exerciseId="progressive-chunk-reading" labHref={LAB_HREF} failed={false} />
               </div>
             )}
             {subPhase === 'failScreen' && evalData && (
@@ -830,6 +832,7 @@ function ProgressiveChunkReadingSession({
                 >
                   Try Again
                 </button>
+                <LevelEndPlanExit exerciseId="progressive-chunk-reading" labHref={LAB_HREF} failed={true} />
               </div>
             )}
             {subPhase === 'reading' && currentBlock && (

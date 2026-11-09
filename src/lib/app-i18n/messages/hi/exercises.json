@@ -166,7 +166,8 @@
     "nextAt": "आगे — {wpm} WPM",
     "tryAgain": "फिर से कोशिश करें",
     "checkUnderstanding": "अपनी समझ जाँचें",
-    "questionN": "सवाल {n} / {total}"
+    "questionN": "सवाल {n} / {total}",
+    "backToPlan": "आज की योजना पर वापस"
   },
   "reading": {
     "avgPace": "औसत पढ़ने की रफ़्तार",
