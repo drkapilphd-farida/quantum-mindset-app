@@ -63,6 +63,9 @@ export function HomePaths(): React.JSX.Element {
           <article className="flex flex-col rounded-sm border border-line-strong bg-panel p-6 sm:p-8" data-home-path="sessions">
             <Eyebrow color="text-teal">{say(ps.eyebrow, lang)}</Eyebrow>
             <h3 className="mt-3 text-[24px] font-extrabold leading-snug sm:text-[28px]">{say(ps.title, lang)}</h3>
+            <Link href={lang === "hi" ? "/stress-anxiety-support?lang=hi" : "/stress-anxiety-support"} className="mt-4 inline-flex min-h-11 items-center self-start rounded-sm border-2 border-[#0F766E] bg-[#DDF3EF] px-4 py-2 text-[16px] font-extrabold text-[#0B5E57]" data-home-stress>
+              {say(ps.first, lang)}
+            </Link>
             {/* Owner (Nov 2026): the 5 program groups as coloured tags (same colours as /personal-sessions). */}
             <ul className="mt-4 flex flex-wrap gap-2" data-home-groups>
               {GROUP_ORDER.map((id) => {

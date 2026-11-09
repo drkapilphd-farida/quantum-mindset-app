@@ -6,8 +6,8 @@ import type { ProgramCopy } from './copyTypes'
 export const STRESS: ProgramCopy = {
   h1: { en: 'Calm your mind. Steady your body. Live without constant fear.', hi: 'मन शांत कीजिए। शरीर स्थिर कीजिए। लगातार डर के बिना जिएँ।' },
   subline: {
-    en: '1-on-1 support for stress, anxiety, panic attacks and low mood — at your pace, in a safe and private space.',
-    hi: 'तनाव, एंग्ज़ायटी, पैनिक अटैक और उदासी में 1-on-1 सपोर्ट — आपकी गति से, एक सुरक्षित और निजी माहौल में।',
+    en: '1-on-1 support for stress, anxiety, panic attacks, low mood and depression — at your pace, in a safe and private space.',
+    hi: 'तनाव, एंग्ज़ायटी, पैनिक अटैक, उदासी और डिप्रेशन में 1-on-1 सपोर्ट — आपकी गति से, एक सुरक्षित और निजी माहौल में।',
   },
   soundLike: [
     { en: 'Your mind keeps racing, even when you want to rest', hi: 'आराम करना चाहते हैं, फिर भी मन दौड़ता रहता है' },

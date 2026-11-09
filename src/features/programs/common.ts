@@ -57,6 +57,34 @@ export const COMMON = {
   photoAlt: { en: 'Dr. Kapil Dev Sharma', hi: 'डॉ. कपिल देव शर्मा' },
 } as const
 
+/** FAQ 5 on every program page, and on the hub after the recordings FAQ (owner's plans brief, Nov 2026). */
+export const FULL_RECORDINGS_FAQ = {
+  q: { en: 'Do I get recordings of the full sessions?', hi: 'क्या मुझे पूरे सेशन की रिकॉर्डिंग मिलती है?' },
+  a: {
+    en: 'No. You get personal guided meditation / therapy recordings made for you to practise with. Your conversations with Dr. Kapil stay private.',
+    hi: 'नहीं। आपको अभ्यास के लिए आपके लिए बनी पर्सनल गाइडेड मेडिटेशन / थेरेपी रिकॉर्डिंग मिलती हैं। डॉ. कपिल के साथ आपकी बातचीत निजी रहती है।',
+  },
+} as const
+
+/** The four numbers (hub hero and the "Trusted by thousands" band). */
+export const STATS: { value: Bi; label: Bi }[] = [
+  { value: { en: '12+ years', hi: '12+ साल' }, label: { en: 'of mind coaching', hi: 'माइंड कोचिंग' } },
+  { value: { en: '15 years', hi: '15 साल' }, label: { en: 'as a professor', hi: 'प्रोफ़ेसर' } },
+  { value: { en: '500+', hi: '500+' }, label: { en: 'workshops', hi: 'वर्कशॉप' } },
+  { value: { en: '10,000+', hi: '10,000+' }, label: { en: 'people trained', hi: 'प्रशिक्षित लोग' } },
+]
+
+/** "Trusted by thousands" band (hub and every program page, just before the FAQ). */
+export const TRUST = {
+  heading: { en: 'Trusted by thousands', hi: 'हज़ारों लोगों का भरोसा' },
+  // Podcast: the same feature as the homepage (HomePodcastFeature.tsx).
+  podcastEyebrow: { en: 'Featured podcast', hi: 'फीचर्ड पॉडकास्ट' },
+  podcastTitle: { en: "Dr. Kapil Dev Sharma on Solomon Daniel's Podcast", hi: 'डॉ. कपिल देव शर्मा — Solomon Daniel के पॉडकास्ट पर' },
+  podcastLink: { en: 'Watch on YouTube →', hi: 'YouTube पर देखिए →' },
+  podcastUrl: 'https://youtu.be/rVCdV4xGlYc',
+  podcastThumb: '/podcast-videos/rVCdV4xGlYc-thumb.jpg',
+} as const
+
 /** Shared block: What you get. */
 export const WHAT_YOU_GET = {
   heading: { en: 'What you get', hi: 'आपको क्या मिलता है' },

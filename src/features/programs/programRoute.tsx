@@ -5,7 +5,7 @@ import { buildFaqPageSchema } from '@/lib/seo/faqSchema'
 import { buildServiceSchema } from '@/lib/seo/serviceSchema'
 import { buildOgImageResponse } from '@/lib/seo/ogImage'
 import { langFromParam } from '@/features/telepathy-workshop/telepathyWorkshop'
-import { COMMON, say } from './common'
+import { COMMON, FULL_RECORDINGS_FAQ, say } from './common'
 import { bookingHref, getProgram } from './programs'
 import { ProgramPage } from './components/ProgramPage'
 import { ProgramsShell } from './components/ProgramsShell'
@@ -26,7 +26,8 @@ export async function programMetadata(slug: ProgramSlug, { searchParams }: Progr
 export async function ProgramRoute({ slug, searchParams }: { slug: ProgramSlug } & ProgramRouteProps): Promise<React.JSX.Element> {
   const lang = langFromParam((await searchParams).lang) ?? 'en'
   const p = getProgram(slug)
-  const faqSchema = buildFaqPageSchema(p.faqs.map((f) => ({ question: say(f.q, lang), answer: say(f.a, lang) })))
+  const faqs = [...p.faqs.filter((f) => f.hidden !== true), FULL_RECORDINGS_FAQ]
+  const faqSchema = buildFaqPageSchema(faqs.map((f) => ({ question: say(f.q, lang), answer: say(f.a, lang) })))
   const serviceSchema = buildServiceSchema({ name: say(p.seoTitle, lang).replace(/ \| (Mind Ur Mind|मन उर मन)$/, ''), description: say(p.seoDescription, lang), path: `/${slug}`, inLanguage: lang })
   return (
     <ProgramsShell lang={lang} path={`/${slug}`} ctaHref={bookingHref(slug, lang)} ctaLabel={say(COMMON.bookButton, lang)} schemas={[faqSchema, serviceSchema]}>

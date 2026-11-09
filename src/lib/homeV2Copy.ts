@@ -54,6 +54,8 @@ export const homeV2 = {
     sessions: {
       eyebrow: { hi: 'डॉ. कपिल के साथ 1-on-1', en: '1-on-1 with Dr. Kapil' },
       title: { hi: 'पर्सनल सेशन', en: 'Personal Sessions' },
+      // Owner (plans brief, Nov 2026): the main program first, before the groups.
+      first: { hi: 'तनाव, एंग्ज़ायटी, पैनिक और डिप्रेशन सपोर्ट →', en: 'Stress, Anxiety, Panic & Depression Support →' },
       groups: [
         { title: { hi: 'मन और भावनाएँ', en: 'Mind & emotions' }, topics: { hi: 'तनाव, एंग्ज़ायटी, पैनिक, माइंडसेट कोचिंग, सबकॉन्शियस रीप्रोग्रामिंग', en: 'Stress, anxiety, panic, mindset coaching, subconscious reprogramming' } },
         { title: { hi: 'परफ़ॉर्मेंस', en: 'Performance' }, topics: { hi: 'ट्रेडर्स के लिए इनट्यूशन ट्रेनिंग, डर के लिए हार्ट-ब्रेन कोहेरेंस', en: 'Intuition training for traders, heart-brain coherence for fear' } },

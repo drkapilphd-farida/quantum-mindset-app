@@ -4,6 +4,7 @@ import { BUSINESS_LOSS, MINDSET, STRESS, SUBCONSCIOUS } from './copyMind'
 import { COHERENCE, MANIFESTATION, TELEPATHY, TRADERS } from './copyRelPerf'
 import { ASTRAL, AURA, CHAKRA, COSMIC_FUSION, KUNDALINI, RETREAT, SAMADHI } from './copySpiritual'
 import type { ProgramCopy } from './copyTypes'
+import type { SessionPlanId } from '@/config/site.config'
 import type { GroupId, Program, ProgramSlug } from './types'
 
 // The approved copy (Nov 8, 2026) for each program, joined with what the
@@ -88,10 +89,11 @@ export function programHref(slug: ProgramSlug, lang: 'en' | 'hi'): string {
   return lang === 'hi' ? `/${slug}?lang=hi` : `/${slug}`
 }
 
-/** The hub's booking form with this program pre-selected. */
-export function bookingHref(slug: ProgramSlug | null, lang: 'en' | 'hi'): string {
+/** The hub's booking form with this program (and plan, if given) pre-selected. */
+export function bookingHref(slug: ProgramSlug | null, lang: 'en' | 'hi', plan?: SessionPlanId): string {
   const params = new URLSearchParams()
   if (slug !== null) params.set('program', slug)
+  if (plan !== undefined) params.set('plan', plan)
   if (lang === 'hi') params.set('lang', 'hi')
   const query = params.toString()
   return `/personal-sessions${query === '' ? '' : `?${query}`}#book`

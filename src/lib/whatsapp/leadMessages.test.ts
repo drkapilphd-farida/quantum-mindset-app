@@ -4,8 +4,14 @@ import { waLink } from '@/data/links'
 
 describe('lead WhatsApp messages', () => {
   it('puts every Clarity Session answer and the program name in the message', () => {
-    const msg = clarityRequestMessage({ programName: 'Telepathy', name: 'Asha', phone: '+919540123161', city: 'Vadodara', change: 'I want calmer relationships.' })
-    for (const part of ['Clarity Session', 'Program: Telepathy', 'Name: Asha', 'WhatsApp: +919540123161', 'City: Vadodara', 'I want calmer relationships.']) expect(msg).toContain(part)
+    const msg = clarityRequestMessage({ programName: 'Telepathy', planName: 'Core · 7 days', name: 'Asha', phone: '+919540123161', city: 'Vadodara', change: 'I want calmer relationships.' })
+    for (const part of ['Clarity Session', 'Program: Telepathy', 'Plan: Core · 7 days', 'Name: Asha', 'WhatsApp: +919540123161', 'City: Vadodara', 'I want calmer relationships.']) expect(msg).toContain(part)
+    expect(msg).not.toContain('in-person retreats')
+  })
+
+  it('adds the in-person retreat wish when ticked', () => {
+    const msg = clarityRequestMessage({ programName: 'Personal Retreat', planName: 'Core · 7 days', retreatNotify: true, name: 'Asha', phone: '+919540123161', city: 'Vadodara', change: 'A few days for myself.' })
+    expect(msg).toContain('Notify me about in-person retreats (Rishikesh / Lonavala): Yes')
   })
 
   it('puts every partner answer in the message, with the question', () => {

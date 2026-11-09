@@ -4,25 +4,29 @@ import { HUB } from "../hubCopy";
 import { bookingHref } from "../programs";
 import type { ProgramLang, ProgramSlug } from "../types";
 import { Faq } from "./Faq";
-import { HubBookingForm, HubBookingProvider, HubPrograms, HubQuiz } from "./HubInteractive";
+import { HubBookingForm, HubBookingProvider, HubChoosePlan, HubPrograms, HubQuiz } from "./HubInteractive";
+import { PLAN_COPY, PLAN_IDS, type SessionPlanId } from "../plans";
+import { PlanCards, chooseButtonClass } from "./Plans";
 import { HeroMedia, ReviewStrip } from "./Media";
 import { HUB_REVIEWS } from "../reviewVideos";
 import { StickyBookBar } from "./StickyBookBar";
-import { ClarityCardContent, WhatYouGetSection } from "./SharedBlocks";
+import { ClarityCardContent, TrustSection, WhatYouGetSection } from "./SharedBlocks";
 import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
 
-// /personal-sessions — built from design-personal-sessions-hub.html (owner,
-// Nov 2026): same section order, text, colours, sizes and spacing.
+// /personal-sessions — design from design-personal-sessions-hub.html; section
+// order from the owner's plans brief (Nov 2026): Hero → Three doors → Quiz →
+// How it works → What you get → Choose your plan → Reviews → Trusted by
+// thousands → About → Booking → FAQ.
 
 const PHOTO = "/dr-kapil-real.jpg";
 const wrap = "mx-auto w-full max-w-[1160px]";
 const sectionPad = "px-4 py-14 sm:px-6 md:py-20";
 const h2 = "text-[28px] font-extrabold leading-[1.2] md:text-[40px]";
 
-export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialProgram: ProgramSlug | null }): React.JSX.Element {
+export function HubPage({ lang, initialProgram, initialPlan }: { lang: ProgramLang; initialProgram: ProgramSlug | null; initialPlan: SessionPlanId | null }): React.JSX.Element {
   const h = HUB.hero;
   return (
-    <HubBookingProvider initialProgram={initialProgram}>
+    <HubBookingProvider initialProgram={initialProgram} initialPlan={initialPlan}>
       {/* HERO */}
       <section className="bg-[#0E1B2C] px-4 pb-16 pt-14 text-white sm:px-6 md:pt-[72px]">
         <div className={`${wrap} flex flex-wrap items-center gap-12`}>
@@ -42,6 +46,9 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
                 {say(h.quiz, lang)}
               </a>
             </div>
+            <a href={lang === "hi" ? "/stress-anxiety-support?lang=hi" : "/stress-anxiety-support"} className="self-start text-[17px] font-semibold text-[#F2A93B] underline decoration-[#F2A93B]/50 underline-offset-4 hover:decoration-[#F2A93B]" data-stress-link>
+              {say(h.stressLink, lang)}
+            </a>
           </div>
           <div className="min-w-0 flex-[1_1_400px]">
             {/* Owner: the intro video is not ready — the box shows the photo as its poster. */}
@@ -58,13 +65,10 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
         </div>
       </section>
 
-      {/* WHAT ARE YOU HERE FOR + ALL PROGRAMS */}
+      {/* THREE DOORS: WHAT ARE YOU HERE FOR? */}
       <section id="programs" className={sectionPad}>
         <div className={`${wrap} flex flex-col gap-7`}>
-          <div>
-            <h2 className={h2}>{say(HUB.programs.title, lang)}</h2>
-            <p className="mt-1.5 text-[19px] text-[#4A5568]">{say(HUB.programs.sub, lang)}</p>
-          </div>
+          <h2 className={h2}>{say(HUB.programs.title, lang)}</h2>
           <HubPrograms lang={lang} />
         </div>
       </section>
@@ -99,12 +103,19 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
       {/* WHAT YOU GET (shared block, new in the Nov 8 copy) */}
       <WhatYouGetSection lang={lang} />
 
-      {/* WHY 1-ON-1 QUOTE */}
-      <section className="bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-20">
-        <div className="mx-auto flex max-w-[900px] flex-col items-center gap-[18px] text-center">
-          <p className="text-[15px] font-semibold tracking-[0.06em] text-[#F2A93B]">{say(HUB.quote.eyebrow, lang)}</p>
-          <p className="text-[24px] font-extrabold leading-[1.35] md:text-[34px]">{say(HUB.quote.text, lang)}</p>
-          <p className="text-[18px] text-[#AEB8CA]">{say(COMMON.quoteBy, lang)}</p>
+      {/* CHOOSE YOUR PLAN */}
+      <section id="plans" className={`scroll-mt-20 bg-[#EEF2FB] ${sectionPad}`} data-hub-plans>
+        <div className={`${wrap} flex flex-col gap-7`}>
+          <h2 className={h2}>{say(PLAN_COPY.hubTitle, lang)}</h2>
+          <PlanCards plans={PLAN_IDS} lang={lang} choose={(plan) => <HubChoosePlan plan={plan.id} lang={lang} className={chooseButtonClass(plan.mostChosen)} />} />
+          <ul className="flex flex-col gap-2 text-[17px] text-[#33415C]" data-plan-rules>
+            {PLAN_COPY.rules.map((rule) => (
+              <li key={rule.en} className="flex gap-2.5">
+                <span aria-hidden="true" className="mt-[11px] h-1.5 w-1.5 flex-none rounded-full bg-[#1F3A8A]" />
+                {say(rule, lang)}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -121,6 +132,9 @@ export function HubPage({ lang, initialProgram }: { lang: ProgramLang; initialPr
           </a>
         </div>
       </section>
+
+      {/* TRUSTED BY THOUSANDS */}
+      <TrustSection lang={lang} />
 
       {/* ABOUT */}
       <section className={`border-y border-[#E3E6EC] bg-white ${sectionPad}`}>

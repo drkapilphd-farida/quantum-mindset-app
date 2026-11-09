@@ -655,6 +655,22 @@ export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
 /** Personal Sessions entry point (owner, Nov 2026): every booking starts here. */
 export const CLARITY_SESSION = { priceInr: 1100, minutes: 60 } as const
 
+/**
+ * Personal Sessions plans (owner's plans brief, Nov 2026) — the one place
+ * these fees are written. `perSessionInr` is the owner's own figure (shown
+ * as given, not recalculated). The Clarity Session fee comes from
+ * CLARITY_SESSION above.
+ */
+export type SessionPlanId = 'clarity' | 'starter' | 'core' | 'transformation' | 'mastery' | 'mentorship'
+export const SESSION_PLAN_PRICES: Record<SessionPlanId, { feeInr: number; perSessionInr: number }> = {
+  clarity: { feeInr: CLARITY_SESSION.priceInr, perSessionInr: CLARITY_SESSION.priceInr },
+  starter: { feeInr: 3999, perSessionInr: 2000 },
+  core: { feeInr: 13999, perSessionInr: 2000 },
+  transformation: { feeInr: 21999, perSessionInr: 1833 },
+  mastery: { feeInr: 39999, perSessionInr: 1666 },
+  mentorship: { feeInr: 69999, perSessionInr: 1458 },
+}
+
 /** Sharp Brain's two offers — the one place these prices are written. */
 /**
  * The ₹1,000-off offer after a valid Reading & Memory Test. Turned off by

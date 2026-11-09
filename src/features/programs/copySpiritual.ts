@@ -290,7 +290,10 @@ export const ASTRAL: ProgramCopy = {
 
 export const RETREAT: ProgramCopy = {
   h1: { en: 'A few days away. Fully guided. Completely yours.', hi: 'कुछ दिन रोज़मर्रा से दूर। पूरे मार्गदर्शन के साथ। पूरी तरह आपके।' },
-  subline: { en: 'A multi-day 1-on-1 intensive with Dr. Kapil — shaped around your own reason.', hi: 'डॉ. कपिल के साथ कई दिनों का 1-on-1 इंटेंसिव — आपकी अपनी वजह के हिसाब से।' },
+  subline: {
+    en: 'A multi-day 1-on-1 intensive with Dr. Kapil — online now, from your home. In-person retreats in Rishikesh and Lonavala when a group is ready.',
+    hi: 'डॉ. कपिल के साथ कई दिनों का 1-on-1 इंटेंसिव — अभी ऑनलाइन, आपके घर से। ग्रुप तैयार होने पर ऋषिकेश और लोनावला में आमने-सामने रिट्रीट।',
+  },
   soundLike: [
     { en: 'Weekly sessions feel too slow for what you want', hi: 'आप जो चाहते हैं, उसके लिए हफ़्ते के सेशन बहुत धीमे लगते हैं' },
     { en: 'You want deep change in a short time', hi: 'आप कम समय में गहरा बदलाव चाहते हैं' },
@@ -314,9 +317,11 @@ export const RETREAT: ProgramCopy = {
   faqs: [
     {
       q: { en: 'Where does it happen?', hi: 'यह कहाँ होता है?' },
-      // Owner: [PLACEHOLDER — Dr. Kapil to confirm the place]. Hidden until the text arrives.
-      a: { en: '[PLACEHOLDER — Dr. Kapil to confirm the place]', hi: '[PLACEHOLDER]' },
-      hidden: true,
+      // Owner's answer (plans brief, Nov 2026).
+      a: {
+        en: 'Right now, online: a fully guided intensive from your home. In-person retreats are held in Rishikesh and Lonavala when enough participants are ready. Tell us in the form if you would like to join one.',
+        hi: 'अभी ऑनलाइन: आपके घर से, पूरे मार्गदर्शन के साथ इंटेंसिव। जब पर्याप्त प्रतिभागी तैयार हों, तब ऋषिकेश और लोनावला में आमने-सामने रिट्रीट होते हैं। अगर आप किसी में शामिल होना चाहते हैं, तो फ़ॉर्म में बताइए।',
+      },
     },
     {
       q: { en: 'How many days?', hi: 'कितने दिन?' },

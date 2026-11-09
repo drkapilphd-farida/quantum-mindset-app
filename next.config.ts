@@ -1,3 +1,5 @@
+import { readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs/config'
 import { LEGACY_REDIRECTS } from './src/config/legacyRedirects'
@@ -162,12 +164,27 @@ const securityHeaders = [
   { key: 'Content-Security-Policy', value: buildContentSecurityPolicy() },
 ]
 
+// Personal Sessions images (owner's images brief, Nov 2026): the owner drops
+// hero-<program-slug>.jpg and me-recording.jpg into this folder. Which files
+// exist is read at build time, so a slot is shown only once its image is
+// there — never an empty box.
+function personalSessionImages(): string {
+  try {
+    return readdirSync(join(process.cwd(), 'public/images/personal-sessions'))
+      .filter((file) => file.endsWith('.jpg'))
+      .join(',')
+  } catch {
+    return ''
+  }
+}
+
 const nextConfig: NextConfig = {
   // Content TODO markers (src/components/site/SiteTodo.tsx) render on
   // local and preview builds so missing content is visible during review,
   // and never on the production deployment.
   env: {
     NEXT_PUBLIC_SHOW_CONTENT_TODOS: process.env.VERCEL_ENV === 'production' ? 'false' : 'true',
+    NEXT_PUBLIC_PERSONAL_SESSION_IMAGES: personalSessionImages(),
   },
 
   // pdfjs-dist (PDF text extraction, src/core/universal-learning-engine/

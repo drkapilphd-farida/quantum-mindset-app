@@ -1,13 +1,13 @@
-import { COMMON } from './common'
+import { COMMON, FULL_RECORDINGS_FAQ, STATS } from './common'
 
 const PRICE = COMMON.price
 const MIN = COMMON.minutes
-import type { Bi, GroupId, ProgramSlug } from './types'
+import type { Bi, ProgramSlug } from './types'
 
 // /personal-sessions hub — English exactly as in the owner's design file
 // (design-personal-sessions-hub.html), Hindi as approved (Nov 2026).
 
-export type ChipId = GroupId | 'all'
+export type DoorId = 'calm' | 'perform' | 'grow'
 export type Q1 = 'mind' | 'rel' | 'perf' | 'spirit'
 export type Q2 = 'change' | 'learn'
 
@@ -44,32 +44,37 @@ export const HUB = {
     h1a: { en: 'Your problem is personal.', hi: 'आपकी समस्या आपकी अपनी है।' },
     h1b: { en: 'Your path should be too.', hi: 'आपका रास्ता भी आपका अपना होना चाहिए।' },
     sub: {
-      en: 'Mind and emotions, relationships, trading decisions or a deep spiritual practice — every session is built around you, your reason and your pace. Online or in person.',
-      hi: 'मन और भावनाएँ, रिश्ते, ट्रेडिंग के फ़ैसले या गहरी आध्यात्मिक साधना — हर सेशन आपके, आपकी वजह और आपकी गति के हिसाब से बनता है। ऑनलाइन या आमने-सामने।',
+      en: 'Stress, anxiety, panic attacks, low mood — or a deeper spiritual practice. Every session is built around you, your reason and your pace. Online or in person.',
+      hi: 'तनाव, एंग्ज़ायटी, पैनिक अटैक, उदासी — या गहरी आध्यात्मिक साधना। हर सेशन आपके, आपकी वजह और आपकी गति के हिसाब से बनता है। ऑनलाइन या आमने-सामने।',
     },
+    stressLink: { en: 'Struggling with stress, anxiety or panic? Start here →', hi: 'तनाव, एंग्ज़ायटी या पैनिक से जूझ रहे हैं? यहाँ से शुरू कीजिए →' },
     book: COMMON.bookButton,
     quiz: { en: 'Find my path in 30 seconds', hi: '30 सेकंड में अपना रास्ता जानिए' },
     videoTitle: { en: 'How a personal session works', hi: 'पर्सनल सेशन कैसे होता है' },
     videoAria: { en: "Play Dr. Kapil's introduction video", hi: 'डॉ. कपिल का परिचय वीडियो चलाएँ' },
-    stats: [
-      { value: { en: '12+ years', hi: '12+ साल' }, label: { en: 'of mind coaching', hi: 'माइंड कोचिंग' } },
-      { value: { en: '15 years', hi: '15 साल' }, label: { en: 'as a professor', hi: 'प्रोफ़ेसर' } },
-      { value: { en: '500+', hi: '500+' }, label: { en: 'workshops', hi: 'वर्कशॉप' } },
-      { value: { en: '10,000+', hi: '10,000+' }, label: { en: 'people trained', hi: 'प्रशिक्षित लोग' } },
-    ],
+    stats: STATS,
   },
   programs: {
     title: { en: 'What are you here for?', hi: 'आप किसलिए आए हैं?' },
-    sub: { en: 'Choose what matters to you. Every program is taught 1-on-1.', hi: 'अपने लिए जो ज़रूरी है वह चुनिए। हर प्रोग्राम 1-on-1 सिखाया जाता है।' },
-    filterLabel: { en: 'Filter programs', hi: 'प्रोग्राम फ़िल्टर करें' },
-    chips: [
-      { id: 'all', label: { en: 'Everything', hi: 'सब कुछ' } },
-      { id: 'mind', label: { en: 'Calm my mind', hi: 'मन शांत करना' } },
-      { id: 'rel', label: { en: 'Relationships & intention', hi: 'रिश्ते और इरादा' } },
-      { id: 'perf', label: { en: 'Trade with clarity', hi: 'साफ़ ट्रेडिंग' } },
-      { id: 'spirit', label: { en: 'Grow spiritually', hi: 'आध्यात्मिक विकास' } },
-      { id: 'deep', label: { en: 'A deep retreat', hi: 'गहरा रिट्रीट' } },
-    ] as { id: ChipId; label: Bi }[],
+    // Three doors (owner's plans brief): the first is selected by default.
+    doors: [
+      {
+        id: 'calm',
+        label: { en: 'Calm my mind', hi: 'मन शांत करना' },
+        programs: ['stress-anxiety-support', 'heart-brain-coherence', 'subconscious-reprogramming', 'business-loss-mindset', 'mindset-coaching'],
+      },
+      {
+        id: 'perform',
+        label: { en: 'Perform better', hi: 'बेहतर परफ़ॉर्म करना' },
+        programs: ['intuition-for-traders', 'mindset-coaching', 'business-loss-mindset'],
+      },
+      {
+        id: 'grow',
+        label: { en: 'Grow spiritually', hi: 'आध्यात्मिक विकास' },
+        programs: ['telepathy', 'cosmic-fusion', 'manifestation', 'aura-reading', 'chakra-activation', 'samadhi-meditation', 'kundalini-meditation', 'astral-projection', 'personal-retreat'],
+      },
+    ] as { id: DoorId; label: Bi; programs: ProgramSlug[] }[],
+    seeAll: { en: 'See all 15 programs', hi: 'सारे 15 प्रोग्राम देखिए' },
   },
   quiz: {
     eyebrow: { en: 'NOT SURE WHERE TO START?', hi: 'तय नहीं कि कहाँ से शुरू करें?' },
@@ -131,6 +136,7 @@ export const HUB = {
     city: { en: 'City', hi: 'शहर' },
     program: { en: 'Which program interests you?', hi: 'आपको कौन-सा प्रोग्राम पसंद है?' },
     choose: { en: 'Choose', hi: 'चुनें' },
+    retreatNotify: { en: 'Notify me about in-person retreats (Rishikesh / Lonavala)', hi: 'आमने-सामने के रिट्रीट (ऋषिकेश / लोनावला) के बारे में मुझे बताएँ' },
     notSure: { en: 'Not sure yet', hi: 'अभी तय नहीं' },
     change: { en: 'What would you like to change in your life, and why?', hi: 'आप अपनी ज़िंदगी में क्या बदलना चाहते हैं, और क्यों?' },
     submit: { en: 'Request my Clarity Session', hi: 'मेरे क्लैरिटी सेशन का अनुरोध भेजें' },
@@ -160,6 +166,7 @@ export const HUB = {
           hi: 'आपके सेशन में डॉ. कपिल सिर्फ़ आपके लिए गाइडेड मेडिटेशन लिखते और रिकॉर्ड करते हैं: आपका लक्ष्य, आपके शब्द, आपकी गति। ये हमेशा के लिए आपके हैं।',
         },
       },
+      FULL_RECORDINGS_FAQ,
       {
         q: { en: 'Online or in person?', hi: 'ऑनलाइन या आमने-सामने?' },
         a: { en: 'Both. Most sessions are online; in-person sessions are in Vadodara.', hi: 'दोनों। ज़्यादातर सेशन ऑनलाइन होते हैं; आमने-सामने सेशन वडोदरा में होते हैं।' },

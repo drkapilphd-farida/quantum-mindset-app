@@ -1,20 +1,25 @@
+import Image from "next/image";
 import { CheckCircle2, Sparkles } from "lucide-react";
-import { COMMON, DISCLAIMERS, GROUPS, say } from "../common";
+import { COMMON, DISCLAIMERS, FULL_RECORDINGS_FAQ, GROUPS, say } from "../common";
+import { programHeroImage } from "../images";
+import { PLAN_COPY, PROGRAM_PLANS } from "../plans";
+import { PlanCards, chooseButtonClass } from "./Plans";
 import { bookingHref, getProgram, programHref } from "../programs";
 import type { Program, ProgramLang } from "../types";
 import { Faq } from "./Faq";
 import { HeroMedia, ReviewStrip } from "./Media";
-import { ClarityCardSection, JourneySection, QuoteSection, WhatYouGetSection } from "./SharedBlocks";
+import { ClarityCardSection, JourneySection, QuoteSection, TrustSection, WhatYouGetSection } from "./SharedBlocks";
 import { StickyBookBar } from "./StickyBookBar";
 import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
 import { HUB } from "../hubCopy";
 
-// Program page — 10 sections in the owner's order (strict copy brief,
-// Nov 8 2026), design tokens from the earlier design brief:
+// Program page — sections in the owner's order (strict copy brief, Nov 8
+// 2026, plus the plans brief), design tokens from the earlier design brief:
 //  1 Hero · 2 Does this sound like you? · 3 Why this happens ·
-//  4 What changes for you · 5 What you get · 6 Your journey · 7 Quote ·
-//  8 What participants experienced (only with videos) · 9 Clarity Session
-//  card · 10 FAQ + Often taken together + disclaimer.
+//  4 What changes for you · 5 What you get · Plans for this program ·
+//  6 Your journey · 7 Quote · 8 What participants experienced (only with
+//  videos) · 9 Clarity Session card · Trusted by thousands ·
+//  10 FAQ (+ the full-recordings FAQ as FAQ 5) + Often taken together + disclaimer.
 
 const PHOTO = "/dr-kapil-real.jpg";
 const wrap = "mx-auto w-full max-w-[1160px]";
@@ -27,7 +32,12 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
   const book = bookingHref(p.slug, lang);
   const hubHref = lang === "hi" ? "/personal-sessions?lang=hi" : "/personal-sessions";
   const afterFoundation = p.disclaimers.includes("foundation");
-  const faqs = p.faqs.filter((f) => f.hidden !== true);
+  const faqs = [...p.faqs.filter((f) => f.hidden !== true), FULL_RECORDINGS_FAQ];
+  const plans = PROGRAM_PLANS[p.slug];
+  const deepPlans = plans.every((id) => id === "mastery" || id === "mentorship");
+  const allPlansHref = lang === "hi" ? "/personal-sessions?lang=hi#plans" : "/personal-sessions#plans";
+  // Owner's hero image (16:9) once it is in the image folder; until then the current video/photo.
+  const heroImage = programHeroImage(p.slug);
 
   return (
     <>
@@ -71,7 +81,13 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
             <p className="text-[15px] text-[#AEB8CA]">{say(COMMON.experience, lang)}</p>
           </div>
           <div className="min-w-0 flex-[1_1_380px]">
-            <HeroMedia videoId={p.reviews[0] ?? null} photoSrc={PHOTO} photoAlt={say(COMMON.photoAlt, lang)} lang={lang} />
+            {heroImage !== null ? (
+              <div className="relative aspect-video w-full overflow-hidden rounded-[18px] border border-[#2C3D57] bg-[#16263D]" data-hero-media="image">
+                <Image src={heroImage} alt={say(p.name, lang)} fill priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover" />
+              </div>
+            ) : (
+              <HeroMedia videoId={p.reviews[0] ?? null} photoSrc={PHOTO} photoAlt={say(COMMON.photoAlt, lang)} lang={lang} />
+            )}
           </div>
         </div>
       </section>
@@ -123,8 +139,34 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
         </div>
       </section>
 
-      {/* 5 WHAT YOU GET · 6 YOUR JOURNEY · 7 QUOTE (shared) */}
+      {/* 5 WHAT YOU GET (shared) */}
       <WhatYouGetSection lang={lang} />
+
+      {/* PLANS FOR THIS PROGRAM */}
+      <section className={`bg-[#EEF2FB] ${sectionPad}`} data-program-plans>
+        <div className={`${wrap} flex flex-col gap-7`}>
+          <h2 className={h2}>{say(PLAN_COPY.programTitle, lang)}</h2>
+          {deepPlans && (
+            <p className="max-w-[820px] text-[18px] text-[#33415C]" data-plans-foundation>
+              {say(PLAN_COPY.afterFoundation, lang)}
+            </p>
+          )}
+          <PlanCards
+            plans={plans}
+            lang={lang}
+            choose={(plan) => (
+              <a href={bookingHref(p.slug, lang, plan.id)} className={chooseButtonClass(plan.mostChosen)} data-choose-plan={plan.id}>
+                {say(PLAN_COPY.choose, lang)}
+              </a>
+            )}
+          />
+          <a href={allPlansHref} className="self-start text-[17px] font-extrabold text-[#1F3A8A] hover:text-[#152a66]" data-see-all-plans>
+            {say(PLAN_COPY.seeAll, lang)}
+          </a>
+        </div>
+      </section>
+
+      {/* 6 YOUR JOURNEY · 7 QUOTE (shared) */}
       <JourneySection lang={lang} />
       <QuoteSection lang={lang} />
 
@@ -143,6 +185,9 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
 
       {/* 9 CLARITY SESSION CARD (shared) */}
       <ClarityCardSection lang={lang} bookHref={book} />
+
+      {/* TRUSTED BY THOUSANDS (shared) */}
+      <TrustSection lang={lang} />
 
       {/* 10 FAQ + OFTEN TAKEN TOGETHER + DISCLAIMER */}
       <section className={sectionPad}>

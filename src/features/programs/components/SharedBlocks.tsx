@@ -1,4 +1,7 @@
-import { CLARITY_CARD, COMMON, JOURNEY, QUOTE, WHAT_YOU_GET, say } from "../common";
+import Image from "next/image";
+import { CLARITY_CARD, COMMON, JOURNEY, QUOTE, STATS, TRUST, WHAT_YOU_GET, say } from "../common";
+import { GALLERY_PHOTOS } from "@/config/galleryPhotos";
+import { meRecordingImage } from "../images";
 import type { ProgramLang } from "../types";
 
 // Shared blocks from the approved copy (Nov 8, 2026), used on all 15
@@ -7,6 +10,10 @@ import type { ProgramLang } from "../types";
 
 const wrap = "mx-auto w-full max-w-[1160px]";
 const h2 = "text-[28px] font-extrabold leading-[1.2] md:text-[40px]";
+const RECORDING_ALT = { en: "Dr. Kapil Dev Sharma recording a meditation", hi: "मेडिटेशन रिकॉर्ड करते हुए डॉ. कपिल देव शर्मा" };
+
+/** Six workshop photos from the existing gallery (src/config/galleryPhotos.ts). */
+const WORKSHOP_PHOTOS = GALLERY_PHOTOS.filter((photo): photo is typeof photo & { src: string } => photo.src !== undefined && photo.category === "workshops").slice(0, 6);
 
 export function Tick({ color }: { color: string }): React.JSX.Element {
   return (
@@ -18,6 +25,8 @@ export function Tick({ color }: { color: string }): React.JSX.Element {
 
 /** Section 5 — What you get (navy), with the amber-bordered highlight box. */
 export function WhatYouGetSection({ lang }: { lang: ProgramLang }): React.JSX.Element {
+  // Owner's photo recording a meditation — shown once me-recording.jpg is in the image folder.
+  const photo = meRecordingImage();
   return (
     <section className="bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-20" data-what-you-get>
       <div className={`${wrap} flex flex-col gap-7`}>
@@ -33,9 +42,16 @@ export function WhatYouGetSection({ lang }: { lang: ProgramLang }): React.JSX.El
             </li>
           ))}
         </ul>
-        <p className="rounded-[16px] border-2 border-[#F2A93B] bg-[#16263D] p-6 text-[18px] leading-relaxed text-white md:p-7" data-meditation-highlight>
-          {say(WHAT_YOU_GET.highlight, lang)}
-        </p>
+        <div className="flex flex-wrap items-stretch gap-6">
+          {photo !== null && (
+            <div className="relative aspect-[4/3] min-h-[220px] w-full flex-[1_1_300px] overflow-hidden rounded-[16px] bg-[#16263D]" data-me-recording>
+              <Image src={photo} alt={say(RECORDING_ALT, lang)} fill sizes="(min-width: 1024px) 420px, 92vw" className="object-cover" />
+            </div>
+          )}
+          <p className="flex-[999_1_420px] self-center rounded-[16px] border-2 border-[#F2A93B] bg-[#16263D] p-6 text-[18px] leading-relaxed text-white md:p-7" data-meditation-highlight>
+            {say(WHAT_YOU_GET.highlight, lang)}
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -108,6 +124,48 @@ export function ClarityCardSection({ lang, bookHref }: { lang: ProgramLang; book
         <ClarityCardContent lang={lang} tone="light" />
         <a href={bookHref} className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] bg-[#0E1B2C] px-7 py-4 text-[18px] font-extrabold text-white sm:w-auto" data-band-book>
           {say(CLARITY_CARD.button, lang)}
+        </a>
+      </div>
+    </section>
+  );
+}
+
+/** "Trusted by thousands" band (hub and every program page, just before the FAQ): 4 numbers, 6 workshop photos, the podcast feature. */
+export function TrustSection({ lang }: { lang: ProgramLang }): React.JSX.Element {
+  return (
+    <section className="border-y border-[#E3E6EC] bg-white px-4 py-14 sm:px-6 md:py-20" data-trust>
+      <div className={`${wrap} flex flex-col gap-8`}>
+        <h2 className={h2}>{say(TRUST.heading, lang)}</h2>
+        <div className="grid grid-cols-2 gap-3.5 md:grid-cols-4" data-trust-stats>
+          {STATS.map((stat) => (
+            <div key={stat.value.en} className="rounded-[14px] border border-[#E3E6EC] bg-[#FBFAF7] px-5 py-4">
+              <p className="text-[28px] font-extrabold text-[#1F3A8A] md:text-[32px]">{say(stat.value, lang)}</p>
+              <p className="text-[16px] text-[#4A5568]">{say(stat.label, lang)}</p>
+            </div>
+          ))}
+        </div>
+        <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-6 *:snap-start" data-trust-photos>
+          {WORKSHOP_PHOTOS.map((photo) => (
+            <div key={photo.id} className="relative aspect-[4/3] w-[220px] flex-none overflow-hidden rounded-[12px] bg-[#E3E6EC] sm:w-auto">
+              <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 190px, (min-width: 640px) 33vw, 220px" className="object-cover" />
+            </div>
+          ))}
+        </div>
+        <a
+          href={TRUST.podcastUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex flex-wrap items-center gap-5 rounded-[16px] border border-[#E3E6EC] bg-[#0E1B2C] p-4 text-white no-underline sm:p-5"
+          data-trust-podcast
+        >
+          <span className="relative aspect-video w-full flex-[1_1_260px] overflow-hidden rounded-[10px] sm:max-w-[320px]">
+            <Image src={TRUST.podcastThumb} alt="" fill sizes="320px" className="object-cover" />
+          </span>
+          <span className="flex min-w-0 flex-[999_1_280px] flex-col gap-1.5">
+            <span className="text-[14px] font-semibold tracking-[0.06em] text-[#F2A93B]">{say(TRUST.podcastEyebrow, lang)}</span>
+            <span className="text-[22px] font-extrabold leading-[1.25]">{say(TRUST.podcastTitle, lang)}</span>
+            <span className="font-extrabold text-[#F2A93B] group-hover:underline">{say(TRUST.podcastLink, lang)}</span>
+          </span>
         </a>
       </div>
     </section>

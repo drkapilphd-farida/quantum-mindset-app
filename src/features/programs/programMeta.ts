@@ -10,9 +10,10 @@ export const PROGRAM_META: Record<ProgramSlug, ProgramMeta> = {
   'stress-anxiety-support': {
     slug: 'stress-anxiety-support',
     group: 'mind',
-    name: { en: "Stress, Anxiety & Panic Support", hi: "तनाव, एंग्ज़ायटी और पैनिक सपोर्ट" },
+    name: { en: "Stress, Anxiety, Panic & Depression Support", hi: "तनाव, एंग्ज़ायटी, पैनिक और डिप्रेशन सपोर्ट" },
     line: { en: "Calm the body, steady the mind, step by step.", hi: "शरीर शांत, मन स्थिर, कदम-दर-कदम।" },
-    seoTitle: { en: "Stress, Anxiety & Panic Attack Support — 1-on-1 Coaching with Dr. Kapil Dev Sharma | Mind Ur Mind", hi: "तनाव, एंग्ज़ायटी और पैनिक अटैक में सपोर्ट — डॉ. कपिल देव शर्मा के साथ 1-on-1 कोचिंग | मन उर मन" },
+    // Owner (plans brief, Nov 2026): exact title, no site-name suffix.
+    seoTitle: { en: "Stress, Anxiety, Panic Attacks & Depression Support — 1-on-1 with Dr. Kapil", hi: "तनाव, एंग्ज़ायटी, पैनिक अटैक और डिप्रेशन में सपोर्ट — डॉ. कपिल के साथ 1-on-1" },
     seoDescription: { en: "Support and coaching for stress, anxiety, panic attacks and low mood, alongside medical care where needed. The approach is chosen for each person.", hi: "तनाव, एंग्ज़ायटी, पैनिक अटैक और उदासी में सपोर्ट और कोचिंग, ज़रूरत हो तो मेडिकल देखभाल के साथ। तरीका हर व्यक्ति के लिए अलग चुना जाता है।" },
     faqTopic: { en: "stress and anxiety support", hi: "तनाव और एंग्ज़ायटी सपोर्ट" },
   },

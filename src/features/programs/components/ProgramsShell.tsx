@@ -27,8 +27,8 @@ export function ProgramsShell({
   return (
     <LanguageOverride lang={lang}>
       <div className="warm-light min-h-screen font-sans antialiased" lang={lang}>
-        {schemas.map((schema) => (
-          <script key={schema.slice(0, 40)} type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
+        {schemas.map((schema, index) => (
+          <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
         ))}
         <SiteNav languageLink={languageLink} cta={{ label: ctaLabel, href: ctaHref, external: false }} />
         <main className={`${mukta.className} bg-[#FBFAF7] leading-[1.6] text-[#0E1B2C]`}>{children}</main>

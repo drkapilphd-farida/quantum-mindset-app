@@ -1,25 +1,30 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
+import Image from "next/image";
 import { normalizeIndianMobile } from "@/lib/phone/indianMobile";
 import { waLink } from "@/data/links";
 import { cancelWhatsAppHandoff, finishWhatsAppHandoff, openPendingWhatsAppTab } from "@/lib/whatsapp/handoff";
 import { clarityRequestMessage } from "@/lib/whatsapp/leadMessages";
 import { submitSessionEnquiry } from "@/app/personal-sessions/actions/submitSessionEnquiry";
 import { GROUPS, say } from "../common";
-import { HUB, QUIZ_NAMES, QUIZ_RESULTS, type ChipId, type Q1, type Q2 } from "../hubCopy";
-import { PROGRAMS, getProgram, programHref, programsInGroup } from "../programs";
+import { HUB, QUIZ_NAMES, QUIZ_RESULTS, type DoorId, type Q1, type Q2 } from "../hubCopy";
+import { PROGRAMS, getProgram, programHref } from "../programs";
+import { PLANS, PLAN_COPY, getPlan, type SessionPlanId } from "../plans";
+import { programHeroImage } from "../images";
 import type { ProgramLang, ProgramSlug } from "../types";
 
 // /personal-sessions interactive parts. The quiz result button and
-// ?program=<slug> both pre-select a program in the booking form.
+// ?program=<slug> pre-select a program in the booking form; "Choose this
+// plan" and ?plan=<id> pre-select the plan (Clarity Session by default).
 
-type BookingState = { program: string; setProgram: (value: string) => void };
+type BookingState = { program: string; setProgram: (value: string) => void; plan: SessionPlanId; setPlan: (value: SessionPlanId) => void };
 const BookingContext = createContext<BookingState | null>(null);
 
-export function HubBookingProvider({ initialProgram, children }: { initialProgram: ProgramSlug | null; children: React.ReactNode }): React.JSX.Element {
+export function HubBookingProvider({ initialProgram, initialPlan, children }: { initialProgram: ProgramSlug | null; initialPlan: SessionPlanId | null; children: React.ReactNode }): React.JSX.Element {
   const [program, setProgram] = useState<string>(initialProgram ?? "");
-  return <BookingContext.Provider value={{ program, setProgram }}>{children}</BookingContext.Provider>;
+  const [plan, setPlan] = useState<SessionPlanId>(initialPlan ?? "clarity");
+  return <BookingContext.Provider value={{ program, setProgram, plan, setPlan }}>{children}</BookingContext.Provider>;
 }
 
 function useBooking(): BookingState {
@@ -28,43 +33,70 @@ function useBooking(): BookingState {
   return value;
 }
 
-const pill = (on: boolean): string =>
-  `min-h-11 rounded-full border-2 px-[18px] py-2.5 text-[16px] ${on ? "border-[#0E1B2C] bg-[#0E1B2C] font-extrabold text-white" : "border-[#C5CCD8] bg-white font-semibold text-[#0E1B2C]"}`;
+const door = (on: boolean): string =>
+  `flex min-h-[96px] items-center justify-center rounded-[18px] border-2 px-5 py-6 text-center text-[22px] font-extrabold leading-[1.2] transition-colors md:min-h-[120px] md:text-[26px] ${
+    on ? "border-[#0E1B2C] bg-[#0E1B2C] text-white" : "border-[#C5CCD8] bg-white text-[#0E1B2C] hover:border-[#0E1B2C]"
+  }`;
 
+/** Three doors (owner's plans brief): one selected shows only its programs; "See all 15 programs" shows the full grid. */
 export function HubPrograms({ lang }: { lang: ProgramLang }): React.JSX.Element {
-  const [chip, setChip] = useState<ChipId>("all");
-  const shown = programsInGroup(chip);
   const c = HUB.programs;
+  const [selected, setSelected] = useState<DoorId | "all">("calm");
+  const current = c.doors.find((d) => d.id === selected);
+  const shown = current === undefined ? PROGRAMS : current.programs.map(getProgram);
   return (
     <>
-      <div role="group" aria-label={say(c.filterLabel, lang)} className="flex flex-wrap gap-2.5" data-chips>
-        {c.chips.map((item) => (
-          <button key={item.id} type="button" aria-pressed={chip === item.id} onClick={() => setChip(item.id)} className={pill(chip === item.id)} data-chip={item.id}>
-            {say(item.label, lang)}
+      <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3" data-doors>
+        {c.doors.map((d) => (
+          <button key={d.id} type="button" aria-pressed={selected === d.id} onClick={() => setSelected(d.id)} className={door(selected === d.id)} data-door={d.id}>
+            {say(d.label, lang)}
           </button>
         ))}
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5" data-program-cards>
         {shown.map((p) => {
           const g = GROUPS[p.group];
+          const thumb = programHeroImage(p.slug);
           return (
             <a
               key={p.slug}
               href={programHref(p.slug, lang)}
-              className="flex min-h-[190px] flex-col gap-2.5 rounded-[16px] border-[1.5px] border-[#E3E6EC] bg-white p-[22px] text-[#0E1B2C] no-underline transition-colors hover:border-[#0E1B2C]"
+              className="flex min-h-[190px] flex-col overflow-hidden rounded-[16px] border-[1.5px] border-[#E3E6EC] bg-white text-[#0E1B2C] no-underline transition-colors hover:border-[#0E1B2C]"
               data-program-card={p.slug}
             >
-              <span className="self-start rounded-full px-2.5 py-[3px] text-[13px] font-extrabold" style={{ background: g.tagBg, color: g.tagFg }}>
-                {say(g.label, lang)}
+              {thumb !== null && (
+                <span className="relative block aspect-[4/3] w-full bg-[#E3E6EC]" data-card-thumb>
+                  <Image src={thumb} alt="" fill sizes="(min-width: 1024px) 360px, 92vw" className="object-cover" />
+                </span>
+              )}
+              <span className="flex flex-1 flex-col gap-2.5 p-[22px]">
+                <span className="self-start rounded-full px-2.5 py-[3px] text-[13px] font-extrabold" style={{ background: g.tagBg, color: g.tagFg }}>
+                  {say(g.label, lang)}
+                </span>
+                <span className="text-[22px] font-extrabold leading-[1.25]">{say(p.name, lang)}</span>
+                <span className="text-[16px] text-[#4A5568]">{say(p.line, lang)}</span>
+                <span className="mt-auto text-[16px] font-extrabold text-[#1F3A8A]">{lang === "hi" ? "और जानिए →" : "Learn more →"}</span>
               </span>
-              <span className="text-[22px] font-extrabold leading-[1.25]">{say(p.name, lang)}</span>
-              <span className="text-[16px] text-[#4A5568]">{say(p.line, lang)}</span>
-              <span className="mt-auto text-[16px] font-extrabold text-[#1F3A8A]">{lang === "hi" ? "और जानिए →" : "Learn more →"}</span>
             </a>
           );
         })}
       </div>
+      {selected !== "all" && (
+        <button type="button" onClick={() => setSelected("all")} className="self-start rounded-[10px] border-2 border-[#0E1B2C] px-6 py-3 text-[17px] font-extrabold text-[#0E1B2C] hover:bg-[#0E1B2C] hover:text-white" data-see-all-programs>
+          {say(c.seeAll, lang)}
+        </button>
+      )}
     </>
+  );
+}
+
+/** "Choose this plan" on the hub: pre-selects the plan in the form below and jumps to it. */
+export function HubChoosePlan({ plan, lang, className }: { plan: SessionPlanId; lang: ProgramLang; className: string }): React.JSX.Element {
+  const { setPlan } = useBooking();
+  return (
+    <a href={`?plan=${plan}#book`} onClick={(event) => { event.preventDefault(); setPlan(plan); document.getElementById("book")?.scrollIntoView({ behavior: "smooth" }); window.history.replaceState(null, "", "#book"); }} className={className} data-choose-plan={plan}>
+      {say(PLAN_COPY.choose, lang)}
+    </a>
   );
 }
 
@@ -137,8 +169,10 @@ const field = "min-h-11 w-full rounded-[8px] border border-[#3A4B66] bg-[#0E1B2C
 
 export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: string }): React.JSX.Element {
   const c = HUB.book;
-  const { program, setProgram } = useBooking();
+  const { program, setProgram, plan, setPlan } = useBooking();
   const [form, setForm] = useState<FormState>(EMPTY);
+  const [retreatNotify, setRetreatNotify] = useState(false);
+  const isRetreat = program === "personal-retreat";
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
@@ -163,11 +197,11 @@ export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: st
     const tab = openPendingWhatsAppTab();
     setPending(true);
     setError(null);
-    const result = await submitSessionEnquiry({ ...form, program, source });
+    const result = await submitSessionEnquiry({ ...form, program, plan, retreatNotify: isRetreat && retreatNotify, source });
     setPending(false);
     if (result.success) {
       const programName = program === "" || program === "not-sure" ? say(c.notSure, "en") : getProgram(program as ProgramSlug).name.en;
-      finishWhatsAppHandoff(tab, waLink(clarityRequestMessage({ programName, name: form.name, phone: form.phone, city: form.city, change: form.change })));
+      finishWhatsAppHandoff(tab, waLink(clarityRequestMessage({ programName, planName: getPlan(plan).name.en, retreatNotify: isRetreat && retreatNotify, name: form.name, phone: form.phone, city: form.city, change: form.change })));
       setSent(true);
     } else {
       cancelWhatsAppHandoff(tab);
@@ -207,6 +241,24 @@ export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: st
           {PROGRAMS.map((p) => (
             <option key={p.slug} value={p.slug}>
               {say(p.name, lang)}
+            </option>
+          ))}
+        </select>
+      </div>
+      {isRetreat && (
+        <label className="flex items-start gap-3 text-[17px]" data-retreat-notify>
+          <input type="checkbox" checked={retreatNotify} onChange={(e) => setRetreatNotify(e.target.checked)} className="mt-1 h-5 w-5 flex-none accent-[#F2A93B]" />
+          {say(c.retreatNotify, lang)}
+        </label>
+      )}
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="bPlan" className="font-semibold">
+          {say(PLAN_COPY.formLabel, lang)}
+        </label>
+        <select id="bPlan" required value={plan} onChange={(e) => setPlan(e.target.value as SessionPlanId)} className={field} data-plan-select>
+          {PLANS.map((p) => (
+            <option key={p.id} value={p.id}>
+              {say(p.name, lang)} — {p.fee}
             </option>
           ))}
         </select>
