@@ -20,6 +20,8 @@ export function trackMetaPixelEvent(event: MetaPixelStandardEvent, params?: FbqP
   if (typeof window === 'undefined') return
   const eventId = newEventId()
   track(event, params, eventId)
+  // ViewContent is browser-only (owner, Nov 2026).
+  if (event === 'ViewContent') return
   // Fire and forget: a tracking call must never block or break a click.
   trackServerEvent({ eventName: event, eventId, url: window.location.href, ...(params !== undefined ? { customData: params } : {}) }).catch(() => undefined)
 }

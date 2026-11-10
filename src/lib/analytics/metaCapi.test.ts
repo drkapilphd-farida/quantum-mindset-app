@@ -23,3 +23,37 @@ describe('UTM line saved with each lead', () => {
     expect(utmToLine(undefined)).toBeNull()
   })
 })
+
+describe('Meta Pixel + Conversions API switches', () => {
+  it('uses the owner’s Pixel ID, set in site.config.ts only', async () => {
+    const { analytics } = await import('@/config/site.config')
+    expect(analytics.metaPixelId).toBe('2813779008994609')
+  })
+
+  it('sends nothing to Meta’s server until META_CAPI_TOKEN is set, then sends with the event_id', async () => {
+    const { sendMetaCapiEvent, hasMetaCapi } = await import('./metaCapi')
+    const calls: string[] = []
+    const realFetch = globalThis.fetch
+    globalThis.fetch = (async (url: string | URL | Request, init?: RequestInit) => {
+      calls.push(`${String(url)} ${String(init?.body)}`)
+      return new Response('{}', { status: 200 })
+    }) as typeof fetch
+    const saved = process.env.META_CAPI_TOKEN
+    try {
+      delete process.env.META_CAPI_TOKEN
+      expect(hasMetaCapi()).toBe(false)
+      await sendMetaCapiEvent({ eventName: 'Lead', eventId: 'evt-12345678', eventSourceUrl: 'https://mindurmind.org.in/personal-sessions' })
+      expect(calls).toHaveLength(0)
+      process.env.META_CAPI_TOKEN = 'test-token'
+      await sendMetaCapiEvent({ eventName: 'Lead', eventId: 'evt-12345678', eventSourceUrl: 'https://mindurmind.org.in/personal-sessions' })
+      expect(calls).toHaveLength(1)
+      expect(calls[0]).toContain('graph.facebook.com/')
+      expect(calls[0]).toContain('/2813779008994609/events')
+      expect(calls[0]).toContain('"event_id":"evt-12345678"')
+    } finally {
+      globalThis.fetch = realFetch
+      if (saved === undefined) delete process.env.META_CAPI_TOKEN
+      else process.env.META_CAPI_TOKEN = saved
+    }
+  })
+})

@@ -488,12 +488,14 @@ export function programForCheckoutHref(href: string): (typeof programs)[ProgramI
  * Analytics IDs — loaded site-wide only when set. Leave empty until the
  * real IDs are supplied; never put a placeholder here.
  * TODO(content): GA4 measurement ID (G-…) not provided yet.
- * Meta Pixel: founder's pixel (16 Oct 2026); NEXT_PUBLIC_META_PIXEL_ID overrides it.
+ * Meta Pixel: the owner's own Pixel (business portfolio MIND UR MIND). Owner
+ * (Nov 2026): this ID everywhere, set here only — no env override, so no
+ * other Pixel ID can replace it.
  */
 export const analytics: { readonly ga4MeasurementId: string; readonly metaPixelId: string } = {
   // Owner (conversion brief): set NEXT_PUBLIC_GA_MEASUREMENT_ID in Vercel (G-XXXXXXX); empty = GA4 off.
   ga4MeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? '',
-  metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '2813779008994609',
+  metaPixelId: '2813779008994609',
 }
 
 /** The first checkout/enquiry link of a program — throws at module load if the registry entry has none. */

@@ -11,7 +11,7 @@ import { logger } from '@/lib/logger'
 
 const GRAPH_VERSION = 'v23.0'
 
-export type CapiEventName = 'ViewContent' | 'Lead' | 'Contact' | 'InitiateCheckout' | 'Purchase'
+export type CapiEventName = 'Lead' | 'Contact' | 'InitiateCheckout' | 'Purchase'
 
 export type CapiEvent = {
   eventName: CapiEventName
