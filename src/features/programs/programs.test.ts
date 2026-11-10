@@ -3,6 +3,7 @@ import { ASK_WHATSAPP, CAPACITY_LINE, CLARITY_CARD, COMMON, DISCLAIMERS, FULL_RE
 import { CHANGE_ICONS } from './changeIcons'
 import { PREBUILT_PROGRAM_SLUGS, prebuiltCopyRedirect, prebuiltRewritePath } from '@/config/prebuiltLangPages'
 import { BOOKED_PAGE, CLARITY_PAGE } from '@/features/clarity-session/copy'
+import { CLARITY_BOOKING } from '@/config/site.config'
 import { PLANS, PLAN_COPY, PROGRAM_PLANS } from './plans'
 import { HUB, QUIZ_RESULTS } from './hubCopy'
 import { PROGRAMS, PROGRAM_SLUGS, bookingHref, clarityHref, getProgram, isProgramSlug, reviewThumb } from './programs'
@@ -211,6 +212,10 @@ describe('conversion brief (Nov 2026)', () => {
     expect(hubQs).toContain(REFUND_FAQ.q.en)
     expect(hubQs).toContain(RESCHEDULE_FAQ.q.en)
     expect(SHARED_PROGRAM_FAQS.map((f) => f.q.en)).toEqual([FULL_RECORDINGS_FAQ.q.en, REFUND_FAQ.q.en, RESCHEDULE_FAQ.q.en])
+  })
+
+  it('embeds the owner’s Cal.com event on /clarity-session/booked', () => {
+    expect(CLARITY_BOOKING.calcomEventLink).toBe('https://cal.com/kapil-dev-sharma-n0zfwk/clarity-session')
   })
 
   it('sends every "Book a Clarity Session" button to /clarity-session', () => {

@@ -666,8 +666,8 @@ export const CLARITY_SESSION = { priceInr: 1100, minutes: 60 } as const
 export const CLARITY_BOOKING: { readonly paymentLink: string | null; readonly calcomEventLink: string | null } = {
   // TODO(business): Dr. Kapil to send [CLARITY_PAYMENT_LINK] (Razorpay Payment Page, ₹1,100).
   paymentLink: null,
-  // TODO(business): Dr. Kapil to send [CALCOM_EVENT_LINK], e.g. https://cal.com/<username>/clarity-session
-  calcomEventLink: null,
+  // Owner (Nov 2026): "Clarity Session (60 min)" — Google Calendar + Zoom, required WhatsApp number question.
+  calcomEventLink: 'https://cal.com/kapil-dev-sharma-n0zfwk/clarity-session',
 }
 
 /**
