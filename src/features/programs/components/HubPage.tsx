@@ -1,16 +1,19 @@
 import Image from "next/image";
-import { COMMON, say } from "../common";
+import { ASK_WHATSAPP, CAPACITY_LINE, CLARITY_CARD, COMMON, say } from "../common";
+import { waLink } from "@/data/links";
+import { reviewVideo } from "../reviewVideos";
+import { WhatsAppGlyph } from "./WhatsAppGlyph";
 import { HUB } from "../hubCopy";
-import { bookingHref } from "../programs";
-import type { ProgramLang, ProgramSlug } from "../types";
+import { clarityHref } from "../programs";
+import type { ProgramLang } from "../types";
 import { Faq } from "./Faq";
 import { HubBookingForm, HubBookingProvider, HubChoosePlan, HubPrograms, HubQuiz } from "./HubInteractive";
-import { PLAN_COPY, PLAN_IDS, type SessionPlanId } from "../plans";
+import { PLAN_COPY, PLAN_IDS } from "../plans";
 import { PlanCards, chooseButtonClass } from "./Plans";
-import { HeroMedia, ReviewStrip } from "./Media";
+import { HeroMedia, ReviewCard, ReviewStrip } from "./Media";
 import { HUB_REVIEWS } from "../reviewVideos";
 import { StickyBookBar } from "./StickyBookBar";
-import { ClarityCardContent, TrustSection, WhatYouGetSection } from "./SharedBlocks";
+import { ClarityCardContent, NotReadyBand, TrustSection, WhatYouGetSection } from "./SharedBlocks";
 import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
 
 // /personal-sessions — design from design-personal-sessions-hub.html; section
@@ -23,10 +26,10 @@ const wrap = "mx-auto w-full max-w-[1160px]";
 const sectionPad = "px-4 py-14 sm:px-6 md:py-20";
 const h2 = "text-[28px] font-extrabold leading-[1.2] md:text-[40px]";
 
-export function HubPage({ lang, initialProgram, initialPlan }: { lang: ProgramLang; initialProgram: ProgramSlug | null; initialPlan: SessionPlanId | null }): React.JSX.Element {
+export function HubPage({ lang }: { lang: ProgramLang }): React.JSX.Element {
   const h = HUB.hero;
   return (
-    <HubBookingProvider initialProgram={initialProgram} initialPlan={initialPlan}>
+    <HubBookingProvider>
       {/* HERO */}
       <section className="bg-[#0E1B2C] px-4 pb-16 pt-14 text-white sm:px-6 md:pt-[72px]">
         <div className={`${wrap} flex flex-wrap items-center gap-12`}>
@@ -39,11 +42,12 @@ export function HubPage({ lang, initialProgram, initialPlan }: { lang: ProgramLa
             </h1>
             <p className="text-[18px] text-[#D6DCE8] md:text-[20px]">{say(h.sub, lang)}</p>
             <div className="flex flex-wrap gap-3 pt-2">
-              <a href="#book" className="inline-flex min-h-12 items-center rounded-[10px] bg-[#F2A93B] px-7 py-3.5 text-[18px] font-extrabold text-[#0E1B2C] hover:bg-[#E39A2A]">
+              <a href={clarityHref(null, lang)} className="inline-flex min-h-12 items-center rounded-[10px] bg-[#F2A93B] px-7 py-3.5 text-[18px] font-extrabold text-[#0E1B2C] hover:bg-[#E39A2A]">
                 {say(h.book, lang)}
               </a>
-              <a href="#quiz" className="inline-flex min-h-12 items-center rounded-[10px] border-[1.5px] border-[#5B6B85] px-6 py-3.5 text-[18px] font-semibold text-white">
-                {say(h.quiz, lang)}
+              <a href={waLink(ASK_WHATSAPP.message("Personal Sessions"))} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-2.5 rounded-[10px] border-[1.5px] border-[#5B6B85] px-6 py-3.5 text-[18px] font-semibold text-white hover:border-[#25D366]" data-hero-whatsapp>
+                <WhatsAppGlyph />
+                {say(ASK_WHATSAPP.label, lang)}
               </a>
             </div>
             <a href={lang === "hi" ? "/stress-anxiety-support?lang=hi" : "/stress-anxiety-support"} className="self-start text-[17px] font-semibold text-[#F2A93B] underline decoration-[#F2A93B]/50 underline-offset-4 hover:decoration-[#F2A93B]" data-stress-link>
@@ -107,6 +111,9 @@ export function HubPage({ lang, initialProgram, initialPlan }: { lang: ProgramLa
       <section id="plans" className={`scroll-mt-20 bg-[#EEF2FB] ${sectionPad}`} data-hub-plans>
         <div className={`${wrap} flex flex-col gap-7`}>
           <h2 className={h2}>{say(PLAN_COPY.hubTitle, lang)}</h2>
+          <div className="max-w-[460px]" data-plans-proof>
+            <ReviewCard video={reviewVideo("1FO8UVfxJ9I")} lang={lang} />
+          </div>
           <PlanCards plans={PLAN_IDS} lang={lang} choose={(plan) => <HubChoosePlan plan={plan.id} lang={lang} className={chooseButtonClass(plan.mostChosen)} />} />
           <ul className="flex flex-col gap-2 text-[17px] text-[#33415C]" data-plan-rules>
             {PLAN_COPY.rules.map((rule) => (
@@ -116,6 +123,9 @@ export function HubPage({ lang, initialProgram, initialPlan }: { lang: ProgramLa
               </li>
             ))}
           </ul>
+          <p className="text-[17px] font-semibold text-[#33415C]" data-capacity-line>
+            {say(CAPACITY_LINE, lang)}
+          </p>
         </div>
       </section>
 
@@ -156,9 +166,15 @@ export function HubPage({ lang, initialProgram, initialPlan }: { lang: ProgramLa
           {/* Left: the shared Clarity Session card text (owner: card text left, form right). */}
           <div className="min-w-0 flex-[1_1_340px]">
             <ClarityCardContent lang={lang} tone="dark" />
+            <a href={clarityHref(null, lang)} className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] bg-[#F2A93B] px-7 py-4 text-[18px] font-extrabold text-[#0E1B2C] hover:bg-[#E39A2A] sm:w-auto" data-band-book>
+              {say(CLARITY_CARD.button, lang)}
+            </a>
           </div>
-          <div className="min-w-0 flex-[999_1_460px]">
-            <HubBookingForm lang={lang} source={initialProgram ?? "hub"} />
+          <div className="flex min-w-0 flex-[999_1_460px] flex-col gap-4">
+            <h3 className="text-[24px] font-extrabold leading-[1.25] md:text-[28px]" data-enquiry-heading>
+              {say(HUB.book.enquiryHeading, lang)}
+            </h3>
+            <HubBookingForm lang={lang} />
           </div>
         </div>
       </section>
@@ -174,7 +190,9 @@ export function HubPage({ lang, initialProgram, initialPlan }: { lang: ProgramLa
         </div>
       </section>
 
-      <StickyBookBar href={bookingHref(null, lang)} label={say(COMMON.sticky, lang)} />
+      <NotReadyBand lang={lang} />
+
+      <StickyBookBar href={clarityHref(null, lang)} label={say(COMMON.sticky, lang)} />
     </HubBookingProvider>
   );
 }

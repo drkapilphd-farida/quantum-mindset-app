@@ -120,6 +120,9 @@ function buildContentSecurityPolicy(): string {
       'https://api.razorpay.com',
       'https://checkout.razorpay.com',
       'https://www.youtube-nocookie.com',
+      // Clarity Session booking calendar (/clarity-session/booked, owner's conversion brief).
+      'https://cal.com',
+      'https://app.cal.com',
       // Executive Brain Performance Workshop — the venue Google Maps embed.
       'https://www.google.com',
     ],
@@ -264,6 +267,13 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'i.ytimg.com',
+        pathname: '/vi/**',
+      },
+      // Shorts use YouTube's mid-video frame (img.youtube.com/vi/<id>/hq2.jpg),
+      // owner's conversion brief — no other topic's title painted on it.
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
         pathname: '/vi/**',
       },
     ],

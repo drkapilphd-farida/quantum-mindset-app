@@ -66,6 +66,47 @@ export const FULL_RECORDINGS_FAQ = {
   },
 } as const
 
+/** Conversion brief (Nov 2026), word for word. */
+export const REFUND_LINE: Bi = {
+  en: `Not the right fit? If you feel the Clarity Session was not right for you, tell us within 24 hours and your ${price} is refunded in full.`,
+  hi: `सही नहीं लगा? अगर आपको लगे कि क्लैरिटी सेशन आपके लिए सही नहीं था, तो 24 घंटे के भीतर हमें बताइए और आपके ${price} पूरे वापस कर दिए जाएँगे।`,
+}
+
+export const CAPACITY_LINE: Bi = {
+  en: 'Dr. Kapil works with only 10 new people each month, so every person gets full attention.',
+  hi: 'डॉ. कपिल हर महीने सिर्फ़ 10 नए लोगों के साथ काम करते हैं, ताकि हर व्यक्ति को पूरा ध्यान मिले।',
+}
+
+/** Added to the FAQ on the hub and every program page (conversion brief). */
+export const REFUND_FAQ = {
+  q: { en: "What if the session doesn't feel right for me?", hi: 'अगर सेशन मुझे सही न लगे तो?' },
+  a: {
+    en: `Tell us within 24 hours of your Clarity Session and your ${price} is refunded in full. No questions asked.`,
+    hi: `अपने क्लैरिटी सेशन के 24 घंटे के भीतर हमें बताइए और आपके ${price} पूरे वापस कर दिए जाएँगे। कोई सवाल नहीं पूछा जाएगा।`,
+  },
+} as const
+
+export const RESCHEDULE_FAQ = {
+  q: { en: 'Can I reschedule a session?', hi: 'क्या मैं सेशन का समय बदल सकता/सकती हूँ?' },
+  a: { en: 'Yes. You can reschedule up to 12 hours before your session, free of charge.', hi: 'हाँ। आप अपने सेशन से 12 घंटे पहले तक, बिना किसी शुल्क के, समय बदल सकते हैं।' },
+} as const
+
+/** Hero second button (hub and program pages). The message is sent in English, like the other lead messages. */
+export const ASK_WHATSAPP = {
+  label: { en: 'Ask on WhatsApp', hi: 'WhatsApp पर पूछिए' },
+  message: (programName: string): string => `Hi Dr. Kapil, I have a question about ${programName}.`,
+} as const
+
+/** Band after the FAQ on the Stress page and the hub. */
+export const NOT_READY: Bi = {
+  en: 'Not ready to book yet? Take the free Overthinking Test and get your result on WhatsApp.',
+  hi: 'अभी बुक करने के लिए तैयार नहीं? मुफ़्त ओवरथिंकिंग टेस्ट दीजिए और अपना रिज़ल्ट WhatsApp पर पाइए।',
+}
+export const OVERTHINKING_TEST_HREF = '/mind-assessment'
+
+/** Shared FAQs after each program's own 4: FAQ 5 (full recordings), then refund and reschedule. */
+export const SHARED_PROGRAM_FAQS = [FULL_RECORDINGS_FAQ, REFUND_FAQ, RESCHEDULE_FAQ] as const
+
 /** The four numbers (hub hero and the "Trusted by thousands" band). */
 export const STATS: { value: Bi; label: Bi }[] = [
   { value: { en: '12+ years', hi: '12+ साल' }, label: { en: 'of mind coaching', hi: 'माइंड कोचिंग' } },

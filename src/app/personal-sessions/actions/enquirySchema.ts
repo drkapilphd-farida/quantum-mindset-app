@@ -25,10 +25,13 @@ export const SessionEnquirySchema = z.object({
   city: z.string().trim().min(2, 'Please enter your city.').max(100),
   program: z.enum(PROGRAM_VALUES, { message: 'Please choose a program, or "Not sure yet".' }),
   /** Clarity Session or one of the 5 plans (owner's plans brief). */
-  plan: z.enum(PLAN_VALUES, { message: 'Please choose a plan.' }),
+  plan: z.enum(PLAN_VALUES, { message: 'Please choose a plan.' }).optional(),
   /** Personal Retreat only: "Notify me about in-person retreats". */
   retreatNotify: z.boolean().optional(),
-  change: z.string().trim().min(10, 'Please write a few words about what you would like to change, and why.').max(2000),
+  /** Optional since the conversion brief (Nov 2026). */
+  change: z.string().trim().max(2000).optional(),
+  /** The visitor's utm_* params from the landing URL (conversion brief). */
+  utm: z.record(z.string().max(40), z.string().trim().max(200)).optional(),
   /** Page the request came from (program slug or "hub"), for the owner. */
   source: z.string().trim().max(60).optional(),
   /** Honeypot — must stay empty. */

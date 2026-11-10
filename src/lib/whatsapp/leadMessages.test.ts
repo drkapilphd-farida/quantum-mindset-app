@@ -9,6 +9,12 @@ describe('lead WhatsApp messages', () => {
     expect(msg).not.toContain('in-person retreats')
   })
 
+  it('leaves out the plan and the optional answer when not given', () => {
+    const msg = clarityRequestMessage({ programName: 'Telepathy', name: 'Asha', phone: '+919540123161', city: 'Vadodara', change: '' })
+    expect(msg).not.toContain('Plan:')
+    expect(msg).not.toContain('What I would like to change')
+  })
+
   it('adds the in-person retreat wish when ticked', () => {
     const msg = clarityRequestMessage({ programName: 'Personal Retreat', planName: 'Core · 7 days', retreatNotify: true, name: 'Asha', phone: '+919540123161', city: 'Vadodara', change: 'A few days for myself.' })
     expect(msg).toContain('Notify me about in-person retreats (Rishikesh / Lonavala): Yes')

@@ -1,4 +1,4 @@
-import { COMMON, FULL_RECORDINGS_FAQ, STATS } from './common'
+import { COMMON, FULL_RECORDINGS_FAQ, REFUND_FAQ, RESCHEDULE_FAQ, STATS } from './common'
 
 const PRICE = COMMON.price
 const MIN = COMMON.minutes
@@ -125,12 +125,15 @@ export const HUB = {
     eyebrow: { en: 'YOUR GUIDE', hi: 'आपके मार्गदर्शक' },
     name: { en: 'Dr. Kapil Dev Sharma', hi: 'डॉ. कपिल देव शर्मा' },
     text: {
-      en: '12+ years of mind coaching · 15 years as a professor. Spent the whole of 2016 in the Himalayas, and has guided workshops and personal students since 2017. The spiritual practices are taught through Kriya Yoga and the movement of prana; the mind sessions use the approach that fits each person best.',
-      hi: '12+ साल माइंड कोचिंग · 15 साल प्रोफ़ेसर। 2016 का पूरा साल हिमालय में बिताया, और 2017 से वर्कशॉप और व्यक्तिगत विद्यार्थियों का मार्गदर्शन कर रहे हैं। आध्यात्मिक अभ्यास क्रिया योग और प्राण की गति के ज़रिए सिखाए जाते हैं; मन के सेशन में वह तरीका अपनाया जाता है जो हर व्यक्ति के लिए सबसे सही हो।',
+      en: `${COMMON.experience.en}. Spent the whole of 2016 in the Himalayas, and has guided workshops and personal students since 2017. The spiritual practices are taught through Kriya Yoga and the movement of prana; the mind sessions use the approach that fits each person best. Dr. Kapil holds a PhD in English Literature and taught as a professor for 15 years at Accurate Institute of Management and Technology, Greater Noida (affiliated to Dr. A.P.J. Abdul Kalam Technical University) and Amar Singh Post Graduate College, Lakhaoti, Bulandshahr (affiliated to CCS University, Meerut).`,
+      hi: `${COMMON.experience.hi}। 2016 का पूरा साल हिमालय में बिताया, और 2017 से वर्कशॉप और व्यक्तिगत विद्यार्थियों का मार्गदर्शन कर रहे हैं। आध्यात्मिक अभ्यास क्रिया योग और प्राण की गति के ज़रिए सिखाए जाते हैं; मन के सेशन में वह तरीका अपनाया जाता है जो हर व्यक्ति के लिए सबसे सही हो। डॉ. कपिल ने अंग्रेज़ी साहित्य में PhD की है और 15 साल तक Accurate Institute of Management and Technology, ग्रेटर नोएडा (डॉ. ए.पी.जे. अब्दुल कलाम टेक्निकल यूनिवर्सिटी से संबद्ध) और अमर सिंह पोस्ट ग्रेजुएट कॉलेज, लखावटी, बुलंदशहर (सीसीएस यूनिवर्सिटी, मेरठ से संबद्ध) में प्रोफ़ेसर के रूप में पढ़ाया है।`,
     },
   },
   book: {
     // Left side: the shared Clarity Session card (common.ts, CLARITY_CARD).
+    // Right side: the enquiry form, now the second option (conversion brief).
+    enquiryHeading: { en: 'Prefer to talk first? Send an enquiry', hi: 'पहले बात करना चाहते हैं? पूछताछ भेजिए' },
+    optional: { en: '(optional)', hi: '(वैकल्पिक)' },
     name: { en: 'Name', hi: 'नाम' },
     phone: { en: 'WhatsApp number', hi: 'WhatsApp नंबर' },
     city: { en: 'City', hi: 'शहर' },
@@ -189,6 +192,8 @@ export const HUB = {
         q: { en: 'Is my conversation private?', hi: 'क्या मेरी बातचीत निजी रहती है?' },
         a: { en: 'Yes. Everything you share in a session stays between you and Dr. Kapil.', hi: 'हाँ। सेशन में आप जो भी साझा करते हैं, वह आपके और डॉ. कपिल के बीच रहता है।' },
       },
+      REFUND_FAQ,
+      RESCHEDULE_FAQ,
     ],
     disclaimer: {
       en: 'Personal sessions are coaching and spiritual practice, not medical treatment. If you are in serious distress or have thoughts of harming yourself, please contact a doctor or a mental health professional immediately. Intuition training is mind training only, not financial or investment advice.',

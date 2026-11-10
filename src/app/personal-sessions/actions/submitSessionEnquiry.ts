@@ -6,6 +6,7 @@ import { sendSessionEnquiryNotification } from '@/lib/email/sendSessionEnquiryNo
 import { NOT_SURE, SessionEnquirySchema } from './enquirySchema'
 import { getProgram, isProgramSlug } from '@/features/programs/programs'
 import { getPlan, isPlanId } from '@/features/programs/plans'
+import { utmToLine } from '@/lib/analytics/utmLine'
 
 export type SubmitSessionEnquiryResult = { success: true } | { success: false; error: string }
 
@@ -20,10 +21,11 @@ export async function submitSessionEnquiry(input: unknown): Promise<SubmitSessio
     logger.warn('[session-enquiries] submit input failed validation', { issues: parsed.error.issues.map((issue) => issue.path.join('.')) })
     return { success: false, error: parsed.error.issues[0]?.message ?? 'Please check your details and try again.' }
   }
-  const { name, phone, city, program, plan, retreatNotify, change, source, website } = parsed.data
+  const { name, phone, city, program, plan, retreatNotify, change = '', source, utm, website } = parsed.data
   if (website !== undefined && website !== '') return { success: true }
   const programName = program === NOT_SURE || !isProgramSlug(program) ? 'Not sure yet' : getProgram(program).name.en
-  const planName = isPlanId(plan) ? getPlan(plan).name.en : plan
+  const planName = plan !== undefined && isPlanId(plan) ? getPlan(plan).name.en : undefined
+  const utmLine = utmToLine(utm)
   const notify = program === 'personal-retreat' && retreatNotify === true
 
   const supabase = await createClient()
@@ -31,7 +33,7 @@ export async function submitSessionEnquiry(input: unknown): Promise<SubmitSessio
     name,
     phone,
     city,
-    background: [`[1-on-1] Clarity Session request (/personal-sessions)`, `Program: ${programName}`, `Plan: ${planName}`, ...(notify ? ['Notify me about in-person retreats (Rishikesh / Lonavala): Yes'] : []), ...(source !== undefined && source !== '' ? [`From page: ${source}`] : [])].join('\n'),
+    background: [`[1-on-1] Clarity Session request (/personal-sessions)`, `Program: ${programName}`, ...(planName !== undefined ? [`Plan: ${planName}`] : []), ...(notify ? ['Notify me about in-person retreats (Rishikesh / Lonavala): Yes'] : []), ...(source !== undefined && source !== '' ? [`From page: ${source}`] : []), ...(utmLine !== null ? [`UTM: ${utmLine}`] : [])].join('\n'),
     why_interested: change,
   })
   if (error) {
@@ -39,6 +41,6 @@ export async function submitSessionEnquiry(input: unknown): Promise<SubmitSessio
     return { success: false, error: 'Something went wrong. Please try again, or message us on WhatsApp.' }
   }
 
-  await sendSessionEnquiryNotification({ name, phone, city, area: programName, plan: planName, retreatNotify: notify, change })
+  await sendSessionEnquiryNotification({ name, phone, city, area: programName, ...(planName !== undefined ? { plan: planName } : {}), retreatNotify: notify, change })
   return { success: true }
 }

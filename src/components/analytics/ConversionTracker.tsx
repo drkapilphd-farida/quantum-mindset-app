@@ -43,6 +43,8 @@ export default function ConversionTracker(): null {
       if (kind === null) return;
       const path = window.location.pathname;
       if (kind === "checkout") {
+        // Buttons that already counted this InitiateCheckout themselves (Clarity Session "Pay ₹1,100").
+        if (anchor.dataset.checkoutTracked !== undefined) return;
         trackInitiateCheckout(contentNameFor(path, anchor.href, "Checkout"));
         return;
       }

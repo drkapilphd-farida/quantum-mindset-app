@@ -41,6 +41,9 @@ export type GaEventName =
   | 'view_item'
   | 'begin_checkout'
   | 'generate_lead'
+  // Conversion brief (Nov 2026): WhatsApp taps and the paid Clarity Session.
+  | 'contact'
+  | 'purchase'
   // Reading Speed Test funnel (features/reading-speed-test/tracking.ts)
   | 'speed_test_started'
   | 'speed_test_completed'
@@ -88,7 +91,7 @@ export type GaEventName =
 // this function is called (QSR, retreats, franchise, the Overthinking
 // Test, etc.) — fixing it here, in the shared utility, covers every
 // call site at once rather than defensively wrapping each one.
-export function trackGaEvent(event: GaEventName, params?: Record<string, string>): void {
+export function trackGaEvent(event: GaEventName, params?: Record<string, string | number>): void {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
   try {
     window.gtag('event', event, params)

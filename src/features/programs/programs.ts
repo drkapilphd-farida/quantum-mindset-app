@@ -81,7 +81,21 @@ const LOCAL_THUMBS: Record<string, string> = {
 }
 
 export function videoThumb(id: string): string {
-  return LOCAL_THUMBS[id] ?? `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+  return LOCAL_THUMBS[id] ?? defaultThumb(id)
+}
+
+/** YouTube's own default thumbnail (also the fallback when a Short's frame fails). */
+export function defaultThumb(id: string): string {
+  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+}
+
+/**
+ * Thumbnail for a review video. Shorts use YouTube's frame thumbnail
+ * (hq2.jpg), owner's conversion brief, so no card shows another topic's
+ * title written on it; long videos keep the local frame or the default.
+ */
+export function reviewThumb(id: string, type: 'L' | 'S'): string {
+  return type === 'S' ? `https://img.youtube.com/vi/${id}/hq2.jpg` : videoThumb(id)
 }
 
 /** Program page URL (Hindi at ?lang=hi). */
@@ -89,7 +103,16 @@ export function programHref(slug: ProgramSlug, lang: 'en' | 'hi'): string {
   return lang === 'hi' ? `/${slug}?lang=hi` : `/${slug}`
 }
 
-/** The hub's booking form with this program (and plan, if given) pre-selected. */
+/** Every "Book a Clarity Session" button (conversion brief): the pay-and-book page; the program travels along for the payment notes. */
+export function clarityHref(slug: ProgramSlug | null, lang: 'en' | 'hi'): string {
+  const params = new URLSearchParams()
+  if (slug !== null) params.set('program', slug)
+  if (lang === 'hi') params.set('lang', 'hi')
+  const query = params.toString()
+  return `/clarity-session${query === '' ? '' : `?${query}`}`
+}
+
+/** The hub's enquiry form with this program (and plan, if given) pre-selected. */
 export function bookingHref(slug: ProgramSlug | null, lang: 'en' | 'hi', plan?: SessionPlanId): string {
   const params = new URLSearchParams()
   if (slug !== null) params.set('program', slug)

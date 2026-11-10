@@ -125,8 +125,9 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
         { label: 'Sharp Brain', href: sharpBrainUrl(lang) },
         { label: hi ? 'पर्सनल सेशन' : 'Personal Sessions', href: programs.oneOnOneCoaching.url },
         { label: hi ? '21 दिन ओवरथिंकिंग' : '21-Day Overthinking', href: programs.overthinkingReset.url },
-        { label: hi ? '11 रात रिट्रीट' : '11-Night Retreat', href: programs.onlineRetreat.url },
-        { label: hi ? 'रेसिडेंशियल रिट्रीट' : 'Residential Retreat', href: programs.residentialRetreat.url },
+        // Owner (conversion brief, Nov 2026): the old retreats out; Personal Retreat and Clarity Session in.
+        { label: hi ? 'पर्सनल रिट्रीट' : 'Personal Retreat', href: '/personal-retreat' },
+        { label: hi ? 'क्लैरिटी सेशन' : 'Clarity Session', href: '/clarity-session' },
       ],
     },
     {
@@ -136,7 +137,6 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
         { label: hi ? 'गैलरी' : 'Gallery', href: '/gallery' },
         { label: hi ? 'मेरी कहानी' : 'My story', href: '/about' },
         { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
-        { label: hi ? 'कॉर्पोरेट' : 'Corporate', href: ORGANISATIONS_HREF },
         { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
       ],
     },

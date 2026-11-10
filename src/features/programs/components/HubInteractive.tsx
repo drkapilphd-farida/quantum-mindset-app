@@ -1,16 +1,19 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { normalizeIndianMobile } from "@/lib/phone/indianMobile";
 import { waLink } from "@/data/links";
+import { readUtmParams } from "@/lib/analytics/utm";
+import { trackChoosePlan, trackLead } from "@/lib/analytics/conversions";
+import { SESSION_PLAN_PRICES } from "@/config/site.config";
 import { cancelWhatsAppHandoff, finishWhatsAppHandoff, openPendingWhatsAppTab } from "@/lib/whatsapp/handoff";
 import { clarityRequestMessage } from "@/lib/whatsapp/leadMessages";
 import { submitSessionEnquiry } from "@/app/personal-sessions/actions/submitSessionEnquiry";
 import { GROUPS, say } from "../common";
 import { HUB, QUIZ_NAMES, QUIZ_RESULTS, type DoorId, type Q1, type Q2 } from "../hubCopy";
-import { PROGRAMS, getProgram, programHref } from "../programs";
-import { PLANS, PLAN_COPY, getPlan, type SessionPlanId } from "../plans";
+import { PROGRAMS, clarityHref, getProgram, isProgramSlug, programHref } from "../programs";
+import { PLANS, PLAN_COPY, getPlan, isPlanId, type SessionPlanId } from "../plans";
 import { programHeroImage } from "../images";
 import type { ProgramLang, ProgramSlug } from "../types";
 
@@ -18,13 +21,26 @@ import type { ProgramLang, ProgramSlug } from "../types";
 // ?program=<slug> pre-select a program in the booking form; "Choose this
 // plan" and ?plan=<id> pre-select the plan (Clarity Session by default).
 
-type BookingState = { program: string; setProgram: (value: string) => void; plan: SessionPlanId; setPlan: (value: SessionPlanId) => void };
+type BookingState = { program: string; setProgram: (value: string) => void; plan: SessionPlanId | null; setPlan: (value: SessionPlanId) => void; source: string };
 const BookingContext = createContext<BookingState | null>(null);
 
-export function HubBookingProvider({ initialProgram, initialPlan, children }: { initialProgram: ProgramSlug | null; initialPlan: SessionPlanId | null; children: React.ReactNode }): React.JSX.Element {
-  const [program, setProgram] = useState<string>(initialProgram ?? "");
-  const [plan, setPlan] = useState<SessionPlanId>(initialPlan ?? "clarity");
-  return <BookingContext.Provider value={{ program, setProgram, plan, setPlan }}>{children}</BookingContext.Provider>;
+/** ?program=<slug> and ?plan=<id> are read in the browser, so the hub itself can be pre-built (served from the CDN). */
+export function HubBookingProvider({ children }: { children: React.ReactNode }): React.JSX.Element {
+  const [program, setProgram] = useState<string>("");
+  // null until the visitor comes from a "Choose this plan" button: only then does the form show the Plan dropdown.
+  const [plan, setPlan] = useState<SessionPlanId | null>(null);
+  const [source, setSource] = useState("hub");
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get("program");
+    const planFromUrl = params.get("plan");
+    if (isProgramSlug(fromUrl)) {
+      setProgram(fromUrl);
+      setSource(fromUrl);
+    }
+    if (isPlanId(planFromUrl)) setPlan(planFromUrl);
+  }, []);
+  return <BookingContext.Provider value={{ program, setProgram, plan, setPlan, source }}>{children}</BookingContext.Provider>;
 }
 
 function useBooking(): BookingState {
@@ -94,7 +110,7 @@ export function HubPrograms({ lang }: { lang: ProgramLang }): React.JSX.Element 
 export function HubChoosePlan({ plan, lang, className }: { plan: SessionPlanId; lang: ProgramLang; className: string }): React.JSX.Element {
   const { setPlan } = useBooking();
   return (
-    <a href={`?plan=${plan}#book`} onClick={(event) => { event.preventDefault(); setPlan(plan); document.getElementById("book")?.scrollIntoView({ behavior: "smooth" }); window.history.replaceState(null, "", "#book"); }} className={className} data-choose-plan={plan}>
+    <a href={`?plan=${plan}#book`} onClick={(event) => { event.preventDefault(); trackChoosePlan(getPlan(plan).name.en, SESSION_PLAN_PRICES[plan].feeInr); setPlan(plan); document.getElementById("book")?.scrollIntoView({ behavior: "smooth" }); window.history.replaceState(null, "", "#book"); }} className={className} data-choose-plan={plan}>
       {say(PLAN_COPY.choose, lang)}
     </a>
   );
@@ -105,7 +121,6 @@ const opt = (on: boolean): string =>
 
 export function HubQuiz({ lang }: { lang: ProgramLang }): React.JSX.Element {
   const c = HUB.quiz;
-  const { setProgram } = useBooking();
   const [q1, setQ1] = useState<Q1 | null>(null);
   const [q2, setQ2] = useState<Q2 | null>(null);
   const result = q1 !== null && q2 !== null ? QUIZ_RESULTS[`${q1}-${q2}`] : null;
@@ -147,8 +162,7 @@ export function HubQuiz({ lang }: { lang: ProgramLang }): React.JSX.Element {
           <p className="text-[17px] text-[#D6DCE8]">{say(c.resultLine, lang)}</p>
           <div className="flex flex-wrap gap-3">
             <a
-              href="#book"
-              onClick={() => setProgram(result[0])}
+              href={clarityHref(result[0], lang)}
               className="inline-flex min-h-11 items-center rounded-[10px] bg-[#F2A93B] px-[22px] py-3 text-[17px] font-extrabold text-[#0E1B2C] hover:bg-[#E39A2A]"
               data-quiz-book
             >
@@ -167,9 +181,9 @@ type FormState = { name: string; phone: string; city: string; change: string; we
 const EMPTY: FormState = { name: "", phone: "", city: "", change: "", website: "" };
 const field = "min-h-11 w-full rounded-[8px] border border-[#3A4B66] bg-[#0E1B2C] p-3 text-[17px] text-white focus:border-[#F2A93B] focus:outline-none";
 
-export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: string }): React.JSX.Element {
+export function HubBookingForm({ lang }: { lang: ProgramLang }): React.JSX.Element {
   const c = HUB.book;
-  const { program, setProgram, plan, setPlan } = useBooking();
+  const { program, setProgram, plan, setPlan, source } = useBooking();
   const [form, setForm] = useState<FormState>(EMPTY);
   const [retreatNotify, setRetreatNotify] = useState(false);
   const isRetreat = program === "personal-retreat";
@@ -197,11 +211,12 @@ export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: st
     const tab = openPendingWhatsAppTab();
     setPending(true);
     setError(null);
-    const result = await submitSessionEnquiry({ ...form, program, plan, retreatNotify: isRetreat && retreatNotify, source });
+    const result = await submitSessionEnquiry({ ...form, program, ...(plan !== null ? { plan } : {}), retreatNotify: isRetreat && retreatNotify, source, utm: readUtmParams() });
     setPending(false);
     if (result.success) {
       const programName = program === "" || program === "not-sure" ? say(c.notSure, "en") : getProgram(program as ProgramSlug).name.en;
-      finishWhatsAppHandoff(tab, waLink(clarityRequestMessage({ programName, planName: getPlan(plan).name.en, retreatNotify: isRetreat && retreatNotify, name: form.name, phone: form.phone, city: form.city, change: form.change })));
+      trackLead(programName === say(c.notSure, "en") ? "Personal Sessions enquiry" : programName, "form");
+      finishWhatsAppHandoff(tab, waLink(clarityRequestMessage({ programName, ...(plan !== null ? { planName: getPlan(plan).name.en } : {}), retreatNotify: isRetreat && retreatNotify, name: form.name, phone: form.phone, city: form.city, change: form.change })));
       setSent(true);
     } else {
       cancelWhatsAppHandoff(tab);
@@ -251,6 +266,7 @@ export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: st
           {say(c.retreatNotify, lang)}
         </label>
       )}
+      {plan !== null && (
       <div className="flex flex-col gap-1.5">
         <label htmlFor="bPlan" className="font-semibold">
           {say(PLAN_COPY.formLabel, lang)}
@@ -263,11 +279,12 @@ export function HubBookingForm({ lang, source }: { lang: ProgramLang; source: st
           ))}
         </select>
       </div>
+      )}
       <div className="flex flex-col gap-1.5">
         <label htmlFor="bWhy" className="font-semibold">
-          {say(c.change, lang)}
+          {say(c.change, lang)} <span className="font-normal text-[#AEB8CA]">{say(c.optional, lang)}</span>
         </label>
-        <textarea id="bWhy" rows={4} required minLength={10} maxLength={2000} value={form.change} onChange={(e) => set("change")(e.target.value)} className={field} />
+        <textarea id="bWhy" rows={4} maxLength={2000} value={form.change} onChange={(e) => set("change")(e.target.value)} className={field} />
       </div>
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={form.website} onChange={(e) => set("website")(e.target.value)} className="absolute -left-[9999px] h-0 w-0 opacity-0" />
       {error !== null && (

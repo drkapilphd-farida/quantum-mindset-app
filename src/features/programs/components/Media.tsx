@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { COMMON, say } from "../common";
-import { videoThumb } from "../programs";
+import { defaultThumb, reviewThumb } from "../programs";
 import { REVIEW_LINE, reviewVideo, topicTag, type ReviewVideo } from "../reviewVideos";
 import type { ProgramLang } from "../types";
 
@@ -55,13 +55,24 @@ function Lightbox({ id, vertical, title, closeLabel, onClose }: { id: string; ve
 
 const CLOSE: { en: string; hi: string } = { en: "Close video", hi: "वीडियो बंद करें" };
 
+/** A review thumbnail that falls back to YouTube's default thumbnail if its first image fails. */
+function Thumb({ video, sizes, priority = false, className }: { video: ReviewVideo; sizes: string; priority?: boolean; className: string }): React.JSX.Element {
+  const first = reviewThumb(video.id, video.type);
+  const [src, setSrc] = useState(first);
+  return <Image src={src} alt="" fill priority={priority} sizes={sizes} className={className} onError={() => setSrc((current) => (current === defaultThumb(video.id) ? current : defaultThumb(video.id)))} />;
+}
+
 /** Hero media box (16:10): the page's first review video (lightbox), or the photo when there is none. */
 export function HeroMedia({ videoId, photoSrc, photoAlt, lang, caption }: { videoId: string | null; photoSrc: string; photoAlt: string; lang: ProgramLang; caption?: string | undefined }): React.JSX.Element {
   const [open, setOpen] = useState(false);
   const video = videoId === null ? null : reviewVideo(videoId);
   return (
     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[18px] border border-[#2C3D57] bg-[#16263D]" data-hero-media={video === null ? "photo" : "video"}>
-      <Image src={video === null ? photoSrc : videoThumb(video.id)} alt={video === null ? photoAlt : ""} fill priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover object-top" />
+      {video === null ? (
+        <Image src={photoSrc} alt={photoAlt} fill priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover object-top" />
+      ) : (
+        <Thumb video={video} priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover object-top" />
+      )}
       {video !== null ? (
         <>
           <span className="absolute inset-0 bg-[#0E1B2C]/35" aria-hidden="true" />
@@ -89,7 +100,7 @@ export function ReviewCard({ video, lang, size = "large" }: { video: ReviewVideo
   return (
     <figure className={`flex flex-none flex-col overflow-hidden rounded-[16px] border border-[#E3E6EC] bg-white ${width}`} data-review-card={video.id} data-review-type={video.type}>
       <button type="button" onClick={() => setOpen(true)} aria-label={`${say(COMMON.playVideo, lang)}: ${caption}`} className={`group relative w-full bg-[#16263D] ${vertical ? "aspect-[9/16]" : "aspect-video"}`}>
-        <Image src={videoThumb(video.id)} alt="" fill sizes={vertical ? "290px" : "(min-width: 1024px) 380px, 92vw"} className="object-cover" />
+        <Thumb video={video} sizes={vertical ? "290px" : "(min-width: 1024px) 380px, 92vw"} className="object-cover" />
         <span className="absolute inset-0 flex items-center justify-center transition-transform group-hover:scale-105">
           <PlayDisc size={small ? 48 : 60} />
         </span>

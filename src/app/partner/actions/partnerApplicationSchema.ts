@@ -21,6 +21,8 @@ export const PartnerApplicationSchema = z.object({
   contact: z.enum(CONTACT_OPTIONS, { message: 'Please answer the question about children and parents.' }),
   invest: z.enum(INVEST_OPTIONS, { message: 'Please answer the question about the partner fee.' }),
   start: z.enum(START_OPTIONS, { message: 'Please choose when you would like to start.' }),
+  /** The visitor's utm_* params from the landing URL (conversion brief). */
+  utm: z.record(z.string().max(40), z.string().trim().max(200)).optional(),
   /** Honeypot — must stay empty (hidden from people, filled by bots). */
   website: z.string().max(0).optional(),
 })

@@ -26,8 +26,8 @@ type Widen<T> = T extends string
         : T
 
 // Headline numbers — edit here only; bios, stats and trust lines are built from them.
-// Owner (Nov 2026): the experience line everywhere is
-// "12+ years of mind coaching · 15 years as a professor" (EXPERIENCE_LINE).
+// Owner (conversion brief, Nov 2026): the experience line everywhere is
+// "PhD in English Literature · 15 years as a professor · 12+ years of mind coaching" (EXPERIENCE_LINE).
 const YEARS_TOTAL = '12+'
 const YEARS_PROFESSOR = 15
 const SKILLS_TRAINING_SINCE = 2015
@@ -37,8 +37,8 @@ const WORKSHOPS = '500+'
 
 /** The one experience line, word for word (owner, Nov 2026). */
 export const EXPERIENCE_LINE = {
-  en: `${YEARS_TOTAL} years of mind coaching · ${YEARS_PROFESSOR} years as a professor`,
-  hi: `${YEARS_TOTAL} साल माइंड कोचिंग · ${YEARS_PROFESSOR} साल प्रोफ़ेसर`,
+  en: `PhD in English Literature · ${YEARS_PROFESSOR} years as a professor · ${YEARS_TOTAL} years of mind coaching`,
+  hi: `अंग्रेज़ी साहित्य में PhD · ${YEARS_PROFESSOR} साल प्रोफ़ेसर · ${YEARS_TOTAL} साल माइंड कोचिंग`,
 } as const
 
 export const SITE_CONFIG_WHATSAPP_NUMBER = '919540123161'
@@ -491,7 +491,8 @@ export function programForCheckoutHref(href: string): (typeof programs)[ProgramI
  * Meta Pixel: founder's pixel (16 Oct 2026); NEXT_PUBLIC_META_PIXEL_ID overrides it.
  */
 export const analytics: { readonly ga4MeasurementId: string; readonly metaPixelId: string } = {
-  ga4MeasurementId: '',
+  // Owner (conversion brief): set NEXT_PUBLIC_GA_MEASUREMENT_ID in Vercel (G-XXXXXXX); empty = GA4 off.
+  ga4MeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? '',
   metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '2813779008994609',
 }
 
@@ -654,6 +655,20 @@ export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
 
 /** Personal Sessions entry point (owner, Nov 2026): every booking starts here. */
 export const CLARITY_SESSION = { priceInr: 1100, minutes: 60 } as const
+
+/**
+ * Clarity Session pay-and-book flow (owner's conversion brief, Nov 2026).
+ * Payment: with RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET set in Vercel, Razorpay
+ * Checkout opens on the page; otherwise `paymentLink` (a Razorpay Payment
+ * Page set to redirect to /clarity-session/booked). Booking: the Cal.com
+ * event shown on /clarity-session/booked.
+ */
+export const CLARITY_BOOKING: { readonly paymentLink: string | null; readonly calcomEventLink: string | null } = {
+  // TODO(business): Dr. Kapil to send [CLARITY_PAYMENT_LINK] (Razorpay Payment Page, ₹1,100).
+  paymentLink: null,
+  // TODO(business): Dr. Kapil to send [CALCOM_EVENT_LINK], e.g. https://cal.com/<username>/clarity-session
+  calcomEventLink: null,
+}
 
 /**
  * Personal Sessions plans (owner's plans brief, Nov 2026) — the one place

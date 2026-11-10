@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CLARITY_CARD, COMMON, JOURNEY, QUOTE, STATS, TRUST, WHAT_YOU_GET, say } from "../common";
+import { CLARITY_CARD, COMMON, JOURNEY, NOT_READY, OVERTHINKING_TEST_HREF, QUOTE, REFUND_LINE, STATS, TRUST, WHAT_YOU_GET, say } from "../common";
 import { GALLERY_PHOTOS } from "@/config/galleryPhotos";
 import { meRecordingImage } from "../images";
 import type { ProgramLang } from "../types";
@@ -112,6 +112,9 @@ export function ClarityCardContent({ lang, tone }: { lang: ProgramLang; tone: "l
       <p className="text-[17px] font-extrabold" data-clarity-note>
         {say(CLARITY_CARD.note, lang)}
       </p>
+      <p className={`rounded-[12px] border px-4 py-3 text-[16px] ${dark ? "border-[#2C3D57] text-[#D6DCE8]" : "border-[#E3E6EC] bg-[#FBFAF7] text-[#33415C]"}`} data-refund-line>
+        {say(REFUND_LINE, lang)}
+      </p>
     </div>
   );
 }
@@ -168,6 +171,21 @@ export function TrustSection({ lang }: { lang: ProgramLang }): React.JSX.Element
           </span>
         </a>
       </div>
+    </section>
+  );
+}
+
+/** "Not ready to book yet?" band (after the FAQ on the hub and the Stress page) → the free Overthinking Test. */
+export function NotReadyBand({ lang }: { lang: ProgramLang }): React.JSX.Element {
+  return (
+    <section className="px-4 pb-14 sm:px-6 md:pb-20" data-not-ready>
+      <a
+        href={OVERTHINKING_TEST_HREF}
+        className="mx-auto flex max-w-[860px] items-center justify-between gap-4 rounded-[16px] border-2 border-[#0F766E] bg-[#DDF3EF] px-6 py-5 text-[18px] font-extrabold leading-snug text-[#0B5E57] no-underline hover:bg-[#cdeee8] md:text-[20px]"
+      >
+        <span>{say(NOT_READY, lang)}</span>
+        <span aria-hidden="true" className="text-[26px]">→</span>
+      </a>
     </section>
   );
 }

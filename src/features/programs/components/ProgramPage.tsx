@@ -1,14 +1,20 @@
 import Image from "next/image";
-import { CheckCircle2, Sparkles } from "lucide-react";
-import { COMMON, DISCLAIMERS, FULL_RECORDINGS_FAQ, GROUPS, say } from "../common";
+import { CheckCircle2, Headphones } from "lucide-react";
+import { CHANGE_ICONS } from "../changeIcons";
+import { ASK_WHATSAPP, CAPACITY_LINE, COMMON, DISCLAIMERS, SHARED_PROGRAM_FAQS, GROUPS, say } from "../common";
 import { programHeroImage } from "../images";
 import { PLAN_COPY, PROGRAM_PLANS } from "../plans";
 import { PlanCards, chooseButtonClass } from "./Plans";
-import { bookingHref, getProgram, programHref } from "../programs";
+import { ChoosePlanLink, ProgramViewContent } from "./Tracking";
+import { SESSION_PLAN_PRICES } from "@/config/site.config";
+import { bookingHref, clarityHref, getProgram, programHref } from "../programs";
 import type { Program, ProgramLang } from "../types";
 import { Faq } from "./Faq";
-import { HeroMedia, ReviewStrip } from "./Media";
-import { ClarityCardSection, JourneySection, QuoteSection, TrustSection, WhatYouGetSection } from "./SharedBlocks";
+import { HeroMedia, ReviewCard, ReviewStrip } from "./Media";
+import { ClarityCardSection, JourneySection, NotReadyBand, QuoteSection, TrustSection, WhatYouGetSection } from "./SharedBlocks";
+import { WhatsAppGlyph } from "./WhatsAppGlyph";
+import { waLink } from "@/data/links";
+import { reviewVideo } from "../reviewVideos";
 import { StickyBookBar } from "./StickyBookBar";
 import { PERSONAL_SESSIONS_REVIEWS_HREF } from "./ReviewsPersonalSessions";
 import { HUB } from "../hubCopy";
@@ -29,18 +35,22 @@ const h2 = "text-[28px] font-extrabold leading-[1.2] md:text-[40px]";
 export function ProgramPage({ program: p, lang }: { program: Program; lang: ProgramLang }): React.JSX.Element {
   const g = GROUPS[p.group];
   const hasVideos = p.reviews.length > 0;
-  const book = bookingHref(p.slug, lang);
+  const book = clarityHref(p.slug, lang);
   const hubHref = lang === "hi" ? "/personal-sessions?lang=hi" : "/personal-sessions";
   const afterFoundation = p.disclaimers.includes("foundation");
-  const faqs = [...p.faqs.filter((f) => f.hidden !== true), FULL_RECORDINGS_FAQ];
+  const faqs = [...p.faqs.filter((f) => f.hidden !== true), ...SHARED_PROGRAM_FAQS];
   const plans = PROGRAM_PLANS[p.slug];
   const deepPlans = plans.every((id) => id === "mastery" || id === "mentorship");
   const allPlansHref = lang === "hi" ? "/personal-sessions?lang=hi#plans" : "/personal-sessions#plans";
   // Owner's hero image (16:9) once it is in the image folder; until then the current video/photo.
   const heroImage = programHeroImage(p.slug);
+  // Proof above the plans (conversion brief): the telepathy review on the spiritual pages ("Grow spiritually"), the stress review elsewhere.
+  const spiritual = HUB.programs.doors.find((d) => d.id === "grow")?.programs.includes(p.slug) === true;
+  const proofVideo = spiritual ? "h6KiUZKXqKM" : "1FO8UVfxJ9I";
 
   return (
     <>
+      <ProgramViewContent name={p.name.en} />
       {/* 1 HERO */}
       <section className="bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-16">
         <div className={`${wrap} flex flex-wrap items-center gap-12`}>
@@ -72,12 +82,16 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
               <a href={book} className="inline-flex min-h-12 items-center rounded-[10px] bg-[#F2A93B] px-7 py-3.5 text-[18px] font-extrabold text-[#0E1B2C] hover:bg-[#E39A2A]" data-hero-book>
                 {say(COMMON.bookButton, lang)}
               </a>
-              {hasVideos && (
-                <a href="#reviews" className="inline-flex min-h-12 items-center rounded-[10px] border-[1.5px] border-[#5B6B85] px-6 py-3.5 text-[18px] font-semibold text-white" data-hero-watch>
-                  {say(COMMON.watchButton, lang)}
-                </a>
-              )}
+              <a href={waLink(ASK_WHATSAPP.message(p.name.en))} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-2.5 rounded-[10px] border-[1.5px] border-[#5B6B85] px-6 py-3.5 text-[18px] font-semibold text-white hover:border-[#25D366]" data-hero-whatsapp>
+                <WhatsAppGlyph />
+                {say(ASK_WHATSAPP.label, lang)}
+              </a>
             </div>
+            {hasVideos && (
+              <a href="#reviews" className="self-start text-[17px] font-semibold text-[#F2A93B] underline decoration-[#F2A93B]/50 underline-offset-4 hover:decoration-[#F2A93B]" data-hero-watch>
+                {say(COMMON.watchButton, lang)}
+              </a>
+            )}
             <p className="text-[15px] text-[#AEB8CA]">{say(COMMON.experience, lang)}</p>
           </div>
           <div className="min-w-0 flex-[1_1_380px]">
@@ -129,12 +143,15 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
         <div className={`${wrap} flex flex-col gap-7`}>
           <h2 className={h2}>{say(COMMON.changesHeading, lang)}</h2>
           <ul className="grid grid-cols-1 gap-5 md:grid-cols-3">
-            {p.changes.map((item) => (
-              <li key={item.en} className="flex flex-col gap-3 rounded-[16px] border border-[#E3E6EC] bg-white p-6">
-                <Sparkles aria-hidden="true" className="h-7 w-7" style={{ color: g.border }} strokeWidth={1.75} />
+            {p.changes.map((item, index) => {
+              const Icon = CHANGE_ICONS[p.slug][index] ?? Headphones;
+              return (
+              <li key={item.en} className="flex flex-col gap-3 rounded-[16px] border border-[#E3E6EC] bg-white p-6" data-change-icon={Icon.displayName}>
+                <Icon aria-hidden="true" className="h-7 w-7" style={{ color: g.border }} strokeWidth={1.75} />
                 <p className="text-[18px] font-semibold leading-snug">{say(item, lang)}</p>
               </li>
-            ))}
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -146,6 +163,9 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
       <section className={`bg-[#EEF2FB] ${sectionPad}`} data-program-plans>
         <div className={`${wrap} flex flex-col gap-7`}>
           <h2 className={h2}>{say(PLAN_COPY.programTitle, lang)}</h2>
+          <div className="max-w-[460px]" data-plans-proof>
+            <ReviewCard video={reviewVideo(proofVideo)} lang={lang} />
+          </div>
           {deepPlans && (
             <p className="max-w-[820px] text-[18px] text-[#33415C]" data-plans-foundation>
               {say(PLAN_COPY.afterFoundation, lang)}
@@ -155,11 +175,14 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
             plans={plans}
             lang={lang}
             choose={(plan) => (
-              <a href={bookingHref(p.slug, lang, plan.id)} className={chooseButtonClass(plan.mostChosen)} data-choose-plan={plan.id}>
+              <ChoosePlanLink href={bookingHref(p.slug, lang, plan.id)} planName={plan.name.en} feeInr={SESSION_PLAN_PRICES[plan.id].feeInr} planId={plan.id} className={chooseButtonClass(plan.mostChosen)}>
                 {say(PLAN_COPY.choose, lang)}
-              </a>
+              </ChoosePlanLink>
             )}
           />
+          <p className="text-[17px] font-semibold text-[#33415C]" data-capacity-line>
+            {say(CAPACITY_LINE, lang)}
+          </p>
           <a href={allPlansHref} className="self-start text-[17px] font-extrabold text-[#1F3A8A] hover:text-[#152a66]" data-see-all-plans>
             {say(PLAN_COPY.seeAll, lang)}
           </a>
@@ -224,6 +247,8 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
           </div>
         </div>
       </section>
+
+      {p.slug === "stress-anxiety-support" && <NotReadyBand lang={lang} />}
 
       <StickyBookBar href={book} label={say(COMMON.sticky, lang)} />
     </>

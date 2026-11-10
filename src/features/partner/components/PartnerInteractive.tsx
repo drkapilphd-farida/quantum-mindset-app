@@ -4,6 +4,8 @@ import { createContext, useContext, useState } from "react";
 import { PARTNER_PROGRAM } from "@/config/partnerProgram";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { waLink } from "@/data/links";
+import { readUtmParams } from "@/lib/analytics/utm";
+import { trackLead } from "@/lib/analytics/conversions";
 import { cancelWhatsAppHandoff, finishWhatsAppHandoff, openPendingWhatsAppTab } from "@/lib/whatsapp/handoff";
 import { partnerApplicationMessage } from "@/lib/whatsapp/leadMessages";
 import VideoReviewGrid from "@/components/VideoReviewGrid";
@@ -245,9 +247,10 @@ export function PartnerApplyForm(): React.JSX.Element {
     const tab = openPendingWhatsAppTab();
     setPending(true);
     setError(null);
-    const result = await submitPartnerApplication(form);
+    const result = await submitPartnerApplication({ ...form, utm: readUtmParams() });
     setPending(false);
     if (result.success) {
+      trackLead("Sharp Brain Partner Program", "form");
       finishWhatsAppHandoff(tab, waLink(message()));
       setDone(true);
     } else {

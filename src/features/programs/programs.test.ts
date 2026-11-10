@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { CLARITY_CARD, COMMON, DISCLAIMERS, FULL_RECORDINGS_FAQ, JOURNEY, QUOTE, TRUST, WHAT_YOU_GET } from './common'
+import { ASK_WHATSAPP, CAPACITY_LINE, CLARITY_CARD, COMMON, DISCLAIMERS, FULL_RECORDINGS_FAQ, JOURNEY, NOT_READY, QUOTE, REFUND_FAQ, REFUND_LINE, RESCHEDULE_FAQ, SHARED_PROGRAM_FAQS, TRUST, WHAT_YOU_GET } from './common'
+import { CHANGE_ICONS } from './changeIcons'
+import { PREBUILT_PROGRAM_SLUGS, prebuiltCopyRedirect, prebuiltRewritePath } from '@/config/prebuiltLangPages'
+import { BOOKED_PAGE, CLARITY_PAGE } from '@/features/clarity-session/copy'
 import { PLANS, PLAN_COPY, PROGRAM_PLANS } from './plans'
 import { HUB, QUIZ_RESULTS } from './hubCopy'
-import { PROGRAMS, PROGRAM_SLUGS, bookingHref, getProgram, isProgramSlug } from './programs'
+import { PROGRAMS, PROGRAM_SLUGS, bookingHref, clarityHref, getProgram, isProgramSlug, reviewThumb } from './programs'
 
 // The owner's content rules and approved copy (Nov 8, 2026). The required
 // disclaimer sentences contain "treatment"; that is the only place it may appear.
@@ -13,7 +16,7 @@ const REQUIRED = [
   "It is coaching and mind training support, not medical treatment. If you are under a doctor's care, continue it; these sessions can run alongside.",
 ]
 const strip = (text: string): string => REQUIRED.reduce((acc, sentence) => acc.split(sentence).join(''), text)
-const ALL_EN = (): string => strip(JSON.stringify([PROGRAMS, HUB, COMMON, CLARITY_CARD, JOURNEY, QUOTE, WHAT_YOU_GET, DISCLAIMERS, PLANS, PLAN_COPY, TRUST].map((x) => JSON.parse(JSON.stringify(x, (key, value: unknown) => (key === 'hi' ? undefined : value))))))
+const ALL_EN = (): string => strip(JSON.stringify([PROGRAMS, HUB, COMMON, CLARITY_CARD, JOURNEY, QUOTE, WHAT_YOU_GET, DISCLAIMERS, PLANS, PLAN_COPY, TRUST, REFUND_LINE, CAPACITY_LINE, REFUND_FAQ, RESCHEDULE_FAQ, NOT_READY, CLARITY_PAGE, BOOKED_PAGE].map((x) => JSON.parse(JSON.stringify(x, (key, value: unknown) => (key === 'hi' ? undefined : value))))))
 
 describe('program pages content', () => {
   it('has all 15 programs, each with a unique slug', () => {
@@ -93,8 +96,11 @@ describe('program pages content', () => {
     expect(all).not.toMatch(/\b75\b/)
   })
 
-  it('uses the experience line from the owner', () => {
-    expect(COMMON.experience.en).toBe('12+ years of mind coaching · 15 years as a professor')
+  it('uses the experience line and About text from the owner (conversion brief)', () => {
+    expect(COMMON.experience.en).toBe('PhD in English Literature · 15 years as a professor · 12+ years of mind coaching')
+    expect(HUB.about.text.en.endsWith(
+      'Dr. Kapil holds a PhD in English Literature and taught as a professor for 15 years at Accurate Institute of Management and Technology, Greater Noida (affiliated to Dr. A.P.J. Abdul Kalam Technical University) and Amar Singh Post Graduate College, Lakhaoti, Bulandshahr (affiliated to CCS University, Meerut).',
+    )).toBe(true)
   })
 })
 
@@ -179,5 +185,62 @@ describe('hub (owner’s plans brief)', () => {
     const qs = HUB.faq.items.map((f) => f.q.en)
     expect(qs.indexOf('Do I get recordings of the full sessions?')).toBe(qs.indexOf('What are the personal meditation recordings?') + 1)
     expect(FULL_RECORDINGS_FAQ.a.en).toBe('No. You get personal guided meditation / therapy recordings made for you to practise with. Your conversations with Dr. Kapil stay private.')
+  })
+})
+
+describe('conversion brief (Nov 2026)', () => {
+  it('uses the refund, capacity, FAQ and page lines word for word', () => {
+    expect(REFUND_LINE.en).toBe('Not the right fit? If you feel the Clarity Session was not right for you, tell us within 24 hours and your ₹1,100 is refunded in full.')
+    expect(REFUND_FAQ.q.en).toBe("What if the session doesn't feel right for me?")
+    expect(REFUND_FAQ.a.en).toBe('Tell us within 24 hours of your Clarity Session and your ₹1,100 is refunded in full. No questions asked.')
+    expect(CAPACITY_LINE.en).toBe('Dr. Kapil works with only 10 new people each month, so every person gets full attention.')
+    expect(RESCHEDULE_FAQ.q.en).toBe('Can I reschedule a session?')
+    expect(RESCHEDULE_FAQ.a.en).toBe('Yes. You can reschedule up to 12 hours before your session, free of charge.')
+    expect(NOT_READY.en).toBe('Not ready to book yet? Take the free Overthinking Test and get your result on WhatsApp.')
+    expect(CLARITY_PAGE.recap.en).toBe('Clarity Session · ₹1,100 · 60 minutes · 1-on-1 with Dr. Kapil · includes your first personal meditation / therapy session recording')
+    expect(CLARITY_PAGE.pay.en).toBe('Pay ₹1,100 and choose your time')
+    expect(BOOKED_PAGE.title.en).toBe('Payment received — now choose your time.')
+    expect(BOOKED_PAGE.note.en).toBe('You will get a confirmation on email and WhatsApp. To reschedule, use the link in your confirmation.')
+    expect(HUB.book.enquiryHeading.en).toBe('Prefer to talk first? Send an enquiry')
+    expect(ASK_WHATSAPP.label.en).toBe('Ask on WhatsApp')
+    expect(ASK_WHATSAPP.message('Telepathy')).toBe('Hi Dr. Kapil, I have a question about Telepathy.')
+  })
+
+  it('adds the refund and reschedule FAQs on the hub and every program page', () => {
+    const hubQs = HUB.faq.items.map((f) => f.q.en)
+    expect(hubQs).toContain(REFUND_FAQ.q.en)
+    expect(hubQs).toContain(RESCHEDULE_FAQ.q.en)
+    expect(SHARED_PROGRAM_FAQS.map((f) => f.q.en)).toEqual([FULL_RECORDINGS_FAQ.q.en, REFUND_FAQ.q.en, RESCHEDULE_FAQ.q.en])
+  })
+
+  it('sends every "Book a Clarity Session" button to /clarity-session', () => {
+    expect(clarityHref('telepathy', 'en')).toBe('/clarity-session?program=telepathy')
+    expect(clarityHref(null, 'hi')).toBe('/clarity-session?lang=hi')
+  })
+
+  it('gives each "What changes for you" card its own icon', () => {
+    for (const p of PROGRAMS) {
+      const icons = CHANGE_ICONS[p.slug]
+      expect(icons, p.slug).toHaveLength(p.changes.length)
+      expect(new Set(icons).size, p.slug).toBe(icons.length)
+    }
+  })
+
+  it('uses the YouTube frame thumbnail for Shorts only', () => {
+    expect(reviewThumb('abc123', 'S')).toBe('https://img.youtube.com/vi/abc123/hq2.jpg')
+    expect(reviewThumb('abc123', 'L')).toBe('https://i.ytimg.com/vi/abc123/hqdefault.jpg')
+  })
+
+  it('serves the hub, the 15 programs and the Clarity Session pages from pre-built copies', () => {
+    expect([...PREBUILT_PROGRAM_SLUGS].sort()).toEqual([...PROGRAM_SLUGS].sort())
+    expect(prebuiltRewritePath('/telepathy', null)).toBe('/telepathy/en')
+    expect(prebuiltRewritePath('/telepathy', 'hi')).toBe('/telepathy/hi')
+    expect(prebuiltRewritePath('/personal-sessions/', 'en')).toBe('/personal-sessions/en')
+    expect(prebuiltRewritePath('/clarity-session/booked', null)).toBe('/clarity-session/booked/en')
+    expect(prebuiltRewritePath('/telepathy-workshop', 'hi')).toBeNull()
+    expect(prebuiltCopyRedirect('/telepathy/hi')).toEqual({ path: '/telepathy', lang: 'hi' })
+    expect(prebuiltCopyRedirect('/clarity-session/booked/en')).toEqual({ path: '/clarity-session/booked', lang: 'en' })
+    expect(prebuiltCopyRedirect('/clarity-session/booked')).toBeNull()
+    expect(prebuiltCopyRedirect('/telepathy-workshop/hi')).toBeNull()
   })
 })
