@@ -5,6 +5,7 @@ import { logger } from '@/lib/logger'
 import { leadTag } from '@/features/partner/earnings'
 import { sendPartnerApplicationNotification } from '@/lib/email/sendPartnerApplicationNotification'
 import { PartnerApplicationSchema } from './partnerApplicationSchema'
+import { utmToLine } from '@/lib/analytics/utmLine'
 
 export type SubmitPartnerApplicationResult = { success: true } | { success: false; error: string }
 
@@ -21,7 +22,8 @@ export async function submitPartnerApplication(input: unknown): Promise<SubmitPa
     return { success: false, error: parsed.error.issues[0]?.message ?? 'Please check your details and try again.' }
   }
 
-  const { name, phone, city, occupation, contact, invest, start, website } = parsed.data
+  const { name, phone, city, occupation, contact, invest, start, utm, website } = parsed.data
+  const utmLine = utmToLine(utm)
   // Honeypot filled → a bot. Pretend it worked, save nothing.
   if (website !== undefined && website !== '') return { success: true }
 
@@ -31,7 +33,7 @@ export async function submitPartnerApplication(input: unknown): Promise<SubmitPa
     name,
     phone,
     city,
-    background: [`[${tag}] Partner application (/partner)`, `What they do now: ${occupation}`, `Contact with children or parents: ${contact}`].join('\n'),
+    background: [`[${tag}] Partner application (/partner)`, `What they do now: ${occupation}`, `Contact with children or parents: ${contact}`, ...(utmLine !== null ? [`UTM: ${utmLine}`] : [])].join('\n'),
     why_interested: [`Ready to invest ₹45,000 + GST: ${invest}`, `When to start: ${start}`].join('\n'),
   })
 

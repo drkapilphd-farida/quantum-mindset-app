@@ -26,8 +26,8 @@ type Widen<T> = T extends string
         : T
 
 // Headline numbers — edit here only; bios, stats and trust lines are built from them.
-// Owner (Nov 2026): the experience line everywhere is
-// "12+ years of mind coaching · 15 years as a professor" (EXPERIENCE_LINE).
+// Owner (conversion brief, Nov 2026): the experience line everywhere is
+// "PhD in English Literature · 15 years as a professor · 12+ years of mind coaching" (EXPERIENCE_LINE).
 const YEARS_TOTAL = '12+'
 const YEARS_PROFESSOR = 15
 const SKILLS_TRAINING_SINCE = 2015
@@ -37,8 +37,8 @@ const WORKSHOPS = '500+'
 
 /** The one experience line, word for word (owner, Nov 2026). */
 export const EXPERIENCE_LINE = {
-  en: `${YEARS_TOTAL} years of mind coaching · ${YEARS_PROFESSOR} years as a professor`,
-  hi: `${YEARS_TOTAL} साल माइंड कोचिंग · ${YEARS_PROFESSOR} साल प्रोफ़ेसर`,
+  en: `PhD in English Literature · ${YEARS_PROFESSOR} years as a professor · ${YEARS_TOTAL} years of mind coaching`,
+  hi: `अंग्रेज़ी साहित्य में PhD · ${YEARS_PROFESSOR} साल प्रोफ़ेसर · ${YEARS_TOTAL} साल माइंड कोचिंग`,
 } as const
 
 export const SITE_CONFIG_WHATSAPP_NUMBER = '919540123161'
@@ -488,11 +488,14 @@ export function programForCheckoutHref(href: string): (typeof programs)[ProgramI
  * Analytics IDs — loaded site-wide only when set. Leave empty until the
  * real IDs are supplied; never put a placeholder here.
  * TODO(content): GA4 measurement ID (G-…) not provided yet.
- * Meta Pixel: founder's pixel (16 Oct 2026); NEXT_PUBLIC_META_PIXEL_ID overrides it.
+ * Meta Pixel: the owner's own Pixel (business portfolio MIND UR MIND). Owner
+ * (Nov 2026): this ID everywhere, set here only — no env override, so no
+ * other Pixel ID can replace it.
  */
 export const analytics: { readonly ga4MeasurementId: string; readonly metaPixelId: string } = {
-  ga4MeasurementId: '',
-  metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '2813779008994609',
+  // Owner (conversion brief): set NEXT_PUBLIC_GA_MEASUREMENT_ID in Vercel (G-XXXXXXX); empty = GA4 off.
+  ga4MeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? '',
+  metaPixelId: '2813779008994609',
 }
 
 /** The first checkout/enquiry link of a program — throws at module load if the registry entry has none. */
@@ -653,7 +656,37 @@ export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
 } = sharpBrainEnrolmentData
 
 /** Personal Sessions entry point (owner, Nov 2026): every booking starts here. */
-export const CLARITY_SESSION = { priceInr: 2100, minutes: 75 } as const
+export const CLARITY_SESSION = { priceInr: 1100, minutes: 60 } as const
+
+/**
+ * Clarity Session pay-and-book flow (owner's conversion brief, Nov 2026).
+ * Payment: with RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET set in Vercel, Razorpay
+ * Checkout opens on the page; otherwise `paymentLink` (a Razorpay Payment
+ * Page set to redirect to /clarity-session/booked). Booking: the Cal.com
+ * event shown on /clarity-session/booked.
+ */
+export const CLARITY_BOOKING: { readonly paymentLink: string | null; readonly calcomEventLink: string | null } = {
+  // TODO(business): Dr. Kapil to send [CLARITY_PAYMENT_LINK] (Razorpay Payment Page, ₹1,100).
+  paymentLink: null,
+  // Owner (Nov 2026): "Clarity Session (60 min)" — Google Calendar + Zoom, required WhatsApp number question.
+  calcomEventLink: 'https://cal.com/kapil-dev-sharma-n0zfwk/clarity-session',
+}
+
+/**
+ * Personal Sessions plans (owner's plans brief, Nov 2026) — the one place
+ * these fees are written. `perSessionInr` is the owner's own figure (shown
+ * as given, not recalculated). The Clarity Session fee comes from
+ * CLARITY_SESSION above.
+ */
+export type SessionPlanId = 'clarity' | 'starter' | 'core' | 'transformation' | 'mastery' | 'mentorship'
+export const SESSION_PLAN_PRICES: Record<SessionPlanId, { feeInr: number; perSessionInr: number }> = {
+  clarity: { feeInr: CLARITY_SESSION.priceInr, perSessionInr: CLARITY_SESSION.priceInr },
+  starter: { feeInr: 3999, perSessionInr: 2000 },
+  core: { feeInr: 13999, perSessionInr: 2000 },
+  transformation: { feeInr: 21999, perSessionInr: 1833 },
+  mastery: { feeInr: 39999, perSessionInr: 1666 },
+  mentorship: { feeInr: 69999, perSessionInr: 1458 },
+}
 
 /** Sharp Brain's two offers — the one place these prices are written. */
 /**

@@ -6,6 +6,10 @@ import { programs } from "@/config/site.config";
 import { FREE_TEST_LINKS } from "@/config/navigation";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
+import { GROUPS } from "@/features/programs/common";
+import type { GroupId } from "@/features/programs/types";
+
+const GROUP_ORDER: GroupId[] = ["mind", "rel", "perf", "spirit", "deep"];
 import VideoReviewGrid from "../VideoReviewGrid";
 import { Eyebrow } from "../ui";
 
@@ -59,19 +63,25 @@ export function HomePaths(): React.JSX.Element {
           <article className="flex flex-col rounded-sm border border-line-strong bg-panel p-6 sm:p-8" data-home-path="sessions">
             <Eyebrow color="text-teal">{say(ps.eyebrow, lang)}</Eyebrow>
             <h3 className="mt-3 text-[24px] font-extrabold leading-snug sm:text-[28px]">{say(ps.title, lang)}</h3>
-            <ul className="mt-4 space-y-4">
-              {ps.groups.map((group) => (
-                <li key={group.title.en}>
-                  <p className="text-[16.5px] font-bold">{say(group.title, lang)}</p>
-                  <p className="text-[15px] leading-relaxed text-ink-dim">{say(group.topics, lang)}</p>
-                </li>
-              ))}
+            <Link href={lang === "hi" ? "/stress-anxiety-support?lang=hi" : "/stress-anxiety-support"} className="mt-4 inline-flex min-h-11 items-center self-start rounded-sm border-2 border-[#0F766E] bg-[#DDF3EF] px-4 py-2 text-[16px] font-extrabold text-[#0B5E57]" data-home-stress>
+              {say(ps.first, lang)}
+            </Link>
+            {/* Owner (Nov 2026): the 5 program groups as coloured tags (same colours as /personal-sessions). */}
+            <ul className="mt-4 flex flex-wrap gap-2" data-home-groups>
+              {GROUP_ORDER.map((id) => {
+                const g = GROUPS[id];
+                return (
+                  <li key={id} className="rounded-full px-3 py-1 text-[14px] font-extrabold" style={{ background: g.tagBg, color: g.tagFg }}>
+                    {say(g.label, lang)}
+                  </li>
+                );
+              })}
             </ul>
             <p className="mt-5 text-[15.5px] font-semibold" data-home-clarity>
               {say(ps.price, lang)}
             </p>
             <div className="mt-5 flex flex-col items-start gap-3 lg:mt-auto lg:pt-6">
-              <Link href={programs.oneOnOneCoaching.url} className={GOLD}>
+              <Link href={lang === "hi" ? `${programs.oneOnOneCoaching.url}?lang=hi` : programs.oneOnOneCoaching.url} className={GOLD} data-home-all-programs>
                 {say(ps.button, lang)}
               </Link>
               <p className="text-[13px] text-ink-dim">{say(ps.note, lang)}</p>

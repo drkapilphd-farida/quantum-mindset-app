@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { retiredPageRedirect } from '@/config/retiredPages'
+import { prebuiltCopyRedirect, prebuiltRewritePath } from '@/config/prebuiltLangPages'
 import { updateSession } from '@/lib/supabase/middleware'
 import { APP_DOMAIN_HEADER, resolveAppDomain, isAppSubdomain, type AppDomain } from '@/lib/domains/appDomain'
 import { SITE_URL } from '@/lib/seo/siteUrl'
@@ -90,6 +91,22 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     target.search = request.nextUrl.search
     target.searchParams.set('lang', telepathyCopyPath[1] ?? 'en')
     return NextResponse.redirect(target, 308)
+  }
+
+  // Personal Sessions pages (hub, 15 programs, Clarity Session): served from
+  // their pre-built English/Hindi copies — no server render, no session
+  // lookup (these pages are public and read no login).
+  const prebuiltCopy = prebuiltCopyRedirect(pathname)
+  if (prebuiltCopy !== null) {
+    const target = new URL(prebuiltCopy.path, request.url)
+    target.search = request.nextUrl.search
+    if (prebuiltCopy.lang === 'hi') target.searchParams.set('lang', 'hi')
+    else target.searchParams.delete('lang')
+    return NextResponse.redirect(target, 308)
+  }
+  const prebuiltPath = prebuiltRewritePath(pathname, request.nextUrl.searchParams.get('lang'))
+  if (prebuiltPath !== null) {
+    return NextResponse.rewrite(new URL(`${prebuiltPath}${request.nextUrl.search}`, request.url))
   }
 
   const { response: sessionResponse, user, supabase } = await updateSession(request)

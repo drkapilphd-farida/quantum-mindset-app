@@ -6,7 +6,7 @@ import { logger } from '@/lib/logger'
 // Includes a one-tap WhatsApp link to reply to the person.
 const DEFAULT_NOTIFY_EMAIL = 'drkapilphd@gmail.com'
 
-export type SessionEnquiryNotification = { name: string; phone: string; city: string; area: string; change: string }
+export type SessionEnquiryNotification = { name: string; phone: string; city: string; area: string; plan?: string; retreatNotify?: boolean; change: string }
 
 export async function sendSessionEnquiryNotification(enquiry: SessionEnquiryNotification): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
@@ -23,14 +23,16 @@ export async function sendSessionEnquiryNotification(enquiry: SessionEnquiryNoti
   const { error } = await resend.emails.send({
     from: fromEmail,
     to: notifyEmail,
-    subject: `[1-on-1] New personal session enquiry — ${enquiry.name} (${enquiry.city})`,
+    subject: `[1-on-1] Clarity Session request — ${enquiry.area} — ${enquiry.name} (${enquiry.city})`,
     text: [
-      `New Personal Sessions enquiry (/personal-sessions)`,
+      `New Clarity Session request (/personal-sessions)`,
       ``,
       `Name: ${enquiry.name}`,
       `WhatsApp: ${enquiry.phone}`,
       `City: ${enquiry.city}`,
-      `Kind of session: ${enquiry.area}`,
+      `Program: ${enquiry.area}`,
+      ...(enquiry.plan !== undefined ? [`Plan: ${enquiry.plan}`] : []),
+      ...(enquiry.retreatNotify === true ? ['Notify me about in-person retreats (Rishikesh / Lonavala): Yes'] : []),
       ``,
       `What would you like to change in your life, and why?`,
       enquiry.change,

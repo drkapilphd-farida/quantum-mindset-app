@@ -4,6 +4,10 @@ import { createContext, useContext, useState } from "react";
 import { PARTNER_PROGRAM } from "@/config/partnerProgram";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { waLink } from "@/data/links";
+import { readUtmParams } from "@/lib/analytics/utm";
+import { trackLead } from "@/lib/analytics/conversions";
+import { cancelWhatsAppHandoff, finishWhatsAppHandoff, openPendingWhatsAppTab } from "@/lib/whatsapp/handoff";
+import { partnerApplicationMessage } from "@/lib/whatsapp/leadMessages";
 import VideoReviewGrid from "@/components/VideoReviewGrid";
 import { submitPartnerApplication } from "@/app/partner/actions/submitPartnerApplication";
 import { CONTACT_OPTIONS, INVEST_OPTIONS, OCCUPATIONS, START_OPTIONS, formatInr, normalizeIndianMobile, partnerEarnings, recoverText, type LiveTeacher } from "../earnings";
@@ -209,16 +213,14 @@ export function PartnerApplyForm(): React.JSX.Element {
   const [done, setDone] = useState(false);
   const set = (key: keyof FormState) => (value: string) => setForm((current) => ({ ...current, [key]: value }));
 
+  const message = (): string =>
+    partnerApplicationMessage({
+      ...form,
+      questions: { occupation: c.occupation, contact: c.contact, invest: c.invest, start: c.start },
+    });
+
   if (done) {
-    const details = [
-      "Sharp Brain Partner application",
-      `Name: ${form.name}`,
-      `City / Area: ${form.city}`,
-      `What I do now: ${form.occupation}`,
-      `Contact with children or parents: ${form.contact}`,
-      `Ready to invest: ${form.invest}`,
-      `When to start: ${form.start}`,
-    ].join("\n");
+    const details = message();
     return (
       <div className="rounded-lg bg-panel2 p-7 text-center sm:p-9" role="status" data-apply-thanks>
         <p className="text-[24px] font-extrabold text-gold sm:text-[28px]">{c.thanks.title}</p>
@@ -241,12 +243,20 @@ export function PartnerApplyForm(): React.JSX.Element {
       setError("Please enter a valid 10-digit Indian mobile number.");
       return;
     }
+    // Opened during the tap (phones block it later); pointed at WhatsApp once saved.
+    const tab = openPendingWhatsAppTab();
     setPending(true);
     setError(null);
-    const result = await submitPartnerApplication(form);
+    const result = await submitPartnerApplication({ ...form, utm: readUtmParams() });
     setPending(false);
-    if (result.success) setDone(true);
-    else setError(result.error);
+    if (result.success) {
+      trackLead("Sharp Brain Partner Program", "form");
+      finishWhatsAppHandoff(tab, waLink(message()));
+      setDone(true);
+    } else {
+      cancelWhatsAppHandoff(tab);
+      setError(result.error);
+    }
   }
 
   return (

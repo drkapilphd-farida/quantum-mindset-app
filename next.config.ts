@@ -1,7 +1,8 @@
+import { readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs/config'
 import { LEGACY_REDIRECTS } from './src/config/legacyRedirects'
-import { HELD_PAGE_REDIRECTS } from './src/config/heldPages'
 
 // The Supabase project origin is read from the same env var the client
 // SDK itself uses, so the CSP always matches whichever project a given
@@ -119,6 +120,9 @@ function buildContentSecurityPolicy(): string {
       'https://api.razorpay.com',
       'https://checkout.razorpay.com',
       'https://www.youtube-nocookie.com',
+      // Clarity Session booking calendar (/clarity-session/booked, owner's conversion brief).
+      'https://cal.com',
+      'https://app.cal.com',
       // Executive Brain Performance Workshop — the venue Google Maps embed.
       'https://www.google.com',
     ],
@@ -163,12 +167,27 @@ const securityHeaders = [
   { key: 'Content-Security-Policy', value: buildContentSecurityPolicy() },
 ]
 
+// Personal Sessions images (owner's images brief, Nov 2026): the owner drops
+// hero-<program-slug>.jpg and me-recording.jpg into this folder. Which files
+// exist is read at build time, so a slot is shown only once its image is
+// there — never an empty box.
+function personalSessionImages(): string {
+  try {
+    return readdirSync(join(process.cwd(), 'public/images/personal-sessions'))
+      .filter((file) => file.endsWith('.jpg'))
+      .join(',')
+  } catch {
+    return ''
+  }
+}
+
 const nextConfig: NextConfig = {
   // Content TODO markers (src/components/site/SiteTodo.tsx) render on
   // local and preview builds so missing content is visible during review,
   // and never on the production deployment.
   env: {
     NEXT_PUBLIC_SHOW_CONTENT_TODOS: process.env.VERCEL_ENV === 'production' ? 'false' : 'true',
+    NEXT_PUBLIC_PERSONAL_SESSION_IMAGES: personalSessionImages(),
   },
 
   // pdfjs-dist (PDF text extraction, src/core/universal-learning-engine/
@@ -226,7 +245,6 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
       ...LEGACY_REDIRECTS,
-      ...HELD_PAGE_REDIRECTS,
     ]
   },
 
@@ -249,6 +267,13 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'i.ytimg.com',
+        pathname: '/vi/**',
+      },
+      // Shorts use YouTube's mid-video frame (img.youtube.com/vi/<id>/hq2.jpg),
+      // owner's conversion brief — no other topic's title painted on it.
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
         pathname: '/vi/**',
       },
     ],

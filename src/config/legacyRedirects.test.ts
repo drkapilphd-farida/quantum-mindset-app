@@ -7,18 +7,35 @@ describe('legacy redirects', () => {
   it('sends each indexed old WordPress URL to the closest current page with a 301', () => {
     expect(find('/faq')).toMatchObject({ destination: '/#faq', statusCode: 301 })
     expect(find('/testimonials')).toMatchObject({ destination: '/#proof', statusCode: 301 })
-    expect(find('/personalclass')).toMatchObject({ destination: '/mentoring/personal-class', statusCode: 301 })
-    expect(find('/anxiety')).toMatchObject({ destination: '/mentoring/overthinking-course', statusCode: 301 })
+    expect(find('/personalclass')).toMatchObject({ destination: '/personal-sessions', statusCode: 301 })
+    expect(find('/anxiety')).toMatchObject({ destination: '/stress-anxiety-support', statusCode: 301 })
     for (const old of ['/free', '/elementor-landing-page-1483']) {
       expect(find(old)).toMatchObject({ destination: '/', statusCode: 301 })
     }
   })
 
-  it('leaves the old telepathy URLs to the held-pages redirects; /about-us-telepathy goes to /about', () => {
-    for (const old of ['/telepathy', '/telepathycourse', '/telepathy-mind-reading-offline']) {
-      expect(find(old)).toBeUndefined()
+  it('sends every old telepathy, traders, Vadodara and retreat URL to its new 1-on-1 page (program pages, Nov 2026)', () => {
+    const expected: Record<string, string> = {
+      '/telepathy-workshop': '/telepathy',
+      '/telepathy-workshop/en': '/telepathy',
+      '/telepathy-workshop/hi': '/telepathy?lang=hi',
+      '/telepathy-workshop/online': '/telepathy',
+      '/telepathy-workshop/booked': '/telepathy',
+      '/telepathy-workshop/traders': '/intuition-for-traders',
+      '/vadodara': '/telepathy',
+      '/telepathycourse': '/telepathy',
+      '/telepathy-mind-reading-offline': '/telepathy',
+      '/about-us-telepathy': '/telepathy',
+      '/retreats': '/personal-retreat',
+      '/retreats/online-11-day': '/personal-retreat',
+      '/retreats/residential': '/personal-retreat',
+      '/workshops': '/personal-sessions',
     }
-    expect(find('/about-us-telepathy')).toMatchObject({ destination: '/about', statusCode: 301 })
+    for (const [source, destination] of Object.entries(expected)) {
+      expect(find(source), source).toMatchObject({ destination, statusCode: 301 })
+    }
+    // /telepathy is the new page itself — no redirect.
+    expect(find('/telepathy')).toBeUndefined()
   })
 
   it('sends the old 1-on-1 page to /personal-sessions', () => {
