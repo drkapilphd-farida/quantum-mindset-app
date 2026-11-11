@@ -27,6 +27,8 @@ describe('page videos (owner, Nov 2026)', () => {
       'mindset-coaching': 'mindset',
       'subconscious-reprogramming': 'mindset',
       'heart-brain-coherence': 'mindset',
+      manifestation: 'mindset',
+      'business-loss-mindset': 'mindset',
       'intuition-for-traders': 'trader',
       telepathy: 'kriyaYoga',
       'aura-reading': 'kriyaYoga',
