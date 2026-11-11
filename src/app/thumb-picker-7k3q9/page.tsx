@@ -4,12 +4,12 @@ import { REVIEW_VIDEOS } from '@/features/programs/reviewVideos'
 import { SHARP_BRAIN_VIDEO_REVIEWS } from '@/config/sharpBrainVideoReviews'
 import { DEFAULT_THUMB_FRAME, reviewFrameSrc, reviewFrameStyle, type ThumbFrame, type VideoShape } from '@/lib/video/reviewFrames'
 
-// Temporary, unlisted (owner, Nov 2026): every review video with its three
-// in-video frames (hq1 25% · hq2 50% · hq3 75%), cropped exactly as on the
-// site, so the owner can pick the best one. Behind the admin login (the
-// (admin) layout). Not linked from the admin menu; remove once the frames
-// are chosen.
-export const metadata: Metadata = { title: 'Review thumbnails — Admin', robots: { index: false, follow: false } }
+// TEMPORARY — delete before merging (owner, Nov 2026). Every review video
+// with its three in-video frames (hq1 25% · hq2 50% · hq3 75%), cropped
+// exactly as on the site, so the owner can pick the best one. Open without a
+// login on a hard-to-guess path (the admin login sent him to the app login),
+// noindex/nofollow, not in the sitemap or robots.txt, linked from nowhere.
+export const metadata: Metadata = { title: 'Review thumbnails', robots: { index: false, follow: false } }
 
 const FRAMES: ThumbFrame[] = [1, 2, 3]
 
@@ -69,7 +69,7 @@ export default function ReviewThumbsPage(): React.JSX.Element {
   const sessions: Row[] = REVIEW_VIDEOS.map((v) => ({ id: v.id, shape: v.type, caption: v.caption.en, current: v.thumbFrame ?? DEFAULT_THUMB_FRAME }))
   const sharpBrain: Row[] = SHARP_BRAIN_VIDEO_REVIEWS.map((v) => ({ id: v.videoId, shape: 'S', caption: v.caption.en, current: v.thumbFrame ?? DEFAULT_THUMB_FRAME }))
   return (
-    <div className="space-y-8">
+    <main className="mx-auto max-w-6xl space-y-8 bg-white px-4 py-8 text-neutral-900 sm:px-6">
       <div>
         <h1 className="text-2xl font-semibold">Review thumbnails</h1>
         <p className="text-sm text-muted-foreground">
@@ -78,6 +78,6 @@ export default function ReviewThumbsPage(): React.JSX.Element {
       </div>
       <Section title="Personal Sessions reviews" rows={sessions} />
       <Section title="Sharp Brain reviews" rows={sharpBrain} />
-    </div>
+    </main>
   )
 }
