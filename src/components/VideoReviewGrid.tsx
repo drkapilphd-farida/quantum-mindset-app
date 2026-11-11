@@ -22,6 +22,9 @@ type VideoReviewItem = {
   // and name (small, grey). Each line shows only when given.
   title?: string;
   name?: string;
+  // What the review is about (Sharp Brain reviews, owner Nov 2026): left-aligned
+  // under the card, at most 2 lines (ellipsis only if longer).
+  caption?: string;
 };
 
 type VideoReviewGridProps = {
@@ -122,6 +125,11 @@ export default function VideoReviewGrid({
               </button>
               {caption !== undefined && (
                 <p className="mt-2 text-center font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{caption}</p>
+              )}
+              {video.caption !== undefined && (
+                <p className="mt-2 line-clamp-2 text-left text-[14px] leading-snug text-ink sm:line-clamp-none" title={video.caption} data-review-caption>
+                  {video.caption}
+                </p>
               )}
               {video.title !== undefined && <p className="mt-2 text-[14px] font-bold leading-snug text-ink">{video.title}</p>}
               {video.name !== undefined && <p className="mt-0.5 text-[12.5px] text-ink-faint">{video.name}</p>}

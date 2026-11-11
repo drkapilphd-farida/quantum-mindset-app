@@ -8,7 +8,7 @@ import { PAGE_VIDEOS, SHARP_BRAIN_PRICES, programs, qsrGuarantee } from "@/confi
 import { PageVideo } from "@/components/video/PageVideo";
 import { FreeTestButton } from "../FreeTestButton";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
-import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
+import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/sharpBrainVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { trackGaEvent } from "@/lib/analytics/ga4";
@@ -300,6 +300,7 @@ export function SharpBrainCertificate(): React.JSX.Element {
 
 export function SharpBrainProof(): React.JSX.Element {
   const c = useCopy().proof;
+  const { lang } = useLanguage();
   const testimonials = useProgramTestimonials("sharpBrain").filter((item) => item.quote !== null);
   return (
     <section id="testimonials" className={sectionClass}>
@@ -323,7 +324,7 @@ export function SharpBrainProof(): React.JSX.Element {
 
         {/* Phase 4.5: the 7 new Sharp Brain Shorts (sharpBrainVideoReviews.ts)
             replace the older reviews and their "From earlier batches" label. */}
-        <VideoReviewGrid videos={SHARP_BRAIN_REVIEW_CARDS} aspectRatioClassName="aspect-[9/16]" gridClassName={SHARP_BRAIN_REVIEW_GRID_CLASS} className="mt-8" />
+        <VideoReviewGrid videos={sharpBrainReviewCards(lang)} aspectRatioClassName="aspect-[9/16]" gridClassName={SHARP_BRAIN_REVIEW_GRID_CLASS} className="mt-8" />
         <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
           <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-[14px] font-semibold text-gold hover:underline">
             {c.playlistCta} →

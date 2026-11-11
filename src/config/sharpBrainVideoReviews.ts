@@ -3,10 +3,9 @@
 // (qsrVideoReviews.ts / HOME_LEARNING_VIDEO_REVIEWS stay in the code but are
 // no longer shown).
 //
-// title / name: only from the owner's table. All seven are still
-// placeholders there ([[TITLE_n]] / [[NAME_n]]), so they are null and the
-// card shows no text line. Fill them in here when the owner sends them —
-// never from YouTube or by guessing.
+// title / name: only from the owner's table — still null (not given).
+// caption: what each review is about, from the owner (Nov 2026), matched by
+// video ID; shown under every card wherever these videos appear.
 
 export type SharpBrainVideoReview = {
   videoId: string
@@ -14,25 +13,33 @@ export type SharpBrainVideoReview = {
   title: string | null
   /** Second line (small, grey). null = not given yet → not shown. */
   name: string | null
+  /** What the review is about (owner, Nov 2026), English and Hindi — matched by video ID. */
+  caption: { en: string; hi: string }
 }
 
 export const SHARP_BRAIN_VIDEO_REVIEWS: readonly SharpBrainVideoReview[] = [
-  { videoId: 'g135C_Dak7s', title: null, name: null }, // [[TITLE_1]] / [[NAME_1]]
-  { videoId: 'BOqf3ioo1N4', title: null, name: null }, // [[TITLE_2]] / [[NAME_2]]
-  { videoId: 'KTc1B-kajTY', title: null, name: null }, // [[TITLE_3]] / [[NAME_3]]
-  { videoId: '9oO6Yn2mzs0', title: null, name: null }, // [[TITLE_4]] / [[NAME_4]]
-  { videoId: '2wSuE6hQrEg', title: null, name: null }, // [[TITLE_5]] / [[NAME_5]]
-  { videoId: 'lJIMgohkV1c', title: null, name: null }, // [[TITLE_6]] / [[NAME_6]]
-  { videoId: 'VMe2HiAj_S4', title: null, name: null }, // [[TITLE_7]] / [[NAME_7]]
+  { videoId: 'g135C_Dak7s', title: null, name: null, caption: { en: 'Class 9 Student: Reading Speed 100 → 300 WPM, with Retention', hi: 'कक्षा 9 का छात्र: Reading Speed 100 → 300 WPM, याद रखने के साथ' } },
+  { videoId: 'BOqf3ioo1N4', title: null, name: null, caption: { en: '150 WPM, 30% Retention → 350 WPM, 100% Retention', hi: '150 WPM, 30% याद → 350 WPM, 100% याद' } },
+  { videoId: 'KTc1B-kajTY', title: null, name: null, caption: { en: '"He used to study for hours, yet couldn\'t remember anything" — Parent Review, Ruchi ji', hi: '"घंटों पढ़ता था, पर कुछ याद नहीं रहता था" — अभिभावक की राय, रुचि जी' } },
+  { videoId: '9oO6Yn2mzs0', title: null, name: null, caption: { en: 'Reading Speed 100 WPM → 300+ WPM', hi: 'Reading Speed 100 WPM → 300+ WPM' } },
+  { videoId: '2wSuE6hQrEg', title: null, name: null, caption: { en: 'Increase Reading Speed from 100 to 350 WPM', hi: 'Reading Speed 100 से 350 WPM तक' } },
+  { videoId: 'lJIMgohkV1c', title: null, name: null, caption: { en: 'Struggled with focus… now studying is easy to remember and understand', hi: 'पहले focus नहीं बनता था… अब पढ़ाई समझना और याद रखना आसान है' } },
+  { videoId: 'VMe2HiAj_S4', title: null, name: null, caption: { en: '"It\'s a must-have for every student."', hi: '"हर student के लिए ज़रूरी है।"' } },
 ]
 
-/** The same list in VideoReviewGrid's shape: YouTube's own thumbnail (served through next/image). */
-export const SHARP_BRAIN_REVIEW_CARDS = SHARP_BRAIN_VIDEO_REVIEWS.map((video) => ({
-  videoId: video.videoId,
-  thumbnailSrc: `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`,
-  ...(video.title !== null ? { title: video.title } : {}),
-  ...(video.name !== null ? { name: video.name } : {}),
-}))
+/** The list in VideoReviewGrid's shape, with each video's caption in the page's language. */
+export function sharpBrainReviewCards(lang: 'en' | 'hi'): { videoId: string; thumbnailSrc: string; caption: string; title?: string; name?: string }[] {
+  return SHARP_BRAIN_VIDEO_REVIEWS.map((video) => ({
+    videoId: video.videoId,
+    thumbnailSrc: `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`,
+    caption: video.caption[lang],
+    ...(video.title !== null ? { title: video.title } : {}),
+    ...(video.name !== null ? { name: video.name } : {}),
+  }))
+}
+
+/** English cards, for pages without a Hindi version (YouTube's own thumbnail, served through next/image). */
+export const SHARP_BRAIN_REVIEW_CARDS = sharpBrainReviewCards('en')
 
 /** Shorts row: a swipeable strip on phones, one row of 7 on desktop (4 per row on tablets). */
 export const SHARP_BRAIN_REVIEW_GRID_CLASS =
