@@ -5,6 +5,7 @@ import { COHERENCE, MANIFESTATION, TELEPATHY, TRADERS } from './copyRelPerf'
 import { ASTRAL, AURA, CHAKRA, COSMIC_FUSION, KUNDALINI, RETREAT, SAMADHI } from './copySpiritual'
 import type { ProgramCopy } from './copyTypes'
 import type { SessionPlanId } from '@/config/site.config'
+import { reviewFrameSrc, type ThumbFrame } from '@/lib/video/reviewFrames'
 import type { GroupId, Program, ProgramSlug } from './types'
 
 // The approved copy (Nov 8, 2026) for each program, joined with what the
@@ -64,38 +65,18 @@ export function programsInGroup(group: GroupId | 'all'): readonly Program[] {
   return group === 'all' ? PROGRAMS : PROGRAMS.filter((p) => p.group === group)
 }
 
-// Real, locally stored frames for the review videos we have them for;
-// otherwise YouTube's own thumbnail (allowed in next.config images).
-const LOCAL_THUMBS: Record<string, string> = {
-  pRG3sdsXiHM: '/learner-videos/pRG3sdsXiHM-thumb.jpg',
-  l_3qAC_pgPI: '/learner-videos/l_3qAC_pgPI-thumb.jpg',
-  WZMSSuRTr78: '/learner-videos/WZMSSuRTr78-thumb.jpg',
-  ZyD_iQTOR60: '/learner-videos/ZyD_iQTOR60-thumb.jpg',
-  s87Pxs0EP58: '/learner-videos/s87Pxs0EP58-thumb.jpg',
-  vbNGdtGRxeQ: '/retreat-videos/vbNGdtGRxeQ-thumb.jpg',
-  '8a3vd3ep7QY': '/retreat-videos/8a3vd3ep7QY-thumb.jpg',
-  NubHGGlQdo8: '/retreat-videos/NubHGGlQdo8-thumb.jpg',
-  X66b3WfrsZw: '/retreat-videos/X66b3WfrsZw-thumb.jpg',
-  'Dp2aE_-aZ0g': '/retreat-videos/Dp2aE_-aZ0g-thumb.jpg',
-  uNWLFqACpDU: '/learner-videos/uNWLFqACpDU-thumb.jpg',
-}
-
-export function videoThumb(id: string): string {
-  return LOCAL_THUMBS[id] ?? defaultThumb(id)
-}
-
-/** YouTube's own default thumbnail (also the fallback when a Short's frame fails). */
+/** YouTube's own default thumbnail — only the fallback when an in-video frame fails to load. */
 export function defaultThumb(id: string): string {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
 }
 
 /**
- * Thumbnail for a review video. Shorts use YouTube's frame thumbnail
- * (hq2.jpg), owner's conversion brief, so no card shows another topic's
- * title written on it; long videos keep the local frame or the default.
+ * Thumbnail for a review video (owner, Nov 2026): a frame from inside the
+ * video — hq2 (50%) by default, or the video's own `thumbFrame` — never
+ * YouTube's title card. Cropping: lib/video/reviewFrames.ts.
  */
-export function reviewThumb(id: string, type: 'L' | 'S'): string {
-  return type === 'S' ? `https://img.youtube.com/vi/${id}/hq2.jpg` : videoThumb(id)
+export function reviewThumb(id: string, thumbFrame?: ThumbFrame): string {
+  return reviewFrameSrc(id, thumbFrame)
 }
 
 /** Program page URL (Hindi at ?lang=hi). */

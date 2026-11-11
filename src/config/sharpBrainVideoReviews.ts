@@ -1,3 +1,5 @@
+import { reviewFrameSrc, type ThumbFrame, type VideoShape } from '@/lib/video/reviewFrames'
+
 // Phase 4.5 — the Sharp Brain video reviews (YouTube Shorts, 9:16), in the
 // owner's order. These replace every older Sharp Brain review on the site
 // (qsrVideoReviews.ts / HOME_LEARNING_VIDEO_REVIEWS stay in the code but are
@@ -15,6 +17,8 @@ export type SharpBrainVideoReview = {
   name: string | null
   /** What the review is about (owner, Nov 2026), English and Hindi — matched by video ID. */
   caption: { en: string; hi: string }
+  /** Thumbnail frame from inside the video: hq1 (25%), hq2 (50%, default) or hq3 (75%). Add `thumbFrame: 1` or `3` to switch. */
+  thumbFrame?: ThumbFrame
 }
 
 export const SHARP_BRAIN_VIDEO_REVIEWS: readonly SharpBrainVideoReview[] = [
@@ -28,17 +32,19 @@ export const SHARP_BRAIN_VIDEO_REVIEWS: readonly SharpBrainVideoReview[] = [
 ]
 
 /** The list in VideoReviewGrid's shape, with each video's caption in the page's language. */
-export function sharpBrainReviewCards(lang: 'en' | 'hi'): { videoId: string; thumbnailSrc: string; caption: string; title?: string; name?: string }[] {
+export function sharpBrainReviewCards(lang: 'en' | 'hi'): { videoId: string; thumbnailSrc: string; frameShape: VideoShape; caption: string; title?: string; name?: string }[] {
   return SHARP_BRAIN_VIDEO_REVIEWS.map((video) => ({
     videoId: video.videoId,
-    thumbnailSrc: `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`,
+    // An in-video frame (hq2 by default), not YouTube's title card.
+    thumbnailSrc: reviewFrameSrc(video.videoId, video.thumbFrame),
+    frameShape: 'S' as const,
     caption: video.caption[lang],
     ...(video.title !== null ? { title: video.title } : {}),
     ...(video.name !== null ? { name: video.name } : {}),
   }))
 }
 
-/** English cards, for pages without a Hindi version (YouTube's own thumbnail, served through next/image). */
+/** English cards, for pages without a Hindi version. */
 export const SHARP_BRAIN_REVIEW_CARDS = sharpBrainReviewCards('en')
 
 /** Shorts row: a swipeable strip on phones, one row of 7 on desktop (4 per row on tablets). */

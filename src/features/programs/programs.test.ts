@@ -231,9 +231,10 @@ describe('conversion brief (Nov 2026)', () => {
     }
   })
 
-  it('uses the YouTube frame thumbnail for Shorts only', () => {
-    expect(reviewThumb('abc123', 'S')).toBe('https://img.youtube.com/vi/abc123/hq2.jpg')
-    expect(reviewThumb('abc123', 'L')).toBe('https://i.ytimg.com/vi/abc123/hqdefault.jpg')
+  it('uses an in-video frame for every review thumbnail: hq2 by default, or the video’s thumbFrame', () => {
+    expect(reviewThumb('abc123')).toBe('https://i.ytimg.com/vi/abc123/hq2.jpg')
+    expect(reviewThumb('abc123', 1)).toBe('https://i.ytimg.com/vi/abc123/hq1.jpg')
+    expect(reviewThumb('abc123', 3)).toBe('https://i.ytimg.com/vi/abc123/hq3.jpg')
   })
 
   it('serves the hub, the 15 programs and the Clarity Session pages from pre-built copies', () => {

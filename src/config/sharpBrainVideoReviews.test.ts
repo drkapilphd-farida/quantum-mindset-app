@@ -22,4 +22,9 @@ describe('Sharp Brain review captions', () => {
     expect(sharpBrainReviewCards('en')[0]?.caption).toBe(OWNER.g135C_Dak7s?.en)
     expect(sharpBrainReviewCards('hi')[0]?.caption).toBe(OWNER.g135C_Dak7s?.hi)
   })
+  it('uses an in-video frame (hq2 by default), cropped as a Short', () => {
+    const card = sharpBrainReviewCards('en')[0]
+    expect(card?.thumbnailSrc).toBe('https://i.ytimg.com/vi/g135C_Dak7s/hq2.jpg')
+    expect(card?.frameShape).toBe('S')
+  })
 })

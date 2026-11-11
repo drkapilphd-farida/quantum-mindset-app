@@ -7,6 +7,7 @@ import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/s
 import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
 import { GROUPS } from "@/features/programs/common";
 import { reviewVideo } from "@/features/programs/reviewVideos";
+import { reviewFrameSrc } from "@/lib/video/reviewFrames";
 import Image from "next/image";
 import { BookOpen, Brain, CalendarClock, Headphones, Route } from "lucide-react";
 import { FreeTestButton } from "../FreeTestButton";
@@ -101,7 +102,7 @@ export function HomeSharpBrainReviews(): React.JSX.Element {
   const c = homeV2.reviews;
   const sessionCards = HOME_SESSION_REVIEW_IDS.map((id) => {
     const video = reviewVideo(id);
-    return { videoId: id, thumbnailSrc: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, title: `“${say(video.caption, lang)}”`, alt: say(video.caption, lang) };
+    return { videoId: id, thumbnailSrc: reviewFrameSrc(id, video.thumbFrame), frameShape: video.type, title: `“${say(video.caption, lang)}”`, alt: say(video.caption, lang) };
   });
   return (
     <section id="proof" className={`${SECTION} bg-panel`} aria-labelledby="home-reviews">

@@ -1,4 +1,5 @@
 import type { Bi, ProgramSlug } from './types'
+import type { ThumbFrame } from '@/lib/video/reviewFrames'
 
 // Review videos for Personal Sessions (owner's strict reviews brief, Nov 2026,
 // plus the three videos he added back). IDs, types, English captions and
@@ -7,7 +8,8 @@ import type { Bi, ProgramSlug } from './types'
 
 export type ReviewTopic = 'telepathy' | 'cosmic' | 'ksa' | 'mind' | 'retreat' | 'intuition'
 
-export type ReviewVideo = { id: string; type: 'L' | 'S'; caption: Bi; topics: ReviewTopic[] }
+/** thumbFrame: which in-video frame the card shows — hq1 (25%), hq2 (50%, default) or hq3 (75%). Owner, Nov 2026. */
+export type ReviewVideo = { id: string; type: 'L' | 'S'; caption: Bi; topics: ReviewTopic[]; thumbFrame?: ThumbFrame }
 
 /** /reviews filter chips, in the owner's order ("All" first). */
 export const REVIEW_CHIPS: { id: ReviewTopic | 'all'; label: Bi }[] = [
@@ -31,7 +33,8 @@ export const REVIEW_LINE: Bi = {
   hi: 'पिछले प्रतिभागियों के व्यक्तिगत अनुभव। हर व्यक्ति का अनुभव अलग होता है।',
 }
 
-const v = (id: string, type: 'L' | 'S', en: string, hi: string, topics: ReviewTopic[] = []): ReviewVideo => ({ id, type, caption: { en, hi }, topics })
+// To switch a video's thumbnail frame, add it as the last argument: v(id, type, en, hi, topics, 1) or (…, 3).
+const v = (id: string, type: 'L' | 'S', en: string, hi: string, topics: ReviewTopic[] = [], thumbFrame?: ThumbFrame): ReviewVideo => ({ id, type, caption: { en, hi }, topics, ...(thumbFrame !== undefined ? { thumbFrame } : {}) })
 
 /** Master list, in the owner's order (74 from the brief + 3 added back). */
 export const REVIEW_VIDEOS: readonly ReviewVideo[] = [
