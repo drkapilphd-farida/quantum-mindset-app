@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { programs } from "@/config/site.config";
-import { FREE_TEST_LINKS } from "@/config/navigation";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
 import { GROUPS } from "@/features/programs/common";
 import { reviewVideo } from "@/features/programs/reviewVideos";
 import Image from "next/image";
-import { CalendarClock, Headphones, Route } from "lucide-react";
+import { BookOpen, Brain, CalendarClock, Headphones, Route } from "lucide-react";
+import { FreeTestButton } from "../FreeTestButton";
 import { trainer } from "@/config/site.config";
 import type { GroupId } from "@/features/programs/types";
 
@@ -55,13 +55,11 @@ export function HomePaths(): React.JSX.Element {
                 </div>
               ))}
             </div>
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-auto lg:pt-6">
-              <Link href={sharpBrainHref(lang)} className={GOLD}>
+            <div className="mt-6 flex flex-wrap items-start gap-x-4 gap-y-3 lg:mt-auto lg:pt-6">
+              <Link href={sharpBrainHref(lang)} className={`${GOLD} min-h-12`}>
                 {say(sb.button, lang)}
               </Link>
-              <Link href={FREE_TEST_LINKS.speedTest} className="inline-flex min-h-11 items-center text-[15px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
-                {say(sb.test, lang)}
-              </Link>
+              <FreeTestButton test="reading" lang={lang} />
             </div>
           </article>
           <article className="flex flex-col rounded-sm border border-line-strong bg-panel p-6 sm:p-8" data-home-path="sessions">
@@ -234,17 +232,24 @@ export function HomeMeetKapil(): React.JSX.Element {
 // Free tools band (owner, homepage upgrade): 2 cards.
 export function HomeFreeTools(): React.JSX.Element {
   const { lang } = useLanguage();
-  const c = homeV2.freeTools;
-  const card = "flex min-h-[88px] items-center justify-between gap-4 rounded-sm border border-line-strong bg-panel px-6 py-5 text-[17px] font-extrabold text-ink transition-colors hover:border-gold";
+  // Owner (free-test buttons): each card has a 4px teal top border, a teal icon and the teal FreeTestButton.
+  const card = "flex flex-col items-start gap-4 rounded-sm border border-t-4 border-line-strong border-t-[#0F766E] bg-panel px-6 py-6";
+  const icon = "flex h-11 w-11 items-center justify-center rounded-full bg-[#DDF3EF] text-[#0F766E]";
   return (
     <section className={`${SECTION} bg-panel2`} data-home-free-tools>
       <div className="mx-auto grid max-w-content grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
-        <Link href={FREE_TEST_LINKS.overthinkingTest} className={card}>
-          {say(c.overthinking, lang)} <span aria-hidden="true" className="text-gold">→</span>
-        </Link>
-        <Link href={FREE_TEST_LINKS.speedTest} className={card}>
-          {say(c.reading, lang)} <span aria-hidden="true" className="text-gold">→</span>
-        </Link>
+        <div className={card} data-free-tool="overthinking">
+          <span className={icon} aria-hidden="true">
+            <Brain className="h-5 w-5" strokeWidth={2} />
+          </span>
+          <FreeTestButton test="overthinking" lang={lang} />
+        </div>
+        <div className={card} data-free-tool="reading">
+          <span className={icon} aria-hidden="true">
+            <BookOpen className="h-5 w-5" strokeWidth={2} />
+          </span>
+          <FreeTestButton test="reading" lang={lang} />
+        </div>
       </div>
     </section>
   );

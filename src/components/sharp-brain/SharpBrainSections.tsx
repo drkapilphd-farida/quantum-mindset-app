@@ -6,7 +6,7 @@ import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { PAGE_VIDEOS, SHARP_BRAIN_PRICES, programs, qsrGuarantee } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
-import { FREE_TEST_LINKS } from "@/config/navigation";
+import { FreeTestButton } from "../FreeTestButton";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
@@ -42,24 +42,21 @@ const ENROL_HREF = "/programs/sharp-brain#enrol";
 
 // The two calls to action (hero and final): enrol (→ batch picker in the
 // offer section), or take the free Reading Speed Test.
-function EnrolAndTestButtons({ speedTest, location, className = "" }: { speedTest: string; location: string; className?: string }): React.JSX.Element {
+function EnrolAndTestButtons({ location, className = "" }: { location: string; className?: string }): React.JSX.Element {
   const enrol = useEnrolLabel();
+  const { lang } = useLanguage();
   return (
-    <div className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${className}`}>
+    <div className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start ${className}`}>
       <a
         href={ENROL_HREF}
         onClick={() => trackGaEvent("sharp_brain_enrol_click", { location })}
-        className="inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
+        className="inline-flex min-h-12 items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
         data-enrol-link
       >
         {enrol}
       </a>
-      <Link
-        href={FREE_TEST_LINKS.speedTest}
-        className="inline-flex items-center justify-center rounded-sm border border-line-strong px-7 py-[15px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
-      >
-        {speedTest}
-      </Link>
+      {/* Owner (Nov 2026): the teal FreeTestButton for every free test; gold only for paid actions. */}
+      <FreeTestButton test="reading" lang={lang} align={className.includes("justify-center") ? "center" : "start"} />
     </div>
   );
 }
@@ -386,7 +383,7 @@ export function SharpBrainFinal(): React.JSX.Element {
     <section className={sectionClass}>
       <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
         <h2 className="text-[26px] font-extrabold leading-tight sm:text-[32px]">{c.title}</h2>
-        <EnrolAndTestButtons speedTest={c.speedTest} location="sharp_brain_final" className="mt-7 justify-center" />
+        <EnrolAndTestButtons location="sharp_brain_final" className="mt-7 justify-center" />
         <PriceLine className="mt-4" rollingText={rolling} />
       </div>
     </section>
@@ -431,7 +428,7 @@ export function SharpBrainReviewsHero(): React.JSX.Element {
         <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-gold">{c.reviews.eyebrow}</p>
         <h1 className="mt-4 max-w-3xl text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px]">{c.reviews.h1}</h1>
         <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-ink">{c.reviews.sub}</p>
-        <EnrolAndTestButtons speedTest={c.hero.speedTest} location="reviews_hero" className="mt-8" />
+        <EnrolAndTestButtons location="reviews_hero" className="mt-8" />
         <PriceLine className="mt-4" rollingText={rolling} />
         <Link href={programs.sharpBrain.url} className="mt-5 inline-block text-[14px] font-semibold text-gold hover:underline">
           {c.reviews.programLink}

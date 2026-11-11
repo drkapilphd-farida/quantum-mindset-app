@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest'
+import { existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { PAGE_VIDEOS } from '@/config/site.config'
 import { PROGRAM_PAGE_VIDEOS } from './pageVideos'
 
@@ -39,5 +41,19 @@ describe('page videos (owner, Nov 2026)', () => {
       'astral-projection': 'kriyaYoga',
       'personal-retreat': 'kriyaYoga',
     })
+  })
+  it('uses the owner’s own thumbnails (720×1280 WebP), never a YouTube image', () => {
+    const thumbs = Object.values(PAGE_VIDEOS).map((v) => v.thumb)
+    expect(thumbs.slice(0, 3)).toEqual(['/images/video-thumbs/v1.webp', '/images/video-thumbs/v2.webp', '/images/video-thumbs/v3.webp'])
+    for (const thumb of thumbs) {
+      if (thumb === null) continue
+      const file = join(process.cwd(), 'public', thumb)
+      expect(existsSync(file), thumb).toBe(true)
+      const bytes = readFileSync(file)
+      expect(bytes.subarray(0, 4).toString('ascii'), thumb).toBe('RIFF')
+      expect(bytes.subarray(8, 12).toString('ascii'), thumb).toBe('WEBP')
+    }
+    const player = readFileSync(join(process.cwd(), 'src/components/video/PageVideo.tsx'), 'utf8')
+    expect(player).not.toMatch(/https:\/\/i\.ytimg\.com/)
   })
 })

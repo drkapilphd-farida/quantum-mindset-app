@@ -2,6 +2,7 @@
 
 import { Brain, HeartPulse, Gauge } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { FreeTestButton } from "@/components/FreeTestButton";
 import { Eyebrow } from "../ui";
 
 const SCORE_ICONS = [Brain, HeartPulse, Gauge] as const;
@@ -17,7 +18,7 @@ const SCORE_ICONS = [Brain, HeartPulse, Gauge] as const;
 // CTAs back to back. No actual scores are shown (per spec — the
 // assessment logic itself isn't implemented yet, see /mind-assessment).
 export default function MindResetAssessmentCta(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const section = t.mindResetLanding.assessmentCta;
 
   return (
@@ -44,13 +45,7 @@ export default function MindResetAssessmentCta(): React.JSX.Element {
             })}
           </div>
 
-          <a
-            href="/mind-assessment"
-            className="group mt-8 inline-flex items-center gap-2.5 rounded-sm bg-rose px-7 py-[15px] text-[14.5px] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#b8757e]"
-          >
-            {section.cta}
-            <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-          </a>
+          <FreeTestButton test="overthinking" lang={lang} align="center" className="mt-8" />
           <p className="mx-auto mt-4 max-w-sm text-[12px] leading-relaxed text-ink-faint">{section.disclaimer}</p>
         </div>
       </div>

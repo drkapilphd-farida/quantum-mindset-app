@@ -663,19 +663,27 @@ export const CLARITY_SESSION = { priceInr: 1100, minutes: 60 } as const
  * written; every page reads its video from here. Played with the lite embed
  * (components/video/PageVideo.tsx): thumbnail first, youtube-nocookie.com
  * player only after a tap. `name` is what the VideoPlay event reports.
+ * Thumbnails: the owner's own files (vN.webp), never i.ytimg.com.
  */
 export type PageVideoKey = 'intro' | 'stress' | 'mindset' | 'trader' | 'kriyaYoga' | 'clarity' | 'welcome' | 'sharpBrain' | 'partner'
-export type PageVideoEntry = { readonly id: string; readonly name: string; readonly caption: { readonly en: string; readonly hi: string } }
+/** thumb: the owner's own 9:16 thumbnail in public/images/video-thumbs/ (720×1280 WebP); null = not received yet (a plain poster shows, never a YouTube image). */
+export type PageVideoEntry = { readonly id: string; readonly name: string; readonly thumb: string | null; readonly caption: { readonly en: string; readonly hi: string } }
 export const PAGE_VIDEOS: Readonly<Record<PageVideoKey, PageVideoEntry>> = {
-  intro: { id: '9Uu37T9ceK8', name: 'Intro', caption: { en: 'Dr. Kapil on how personal sessions work', hi: 'डॉ. कपिल बताते हैं कि पर्सनल सेशन कैसे होते हैं' } },
-  stress: { id: 'TjDyV2y_f10', name: 'Stress', caption: { en: 'Dr. Kapil on stress, anxiety and overthinking', hi: 'तनाव, एंग्ज़ायटी और ओवरथिंकिंग पर डॉ. कपिल' } },
-  mindset: { id: 'NkMF-GgHBWo', name: 'Mindset', caption: { en: 'Dr. Kapil on changing your mindset', hi: 'माइंडसेट बदलने पर डॉ. कपिल' } },
-  trader: { id: '6BviF0upE94', name: 'Trader', caption: { en: 'Dr. Kapil on intuition for traders', hi: 'ट्रेडर्स के लिए इनट्यूशन पर डॉ. कपिल' } },
-  kriyaYoga: { id: 'N4GN2wZ-h1k', name: 'Kriya Yoga', caption: { en: 'Dr. Kapil on Kriya Yoga practice', hi: 'क्रिया योग साधना पर डॉ. कपिल' } },
-  clarity: { id: 'rBob7TyUt0Q', name: 'Clarity', caption: { en: 'What happens in your Clarity Session', hi: 'आपके क्लैरिटी सेशन में क्या होता है' } },
-  welcome: { id: 'mgChcjYr7bo', name: 'Welcome', caption: { en: 'A welcome from Dr. Kapil', hi: 'डॉ. कपिल का स्वागत संदेश' } },
-  sharpBrain: { id: 'LPrime0Nl-s', name: 'Sharp Brain', caption: { en: 'Dr. Kapil on Sharp Brain', hi: 'Sharp Brain के बारे में डॉ. कपिल' } },
-  partner: { id: 'HV2ytS0oyds', name: 'Partner', caption: { en: 'Dr. Kapil on the Sharp Brain Partner Program', hi: 'Sharp Brain पार्टनर प्रोग्राम के बारे में डॉ. कपिल' } },
+  intro: { id: '9Uu37T9ceK8', name: 'Intro', thumb: '/images/video-thumbs/v1.webp', caption: { en: 'Dr. Kapil on how personal sessions work', hi: 'डॉ. कपिल बताते हैं कि पर्सनल सेशन कैसे होते हैं' } },
+  stress: { id: 'TjDyV2y_f10', name: 'Stress', thumb: '/images/video-thumbs/v2.webp', caption: { en: 'Dr. Kapil on stress, anxiety and overthinking', hi: 'तनाव, एंग्ज़ायटी और ओवरथिंकिंग पर डॉ. कपिल' } },
+  mindset: { id: 'NkMF-GgHBWo', name: 'Mindset', thumb: '/images/video-thumbs/v3.webp', caption: { en: 'Dr. Kapil on changing your mindset', hi: 'माइंडसेट बदलने पर डॉ. कपिल' } },
+  // TODO(business): Dr. Kapil to send v4.webp
+  trader: { id: '6BviF0upE94', name: 'Trader', thumb: null, caption: { en: 'Dr. Kapil on intuition for traders', hi: 'ट्रेडर्स के लिए इनट्यूशन पर डॉ. कपिल' } },
+  // TODO(business): Dr. Kapil to send v5.webp
+  kriyaYoga: { id: 'N4GN2wZ-h1k', name: 'Kriya Yoga', thumb: null, caption: { en: 'Dr. Kapil on Kriya Yoga practice', hi: 'क्रिया योग साधना पर डॉ. कपिल' } },
+  // TODO(business): Dr. Kapil to send v6.webp
+  clarity: { id: 'rBob7TyUt0Q', name: 'Clarity', thumb: null, caption: { en: 'What happens in your Clarity Session', hi: 'आपके क्लैरिटी सेशन में क्या होता है' } },
+  // TODO(business): Dr. Kapil to send v7.webp
+  welcome: { id: 'mgChcjYr7bo', name: 'Welcome', thumb: null, caption: { en: 'A welcome from Dr. Kapil', hi: 'डॉ. कपिल का स्वागत संदेश' } },
+  // TODO(business): Dr. Kapil to send v8.webp
+  sharpBrain: { id: 'LPrime0Nl-s', name: 'Sharp Brain', thumb: null, caption: { en: 'Dr. Kapil on Sharp Brain', hi: 'Sharp Brain के बारे में डॉ. कपिल' } },
+  // TODO(business): Dr. Kapil to send v9.webp
+  partner: { id: 'HV2ytS0oyds', name: 'Partner', thumb: null, caption: { en: 'Dr. Kapil on the Sharp Brain Partner Program', hi: 'Sharp Brain पार्टनर प्रोग्राम के बारे में डॉ. कपिल' } },
 }
 
 /**

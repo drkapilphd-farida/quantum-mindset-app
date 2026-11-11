@@ -2,6 +2,7 @@
 
 import { primaryCheckoutHref } from "@/config/site.config";
 import { useLanguage } from "@/context/LanguageContext";
+import { FreeTestButton } from "@/components/FreeTestButton";
 import { Eyebrow } from "../ui";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
@@ -12,7 +13,7 @@ const OVERTHINKING_CHECKOUT_HREF = primaryCheckoutHref('overthinkingReset');
 // on this page (see the master prompt's Step 1b) — exactly two
 // conversion paths, purchase and the free assessment.
 export default function MindResetFinalCta(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const section = t.mindResetLanding.finalCta;
 
   return (
@@ -35,12 +36,7 @@ export default function MindResetFinalCta(): React.JSX.Element {
             {section.ctaPrimary}
             <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
           </a>
-          <a
-            href="/mind-assessment"
-            className="inline-flex items-center gap-2 rounded-sm border border-line-strong px-8 py-[17px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
-          >
-            {section.ctaSecondary}
-          </a>
+          <FreeTestButton test="overthinking" lang={lang} align="center" />
         </div>
       </div>
     </section>

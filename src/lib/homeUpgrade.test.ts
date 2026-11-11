@@ -22,8 +22,6 @@ describe('homepage upgrade', () => {
       'Since 2015: Sharp Brain; 12+ years of 1-on-1 mind coaching.',
     ])
     expect(homeV2.meet.story.en).toBe('My story →')
-    expect(homeV2.freeTools.overthinking.en).toBe('Free Overthinking Test — 3 minutes')
-    expect(homeV2.freeTools.reading.en).toBe('Free Reading & Memory Test')
     expect(homeV2.finalCta.heading.hi).toBe('आपका पहला कदम आज।')
     expect(homeV2.finalCta.clarity.en).toBe('Book Clarity Session — ₹1,100')
     expect(homeV2.finalCta.sharpBrain.en).toBe('Explore Sharp Brain')

@@ -101,10 +101,6 @@ export const homeV2 = {
     ] as Bi[],
     story: { hi: 'मेरी कहानी →', en: 'My story →' },
   },
-  freeTools: {
-    overthinking: { hi: 'मुफ़्त ओवरथिंकिंग टेस्ट — 3 मिनट', en: 'Free Overthinking Test — 3 minutes' },
-    reading: { hi: 'मुफ़्त Reading & Memory Test', en: 'Free Reading & Memory Test' },
-  },
   finalCta: {
     // Owner's heading is Hindi; the English page shows the same line in English.
     heading: { hi: 'आपका पहला कदम आज।', en: 'Your first step, today.' },

@@ -13,13 +13,12 @@ import { trackGaEvent } from "@/lib/analytics/ga4";
 // Safari can), the video starts muted and a "Tap for sound" button unmutes
 // it. A tap also sends "VideoPlay" (video name) to Meta Pixel and GA4.
 //
-// Thumbnail: YouTube's vertical frame (oardefault.jpg) when it exists; when
-// it is missing or comes back landscape, hqdefault.jpg cropped to 9:16.
+// Thumbnail (owner, Nov 2026): his own 9:16 image (PAGE_VIDEOS[…].thumb,
+// public/images/video-thumbs/vN.webp), served as is, cropped from the top so
+// the face is never cut; the play button sits over the face, not the title
+// at the bottom. Never an i.ytimg.com image. No thumb yet → a plain poster.
 
 export type PageVideoLang = "en" | "hi";
-
-const vertical = (id: string): string => `https://i.ytimg.com/vi/${id}/oardefault.jpg`;
-const fallback = (id: string): string => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 const PLAYING = 1;
 const BUFFERING = 3;
@@ -93,14 +92,12 @@ export function PageVideo({
   const [started, setStarted] = useState(false); // video is playing
   const [needsSound, setNeedsSound] = useState(false); // started muted
   const [plainIframe, setPlainIframe] = useState(false); // API failed to load: plain embed
-  const [src, setSrc] = useState(vertical(video.id));
   const mountRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const timerRef = useRef<number | null>(null);
   const caption = captionOverride ?? video.caption[lang];
   const alt = lang === "hi" ? `वीडियो: ${caption}` : `Video: ${caption}`;
   const playLabel = lang === "hi" ? `वीडियो चलाएँ: ${caption}` : `Play video: ${caption}`;
-  const switchToFallback = (): void => setSrc((current) => (current === fallback(video.id) ? current : fallback(video.id)));
 
   useEffect(
     () => () => {
@@ -187,23 +184,18 @@ export function PageVideo({
             className="group absolute inset-0 h-full w-full disabled:cursor-wait"
             data-page-video-play
           >
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              priority={priority}
-              sizes="360px"
-              className="object-cover"
-              onError={switchToFallback}
-              onLoad={(event) => {
-                const img = event.currentTarget;
-                // oardefault is vertical; a landscape image here means the fallback (cropped) looks better.
-                if (src === vertical(video.id) && img.naturalWidth >= img.naturalHeight) switchToFallback();
-              }}
-              data-thumb={src === vertical(video.id) ? "vertical" : "cropped"}
-            />
-            <span className="absolute inset-0 bg-[#0E1B2C]/15 transition-colors group-hover:bg-[#0E1B2C]/30" aria-hidden="true" />
-            <span className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+            {video.thumb !== null ? (
+              // The owner's file is already 720×1280 WebP: served as is (no re-compression).
+              <Image src={video.thumb} alt={alt} fill unoptimized priority={priority} sizes="360px" className="object-cover object-top" data-thumb="own" />
+            ) : (
+              <span className="absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-[#1F3A5F] via-[#16263D] to-[#0E1B2C] p-5 text-left" data-thumb="poster">
+                <span className="text-[13px] font-semibold tracking-[0.06em] text-[#F2A93B]">{lang === "hi" ? "डॉ. कपिल देव शर्मा" : "Dr. Kapil Dev Sharma"}</span>
+                <span className="mt-1.5 text-[20px] font-extrabold leading-snug text-white">{caption}</span>
+              </span>
+            )}
+            <span className="absolute inset-0 bg-[#0E1B2C]/10 transition-colors group-hover:bg-[#0E1B2C]/25" aria-hidden="true" />
+            {/* Over the face (upper part), not over the title at the bottom of the thumbnail. */}
+            <span className={`absolute inset-x-0 flex justify-center ${video.thumb !== null ? "top-[34%]" : "top-[38%]"}`} aria-hidden="true">
               <span className={`flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#F2A93B] shadow-[0_6px_18px_rgba(14,27,44,0.4)] transition-transform group-hover:scale-105 ${active ? "animate-pulse" : ""}`}>
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="#0E1B2C">
                   <path d="M8 5v14l11-7z" />
