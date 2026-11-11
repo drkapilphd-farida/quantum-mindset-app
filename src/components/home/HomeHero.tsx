@@ -1,15 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { programs, trainer } from "@/config/site.config";
+import { PAGE_VIDEOS, programs } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
 import { useLanguage } from "@/context/LanguageContext";
 import { homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
 
 // 1. Hero (Phase 4.2, copy/home-v2.md): proof strip, H1, subtitle, "अपनी
 // तारीख चुनिए" (→ the date cards, #dates), "वर्कशॉप में क्या होता है →"
 // (→ /telepathy-workshop; from /hi its Hindi version) and the small booking
-// line. The photo is unchanged. The page's only <h1>.
+// line. The page's only <h1>. Owner (Nov 2026): the intro page video replaces
+// the photo — under the headline on phones, beside it on desktop.
 export default function HomeHero(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.hero;
@@ -20,6 +21,8 @@ export default function HomeHero(): React.JSX.Element {
         <div>
           <p className="font-mono text-[12.5px] uppercase tracking-[0.08em] text-gold">{say(c.strip, lang)}</p>
           <h1 className="mt-4 text-balance text-[32px] font-extrabold leading-[1.12] tracking-tight sm:text-[46px] lg:text-[52px]">{say(c.h1, lang)}</h1>
+          {/* Owner (Nov 2026): the intro page video — under the headline on phones, beside it on desktop. */}
+          <PageVideo video={PAGE_VIDEOS.intro} lang={lang} tone="light" priority className="mt-6 lg:hidden" />
           <p className="mt-5 max-w-xl text-[16.5px] leading-relaxed text-ink-dim sm:text-[18px]">{say(c.sub, lang)}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
@@ -38,17 +41,8 @@ export default function HomeHero(): React.JSX.Element {
           <p className="mt-4 text-[14.5px] text-ink-dim">{say(c.smallLine, lang)}</p>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[520px]">
-          <div className="relative aspect-[1374/1145] w-full overflow-hidden rounded-sm border border-line-strong bg-panel2">
-            <Image
-              src={trainer.photo.src}
-              alt={trainer.photo.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 520px, 92vw"
-              className="object-cover object-top"
-            />
-          </div>
+        <div className="hidden lg:block">
+          <PageVideo video={PAGE_VIDEOS.intro} lang={lang} tone="light" priority />
         </div>
       </div>
     </section>

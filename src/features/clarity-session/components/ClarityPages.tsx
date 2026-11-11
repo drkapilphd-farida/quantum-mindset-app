@@ -1,4 +1,5 @@
-import { CLARITY_BOOKING, CLARITY_SESSION } from "@/config/site.config";
+import { CLARITY_BOOKING, CLARITY_SESSION, PAGE_VIDEOS } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
 import { waLink } from "@/data/links";
 import SiteTodo from "@/components/site/SiteTodo";
 import { hasPaymentLinksApi } from "@/lib/razorpay/paymentLinksApi";
@@ -12,7 +13,6 @@ import { PurchaseTracker } from "./PurchaseTracker";
 
 // /clarity-session and /clarity-session/booked (owner's conversion brief, Nov 2026).
 
-const wrap = "mx-auto w-full max-w-[860px]";
 
 function payMode(): PayMode {
   // Razorpay Checkout needs both keys (the same RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET as Sharp Brain).
@@ -27,9 +27,12 @@ export function ClaritySessionPage({ lang }: { lang: ProgramLang }): React.JSX.E
   return (
     <ProgramsShell lang={lang} path="/clarity-session" ctaHref={`${self}#pay`} ctaLabel={say(COMMON.bookButton, lang)} schemas={[]}>
       <section className="bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-20" data-clarity-page>
-        <div className={`${wrap} flex flex-col gap-6`}>
+        <div className="mx-auto grid w-full max-w-[1160px] grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="flex min-w-0 flex-col gap-6">
           <p className="text-[15px] font-semibold tracking-[0.06em] text-[#F2A93B]">{say(CLARITY_CARD.eyebrow, lang)}</p>
           <h1 className="text-[36px] font-extrabold leading-[1.15] md:text-[52px]">{say(CLARITY_CARD.title, lang)}</h1>
+          {/* Owner (Nov 2026): the Clarity page video — under the headline on phones, beside it on desktop. */}
+          <PageVideo video={PAGE_VIDEOS.clarity} lang={lang} priority className="lg:hidden" />
           <p className="text-[20px] leading-[1.5] text-[#D6DCE8] md:text-[22px]" data-clarity-recap>
             {say(CLARITY_PAGE.recap, lang)}
           </p>
@@ -45,6 +48,10 @@ export function ClaritySessionPage({ lang }: { lang: ProgramLang }): React.JSX.E
           </p>
           <p className="text-[15px] text-[#AEB8CA]">{say(COMMON.experience, lang)}</p>
         </div>
+        <div className="hidden lg:block">
+          <PageVideo video={PAGE_VIDEOS.clarity} lang={lang} priority />
+        </div>
+        </div>
       </section>
     </ProgramsShell>
   );
@@ -59,6 +66,8 @@ export function ClarityBookedPage({ lang }: { lang: ProgramLang }): React.JSX.El
       <section className="px-4 py-12 sm:px-6 md:py-16" data-booked-page>
         <div className="mx-auto flex w-full max-w-[1000px] flex-col gap-6">
           <h1 className="text-[32px] font-extrabold leading-[1.2] md:text-[44px]">{say(BOOKED_PAGE.title, lang)}</h1>
+          {/* Owner (Nov 2026): the welcome video, above the Cal.com calendar. */}
+          <PageVideo video={PAGE_VIDEOS.welcome} lang={lang} tone="light" priority />
           {cal !== null ? (
             <iframe
               src={`${cal}${cal.includes("?") ? "&" : "?"}embed=true&layout=month_view`}

@@ -659,6 +659,26 @@ export const sharpBrainEnrolment: Widen<typeof sharpBrainEnrolmentData> & {
 export const CLARITY_SESSION = { priceInr: 1100, minutes: 60 } as const
 
 /**
+ * Page videos (owner, Nov 2026) — the one place these YouTube Shorts IDs are
+ * written; every page reads its video from here. Played with the lite embed
+ * (components/video/PageVideo.tsx): thumbnail first, youtube-nocookie.com
+ * player only after a tap. `name` is what the VideoPlay event reports.
+ */
+export type PageVideoKey = 'intro' | 'stress' | 'mindset' | 'trader' | 'kriyaYoga' | 'clarity' | 'welcome' | 'sharpBrain' | 'partner'
+export type PageVideoEntry = { readonly id: string; readonly name: string; readonly caption: { readonly en: string; readonly hi: string } }
+export const PAGE_VIDEOS: Readonly<Record<PageVideoKey, PageVideoEntry>> = {
+  intro: { id: '9Uu37T9ceK8', name: 'Intro', caption: { en: 'Dr. Kapil on how personal sessions work', hi: 'डॉ. कपिल बताते हैं कि पर्सनल सेशन कैसे होते हैं' } },
+  stress: { id: 'TjDyV2y_f10', name: 'Stress', caption: { en: 'Dr. Kapil on stress, anxiety and overthinking', hi: 'तनाव, एंग्ज़ायटी और ओवरथिंकिंग पर डॉ. कपिल' } },
+  mindset: { id: 'NkMF-GgHBWo', name: 'Mindset', caption: { en: 'Dr. Kapil on changing your mindset', hi: 'माइंडसेट बदलने पर डॉ. कपिल' } },
+  trader: { id: '6BviF0upE94', name: 'Trader', caption: { en: 'Dr. Kapil on intuition for traders', hi: 'ट्रेडर्स के लिए इनट्यूशन पर डॉ. कपिल' } },
+  kriyaYoga: { id: 'N4GN2wZ-h1k', name: 'Kriya Yoga', caption: { en: 'Dr. Kapil on Kriya Yoga practice', hi: 'क्रिया योग साधना पर डॉ. कपिल' } },
+  clarity: { id: 'rBob7TyUt0Q', name: 'Clarity', caption: { en: 'What happens in your Clarity Session', hi: 'आपके क्लैरिटी सेशन में क्या होता है' } },
+  welcome: { id: 'mgChcjYr7bo', name: 'Welcome', caption: { en: 'A welcome from Dr. Kapil', hi: 'डॉ. कपिल का स्वागत संदेश' } },
+  sharpBrain: { id: 'LPrime0Nl-s', name: 'Sharp Brain', caption: { en: 'Dr. Kapil on Sharp Brain', hi: 'Sharp Brain के बारे में डॉ. कपिल' } },
+  partner: { id: 'HV2ytS0oyds', name: 'Partner', caption: { en: 'Dr. Kapil on the Sharp Brain Partner Program', hi: 'Sharp Brain पार्टनर प्रोग्राम के बारे में डॉ. कपिल' } },
+}
+
+/**
  * Clarity Session pay-and-book flow (owner's conversion brief, Nov 2026).
  * Payment: with RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET set in Vercel, Razorpay
  * Checkout opens on the page; otherwise `paymentLink` (a Razorpay Payment

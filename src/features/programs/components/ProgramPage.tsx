@@ -6,7 +6,9 @@ import { programHeroImage } from "../images";
 import { PLAN_COPY, PROGRAM_PLANS } from "../plans";
 import { PlanCards, chooseButtonClass } from "./Plans";
 import { ChoosePlanLink, ProgramViewContent } from "./Tracking";
-import { SESSION_PLAN_PRICES } from "@/config/site.config";
+import { PAGE_VIDEOS, SESSION_PLAN_PRICES } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
+import { PROGRAM_PAGE_VIDEOS } from "../pageVideos";
 import { bookingHref, clarityHref, getProgram, programHref } from "../programs";
 import type { Program, ProgramLang } from "../types";
 import { Faq } from "./Faq";
@@ -44,6 +46,9 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
   const allPlansHref = lang === "hi" ? "/personal-sessions?lang=hi#plans" : "/personal-sessions#plans";
   // Owner's hero image (16:9) once it is in the image folder; until then the current video/photo.
   const heroImage = programHeroImage(p.slug);
+  // Page video (owner, Nov 2026): under the headline on phones, beside it on desktop.
+  const videoKey = PROGRAM_PAGE_VIDEOS[p.slug];
+  const pageVideo = videoKey !== undefined ? PAGE_VIDEOS[videoKey] : null;
   // Proof above the plans (conversion brief): the telepathy review on the spiritual pages ("Grow spiritually"), the stress review elsewhere.
   const spiritual = HUB.programs.doors.find((d) => d.id === "grow")?.programs.includes(p.slug) === true;
   const proofVideo = spiritual ? "h6KiUZKXqKM" : "1FO8UVfxJ9I";
@@ -72,6 +77,7 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
               )}
             </div>
             <h1 className="text-[34px] font-extrabold leading-[1.15] md:text-[50px]">{say(p.h1, lang)}</h1>
+            {pageVideo !== null && <PageVideo video={pageVideo} lang={lang} priority className="lg:hidden" />}
             <p className="text-[18px] text-[#D6DCE8] md:text-[20px]">{say(p.subline, lang)}</p>
             {p.disclaimers.includes("traders") && (
               <p className="text-[14px] text-[#AEB8CA]" data-hero-disclaimer>
@@ -94,8 +100,10 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
             )}
             <p className="text-[15px] text-[#AEB8CA]">{say(COMMON.experience, lang)}</p>
           </div>
-          <div className="min-w-0 flex-[1_1_380px]">
-            {heroImage !== null ? (
+          <div className={`min-w-0 flex-[1_1_380px] ${pageVideo !== null ? "hidden lg:block" : ""}`}>
+            {pageVideo !== null ? (
+              <PageVideo video={pageVideo} lang={lang} priority />
+            ) : heroImage !== null ? (
               <div className="relative aspect-video w-full overflow-hidden rounded-[18px] border border-[#2C3D57] bg-[#16263D]" data-hero-media="image">
                 <Image src={heroImage} alt={say(p.name, lang)} fill priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover" />
               </div>

@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { PAGE_VIDEOS } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
 import { ASK_WHATSAPP, CAPACITY_LINE, CLARITY_CARD, COMMON, say } from "../common";
 import { waLink } from "@/data/links";
 import { reviewVideo } from "../reviewVideos";
@@ -10,7 +12,7 @@ import { Faq } from "./Faq";
 import { HubBookingForm, HubBookingProvider, HubChoosePlan, HubPrograms, HubQuiz } from "./HubInteractive";
 import { PLAN_COPY, PLAN_IDS } from "../plans";
 import { PlanCards, chooseButtonClass } from "./Plans";
-import { HeroMedia, ReviewCard, ReviewStrip } from "./Media";
+import { ReviewCard, ReviewStrip } from "./Media";
 import { HUB_REVIEWS } from "../reviewVideos";
 import { StickyBookBar } from "./StickyBookBar";
 import { ClarityCardContent, NotReadyBand, TrustSection, WhatYouGetSection } from "./SharedBlocks";
@@ -40,6 +42,7 @@ export function HubPage({ lang }: { lang: ProgramLang }): React.JSX.Element {
               <br />
               {say(h.h1b, lang)}
             </h1>
+            <PageVideo video={PAGE_VIDEOS.intro} lang={lang} priority className="lg:hidden" />
             <p className="text-[18px] text-[#D6DCE8] md:text-[20px]">{say(h.sub, lang)}</p>
             <div className="flex flex-wrap gap-3 pt-2">
               <a href={clarityHref(null, lang)} className="inline-flex min-h-12 items-center rounded-[10px] bg-[#F2A93B] px-7 py-3.5 text-[18px] font-extrabold text-[#0E1B2C] hover:bg-[#E39A2A]">
@@ -54,9 +57,9 @@ export function HubPage({ lang }: { lang: ProgramLang }): React.JSX.Element {
               {say(h.stressLink, lang)}
             </a>
           </div>
-          <div className="min-w-0 flex-[1_1_400px]">
-            {/* Owner: the intro video is not ready — the box shows the photo as its poster. */}
-            <HeroMedia videoId={null} photoSrc={PHOTO} photoAlt={say(COMMON.photoAlt, lang)} lang={lang} caption={say(h.videoTitle, lang)} />
+          {/* Owner (Nov 2026): the intro page video, beside the headline on desktop (under it on phones, above). */}
+          <div className="hidden min-w-0 flex-[1_1_400px] lg:block">
+            <PageVideo video={PAGE_VIDEOS.intro} lang={lang} priority />
           </div>
         </div>
         <div className={`${wrap} mt-12 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4`}>

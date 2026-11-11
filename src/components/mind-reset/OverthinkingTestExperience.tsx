@@ -5,6 +5,8 @@ import { useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
+import { PAGE_VIDEOS } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
 import OverthinkingTestLeadForm from "./OverthinkingTestLeadForm";
 
 type BandKey = "low" | "moderate" | "high";
@@ -45,7 +47,7 @@ type Stage = "intro" | "quiz" | "results";
 // capture is reconsidered, per this task's own instruction not to
 // delete "the underlying lead-storage mechanism."
 export default function OverthinkingTestExperience(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const section = t.overthinkingTestLanding;
 
   const flatQuestions = useMemo(
@@ -119,6 +121,8 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
         <div className="mx-auto max-w-xl">
           <Eyebrow color="text-rose">{section.hero.eyebrow}</Eyebrow>
           <h1 className="mt-4 text-[30px] font-extrabold leading-tight sm:text-[38px]">{section.hero.headline}</h1>
+          {/* Owner (Nov 2026): the Stress page video, under the headline. */}
+          <PageVideo video={PAGE_VIDEOS.stress} lang={lang} tone="light" priority className="mt-7" />
           <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-ink-dim">{section.hero.sub}</p>
           <button
             type="button"
