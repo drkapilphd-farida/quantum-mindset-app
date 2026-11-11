@@ -11,6 +11,7 @@ type Bi = { hi: string; en: string }
 const inr = (n: number): string => `₹${n.toLocaleString('en-IN')}`
 const selfPacedPrice = inr(SHARP_BRAIN_PRICES.selfPacedInr)
 const livePrice = inr(SHARP_BRAIN_PRICES.liveInr)
+const clarityPrice = inr(CLARITY_SESSION.priceInr)
 
 export const homeV2 = {
   meta: {
@@ -66,8 +67,49 @@ export const homeV2 = {
       note: { hi: 'कोचिंग और सपोर्ट — मेडिकल इलाज नहीं।', en: 'Coaching and support — not medical care.' },
     },
   },
+  // Owner (homepage upgrade, Nov 2026): one line of 4 facts under the hero.
+  trust: [
+    { hi: 'PhD · 15 साल प्रोफ़ेसर', en: 'PhD · 15 years professor' },
+    { hi: '12+ साल माइंड कोचिंग', en: '12+ years mind coaching' },
+    { hi: '500+ वर्कशॉप', en: '500+ workshops' },
+    { hi: 'Solomon Daniel के पॉडकास्ट पर फ़ीचर्ड', en: "Featured on Solomon Daniel's Podcast" },
+  ] as Bi[],
+  howSessions: {
+    heading: { hi: 'पर्सनल सेशन कैसे होते हैं', en: 'How Personal Sessions work' },
+    steps: [
+      {
+        lead: { hi: `क्लैरिटी सेशन, ${CLARITY_SESSION.minutes} मिनट, ${clarityPrice}`, en: `Clarity Session, ${CLARITY_SESSION.minutes} min, ${clarityPrice}` },
+        rest: { hi: 'अपना पैटर्न समझिए और पहला बदलाव महसूस कीजिए।', en: 'understand your pattern and feel the first shift.' },
+      },
+      {
+        lead: { hi: 'आपका प्लान', en: 'Your plan' },
+        rest: { hi: `2 दिन से 6 महीने तक; 7 दिन के भीतर प्लान चुनने पर ${clarityPrice} एडजस्ट हो जाते हैं।`, en: `from 2 days to 6 months; the ${clarityPrice} is adjusted if you choose a plan within 7 days.` },
+      },
+      {
+        lead: { hi: '1-on-1 सेशन + हर सेशन के बाद एक मेडिटेशन रिकॉर्डिंग।', en: '1-on-1 sessions + a meditation recording after every session.' },
+        rest: null,
+      },
+    ] as { lead: Bi; rest: Bi | null }[],
+    button: { hi: `क्लैरिटी सेशन बुक करें — ${clarityPrice}`, en: `Book Clarity Session — ${clarityPrice}` },
+  },
+  meet: {
+    heading: { hi: 'डॉ. कपिल से मिलिए', en: 'Meet Dr. Kapil' },
+    lines: [
+      { hi: '15 साल प्रोफ़ेसर (PhD, अंग्रेज़ी साहित्य)।', en: '15 years as a professor (PhD, English Literature).' },
+      { hi: '2016: हिमालय में पूरे एक साल की साधना।', en: '2016: a full year of sadhana in the Himalayas.' },
+      { hi: '2015 से: Sharp Brain; 12+ साल 1-on-1 माइंड कोचिंग।', en: 'Since 2015: Sharp Brain; 12+ years of 1-on-1 mind coaching.' },
+    ] as Bi[],
+    story: { hi: 'मेरी कहानी →', en: 'My story →' },
+  },
+  finalCta: {
+    // Owner's heading is Hindi; the English page shows the same line in English.
+    heading: { hi: 'आपका पहला कदम आज।', en: 'Your first step, today.' },
+    clarity: { hi: `क्लैरिटी सेशन बुक करें — ${clarityPrice}`, en: `Book Clarity Session — ${clarityPrice}` },
+    sharpBrain: { hi: 'Sharp Brain देखिए', en: 'Explore Sharp Brain' },
+  },
   reviews: {
     heading: { hi: 'Sharp Brain — विद्यार्थियों के अपने शब्दों में', en: "Sharp Brain — in students' own words" },
+    sessionsHeading: { hi: 'पर्सनल सेशन — क्लाइंट्स के अपने शब्दों में', en: "Personal Sessions — in clients' own words" },
     more: { hi: 'सारे रिव्यू देखिए →', en: 'See all reviews →' },
   },
   franchise: {
@@ -76,6 +118,9 @@ export const homeV2 = {
     button: { hi: 'पार्टनर बनिए', en: 'Become a Partner' },
   },
 } satisfies Record<string, unknown>
+
+/** Personal Sessions review Shorts for the homepage row (from the reviews data: mind, meditation, telepathy — no Sharp Brain). */
+export const HOME_SESSION_REVIEW_IDS: readonly string[] = ['otIFQVpc-RQ', 'SPD1x72viiU', 'QjoJl5R0bBk', '4Qiz0rkpTwc', 'VA_IKWt4f2g', 'Nji0LLBwhtc', 'QwMZfl9jLvA']
 
 export type HomeLang = 'hi' | 'en'
 

@@ -2,6 +2,7 @@
 
 import { PAGE_VIDEOS, primaryCheckoutHref } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
+import { FreeTestButton } from "@/components/FreeTestButton";
 import { useLanguage } from "@/context/LanguageContext";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
@@ -58,12 +59,7 @@ export default function MindResetHero(): React.JSX.Element {
             {section.ctaPrimary}
             <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
           </a>
-          <a
-            href="/mind-assessment"
-            className="inline-flex items-center gap-2 rounded-sm border border-white/20 px-8 py-[17px] text-[15px] font-semibold text-[#e4e6f0] transition-colors hover:bg-white/[0.05]"
-          >
-            {section.ctaSecondary}
-          </a>
+          <FreeTestButton test="overthinking" lang={lang} align="center" timeTone="dark" />
         </div>
 
         <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.06em] text-[#8b8fa8]">{section.trustLine}</p>

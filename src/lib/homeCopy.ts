@@ -149,6 +149,10 @@ const en: HomeCopy = {
     title: 'Before you start',
     items: [
       {
+        question: 'What happens in a Clarity Session?',
+        answer: '60 minutes, 1-on-1 on Zoom: a short settling practice, I listen to your full story, explain your pattern in simple words, guide you through a technique for it, and show you a clear week-by-week path. You get the recording the same day.',
+      },
+      {
         question: 'Which program is right for me?',
         answer: `Reading, focus and memory → Sharp Brain: Self-paced (₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}) or the Live batch (₹${SHARP_BRAIN_PRICES.liveInr.toLocaleString('en-IN')}). Stress, anxiety, mindset, performance or a spiritual practice → ${programs.oneOnOneCoaching.name}. Not sure? Take the free Reading & Memory Test or message us on WhatsApp.`,
       },
@@ -283,6 +287,10 @@ const hi: HomeCopy = {
     eyebrow: 'सवाल',
     title: 'शुरू करने से पहले',
     items: [
+      {
+        question: 'क्लैरिटी सेशन में क्या होता है?',
+        answer: '60 मिनट, Zoom पर 1-on-1: पहले मन को शांत करने का एक छोटा-सा अभ्यास, फिर मैं आपकी पूरी बात सुनता हूँ, आपका पैटर्न आसान शब्दों में समझाता हूँ, उसके लिए एक तकनीक करवाता हूँ, और हफ़्ते-दर-हफ़्ते का साफ़ रास्ता दिखाता हूँ। रिकॉर्डिंग आपको उसी दिन मिल जाती है।',
+      },
       {
         question: 'मेरे लिए कौन सा प्रोग्राम सही है?',
         answer: `पढ़ना, ध्यान और याददाश्त → Sharp Brain: सेल्फ़-पेस्ड (₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}) या लाइव बैच (₹${SHARP_BRAIN_PRICES.liveInr.toLocaleString('en-IN')})। तनाव, एंग्ज़ायटी, माइंडसेट, परफ़ॉर्मेंस या कोई आध्यात्मिक साधना → ${programs.oneOnOneCoaching.nameHi}। तय नहीं? मुफ़्त Reading & Memory Test दें या हमें WhatsApp पर संदेश भेजें।`,

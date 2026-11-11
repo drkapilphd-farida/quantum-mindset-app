@@ -74,6 +74,8 @@ function buildContentSecurityPolicy(): string {
       'https://checkout.razorpay.com',
       'https://www.googletagmanager.com',
       'https://connect.facebook.net',
+      // Page videos (one-tap play): the YouTube IFrame Player API, loaded only after a tap.
+      'https://www.youtube.com',
     ],
     'style-src': ["'self'", "'unsafe-inline'"],
     'img-src': [

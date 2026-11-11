@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { CLARITY_CARD, COMMON, JOURNEY, NOT_READY, OVERTHINKING_TEST_HREF, QUOTE, REFUND_LINE, STATS, TRUST, WHAT_YOU_GET, say } from "../common";
+import { FreeTestButton } from "@/components/FreeTestButton";
+import { CLARITY_CARD, COMMON, JOURNEY, NOT_READY, QUOTE, REFUND_LINE, STATS, TRUST, WHAT_YOU_GET, say } from "../common";
 import { GALLERY_PHOTOS } from "@/config/galleryPhotos";
 import { meRecordingImage } from "../images";
 import type { ProgramLang } from "../types";
@@ -179,13 +180,11 @@ export function TrustSection({ lang }: { lang: ProgramLang }): React.JSX.Element
 export function NotReadyBand({ lang }: { lang: ProgramLang }): React.JSX.Element {
   return (
     <section className="px-4 pb-14 sm:px-6 md:pb-20" data-not-ready>
-      <a
-        href={OVERTHINKING_TEST_HREF}
-        className="mx-auto flex max-w-[860px] items-center justify-between gap-4 rounded-[16px] border-2 border-[#0F766E] bg-[#DDF3EF] px-6 py-5 text-[18px] font-extrabold leading-snug text-[#0B5E57] no-underline hover:bg-[#cdeee8] md:text-[20px]"
-      >
-        <span>{say(NOT_READY, lang)}</span>
-        <span aria-hidden="true" className="text-[26px]">→</span>
-      </a>
+      <div className="mx-auto flex max-w-[860px] flex-col items-start gap-4 rounded-[16px] border-2 border-[#0F766E] bg-[#DDF3EF] px-6 py-5 md:flex-row md:items-center md:justify-between">
+        <p className="text-[18px] font-extrabold leading-snug text-[#0B5E57] md:text-[20px]">{say(NOT_READY, lang)}</p>
+        {/* The teal FreeTestButton (owner, Nov 2026) → /mind-assessment. */}
+        <FreeTestButton test="overthinking" lang={lang} rounded="rounded-[10px]" className="flex-none" />
+      </div>
     </section>
   );
 }
