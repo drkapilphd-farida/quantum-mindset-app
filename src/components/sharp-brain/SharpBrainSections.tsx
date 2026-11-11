@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { SHARP_BRAIN_PRICES, programs, qsrGuarantee, trainer } from "@/config/site.config";
+import { PAGE_VIDEOS, SHARP_BRAIN_PRICES, programs, qsrGuarantee } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
 import { FREE_TEST_LINKS } from "@/config/navigation";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
 import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
@@ -481,21 +482,22 @@ function OfferButtons({ location, className = "" }: { location: string; classNam
 
 export function SharpBrainOffersHero(): React.JSX.Element {
   const c = useCopy().offers.hero;
+  const { lang } = useLanguage();
   return (
     <section id="top" className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
       <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         <div>
           <h1 className="text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px] lg:text-[50px]">{c.h1}</h1>
+          {/* Owner (Nov 2026): the Sharp Brain page video — under the headline on phones, beside it on desktop. */}
+          <PageVideo video={PAGE_VIDEOS.sharpBrain} lang={lang} tone="light" priority className="mt-6 lg:hidden" />
           <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
           <OfferButtons location="sharp_brain_hero" className="mt-8" />
           <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint" data-seats-line>
             {c.seats}
           </p>
         </div>
-        <div className="relative mx-auto w-full max-w-[480px]">
-          <div className="relative aspect-[1374/1145] w-full overflow-hidden rounded-sm border border-line-strong bg-panel2">
-            <Image src={trainer.photo.src} alt={trainer.photo.alt} fill priority sizes="(min-width: 1024px) 480px, 92vw" className="object-cover object-top" />
-          </div>
+        <div className="hidden lg:block">
+          <PageVideo video={PAGE_VIDEOS.sharpBrain} lang={lang} tone="light" priority />
         </div>
       </div>
     </section>

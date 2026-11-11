@@ -10,6 +10,16 @@ declare global {
 export type FbqEvent = 'PageView' | 'ViewContent' | 'Lead' | 'Contact' | 'InitiateCheckout' | 'Purchase'
 export type FbqParams = Record<string, string | number>
 
+/** fbq('trackCustom', name, params) — for events Meta has no standard name for (e.g. VideoPlay). */
+export function trackCustom(name: string, params?: FbqParams): void {
+  if (typeof window === 'undefined' || typeof window.fbq !== 'function') return
+  try {
+    window.fbq('trackCustom', name, params ?? {})
+  } catch {
+    // ignored on purpose
+  }
+}
+
 /** fbq('track', event, params[, { eventID }]) — eventID lets Meta drop duplicates of the same event. */
 export function track(event: FbqEvent, params?: FbqParams, eventId?: string): void {
   if (typeof window === 'undefined' || typeof window.fbq !== 'function') return

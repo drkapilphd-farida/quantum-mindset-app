@@ -1,6 +1,7 @@
 "use client";
 
-import { primaryCheckoutHref } from "@/config/site.config";
+import { PAGE_VIDEOS, primaryCheckoutHref } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
 import { useLanguage } from "@/context/LanguageContext";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 
@@ -16,7 +17,7 @@ const OVERTHINKING_CHECKOUT_HREF = primaryCheckoutHref('overthinkingReset');
 // ₹5,999/₹8,999 model), since this page's actual pricing comparison
 // lives in its own dedicated section further down.
 export default function MindResetHero(): React.JSX.Element {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const section = t.mindResetLanding.hero;
 
   return (
@@ -36,6 +37,9 @@ export default function MindResetHero(): React.JSX.Element {
         <h1 className="mt-3 text-[32px] font-extrabold leading-[1.15] tracking-tight text-[#f5f1e6] sm:text-[42px] lg:text-[48px]">
           {section.headline}
         </h1>
+
+        {/* Owner (Nov 2026): the Stress page video, under the headline (centred, like the rest of this hero). */}
+        <PageVideo video={PAGE_VIDEOS.stress} lang={lang} priority className="mt-7" />
 
         <p className="mt-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[#eb8a96]/90">{section.tagline}</p>
 

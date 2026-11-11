@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { PAGE_VIDEOS } from "@/config/site.config";
+import { PageVideo } from "@/components/video/PageVideo";
 import { Check } from "lucide-react";
 import { FOUNDING_PARTNERS } from "@/config/partnerProgram";
 import { YOUTUBE_CHANNEL } from "@/data/links";
@@ -23,6 +25,8 @@ export function PartnerHero(): React.JSX.Element {
         <div className="flex min-w-0 flex-col gap-5">
           <p className="text-[13px] font-semibold tracking-[0.06em] text-gold sm:text-[14px]">{c.eyebrow}</p>
           <h1 className="text-[32px] font-extrabold leading-[1.15] sm:text-[44px]">{c.h1}</h1>
+          {/* Owner (Nov 2026): the Partner page video — under the headline on phones, beside it on desktop. */}
+          <PageVideo video={PAGE_VIDEOS.partner} lang="en" className="lg:hidden" priority />
           <p className="text-[18px] leading-relaxed text-ink-dim sm:text-[20px]">{c.sub}</p>
           <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
             <a href="#apply" className={goldButton} data-hero-apply>
@@ -36,7 +40,10 @@ export function PartnerHero(): React.JSX.Element {
             </a>
           </div>
         </div>
-        <HeroEarningsCard />
+        <div className="flex min-w-0 flex-col gap-8">
+          <PageVideo video={PAGE_VIDEOS.partner} lang="en" className="hidden lg:flex" priority />
+          <HeroEarningsCard />
+        </div>
       </div>
       <ul className={`${wrap} mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5`}>
         {c.stats.map((stat) => (

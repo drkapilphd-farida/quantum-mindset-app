@@ -44,6 +44,8 @@ export type GaEventName =
   // Conversion brief (Nov 2026): WhatsApp taps and the paid Clarity Session.
   | 'contact'
   | 'purchase'
+  // Page videos (owner, Nov 2026): a tap on a page video's play button.
+  | 'VideoPlay'
   // Reading Speed Test funnel (features/reading-speed-test/tracking.ts)
   | 'speed_test_started'
   | 'speed_test_completed'
