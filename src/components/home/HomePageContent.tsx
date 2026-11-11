@@ -9,17 +9,17 @@ import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
 import HomeHero from '@/components/home/HomeHero'
 import HomePodcastFeature from '@/components/HomePodcastFeature'
 import HomeFaq from '@/components/home/HomeFaq'
-import { HomeFranchiseStrip, HomePaths, HomeSharpBrainReviews } from '@/components/home/HomeV2Sections'
+import { HomeFinalCta, HomeFranchiseStrip, HomeFreeTools, HomeHowSessions, HomeMeetKapil, HomePaths, HomeSharpBrainReviews, HomeTrustStrip } from '@/components/home/HomeV2Sections'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 
 // The homepage, shared by `/` (English) and `/hi` (Hindi) — positioning
 // rework. LanguageOverride fixes the page's language whatever language is
 // stored (the stored choice, shared with the app, is left alone).
-// Nov 2026 order (owner: Sharp Brain + Personal Sessions; telepathy on
-// hold): hero → two paths (Sharp Brain ₹2,999 / ₹8,999 · Personal
-// Sessions) → Sharp Brain video reviews → podcast → FAQ → partner strip →
-// footer.
+// Order (owner's homepage upgrade, Nov 2026): hero → trust strip → two
+// paths → how Personal Sessions work → reviews (Sharp Brain, Personal
+// Sessions) → meet Dr. Kapil → free tools → podcast → FAQ → final call to
+// action → partner strip → footer.
 export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Element {
   const organizationSchema = buildOrganizationSchema()
   const personSchema = buildPersonSchema()
@@ -35,10 +35,15 @@ export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Ele
         <SiteNav />
         <main>
           <HomeHero />
+          <HomeTrustStrip />
           <HomePaths />
+          <HomeHowSessions />
           <HomeSharpBrainReviews />
+          <HomeMeetKapil />
+          <HomeFreeTools />
           <HomePodcastFeature />
           <HomeFaq />
+          <HomeFinalCta />
           <HomeFranchiseStrip />
         </main>
         <Footer />
