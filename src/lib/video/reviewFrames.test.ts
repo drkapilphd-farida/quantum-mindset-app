@@ -19,3 +19,14 @@ describe('review video frames', () => {
     expect(reviewFrameScale(16 / 10, 'L')).toBeGreaterThanOrEqual(1)
   })
 })
+
+describe('owner’s frame picks (Nov 2026)', () => {
+  it('uses hq3 for the 4 chosen videos and hq2 for every other review video', async () => {
+    const { REVIEW_VIDEOS } = await import('@/features/programs/reviewVideos')
+    const { SHARP_BRAIN_VIDEO_REVIEWS } = await import('@/config/sharpBrainVideoReviews')
+    const picks: Record<string, number> = { LxZC82BlYiM: 3, R6f1_LEWOMs: 3, BOqf3ioo1N4: 3, '2wSuE6hQrEg': 3 }
+    const all = [...REVIEW_VIDEOS.map((v) => [v.id, v.thumbFrame] as const), ...SHARP_BRAIN_VIDEO_REVIEWS.map((v) => [v.videoId, v.thumbFrame] as const)]
+    for (const [id, frame] of all) expect(frame ?? 2, id).toBe(picks[id] ?? 2)
+    expect(all.filter(([, frame]) => frame !== undefined)).toHaveLength(4)
+  })
+})

@@ -23,10 +23,10 @@ export type SharpBrainVideoReview = {
 
 export const SHARP_BRAIN_VIDEO_REVIEWS: readonly SharpBrainVideoReview[] = [
   { videoId: 'g135C_Dak7s', title: null, name: null, caption: { en: 'Class 9 Student: Reading Speed 100 → 300 WPM, with Retention', hi: 'कक्षा 9 का छात्र: Reading Speed 100 → 300 WPM, याद रखने के साथ' } },
-  { videoId: 'BOqf3ioo1N4', title: null, name: null, caption: { en: '150 WPM, 30% Retention → 350 WPM, 100% Retention', hi: '150 WPM, 30% याद → 350 WPM, 100% याद' } },
+  { videoId: 'BOqf3ioo1N4', title: null, name: null, thumbFrame: 3, caption: { en: '150 WPM, 30% Retention → 350 WPM, 100% Retention', hi: '150 WPM, 30% याद → 350 WPM, 100% याद' } },
   { videoId: 'KTc1B-kajTY', title: null, name: null, caption: { en: '"He used to study for hours, yet couldn\'t remember anything" — Parent Review, Ruchi ji', hi: '"घंटों पढ़ता था, पर कुछ याद नहीं रहता था" — अभिभावक की राय, रुचि जी' } },
   { videoId: '9oO6Yn2mzs0', title: null, name: null, caption: { en: 'Reading Speed 100 WPM → 300+ WPM', hi: 'Reading Speed 100 WPM → 300+ WPM' } },
-  { videoId: '2wSuE6hQrEg', title: null, name: null, caption: { en: 'Increase Reading Speed from 100 to 350 WPM', hi: 'Reading Speed 100 से 350 WPM तक' } },
+  { videoId: '2wSuE6hQrEg', title: null, name: null, thumbFrame: 3, caption: { en: 'Increase Reading Speed from 100 to 350 WPM', hi: 'Reading Speed 100 से 350 WPM तक' } },
   { videoId: 'lJIMgohkV1c', title: null, name: null, caption: { en: 'Struggled with focus… now studying is easy to remember and understand', hi: 'पहले focus नहीं बनता था… अब पढ़ाई समझना और याद रखना आसान है' } },
   { videoId: 'VMe2HiAj_S4', title: null, name: null, caption: { en: '"It\'s a must-have for every student."', hi: '"हर student के लिए ज़रूरी है।"' } },
 ]
