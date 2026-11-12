@@ -186,7 +186,7 @@ export function PageVideo({
           >
             {video.thumb !== null ? (
               // The owner's file is already 720×1280 WebP: served as is (no re-compression).
-              <Image src={video.thumb} alt={alt} fill unoptimized priority={priority} sizes="360px" className="object-cover object-top" data-thumb="own" />
+              <Image src={video.thumb} alt={alt} fill unoptimized priority={priority} {...(priority ? { fetchPriority: "high" as const } : {})} sizes="360px" className="object-cover object-top" data-thumb="own" />
             ) : (
               <span className="absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-[#1F3A5F] via-[#16263D] to-[#0E1B2C] p-5 text-left" data-thumb="poster">
                 <span className="text-[13px] font-semibold tracking-[0.06em] text-[#F2A93B]">{lang === "hi" ? "डॉ. कपिल देव शर्मा" : "Dr. Kapil Dev Sharma"}</span>
