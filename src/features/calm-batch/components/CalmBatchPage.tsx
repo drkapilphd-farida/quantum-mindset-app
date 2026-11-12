@@ -9,7 +9,7 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 import SiteTodo from "@/components/site/SiteTodo";
 import VideoReviewGrid from "@/components/VideoReviewGrid";
 import { PageVideo } from "@/components/video/PageVideo";
-import { HomeMeetKapil, HomeTrustStrip } from "@/components/home/HomeV2Sections";
+import { HomeMeetKapil, HomeTrustStrip } from "@/components/home/HomeTrustMeet";
 import { SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
 import { calmReviewVideos } from "../reviews";
 import { reviewFrameSrc } from "@/lib/video/reviewFrames";
