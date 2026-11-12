@@ -42,8 +42,8 @@ export type SharpBrainCopy = {
   offers: OffersCopy
 }
 
-/** A comparison-table cell: a short text, or included / not included. */
-export type OfferCell = string | true | false
+/** A comparison-table cell: a short text, included / not included, or included with a short note (e.g. "offline"). */
+export type OfferCell = string | true | false | { included: true; note: string }
 
 export type OffersCopy = {
   hero: { h1: string; sub: string; liveButton: (price: string) => string; selfButton: string; seats: string }
@@ -54,7 +54,8 @@ export type OffersCopy = {
     feature: string
     included: string
     notIncluded: string
-    rows: { feature: string; self: OfferCell; live: OfferCell }[]
+    /** card: how a row reads on the plan card when it differs from the table label (shown highlighted, with a small note). */
+    rows: { feature: string; self: OfferCell; live: OfferCell; card?: { text: string; note: string } }[]
   }
   live: { name: string; badge: string; perDay: (price: string) => string; cta: string }
   self: { name: string; price: string; noLive: string; recordings: string; cta: string; upgrade: string }
@@ -232,6 +233,11 @@ const en: SharpBrainCopy = {
       { question: 'Are there live classes in self-paced?', answer: 'No. All 7 classes are recorded.' },
       { question: 'How do I upgrade?', answer: 'Within 7 days of buying, pay ₹6,000 and move to the live batch. Message us on WhatsApp for the link.' },
       { question: 'Can I download the recorded classes?', answer: 'No. You can watch them in the app for 30 days.' },
+      {
+        question: 'What is the EEG brain test?',
+        answer:
+          'It is a simple test done with a Muse EEG headband. It shows an indicator of your focus on a graph while you read and meditate. Comparing Day 1 and Day 30, you can see your own change. It is not a medical test. The test is done offline (Vadodara / workshop centres).',
+      },
     ],
   },
   final: { title: 'Your brain can learn better. Start in the next batch.', speedTest: 'Take the free Reading & Memory Test →' },
@@ -259,6 +265,16 @@ const en: SharpBrainCopy = {
       notIncluded: 'Not included',
       rows: [
         { feature: 'The 7 classes', self: 'Recorded', live: 'Live' },
+        // Owner (Nov 2026): EEG brain test — Live batch only, offline.
+        {
+          feature: 'EEG Brain Test (Day 1 & Day 30)',
+          self: false,
+          live: { included: true, note: 'offline' },
+          card: {
+            text: '🧠 EEG Brain Test on Day 1 & Day 30 (Muse EEG headband) — see your focus change on a graph',
+            note: 'Offline at Vadodara / workshop centres. Online students take the regular Day 1 & Day 30 Sharp Brain test.',
+          },
+        },
         { feature: '30 days of app practice', self: true, live: true },
         { feature: 'Day 1 / Day 30 test + certificate', self: true, live: true },
       ],
@@ -443,6 +459,11 @@ const hi: SharpBrainCopy = {
       { question: 'क्या सेल्फ़-पेस्ड में लाइव क्लास मिलेंगी?', answer: 'नहीं। सातों क्लास रिकॉर्डेड हैं।' },
       { question: 'अपग्रेड कैसे करूँ?', answer: 'खरीदने के 7 दिन के भीतर ₹6,000 देकर लाइव बैच में जा सकते हैं। लिंक के लिए वॉट्सऐप कीजिए।' },
       { question: 'क्या रिकॉर्डेड क्लास डाउनलोड हो सकती हैं?', answer: 'नहीं। 30 दिन तक ऐप में देख सकते हैं।' },
+      {
+        question: 'EEG ब्रेन टेस्ट क्या है?',
+        answer:
+          'यह Muse EEG हेडबैंड से किया जाने वाला एक आसान टेस्ट है, जो पढ़ते और ध्यान करते समय आपके फ़ोकस का संकेत (indicator) ग्राफ़ में दिखाता है। Day 1 और Day 30 की तुलना से आप अपना बदलाव ख़ुद देख सकते हैं। यह कोई मेडिकल जाँच नहीं है। यह टेस्ट ऑफ़लाइन (वडोदरा / वर्कशॉप सेंटर) पर होता है।',
+      },
     ],
   },
   final: { title: 'आपका दिमाग़ बेहतर सीख सकता है। अगले बैच से शुरू करें।', speedTest: 'मुफ़्त Reading और Memory Test दें →' },
@@ -470,6 +491,16 @@ const hi: SharpBrainCopy = {
       notIncluded: 'शामिल नहीं',
       rows: [
         { feature: 'सातों क्लास', self: 'रिकॉर्डेड', live: 'लाइव' },
+        // Owner (Nov 2026): EEG ब्रेन टेस्ट — सिर्फ़ लाइव बैच, ऑफ़लाइन।
+        {
+          feature: 'EEG ब्रेन टेस्ट (Day 1 & Day 30)',
+          self: false,
+          live: { included: true, note: 'ऑफ़लाइन' },
+          card: {
+            text: '🧠 EEG ब्रेन टेस्ट — Day 1 और Day 30 पर (Muse EEG हेडबैंड से) — अपने फ़ोकस का बदलाव ग्राफ़ में देखें',
+            note: 'ऑफ़लाइन — वडोदरा / वर्कशॉप सेंटर पर। ऑनलाइन छात्रों के लिए Day 1 और Day 30 का Sharp Brain टेस्ट।',
+          },
+        },
         { feature: '30 दिन ऐप अभ्यास', self: true, live: true },
         { feature: 'Day 1 / Day 30 टेस्ट + सर्टिफ़िकेट', self: true, live: true },
       ],
