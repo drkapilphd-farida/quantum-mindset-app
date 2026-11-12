@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { programs } from "@/config/site.config";
-import { SHARP_BRAIN_REVIEW_CARDS, SHARP_BRAIN_REVIEW_GRID_CLASS } from "@/config/sharpBrainVideoReviews";
+import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/sharpBrainVideoReviews";
 import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
 import { GROUPS } from "@/features/programs/common";
 import { reviewVideo } from "@/features/programs/reviewVideos";
+import { reviewFrameSrc } from "@/lib/video/reviewFrames";
 import Image from "next/image";
 import { BookOpen, Brain, CalendarClock, Headphones, Route } from "lucide-react";
 import { FreeTestButton } from "../FreeTestButton";
@@ -101,7 +102,7 @@ export function HomeSharpBrainReviews(): React.JSX.Element {
   const c = homeV2.reviews;
   const sessionCards = HOME_SESSION_REVIEW_IDS.map((id) => {
     const video = reviewVideo(id);
-    return { videoId: id, thumbnailSrc: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, title: `“${say(video.caption, lang)}”`, alt: say(video.caption, lang) };
+    return { videoId: id, thumbnailSrc: reviewFrameSrc(id, video.thumbFrame), frameShape: video.type, title: `“${say(video.caption, lang)}”`, alt: say(video.caption, lang) };
   });
   return (
     <section id="proof" className={`${SECTION} bg-panel`} aria-labelledby="home-reviews">
@@ -109,7 +110,7 @@ export function HomeSharpBrainReviews(): React.JSX.Element {
         <h2 id="home-reviews" className="text-[26px] font-extrabold leading-tight sm:text-[34px]">
           {say(c.heading, lang)}
         </h2>
-        <VideoReviewGrid videos={SHARP_BRAIN_REVIEW_CARDS} aspectRatioClassName="aspect-[9/16]" gridClassName={SHARP_BRAIN_REVIEW_GRID_CLASS} className="mt-8" />
+        <VideoReviewGrid videos={sharpBrainReviewCards(lang)} aspectRatioClassName="aspect-[9/16]" gridClassName={SHARP_BRAIN_REVIEW_GRID_CLASS} className="mt-8" />
         {/* Owner (homepage upgrade): a second row — Personal Sessions reviews (telepathy, meditation, mind), never Sharp Brain ones. */}
         <h2 className="mt-14 text-[26px] font-extrabold leading-tight sm:text-[34px]" data-home-sessions-reviews>
           {say(c.sessionsHeading, lang)}

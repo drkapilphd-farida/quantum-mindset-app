@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Play, X } from "lucide-react";
+import { REVIEW_FRAME_POSITION, reviewFrameStyle, type VideoShape } from "@/lib/video/reviewFrames";
 
 // Structural, not imported from one specific config file — every real
 // video-review data source (RetreatVideoReview, QsrVideoReview, etc.)
@@ -22,6 +23,12 @@ type VideoReviewItem = {
   // and name (small, grey). Each line shows only when given.
   title?: string;
   name?: string;
+  // What the review is about (Sharp Brain reviews, owner Nov 2026): left-aligned
+  // under the card, at most 2 lines (ellipsis only if longer).
+  caption?: string;
+  // Review frames (owner, Nov 2026): when set, thumbnailSrc is an in-video
+  // frame (hq1–hq3) — cropped at center 35% and zoomed so no black bar shows.
+  frameShape?: VideoShape;
 };
 
 type VideoReviewGridProps = {
@@ -69,6 +76,11 @@ export default function VideoReviewGrid({
   const [openVideoId, setOpenVideoId] = useState<string | null>(null);
   const openCaption = videos.find((video) => video.videoId === openVideoId)?.label ?? cardLabel;
   const isVertical = aspectRatioClassName !== "aspect-video";
+  const boxAspect = isVertical ? 9 / 16 : 16 / 9;
+  const frameZoom = (shape: VideoShape): React.CSSProperties => {
+    const { objectPosition: _position, ...zoom } = reviewFrameStyle(boxAspect, shape);
+    return zoom;
+  };
 
   useEffect(() => {
     if (openVideoId === null) return undefined;
@@ -99,7 +111,18 @@ export default function VideoReviewGrid({
                 aria-label={caption !== undefined ? `Play ${caption}` : "Play video review"}
                 className={`group relative w-full ${aspectRatioClassName} overflow-hidden rounded-sm border border-line-strong bg-panel2`}
               >
-                {video.thumbnailSrc !== undefined ? (
+                {video.thumbnailSrc !== undefined && video.frameShape !== undefined ? (
+                  <span className="absolute inset-0" style={frameZoom(video.frameShape)} data-review-frame={video.thumbnailSrc.split("/").pop()}>
+                    <Image
+                      src={video.thumbnailSrc}
+                      alt={video.alt ?? caption ?? "Real student video review"}
+                      fill
+                      sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      style={{ objectPosition: REVIEW_FRAME_POSITION }}
+                    />
+                  </span>
+                ) : video.thumbnailSrc !== undefined ? (
                   <Image
                     src={video.thumbnailSrc}
                     alt={video.alt ?? caption ?? "Real student video review"}
@@ -122,6 +145,11 @@ export default function VideoReviewGrid({
               </button>
               {caption !== undefined && (
                 <p className="mt-2 text-center font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{caption}</p>
+              )}
+              {video.caption !== undefined && (
+                <p className="mt-2 line-clamp-2 text-left text-[14px] leading-snug text-ink sm:line-clamp-none" title={video.caption} data-review-caption>
+                  {video.caption}
+                </p>
               )}
               {video.title !== undefined && <p className="mt-2 text-[14px] font-bold leading-snug text-ink">{video.title}</p>}
               {video.name !== undefined && <p className="mt-0.5 text-[12.5px] text-ink-faint">{video.name}</p>}

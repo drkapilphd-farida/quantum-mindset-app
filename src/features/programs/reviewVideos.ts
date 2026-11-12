@@ -1,4 +1,5 @@
 import type { Bi, ProgramSlug } from './types'
+import type { ThumbFrame } from '@/lib/video/reviewFrames'
 
 // Review videos for Personal Sessions (owner's strict reviews brief, Nov 2026,
 // plus the three videos he added back). IDs, types, English captions and
@@ -7,7 +8,8 @@ import type { Bi, ProgramSlug } from './types'
 
 export type ReviewTopic = 'telepathy' | 'cosmic' | 'ksa' | 'mind' | 'retreat' | 'intuition'
 
-export type ReviewVideo = { id: string; type: 'L' | 'S'; caption: Bi; topics: ReviewTopic[] }
+/** thumbFrame: which in-video frame the card shows — hq1 (25%), hq2 (50%, default) or hq3 (75%). Owner, Nov 2026. */
+export type ReviewVideo = { id: string; type: 'L' | 'S'; caption: Bi; topics: ReviewTopic[]; thumbFrame?: ThumbFrame }
 
 /** /reviews filter chips, in the owner's order ("All" first). */
 export const REVIEW_CHIPS: { id: ReviewTopic | 'all'; label: Bi }[] = [
@@ -31,7 +33,8 @@ export const REVIEW_LINE: Bi = {
   hi: 'पिछले प्रतिभागियों के व्यक्तिगत अनुभव। हर व्यक्ति का अनुभव अलग होता है।',
 }
 
-const v = (id: string, type: 'L' | 'S', en: string, hi: string, topics: ReviewTopic[] = []): ReviewVideo => ({ id, type, caption: { en, hi }, topics })
+// To switch a video's thumbnail frame, add it as the last argument: v(id, type, en, hi, topics, 1) or (…, 3).
+const v = (id: string, type: 'L' | 'S', en: string, hi: string, topics: ReviewTopic[] = [], thumbFrame?: ThumbFrame): ReviewVideo => ({ id, type, caption: { en, hi }, topics, ...(thumbFrame !== undefined ? { thumbFrame } : {}) })
 
 /** Master list, in the owner's order (74 from the brief + 3 added back). */
 export const REVIEW_VIDEOS: readonly ReviewVideo[] = [
@@ -43,7 +46,7 @@ export const REVIEW_VIDEOS: readonly ReviewVideo[] = [
   v('WZMSSuRTr78', 'L', "Sir's program is 100% authentic.", 'सर का प्रोग्राम 100% प्रामाणिक है।', ['cosmic']),
   v('Z5v-1ms8j8c', 'L', 'I did many workshops, but only here I learned what my mind can do. I found what I was searching for, for years.', 'मैंने बहुत-सी वर्कशॉप कीं, पर मेरा मन क्या कर सकता है, यह यहीं सीखा। जो मैं सालों से ढूँढ रही थी, वह यहाँ मिला।', ['mind']),
   v('NubHGGlQdo8', 'L', "Sir taught me what I hadn't learned even by the age of 50.", 'सर ने वह सिखाया जो मैंने 50 साल की उम्र तक भी नहीं सीखा था।', ['retreat']),
-  v('LxZC82BlYiM', 'L', 'Everything here is practical, and it benefits everyone.', 'यहाँ सब कुछ प्रैक्टिकल होता है, और इससे सबको फ़ायदा होता है।'),
+  v('LxZC82BlYiM', 'L', 'Everything here is practical, and it benefits everyone.', 'यहाँ सब कुछ प्रैक्टिकल होता है, और इससे सबको फ़ायदा होता है।', [], 3),
   v('LF4aKFnk6eo', 'L', 'My confidence has grown with this program.', 'इस प्रोग्राम से मेरा आत्मविश्वास बढ़ गया है।', ['mind']),
   v('m8eJQ63XGtI', 'L', "It's unique because it's all practical.", 'यह अनोखा है, क्योंकि इसमें सब कुछ प्रैक्टिकल है।'),
   v('_1A-vR9f9oo', 'L', 'A live astral travel experience.', 'एस्ट्रल ट्रैवल का लाइव अनुभव।', ['ksa']),
@@ -104,7 +107,7 @@ export const REVIEW_VIDEOS: readonly ReviewVideo[] = [
   v('v0s6Wc7UGk4', 'S', 'I liked the intuition power the most.', 'मुझे इनट्यूशन की शक्ति सबसे ज़्यादा अच्छी लगी।', ['intuition']),
   v('t5JzaLTptrI', 'S', 'It was life-changing for me. I learned a lot.', 'यह मेरे लिए ज़िंदगी बदल देने वाला था। मैंने बहुत कुछ सीखा।'),
   v('SwCtIyx5yUw', 'S', 'I experienced telepathy.', 'मैंने टेलीपैथी का अनुभव किया।', ['telepathy']),
-  v('R6f1_LEWOMs', 'S', 'I would love to do this course again and again.', 'मैं यह कोर्स बार-बार करना चाहूँगी।'),
+  v('R6f1_LEWOMs', 'S', 'I would love to do this course again and again.', 'मैं यह कोर्स बार-बार करना चाहूँगी।', [], 3),
   v('2fqhU92lIWM', 'S', 'This program is both spiritual and scientific.', 'यह प्रोग्राम आध्यात्मिक भी है और वैज्ञानिक भी।'),
   v('mG5zL3jRGWw', 'S', 'I had all these experiences myself.', 'ये सारे अनुभव मैंने ख़ुद किए हैं।'),
   v('rT4IehlpUWc', 'S', 'Sir is a very high-level intellectual and spiritual person.', 'सर बहुत ऊँचे स्तर के बौद्धिक और आध्यात्मिक व्यक्ति हैं।'),

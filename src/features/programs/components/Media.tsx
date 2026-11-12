@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { COMMON, say } from "../common";
 import { defaultThumb, reviewThumb } from "../programs";
+import { reviewFrameStyle } from "@/lib/video/reviewFrames";
 import { REVIEW_LINE, reviewVideo, topicTag, type ReviewVideo } from "../reviewVideos";
 import type { ProgramLang } from "../types";
 
@@ -56,10 +57,16 @@ function Lightbox({ id, vertical, title, closeLabel, onClose }: { id: string; ve
 const CLOSE: { en: string; hi: string } = { en: "Close video", hi: "वीडियो बंद करें" };
 
 /** A review thumbnail that falls back to YouTube's default thumbnail if its first image fails. */
-function Thumb({ video, sizes, priority = false, className }: { video: ReviewVideo; sizes: string; priority?: boolean; className: string }): React.JSX.Element {
-  const first = reviewThumb(video.id, video.type);
+/** A review thumbnail: an in-video frame (hq2 or the video's thumbFrame), cropped at center 35% and zoomed so no black bar shows; YouTube's default thumbnail only if the frame fails. */
+function Thumb({ video, sizes, boxAspect, priority = false, className }: { video: ReviewVideo; sizes: string; boxAspect: number; priority?: boolean; className: string }): React.JSX.Element {
+  const first = reviewThumb(video.id, video.thumbFrame);
   const [src, setSrc] = useState(first);
-  return <Image src={src} alt="" fill priority={priority} sizes={sizes} className={className} onError={() => setSrc((current) => (current === defaultThumb(video.id) ? current : defaultThumb(video.id)))} />;
+  const { objectPosition, ...zoom } = reviewFrameStyle(boxAspect, video.type);
+  return (
+    <span className="absolute inset-0" style={zoom} data-review-frame={src.split("/").pop()}>
+      <Image src={src} alt="" fill priority={priority} sizes={sizes} className={className} style={{ objectPosition }} onError={() => setSrc((current) => (current === defaultThumb(video.id) ? current : defaultThumb(video.id)))} />
+    </span>
+  );
 }
 
 /** Hero media box (16:10): the page's first review video (lightbox), or the photo when there is none. */
@@ -71,7 +78,7 @@ export function HeroMedia({ videoId, photoSrc, photoAlt, lang, caption }: { vide
       {video === null ? (
         <Image src={photoSrc} alt={photoAlt} fill priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover object-top" />
       ) : (
-        <Thumb video={video} priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover object-top" />
+        <Thumb video={video} boxAspect={16 / 10} priority sizes="(min-width: 1024px) 460px, 92vw" className="object-cover" />
       )}
       {video !== null ? (
         <>
@@ -100,7 +107,7 @@ export function ReviewCard({ video, lang, size = "large" }: { video: ReviewVideo
   return (
     <figure className={`flex flex-none flex-col overflow-hidden rounded-[16px] border border-[#E3E6EC] bg-white ${width}`} data-review-card={video.id} data-review-type={video.type}>
       <button type="button" onClick={() => setOpen(true)} aria-label={`${say(COMMON.playVideo, lang)}: ${caption}`} className={`group relative w-full bg-[#16263D] ${vertical ? "aspect-[9/16]" : "aspect-video"}`}>
-        <Thumb video={video} sizes={vertical ? "290px" : "(min-width: 1024px) 380px, 92vw"} className="object-cover" />
+        <Thumb video={video} boxAspect={vertical ? 9 / 16 : 16 / 9} sizes={vertical ? "290px" : "(min-width: 1024px) 380px, 92vw"} className="object-cover" />
         <span className="absolute inset-0 flex items-center justify-center transition-transform group-hover:scale-105">
           <PlayDisc size={small ? 48 : 60} />
         </span>
