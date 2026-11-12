@@ -23,7 +23,9 @@ export async function getFranchiseLeads(): Promise<FranchiseLeadRow[]> {
     .select('id, name, phone, city, background, why_interested, status, submitted_at')
     .order('submitted_at', { ascending: false })
 
-  return (data ?? []).map((row) => ({
+  // The Calm Mind batch reminder sent-log shares this table — not leads, so not listed.
+  // (Filtered here, not in SQL: a SQL "NOT LIKE" would also drop rows with no background.)
+  return (data ?? []).filter((row) => !(row.background ?? '').startsWith('[calm-reminder]')).map((row) => ({
     id: row.id,
     name: row.name,
     phone: row.phone,

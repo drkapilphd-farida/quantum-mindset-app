@@ -11,6 +11,8 @@ describe('21-Day Calm Mind copy', () => {
     expect(CALM_COPY.hero.reserve.en).toBe('Reserve my seat — ₹2,999')
     expect(CALM_COPY.meta.title.en).toBe('21-Day Calm Mind — Live Online Batch with Dr. Kapil Dev Sharma')
     expect(CALM_COPY.reviews.heading.en).toBe('What people say about learning with Dr. Kapil')
+    expect(CALM_COPY.refund.en).toBe("Full refund if you cancel before the first class begins. After the first class, refunds aren't available — but you can move once to the next batch.")
+    expect(CALM_COPY.refund.hi).toBe('पहली class शुरू होने से पहले रद्द करने पर पूरा पैसा वापस। पहली class के बाद refund नहीं, लेकिन आप एक बार अगले batch में शिफ़्ट हो सकते हैं।')
   })
 
   it('never uses the banned words (outside the required disclaimer)', () => {

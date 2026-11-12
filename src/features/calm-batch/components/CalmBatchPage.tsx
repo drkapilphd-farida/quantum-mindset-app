@@ -6,7 +6,6 @@ import { LanguageOverride } from "@/context/LanguageContext";
 import SiteNav from "@/components/site/SiteNav";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
-import SiteTodo from "@/components/site/SiteTodo";
 import VideoReviewGrid from "@/components/VideoReviewGrid";
 import { PageVideo } from "@/components/video/PageVideo";
 import { HomeMeetKapil, HomeTrustStrip } from "@/components/home/HomeTrustMeet";
@@ -220,9 +219,9 @@ export function CalmBatchPage({ lang, state, checkout }: { lang: Lang; state: Ba
               </ul>
               <CalmReserveButton state={state} checkout={checkout} lang={lang} className="mt-6" full />
               {calmMindBatch.upgradeAdjust && <p className="mt-4 text-[14px] leading-relaxed text-ink-dim">{say(c.price.upgrade, lang)}</p>}
-              <div className="mt-4" data-calm-refund>
-                <SiteTodo>Refund line for the batch: the /clarity-session text names the Clarity Session and ₹1,100 — waiting for the owner&apos;s batch wording.</SiteTodo>
-              </div>
+              <p className="mt-4 rounded-sm border border-line-strong bg-void px-4 py-3 text-[14.5px] leading-relaxed text-ink" data-calm-refund>
+                {say(c.refund, lang)}
+              </p>
               <Disclaimer lang={lang} className="mt-4" />
             </div>
           </section>
@@ -288,9 +287,7 @@ export function CalmBatchPage({ lang, state, checkout }: { lang: Lang; state: Ba
                       +
                     </span>
                   </summary>
-                  <div className="mt-3 pr-8">
-                    <SiteTodo>Refund answer: waiting for the owner&apos;s batch refund wording (the /clarity-session text names the Clarity Session and ₹1,100).</SiteTodo>
-                  </div>
+                  <p className="mt-3 pr-8 text-[15.5px] leading-relaxed text-ink-dim">{say(c.refund, lang)}</p>
                 </details>
               </div>
             </div>

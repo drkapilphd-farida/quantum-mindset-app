@@ -8,9 +8,9 @@ import { createOrder, isValidPaymentSignature } from '@/lib/razorpay/ordersApi'
 import { sendMetaCapiEvent } from '@/lib/analytics/metaCapi'
 import { utmToLine } from '@/lib/analytics/utmLine'
 import { logger } from '@/lib/logger'
-import { sendCalmAdminNotice, sendCalmConfirmation } from '@/lib/email/sendCalmBatchEmails'
 import { batchState } from '@/features/calm-batch/batch'
-import { countPaidRegistrations, saveRegistration } from '@/features/calm-batch/registrations'
+import { countPaidRegistrations } from '@/features/calm-batch/registrations'
+import { finalizeCalmRegistration } from '@/features/calm-batch/finalize'
 import { joinedToken } from '@/features/calm-batch/joinedToken'
 
 // 21-Day Calm Mind batch payment (owner's brief): Razorpay Checkout exactly
@@ -65,11 +65,8 @@ export async function confirmCalmPayment(input: unknown): Promise<{ ok: true; hr
     return { ok: false }
   }
   const phone = normalizeIndianMobile(parsed.data.phone) ?? parsed.data.phone
-  const reg = { name, phone, email, paymentId, orderId, batch: calmMindBatch.nextBatch.startDate, utm: utmToLine(utm) }
-  await saveRegistration(reg)
-  const full = { ...reg, paidAt: new Date().toISOString() }
-  await sendCalmConfirmation(full)
-  if (!calmMindBatch.zoomLink || !calmMindBatch.whatsappGroupLink) await sendCalmAdminNotice(full)
+  // Saved once (unique on the payment ID) — the Razorpay webhook may have done it already.
+  await finalizeCalmRegistration({ name, phone, email, paymentId, orderId, batch: calmMindBatch.nextBatch.startDate, utm: utmToLine(utm) }, 'checkout')
 
   // Server-side Purchase with the same event_id (payment ID) as the joined page's browser Purchase.
   const requestHeaders = await headers()

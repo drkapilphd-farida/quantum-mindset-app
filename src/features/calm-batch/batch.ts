@@ -78,18 +78,29 @@ export function buildBatchIcs(options: { zoomLink?: string | undefined; nowMs?: 
   return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Mind Ur Mind//Calm Mind Batch//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', ...events, 'END:VCALENDAR', ''].join('\r\n')
 }
 
-/** The reminders cron runs every 15 minutes: a reminder is due when "now" falls in its 15-minute window. */
-export const REMINDER_WINDOW_MS = 15 * 60_000
+/**
+ * When each reminder may go out (the reminders cron runs every 15 minutes).
+ * The sent-log (registrations.ts, claimReminder) makes each one go out at most
+ * once, so the windows can be wide enough to survive a late or missed run:
+ * - day-before (class 1): from 8:00 PM IST the evening before, for 12 hours;
+ * - hour-before (each class): from 60 to 30 minutes before the class.
+ */
+export const DAY_BEFORE_WINDOW_MS = 12 * 60 * 60_000
+export const HOUR_BEFORE_WINDOW_MS = 30 * 60_000
 export type DueReminder = { kind: 'day-before' | 'hour-before'; classNumber: number }
 
-/** Day-before email for class 1 (8:00 PM IST the evening before), and an email 1 hour before each class. */
+/** The sent-log key of a reminder ("registration + type"). */
+export function reminderType(r: DueReminder): string {
+  return r.kind === 'day-before' ? 'day-before' : `hour-before-${r.classNumber}`
+}
+
 export function dueReminders(nowMs: number, classDates: readonly string[] = calmMindBatch.nextBatch.classDates): DueReminder[] {
   const due: DueReminder[] = []
-  const inWindow = (target: number): boolean => nowMs >= target && nowMs < target + REMINDER_WINDOW_MS
+  const inWindow = (target: number, length: number): boolean => nowMs >= target && nowMs < target + length
   classDates.forEach((iso, index) => {
     const start = classStartMs(iso)
-    if (index === 0 && inWindow(start - 24 * 60 * 60_000)) due.push({ kind: 'day-before', classNumber: 1 })
-    if (inWindow(start - 60 * 60_000)) due.push({ kind: 'hour-before', classNumber: index + 1 })
+    if (index === 0 && inWindow(start - 24 * 60 * 60_000, DAY_BEFORE_WINDOW_MS)) due.push({ kind: 'day-before', classNumber: 1 })
+    if (inWindow(start - 60 * 60_000, HOUR_BEFORE_WINDOW_MS)) due.push({ kind: 'hour-before', classNumber: index + 1 })
   })
   return due
 }

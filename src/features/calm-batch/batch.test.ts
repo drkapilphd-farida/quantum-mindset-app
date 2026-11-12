@@ -53,13 +53,46 @@ describe('calm batch registrations (saved in franchise_leads)', () => {
 })
 
 describe('calm batch reminder windows', () => {
-  it('emails the evening before class 1 and 1 hour before every class, once per window', async () => {
+  it('opens the day-before window at 8 PM the evening before and the class window 60–30 minutes before', async () => {
     const { dueReminders } = await import('./batch')
     expect(dueReminders(Date.parse('2026-11-30T20:05:00+05:30'))).toEqual([{ kind: 'day-before', classNumber: 1 }])
+    expect(dueReminders(Date.parse('2026-12-01T07:59:00+05:30'))).toEqual([{ kind: 'day-before', classNumber: 1 }])
+    expect(dueReminders(Date.parse('2026-12-01T08:00:00+05:30'))).toEqual([])
     expect(dueReminders(Date.parse('2026-12-01T19:00:00+05:30'))).toEqual([{ kind: 'hour-before', classNumber: 1 }])
-    expect(dueReminders(Date.parse('2026-12-18T19:14:00+05:30'))).toEqual([{ kind: 'hour-before', classNumber: 6 }])
-    expect(dueReminders(Date.parse('2026-12-18T19:15:00+05:30'))).toEqual([])
+    expect(dueReminders(Date.parse('2026-12-18T19:29:00+05:30'))).toEqual([{ kind: 'hour-before', classNumber: 6 }])
+    expect(dueReminders(Date.parse('2026-12-18T19:30:00+05:30'))).toEqual([])
     expect(dueReminders(Date.parse('2026-12-02T19:00:00+05:30'))).toEqual([])
+  })
+})
+
+describe('calm batch reminder sent-log', () => {
+  it('never sends the same reminder twice to the same registration, and retries a failed email', async () => {
+    const { sendCalmBatchReminders } = await import('./sendCalmBatchReminders')
+    const log = new Set<string>()
+    const sent: string[] = []
+    let failNext = true
+    const reg = (paymentId: string): { name: string; phone: string; email: string; paymentId: string; orderId: string; batch: string; paidAt: string; utm: null } => ({ name: 'A', phone: '1', email: `${paymentId}@x.in`, paymentId, orderId: 'o', batch: '2026-12-01', paidAt: '', utm: null })
+    const deps = {
+      list: async () => [reg('pay_1'), reg('pay_2')],
+      claim: async (pid: string, type: string) => (log.has(`${pid}:${type}`) ? ('already-sent' as const) : (log.add(`${pid}:${type}`), 'claimed' as const)),
+      release: async (pid: string, type: string) => {
+        log.delete(`${pid}:${type}`)
+      },
+      send: async (_r: unknown, r: { paymentId: string }) => {
+        if (r.paymentId === 'pay_2' && failNext) {
+          failNext = false
+          return false
+        }
+        sent.push(r.paymentId)
+        return true
+      },
+    }
+    const t1 = Date.parse('2026-12-01T19:00:00+05:30')
+    expect(await sendCalmBatchReminders(t1, deps)).toEqual({ due: 1, sent: 1, skipped: 0, failed: 1 })
+    // Next cron run inside the same window: pay_1 is skipped (already sent), pay_2 is retried.
+    expect(await sendCalmBatchReminders(t1 + 15 * 60_000, deps)).toEqual({ due: 1, sent: 1, skipped: 1, failed: 0 })
+    expect(await sendCalmBatchReminders(t1 + 20 * 60_000, deps)).toEqual({ due: 1, sent: 0, skipped: 2, failed: 0 })
+    expect(sent).toEqual(['pay_1', 'pay_2'])
   })
 })
 

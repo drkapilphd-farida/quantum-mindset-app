@@ -5,6 +5,7 @@
 // the CSV export and the reminder emails all read the same rows.
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
+import { idFromKey, UNIQUE_VIOLATION } from '@/lib/idFromKey'
 
 export type CalmRegistration = { name: string; phone: string; email: string; paymentId: string; orderId: string; batch: string; paidAt: string; utm: string | null }
 
@@ -59,16 +60,44 @@ export async function listRegistrations(startDate?: string): Promise<CalmRegistr
   return (data ?? []).map(parseRegistration).filter((r): r is CalmRegistration => r !== null)
 }
 
-/** Saves a verified payment once (a repeat call with the same payment ID does nothing). */
-export async function saveRegistration(r: Omit<CalmRegistration, 'paidAt'>): Promise<boolean> {
+export type SaveResult = 'created' | 'exists' | 'failed'
+
+/**
+ * Saves a verified payment exactly once. The row's id is derived from the
+ * payment ID, so the database refuses a second row for the same payment even
+ * when the browser and the Razorpay webhook arrive at the same moment.
+ */
+export async function saveRegistration(r: Omit<CalmRegistration, 'paidAt'>): Promise<SaveResult> {
   const client = db()
-  if (client === null) return false
-  const { data: existing } = await client.from('franchise_leads').select('id').like('background', `%Payment: ${r.paymentId}%`).limit(1)
-  if ((existing ?? []).length > 0) return true
-  const { error } = await client.from('franchise_leads').insert({ name: r.name, phone: r.phone, city: 'Online — Calm Mind batch', background: registrationBackground(r) })
-  if (error) {
-    logger.warn('[calm-batch] could not save registration', { error: error.message })
-    return false
-  }
-  return true
+  if (client === null) return 'failed'
+  const { error } = await client.from('franchise_leads').insert({ id: idFromKey(`calm-batch:${r.paymentId}`), name: r.name, phone: r.phone, city: 'Online — Calm Mind batch', background: registrationBackground(r) })
+  if (error === null) return 'created'
+  if (error.code === UNIQUE_VIOLATION) return 'exists'
+  logger.warn('[calm-batch] could not save registration', { error: error.message })
+  return 'failed'
+}
+
+/**
+ * Reminder sent-log: claims "this registration + this reminder type" before
+ * sending (a row with an id derived from both). A second claim is refused by
+ * the database, so a reminder is never sent twice. Kept in the same table,
+ * tagged "[calm-reminder]" (hidden from the leads list).
+ */
+export const REMINDER_TAG = '[calm-reminder]'
+
+export async function claimReminder(paymentId: string, type: string): Promise<'claimed' | 'already-sent' | 'failed'> {
+  const client = db()
+  if (client === null) return 'failed'
+  const { error } = await client.from('franchise_leads').insert({ id: idFromKey(`calm-reminder:${paymentId}:${type}`), name: 'Calm Mind reminder', phone: '-', city: '-', background: `${REMINDER_TAG} ${type}\nPayment: ${paymentId}` })
+  if (error === null) return 'claimed'
+  if (error.code === UNIQUE_VIOLATION) return 'already-sent'
+  logger.warn('[calm-batch] could not log reminder', { error: error.message })
+  return 'failed'
+}
+
+/** Frees a claim when the email itself failed, so the next cron run (still inside the window) tries again. */
+export async function releaseReminder(paymentId: string, type: string): Promise<void> {
+  const client = db()
+  if (client === null) return
+  await client.from('franchise_leads').delete().eq('id', idFromKey(`calm-reminder:${paymentId}:${type}`))
 }

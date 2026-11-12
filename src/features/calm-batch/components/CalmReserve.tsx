@@ -118,6 +118,7 @@ function CheckoutForm({ lang, onClose }: { lang: Lang; onClose: () => void }): R
       name: "Mind Ur Mind",
       description: "21-Day Calm Mind — Live Batch",
       prefill: { name: form.name, email: form.email, contact: order.contact },
+      notes: { product: "calm-mind-batch", batch: calmMindBatch.nextBatch.startDate, name: form.name, email: form.email, phone: order.contact },
       theme: { color: "#B8862E" },
       modal: { ondismiss: () => setBusy(false) },
       handler: (response: RazorpayResponse) => {

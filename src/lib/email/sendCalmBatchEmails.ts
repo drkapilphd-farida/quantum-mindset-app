@@ -59,17 +59,19 @@ export async function sendCalmConfirmation(reg: CalmRegistration): Promise<void>
   if (error) logger.warn('[calm-batch] confirmation email failed', { error: error.message })
 }
 
-/** The owner's notice that a payment came in while the joining links are not set (send them by hand). */
-export async function sendCalmAdminNotice(reg: CalmRegistration): Promise<void> {
+/** The owner's notice of a payment: always when it came only through the webhook, or while the joining links are not set (send them by hand). */
+export async function sendCalmAdminNotice(reg: CalmRegistration, context: { source: 'checkout' | 'webhook'; linksMissing: boolean; saved: boolean } = { source: 'checkout', linksMissing: true, saved: true }): Promise<void> {
   const c = client()
   if (c === null) return
   const { error } = await c.resend.emails.send({
     from: c.from,
     to: process.env.FRANCHISE_LEAD_NOTIFY_EMAIL ?? DEFAULT_NOTIFY_EMAIL,
-    subject: `[Calm Mind batch] Payment received — ${reg.name} — send joining details`,
+    subject: `[Calm Mind batch] Payment received — ${reg.name}${context.linksMissing ? ' — send joining details' : ''}`,
     text: [
-      `A payment for the 21-Day Calm Mind batch (${start()}) came in, but the Zoom / WhatsApp links are not set (CALM_BATCH_ZOOM_LINK / CALM_BATCH_WHATSAPP_LINK).`,
-      `The buyer was told the joining details reach them on WhatsApp within 2 hours.`,
+      `A payment for the 21-Day Calm Mind batch (${start()}) came in.`,
+      ...(context.source === 'webhook' ? [`It came through the Razorpay webhook: the buyer did not return to the website after paying. The confirmation email (with the links and calendar) has been sent to them.`] : []),
+      ...(context.linksMissing ? [`The Zoom / WhatsApp links are not set (CALM_BATCH_ZOOM_LINK / CALM_BATCH_WHATSAPP_LINK). The buyer was told the joining details reach them on WhatsApp within 2 hours.`] : []),
+      ...(context.saved ? [] : [`The registration could not be saved to the database — please add it by hand.`]),
       ``,
       `Name: ${reg.name}`,
       `WhatsApp: ${reg.phone}`,
@@ -85,24 +87,19 @@ export async function sendCalmAdminNotice(reg: CalmRegistration): Promise<void> 
 export type CalmReminder = { kind: 'day-before' | 'hour-before'; classNumber: number }
 
 export function reminderSubject(r: CalmReminder): string {
-  return r.kind === 'day-before' ? `Tomorrow: your 21-Day Calm Mind batch starts (8:00 PM IST)` : `In 1 hour: Calm Mind live class ${r.classNumber} of 6 (8:00 PM IST)`
+  return r.kind === 'day-before' ? `Tomorrow: your 21-Day Calm Mind batch starts (8:00 PM IST)` : `Today 8:00 PM IST: Calm Mind live class ${r.classNumber} of 6`
 }
 
-export async function sendCalmReminder(r: CalmReminder, regs: CalmRegistration[]): Promise<{ sent: number; failed: number }> {
+/** One reminder to one person. false when email is not configured or the send failed. */
+export async function sendCalmReminderTo(r: CalmReminder, reg: CalmRegistration): Promise<boolean> {
   const c = client()
-  const summary = { sent: 0, failed: 0 }
-  if (c === null) return summary
+  if (c === null || reg.email === '') return false
   const zoom = calmMindBatch.zoomLink || 'in your confirmation email and on WhatsApp'
-  for (const reg of regs) {
-    if (reg.email === '') continue
-    const { error } = await c.resend.emails.send({
-      from: c.from,
-      to: reg.email,
-      subject: reminderSubject(r),
-      text: [`Namaste ${reg.name},`, ``, r.kind === 'day-before' ? `Your 21-Day Calm Mind batch starts tomorrow, 8:00–9:00 PM IST.` : `Live class ${r.classNumber} of 6 starts in 1 hour (8:00 PM IST).`, ``, `Zoom: ${zoom}`, ``, `A quiet place and headphones help. See you there!`].join('\n'),
-    })
-    if (error) summary.failed += 1
-    else summary.sent += 1
-  }
-  return summary
+  const { error } = await c.resend.emails.send({
+    from: c.from,
+    to: reg.email,
+    subject: reminderSubject(r),
+    text: [`Namaste ${reg.name},`, ``, r.kind === 'day-before' ? `Your 21-Day Calm Mind batch starts tomorrow, 8:00–9:00 PM IST.` : `Live class ${r.classNumber} of 6 starts at 8:00 PM IST — in under an hour.`, ``, `Zoom: ${zoom}`, ``, `A quiet place and headphones help. See you there!`].join('\n'),
+  })
+  return !error
 }

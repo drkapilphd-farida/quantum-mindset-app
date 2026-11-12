@@ -71,6 +71,7 @@ export function ClarityPayButton({ mode, lang }: { mode: PayMode; lang: ProgramL
       currency: "INR",
       name: "Mind Ur Mind",
       description: "Clarity Session (60 min) · 1-on-1 with Dr. Kapil",
+      notes: { product: "clarity-session", ...(program !== null ? { program } : {}) },
       theme: { color: "#0E1B2C" },
       modal: { ondismiss: () => setBusy(false) },
       handler: (response: RazorpayResponse) => {

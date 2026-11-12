@@ -140,6 +140,11 @@ export const CALM_COPY = {
     },
     refund: { q: { en: 'Refund?', hi: 'रिफ़ंड?' } },
   },
+  /** Owner (Nov 2026): price card and FAQ 8. */
+  refund: {
+    en: "Full refund if you cancel before the first class begins. After the first class, refunds aren't available — but you can move once to the next batch.",
+    hi: 'पहली class शुरू होने से पहले रद्द करने पर पूरा पैसा वापस। पहली class के बाद refund नहीं, लेकिन आप एक बार अगले batch में शिफ़्ट हो सकते हैं।',
+  },
   finalCta: {
     heading: (start: string): Bi => ({ en: `Your calmer mind starts on ${start}.`, hi: `आपका शांत मन ${start} से शुरू होता है।` }),
   },
