@@ -7,9 +7,11 @@ import { trackMetaPixelEvent } from './metaPixel'
 // program name from site.config.ts, never an internal id. Both senders
 // are no-ops until their IDs are configured.
 
-export function trackViewContent(contentName: string): void {
-  trackMetaPixelEvent('ViewContent', { content_name: contentName })
-  trackGaEvent('view_item', { content_name: contentName })
+/** valueInr: the page's price, when it has one (e.g. the Calm Mind batch, ₹2,999). */
+export function trackViewContent(contentName: string, valueInr?: number): void {
+  const value = valueInr !== undefined ? { currency: 'INR', value: valueInr } : {}
+  trackMetaPixelEvent('ViewContent', { content_name: contentName, ...value })
+  trackGaEvent('view_item', { content_name: contentName, ...value })
 }
 
 /** valueInr: the price shown on the button that was clicked (omitted when the page doesn't know it). */

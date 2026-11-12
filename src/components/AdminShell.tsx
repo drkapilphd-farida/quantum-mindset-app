@@ -24,6 +24,7 @@ const NAV_ITEMS = [
   { href: '/admin/reminders', label: 'Reminders', icon: ClipboardList, exact: false },
   { href: '/admin/test-leads', label: 'Test Leads', icon: ClipboardList, exact: false },
   { href: '/admin/franchise-leads', label: 'Franchise Leads', icon: ClipboardList, exact: false },
+  { href: '/admin/calm-mind-batch', label: 'Calm Mind Batch', icon: ClipboardList, exact: false },
   { href: '/admin/partner-resources', label: 'Partner Resources', icon: BookOpen, exact: false },
   { href: '/admin/leaderboard', label: 'Leaderboard', icon: Trophy, exact: false },
   { href: '/admin/quality-control', label: 'Quality Control', icon: MessageSquareHeart, exact: false },

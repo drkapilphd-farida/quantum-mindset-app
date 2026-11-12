@@ -8,6 +8,7 @@ import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/home
 import { GROUPS } from "@/features/programs/common";
 import { reviewVideo } from "@/features/programs/reviewVideos";
 import { sharpBrainCopy } from "@/lib/sharpBrainCopy";
+import { CALM_COPY } from "@/features/calm-batch/copy";
 import { reviewFrameSrc } from "@/lib/video/reviewFrames";
 import Image from "next/image";
 import { BookOpen, Brain, CalendarClock, Headphones, Route } from "lucide-react";
@@ -204,6 +205,12 @@ export function HomeHowSessions(): React.JSX.Element {
         <Link href={clarityHref(lang)} className={`${GOLD} mt-8`} data-home-how-book>
           {say(c.button, lang)}
         </Link>
+        {/* Owner (Calm Mind brief): one line for the live group batch — no new section. */}
+        <p className="mt-4">
+          <Link href={lang === "hi" ? "/calm-mind-batch?lang=hi" : "/calm-mind-batch"} className="inline-flex min-h-11 items-center text-[15.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4" data-home-calm-line>
+            {say(CALM_COPY.homeLine, lang)}
+          </Link>
+        </p>
       </div>
     </section>
   );

@@ -44,9 +44,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }))
 
-  // Program pages (owner, Nov 2026): the hub and the 15 1-on-1 program
-  // pages, each with its Hindi version (?lang=hi) as an alternate.
-  const programUrls: MetadataRoute.Sitemap = ['/personal-sessions', ...PROGRAM_SLUGS.map((slug) => `/${slug}`)].map((path) => ({
+  // Program pages (owner, Nov 2026): the hub, the 15 1-on-1 program pages
+  // and the 21-Day Calm Mind batch, each with its Hindi version (?lang=hi) as
+  // an alternate.
+  const programUrls: MetadataRoute.Sitemap = ['/personal-sessions', ...PROGRAM_SLUGS.map((slug) => `/${slug}`), '/calm-mind-batch'].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified,
     changeFrequency: 'weekly',

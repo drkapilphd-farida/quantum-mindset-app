@@ -12,6 +12,7 @@ import { Faq } from "./Faq";
 import { HubBookingForm, HubBookingProvider, HubChoosePlan, HubPrograms, HubQuiz } from "./HubInteractive";
 import { PLAN_COPY, PLAN_IDS } from "../plans";
 import { PlanCards, chooseButtonClass } from "./Plans";
+import { CalmBatchCard } from "@/features/calm-batch/components/CalmBatchCard";
 import { ReviewCard, ReviewStrip } from "./Media";
 import { HUB_REVIEWS } from "../reviewVideos";
 import { StickyBookBar } from "./StickyBookBar";
@@ -117,6 +118,8 @@ export function HubPage({ lang }: { lang: ProgramLang }): React.JSX.Element {
           <div className="max-w-[460px]" data-plans-proof>
             <ReviewCard video={reviewVideo("1FO8UVfxJ9I")} lang={lang} />
           </div>
+          {/* Owner (Calm Mind brief): the live group batch, directly above the plans ladder. */}
+          <CalmBatchCard lang={lang} />
           <PlanCards plans={PLAN_IDS} lang={lang} choose={(plan) => <HubChoosePlan plan={plan.id} lang={lang} className={chooseButtonClass(plan.mostChosen)} />} />
           <ul className="flex flex-col gap-2 text-[17px] text-[#33415C]" data-plan-rules>
             {PLAN_COPY.rules.map((rule) => (
