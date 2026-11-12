@@ -8,16 +8,18 @@ import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/home
 import { GROUPS } from "@/features/programs/common";
 import { reviewVideo } from "@/features/programs/reviewVideos";
 import { sharpBrainCopy } from "@/lib/sharpBrainCopy";
+import { CALM_COPY } from "@/features/calm-batch/copy";
 import { reviewFrameSrc } from "@/lib/video/reviewFrames";
-import Image from "next/image";
 import { BookOpen, Brain, CalendarClock, Headphones, Route } from "lucide-react";
 import { FreeTestButton } from "../FreeTestButton";
-import { trainer } from "@/config/site.config";
 import type { GroupId } from "@/features/programs/types";
 
 const GROUP_ORDER: GroupId[] = ["mind", "rel", "perf", "spirit", "deep"];
 import VideoReviewGrid from "../VideoReviewGrid";
 import { Eyebrow } from "../ui";
+
+// Trust strip and Meet Dr. Kapil live in HomeTrustMeet.tsx (small, so other pages can reuse them cheaply).
+export { HomeMeetKapil, HomeTrustStrip } from "./HomeTrustMeet";
 
 // Homepage sections (Nov 2026): Sharp Brain + Personal Sessions. The
 // homepage's existing look (border-b sections, cards, gold buttons).
@@ -154,23 +156,6 @@ export function HomeFranchiseStrip(): React.JSX.Element {
 
 const clarityHref = (lang: "hi" | "en"): string => (lang === "hi" ? "/clarity-session?lang=hi" : "/clarity-session");
 
-// Trust strip under the hero (owner, homepage upgrade): one line of 4 facts.
-export function HomeTrustStrip(): React.JSX.Element {
-  const { lang } = useLanguage();
-  return (
-    <section className="border-b border-line bg-panel px-4 py-5 sm:px-8" aria-label={lang === "hi" ? "भरोसा" : "Trust"} data-home-trust>
-      <ul className="mx-auto grid max-w-content grid-cols-2 gap-x-4 gap-y-2.5 text-center text-[14px] font-semibold text-ink sm:text-[15px] lg:flex lg:items-center lg:justify-between lg:gap-0">
-        {homeV2.trust.map((item, index) => (
-          <li key={item.en} className="flex items-center justify-center gap-4">
-            {index > 0 && <span className="hidden text-line-strong lg:inline" aria-hidden="true">|</span>}
-            {say(item, lang)}
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
 // How Personal Sessions work (owner, homepage upgrade): 3 steps + Clarity Session button.
 const STEP_ICONS = [CalendarClock, Route, Headphones];
 export function HomeHowSessions(): React.JSX.Element {
@@ -204,37 +189,12 @@ export function HomeHowSessions(): React.JSX.Element {
         <Link href={clarityHref(lang)} className={`${GOLD} mt-8`} data-home-how-book>
           {say(c.button, lang)}
         </Link>
-      </div>
-    </section>
-  );
-}
-
-// Meet Dr. Kapil (owner, homepage upgrade): the photo that was in the hero, 3 lines, "My story".
-export function HomeMeetKapil(): React.JSX.Element {
-  const { lang } = useLanguage();
-  const c = homeV2.meet;
-  return (
-    <section className={SECTION} aria-labelledby="home-meet" data-home-meet>
-      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-12">
-        <div className="relative mx-auto aspect-[1374/1145] w-full max-w-[520px] overflow-hidden rounded-sm border border-line-strong bg-panel2">
-          <Image src={trainer.photo.src} alt={trainer.photo.alt} fill sizes="(min-width: 768px) 480px, 92vw" className="object-cover object-top" />
-        </div>
-        <div>
-          <h2 id="home-meet" className="text-[26px] font-extrabold leading-tight sm:text-[34px]">
-            {say(c.heading, lang)}
-          </h2>
-          <ul className="mt-6 space-y-3 text-[17px] leading-relaxed">
-            {c.lines.map((line) => (
-              <li key={line.en} className="flex items-start gap-2.5">
-                <span className="font-bold text-gold" aria-hidden="true">✓</span>
-                {say(line, lang)}
-              </li>
-            ))}
-          </ul>
-          <Link href="/about" className="mt-6 inline-flex min-h-11 items-center text-[15.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4">
-            {say(c.story, lang)}
+        {/* Owner (Calm Mind brief): one line for the live group batch — no new section. */}
+        <p className="mt-4">
+          <Link href={lang === "hi" ? "/calm-mind-batch?lang=hi" : "/calm-mind-batch"} className="inline-flex min-h-11 items-center text-[15.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4" data-home-calm-line>
+            {say(CALM_COPY.homeLine, lang)}
           </Link>
-        </div>
+        </p>
       </div>
     </section>
   );

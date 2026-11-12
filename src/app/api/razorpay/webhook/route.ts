@@ -4,6 +4,7 @@ import { verifyRazorpayWebhookSignature } from '@/lib/razorpay/verifyWebhookSign
 import { createServiceClient } from '@/lib/supabase/service'
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
+import { handlePaymentCaptured } from '@/features/payments/paymentCaptured'
 
 // Generous on purpose — Razorpay is a single external caller and real
 // traffic from it (even a busy tenant's worth of events) comes nowhere
@@ -104,6 +105,14 @@ async function handleRazorpayWebhook(request: NextRequest): Promise<NextResponse
   }
 
   const { event, payload } = parsed.data
+
+  // Owner (Nov 2026): one-time Checkout payments (21-Day Calm Mind batch,
+  // Clarity Session) — saved once and emailed even if the buyer never
+  // returned to the site. Separate from the subscription handling below.
+  if (event === 'payment.captured') {
+    const outcome = await handlePaymentCaptured(json)
+    return NextResponse.json({ received: true, outcome })
+  }
 
   if (!HANDLED_EVENTS.has(event)) {
     return NextResponse.json({ received: true })

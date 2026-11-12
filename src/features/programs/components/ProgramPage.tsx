@@ -5,6 +5,7 @@ import { ASK_WHATSAPP, CAPACITY_LINE, COMMON, DISCLAIMERS, SHARED_PROGRAM_FAQS, 
 import { programHeroImage } from "../images";
 import { PLAN_COPY, PROGRAM_PLANS } from "../plans";
 import { PlanCards, chooseButtonClass } from "./Plans";
+import { CalmBatchCard } from "@/features/calm-batch/components/CalmBatchCard";
 import { ChoosePlanLink, ProgramViewContent } from "./Tracking";
 import { PAGE_VIDEOS, SESSION_PLAN_PRICES } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
@@ -166,6 +167,13 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
 
       {/* 5 WHAT YOU GET (shared) */}
       <WhatYouGetSection lang={lang} />
+
+      {/* Owner (Calm Mind brief): the live group batch, right after "What you get" — stress page only. */}
+      {p.slug === "stress-anxiety-support" && (
+        <section className="bg-white px-4 py-10 sm:px-6" data-calm-placement>
+          <CalmBatchCard lang={lang} className={`${wrap}`} />
+        </section>
+      )}
 
       {/* PLANS FOR THIS PROGRAM */}
       <section className={`bg-[#EEF2FB] ${sectionPad}`} data-program-plans>

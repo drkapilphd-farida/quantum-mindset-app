@@ -22,7 +22,7 @@ export const PREBUILT_PROGRAM_SLUGS = [
   'personal-retreat',
 ] as const
 
-export const PREBUILT_LANG_PATHS: readonly string[] = ['/personal-sessions', '/clarity-session', '/clarity-session/booked', ...PREBUILT_PROGRAM_SLUGS.map((slug) => `/${slug}`)]
+export const PREBUILT_LANG_PATHS: readonly string[] = ['/personal-sessions', '/clarity-session', '/clarity-session/booked', '/calm-mind-batch', ...PREBUILT_PROGRAM_SLUGS.map((slug) => `/${slug}`)]
 
 /** <path> → its pre-built copy for the visitor's ?lang (English unless lang=hi). */
 export function prebuiltRewritePath(pathname: string, langParam: string | null): string | null {

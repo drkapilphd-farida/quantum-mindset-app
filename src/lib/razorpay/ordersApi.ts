@@ -44,3 +44,44 @@ export function isValidPaymentSignature(orderId: string, paymentId: string, sign
   const b = Buffer.from(signature)
   return a.length === b.length && timingSafeEqual(a, b)
 }
+
+const auth = (): string | null => {
+  const keyId = process.env.RAZORPAY_KEY_ID ?? ''
+  const keySecret = process.env.RAZORPAY_KEY_SECRET ?? ''
+  return keyId === '' || keySecret === '' ? null : `Basic ${Buffer.from(`${keyId}:${keySecret}`).toString('base64')}`
+}
+
+const NotesSchema = z.record(z.string(), z.union([z.string(), z.number()]).transform(String)).catch({})
+const PaymentSchema = z.object({ id: z.string(), order_id: z.string().nullable().optional(), amount: z.number(), email: z.string().nullable().optional(), contact: z.string().nullable().optional(), notes: z.union([NotesSchema, z.array(z.unknown()).transform(() => ({}))]).optional() })
+
+export type RazorpayPayment = { id: string; orderId: string | null; amountPaise: number; email: string; contact: string; notes: Record<string, string> }
+
+/** Reads one payment (email, phone, notes) — server only. null when the keys are missing or the call fails. */
+export async function fetchPayment(paymentId: string): Promise<RazorpayPayment | null> {
+  const header = auth()
+  if (header === null) return null
+  try {
+    const response = await fetch(`https://api.razorpay.com/v1/payments/${encodeURIComponent(paymentId)}`, { headers: { Authorization: header }, cache: 'no-store', signal: AbortSignal.timeout(10_000) })
+    if (!response.ok) return null
+    const parsed = PaymentSchema.safeParse(await response.json())
+    if (!parsed.success) return null
+    const p = parsed.data
+    return { id: p.id, orderId: p.order_id ?? null, amountPaise: p.amount, email: p.email ?? '', contact: p.contact ?? '', notes: (p.notes as Record<string, string> | undefined) ?? {} }
+  } catch {
+    return null
+  }
+}
+
+/** An order's notes (product, batch, buyer details we set when creating it) — server only. */
+export async function fetchOrderNotes(orderId: string): Promise<Record<string, string>> {
+  const header = auth()
+  if (header === null) return {}
+  try {
+    const response = await fetch(`https://api.razorpay.com/v1/orders/${encodeURIComponent(orderId)}`, { headers: { Authorization: header }, cache: 'no-store', signal: AbortSignal.timeout(10_000) })
+    if (!response.ok) return {}
+    const parsed = z.object({ notes: z.union([NotesSchema, z.array(z.unknown()).transform(() => ({}))]).optional() }).safeParse(await response.json())
+    return parsed.success ? ((parsed.data.notes as Record<string, string> | undefined) ?? {}) : {}
+  } catch {
+    return {}
+  }
+}

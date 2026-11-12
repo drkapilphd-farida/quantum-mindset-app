@@ -3,7 +3,9 @@
 import { cookies, headers } from 'next/headers'
 import { z } from 'zod'
 import { CLARITY_SESSION } from '@/config/site.config'
-import { createOrder, isValidPaymentSignature } from '@/lib/razorpay/ordersApi'
+import { createOrder, fetchOrderNotes, fetchPayment, isValidPaymentSignature } from '@/lib/razorpay/ordersApi'
+import { finalizeClarityPayment } from '@/features/clarity-session/paidRecords'
+import { utmToLine } from '@/lib/analytics/utmLine'
 import { sendMetaCapiEvent } from '@/lib/analytics/metaCapi'
 import { logger } from '@/lib/logger'
 import { isProgramSlug } from '@/features/programs/programs'
@@ -51,6 +53,20 @@ export async function confirmClarityPayment(input: unknown): Promise<{ ok: boole
     logger.warn('[clarity-session] payment signature did not match')
     return { ok: false }
   }
+  // Saved once (unique on the payment ID) — the Razorpay webhook may do it too.
+  const [payment, orderNotes] = await Promise.all([fetchPayment(paymentId), fetchOrderNotes(orderId)])
+  await finalizeClarityPayment(
+    {
+      paymentId,
+      orderId,
+      email: payment?.email ?? '',
+      phone: payment?.contact ?? '',
+      program: orderNotes.program ?? null,
+      utm: utmToLine(Object.fromEntries(Object.entries(orderNotes).filter(([key]) => key.startsWith('utm_')))),
+    },
+    'checkout',
+  )
+
   const requestHeaders = await headers()
   const jar = await cookies()
   const ip = requestHeaders.get('x-forwarded-for')?.split(',')[0]?.trim()

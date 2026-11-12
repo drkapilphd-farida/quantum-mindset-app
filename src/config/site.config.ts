@@ -687,6 +687,31 @@ export const PAGE_VIDEOS: Readonly<Record<PageVideoKey, PageVideoEntry>> = {
 }
 
 /**
+ * 21-Day Calm Mind — live online batch (owner's brief, Nov 2026). The one
+ * place its price, seats and dates live. Seats left = seatsTotal minus the
+ * verified paid registrations for this batch (never faked). The WhatsApp and
+ * Zoom links are server-only env vars, shown only after a verified payment.
+ */
+export const calmMindBatch = {
+  slug: 'calm-mind-batch',
+  price: 2999,
+  seatsTotal: 25,
+  nextBatch: {
+    startDate: '2026-12-01',
+    endDate: '2026-12-21',
+    classDates: ['2026-12-01', '2026-12-04', '2026-12-08', '2026-12-11', '2026-12-15', '2026-12-18'],
+    days: { en: 'Tuesday & Friday', hi: 'मंगलवार और शुक्रवार' },
+    time: { en: '8:00–9:00 PM IST', hi: 'रात 8:00–9:00 बजे (IST)' },
+  },
+  /** ₹2,999 adjusted in a 1-on-1 plan within 14 days of batch end. */
+  upgradeAdjust: true,
+  /** Shown ONLY after payment. */
+  whatsappGroupLink: process.env.CALM_BATCH_WHATSAPP_LINK,
+  /** Shown ONLY after payment + in the email. */
+  zoomLink: process.env.CALM_BATCH_ZOOM_LINK,
+} as const
+
+/**
  * Clarity Session pay-and-book flow (owner's conversion brief, Nov 2026).
  * Payment: with RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET set in Vercel, Razorpay
  * Checkout opens on the page; otherwise `paymentLink` (a Razorpay Payment

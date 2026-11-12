@@ -6,6 +6,7 @@ import { buildPageMetadata } from '@/lib/seo/metadata'
 import { absoluteUrl } from '@/lib/seo/siteUrl'
 import MindResetNav from '@/components/mind-reset/MindResetNav'
 import MindResetHero from '@/components/mind-reset/MindResetHero'
+import { CalmBatchCard } from '@/features/calm-batch/components/CalmBatchCard'
 import MindResetProblem from '@/components/mind-reset/MindResetProblem'
 import MindResetWhatIsOverthinking from '@/components/mind-reset/MindResetWhatIsOverthinking'
 import MindResetAssessmentCta from '@/components/mind-reset/MindResetAssessmentCta'
@@ -95,6 +96,10 @@ export default function OverthinkingMasteryCoursePage(): React.JSX.Element {
             Trainer → FAQ → Final CTA → next step. No testimonial section
             until verified reviews exist (src/config/testimonials.ts). */}
         <MindResetHero />
+        {/* Owner (Calm Mind brief): the live group batch near the top, as the live upgrade. */}
+        <section className="border-b border-line px-4 py-10 sm:px-8" data-calm-placement>
+          <CalmBatchCard className="mx-auto max-w-content" />
+        </section>
         <MindResetProblem />
         <MindResetWhatIsOverthinking />
         <MindResetWhoFor />

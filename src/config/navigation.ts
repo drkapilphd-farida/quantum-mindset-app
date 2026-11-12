@@ -124,6 +124,8 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
       links: [
         { label: 'Sharp Brain', href: sharpBrainUrl(lang) },
         { label: hi ? 'पर्सनल सेशन' : 'Personal Sessions', href: programs.oneOnOneCoaching.url },
+        // Owner (Calm Mind brief): under Personal Sessions; not in the top navigation.
+        { label: hi ? '21 दिन का शांत मन बैच' : '21-Day Calm Mind Batch', href: '/calm-mind-batch' },
         { label: hi ? '21 दिन ओवरथिंकिंग' : '21-Day Overthinking', href: programs.overthinkingReset.url },
         // Owner (conversion brief, Nov 2026): the old retreats out; Personal Retreat and Clarity Session in.
         { label: hi ? 'पर्सनल रिट्रीट' : 'Personal Retreat', href: '/personal-retreat' },

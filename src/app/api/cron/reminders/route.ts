@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { timingSafeEqual } from 'node:crypto'
 import { sendDueReminders } from '@/features/reminders/sendDueReminders'
+import { sendCalmBatchReminders } from '@/features/calm-batch/sendCalmBatchReminders'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -19,7 +20,9 @@ function authorised(request: Request): boolean {
 
 async function handle(request: Request): Promise<NextResponse> {
   if (!authorised(request)) return NextResponse.json({ error: 'Not authorised' }, { status: 401 })
-  return NextResponse.json(await sendDueReminders())
+  // App practice reminders (push) and the 21-Day Calm Mind batch class emails, independently.
+  const [push, calmBatch] = await Promise.all([sendDueReminders(), sendCalmBatchReminders()])
+  return NextResponse.json({ ...push, calmBatch })
 }
 
 export const GET = handle

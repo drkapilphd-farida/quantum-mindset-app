@@ -5,6 +5,8 @@ import { useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Eyebrow } from "../ui";
+import Link from "next/link";
+import { CALM_COPY } from "@/features/calm-batch/copy";
 import { PAGE_VIDEOS } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
 import OverthinkingTestLeadForm from "./OverthinkingTestLeadForm";
@@ -223,6 +225,16 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
           </p>
           <p className="mt-1.5 text-[26px] font-extrabold text-ink">{section.bands[overallBand].label}</p>
           <p className="mt-2 text-[14.5px] leading-relaxed text-ink-dim">{section.bands[overallBand].shortLine}</p>
+        </div>
+
+        {/* Owner (Calm Mind brief): after the score, two next steps side by side (stacked on narrow phones). */}
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2" data-test-next-steps>
+          <Link href={lang === "hi" ? "/calm-mind-batch?lang=hi" : "/calm-mind-batch"} className="inline-flex min-h-12 items-center justify-center rounded-sm bg-gold px-4 py-3 text-center text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]" data-test-calm-batch>
+            {CALM_COPY.testOptions.batch[lang]}
+          </Link>
+          <Link href={lang === "hi" ? "/clarity-session?lang=hi" : "/clarity-session"} className="inline-flex min-h-12 items-center justify-center rounded-sm border-2 border-gold px-4 py-3 text-center text-[15px] font-semibold text-ink transition-colors hover:bg-gold-soft" data-test-clarity>
+            {CALM_COPY.testOptions.clarity[lang]}
+          </Link>
         </div>
 
         <div className="mt-6 rounded-sm border border-line-strong bg-panel2 px-7 py-7 sm:px-9">
