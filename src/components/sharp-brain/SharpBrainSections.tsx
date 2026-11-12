@@ -504,13 +504,22 @@ export function SharpBrainOffersHero(): React.JSX.Element {
 
 function CellMark({ value, included, notIncluded }: { value: OfferCell; included: string; notIncluded: string }): React.JSX.Element {
   if (typeof value === "string") return <span className="font-semibold text-ink">{value}</span>;
+  if (typeof value === "object") {
+    // Included, with a short note — e.g. the EEG test: ✓ (offline).
+    return (
+      <span className="whitespace-nowrap">
+        <span className="text-[17px] font-bold text-teal">✓</span>
+        <span className="sr-only"> {included}</span> <span className="text-[13.5px] font-semibold text-ink-dim">({value.note})</span>
+      </span>
+    );
+  }
   return value ? (
     <span className="text-[17px] font-bold text-teal">
       ✓<span className="sr-only"> {included}</span>
     </span>
   ) : (
-    <span className="text-ink-faint">
-      —<span className="sr-only"> {notIncluded}</span>
+    <span className="text-[17px] font-bold text-ink-faint">
+      ✗<span className="sr-only"> {notIncluded}</span>
     </span>
   );
 }
@@ -567,16 +576,31 @@ function OfferFeatureList({ side }: { side: "self" | "live" }): React.JSX.Elemen
     <ul className="space-y-2.5">
       {t.rows.map((row) => {
         const value = row[side];
-        const on = value !== false;
+        // A plan card lists only what that plan includes (owner: no EEG line on Self-paced).
+        if (value === false) return null;
+        if (row.card !== undefined) {
+          // Highlighted feature (the Live batch's EEG brain test), with its small note.
+          return (
+            <li key={row.feature} className="-mx-1 flex items-start gap-3 rounded-sm border border-gold/50 bg-gold/10 px-3 py-3 text-[15.5px] leading-relaxed text-ink" data-offer-highlight>
+              <span className="w-5 flex-none text-center font-bold text-teal" aria-hidden="true">
+                ✓
+              </span>
+              <span>
+                <span className="font-semibold">{row.card.text}</span>
+                <span className="mt-1 block text-[13px] leading-snug text-ink-dim">{row.card.note}</span>
+              </span>
+            </li>
+          );
+        }
         return (
-          <li key={row.feature} className={`flex items-start gap-3 text-[15.5px] leading-relaxed ${on ? "text-ink" : "text-ink-faint"}`}>
-            <span className={`w-5 flex-none text-center font-bold ${on ? "text-teal" : ""}`} aria-hidden="true">
-              {on ? "✓" : "—"}
+          <li key={row.feature} className="flex items-start gap-3 text-[15.5px] leading-relaxed text-ink">
+            <span className="w-5 flex-none text-center font-bold text-teal" aria-hidden="true">
+              ✓
             </span>
             <span>
               {row.feature}
               {typeof value === "string" && <span className="font-semibold"> — {value}</span>}
-              {value === false && <span className="sr-only"> ({t.notIncluded})</span>}
+              {typeof value === "object" && <span className="font-semibold"> — {value.note}</span>}
             </span>
           </li>
         );

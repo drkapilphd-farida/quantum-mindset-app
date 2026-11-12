@@ -7,6 +7,7 @@ import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/s
 import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
 import { GROUPS } from "@/features/programs/common";
 import { reviewVideo } from "@/features/programs/reviewVideos";
+import { sharpBrainCopy } from "@/lib/sharpBrainCopy";
 import { reviewFrameSrc } from "@/lib/video/reviewFrames";
 import Image from "next/image";
 import { BookOpen, Brain, CalendarClock, Headphones, Route } from "lucide-react";
@@ -29,6 +30,7 @@ export function HomePaths(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.paths;
   const sb = c.sharpBrain;
+  const eeg = sharpBrainCopy[lang].offers.table.rows.find((row) => row.card !== undefined)?.card;
   const ps = c.sessions;
   return (
     <section id="paths" className={SECTION} aria-labelledby="home-paths">
@@ -48,6 +50,14 @@ export function HomePaths(): React.JSX.Element {
                 </li>
               ))}
             </ul>
+            {/* Owner (Nov 2026): the Live batch's EEG brain test — the same wording as the Sharp Brain page (sharpBrainCopy). */}
+            {eeg !== undefined && (
+              <div className="mt-3 rounded-sm border border-gold/50 bg-gold-soft px-3.5 py-3" data-home-eeg>
+                <span className="inline-flex rounded-sm bg-gold px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-[#1B1508]">{say(sb.prices[1]?.label ?? { en: "Live batch", hi: "लाइव बैच" }, lang)}</span>
+                <p className="mt-2 text-[15.5px] font-semibold leading-relaxed text-ink">{eeg.text}</p>
+                <p className="mt-1 text-[13px] leading-snug text-ink-dim">{eeg.note}</p>
+              </div>
+            )}
             <div className="mt-5 grid grid-cols-2 gap-3">
               {sb.prices.map((item) => (
                 <div key={item.price} className="rounded-sm border border-line-strong bg-void px-4 py-3 text-center">
