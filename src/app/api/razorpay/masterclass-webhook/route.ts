@@ -6,6 +6,8 @@ import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
 import { sharpBrainEnrolment } from '@/config/site.config'
 import { linkIdsFromEnv } from '@/lib/razorpay/paymentLinkEvent'
+import { LINKS } from '@/data/links'
+import { saveUnmatchedPayment } from '@/features/sharp-brain-plans/unmatched'
 import { SHARP_BRAIN_PROGRAM_NOTE, programPaymentFromEvent, type FixedProgramLink, type ProgramPayment } from '@/features/sharp-brain-enrol/programPayment'
 import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 
@@ -48,6 +50,13 @@ import { revokeMasterclassAccessForPayment } from '../revokeMasterclassAccess'
 // ₹8,999 link. The buyer name, offer (earlybird | regular | test1000) and
 // chosen batch are saved with the payment, and a redeemed Reading Speed
 // Test offer is marked used. See src/features/sharp-brain-enrol.
+//
+// Two plans (13 Nov 2026): every program payment is saved with its plan —
+// 'live' (₹8,999 batch) or 'self_paced' (₹2,999: server-created links with
+// notes.plan = "self_paced", and the website's fixed ₹2,999 link). Both get
+// the same access, instantly. A payment_link.paid this endpoint does not
+// recognise is never dropped: it is saved to unmatched_payments and shown on
+// /admin/unmatched-payments.
 const WEBHOOK_RATE_LIMIT = { max: 60, windowMs: 60_000 }
 
 // Razorpay's documented refund.processed shape — the refund entity
@@ -175,7 +184,11 @@ async function handleRefundProcessed(json: unknown): Promise<NextResponse> {
 
 function fixedProgramLinks(): FixedProgramLink[] {
   const { regular, discounted } = sharpBrainEnrolment.fallbackLinks
-  return [{ url: regular, offer: 'regular' }, ...(discounted !== null ? [{ url: discounted, offer: 'earlybird' as const }] : [])]
+  return [
+    { url: regular, offer: 'regular', plan: 'live' },
+    ...(discounted !== null ? [{ url: discounted, offer: 'earlybird' as const, plan: 'live' as const }] : []),
+    { url: LINKS.rzpSharpBrainSelfPaced2999, offer: null, plan: 'self_paced' },
+  ]
 }
 
 async function handlePaymentLinkPaid(json: unknown): Promise<NextResponse> {
@@ -185,11 +198,12 @@ async function handlePaymentLinkPaid(json: unknown): Promise<NextResponse> {
     extraLinkIds: linkIdsFromEnv(process.env.RAZORPAY_MASTERCLASS_EXTRA_LINK_IDS),
   })
   if (!result.ok) {
-    if (result.reason === 'invalid_payload') {
-      logger.warn('[razorpay-masterclass-webhook] payment_link.paid payload failed validation')
-      return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 })
-    }
-    // Another product's payment link (retreat, Starter, workshop …): not ours.
+    // Never dropped: saved for the admin to look at (another product's link,
+    // or a payment whose shape we could not read).
+    const saved = await saveUnmatchedPayment(json, result.reason === 'invalid_payload' ? 'invalid_payload' : 'other_link')
+    if (result.reason === 'invalid_payload') logger.warn('[razorpay-masterclass-webhook] payment_link.paid payload failed validation', { saved })
+    // Not saved → Razorpay retries, so nothing is lost.
+    if (!saved) return NextResponse.json({ error: 'Failed to save payment.' }, { status: result.reason === 'invalid_payload' ? 400 : 500 })
     return NextResponse.json({ received: true })
   }
   return recordAndGrant(result.payment)
@@ -226,6 +240,7 @@ async function recordAndGrant(payment: ProgramPayment): Promise<NextResponse> {
       batch_start: payment.batchStart,
       payment_link_id: payment.paymentLinkId,
       sharp_brain_offer_id: payment.offerId,
+      plan_type: payment.plan,
     })
     .select('id')
     .single()

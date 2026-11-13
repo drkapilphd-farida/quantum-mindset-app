@@ -39,9 +39,9 @@ export default async function AdminSharpBrainEnrolmentsPage(): Promise<React.JSX
       </div>
       {groups.length === 0 && <p className="text-sm text-muted-foreground">No paid enrolments yet.</p>}
       {groups.map((group) => (
-        <section key={group.batchStart ?? 'none'} className="space-y-3">
+        <section key={group.selfPaced ? 'self-paced' : (group.batchStart ?? 'none')} className="space-y-3">
           <h2 className="text-lg font-semibold">
-            {formatBatch(group.batchStart)}{' '}
+            {group.selfPaced ? 'Self-paced (₹2,999 — no batch)' : formatBatch(group.batchStart)}{' '}
             <span className="text-sm font-normal text-muted-foreground">
               · {group.rows.filter((r) => !r.refunded).length} paid · ₹{group.totalInr.toLocaleString('en-IN')}
             </span>

@@ -6,6 +6,8 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { hasQuantumSpeedReadingProAccess } from '@/lib/subscription/hasQuantumSpeedReadingProAccess'
 import { canRegister, classesDone, nextClassToJoin, type AttendanceMark, type Session } from './liveClasses'
+import { planForUser } from '@/features/sharp-brain-plans/server'
+import { upgradeOfferEndsAt, upgradeOfferOpen } from '@/features/sharp-brain-plans/rules'
 
 export type LiveClassesView = {
   enrolled: boolean
@@ -14,6 +16,10 @@ export type LiveClassesView = {
   marks: AttendanceMark[]
   daysCompleted: number
   learner: { name: string; email: string }
+  /** live = register for live classes (unchanged); self_paced = recordings only, no registration. */
+  plan: 'live' | 'self_paced'
+  /** Self-paced only, during the first 7 days: when the ₹6,000 upgrade offer closes. */
+  upgradeEndsAtMs: number | null
 }
 
 type SessionRow = { id: string; class_number: number; topic_override: string | null; starts_at: string; ends_at: string; status: string }
@@ -25,16 +31,17 @@ export async function getLiveClassesView(): Promise<LiveClassesView> {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-  const empty: LiveClassesView = { enrolled: false, sessions: [], registeredSessionIds: [], marks: [], daysCompleted: 0, learner: { name: '', email: '' } }
+  const empty: LiveClassesView = { enrolled: false, sessions: [], registeredSessionIds: [], marks: [], daysCompleted: 0, learner: { name: '', email: '' }, plan: 'live', upgradeEndsAtMs: null }
   if (!user) return empty
 
-  const [enrolled, sessions, registrations, marks, days, profile] = await Promise.all([
+  const [enrolled, sessions, registrations, marks, days, profile, learnerPlan] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
     supabase.from('live_class_sessions').select('id, class_number, topic_override, starts_at, ends_at, status').gte('ends_at', new Date(Date.now() - 86_400_000).toISOString()).order('starts_at'),
     supabase.from('live_class_registrations').select('session_id').eq('user_id', user.id).is('cancelled_at', null),
     supabase.from('live_class_attendance').select('class_number, kind, counts').eq('user_id', user.id),
     supabase.from('curriculum_day_completions').select('day').eq('user_id', user.id),
     supabase.from('profiles').select('full_name').eq('id', user.id).maybeSingle(),
+    planForUser(user.id),
   ])
   if (sessions.error) logger.error('getLiveClassesView: sessions read failed', { code: sessions.error.code })
 
@@ -45,6 +52,8 @@ export async function getLiveClassesView(): Promise<LiveClassesView> {
     marks: (marks.data ?? []).map((m) => ({ classNumber: m.class_number, kind: m.kind as AttendanceMark['kind'], counts: m.counts })),
     daysCompleted: new Set((days.data ?? []).map((d) => d.day)).size,
     learner: { name: profile.data?.full_name?.trim() ?? '', email: user.email ?? '' },
+    plan: learnerPlan.plan,
+    upgradeEndsAtMs: upgradeOfferOpen(learnerPlan, Date.now()) ? upgradeOfferEndsAt(learnerPlan) : null,
   }
 }
 
@@ -80,7 +89,7 @@ export async function getNextClass(): Promise<NextClass> {
   return { classNumber: next.classNumber, startsAt: next.startsAt, endsAt: next.endsAt, registered: (registrations.data ?? []).some((r) => r.session_id === next.id) }
 }
 
-type RegisterResult = { ok: true } | { ok: false; error: 'unauthenticated' | 'not-enrolled' | 'closed' | 'invalid' | 'db' }
+type RegisterResult = { ok: true } | { ok: false; error: 'unauthenticated' | 'not-enrolled' | 'not-live' | 'closed' | 'invalid' | 'db' }
 
 /** "Register for this class": saved here; the learner then confirms on WhatsApp. */
 export async function registerForClass(input: unknown): Promise<RegisterResult> {
@@ -92,6 +101,8 @@ export async function registerForClass(input: unknown): Promise<RegisterResult> 
   } = await supabase.auth.getUser()
   if (!user) return { ok: false, error: 'unauthenticated' }
   if (!(await hasQuantumSpeedReadingProAccess())) return { ok: false, error: 'not-enrolled' }
+  // Self-paced learners watch the recordings; live registration is for the live batch.
+  if ((await planForUser(user.id)).plan === 'self_paced') return { ok: false, error: 'not-live' }
 
   const { data: session } = await supabase.from('live_class_sessions').select('status, starts_at').eq('id', parsed.data.sessionId).maybeSingle()
   if (!session || !canRegister({ status: session.status as Session['status'], startsAt: session.starts_at }, Date.now())) return { ok: false, error: 'closed' }

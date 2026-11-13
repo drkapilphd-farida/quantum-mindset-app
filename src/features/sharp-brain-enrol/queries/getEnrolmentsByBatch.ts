@@ -17,7 +17,10 @@ export type EnrolmentRow = {
   refunded: boolean
 }
 
-export type BatchGroup = { batchStart: string | null; rows: EnrolmentRow[]; totalInr: number }
+/** selfPaced: the ₹2,999 Self-paced buyers (no batch), listed as their own group. */
+export type BatchGroup = { batchStart: string | null; selfPaced: boolean; rows: EnrolmentRow[]; totalInr: number }
+
+const SELF_PACED_KEY = 'self_paced'
 
 // Master-admin only (the (admin)/layout.tsx ADMIN_EMAILS gate) — the
 // service-role client bypasses RLS and must never reach the browser.
@@ -28,7 +31,7 @@ export async function getEnrolmentsByBatch(): Promise<BatchGroup[]> {
   const supabase = createServiceClient()
   const { data } = await supabase
     .from('masterclass_payments')
-    .select('id, customer_name, phone, email, offer, amount_cents, created_at, batch_start, granted_at, user_id, source, payment_mode, paid_on, refunded_at')
+    .select('id, customer_name, phone, email, offer, amount_cents, created_at, batch_start, granted_at, user_id, source, payment_mode, paid_on, refunded_at, plan_type')
     .order('created_at', { ascending: false })
     .limit(2000)
   const rows = data ?? []
@@ -43,7 +46,8 @@ export async function getEnrolmentsByBatch(): Promise<BatchGroup[]> {
 
   const groups = new Map<string | null, EnrolmentRow[]>()
   for (const r of rows) {
-    const list = groups.get(r.batch_start) ?? []
+    const key = r.plan_type === 'self_paced' ? SELF_PACED_KEY : r.batch_start
+    const list = groups.get(key) ?? []
     list.push({
       id: r.id,
       name: r.customer_name ?? (r.user_id !== null ? (names.get(r.user_id) ?? null) : null),
@@ -57,11 +61,12 @@ export async function getEnrolmentsByBatch(): Promise<BatchGroup[]> {
       paidVia: r.source === 'manual' ? (PAYMENT_MODE_LABEL[r.payment_mode as PaymentMode] ?? 'Manual') : 'Razorpay',
       refunded: r.refunded_at !== null,
     })
-    groups.set(r.batch_start, list)
+    groups.set(key, list)
   }
 
-  // Newest batch first; "not recorded" last.
+  // Newest batch first; then Self-paced; "not recorded" last.
+  const rank = (k: string | null): number => (k === null ? 2 : k === SELF_PACED_KEY ? 1 : 0)
   return [...groups.entries()]
-    .sort(([a], [b]) => (a === null ? 1 : b === null ? -1 : b.localeCompare(a)))
-    .map(([batchStart, list]) => ({ batchStart, rows: list, totalInr: list.filter((r) => !r.refunded).reduce((sum, r) => sum + (r.amountInr ?? 0), 0) }))
+    .sort(([a], [b]) => rank(a) - rank(b) || (a !== null && b !== null ? b.localeCompare(a) : 0))
+    .map(([key, list]) => ({ batchStart: key === SELF_PACED_KEY ? null : key, selfPaced: key === SELF_PACED_KEY, rows: list, totalInr: list.filter((r) => !r.refunded).reduce((sum, r) => sum + (r.amountInr ?? 0), 0) }))
 }

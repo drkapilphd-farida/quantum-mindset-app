@@ -4,6 +4,10 @@ import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { recordManualEnrolment } from '../actions'
 import { PAYMENT_MODE_LABEL, PAYMENT_MODES, type PaymentMode } from '../rules'
+import { SHARP_BRAIN_PRICES } from '@/config/site.config'
+import type { PlanType } from '@/features/sharp-brain-plans/rules'
+
+const PLAN_LABEL: Record<PlanType, string> = { live: `Live batch · ₹${SHARP_BRAIN_PRICES.liveInr.toLocaleString('en-IN')}`, self_paced: `Self-paced · ₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}` }
 
 const field = 'min-h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground'
 
@@ -12,6 +16,7 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
   const [pending, start] = useTransition()
   const [result, setResult] = useState<{ ok: boolean; text: string } | null>(null)
   const [mode, setMode] = useState<PaymentMode>('gpay')
+  const [plan, setPlan] = useState<PlanType>('live')
   const [form, setForm] = useState({ email: '', name: '', phone: '', amount: '', paidOn: today, batch: defaultBatch, note: '' })
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => setForm((f) => ({ ...f, [k]: e.target.value }))
 
@@ -28,8 +33,9 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
             phone: form.phone || undefined,
             amountInr: Number(form.amount.replace(/[^\d]/g, '')),
             mode,
+            plan,
             paidOn: form.paidOn,
-            batchStart: form.batch || null,
+            batchStart: plan === 'live' ? form.batch || null : null,
             note: form.note || undefined,
           })
           setResult(res.ok ? { ok: true, text: res.message } : { ok: false, text: res.error })
@@ -48,7 +54,7 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
       </label>
       <label className="flex flex-col gap-1 text-sm font-medium">
         Amount (₹) *
-        <input inputMode="numeric" required value={form.amount} onChange={set('amount')} placeholder="8999" className={field} data-manual-amount="true" />
+        <input inputMode="numeric" required value={form.amount} onChange={set('amount')} placeholder={plan === 'live' ? String(SHARP_BRAIN_PRICES.liveInr) : String(SHARP_BRAIN_PRICES.selfPacedInr)} className={field} data-manual-amount="true" />
       </label>
       <fieldset className="flex flex-col gap-1 text-sm font-medium">
         <legend className="mb-1">Payment mode *</legend>
@@ -64,10 +70,17 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
         Payment date *
         <input type="date" required max={today} value={form.paidOn} onChange={set('paidOn')} className={field} data-manual-date="true" />
       </label>
-      <label className="flex flex-col gap-1 text-sm font-medium">
-        Program
-        <input value="Sharp Brain 30-Day Program" readOnly className={`${field} text-muted-foreground`} />
-      </label>
+      <fieldset className="flex flex-col gap-1 text-sm font-medium">
+        <legend className="mb-1">Sharp Brain plan *</legend>
+        <div className="flex gap-2">
+          {(['live', 'self_paced'] as const).map((p) => (
+            <button key={p} type="button" aria-pressed={plan === p} onClick={() => setPlan(p)} className={`min-h-11 flex-1 rounded-lg border px-2 text-sm ${plan === p ? 'border-primary bg-primary/10 font-semibold' : 'border-border'}`} data-manual-plan={p}>
+              {PLAN_LABEL[p]}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+      {plan === 'live' && (
       <label className="flex flex-col gap-1 text-sm font-medium">
         Batch
         <select value={form.batch} onChange={set('batch')} className={field} data-manual-batch="true">
@@ -79,6 +92,7 @@ export function ManualEnrolmentForm({ batches, defaultBatch, today }: { batches:
           <option value="">Not decided</option>
         </select>
       </label>
+      )}
       <label className="flex flex-col gap-1 text-sm font-medium">
         Phone / note (optional)
         <input value={form.note} onChange={set('note')} maxLength={300} placeholder="e.g. GPay ref 1234" className={field} />

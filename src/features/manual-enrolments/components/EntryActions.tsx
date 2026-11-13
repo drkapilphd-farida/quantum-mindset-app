@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button'
 import { deleteManualEnrolment, updateManualEnrolment } from '../actions'
 import { PAYMENT_MODE_LABEL, PAYMENT_MODES, type PaymentMode } from '../rules'
 import { RefundButton } from './RefundButton'
+import type { PlanType } from '@/features/sharp-brain-plans/rules'
 
-type Entry = { id: string; amountInr: number | null; mode: PaymentMode; paidOn: string; batchStart: string | null; refunded: boolean; inWindow: boolean }
+type Entry = { id: string; amountInr: number | null; mode: PaymentMode; plan: PlanType; paidOn: string; batchStart: string | null; refunded: boolean; inWindow: boolean }
 
 const field = 'min-h-9 rounded-md border border-border bg-background px-2 text-sm'
 
@@ -16,7 +17,7 @@ export function EntryActions({ entry, batches, today }: { entry: Entry; batches:
   const [mode, setMode] = useState<'idle' | 'edit' | 'delete'>('idle')
   const [pending, start] = useTransition()
   const [error, setError] = useState<string | null>(null)
-  const [form, setForm] = useState({ amount: String(entry.amountInr ?? ''), payMode: entry.mode, paidOn: entry.paidOn, batch: entry.batchStart ?? '' })
+  const [form, setForm] = useState({ amount: String(entry.amountInr ?? ''), payMode: entry.mode, plan: entry.plan, paidOn: entry.paidOn, batch: entry.batchStart ?? '' })
 
   if (mode === 'edit')
     return (
@@ -25,7 +26,7 @@ export function EntryActions({ entry, batches, today }: { entry: Entry; batches:
         onSubmit={(e) => {
           e.preventDefault()
           start(async () => {
-            const res = await updateManualEnrolment({ id: entry.id, amountInr: Number(form.amount.replace(/[^\d]/g, '')), mode: form.payMode, paidOn: form.paidOn, batchStart: form.batch || null })
+            const res = await updateManualEnrolment({ id: entry.id, amountInr: Number(form.amount.replace(/[^\d]/g, '')), mode: form.payMode, plan: form.plan, paidOn: form.paidOn, batchStart: form.plan === 'live' ? form.batch || null : null })
             if (res.ok) setMode('idle')
             else setError(res.error)
           })
@@ -37,6 +38,13 @@ export function EntryActions({ entry, batches, today }: { entry: Entry; batches:
           {PAYMENT_MODES.map((m) => (
             <button key={m} type="button" aria-pressed={form.payMode === m} onClick={() => setForm((f) => ({ ...f, payMode: m }))} className={`min-h-9 flex-1 rounded-md border px-1 text-xs ${form.payMode === m ? 'border-primary bg-primary/10 font-semibold' : 'border-border'}`} data-manual-edit-mode={m}>
               {PAYMENT_MODE_LABEL[m]}
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-1">
+          {(['live', 'self_paced'] as const).map((p) => (
+            <button key={p} type="button" aria-pressed={form.plan === p} onClick={() => setForm((f) => ({ ...f, plan: p }))} className={`min-h-9 flex-1 rounded-md border px-1 text-xs ${form.plan === p ? 'border-primary bg-primary/10 font-semibold' : 'border-border'}`} data-manual-edit-plan={p}>
+              {p === 'live' ? 'Live' : 'Self-paced'}
             </button>
           ))}
         </div>

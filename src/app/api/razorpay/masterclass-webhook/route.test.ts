@@ -22,6 +22,7 @@ function fakeService(existing: Existing): { calls: Call[]; client: { from: (t: s
       eq: () => b,
       is: () => b,
       insert: (v: unknown) => ((call.op = 'insert'), (call.values = v), b),
+      upsert: (v: unknown) => ((call.op = 'upsert'), (call.values = v), b),
       update: (v: unknown) => ((call.op = 'update'), (call.values = v), b),
       single: () => Promise.resolve(result()),
       maybeSingle: () => Promise.resolve(result()),
@@ -49,11 +50,11 @@ async function post(body: unknown, existing: Existing = {}): Promise<{ status: n
   return { status: response.status, calls }
 }
 
-const linkPaid = (shortUrl: string, notes: unknown = [], customer: unknown = null): unknown => ({
+const linkPaid = (shortUrl: string, notes: unknown = [], customer: unknown = null, amount = 999900): unknown => ({
   event: 'payment_link.paid',
   payload: {
     payment_link: { entity: { id: 'plink_1', short_url: shortUrl, notes, customer } },
-    payment: { entity: { id: 'pay_1', amount: 999900, currency: 'INR', email: 'buyer@example.com', contact: null } },
+    payment: { entity: { id: 'pay_1', amount, currency: 'INR', email: 'buyer@example.com', contact: null } },
   },
 })
 const PROGRAM = 'https://rzp.io/rzp/hx46Vs5f'
@@ -71,10 +72,19 @@ describe('masterclass webhook — program payments only, manual grants preserved
     expect(calls).toHaveLength(0)
   })
 
-  it('ignores payments for any other product link', async () => {
+  it('never drops a payment for another product link: saves it for the admin, grants nothing', async () => {
     const { status, calls } = await post(linkPaid('https://rzp.io/rzp/vecVC7sx'))
     expect(status).toBe(200)
-    expect(calls).toHaveLength(0)
+    expect(calls.filter((c) => c.op !== 'select').map((c) => `${c.table}:${c.op}`)).toEqual(['unmatched_payments:upsert'])
+    expect(writes(calls, 'unmatched_payments')[0]?.values).toMatchObject({ razorpay_payment_id: 'pay_1', reason: 'other_link', short_url: 'https://rzp.io/rzp/vecVC7sx', amount_cents: 999900, email: 'buyer@example.com' })
+  })
+
+  it('saves a payment_link.paid it cannot read instead of dropping it', async () => {
+    const { status, calls } = await post({ event: 'payment_link.paid', payload: { payment: { entity: { id: 'pay_bad' } } } })
+    expect(status).toBe(200)
+    expect(writes(calls, 'unmatched_payments')[0]?.values).toMatchObject({ razorpay_payment_id: 'pay_bad', reason: 'invalid_payload' })
+    expect(writes(calls, 'masterclass_payments')).toHaveLength(0)
+    expect(writes(calls, 'subscriptions')).toHaveLength(0)
   })
 
   it('leaves a hand-granted (active) subscription untouched, but records the payment against that learner', async () => {
@@ -139,10 +149,11 @@ describe('masterclass webhook — batches and offers (payment links created by o
     ])
   })
 
-  it('ignores links with other notes (another product created through the API)', async () => {
+  it('does not grant for links with other notes (another product created through the API) — saved as unmatched', async () => {
     const { status, calls } = await post(apiLink({ program: 'retreat_11_day' }))
     expect(status).toBe(200)
-    expect(calls).toHaveLength(0)
+    expect(calls.filter((c) => c.op !== 'select').map((c) => `${c.table}:${c.op}`)).toEqual(['unmatched_payments:upsert'])
+    expect(writes(calls, 'unmatched_payments')[0]?.values).toMatchObject({ notes: { program: 'retreat_11_day' } })
   })
 
   it('drops note values that are not a known offer, a date or an offer id', async () => {
@@ -154,5 +165,44 @@ describe('masterclass webhook — batches and offers (payment links created by o
   it('still grants for the fixed ₹9,999 link, saved as a regular payment without a batch', async () => {
     const { calls } = await post(linkPaid(PROGRAM), { profile: null })
     expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ offer: 'regular', batch_start: null })
+  })
+})
+
+describe('masterclass webhook — two plans: ₹2,999 self-paced and ₹8,999 live', () => {
+  beforeEach(() => {
+    vi.restoreAllMocks()
+    vi.unstubAllEnvs()
+  })
+
+  const SELF_PACED_LINK = 'https://rzp.io/rzp/9RmomzjS'
+
+  it('the website ₹2,999 link grants self-paced access instantly', async () => {
+    const { status, calls } = await post(linkPaid(SELF_PACED_LINK, [], null, 299900), { profile: { id: 'user-sp' }, subscription: null })
+    expect(status).toBe(200)
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ plan_type: 'self_paced', amount_cents: 299900, offer: null, batch_start: null })
+    expect(writes(calls, 'subscriptions')).toEqual([{ table: 'subscriptions', op: 'insert', values: expect.objectContaining({ user_id: 'user-sp', status: 'active' }) }])
+    expect(writes(calls, 'unmatched_payments')).toHaveLength(0)
+  })
+
+  it('a ₹2,999 checkout link created by our server (notes.plan = self_paced) grants self-paced access instantly', async () => {
+    const { calls } = await post(linkPaid('https://rzp.io/rzp/Srv2999x', { program: 'sharp_brain_30', plan: 'self_paced' }, { name: 'Ravi' }, 299900), { profile: { id: 'user-sp2' }, subscription: null })
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ plan_type: 'self_paced', customer_name: 'Ravi', offer: null, batch_start: null })
+    expect(writes(calls, 'subscriptions')).toHaveLength(1)
+  })
+
+  it('a ₹2,999 sharp_brain_30 payment without notes.plan is still self-paced (decided by the amount)', async () => {
+    const { calls } = await post(linkPaid('https://rzp.io/rzp/Old2999x', { program: 'sharp_brain_30' }, null, 299900), { profile: null })
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ plan_type: 'self_paced' })
+  })
+
+  it('₹8,999 through the live link stays the live plan, exactly as before', async () => {
+    const { calls } = await post(linkPaid(PROGRAM, [], null, 899900), { profile: { id: 'user-live' }, subscription: null })
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ plan_type: 'live', offer: 'regular', amount_cents: 899900 })
+    expect(writes(calls, 'subscriptions')).toHaveLength(1)
+  })
+
+  it('₹8,999 server-created live checkout (notes.plan = live) keeps its batch and offer', async () => {
+    const { calls } = await post(linkPaid('https://rzp.io/rzp/Srv8999x', { program: 'sharp_brain_30', plan: 'live', batch: '2026-11-25', offer: 'regular' }, null, 899900), { profile: null })
+    expect(writes(calls, 'masterclass_payments')[0]?.values).toMatchObject({ plan_type: 'live', batch_start: '2026-11-25', offer: 'regular' })
   })
 })

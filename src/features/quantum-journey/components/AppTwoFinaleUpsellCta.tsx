@@ -1,11 +1,12 @@
 'use client'
 
-import { primaryCheckoutHref } from '@/config/site.config'
+import { primaryCheckoutHref, SHARP_BRAIN_PRICES } from '@/config/site.config'
 import { LiveProgramPrice } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
 import { Sparkles } from 'lucide-react'
 
 // Paid button link — read from the programs registry (site.config.ts).
 const SHARP_BRAIN_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
+const SELF_PACED_PRICE = `₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}`
 
 // App 1 → App 2 Upsell™ — the Day 21 finale (Grand Celebration screen and
 // the always-revisitable certificate page) is this app's single
@@ -34,7 +35,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
       </div>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed font-medium text-foreground sm:text-base">
         अब अपनी इस नई स्पीड को अपने खुद के डॉक्यूमेंट्स और किताबों पर आजमाएं — Get 30-Day Sharp Brain Pro Suite (App 2) with Upload Documents, Spider
-        Notes, &amp; Memory Techniques at <LiveProgramPrice />.
+        Notes, &amp; Memory Techniques — Live batch <LiveProgramPrice /> or Self-paced {SELF_PACED_PRICE}.
       </p>
       <a
         href={SHARP_BRAIN_CHECKOUT_HREF}
@@ -44,7 +45,7 @@ export function AppTwoFinaleUpsellCta(): React.JSX.Element {
         data-enroll-button="true"
       >
         <Sparkles className="size-4" aria-hidden="true" />
-        Enroll Now for <LiveProgramPrice /> →
+        See both plans →
       </a>
     </div>
   )

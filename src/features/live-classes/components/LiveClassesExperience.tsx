@@ -8,6 +8,7 @@ import { LANGUAGES } from '@/lib/app-i18n/languages'
 import { waLink } from '@/config/site.config'
 import { trackWhatsAppContact } from '@/lib/analytics/conversions'
 import { cancelClassRegistration, registerForClass, type LiveClassesView } from '../actions'
+import { UpgradeCard } from '@/features/sharp-brain-plans/components/UpgradeCard'
 import { canRegister, CLASS_NUMBERS, CLASS_TOPICS_EN, classesDone, fillTemplate, formatSessionDate, formatSessionTime, isClassNumber, nextSessionFor, upcomingSessions, type Session } from '../liveClasses'
 
 type MessageKey = Parameters<ReturnType<typeof useAppT>>[0]
@@ -22,6 +23,8 @@ export function LiveClassesExperience({ view, now }: { view: LiveClassesView; no
   const [error, setError] = useState<string | null>(null)
   const done = classesDone(view.marks)
   const upcoming = upcomingSessions(view.sessions, now)
+  // Self-paced (13 Nov 2026): no live registration (and so no Zoom link on WhatsApp) — the recordings instead.
+  const selfPaced = view.enrolled && view.plan === 'self_paced'
 
   const topic = (n: number): string => (isClassNumber(n) ? t(`training.liveClasses.topics.c${n}` as MessageKey) : '')
   const when = (s: Session): string =>
@@ -53,7 +56,7 @@ export function LiveClassesExperience({ view, now }: { view: LiveClassesView; no
         next.delete(s.id)
         return next
       })
-      setError(res.error === 'not-enrolled' ? t('training.liveClasses.notEnrolled') : res.error === 'closed' ? t('training.liveClasses.closed') : t('training.liveClasses.error'))
+      setError(res.error === 'not-enrolled' ? t('training.liveClasses.notEnrolled') : res.error === 'not-live' ? t('training.liveClasses.notLive') : res.error === 'closed' ? t('training.liveClasses.closed') : t('training.liveClasses.error'))
     })
   }
 
@@ -80,7 +83,7 @@ export function LiveClassesExperience({ view, now }: { view: LiveClassesView; no
         <ul className="mt-4 divide-y divide-border/60">
           {CLASS_NUMBERS.map((n) => {
             const isDone = done.has(n)
-            const next = isDone ? null : nextSessionFor(n, view.sessions, now)
+            const next = isDone || selfPaced ? null : nextSessionFor(n, view.sessions, now)
             return (
               <li key={n} className="flex items-center gap-3 py-3" data-class-row={n} data-class-done={isDone}>
                 {isDone ? (
@@ -95,15 +98,18 @@ export function LiveClassesExperience({ view, now }: { view: LiveClassesView; no
                   <p className="text-sm leading-snug text-muted-foreground">{topic(n)}</p>
                 </div>
                 <span className={`max-w-[42%] shrink-0 text-right text-xs ${isDone ? 'font-semibold text-emerald-700 dark:text-emerald-400' : 'text-muted-foreground'}`}>
-                  {isDone ? t('training.liveClasses.done') : next ? fillTemplate(t('training.liveClasses.next'), { date: formatSessionDate(next.startsAt, htmlLang) }) : t('training.liveClasses.tba')}
+                  {isDone ? t('training.liveClasses.done') : selfPaced ? '' : next ? fillTemplate(t('training.liveClasses.next'), { date: formatSessionDate(next.startsAt, htmlLang) }) : t('training.liveClasses.tba')}
                 </span>
               </li>
             )
           })}
         </ul>
-        <p className="mt-3 text-xs text-muted-foreground">{t('training.liveClasses.recordingsNote')}</p>
+        <p className="mt-3 text-xs text-muted-foreground">{t(selfPaced ? 'training.liveClasses.selfPacedNote' : 'training.liveClasses.recordingsNote')}</p>
       </section>
 
+      {selfPaced && view.upgradeEndsAtMs !== null && <UpgradeCard email={view.learner.email} endsAtMs={view.upgradeEndsAtMs} />}
+
+      {!selfPaced && (
       <section className="flex flex-col gap-3" aria-labelledby="upcoming-classes">
         <h2 id="upcoming-classes" className="text-lg font-semibold text-foreground">
           {t('training.liveClasses.upcoming')}
@@ -156,6 +162,7 @@ export function LiveClassesExperience({ view, now }: { view: LiveClassesView; no
           )
         })}
       </section>
+      )}
     </div>
   )
 }

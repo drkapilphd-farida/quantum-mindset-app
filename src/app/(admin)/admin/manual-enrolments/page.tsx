@@ -56,6 +56,7 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
                 <TableRow>
                   <TableHead>Name / email</TableHead>
                   <TableHead className="text-right">Amount</TableHead>
+                  <TableHead>Plan</TableHead>
                   <TableHead>Mode</TableHead>
                   <TableHead>Paid</TableHead>
                   <TableHead>Refund by</TableHead>
@@ -73,14 +74,15 @@ export default async function ManualEnrolmentsPage(): Promise<React.JSX.Element>
                       {r.note && <div className="text-xs text-muted-foreground">{r.note}</div>}
                     </TableCell>
                     <TableCell className="text-right tabular-nums">{r.amountInr === null ? '—' : `₹${r.amountInr.toLocaleString('en-IN')}`}</TableCell>
+                    <TableCell className="whitespace-nowrap" data-manual-plan-cell={r.plan}>{r.plan === 'self_paced' ? 'Self-paced' : 'Live batch'}</TableCell>
                     <TableCell>{PAYMENT_MODE_LABEL[r.mode]}</TableCell>
                     <TableCell className="whitespace-nowrap">{fmt(r.paidOn)}</TableCell>
                     <TableCell className="whitespace-nowrap">{fmt(r.refundBy)}</TableCell>
-                    <TableCell className="whitespace-nowrap">{r.batchStart ? fmt(r.batchStart) : 'Not decided'}</TableCell>
+                    <TableCell className="whitespace-nowrap">{r.plan === 'self_paced' ? '—' : r.batchStart ? fmt(r.batchStart) : 'Not decided'}</TableCell>
                     <TableCell className={`whitespace-nowrap ${STATUS[r.status]!.className}`}>{STATUS[r.status]!.label}</TableCell>
                     <TableCell>
                       <EntryActions
-                        entry={{ id: r.id, amountInr: r.amountInr, mode: r.mode, paidOn: r.paidOn, batchStart: r.batchStart, refunded: r.status === 'refunded', inWindow: inRefundWindow(r.paidOn, today) }}
+                        entry={{ id: r.id, amountInr: r.amountInr, mode: r.mode, plan: r.plan, paidOn: r.paidOn, batchStart: r.batchStart, refunded: r.status === 'refunded', inWindow: inRefundWindow(r.paidOn, today) }}
                         batches={batches}
                         today={today}
                       />

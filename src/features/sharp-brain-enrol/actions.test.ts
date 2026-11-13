@@ -115,3 +115,40 @@ describe('startSharpBrainCheckout', () => {
     expect(await actions.startSharpBrainCheckout({ email: 'Buyer@Example.com', batch: '2026-10-15', simulateNow: '2026-10-05T10:00:00+05:30' })).toEqual({ ok: false, reason: 'unavailable' })
   })
 })
+
+describe('startSharpBrainCheckout — Self-paced ₹2,999', () => {
+  afterEach(() => vi.unstubAllEnvs())
+
+  it('charges ₹2,999 decided on the server — never an amount from the browser — with plan self_paced in the notes, no batch needed', async () => {
+    const { actions, created } = await load({ api: true })
+    const result = await actions.startSharpBrainCheckout({ plan: 'self_paced', email: 'Self@Example.com', name: 'Meera', amountInr: 1 })
+    expect(result).toEqual({ ok: true, url: 'https://rzp.io/rzp/NEW' })
+    expect(created).toHaveLength(1)
+    expect(created[0]).toMatchObject({ amountInr: 2999, notes: { program: 'sharp_brain_30', plan: 'self_paced' }, customerEmail: 'self@example.com', customerName: 'Meera' })
+    expect((created[0] as { notes: Record<string, string> }).notes).not.toHaveProperty('batch')
+  })
+
+  it('needs a valid sign-in email, like the live checkout', async () => {
+    const { actions, created } = await load({ api: true })
+    expect(await actions.startSharpBrainCheckout({ plan: 'self_paced', email: 'nope' })).toEqual({ ok: false, reason: 'invalid_email' })
+    expect(created).toHaveLength(0)
+  })
+
+  it('without API keys sends the buyer to the website’s fixed ₹2,999 link (the webhook recognises it)', async () => {
+    const { actions, created } = await load({ api: false })
+    expect(await actions.startSharpBrainCheckout({ plan: 'self_paced', email: 'self@example.com' })).toEqual({ ok: true, url: 'https://rzp.io/rzp/9RmomzjS' })
+    expect(created).toHaveLength(0)
+  })
+
+  it('the live checkout is unchanged: still the batch price, now also marked plan live', async () => {
+    const { actions, created } = await load({ api: true })
+    await actions.startSharpBrainCheckout({ email: 'Buyer@Example.com', batch: '2026-10-15', simulateNow: '2026-10-12T10:00:00+05:30' })
+    expect(created[0]).toMatchObject({ amountInr: 9999, notes: { program: 'sharp_brain_30', plan: 'live', batch: '2026-10-15', offer: 'regular' } })
+  })
+
+  it('a live checkout without a batch is refused (never silently charged)', async () => {
+    const { actions, created } = await load({ api: true })
+    expect(await actions.startSharpBrainCheckout({ email: 'Buyer@Example.com' })).toEqual({ ok: false, reason: 'batch_closed' })
+    expect(created).toHaveLength(0)
+  })
+})

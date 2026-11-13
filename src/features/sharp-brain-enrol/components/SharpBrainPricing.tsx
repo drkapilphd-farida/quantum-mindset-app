@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { sharpBrainEnrolment, waLink } from "@/config/site.config";
+import { SHARP_BRAIN_PRICES, sharpBrainEnrolment, waLink } from "@/config/site.config";
+import type { PlanType } from "@/features/sharp-brain-plans/rules";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 import { trackInitiateCheckout } from "@/lib/analytics/conversions";
 import { getSharpBrainPricing, startSharpBrainCheckout, type CheckoutResult } from "../actions";
@@ -142,6 +143,7 @@ export function BatchCheckout({
   buttonLabel,
   hideRegularPrice = false,
   hidePicker = false,
+  plan = "live",
 }: {
   location: string;
   tone?: "light" | "app";
@@ -152,6 +154,8 @@ export function BatchCheckout({
   hideRegularPrice?: boolean;
   /** Rolling admission (owner, Nov 2026): no batch picker — the next open batch is used. */
   hidePicker?: boolean;
+  /** self_paced: ₹2,999, no batch (the server decides the price either way). */
+  plan?: PlanType;
 }): React.JSX.Element {
   const lang = useUiLang();
   const { snapshot, simulateNow, offerId } = useSharpBrainPricing();
@@ -168,16 +172,20 @@ export function BatchCheckout({
   const [error, setError] = useState<Exclude<CheckoutResult, { ok: true }>["reason"] | null>(null);
   const batches = snapshot?.batches ?? [];
   const batch = batches.find((b) => b.start === chosen) ?? batches[0] ?? null;
+  const selfPaced = plan === "self_paced";
 
-  if (snapshot === null || batch === null) return <div className="h-[168px]" aria-busy="true" />;
-  const date = istDayMonth(batch.startsAtMs, lang);
+  if (!selfPaced && (snapshot === null || batch === null)) return <div className="h-[168px]" aria-busy="true" />;
+  const date = batch !== null ? istDayMonth(batch.startsAtMs, lang) : "";
+  const amountInr = selfPaced ? SHARP_BRAIN_PRICES.selfPacedInr : (batch?.amountInr ?? sharpBrainEnrolment.regularInr);
 
-  async function pay(selected: PricedBatch): Promise<void> {
+  async function pay(selected: PricedBatch | null): Promise<void> {
     setPending(true);
     setError(null);
-    trackInitiateCheckout("Sharp Brain 30-Day Program", selected.amountInr);
-    trackGaEvent("razorpay_checkout_click", { location, offer: selected.offer, batch: selected.start });
-    const result = await startSharpBrainCheckout({ batch: selected.start, email, name, offerId, simulateNow });
+    trackInitiateCheckout(selfPaced ? "Sharp Brain 30-Day Program (Self-paced)" : "Sharp Brain 30-Day Program", amountInr);
+    trackGaEvent("razorpay_checkout_click", selfPaced ? { location, plan: "self_paced" } : { location, offer: selected?.offer ?? "regular", batch: selected?.start ?? "" });
+    const result = selfPaced
+      ? await startSharpBrainCheckout({ plan: "self_paced", email, name })
+      : await startSharpBrainCheckout({ batch: selected?.start, email, name, offerId, simulateNow });
     if (result.ok) {
       window.location.assign(result.url);
       return;
@@ -200,7 +208,7 @@ export function BatchCheckout({
 
   return (
     <div data-batch-checkout>
-      {!hidePicker && (
+      {!hidePicker && !selfPaced && batch !== null && snapshot !== null && (
       <>
       <p className={`font-mono text-[11.5px] uppercase tracking-[0.08em] ${faint}`}>{t("chooseBatch")}</p>
       <div role="radiogroup" aria-label={t("chooseBatch")} className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -265,16 +273,16 @@ export function BatchCheckout({
         <p className={`text-[12px] sm:col-span-2 ${faint}`}>{t("emailHint")}</p>
       </form>
       <button type="submit" form={`enrol-form-${location}`} disabled={pending} className={`${button} mt-4`} data-enrol-button>
-        {pending ? t("redirecting") : (buttonLabel ?? t("enrolNow", { price: inr(batch.amountInr) }))}
+        {pending ? t("redirecting") : (buttonLabel ?? t("enrolNow", { price: inr(amountInr) }))}
       </button>
       <p className={`mt-2 text-[12.5px] ${faint}`}>
         {t("oneTime")}
-        {showPerDay && ` · ${t("perDay", { price: inr(Math.round(batch.amountInr / 30)) })}`} · {t("secure")}
+        {showPerDay && ` · ${t("perDay", { price: inr(Math.round(amountInr / 30)) })}`} · {t("secure")}
       </p>
       {error !== null && (
         <p role="alert" className="mt-3 text-[13.5px] text-red-700">
           {t(`errors.${error}`)}{" "}
-          <a href={waLink(t("whatsappEnrol", { date, price: inr(batch.amountInr) }))} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+          <a href={waLink(selfPaced ? t("plans.whatsappSelf", { price: inr(amountInr) }) : t("whatsappEnrol", { date, price: inr(amountInr) }))} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
             {t("chatOnWhatsapp")} →
           </a>
         </p>

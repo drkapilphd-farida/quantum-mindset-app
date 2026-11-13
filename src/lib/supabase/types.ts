@@ -1964,6 +1964,7 @@ export type Database = {
           recorded_by: string | null
           refunded_at: string | null
           source: string
+          plan_type: string
         }
         Insert: {
           amount_cents?: number | null
@@ -1986,6 +1987,7 @@ export type Database = {
           recorded_by?: string | null
           refunded_at?: string | null
           source?: string
+          plan_type?: string
         }
         Update: {
           amount_cents?: number | null
@@ -2008,6 +2010,100 @@ export type Database = {
           recorded_by?: string | null
           refunded_at?: string | null
           source?: string
+          plan_type?: string
+        }
+        Relationships: []
+      }
+      class_recordings: {
+        Row: {
+          id: string
+          class_number: number
+          title: string
+          class_date: string
+          youtube_id: string
+          sort_order: number
+          hidden: boolean
+          created_by: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          class_number: number
+          title: string
+          class_date: string
+          youtube_id: string
+          sort_order?: number
+          hidden?: boolean
+          created_by: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          class_number?: number
+          title?: string
+          class_date?: string
+          youtube_id?: string
+          sort_order?: number
+          hidden?: boolean
+          created_by?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      unmatched_payments: {
+        Row: {
+          id: string
+          razorpay_payment_id: string
+          event: string
+          reason: string
+          payment_link_id: string | null
+          short_url: string | null
+          amount_cents: number | null
+          currency: string | null
+          email: string | null
+          phone: string | null
+          customer_name: string | null
+          notes: Json
+          reviewed_at: string | null
+          reviewed_by: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          razorpay_payment_id: string
+          event: string
+          reason: string
+          payment_link_id?: string | null
+          short_url?: string | null
+          amount_cents?: number | null
+          currency?: string | null
+          email?: string | null
+          phone?: string | null
+          customer_name?: string | null
+          notes?: Json
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          razorpay_payment_id?: string
+          event?: string
+          reason?: string
+          payment_link_id?: string | null
+          short_url?: string | null
+          amount_cents?: number | null
+          currency?: string | null
+          email?: string | null
+          phone?: string | null
+          customer_name?: string | null
+          notes?: Json
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          created_at?: string
         }
         Relationships: []
       }

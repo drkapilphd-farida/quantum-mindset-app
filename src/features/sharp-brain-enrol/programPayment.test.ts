@@ -17,7 +17,7 @@ const linkPaid = (shortUrl: string, notes: Record<string, string> | [] = []): un
   },
 })
 
-const options = { programNote: SHARP_BRAIN_PROGRAM_NOTE, fixedLinks: [{ url: RAZORPAY_MASTERCLASS_PAYMENT_LINK, offer: 'regular' as const }] }
+const options = { programNote: SHARP_BRAIN_PROGRAM_NOTE, fixedLinks: [{ url: RAZORPAY_MASTERCLASS_PAYMENT_LINK, offer: 'regular' as const, plan: 'live' as const }] }
 
 describe('Telepathy Workshop seat payment', () => {
   it('is ignored by the Sharp Brain webhook (no access, not recorded as a sale)', () => {

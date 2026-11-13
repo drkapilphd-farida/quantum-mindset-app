@@ -7,6 +7,7 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
 import { currentAdminEmail } from '@/features/live-classes/admin/data'
 import { normaliseEmail, PAYMENT_MODES, todayIst } from './rules'
+import { PLAN_TYPES } from '@/features/sharp-brain-plans/rules'
 
 // Admin-only: record a Sharp Brain 30-Day Program payment taken by GPay, cash
 // or bank transfer, and give access. If the learner hasn't signed up yet, the
@@ -39,6 +40,8 @@ const RecordSchema = z.object({
   phone: z.string().trim().max(20).optional(),
   amountInr: z.number().int().min(1).max(1_000_000),
   mode: z.enum(PAYMENT_MODES),
+  /** live = ₹8,999 batch, self_paced = ₹2,999. Same access, instantly; the plan decides what they see. */
+  plan: z.enum(PLAN_TYPES).default('live'),
   paidOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   batchStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
   note: z.string().trim().max(300).optional(),
@@ -74,8 +77,9 @@ export async function recordManualEnrolment(input: unknown): Promise<Result> {
     amount_cents: d.amountInr * 100,
     currency: 'INR',
     payment_mode: d.mode,
+    plan_type: d.plan,
     paid_on: d.paidOn,
-    batch_start: d.batchStart,
+    batch_start: d.plan === 'live' ? d.batchStart : null,
     recorded_by: admin,
     note: d.note || null,
     ...(userId !== null ? { user_id: userId, granted_at: now } : {}),
@@ -94,7 +98,8 @@ export async function recordManualEnrolment(input: unknown): Promise<Result> {
     }
   }
   revalidatePath(PAGE)
-  return { ok: true, message: userId !== null ? 'Saved. Access is on now.' : 'Saved. Access switches on when they sign up with this email.' }
+  const label = d.plan === 'self_paced' ? 'Self-paced' : 'Live batch'
+  return { ok: true, message: userId !== null ? `Saved. ${label} access is on now.` : `Saved. ${label} access switches on when they sign up with this email.` }
 }
 
 export async function refundManualEnrolment(input: unknown): Promise<Result> {
@@ -124,11 +129,12 @@ const EditSchema = z.object({
   id: z.string().uuid(),
   amountInr: z.number().int().min(1).max(1_000_000),
   mode: z.enum(PAYMENT_MODES),
+  plan: z.enum(PLAN_TYPES).optional(),
   paidOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   batchStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
 })
 
-/** Correct an entry's amount, mode, date or batch (access is unchanged). */
+/** Correct an entry's amount, mode, plan, date or batch (access is unchanged — both plans have the same access). */
 export async function updateManualEnrolment(input: unknown): Promise<Result> {
   const admin = await currentAdminEmail()
   if (admin === null) return { ok: false, error: 'Not authorized.' }
@@ -138,7 +144,7 @@ export async function updateManualEnrolment(input: unknown): Promise<Result> {
   if (d.paidOn > todayIst()) return { ok: false, error: 'The payment date can’t be in the future.' }
   const { data, error } = await createServiceClient()
     .from('masterclass_payments')
-    .update({ amount_cents: d.amountInr * 100, payment_mode: d.mode, paid_on: d.paidOn, batch_start: d.batchStart })
+    .update({ amount_cents: d.amountInr * 100, payment_mode: d.mode, paid_on: d.paidOn, batch_start: d.plan === 'self_paced' ? null : d.batchStart, ...(d.plan !== undefined ? { plan_type: d.plan } : {}) })
     .eq('id', d.id)
     .eq('source', 'manual')
     .select('id')

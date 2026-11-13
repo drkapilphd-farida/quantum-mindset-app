@@ -4,7 +4,8 @@ import { programs } from '@/config/site.config'
 import { useAppT } from '@/lib/app-i18n/client'
 import { Lock } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
-import { BatchCheckout, PriceLine, SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
+import { SharpBrainPricingProvider } from '@/features/sharp-brain-enrol/components/SharpBrainPricing'
+import { SharpBrainPlans } from '@/features/sharp-brain-enrol/components/SharpBrainPlans'
 
 const PROGRAM_NAME = programs.sharpBrain.name
 
@@ -13,21 +14,22 @@ type MasterclassPaywallModalProps = {
   onOpenChange: (open: boolean) => void
   // Which locked day the learner tapped — null when the modal was
   // triggered generically (not from a specific day cell). Only changes
-  // the headline copy; the price/checkout are identical either way.
+  // the headline copy; the plans/checkout are identical either way.
   day: number | null
 }
 
 // 30-Day Masterclass Paywall™ — every locked day cell opens this instead
 // of navigating anywhere (see ThirtyDayCurriculumOverview.tsx /
-// ThirtyDayCurriculumExperience.tsx). Same real, hosted Razorpay
-// Same price logic as the website (1 Oct 2026): the server decides the
-// early-bird / regular price and creates the Razorpay link for the batch
-// the learner picks here (BatchCheckout). Fetched only while open.
+// ThirtyDayCurriculumExperience.tsx), and so do the exercise lock screen
+// and the Class Recordings lock. Both plans side by side (13 Nov 2026): Live
+// batch ₹8,999 (recommended) and Self-paced ₹2,999. The server decides the
+// price and creates the Razorpay link (SharpBrainPlans → BatchCheckout).
+// Fetched only while open.
 export function MasterclassPaywallModal({ open, onOpenChange, day }: MasterclassPaywallModalProps): React.JSX.Element {
   const t = useAppT()
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-h-[92vh] max-w-2xl overflow-y-auto">
         <div className="flex flex-col items-center gap-4 p-2 text-center">
           <div className="flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" aria-hidden="true">
             <Lock className="size-6" />
@@ -44,11 +46,8 @@ export function MasterclassPaywallModal({ open, onOpenChange, day }: Masterclass
 
           {open && (
             <SharpBrainPricingProvider initial={null}>
-              <div className="w-full rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-left">
-                <PriceLine tone="app" />
-                <div className="mt-4" data-enroll-button="true">
-                  <BatchCheckout location="app_paywall_modal" tone="app" />
-                </div>
+              <div className="w-full" data-enroll-button="true">
+                <SharpBrainPlans location="app_paywall_modal" />
               </div>
             </SharpBrainPricingProvider>
           )}

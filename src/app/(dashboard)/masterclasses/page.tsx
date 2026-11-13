@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ParentDashboard } from '@/features/parent-dashboard/components/ParentDashboard'
 import { getLiveClassesView } from '@/features/live-classes/actions'
 import { LiveClassesExperience } from '@/features/live-classes/components/LiveClassesExperience'
+import { ClassRecordings } from '@/features/sharp-brain-plans/components/ClassRecordings'
 import { MentorGuidanceCard } from '@/features/live-masterclass/components/MentorGuidanceCard'
 import { TYPOGRAPHY } from '@/lib/designSystem/typography'
 import { cn } from '@/lib/utils'
@@ -53,6 +54,8 @@ export default async function MasterclassesPage(): Promise<React.JSX.Element> {
 
         <TabsContent value="masterclass" className="space-y-4 pt-4 sm:space-y-6">
           <LiveClassesExperience view={view} now={Date.now()} />
+          {/* Class Recordings (13 Nov 2026): live and self-paced learners; locked for everyone else. */}
+          <ClassRecordings />
           <MentorGuidanceCard />
         </TabsContent>
 

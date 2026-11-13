@@ -497,7 +497,7 @@
     "done": "Done",
     "next": "Next: {date}",
     "tba": "Date to be announced",
-    "recordingsNote": "Recordings are available on Classplus.",
+    "recordingsNote": "Missed a class? Its recording is in Class recordings below.",
     "upcoming": "Upcoming live classes",
     "noneUpcoming": "No live classes are scheduled yet. Please check again soon.",
     "when": "{date}, {from}–{to} IST",
@@ -526,7 +526,16 @@
     "nextWhen": "{date}, {time}",
     "registerCta": "Register →",
     "registeredCta": "Registered ✓",
-    "tbaLine": "Next class: date to be announced"
+    "tbaLine": "Next class: date to be announced",
+    "selfPacedNote": "You are on the self-paced plan: your 7 classes are the recordings below. Live class registration is for the live batch.",
+    "notLive": "Live class registration is for the live batch.",
+    "upgrade": {
+      "title": "Want live classes?",
+      "body": "Upgrade to the live batch within 7 days for ₹6,000.",
+      "until": "Open until {date}",
+      "cta": "Upgrade on WhatsApp",
+      "whatsapp": "Hi, I am on Sharp Brain Self-paced ({email}). I want to upgrade to the live batch for ₹6,000."
+    }
   },
   "memoryCheck": {
     "offerTitle": "Take your memory baseline",
@@ -1062,5 +1071,18 @@
     "paused": "Paused",
     "start": "Start",
     "ready": "Ready"
+  },
+  "recordings": {
+    "title": "Class recordings",
+    "intro": "All 7 classes, to watch any time. Tap “Mark as watched” after each one — it counts as that class done.",
+    "watched": "Watched ✓",
+    "markWatched": "Mark as watched",
+    "comingSoon": "Recording coming soon",
+    "afterClass": "The recording appears here after the live class.",
+    "lockedTitle": "Class recordings open when you enrol",
+    "lockedBody": "Live batch or self-paced — both include all 7 class recordings.",
+    "error": "Could not save. Please try again.",
+    "link": "Class recordings →",
+    "playerTitle": "Class {n} recording"
   }
 }

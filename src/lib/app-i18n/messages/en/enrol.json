@@ -29,5 +29,32 @@
     "h": "h",
     "m": "m",
     "s": "s"
+  },
+  "plans": {
+    "title": "Choose your plan",
+    "recommended": "Recommended",
+    "oneTime": "one-time",
+    "live": {
+      "name": "Live batch",
+      "badge": "Includes live classes",
+      "f1": "The 7 classes — live with Dr. Kapil Dev Sharma",
+      "f2": "🧠 EEG Brain Test on Day 1 & Day 30 — offline",
+      "seats": "40 seats per live batch",
+      "cta": "Take a seat in the live batch"
+    },
+    "self": {
+      "name": "Self-paced",
+      "f1": "The 7 classes — as recordings",
+      "noEeg": "No EEG Brain Test",
+      "recordings": "Class recordings unlock instantly in the app.",
+      "cta": "Start self-paced",
+      "upgrade": "Upgrade to the live batch within 7 days by paying ₹6,000 — message us on WhatsApp."
+    },
+    "f3": "30 days of app practice",
+    "f4": "Day 1 / Day 30 test + certificate",
+    "other": "← Back to both plans",
+    "seeBoth": "See both plans",
+    "bothPrices": "Live batch {live} · Self-paced {self}",
+    "whatsappSelf": "Hi, I want to start Sharp Brain Self-paced ({price}). Please send me the payment link."
   }
 }

@@ -11,9 +11,8 @@ import { getDailyQuantumSessionHistory } from '@/app/unified-session-preview/act
 import { computeDailyQuantumStreak } from '@/app/unified-session-preview/components/dailyQuantumSessionTracking'
 import { getNextJourneyDay } from '@/features/quantum-journey/streakMotivation'
 import { hasStartedPracticeJourney } from '@/features/quantum-journey/queries/hasStartedPracticeJourney'
-import { primaryCheckoutHref, programs } from '@/config/site.config'
-
-const PROGRAM_CHECKOUT_HREF = primaryCheckoutHref('sharpBrain')
+import { programs, SHARP_BRAIN_PRICES } from '@/config/site.config'
+import { OpenPlansButton } from '@/features/sharp-brain-enrol/components/OpenPlansButton'
 
 // Domain Split™ — habit.mindurmind.org.in's entire dashboard: the 21-Day
 // Quantum Habit Builder journey and its own real streak tracker, nothing
@@ -77,14 +76,14 @@ export async function HabitDashboard(): Promise<React.JSX.Element> {
           <h2 className="font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl">{programs.sharpBrain.name}</h2>
           <p className="mt-2 text-sm text-muted-foreground">{t('dashboard.habit.programOutcome')}</p>
           <p className="mt-2 text-sm text-foreground">{t('dashboard.habit.programFormat')}</p>
-          <a
-            href={PROGRAM_CHECKOUT_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-500 hover:to-indigo-400"
-          >
-            {enrolT(lang)('enrolNow', { price: currentProgramPriceLabel() })}
-          </a>
+          <p className="mt-2 text-sm font-semibold text-foreground" data-both-prices="true">
+            {enrolT(lang)('plans.bothPrices', { live: currentProgramPriceLabel(), self: `₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}` })}
+          </p>
+          <OpenPlansButton
+            label={enrolT(lang)('plans.seeBoth')}
+            dataLocation="habit_dashboard"
+            className="mt-3 inline-flex rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-indigo-500 hover:to-indigo-400"
+          />
         </div>
       )}
     </div>

@@ -3,7 +3,7 @@ import { getAppT } from '@/lib/app-i18n/server'
 import { currentProgramPriceLabel } from '@/features/sharp-brain-enrol/server'
 import { Check, Flame, FlaskConical, Lock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { programs } from '@/config/site.config'
+import { programs, SHARP_BRAIN_PRICES } from '@/config/site.config'
 import { absoluteUrl } from '@/lib/seo/siteUrl'
 
 // Locked days lead to the Sharp Brain 30-Day Program (the ₹99 Starter
@@ -127,7 +127,7 @@ export async function TwentyOneDayJourneyCard({
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-foreground">Day {currentDay}</p>
             <p className="truncate text-xs text-slate-700 dark:text-slate-300">
-              Part of the {programs.sharpBrain.name} · {currentProgramPriceLabel()}
+              Part of the {programs.sharpBrain.name} · Live {currentProgramPriceLabel()} · Self-paced ₹{SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}
             </p>
           </div>
           <span className="shrink-0 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:from-indigo-500 hover:to-indigo-400 active:scale-95">
