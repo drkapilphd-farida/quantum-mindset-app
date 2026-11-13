@@ -3338,8 +3338,130 @@ export type Database = {
         }
         Relationships: []
       }
+      brain_unlock_events: {
+        Row: {
+          id: number
+          session_id: string
+          event: string
+          role: string | null
+          lang: string | null
+          duo: boolean
+          data: Json
+          utm_source: string | null
+          utm_medium: string | null
+          utm_campaign: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          session_id: string
+          event: string
+          role?: string | null
+          lang?: string | null
+          duo?: boolean
+          data?: Json
+          utm_source?: string | null
+          utm_medium?: string | null
+          utm_campaign?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          session_id?: string
+          event?: string
+          role?: string | null
+          lang?: string | null
+          duo?: boolean
+          data?: Json
+          utm_source?: string | null
+          utm_medium?: string | null
+          utm_campaign?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      brain_unlock_settings: {
+        Row: {
+          id: number
+          settings: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          id?: number
+          settings?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          id?: number
+          settings?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      brain_unlock_followups: {
+        Row: {
+          id: string
+          lead_id: string
+          step: string
+          due_at: string
+          status: string
+          reason: string | null
+          attempts: number
+          sent_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          lead_id: string
+          step: string
+          due_at: string
+          status?: string
+          reason?: string | null
+          attempts?: number
+          sent_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          lead_id?: string
+          step?: string
+          due_at?: string
+          status?: string
+          reason?: string | null
+          attempts?: number
+          sent_at?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      whatsapp_opt_outs: {
+        Row: {
+          whatsapp_number: string
+          created_at: string
+        }
+        Insert: {
+          whatsapp_number: string
+          created_at?: string
+        }
+        Update: {
+          whatsapp_number?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
       speed_test_results: {
         Row: {
+          email: string | null
+          role: string | null
+          class_band: string | null
+          brain_type: string | null
+          unlock_score: number | null
+          duo: boolean
+          details: Json | null
+          session_id: string | null
           lead_status: string
           lead_status_updated_at: string | null
           test_kind: string
@@ -3363,6 +3485,14 @@ export type Database = {
           wpm: number
         }
         Insert: {
+          email?: string | null
+          role?: string | null
+          class_band?: string | null
+          brain_type?: string | null
+          unlock_score?: number | null
+          duo?: boolean
+          details?: Json | null
+          session_id?: string | null
           lead_status?: string
           lead_status_updated_at?: string | null
           test_kind?: string
@@ -3386,6 +3516,14 @@ export type Database = {
           wpm: number
         }
         Update: {
+          email?: string | null
+          role?: string | null
+          class_band?: string | null
+          brain_type?: string | null
+          unlock_score?: number | null
+          duo?: boolean
+          details?: Json | null
+          session_id?: string | null
           lead_status?: string
           lead_status_updated_at?: string | null
           test_kind?: string

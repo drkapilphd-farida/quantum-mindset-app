@@ -152,3 +152,23 @@ describe('startSharpBrainCheckout — Self-paced ₹2,999', () => {
     expect(created).toHaveLength(0)
   })
 })
+
+describe('UTM kept to checkout (Brain Unlock)', () => {
+  afterEach(() => vi.unstubAllEnvs())
+
+  it('puts the visit’s utm_* tags and the page section into the Razorpay notes, for both plans', async () => {
+    const { actions, created } = await load({ api: true })
+    const utm = { utm_source: 'meta', utm_medium: 'whatsapp', utm_campaign: 'sb_free_test_en', other: 'ignored' }
+    await actions.startSharpBrainCheckout({ plan: 'self_paced', email: 'a@b.co', utm, from: 'brain_unlock_self' })
+    await actions.startSharpBrainCheckout({ email: 'a@b.co', batch: '2026-10-15', simulateNow: '2026-10-05T10:00:00+05:30', utm, from: 'brain_unlock_live' })
+    expect(created[0]).toMatchObject({ notes: { program: 'sharp_brain_30', plan: 'self_paced', utm_source: 'meta', utm_medium: 'whatsapp', utm_campaign: 'sb_free_test_en', checkout_from: 'brain_unlock_self' } })
+    expect(created[1]).toMatchObject({ notes: { program: 'sharp_brain_30', plan: 'live', utm_campaign: 'sb_free_test_en', checkout_from: 'brain_unlock_live' } })
+    expect((created[0] as { notes: Record<string, string> }).notes).not.toHaveProperty('other')
+  })
+
+  it('without UTM the notes are unchanged', async () => {
+    const { actions, created } = await load({ api: true })
+    await actions.startSharpBrainCheckout({ plan: 'self_paced', email: 'a@b.co' })
+    expect((created[0] as { notes: Record<string, string> }).notes).toEqual({ program: 'sharp_brain_30', plan: 'self_paced' })
+  })
+})

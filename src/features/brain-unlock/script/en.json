@@ -1,0 +1,47 @@
+{
+  "lang": "en",
+  "review": "source",
+  "lines": [
+    {
+      "id": "speed-teach",
+      "text": "Most people read at the speed they speak. ... Your eyes can move much faster. ... Let them follow the light."
+    },
+    {
+      "id": "memory-teach",
+      "text": "Here is the secret. ... Your brain loves pictures and stories. ... Let's link five new words into one crazy story. ... See each picture in your mind."
+    },
+    { "id": "storyA-1", "text": "A huge gorilla..." },
+    { "id": "storyA-2", "text": "opens a giant suitcase." },
+    {
+      "id": "storyA-3",
+      "text": "Instead of clothes, curd pours out of the suitcase!"
+    },
+    { "id": "storyA-4", "text": "The curd soaks a flying drone..." },
+    {
+      "id": "storyA-5",
+      "text": "and the heavy drone falls right into your tiffin."
+    },
+    { "id": "storyB-1", "text": "A cheeky squirrel..." },
+    { "id": "storyB-2", "text": "jumps into a big cooker." },
+    { "id": "storyB-3", "text": "The cooker whistles and shoots out popcorn!" },
+    { "id": "storyB-4", "text": "The popcorn lands on a sleeping buffalo..." },
+    {
+      "id": "storyB-5",
+      "text": "and the buffalo sits right on your TV remote."
+    },
+    {
+      "id": "memory-replay",
+      "text": "Now see the whole story once more in your mind."
+    },
+    {
+      "id": "focus-intro",
+      "text": "Sit comfortably. ... Look softly at the glowing dot."
+    },
+    { "id": "focus-in", "text": "Breathe in." },
+    { "id": "focus-out", "text": "And slowly breathe out." },
+    {
+      "id": "focus-done",
+      "text": "Beautiful. ... Your mind is calm and sharp."
+    }
+  ]
+}

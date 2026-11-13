@@ -5,6 +5,7 @@ import { SHARP_BRAIN_PRICES, sharpBrainEnrolment, waLink } from "@/config/site.c
 import type { PlanType } from "@/features/sharp-brain-plans/rules";
 import { trackGaEvent } from "@/lib/analytics/ga4";
 import { trackInitiateCheckout } from "@/lib/analytics/conversions";
+import { readUtmParams } from "@/lib/analytics/utm";
 import { getSharpBrainPricing, startSharpBrainCheckout, type CheckoutResult } from "../actions";
 import type { PricedBatch, PricingSnapshot } from "../server";
 import { countdownParts, inr, istDayMonth, istDeadline } from "../copy";
@@ -183,9 +184,12 @@ export function BatchCheckout({
     setError(null);
     trackInitiateCheckout(selfPaced ? "Sharp Brain 30-Day Program (Self-paced)" : "Sharp Brain 30-Day Program", amountInr);
     trackGaEvent("razorpay_checkout_click", selfPaced ? { location, plan: "self_paced" } : { location, offer: selected?.offer ?? "regular", batch: selected?.start ?? "" });
+    // UTM tags + the page section travel in the Razorpay notes (attribution).
+    const utm = readUtmParams();
+    const from = location.toLowerCase().replace(/[^a-z0-9_-]/g, "_").slice(0, 60);
     const result = selfPaced
-      ? await startSharpBrainCheckout({ plan: "self_paced", email, name })
-      : await startSharpBrainCheckout({ batch: selected?.start, email, name, offerId, simulateNow });
+      ? await startSharpBrainCheckout({ plan: "self_paced", email, name, utm, from })
+      : await startSharpBrainCheckout({ batch: selected?.start, email, name, offerId, simulateNow, utm, from });
     if (result.ok) {
       window.location.assign(result.url);
       return;

@@ -7,6 +7,12 @@ import { updateTestLeadStatus } from '../actions/updateTestLeadStatus'
 import type { TestLeadRow, TestLeadStatus } from '../queries/getTestLeads'
 import { leadMagnetCopy } from '@/features/reading-speed-test/leadMagnetCopy'
 import type { ReadingProfileType } from '@/features/reading-speed-test/scoring'
+import { DEFAULT_SETTINGS, type BrainTypeId } from '@/features/brain-unlock/settings'
+
+function brainTypeName(id: string): string {
+  const t = DEFAULT_SETTINGS.brainTypes[id as BrainTypeId]
+  return t === undefined ? id : `${t.emoji} ${t.en.name}`
+}
 
 const STATUS: { value: TestLeadStatus; label: string }[] = [
   { value: 'new', label: 'New' },
@@ -69,14 +75,24 @@ export function TestLeadsTable({ rows }: { rows: TestLeadRow[] }): React.JSX.Ele
                     Message on WhatsApp
                   </a>
                 </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  {lead.valid ? `${lead.effectiveWpm} eff. WPM` : 'Not valid'}
-                  <div className="text-xs text-muted-foreground">
-                    {lead.wpm} WPM · {lead.comprehensionPercent}%{lead.retentionCorrect !== null ? ` · retention ${lead.retentionCorrect}/4` : ''}
-                    {lead.memoryCorrect !== null ? ` · memory ${lead.memoryCorrect}/8` : ''} · {lead.lang.toUpperCase()}
-                  </div>
-                </TableCell>
-                <TableCell>{lead.profileType === null ? '—' : (leadMagnetCopy.en.profiles[lead.profileType as ReadingProfileType]?.name ?? lead.profileType)}</TableCell>
+                {lead.testKind === 'brain_unlock' ? (
+                  <TableCell className="whitespace-nowrap" data-lead-kind="brain_unlock">
+                    Brain Unlock · {lead.unlockScore ?? '—'}/100
+                    <div className="text-xs text-muted-foreground">
+                      {lead.wpm} WPM · memory {lead.memoryCorrect ?? '—'}/5 · {lead.role ?? '—'}
+                      {lead.duo ? ' · Duo' : ''} · {lead.lang.toUpperCase()}
+                    </div>
+                  </TableCell>
+                ) : (
+                  <TableCell className="whitespace-nowrap">
+                    {lead.valid ? `${lead.effectiveWpm} eff. WPM` : 'Not valid'}
+                    <div className="text-xs text-muted-foreground">
+                      {lead.wpm} WPM · {lead.comprehensionPercent}%{lead.retentionCorrect !== null ? ` · retention ${lead.retentionCorrect}/4` : ''}
+                      {lead.memoryCorrect !== null ? ` · memory ${lead.memoryCorrect}/8` : ''} · {lead.lang.toUpperCase()}
+                    </div>
+                  </TableCell>
+                )}
+                <TableCell>{lead.brainType !== null ? brainTypeName(lead.brainType) : lead.profileType === null ? '—' : (leadMagnetCopy.en.profiles[lead.profileType as ReadingProfileType]?.name ?? lead.profileType)}</TableCell>
                 <TableCell className="whitespace-nowrap">
                   {lead.offerExpiresAt === null ? '—' : lead.offerUsed ? 'Used' : offerLive ? `Until ${ist(lead.offerExpiresAt)}` : `Expired ${ist(lead.offerExpiresAt)}`}
                 </TableCell>

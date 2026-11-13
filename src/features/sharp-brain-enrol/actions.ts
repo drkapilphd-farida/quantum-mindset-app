@@ -8,6 +8,7 @@ import { checkRateLimit, getClientIp } from '@/lib/rateLimit'
 import { logger } from '@/lib/logger'
 import { createPaymentLink, hasPaymentLinksApi } from '@/lib/razorpay/paymentLinksApi'
 import { createClient } from '@/lib/supabase/server'
+import { attributionNotes } from './attribution'
 import { findUpcomingBatch, priceForBatch } from './batches'
 import { PROGRAM_NOTE, activeOffer, discountsChargeable, enrolConfig, getTestOffer, pricingSnapshot, resolveNow, type PricingSnapshot } from './server'
 
@@ -52,6 +53,9 @@ const CheckoutInput = z.object({
     .transform((v) => (v === undefined || v === '' ? undefined : v)),
   offerId: OfferIdSchema,
   simulateNow: SimulateSchema,
+  /** The visit's utm_* tags and the page section (e.g. "brain_unlock_live"), kept in the Razorpay notes for attribution. */
+  utm: z.record(z.string().max(20), z.string().max(200)).optional(),
+  from: z.string().regex(/^[a-z0-9_-]{1,60}$/).optional(),
 })
 
 export type CheckoutResult = { ok: true; url: string } | { ok: false; reason: 'invalid_email' | 'batch_closed' | 'unavailable' | 'rate_limited' }
@@ -64,7 +68,8 @@ export async function startSharpBrainCheckout(input: unknown): Promise<CheckoutR
   const ip = await getClientIp()
   if (!checkRateLimit(`sharp-brain-checkout:${ip}`, CHECKOUT_RATE_LIMIT).allowed) return { ok: false, reason: 'rate_limited' }
 
-  if (parsed.data.plan === 'self_paced') return startSelfPacedCheckout(parsed.data.email, parsed.data.name)
+  const attribution = attributionNotes(parsed.data.utm, parsed.data.from)
+  if (parsed.data.plan === 'self_paced') return startSelfPacedCheckout(parsed.data.email, parsed.data.name, attribution)
 
   const now = resolveNow(parsed.data.simulateNow)
   if (parsed.data.batch === undefined) return { ok: false, reason: 'batch_closed' }
@@ -96,6 +101,7 @@ export async function startSharpBrainCheckout(input: unknown): Promise<CheckoutR
         batch: batch.start,
         offer: price.offer,
         ...(price.offer === 'test1000' && offer !== null ? { offer_id: offer.id } : {}),
+        ...attribution,
       },
       expireAtMs,
       customerEmail: parsed.data.email,
@@ -112,13 +118,13 @@ export async function startSharpBrainCheckout(input: unknown): Promise<CheckoutR
 }
 
 /** ₹2,999, decided here. Without the Payment Links API, the website's fixed ₹2,999 link (the webhook knows it). */
-async function startSelfPacedCheckout(email: string, name: string | undefined): Promise<CheckoutResult> {
+async function startSelfPacedCheckout(email: string, name: string | undefined, attribution: Record<string, string>): Promise<CheckoutResult> {
   if (!hasPaymentLinksApi()) return { ok: true, url: LINKS.rzpSharpBrainSelfPaced2999 }
   const link = await createPaymentLink(
     {
       amountInr: SHARP_BRAIN_PRICES.selfPacedInr,
       description: 'Sharp Brain 30-Day Program — Self-paced',
-      notes: { program: PROGRAM_NOTE, plan: 'self_paced' },
+      notes: { program: PROGRAM_NOTE, plan: 'self_paced', ...attribution },
       expireAtMs: Date.now() + 24 * 60 * 60_000,
       customerEmail: email,
       ...(name !== undefined ? { customerName: name } : {}),

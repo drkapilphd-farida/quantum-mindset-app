@@ -63,6 +63,8 @@ export type GaEventName =
   | 'memory_test_lead_submitted'
   | 'memory_test_whatsapp_opened'
   | 'memory_test_shared'
+  // Brain Unlock funnel (replaced the Reading & Memory Test, Nov 2026): one GA4 event per step.
+  | 'brain_unlock_step'
   // /telepathy-workshop: free-session / review video plays, ₹1,000 seat-booking
   // taps and WhatsApp taps per batch, and thank-you page visits
   | 'telepathy_video_play'

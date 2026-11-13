@@ -25,6 +25,8 @@ const NAV_ITEMS = [
   { href: '/admin/recordings', label: 'Class recordings', icon: ClipboardList, exact: false },
   { href: '/admin/reminders', label: 'Reminders', icon: ClipboardList, exact: false },
   { href: '/admin/test-leads', label: 'Test Leads', icon: ClipboardList, exact: false },
+  { href: '/admin/brain-unlock-funnel', label: 'Brain Unlock funnel', icon: ClipboardList, exact: false },
+  { href: '/admin/brain-unlock-settings', label: 'Brain Unlock settings', icon: ClipboardList, exact: false },
   { href: '/admin/franchise-leads', label: 'Franchise Leads', icon: ClipboardList, exact: false },
   { href: '/admin/calm-mind-batch', label: 'Calm Mind Batch', icon: ClipboardList, exact: false },
   { href: '/admin/partner-resources', label: 'Partner Resources', icon: BookOpen, exact: false },

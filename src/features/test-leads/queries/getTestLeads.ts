@@ -22,6 +22,11 @@ export type TestLeadRow = {
   offerExpiresAt: string | null
   offerUsed: boolean
   status: TestLeadStatus
+  /** Brain Unlock leads only (test_kind 'brain_unlock'). */
+  role: string | null
+  brainType: string | null
+  unlockScore: number | null
+  duo: boolean
 }
 
 /** Every free-test lead, newest first, with that number's ₹1,000 offer (admin only — service role). */
@@ -30,7 +35,7 @@ export async function getTestLeads(): Promise<TestLeadRow[]> {
   const [{ data: rows, error }, { data: offers }] = await Promise.all([
     client
       .from('speed_test_results')
-      .select('id, created_at, first_name, whatsapp_number, lang, test_kind, effective_wpm, wpm, comprehension_percent, retention_correct, memory_correct, status, profile_type, utm_source, utm_campaign, lead_status')
+      .select('id, created_at, first_name, whatsapp_number, lang, test_kind, effective_wpm, wpm, comprehension_percent, retention_correct, memory_correct, status, profile_type, utm_source, utm_campaign, lead_status, role, brain_type, unlock_score, duo')
       .order('created_at', { ascending: false })
       .limit(1000),
     client.from('sharp_brain_offers').select('whatsapp_number, expires_at, redeemed_at').eq('kind', 'test1000'),
@@ -61,6 +66,10 @@ export async function getTestLeads(): Promise<TestLeadRow[]> {
       offerExpiresAt: offer?.expires_at ?? null,
       offerUsed: offer?.redeemed_at != null,
       status: r.lead_status as TestLeadStatus,
+      role: r.role,
+      brainType: r.brain_type,
+      unlockScore: r.unlock_score,
+      duo: r.duo,
     }
   })
 }
