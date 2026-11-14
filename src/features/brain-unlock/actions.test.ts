@@ -31,7 +31,6 @@ async function load(): Promise<{
   }));
   vi.doMock("./followups", () => ({
     queueFollowups: (id: string) => (queued.push(id), Promise.resolve()),
-    sendBrainUnlockFollowups: () => Promise.resolve({}),
   }));
   vi.doMock("@/lib/email/sendBrainUnlockEmails", () => ({
     sendBrainUnlockFounderEmail: () => Promise.resolve(),

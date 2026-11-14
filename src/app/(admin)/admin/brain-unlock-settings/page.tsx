@@ -6,7 +6,7 @@ import {
   type FollowupStep,
 } from "@/features/brain-unlock/messages";
 import { SettingsForm } from "@/features/brain-unlock/admin/SettingsForm";
-import { isChatboxxConfigured } from "@/lib/whatsapp/chatboxx";
+import { VoiceLinesPanel } from "@/features/brain-unlock/admin/VoiceLinesPanel";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -51,12 +51,14 @@ export default async function BrainUnlockSettingsPage(): Promise<React.JSX.Eleme
       </div>
       <SettingsForm
         initial={settings}
-        followupPreview={STEPS.map((step) => ({
-          step,
-          text: followupText(step, sample),
-        }))}
-        chatboxx={isChatboxxConfigured()}
+        followupPreview={(["en", "hi"] as const).flatMap((lang) =>
+          STEPS.map((step) => ({
+            step: `${step} (${lang.toUpperCase()})`,
+            text: followupText(step, { ...sample, lang }),
+          })),
+        )}
       />
+      <VoiceLinesPanel initial={settings.voiceLines} />
     </div>
   );
 }

@@ -35,6 +35,7 @@ import { UnlockFocus } from "./UnlockFocus";
 import { UnlockMemory } from "./UnlockMemory";
 import { UnlockSpeed } from "./UnlockSpeed";
 import { chipBtn, primaryBtn, Progress, secondaryBtn, SoundToggle } from "./ui";
+import { VoiceCue, VoiceOverrides } from "./useNarration";
 
 // Brain Unlock (founder spec, 13 Nov 2026): hook → Brain Check → 3 unlocks,
 // each with its own real Before → After → the report → the offer, all on one
@@ -249,444 +250,452 @@ export default function BrainUnlock({
       : player < setups.length - 1
         ? c.speed.next
         : c.nextSuperpower;
-  const voice = (key: "speedTeach" | "memoryStory" | "focus"): string =>
-    settings.voice[key][lang];
   const showLangToggle = view === "offer" || stage === "role";
 
   return (
     <LanguageOverride lang={lang}>
-      <div className={dark ? "dark" : ""}>
-        <PlayScope className="min-h-[80vh] bg-background px-4 py-6 text-foreground">
-          <div
-            ref={top}
-            className="mx-auto flex w-full max-w-xl flex-col gap-5"
-            data-bu-stage={view === "offer" ? "offer" : stage}
-            data-bu-lang={lang}
-          >
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-xs font-bold tracking-wider text-primary uppercase">
-                🧠 {c.pageName}
-              </p>
-              <div className="flex items-center gap-2">
-                {showLangToggle && (
-                  <div
-                    className="flex rounded-full border-2 border-border p-0.5"
-                    role="radiogroup"
-                    aria-label={c.langLabel}
-                  >
-                    {(["en", "hi"] as const).map((l) => (
-                      <button
-                        key={l}
-                        type="button"
-                        role="radio"
-                        aria-checked={lang === l}
-                        onClick={() => setLang(l)}
-                        className={`min-h-9 rounded-full px-3 text-sm font-bold ${lang === l ? "bg-primary text-primary-foreground" : "text-foreground"}`}
-                        data-bu-lang-toggle={l}
-                      >
-                        {l === "en" ? "EN" : "हिंदी"}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                <SoundToggle
-                  muted={muted}
-                  on={c.sound.on}
-                  off={c.sound.off}
-                  onToggle={() => {
-                    saveMuted(!muted);
-                    setMuted(!muted);
-                  }}
-                />
-              </div>
-            </div>
-
-            {view === "offer" && (
-              <SharpBrainPricingProvider initial={pricing}>
-                <button
-                  type="button"
-                  className={primaryBtn}
-                  onClick={() => setView("flow")}
-                  data-bu-retake
-                >
-                  🧠 {c.offer.retake} →
-                </button>
-                <OfferBlock
-                  c={c}
-                  lang={lang}
-                  settings={settings}
-                  facts={null}
-                  track={track}
-                  initialPlan={initialPlan}
-                />
-              </SharpBrainPricingProvider>
-            )}
-
-            {view === "flow" && stage === "role" && (
-              <section className="flex flex-col gap-5" data-bu-hook>
-                <h1 className="text-[2rem] leading-tight text-foreground">
-                  {c.hook.title}
-                </h1>
-                <p className="text-base text-muted-foreground">{c.hook.sub}</p>
-                <div
-                  className="flex flex-col gap-3"
-                  role="radiogroup"
-                  aria-label={c.hook.title}
-                >
-                  {ROLES.map((r) => (
-                    <button
-                      key={r}
-                      type="button"
-                      role="radio"
-                      aria-checked={role === r}
-                      onClick={() => {
-                        setRole(r);
-                        if (r === "professional") {
-                          setClassBand(null);
-                          trackBu("role_picked", { ...track, role: r });
-                          setStage("pain");
-                        }
-                      }}
-                      className={`min-h-16 rounded-2xl border-2 px-5 text-left text-xl font-bold ${role === r ? "border-primary bg-primary/15 text-foreground" : "border-border bg-card text-foreground"}`}
-                      data-bu-role={r}
+      <VoiceOverrides.Provider value={settings.voiceLines[lang]}>
+        <div className={dark ? "dark" : ""}>
+          <PlayScope className="min-h-[80vh] bg-background px-4 py-6 text-foreground">
+            <div
+              ref={top}
+              className="mx-auto flex w-full max-w-xl flex-col gap-5"
+              data-bu-stage={view === "offer" ? "offer" : stage}
+              data-bu-lang={lang}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs font-bold tracking-wider text-primary uppercase">
+                  🧠 {c.pageName}
+                </p>
+                <div className="flex items-center gap-2">
+                  {showLangToggle && (
+                    <div
+                      className="flex rounded-full border-2 border-border p-0.5"
+                      role="radiogroup"
+                      aria-label={c.langLabel}
                     >
-                      {c.hook.roles[r]}
-                    </button>
-                  ))}
-                </div>
-                {(role === "parent" || role === "student") && (
-                  <div
-                    className="play-card flex flex-col gap-3 p-4"
-                    data-bu-class
-                  >
-                    <p className="text-base font-bold text-foreground">
-                      {c.hook.classQ}{" "}
-                      <span className="text-sm font-normal text-muted-foreground">
-                        ({c.hook.optional})
-                      </span>
-                    </p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {CLASS_BANDS.map((b) => (
+                      {(["en", "hi"] as const).map((l) => (
                         <button
-                          key={b}
+                          key={l}
                           type="button"
-                          aria-pressed={classBand === b}
-                          onClick={() =>
-                            setClassBand(classBand === b ? null : b)
-                          }
-                          className={chipBtn(classBand === b)}
-                          data-bu-class-chip={b}
+                          role="radio"
+                          aria-checked={lang === l}
+                          onClick={() => setLang(l)}
+                          className={`min-h-9 rounded-full px-3 text-sm font-bold ${lang === l ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+                          data-bu-lang-toggle={l}
                         >
-                          {c.hook.classes[b]}
+                          {l === "en" ? "EN" : "हिंदी"}
                         </button>
                       ))}
                     </div>
-                    <button
-                      type="button"
-                      className={primaryBtn}
-                      onClick={() => {
-                        trackBu(
-                          "role_picked",
-                          track,
-                          classBand === null ? {} : { class: classBand },
-                        );
-                        setStage("pain");
-                      }}
-                      data-bu-role-next
-                    >
-                      {c.hook.next}
-                    </button>
-                  </div>
-                )}
-              </section>
-            )}
-
-            {view === "flow" && stage === "pain" && role !== null && (
-              <section
-                className="flex flex-col gap-6 py-6 text-center"
-                data-bu-pain
-              >
-                <p className="font-heading text-[1.9rem] leading-snug text-foreground">
-                  {c.pain[role]}
-                </p>
-                <button
-                  type="button"
-                  className={primaryBtn}
-                  onClick={() => setStage("promise")}
-                  data-bu-yes
-                >
-                  {c.yes}
-                </button>
-              </section>
-            )}
-
-            {view === "flow" && stage === "promise" && role !== null && (
-              <section className="flex flex-col gap-5" data-bu-promise>
-                <h1 className="text-[1.9rem] leading-snug text-foreground">
-                  {c.promise.title}
-                </h1>
-                <ul className="flex flex-wrap gap-2" data-bu-trust>
-                  {c.promise.trust.map((t, i) => (
-                    <li
-                      key={t}
-                      className="rounded-full px-3 py-1 text-sm font-bold text-white"
-                      style={{
-                        background: ["#4338ca", "#0f766e", "#c2410c"][i % 3],
-                      }}
-                    >
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-                {settings.introVideoId !== "" && (
-                  <PageVideo
-                    video={{
-                      id: settings.introVideoId,
-                      name: "Brain Unlock intro",
-                      thumb: null,
-                      caption: {
-                        en: "Dr. Kapil on Brain Unlock",
-                        hi: "Brain Unlock पर Dr. Kapil",
-                      },
+                  )}
+                  <SoundToggle
+                    muted={muted}
+                    on={c.sound.on}
+                    off={c.sound.off}
+                    onToggle={() => {
+                      saveMuted(!muted);
+                      setMuted(!muted);
                     }}
-                    lang={lang}
-                    tone="light"
-                    className="mx-auto w-48"
                   />
-                )}
-                {role === "parent" && (
-                  <div
-                    className="play-card flex flex-col gap-3 p-4"
-                    data-bu-duo
+                </div>
+              </div>
+
+              {view === "offer" && (
+                <SharpBrainPricingProvider initial={pricing}>
+                  <button
+                    type="button"
+                    className={primaryBtn}
+                    onClick={() => setView("flow")}
+                    data-bu-retake
                   >
-                    <p className="text-base font-bold text-foreground">
-                      {c.promise.duoQ}
-                    </p>
-                    <button
-                      type="button"
-                      aria-pressed={duo}
-                      onClick={() => setDuo(true)}
-                      className={chipBtn(duo)}
-                      data-bu-duo-choice="duo"
-                    >
-                      {c.promise.duo}
-                    </button>
-                    <button
-                      type="button"
-                      aria-pressed={!duo}
-                      onClick={() => setDuo(false)}
-                      className={chipBtn(!duo)}
-                      data-bu-duo-choice="solo"
-                    >
-                      {c.promise.solo}
-                    </button>
-                    {duo && (
-                      <p className="text-sm text-muted-foreground">
-                        {c.promise.duoSub}
-                      </p>
-                    )}
-                  </div>
-                )}
-                <button
-                  type="button"
-                  className={primaryBtn}
-                  onClick={() => {
-                    if (role === "parent")
-                      trackBu("duo_chosen", { ...track, duo }, { duo });
-                    trackBu("started", { ...track, duo });
-                    setParts([{}, {}]);
-                    setPhase(0);
-                    setPlayer(0);
-                    setCheckDone(false);
-                    setHandoff(null);
-                    setStage("play");
-                  }}
-                  data-bu-start
-                >
-                  {c.promise.start}
-                </button>
-                <p className="text-center text-sm text-muted-foreground">
-                  {c.promise.noSignup}
-                </p>
-              </section>
-            )}
-
-            {view === "flow" && stage === "play" && (
-              <>
-                <Progress
-                  step={phase as 0 | 1 | 2 | 3}
-                  label={
-                    phase === 0
-                      ? c.progress.check
-                      : c.progress.superpower(phase)
-                  }
-                  labels={c.progress.labels}
-                />
-                {duo && handoff === null && (
-                  <p className="text-sm font-bold text-primary">
-                    {player === 0 ? c.handoff.parentName : c.handoff.childName}
-                  </p>
-                )}
-
-                {handoff !== null ? (
-                  <section
-                    className="play-card flex flex-col items-center gap-5 p-8 text-center"
-                    data-bu-handoff={handoff}
-                  >
-                    {checkDone && phase === 1 && player === 0 && (
-                      <div className="flex flex-col gap-1">
-                        <p className="font-heading text-2xl text-foreground">
-                          {c.check.complete}
-                        </p>
-                        <p className="text-base text-muted-foreground">
-                          {c.check.completeSub}
-                        </p>
-                      </div>
-                    )}
-                    <p className="font-heading text-[1.6rem] leading-snug text-foreground">
-                      {handoff === "toChild"
-                        ? c.handoff.toChild
-                        : c.handoff.toParent}
-                    </p>
-                    <button
-                      type="button"
-                      className={primaryBtn}
-                      onClick={() => (setHandoff(null), setCheckDone(false))}
-                      data-bu-handoff-ready
-                    >
-                      {c.handoff.ready}
-                    </button>
-                  </section>
-                ) : checkDone && !duo ? (
-                  <section
-                    className="play-card flex flex-col items-center gap-4 p-8 text-center"
-                    data-bu-check-complete
-                  >
-                    <p className="font-heading text-[1.8rem] text-foreground">
-                      {c.check.complete}
-                    </p>
-                    <p className="text-lg text-muted-foreground">
-                      {c.check.completeSub}
-                    </p>
-                    <button
-                      type="button"
-                      className={primaryBtn}
-                      onClick={() => setCheckDone(false)}
-                      data-bu-unlock-now
-                    >
-                      {c.check.unlockNow}
-                    </button>
-                  </section>
-                ) : (
-                  <div key={`${phase}-${player}`}>
-                    {phase === 0 && (
-                      <BrainCheck
-                        c={c}
-                        lang={lang}
-                        passage={passages.check}
-                        wordSet={setup.wordSet}
-                        muted={muted}
-                        onDone={(check) => finishPart({ check })}
-                      />
-                    )}
-                    {phase === 1 && part.check !== undefined && (
-                      <UnlockSpeed
-                        c={c}
-                        lang={lang}
-                        muted={muted}
-                        baselineWpm={wpmFrom(
-                          passages.check.wordCount,
-                          part.check.checkMs,
-                        )}
-                        checkPassageId={passages.check.id}
-                        checkAnswers={part.check.checkAnswers}
-                        passage={passages.sharp}
-                        voiceUrl={voice("speedTeach")}
-                        continueLabel={continueLabel}
-                        onDone={(r) =>
-                          finishPart({
-                            sharpMs: r.sharpMs,
-                            sharpAnswers: r.sharpAnswers,
-                            checkCorrect: r.grade.checkCorrect,
-                            checkTotal: r.grade.checkTotal,
-                            sharpCorrect: r.grade.sharpCorrect,
-                            sharpTotal: r.grade.sharpTotal,
-                          })
-                        }
-                      />
-                    )}
-                    {phase === 2 && part.check !== undefined && (
-                      <UnlockMemory
-                        c={c}
-                        lang={lang}
-                        muted={muted}
-                        before={scorePickedFor(runFor(player, parts))}
-                        wordSet={setup.wordSet}
-                        voiceUrl={voice("memoryStory")}
-                        continueLabel={continueLabel}
-                        onDone={(r) => finishPart(r)}
-                      />
-                    )}
-                    {phase === 3 && part.check !== undefined && (
-                      <UnlockFocus
-                        c={c}
-                        lang={lang}
-                        muted={muted}
-                        before={part.check.focusBefore}
-                        gridBefore={part.check.gridBefore}
-                        voiceUrl={voice("focus")}
-                        continueLabel={continueLabel}
-                        onDone={(r) => finishPart(r)}
-                      />
-                    )}
-                  </div>
-                )}
-              </>
-            )}
-
-            {view === "flow" && stage === "report" && role !== null && (
-              <SharpBrainPricingProvider initial={pricing}>
-                <Report
-                  c={c}
-                  lang={lang}
-                  role={role}
-                  classBand={classBand}
-                  childClassBand={duo ? classBand : null}
-                  duo={duo}
-                  reports={setups.map((_, i) => reportFor(i, parts))}
-                  runs={setups.map((_, i) => runFor(i, parts))}
-                  settings={settings}
-                  track={track}
-                  onSaved={setFacts}
-                />
-                <OfferBlock
-                  c={c}
-                  lang={lang}
-                  settings={settings}
-                  facts={facts ?? factsPreview(reportFor(0, parts))}
-                  track={track}
-                  initialPlan={null}
-                />
-              </SharpBrainPricingProvider>
-            )}
-
-            {view === "flow" &&
-              stage !== "role" &&
-              stage !== "report" &&
-              stage !== "play" && (
-                <button
-                  type="button"
-                  className={secondaryBtn}
-                  onClick={() =>
-                    setStage(stage === "promise" ? "pain" : "role")
-                  }
-                >
-                  ←
-                </button>
+                    🧠 {c.offer.retake} →
+                  </button>
+                  <OfferBlock
+                    c={c}
+                    lang={lang}
+                    settings={settings}
+                    facts={null}
+                    track={track}
+                    initialPlan={initialPlan}
+                  />
+                </SharpBrainPricingProvider>
               )}
-          </div>
-        </PlayScope>
-      </div>
+
+              {view === "flow" && stage === "role" && (
+                <section className="flex flex-col gap-5" data-bu-hook>
+                  <h1 className="text-[2rem] leading-tight text-foreground">
+                    {c.hook.title}
+                  </h1>
+                  <p className="text-base text-muted-foreground">
+                    {c.hook.sub}
+                  </p>
+                  <div
+                    className="flex flex-col gap-3"
+                    role="radiogroup"
+                    aria-label={c.hook.title}
+                  >
+                    {ROLES.map((r) => (
+                      <button
+                        key={r}
+                        type="button"
+                        role="radio"
+                        aria-checked={role === r}
+                        onClick={() => {
+                          setRole(r);
+                          if (r === "professional") {
+                            setClassBand(null);
+                            trackBu("role_picked", { ...track, role: r });
+                            setStage("pain");
+                          }
+                        }}
+                        className={`min-h-16 rounded-2xl border-2 px-5 text-left text-xl font-bold ${role === r ? "border-primary bg-primary/15 text-foreground" : "border-border bg-card text-foreground"}`}
+                        data-bu-role={r}
+                      >
+                        {c.hook.roles[r]}
+                      </button>
+                    ))}
+                  </div>
+                  {(role === "parent" || role === "student") && (
+                    <div
+                      className="play-card flex flex-col gap-3 p-4"
+                      data-bu-class
+                    >
+                      <p className="text-base font-bold text-foreground">
+                        {c.hook.classQ}{" "}
+                        <span className="text-sm font-normal text-muted-foreground">
+                          ({c.hook.optional})
+                        </span>
+                      </p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {CLASS_BANDS.map((b) => (
+                          <button
+                            key={b}
+                            type="button"
+                            aria-pressed={classBand === b}
+                            onClick={() =>
+                              setClassBand(classBand === b ? null : b)
+                            }
+                            className={chipBtn(classBand === b)}
+                            data-bu-class-chip={b}
+                          >
+                            {c.hook.classes[b]}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        className={primaryBtn}
+                        onClick={() => {
+                          trackBu(
+                            "role_picked",
+                            track,
+                            classBand === null ? {} : { class: classBand },
+                          );
+                          setStage("pain");
+                        }}
+                        data-bu-role-next
+                      >
+                        {c.hook.next}
+                      </button>
+                    </div>
+                  )}
+                </section>
+              )}
+
+              {view === "flow" && stage === "pain" && role !== null && (
+                <section
+                  className="flex flex-col gap-6 py-6 text-center"
+                  data-bu-pain
+                >
+                  <p className="font-heading text-[1.9rem] leading-snug text-foreground">
+                    {c.pain[role]}
+                  </p>
+                  <button
+                    type="button"
+                    className={primaryBtn}
+                    onClick={() => setStage("promise")}
+                    data-bu-yes
+                  >
+                    {c.yes}
+                  </button>
+                </section>
+              )}
+
+              {view === "flow" && stage === "promise" && role !== null && (
+                <section className="flex flex-col gap-5" data-bu-promise>
+                  <VoiceCue id="hook" lang={lang} muted={muted} />
+                  <h1 className="text-[1.9rem] leading-snug text-foreground">
+                    {c.promise.title}
+                  </h1>
+                  <ul className="flex flex-wrap gap-2" data-bu-trust>
+                    {c.promise.trust.map((t, i) => (
+                      <li
+                        key={t}
+                        className="rounded-full px-3 py-1 text-sm font-bold text-white"
+                        style={{
+                          background: ["#4338ca", "#0f766e", "#c2410c"][i % 3],
+                        }}
+                      >
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  {settings.introVideoId !== "" && (
+                    <PageVideo
+                      video={{
+                        id: settings.introVideoId,
+                        name: "Brain Unlock intro",
+                        thumb: null,
+                        caption: {
+                          en: "Dr. Kapil on Brain Unlock",
+                          hi: "Brain Unlock पर Dr. Kapil",
+                        },
+                      }}
+                      lang={lang}
+                      tone="light"
+                      className="mx-auto w-48"
+                    />
+                  )}
+                  {role === "parent" && (
+                    <div
+                      className="play-card flex flex-col gap-3 p-4"
+                      data-bu-duo
+                    >
+                      <p className="text-base font-bold text-foreground">
+                        {c.promise.duoQ}
+                      </p>
+                      <button
+                        type="button"
+                        aria-pressed={duo}
+                        onClick={() => setDuo(true)}
+                        className={chipBtn(duo)}
+                        data-bu-duo-choice="duo"
+                      >
+                        {c.promise.duo}
+                      </button>
+                      <button
+                        type="button"
+                        aria-pressed={!duo}
+                        onClick={() => setDuo(false)}
+                        className={chipBtn(!duo)}
+                        data-bu-duo-choice="solo"
+                      >
+                        {c.promise.solo}
+                      </button>
+                      {duo && (
+                        <p className="text-sm text-muted-foreground">
+                          {c.promise.duoSub}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    className={primaryBtn}
+                    onClick={() => {
+                      if (role === "parent")
+                        trackBu("duo_chosen", { ...track, duo }, { duo });
+                      trackBu("started", { ...track, duo });
+                      setParts([{}, {}]);
+                      setPhase(0);
+                      setPlayer(0);
+                      setCheckDone(false);
+                      setHandoff(null);
+                      setStage("play");
+                    }}
+                    data-bu-start
+                  >
+                    {c.promise.start}
+                  </button>
+                  <p className="text-center text-sm text-muted-foreground">
+                    {c.promise.noSignup}
+                  </p>
+                </section>
+              )}
+
+              {view === "flow" && stage === "play" && (
+                <>
+                  <Progress
+                    step={phase as 0 | 1 | 2 | 3}
+                    label={
+                      phase === 0
+                        ? c.progress.check
+                        : c.progress.superpower(phase)
+                    }
+                    labels={c.progress.labels}
+                  />
+                  {duo && handoff === null && (
+                    <p className="text-sm font-bold text-primary">
+                      {player === 0
+                        ? c.handoff.parentName
+                        : c.handoff.childName}
+                    </p>
+                  )}
+
+                  {handoff !== null ? (
+                    <section
+                      className="play-card flex flex-col items-center gap-5 p-8 text-center"
+                      data-bu-handoff={handoff}
+                    >
+                      {checkDone && phase === 1 && player === 0 && (
+                        <div className="flex flex-col gap-1">
+                          <p className="font-heading text-2xl text-foreground">
+                            {c.check.complete}
+                          </p>
+                          <p className="text-base text-muted-foreground">
+                            {c.check.completeSub}
+                          </p>
+                        </div>
+                      )}
+                      <p className="font-heading text-[1.6rem] leading-snug text-foreground">
+                        {handoff === "toChild"
+                          ? c.handoff.toChild
+                          : c.handoff.toParent}
+                      </p>
+                      <button
+                        type="button"
+                        className={primaryBtn}
+                        onClick={() => (setHandoff(null), setCheckDone(false))}
+                        data-bu-handoff-ready
+                      >
+                        {c.handoff.ready}
+                      </button>
+                    </section>
+                  ) : checkDone && !duo ? (
+                    <section
+                      className="play-card flex flex-col items-center gap-4 p-8 text-center"
+                      data-bu-check-complete
+                    >
+                      <p className="font-heading text-[1.8rem] text-foreground">
+                        {c.check.complete}
+                      </p>
+                      <p className="text-lg text-muted-foreground">
+                        {c.check.completeSub}
+                      </p>
+                      <button
+                        type="button"
+                        className={primaryBtn}
+                        onClick={() => setCheckDone(false)}
+                        data-bu-unlock-now
+                      >
+                        {c.check.unlockNow}
+                      </button>
+                    </section>
+                  ) : (
+                    <div key={`${phase}-${player}`}>
+                      {phase === 0 && (
+                        <BrainCheck
+                          c={c}
+                          lang={lang}
+                          passage={passages.check}
+                          wordSet={setup.wordSet}
+                          muted={muted}
+                          onDone={(check) => finishPart({ check })}
+                        />
+                      )}
+                      {phase === 1 && part.check !== undefined && (
+                        <UnlockSpeed
+                          c={c}
+                          lang={lang}
+                          muted={muted}
+                          baselineWpm={wpmFrom(
+                            passages.check.wordCount,
+                            part.check.checkMs,
+                          )}
+                          checkPassageId={passages.check.id}
+                          checkAnswers={part.check.checkAnswers}
+                          passage={passages.sharp}
+                          continueLabel={continueLabel}
+                          onDone={(r) =>
+                            finishPart({
+                              sharpMs: r.sharpMs,
+                              sharpAnswers: r.sharpAnswers,
+                              checkCorrect: r.grade.checkCorrect,
+                              checkTotal: r.grade.checkTotal,
+                              sharpCorrect: r.grade.sharpCorrect,
+                              sharpTotal: r.grade.sharpTotal,
+                            })
+                          }
+                        />
+                      )}
+                      {phase === 2 && part.check !== undefined && (
+                        <UnlockMemory
+                          c={c}
+                          lang={lang}
+                          muted={muted}
+                          before={scorePickedFor(runFor(player, parts))}
+                          wordSet={setup.wordSet}
+                          continueLabel={continueLabel}
+                          onDone={(r) => finishPart(r)}
+                        />
+                      )}
+                      {phase === 3 && part.check !== undefined && (
+                        <UnlockFocus
+                          c={c}
+                          lang={lang}
+                          muted={muted}
+                          before={part.check.focusBefore}
+                          gridBefore={part.check.gridBefore}
+                          continueLabel={continueLabel}
+                          onDone={(r) => finishPart(r)}
+                        />
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
+
+              {view === "flow" && stage === "report" && role !== null && (
+                <SharpBrainPricingProvider initial={pricing}>
+                  <VoiceCue
+                    id="report-ready"
+                    lang={lang}
+                    muted={muted}
+                    delayMs={1200}
+                  />
+                  <Report
+                    c={c}
+                    lang={lang}
+                    role={role}
+                    classBand={classBand}
+                    childClassBand={duo ? classBand : null}
+                    duo={duo}
+                    reports={setups.map((_, i) => reportFor(i, parts))}
+                    runs={setups.map((_, i) => runFor(i, parts))}
+                    settings={settings}
+                    track={track}
+                    onSaved={setFacts}
+                  />
+                  <OfferBlock
+                    c={c}
+                    lang={lang}
+                    settings={settings}
+                    facts={facts ?? factsPreview(reportFor(0, parts))}
+                    track={track}
+                    initialPlan={null}
+                  />
+                </SharpBrainPricingProvider>
+              )}
+
+              {view === "flow" &&
+                stage !== "role" &&
+                stage !== "report" &&
+                stage !== "play" && (
+                  <button
+                    type="button"
+                    className={secondaryBtn}
+                    onClick={() =>
+                      setStage(stage === "promise" ? "pain" : "role")
+                    }
+                  >
+                    ←
+                  </button>
+                )}
+            </div>
+          </PlayScope>
+        </div>
+      </VoiceOverrides.Provider>
     </LanguageOverride>
   );
 }

@@ -7,6 +7,7 @@ import { logger } from "@/lib/logger";
 import { normalizeIndianMobile } from "@/lib/phone/indianMobile";
 import { currentAdminEmail } from "@/features/live-classes/admin/data";
 import { SettingsSchema } from "../settings";
+import { getBrainUnlockSettings } from "../settingsServer";
 
 // /admin/brain-unlock-settings: save the settings row (validated), and stop
 // WhatsApp follow-ups for a number (STOP received another way). Admin only.
@@ -24,11 +25,14 @@ export async function saveBrainUnlockSettings(input: unknown): Promise<Result> {
       error: `Please check “${first?.path.join(" → ") ?? "a field"}”: ${first?.message ?? "invalid value"}`,
     };
   }
+  // Voice lines are saved by their own panel (each change at once): keep the
+  // saved ones, so this form never overwrites a newer upload or take.
+  const current = await getBrainUnlockSettings();
   const { error } = await createServiceClient()
     .from("brain_unlock_settings")
     .upsert({
       id: 1,
-      settings: parsed.data,
+      settings: { ...parsed.data, voiceLines: current.voiceLines },
       updated_at: new Date().toISOString(),
       updated_by: admin,
     });

@@ -15,11 +15,9 @@ const label = "flex flex-col gap-1 text-sm font-medium";
 export function SettingsForm({
   initial,
   followupPreview,
-  chatboxx,
 }: {
   initial: BuSettings;
   followupPreview: { step: string; text: string | null }[];
-  chatboxx: boolean;
 }): React.JSX.Element {
   const [s, setS] = useState<BuSettings>(initial);
   const [json, setJson] = useState({
@@ -53,33 +51,6 @@ export function SettingsForm({
       res.ok ? { ok: true, text: res.message } : { ok: false, text: res.error },
     );
   }
-
-  const voiceRow = (
-    key: keyof BuSettings["voice"],
-    title: string,
-  ): React.JSX.Element => (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-      {(["en", "hi"] as const).map((l) => (
-        <label key={l} className={label}>
-          {title} ({l.toUpperCase()})
-          <input
-            className={input}
-            placeholder="https://… .mp3 (empty = Sarvam voice)"
-            value={s.voice[key][l]}
-            onChange={(e) =>
-              setS({
-                ...s,
-                voice: {
-                  ...s.voice,
-                  [key]: { ...s.voice[key], [l]: e.target.value },
-                },
-              })
-            }
-          />
-        </label>
-      ))}
-    </div>
-  );
 
   return (
     <div className="max-w-3xl space-y-8">
@@ -203,25 +174,15 @@ export function SettingsForm({
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">
-          Dr. Kapil’s voice files (optional)
+          WhatsApp follow-ups (sent by you)
         </h2>
-        <p className="text-xs text-muted-foreground">
-          Paste a public link to an MP3 of your own recording for each part.
-          Empty = the Sarvam “shubh” voice.
-        </p>
-        {voiceRow("speedTeach", "Speed lesson")}
-        {voiceRow("memoryStory", "Memory story")}
-        {voiceRow("focus", "Focus exercise (30 s)")}
-      </section>
-
-      <section className="space-y-3">
-        <h2 className="text-lg font-semibold">WhatsApp follow-ups</h2>
-        <p
-          className={`text-sm ${chatboxx ? "text-foreground" : "font-semibold text-destructive"}`}
-        >
-          {chatboxx
-            ? "Chatboxx is connected."
-            : "Chatboxx is not connected yet — nothing is sent. Due messages are marked “skipped” so nothing piles up."}
+        <p className="text-sm text-muted-foreground">
+          Nothing is sent automatically. Due messages wait in{" "}
+          <a className="font-semibold underline" href="/admin/followups">
+            /admin/followups
+          </a>{" "}
+          with a one-tap “Send on WhatsApp” button. Steps turned off here are
+          skipped.
         </p>
         <div className="flex flex-wrap gap-4 text-sm">
           {(["enabled", "instant", "h1", "d1", "d2", "d30"] as const).map(
@@ -309,7 +270,8 @@ export function SettingsForm({
           Stop follow-ups for a number
         </h2>
         <p className="text-xs text-muted-foreground">
-          If someone replies STOP (or asks you to stop), add their number here.
+          If someone replies STOP (or asks you to stop), add their number here
+          (or tap “Stop” on their row in /admin/followups).
         </p>
         <div className="flex gap-2">
           <input

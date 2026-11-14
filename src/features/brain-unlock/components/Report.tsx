@@ -1,12 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Share2 } from "lucide-react";
+import { Download, Share2 } from "lucide-react";
+import { SITE_CONFIG_WHATSAPP_NUMBER } from "@/config/site.config";
 import { readUtmParams } from "@/lib/analytics/utm";
+import {
+  cancelWhatsAppHandoff,
+  finishWhatsAppHandoff,
+  openPendingWhatsAppTab,
+} from "@/lib/whatsapp/handoff";
 import { shareOrDownload } from "@/features/reading-speed-test/shareCard";
 import { saveBrainUnlockLead } from "../actions";
 import type { BuCopy } from "../copy";
-import { factsFrom, shareText, type ReportFacts } from "../messages";
+import {
+  factsFrom,
+  reportChatText,
+  shareText,
+  waLink,
+  type ReportFacts,
+} from "../messages";
 import type { BuRole } from "../passages";
 import {
   focusSeconds,
@@ -23,8 +35,10 @@ import { secondaryBtn, SKILL } from "./ui";
 
 // The reveal: three Before → After cards per player, the Brain Unlock Score,
 // the Brain Type (with its "fun, not a test" line), the main + role line,
-// then the WhatsApp report form and sharing. Duo Mode: both side by side and
-// a Team Score.
+// then the lead form — "Get my report on WhatsApp" saves the lead and opens
+// wa.me to Dr. Kapil's WhatsApp Business number with the report typed in, so
+// the visitor starts the chat (founder, 14 Nov 2026: no WhatsApp API) — and
+// sharing / the report image. Duo Mode: both side by side and a Team Score.
 
 const TEST_PATH = "/reading-memory-test";
 
@@ -224,6 +238,7 @@ export function Report({
         childClassBand={childClassBand}
         duo={duo}
         runs={runs}
+        settings={settings}
         track={track}
         onSaved={onSaved}
       />
@@ -246,6 +261,7 @@ function LeadForm({
   childClassBand,
   duo,
   runs,
+  settings,
   track,
   onSaved,
 }: {
@@ -256,9 +272,11 @@ function LeadForm({
   childClassBand: ClassBand | null;
   duo: boolean;
   runs: RawRun[];
+  settings: BuSettings;
   track: TrackContext;
   onSaved: (facts: ReportFacts) => void;
 }): React.JSX.Element {
+  const [waUrl, setWaUrl] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -266,6 +284,8 @@ function LeadForm({
   const [error, setError] = useState<string | null>(null);
 
   async function save(): Promise<void> {
+    // Phones only allow a new tab during the tap: open it now, point it at wa.me once saved.
+    const tab = openPendingWhatsAppTab();
     setState("saving");
     setError(null);
     const res = await saveBrainUnlockLead({
@@ -283,25 +303,43 @@ function LeadForm({
       pageUrl: window.location.href,
     });
     if (!res.ok) {
+      cancelWhatsAppHandoff(tab);
       setState("idle");
       setError(res.error);
       return;
     }
+    const url = waLink(
+      SITE_CONFIG_WHATSAPP_NUMBER,
+      reportChatText(res.facts, settings, lang),
+    );
+    setWaUrl(url);
     setState("saved");
     trackBu("whatsapp_submitted", track, {
       score: res.facts.score,
       type: res.facts.brainType,
     });
     onSaved(res.facts);
+    finishWhatsAppHandoff(tab, url);
   }
 
   return (
     <section className="play-card flex flex-col gap-3 p-5" data-bu-lead={state}>
       <h3 className="text-xl leading-snug text-foreground">{c.lead.title}</h3>
       {state === "saved" ? (
-        <div className="flex flex-col gap-1" data-bu-lead-saved>
+        <div className="flex flex-col gap-2" data-bu-lead-saved>
           <p className="text-lg font-bold text-foreground">{c.lead.sent}</p>
           <p className="text-base text-muted-foreground">{c.lead.sentSub}</p>
+          {waUrl !== null && (
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-12 w-full items-center justify-center rounded-2xl border-2 border-[#0b7a3e] px-5 text-base font-bold text-[#0b7a3e]"
+              data-bu-wa-link
+            >
+              {c.lead.again}
+            </a>
+          )}
         </div>
       ) : (
         <form
@@ -392,9 +430,9 @@ function ShareBlock({
   const url = (): string =>
     `${window.location.origin}${TEST_PATH}?utm_source=share&utm_medium=brain_unlock&utm_campaign=bu_share_${lang}`;
   const facts = (): ReportFacts => factsFrom("", r);
-  async function shareImage(): Promise<void> {
+  const card = (): Promise<Blob> => {
     const t = settings.brainTypes[r.brainType];
-    const blob = await drawBrainUnlockCard({
+    return drawBrainUnlockCard({
       title: "Brain Unlock",
       typeEmoji: t.emoji,
       typeName: t[lang].name,
@@ -425,6 +463,21 @@ function ShareBlock({
         .replace(/^https?:\/\//, "")
         .split("?")[0]!,
     });
+  };
+  async function downloadImage(): Promise<void> {
+    const blob = await card();
+    trackBu("share_clicked", track, { method: "download" });
+    const href = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = href;
+    a.download = "brain-unlock-report.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.setTimeout(() => URL.revokeObjectURL(href), 10_000);
+  }
+  async function shareImage(): Promise<void> {
+    const blob = await card();
     trackBu("share_clicked", track, { method: "image" });
     await shareOrDownload(
       blob,
@@ -434,6 +487,15 @@ function ShareBlock({
   return (
     <section className="flex flex-col gap-2" data-bu-share>
       <h3 className="text-lg text-foreground">{c.share.title}</h3>
+      <button
+        type="button"
+        className={secondaryBtn}
+        onClick={() => void downloadImage()}
+        data-bu-download-image
+      >
+        <Download className="size-4" aria-hidden="true" />
+        {c.share.download}
+      </button>
       <button
         type="button"
         className={secondaryBtn}

@@ -16,7 +16,7 @@ import { reviewFrameSrc } from "@/lib/video/reviewFrames";
 import { trackWhatsAppContact } from "@/lib/analytics/conversions";
 import { BatchCheckout } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import type { BuCopy } from "../copy";
-import { whatsappChatText, type ReportFacts } from "../messages";
+import { reportChatText, type ReportFacts } from "../messages";
 import type { BuSettings } from "../settings";
 import { trackBu, type TrackContext } from "../tracking";
 import { primaryBtn, secondaryBtn } from "./ui";
@@ -81,7 +81,7 @@ export function OfferBlock({
         });
   const chatText =
     facts !== null
-      ? whatsappChatText(facts, settings, lang)
+      ? reportChatText(facts, settings, lang)
       : lang === "hi"
         ? "नमस्ते Dr. Kapil, मुझे Sharp Brain के बारे में जानना है।"
         : "Hi Dr. Kapil, I want to know about Sharp Brain.";

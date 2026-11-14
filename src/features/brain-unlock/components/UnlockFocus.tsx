@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { BuCopy } from "../copy";
 import { focusSeconds, shuffledGrid, type FocusRun } from "../scoring";
+import { voiceText } from "../voiceLines";
 import { FocusGrid } from "./FocusGrid";
 import { useNarration } from "./useNarration";
 import { Caption, primaryBtn, RevealCard, SKILL } from "./ui";
@@ -23,7 +24,6 @@ export function UnlockFocus({
   muted,
   before,
   gridBefore,
-  voiceUrl,
   continueLabel,
   onDone,
 }: {
@@ -32,7 +32,6 @@ export function UnlockFocus({
   muted: boolean;
   before: FocusRun;
   gridBefore: readonly number[];
-  voiceUrl: string;
   continueLabel: string;
   onDone: (r: FocusResult) => void;
 }): React.JSX.Element {
@@ -46,7 +45,6 @@ export function UnlockFocus({
     [gridBefore],
   );
   const voice = useNarration(lang, muted);
-  const own = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (phase !== "breathe") return undefined;
@@ -54,50 +52,27 @@ export function UnlockFocus({
     const sleep = (ms: number): Promise<void> =>
       new Promise((r) => window.setTimeout(r, ms));
     void (async () => {
-      // Dr. Kapil's own recording (admin) plays over the whole exercise; otherwise short cues.
-      if (voiceUrl !== "" && !muted) {
-        own.current = new Audio(voiceUrl);
-        own.current.play().catch(() => undefined);
-      } else {
-        await voice.play([
-          {
-            id: "focus-intro",
-            text:
-              lang === "hi"
-                ? "आराम से बैठिए। ... चमकते हुए बिंदु को हल्के से देखिए।"
-                : "Sit comfortably. ... Look softly at the glowing dot.",
-          },
-        ]);
-      }
+      await voice.play([
+        { id: "focus-intro", text: voiceText(lang, "focus-intro") },
+      ]);
       for (let r = 0; r < ROUNDS && !cancelled; r++) {
         setBreath("in");
-        if (voiceUrl === "")
-          void voice.play([{ id: "focus-in", text: c.focus.breatheIn }]);
+        void voice.play([{ id: "focus-in", text: c.focus.breatheIn }]);
         await sleep(IN_MS);
         if (cancelled) return;
         setBreath("out");
-        if (voiceUrl === "")
-          void voice.play([{ id: "focus-out", text: c.focus.breatheOut }]);
+        void voice.play([{ id: "focus-out", text: c.focus.breatheOut }]);
         await sleep(OUT_MS);
       }
       if (cancelled) return;
       setBreath("rest");
-      if (voiceUrl === "")
-        await voice.play([
-          {
-            id: "focus-done",
-            text:
-              lang === "hi"
-                ? "बहुत अच्छे। ... आपका मन शांत और तेज़ है।"
-                : "Beautiful. ... Your mind is calm and sharp.",
-          },
-        ]);
-      own.current?.pause();
+      await voice.play([
+        { id: "focus-done", text: voiceText(lang, "focus-done") },
+      ]);
       if (!cancelled) setPhase("grid");
     })();
     return () => {
       cancelled = true;
-      own.current?.pause();
       voice.stop();
     };
     // run once per breathe phase
@@ -188,6 +163,7 @@ export function UnlockFocus({
             sub={good ? c.sawIt : c.kind}
             good={good}
             muted={muted}
+            lang={lang}
           />
           <button
             type="button"

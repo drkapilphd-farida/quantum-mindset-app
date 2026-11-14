@@ -60,28 +60,56 @@ export function numberLines(
   return [speed, memory, focus];
 }
 
-export function whatsappChatText(
+/** The card numbers, as the report shows them (speed only "after" when it counted). */
+function cardLines(f: Omit<ReportFacts, "firstName" | "child">): {
+  speed: string;
+  memory: string;
+  focus: string;
+} {
+  const after = f.speed.counted ? f.speed.after : f.speed.before;
+  return {
+    speed: `${f.speed.before} → ${after} WPM`,
+    memory: `${f.memory.before}/${MEMORY_TOTAL} → ${f.memory.forward}/${MEMORY_TOTAL}`,
+    focus: `${f.focus.before}s → ${f.focus.after}s`,
+  };
+}
+
+/**
+ * "Get my report on WhatsApp": the visitor starts the chat with Dr. Kapil's
+ * WhatsApp Business number, everything typed in (founder spec, 14 Nov 2026).
+ */
+export function reportChatText(
   f: ReportFacts,
   s: BuSettings,
   lang: BuLangCode,
 ): string {
-  const head =
-    lang === "hi"
-      ? `नमस्ते Dr. Kapil, मैंने अभी Brain Unlock किया। मेरा Brain Type: ${typeName(s, f.brainType, lang)} (Score ${f.score}/100).`
-      : `Hi Dr. Kapil, I just did Brain Unlock. My Brain Type: ${typeName(s, f.brainType, lang)} (Score ${f.score}/100).`;
-  const child =
-    f.child === undefined
-      ? []
-      : [
-          `${f.child.label}: ${typeName(s, f.child.brainType, lang)} (${f.child.score}/100)`,
-          ...numberLines(f.child, lang),
-        ];
-  const ask =
-    lang === "hi"
-      ? "मुझे Sharp Brain के बारे में जानना है।"
-      : "I want to know about Sharp Brain.";
-  return [head, ...numberLines(f, lang), ...child, ask].join("\n");
+  const hi = lang === "hi";
+  const n = cardLines(f);
+  const name = f.firstName.trim();
+  const lines = [
+    hi
+      ? "Namaste Dr. Kapil 🙏 मैंने Brain Unlock challenge पूरा किया!"
+      : "Namaste Dr. Kapil 🙏 I completed the Brain Unlock challenge!",
+    `${name === "" ? "" : `${hi ? "नाम" : "Name"}: ${name} · `}Brain Type: ${typeName(s, f.brainType, lang)}`,
+    `⚡ Speed: ${n.speed}`,
+    `🧠 Memory: ${n.memory}`,
+    `🎯 Focus: ${n.focus}`,
+  ];
+  if (f.child !== undefined) {
+    const c = cardLines(f.child);
+    lines.push(
+      `${f.child.label}: ${typeName(s, f.child.brainType, lang)} · ⚡ ${c.speed} · 🧠 ${c.memory} · 🎯 ${c.focus}`,
+    );
+  }
+  lines.push(
+    hi ? "मुझे मेरा 30-day plan भेजिए।" : "Please send me my 30-day plan.",
+  );
+  return lines.join("\n");
 }
+
+/** wa.me link with the text typed in. `to`: digits with country code. */
+export const waLink = (to: string, text: string): string =>
+  `https://wa.me/${to}?text=${encodeURIComponent(text)}`;
 
 export function shareText(
   f: ReportFacts,
@@ -116,112 +144,175 @@ export type FollowupContext = {
   facts: ReportFacts;
   role: "parent" | "student" | "professional";
   settings: BuSettings;
+  /** The lead's language: the message is written in it. */
+  lang: BuLangCode;
   /** Absolute URLs (UTM kept). */
   links: { report: string; selfPaced: string; live: string; retake: string };
 };
 
 const yt = (id: string): string => `https://youtu.be/${id}`;
 
-function batchLine(s: BuSettings): string | null {
+function batchLine(s: BuSettings, lang: BuLangCode): string | null {
   if (s.nextBatch.date === "") return null;
   const d = new Date(`${s.nextBatch.date}T00:00:00+05:30`).toLocaleDateString(
-    "en-IN",
+    lang === "hi" ? "hi-IN" : "en-IN",
     { day: "numeric", month: "long", timeZone: "Asia/Kolkata" },
   );
-  return s.nextBatch.seatsLeft !== null
-    ? `Next live batch: ${d} (${s.nextBatch.seatsLeft} seats left)`
+  const seats = s.nextBatch.seatsLeft;
+  if (lang === "hi")
+    return seats !== null
+      ? `अगला live batch: ${d} (${seats} seats बाकी)`
+      : `अगला live batch: ${d}`;
+  return seats !== null
+    ? `Next live batch: ${d} (${seats} seats left)`
     : `Next live batch: ${d}`;
 }
 
 /**
- * The WhatsApp follow-ups, in order. null = skip this step (e.g. no demo video
- * set yet). Short, warm, real numbers, and STOP always works.
+ * The five WhatsApp follow-ups Dr. Kapil sends himself from /admin/followups
+ * (WhatsApp Business app, one tap each). In the lead's language: English with
+ * warm Hindi words in Devanagari, or Hindi. Short, warm, real numbers only.
+ * null = skip this step (e.g. no demo video set yet).
  */
 export function followupText(
   step: FollowupStep,
   c: FollowupContext,
 ): string | null {
   const f = c.facts;
-  const name = f.firstName.trim() === "" ? "" : ` ${f.firstName.trim()}`;
-  const type = typeName(c.settings, f.brainType, "en");
-  const stop = "Reply STOP to stop these messages.";
-  const nums = numberLines(f, "en").join("\n");
+  const hi = c.lang === "hi";
+  const first = f.firstName.trim();
+  const name = first === "" ? "" : ` ${first}`;
+  const hey = first === "" ? (hi ? "नमस्ते" : "Hi") : first;
+  const type = typeName(c.settings, f.brainType, c.lang);
+  const nums = numberLines(f, c.lang).join("\n");
+  const g = c.settings.goals;
   switch (step) {
     case "instant": {
       const child =
         f.child === undefined
           ? ""
-          : `\n\n${f.child.label}: ${typeName(c.settings, f.child.brainType, "en")} · ${f.child.score}/100\n${numberLines(f.child, "en").join("\n")}`;
-      return [
-        `Namaste${name} 🙏 आपकी Brain Unlock Report तैयार है!`,
-        ``,
-        `Brain Type: ${type}`,
-        `Brain Unlock Score: ${f.score}/100`,
-        nums + child,
-        ``,
-        `ये सिर्फ़ 4 मिनट थे. You saw the change yourself. In Sharp Brain, this practice happens every day for 30 days, with Dr. Kapil.`,
-        ``,
-        `Your 30-day plan:`,
-        `⚡ ${c.settings.goals.speed.en}`,
-        `🧠 ${c.settings.goals.memory.en}`,
-        `🎯 ${c.settings.goals.focus.en}`,
-        ``,
-        `Plans, reviews & FAQ: ${c.links.report}`,
-        `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
-        `▶ Live batch ₹8,999: ${c.links.live}`,
-        ``,
-        stop,
-      ].join("\n");
+          : `\n\n${f.child.label}: ${typeName(c.settings, f.child.brainType, c.lang)} · ${f.child.score}/100\n${numberLines(f.child, c.lang).join("\n")}`;
+      return (
+        hi
+          ? [
+              `नमस्ते${name} 🙏 Brain Unlock पूरा करने के लिए दिल से धन्यवाद!`,
+              ``,
+              `आपका Brain Type: ${type} · Score ${f.score}/100`,
+              nums + child,
+              ``,
+              `ये सिर्फ़ 4 मिनट थे, और बदलाव आपने खुद देखा। Sharp Brain में यही practice 30 दिन रोज़ होती है, Dr. Kapil के साथ।`,
+              ``,
+              `आपका 30-दिन का plan:`,
+              `⚡ ${g.speed.hi}`,
+              `🧠 ${g.memory.hi}`,
+              `🎯 ${g.focus.hi}`,
+              ``,
+              `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
+              `▶ Live batch ₹8,999: ${c.links.live}`,
+              ``,
+              `(ये messages नहीं चाहिए तो STOP लिख दीजिए।)`,
+            ]
+          : [
+              `Namaste${name} 🙏 Brain Unlock पूरा करने के लिए धन्यवाद!`,
+              ``,
+              `Your Brain Type: ${type} · Score ${f.score}/100`,
+              nums + child,
+              ``,
+              `ये सिर्फ़ 4 मिनट थे, and you saw the change yourself. In Sharp Brain, this practice happens every day for 30 days, with Dr. Kapil.`,
+              ``,
+              `Your 30-day plan:`,
+              `⚡ ${g.speed.en}`,
+              `🧠 ${g.memory.en}`,
+              `🎯 ${g.focus.en}`,
+              ``,
+              `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
+              `▶ Live batch ₹8,999: ${c.links.live}`,
+              ``,
+              `(Reply STOP if you’d rather not get these messages.)`,
+            ]
+      ).join("\n");
     }
     case "h1": {
       if (c.settings.demoVideoId === "") return null;
-      return [
-        `${f.firstName.trim() || "Hi"}, एक छोटी-सी झलक 👀`,
-        `See what a Sharp Brain practice day looks like (2 min):`,
-        yt(c.settings.demoVideoId),
-        ``,
-        stop,
-      ].join("\n");
+      return (
+        hi
+          ? [
+              `${hey}, एक छोटी-सी झलक 👀`,
+              `देखिए Sharp Brain का एक practice दिन कैसा होता है (2 मिनट):`,
+              yt(c.settings.demoVideoId),
+            ]
+          : [
+              `${hey}, एक छोटी-सी झलक 👀`,
+              `See what a Sharp Brain practice day looks like (2 min):`,
+              yt(c.settings.demoVideoId),
+            ]
+      ).join("\n");
     }
     case "d1": {
       const id = c.settings.reviewVideoIds.parent;
       if (id === "") return null;
-      const lead =
+      const memory = numberLines(f, c.lang)[1];
+      if (hi)
+        return [
+          c.role === "parent"
+            ? `Ruchi ji का बेटा घंटों पढ़ता था, पर याद नहीं रहता था। सुनिए अब क्या बदला ❤️`
+            : `एक माँ, Ruchi ji, बता रही हैं कि उनके बेटे में क्या बदला: बेहतर focus, बेहतर memory, तेज़ reading ❤️`,
+          yt(id),
+          ``,
+          `कल आपका अपना result: ${memory}`,
+        ].join("\n");
+      return [
         c.role === "parent"
           ? `Ruchi ji’s son studied for hours but couldn’t remember. सुनिए अब क्या बदला ❤️`
-          : `A parent, Ruchi ji, on what changed for her son: better focus, better memory, faster reading ❤️`;
-      return [
-        lead,
+          : `A parent, Ruchi ji, on what changed for her son: better focus, better memory, faster reading ❤️`,
         yt(id),
         ``,
-        `Your own result yesterday: ${numberLines(f, "en")[1]}`,
-        ``,
-        stop,
+        `Your own result yesterday: ${memory}`,
       ].join("\n");
     }
     case "d2": {
-      const batch = batchLine(c.settings);
-      return [
-        `${f.firstName.trim() || "Hi"}, आपका ${type} दिमाग़ तैयार है 💪`,
-        `Sharp Brain: 30 days, a few minutes a day, with Dr. Kapil.`,
-        ...(batch === null ? [] : [batch]),
-        ``,
-        `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
-        `▶ Live batch ₹8,999 (recommended): ${c.links.live}`,
-        ``,
-        `Questions? Just reply here.`,
-        stop,
-      ].join("\n");
+      const batch = batchLine(c.settings, c.lang);
+      return (
+        hi
+          ? [
+              `${hey}, आपका ${type} दिमाग़ तैयार है 💪`,
+              `Sharp Brain: 30 दिन, रोज़ कुछ मिनट, Dr. Kapil के साथ।`,
+              ...(batch === null ? [] : [batch]),
+              ``,
+              `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
+              `▶ Live batch ₹8,999 (recommended): ${c.links.live}`,
+              ``,
+              `कोई सवाल हो तो यहीं पूछिए 🙏`,
+            ]
+          : [
+              `${hey}, आपका ${type} दिमाग़ तैयार है 💪`,
+              `Sharp Brain: 30 days, a few minutes a day, with Dr. Kapil.`,
+              ...(batch === null ? [] : [batch]),
+              ``,
+              `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
+              `▶ Live batch ₹8,999 (recommended): ${c.links.live}`,
+              ``,
+              `Questions? Just reply here 🙏`,
+            ]
+      ).join("\n");
     }
     case "d30":
-      return [
-        `${f.firstName.trim() || "Hi"}, 30 दिन हो गए! 🌱`,
-        `Take Brain Unlock again and see how far you’ve come:`,
-        c.links.retake,
-        ``,
-        `Last time: ${f.score}/100 · ${type}`,
-        ``,
-        stop,
-      ].join("\n");
+      return (
+        hi
+          ? [
+              `${hey}, 30 दिन हो गए! 🌱`,
+              `Brain Unlock फिर से कीजिए और देखिए आप कितना आगे आ गए:`,
+              c.links.retake,
+              ``,
+              `पिछली बार: ${f.score}/100 · ${type}`,
+            ]
+          : [
+              `${hey}, 30 दिन हो गए! 🌱`,
+              `Take Brain Unlock again and see how far you’ve come:`,
+              c.links.retake,
+              ``,
+              `Last time: ${f.score}/100 · ${type}`,
+            ]
+      ).join("\n");
   }
 }

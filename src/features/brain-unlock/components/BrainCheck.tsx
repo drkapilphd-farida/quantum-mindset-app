@@ -9,6 +9,7 @@ import { CHECK_WORDS, type BuWord, type WordSet } from "../words";
 import { FocusGrid } from "./FocusGrid";
 import { Questions } from "./Questions";
 import { primaryBtn, SKILL } from "./ui";
+import { useNarration } from "./useNarration";
 
 // Step 2: the ≈60-second baseline. Read a short passage (timed in the
 // browser, Done when finished) + 1 question; 5 words for 2 s each, then pick
@@ -66,6 +67,14 @@ export function BrainCheck({
     () => shuffle([...words.targets, ...words.others]),
     [words],
   );
+  // Dr. Kapil introduces the Brain Check; silent the moment reading starts
+  // (a voice over the timed reading would change the result).
+  const voice = useNarration(lang, muted);
+  useEffect(() => {
+    if (phase === "intro") voice.cue("check-intro", 300);
+    else voice.stop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per phase
+  }, [phase]);
 
   return (
     <section className="flex flex-col gap-5" data-bu-check={phase}>

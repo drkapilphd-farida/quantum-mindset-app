@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AdminShell } from '@/components/AdminShell'
+import { countDueFollowups } from '@/features/brain-unlock/admin/followupsData'
 
 export default async function AdminLayout({
   children,
@@ -18,5 +19,7 @@ export default async function AdminLayout({
     process.env.ADMIN_EMAILS?.split(',').map((e) => e.trim()) ?? []
   if (!adminEmails.includes(user.email ?? '')) redirect('/dashboard')
 
-  return <AdminShell>{children}</AdminShell>
+  // Brain Unlock WhatsApp follow-ups due now (sent by hand) — the menu badge.
+  const due = await countDueFollowups()
+  return <AdminShell badges={{ '/admin/followups': due }}>{children}</AdminShell>
 }

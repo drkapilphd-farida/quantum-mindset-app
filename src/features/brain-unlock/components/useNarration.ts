@@ -1,15 +1,27 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { voiceSources, voiceText } from "../voiceLines";
 
-// Plays Brain Unlock voice lines with captions. Each line is a bundled
-// Sarvam "shubh" recording (/audio/brain-unlock/<lang>/<id>.mp3); when the
-// founder has uploaded his own recording for a whole segment (admin
-// settings), that one file plays instead with the captions stepping along.
-// Muted, blocked or missing audio never stops the flow: the caption simply
-// stays for a reading-length pause. Never uses the phone's robot voice.
+// Plays Brain Unlock voice lines with captions, in Dr. Kapil's own cloned
+// voice. Each line tries its sources in order (voiceLines.ts): his admin
+// upload/regenerate → the bundled clone file → the older "shubh" file. If none
+// plays (muted, blocked, missing) the caption simply stays for a reading-length
+// pause: the flow never stops. Never uses the phone's robot voice.
 
 export type NarrationLine = { id: string; text: string };
+
+/** Per-line overrides from admin settings (settings.voiceLines[lang]). */
+export const VoiceOverrides = createContext<Readonly<Record<string, string>>>(
+  {},
+);
 
 const msForText = (text: string): number =>
   Math.min(9000, Math.max(1600, text.length * 65));
@@ -22,17 +34,21 @@ export function useNarration(
   playing: boolean;
   play: (
     lines: readonly NarrationLine[],
-    overrideUrl?: string,
     onLine?: (index: number) => void,
   ) => Promise<void>;
+  /** One line, fire-and-forget (round intros, reveals); text from the script. */
+  cue: (id: string, delayMs?: number) => void;
   stop: () => void;
 } {
+  const overrides = useContext(VoiceOverrides);
   const [caption, setCaption] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
   const audio = useRef<HTMLAudioElement | null>(null);
   const run = useRef(0);
   const mutedRef = useRef(muted);
   mutedRef.current = muted;
+  const overridesRef = useRef(overrides);
+  overridesRef.current = overrides;
 
   useEffect(() => {
     if (muted) audio.current?.pause();
@@ -56,8 +72,9 @@ export function useNarration(
       tick();
     });
 
-  const playFile = (
-    src: string,
+  /** Tries each source until one plays to the end; otherwise waits the caption time. */
+  const playLine = (
+    sources: readonly string[],
     fallbackMs: number,
     id: number,
   ): Promise<void> =>
@@ -74,50 +91,81 @@ export function useNarration(
         settled = true;
         resolve();
       };
-      const fallback = (): void => void wait(fallbackMs, id).then(done);
-      a.onended = done;
-      a.onerror = fallback;
-      a.src = src;
-      a.play().catch(fallback);
+      const tryFrom = (k: number): void => {
+        if (run.current !== id) return done();
+        if (k >= sources.length) {
+          void wait(fallbackMs, id).then(done);
+          return;
+        }
+        a.onended = done;
+        // A file that fails to load (404, decode error) → the next source.
+        a.onerror = () => tryFrom(k + 1);
+        a.src = sources[k]!;
+        a.play().catch((e: unknown) => {
+          // Autoplay blocked: no source will play now, keep the caption pause.
+          if (e instanceof DOMException && e.name === "NotAllowedError")
+            void wait(fallbackMs, id).then(done);
+        });
+      };
+      tryFrom(0);
       // Safety net: never wait forever on a stalled file.
-      window.setTimeout(done, fallbackMs + 8000);
+      window.setTimeout(done, fallbackMs + 12000);
     });
 
   const play = useCallback(
     async (
       lines: readonly NarrationLine[],
-      overrideUrl?: string,
       onLine?: (index: number) => void,
     ): Promise<void> => {
       run.current += 1;
       const id = run.current;
       setPlaying(true);
-      if (overrideUrl !== undefined && overrideUrl !== "") {
-        // One recording for the whole segment: captions step along by length.
-        const total = lines.reduce((n, l) => n + msForText(l.text), 0);
-        const file = playFile(overrideUrl, total, id);
-        for (let i = 0; i < lines.length && run.current === id; i++) {
-          setCaption(lines[i]!.text);
-          onLine?.(i);
-          await wait(msForText(lines[i]!.text), id);
-        }
-        await file;
-      } else {
-        for (let i = 0; i < lines.length && run.current === id; i++) {
-          setCaption(lines[i]!.text);
-          onLine?.(i);
-          await playFile(
-            `/audio/brain-unlock/${lang}/${lines[i]!.id}.mp3`,
-            msForText(lines[i]!.text),
-            id,
-          );
-        }
+      for (let i = 0; i < lines.length && run.current === id; i++) {
+        setCaption(lines[i]!.text);
+        onLine?.(i);
+        await playLine(
+          voiceSources(lang, lines[i]!.id, overridesRef.current),
+          msForText(lines[i]!.text),
+          id,
+        );
       }
       if (run.current === id) setPlaying(false);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- playFile/wait read refs only
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- playLine/wait read refs only
     [lang],
   );
 
-  return { caption, playing, play, stop };
+  const cue = useCallback(
+    (lineId: string, delayMs = 0): void => {
+      const start = run.current;
+      window.setTimeout(() => {
+        if (run.current !== start) return;
+        void play([{ id: lineId, text: voiceText(lang, lineId) }]);
+      }, delayMs);
+    },
+    [lang, play],
+  );
+
+  return { caption, playing, play, cue, stop };
+}
+
+/** Plays one line when it appears on screen; stops when it goes away. */
+export function VoiceCue({
+  id,
+  lang,
+  muted,
+  delayMs = 400,
+}: {
+  id: string;
+  lang: "en" | "hi";
+  muted: boolean;
+  delayMs?: number;
+}): null {
+  const voice = useNarration(lang, muted);
+  useEffect(() => {
+    voice.cue(id, delayMs);
+    // once per appearance (useNarration stops the line on unmount)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  return null;
 }

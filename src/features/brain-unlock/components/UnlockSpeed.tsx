@@ -33,7 +33,6 @@ export function UnlockSpeed({
   checkPassageId,
   checkAnswers,
   passage,
-  voiceUrl,
   continueLabel,
   onDone,
 }: {
@@ -44,7 +43,6 @@ export function UnlockSpeed({
   checkPassageId: string;
   checkAnswers: number[];
   passage: PublicPassage;
-  voiceUrl: string;
   continueLabel: string;
   onDone: (r: SpeedResult, line: { text: string; good: boolean }) => void;
 }): React.JSX.Element {
@@ -72,7 +70,7 @@ export function UnlockSpeed({
   useEffect(() => {
     if (phase !== "teach") return;
     void voice
-      .play([{ id: "speed-teach", text: c.speed.teach }], voiceUrl)
+      .play([{ id: "speed-teach", text: c.speed.teach }])
       .then(() => setPhase((p) => (p === "teach" ? "ready" : p)));
     // play once on entering the teach step
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -246,6 +244,7 @@ export function UnlockSpeed({
             sub={outcome.sub}
             good={outcome.good}
             muted={muted}
+            lang={lang}
           />
           <button
             type="button"

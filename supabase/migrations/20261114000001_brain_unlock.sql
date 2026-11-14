@@ -14,9 +14,10 @@
 --    /admin/brain-unlock-settings — videos, batch date/seats, voice files,
 --    score bands, Brain Type texts, goal ranges, follow-ups on/off.
 -- 4. brain_unlock_followups: the WhatsApp follow-up queue (instant, +1 h,
---    +1 day, +2 days, +30 days). Sent by the 15-minute scheduler; stopped
---    when the lead buys or sends STOP.
--- 5. whatsapp_opt_outs: numbers that sent STOP — never messaged again.
+--    +1 day, +2 days, +30 days). Sent BY HAND from /admin/followups (WhatsApp
+--    Business app; no API): one row per step, the next queued on Done/Skip;
+--    stopped when the lead buys or is marked Stop.
+-- 5. whatsapp_opt_outs: numbers marked Stop (or that sent STOP) — never messaged again.
 --
 -- Add-only: one widened CHECK, new nullable columns, four new tables. Every
 -- new table has RLS on and NO policies: only the server (service role) reads

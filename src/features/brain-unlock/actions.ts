@@ -13,7 +13,7 @@ import {
   sendBrainUnlockReportEmail,
 } from "@/lib/email/sendBrainUnlockEmails";
 import { evaluateRun, InvalidRunError, type EvaluatedRun } from "./evaluate";
-import { queueFollowups, sendBrainUnlockFollowups } from "./followups";
+import { queueFollowups } from "./followups";
 import { factsFrom, type ReportFacts } from "./messages";
 import { countCorrect, passageById } from "./passages";
 import { getBrainUnlockSettings } from "./settingsServer";
@@ -285,7 +285,8 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
     }
     await queueFollowups(saved.id, Date.parse(saved.created_at), settings);
     const email = row.email;
-    // After the response: founder email, the visitor's report email, and the instant WhatsApp (when connected).
+    // After the response: founder email and the visitor's report email. WhatsApp
+    // follow-ups are sent by hand from /admin/followups (first step queued above).
     after(async () => {
       await Promise.all([
         sendBrainUnlockFounderEmail({
@@ -311,7 +312,6 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
               role: d.role,
             }),
       ]);
-      await sendBrainUnlockFollowups();
     });
     return { ok: true, reports, facts };
   } catch (e) {

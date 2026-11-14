@@ -25,6 +25,7 @@ const NAV_ITEMS = [
   { href: '/admin/recordings', label: 'Class recordings', icon: ClipboardList, exact: false },
   { href: '/admin/reminders', label: 'Reminders', icon: ClipboardList, exact: false },
   { href: '/admin/test-leads', label: 'Test Leads', icon: ClipboardList, exact: false },
+  { href: '/admin/followups', label: 'Follow-ups', icon: ClipboardList, exact: false },
   { href: '/admin/brain-unlock-funnel', label: 'Brain Unlock funnel', icon: ClipboardList, exact: false },
   { href: '/admin/brain-unlock-settings', label: 'Brain Unlock settings', icon: ClipboardList, exact: false },
   { href: '/admin/franchise-leads', label: 'Franchise Leads', icon: ClipboardList, exact: false },
@@ -43,9 +44,11 @@ const NAV_ITEMS = [
 function AdminNavLinks({
   pathname,
   onSelect,
+  badges,
 }: {
   pathname: string
   onSelect?: (() => void) | undefined
+  badges: Readonly<Record<string, number>>
 }): React.JSX.Element {
   return (
     <nav className="flex-1 space-y-1 p-3">
@@ -67,6 +70,14 @@ function AdminNavLinks({
           >
             <Icon className="size-4" />
             {label}
+            {(badges[href] ?? 0) > 0 && (
+              <span
+                className="ml-auto rounded-full bg-destructive px-1.5 text-xs font-bold text-white"
+                aria-label={`${badges[href]} pending`}
+              >
+                {badges[href]}
+              </span>
+            )}
           </Link>
         )
       })}
@@ -76,8 +87,11 @@ function AdminNavLinks({
 
 export function AdminShell({
   children,
+  badges = {},
 }: {
   children: React.ReactNode
+  /** Count badges per nav link (e.g. follow-ups due now). */
+  badges?: Readonly<Record<string, number>>
 }): React.JSX.Element {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
@@ -89,7 +103,7 @@ export function AdminShell({
         <div className="flex h-14 items-center border-b px-4">
           <span className="text-sm font-semibold">Admin Panel</span>
         </div>
-        <AdminNavLinks pathname={pathname} />
+        <AdminNavLinks pathname={pathname} badges={badges} />
         <div className="border-t p-4">
           <Link
             href="/dashboard"
@@ -124,7 +138,7 @@ export function AdminShell({
             <div className="flex h-14 shrink-0 items-center border-b px-4">
               <SheetTitle className="text-sm font-semibold">Admin Panel</SheetTitle>
             </div>
-            <AdminNavLinks pathname={pathname} onSelect={() => setOpen(false)} />
+            <AdminNavLinks pathname={pathname} badges={badges} onSelect={() => setOpen(false)} />
             <div className="border-t p-4">
               <Link
                 href="/dashboard"

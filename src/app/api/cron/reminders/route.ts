@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import { timingSafeEqual } from 'node:crypto'
 import { sendDueReminders } from '@/features/reminders/sendDueReminders'
 import { sendCalmBatchReminders } from '@/features/calm-batch/sendCalmBatchReminders'
-import { sendBrainUnlockFollowups } from '@/features/brain-unlock/followups'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -21,10 +20,9 @@ function authorised(request: Request): boolean {
 
 async function handle(request: Request): Promise<NextResponse> {
   if (!authorised(request)) return NextResponse.json({ error: 'Not authorised' }, { status: 401 })
-  // App practice reminders (push), the 21-Day Calm Mind batch class emails and
-  // the Brain Unlock WhatsApp follow-ups, independently.
-  const [push, calmBatch, brainUnlock] = await Promise.all([sendDueReminders(), sendCalmBatchReminders(), sendBrainUnlockFollowups()])
-  return NextResponse.json({ ...push, calmBatch, brainUnlock })
+  // App practice reminders (push) and the 21-Day Calm Mind batch class emails, independently.
+  const [push, calmBatch] = await Promise.all([sendDueReminders(), sendCalmBatchReminders()])
+  return NextResponse.json({ ...push, calmBatch })
 }
 
 export const GET = handle

@@ -1,0 +1,77 @@
+{
+  "exercise": "brain-unlock",
+  "lang": "en",
+  "voice": "shubh",
+  "review": "source",
+  "createdAt": "2026-11-13T17:18:41.166Z",
+  "lines": {
+    "speed-teach": {
+      "file": "speed-teach.mp3",
+      "durationMs": 7304
+    },
+    "memory-teach": {
+      "file": "memory-teach.mp3",
+      "durationMs": 10970
+    },
+    "storyA-1": {
+      "file": "storyA-1.mp3",
+      "durationMs": 1342
+    },
+    "storyA-2": {
+      "file": "storyA-2.mp3",
+      "durationMs": 1756
+    },
+    "storyA-3": {
+      "file": "storyA-3.mp3",
+      "durationMs": 3638
+    },
+    "storyA-4": {
+      "file": "storyA-4.mp3",
+      "durationMs": 1941
+    },
+    "storyA-5": {
+      "file": "storyA-5.mp3",
+      "durationMs": 2457
+    },
+    "storyB-1": {
+      "file": "storyB-1.mp3",
+      "durationMs": 1366
+    },
+    "storyB-2": {
+      "file": "storyB-2.mp3",
+      "durationMs": 1433
+    },
+    "storyB-3": {
+      "file": "storyB-3.mp3",
+      "durationMs": 2559
+    },
+    "storyB-4": {
+      "file": "storyB-4.mp3",
+      "durationMs": 2434
+    },
+    "storyB-5": {
+      "file": "storyB-5.mp3",
+      "durationMs": 2381
+    },
+    "memory-replay": {
+      "file": "memory-replay.mp3",
+      "durationMs": 2556
+    },
+    "focus-intro": {
+      "file": "focus-intro.mp3",
+      "durationMs": 4214
+    },
+    "focus-in": {
+      "file": "focus-in.mp3",
+      "durationMs": 674
+    },
+    "focus-out": {
+      "file": "focus-out.mp3",
+      "durationMs": 1826
+    },
+    "focus-done": {
+      "file": "focus-done.mp3",
+      "durationMs": 3561
+    }
+  }
+}

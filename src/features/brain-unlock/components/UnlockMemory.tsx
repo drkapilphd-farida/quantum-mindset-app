@@ -28,7 +28,6 @@ export function UnlockMemory({
   muted,
   before,
   wordSet,
-  voiceUrl,
   continueLabel,
   onDone,
 }: {
@@ -37,7 +36,6 @@ export function UnlockMemory({
   muted: boolean;
   before: number;
   wordSet: WordSet;
-  voiceUrl: string;
   continueLabel: string;
   onDone: (r: MemoryResult) => void;
 }): React.JSX.Element {
@@ -74,7 +72,7 @@ export function UnlockMemory({
             : "Now see the whole story once more in your mind.",
       },
     ];
-    await voice.play(lines, voiceUrl, (i) =>
+    await voice.play(lines, (i) =>
       setShown(Math.min(Math.max(i, 0), MEMORY_TOTAL)),
     );
     setShown(MEMORY_TOTAL);
@@ -166,6 +164,7 @@ export function UnlockMemory({
             sub={good ? c.sawIt : c.kind}
             good={good}
             muted={muted}
+            lang={lang}
           />
           <button
             type="button"

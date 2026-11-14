@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Confetti } from "@/components/play/Confetti";
 import { playSfx } from "../sound";
+import { useNarration } from "./useNarration";
 
 // Shared Brain Unlock pieces in the play design (Sunny Playground by day,
 // Night Sky in dark mode). Big tap targets (≥ 48 px), mobile first.
@@ -59,15 +60,20 @@ export function RevealCard({
   sub,
   good,
   muted,
+  lang,
 }: {
   colour: string;
   line: string;
   sub: string;
   good: boolean;
   muted: boolean;
+  lang: "en" | "hi";
 }): React.JSX.Element {
+  const voice = useNarration(lang, muted);
   useEffect(() => {
     if (good) playSfx("win", muted);
+    // Dr. Kapil says the honest line: "You just saw it yourself" / the kind line.
+    voice.cue(good ? "reveal-up" : "reveal-kind", good ? 900 : 300);
     // play once, on show
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

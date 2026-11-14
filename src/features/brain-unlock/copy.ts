@@ -134,8 +134,9 @@ export type BuCopy = {
     privacy: string;
     sent: string;
     sentSub: string;
+    again: string;
   };
-  share: { title: string; image: string; whatsapp: string };
+  share: { title: string; image: string; download: string; whatsapp: string };
   offer: {
     reviewsTitle: string;
     stripTitle: string;
@@ -315,16 +316,19 @@ const en: BuCopy = {
     name: "Your name",
     phone: "WhatsApp number",
     email: "Email (optional)",
-    submit: "Send my report",
-    saving: "Sending…",
+    submit: "Get my report on WhatsApp",
+    saving: "Opening WhatsApp…",
     privacy:
       "We use your number only to send your report and Sharp Brain updates. Reply STOP any time.",
-    sent: "Done! Your report is saved ✅",
-    sentSub: "Dr. Kapil’s team will WhatsApp you. Your plans are just below.",
+    sent: "Your report is saved ✅",
+    sentSub:
+      "WhatsApp opened with your report typed in. Just tap Send and Dr. Kapil will send your 30-day plan. Your plans are just below.",
+    again: "Open WhatsApp again",
   },
   share: {
     title: "Share your Brain Type",
     image: "Share my result card",
+    download: "Download report image",
     whatsapp: "Share on WhatsApp",
   },
   offer: {
@@ -529,16 +533,19 @@ const hi: BuCopy = {
     name: "आपका नाम",
     phone: "WhatsApp नंबर",
     email: "Email (ज़रूरी नहीं)",
-    submit: "मेरी report भेजिए",
-    saving: "भेज रहे हैं…",
+    submit: "मेरी report WhatsApp पर पाइए",
+    saving: "WhatsApp खोल रहे हैं…",
     privacy:
       "आपका नंबर सिर्फ़ report और Sharp Brain updates भेजने के लिए। कभी भी STOP लिखकर बंद करें।",
-    sent: "हो गया! आपकी report save हो गई ✅",
-    sentSub: "Dr. Kapil की team आपको WhatsApp करेगी। आपके plans नीचे हैं।",
+    sent: "आपकी report save हो गई ✅",
+    sentSub:
+      "WhatsApp में आपकी report लिखी हुई खुल गई है। बस Send दबाइए, Dr. Kapil आपका 30-दिन का plan भेजेंगे। आपके plans नीचे हैं।",
+    again: "WhatsApp फिर से खोलें",
   },
   share: {
     title: "अपना Brain Type share कीजिए",
     image: "मेरा result card share करें",
+    download: "Report image download करें",
     whatsapp: "WhatsApp पर share करें",
   },
   offer: {

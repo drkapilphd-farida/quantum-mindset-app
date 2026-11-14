@@ -13,7 +13,6 @@ const YT_ID = z
     /^([A-Za-z0-9_-]{11})?$/,
     "A YouTube video ID is 11 characters (or leave it empty).",
   );
-const URL_OR_EMPTY = z.union([z.literal(""), z.string().trim().url().max(500)]);
 const Bi = z.object({
   en: z.string().trim().max(300),
   hi: z.string().trim().max(300),
@@ -91,11 +90,20 @@ export const SettingsSchema = z.object({
     date: z.union([z.literal(""), z.string().regex(/^\d{4}-\d{2}-\d{2}$/)]),
     seatsLeft: z.number().int().min(0).max(1000).nullable(),
   }),
-  /** Dr. Kapil's own recordings (public audio URLs). Empty = the Sarvam "shubh" voice files bundled with the site. */
-  voice: z.object({
-    speedTeach: z.object({ en: URL_OR_EMPTY, hi: URL_OR_EMPTY }),
-    memoryStory: z.object({ en: URL_OR_EMPTY, hi: URL_OR_EMPTY }),
-    focus: z.object({ en: URL_OR_EMPTY, hi: URL_OR_EMPTY }),
+  /**
+   * Per-line voice overrides (public audio URLs), keyed by voice line id
+   * (voiceLines.ts): Dr. Kapil's own upload, or a "Regenerate" from the admin
+   * page. A line without one plays the bundled cloned-voice file.
+   */
+  voiceLines: z.object({
+    en: z.record(
+      z.string().regex(/^[a-z0-9-]{1,40}$/i),
+      z.string().trim().url().max(500),
+    ),
+    hi: z.record(
+      z.string().regex(/^[a-z0-9-]{1,40}$/i),
+      z.string().trim().url().max(500),
+    ),
   }),
   scoring: ScoringSchema,
   brainTypes: z.object({
@@ -127,11 +135,7 @@ export const DEFAULT_SETTINGS: BuSettings = {
   // Real students' results from those review videos.
   numbersStrip: ["100 → 300 WPM", "100 → 350 WPM", "150 → 350 WPM"],
   nextBatch: { date: "", seatsLeft: null },
-  voice: {
-    speedTeach: { en: "", hi: "" },
-    memoryStory: { en: "", hi: "" },
-    focus: { en: "", hi: "" },
-  },
+  voiceLines: { en: {}, hi: {} },
   scoring: {
     speedBands: [
       { minWpm: 0, points: 8 },
