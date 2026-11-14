@@ -66,10 +66,12 @@ export type BuCopy = {
     title: string;
     teach: string;
     modeTitle: string;
-    modeHint: (wpm: number) => string;
+    modeHint: (before: number, now: number) => string;
     start: string;
     slower: string;
     faster: string;
+    tapHint: string;
+    paused: string;
     questions: string;
     q: (i: number, n: number) => string;
     next: string;
@@ -236,13 +238,15 @@ const en: BuCopy = {
   speed: {
     title: "⚡ Speed Superpower",
     teach:
-      "Most people read at the speed they speak. Your eyes can move much faster. Let them follow the light.",
-    modeTitle: "Sharp Reading Mode",
-    modeHint: (wpm) =>
-      `A NEW passage. The light starts at ${wpm} words a minute. Use Slower or Faster any time.`,
+      "Your eyes usually jump around while reading. Now the words will come to your eyes. Just keep looking at the red letter.",
+    modeTitle: "Word Flash: a NEW passage, one word at a time",
+    modeHint: (before, now) =>
+      `Your normal speed: ${before} WPM → Now: ${now} WPM ⚡`,
     start: "Start ▶",
-    slower: "− Slower",
-    faster: "Faster +",
+    slower: "Slower",
+    faster: "Faster",
+    tapHint: "Tap the box to pause. Use − / + to change the speed.",
+    paused: "Paused. Tap to continue",
     questions: "Two quick questions about what you just read",
     q: (i, n) => `Question ${i} of ${n}`,
     next: "Next",
@@ -250,7 +254,7 @@ const en: BuCopy = {
     improved: (b, a) => `⚡ ${b} → ${a} WPM, and you understood it!`,
     flat: (b, a) => `⚡ ${b} → ${a} WPM, with understanding`,
     notCounted: (a, b) =>
-      `You followed the light at ${a} WPM, but the questions were tricky this time. Your speed today: ${b} WPM.`,
+      `You read at ${a} WPM, but the questions were tricky this time. Your speed today: ${b} WPM.`,
   },
   memory: {
     title: "🧠 Memory Superpower",
@@ -454,13 +458,15 @@ const hi: BuCopy = {
   speed: {
     title: "⚡ Speed Superpower",
     teach:
-      "ज़्यादातर लोग उतनी ही speed से पढ़ते हैं जितना बोलते हैं। आपकी आँखें इससे कहीं तेज़ हैं, बस रोशनी के साथ चलिए।",
-    modeTitle: "Sharp Reading Mode",
-    modeHint: (wpm) =>
-      `एक नया passage। रोशनी ${wpm} शब्द प्रति मिनट से शुरू होगी। Slower या Faster कभी भी दबाइए।`,
+      "आपकी आँखें पढ़ते समय इधर-उधर भटकती हैं। अब शब्द ख़ुद आपकी आँखों तक आएँगे, बस दोनों निशानों के बीच नज़र टिकाइए।",
+    modeTitle: "Word Flash: एक नया passage, एक बार में एक शब्द",
+    modeHint: (before, now) =>
+      `आपकी सामान्य speed: ${before} WPM → अब: ${now} WPM ⚡`,
     start: "शुरू ▶",
-    slower: "− Slower",
-    faster: "Faster +",
+    slower: "धीमा",
+    faster: "तेज़",
+    tapHint: "रुकने के लिए बॉक्स पर टैप करें। speed बदलने के लिए − / + दबाइए।",
+    paused: "रुका है, जारी रखने के लिए टैप करें",
     questions: "अभी जो पढ़ा, उस पर दो छोटे सवाल",
     q: (i, n) => `सवाल ${i} / ${n}`,
     next: "आगे",
@@ -468,7 +474,7 @@ const hi: BuCopy = {
     improved: (b, a) => `⚡ ${b} → ${a} WPM, और आपने समझा भी!`,
     flat: (b, a) => `⚡ ${b} → ${a} WPM, समझ के साथ`,
     notCounted: (a, b) =>
-      `आपने ${a} WPM पर रोशनी का साथ दिया, पर इस बार सवाल मुश्किल रहे। आज आपकी speed: ${b} WPM.`,
+      `आपने ${a} WPM पर पढ़ा, पर इस बार सवाल मुश्किल रहे। आज आपकी speed: ${b} WPM.`,
   },
   memory: {
     title: "🧠 Memory Superpower",

@@ -77,7 +77,7 @@ describe("regenerate (one piece, checked)", () => {
     expect(ttsText("A huge gorilla...")).toBe("A huge gorilla");
   });
   it("memory story and focus are calmer; the rest natural", () => {
-    expect(linePace("storyA-3")).toBeLessThan(1);
+    expect(linePace("s3-3")).toBeLessThan(1);
     expect(linePace("focus-in")).toBeLessThan(1);
     expect(linePace("hook")).toBe(1);
   });

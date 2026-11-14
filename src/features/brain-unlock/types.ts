@@ -1,6 +1,11 @@
 import { z } from "zod";
 import type { BuRole } from "./passages";
-import type { WordSet } from "./words";
+import {
+  CHECK_SET_IDS,
+  STORY_SET_IDS,
+  type CheckSetId,
+  type StorySetId,
+} from "./words";
 
 // Shapes shared by the browser and the server actions. The browser sends RAW
 // inputs only (times, taps, answers); the server recomputes every number.
@@ -27,12 +32,13 @@ const Focus = z.object({ ms: Ms, errors: z.number().int().min(0).max(500) });
 export const RawRunSchema = z.object({
   who: z.enum(["me", "parent", "child"]),
   role: z.enum(ROLES),
-  wordSet: z.enum(["A", "B"]),
+  checkSet: z.enum(CHECK_SET_IDS),
+  storySet: z.enum(STORY_SET_IDS),
   checkPassageId: Id,
   checkMs: Ms,
   checkAnswers: Answers,
   sharpPassageId: Id,
-  /** Time the pacer took over the whole passage (Slower/Faster included). */
+  /** Word Flash reading time over the whole passage (−/+ included, paused time left out). */
   sharpMs: Ms,
   sharpAnswers: Answers,
   memoryPicked: z.array(Id).max(5),
@@ -43,7 +49,17 @@ export const RawRunSchema = z.object({
 });
 export type RawRun = z.infer<typeof RawRunSchema>;
 
-export type RunSetup = { who: RawRun["who"]; role: BuRole; wordSet: WordSet };
+export type RunSetup = {
+  who: RawRun["who"];
+  role: BuRole;
+  checkSet: CheckSetId;
+  storySet: StorySetId;
+  checkPassageId: string;
+  sharpPassageId: string;
+};
+
+/** A device id kept in the browser (localStorage), to match a person's earlier sessions. */
+export const DeviceIdSchema = z.string().uuid();
 
 export const UtmSchema = z
   .object({

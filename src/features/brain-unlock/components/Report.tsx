@@ -29,6 +29,7 @@ import {
 } from "../scoring";
 import type { BuSettings } from "../settings";
 import { drawBrainUnlockCard } from "../shareImage";
+import { deviceId } from "../deviceMemory";
 import { trackBu, sessionId, type TrackContext } from "../tracking";
 import type { ClassBand, RawRun } from "../types";
 import { secondaryBtn, SKILL } from "./ui";
@@ -300,6 +301,7 @@ function LeadForm({
       duo,
       runs,
       utm: readUtmParams(),
+      deviceId: deviceId(),
       pageUrl: window.location.href,
     });
     if (!res.ok) {

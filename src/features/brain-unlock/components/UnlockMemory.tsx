@@ -3,7 +3,15 @@
 import { useMemo, useState } from "react";
 import type { BuCopy } from "../copy";
 import { MEMORY_TOTAL, scoreInOrder } from "../scoring";
-import { STORY_LINES, STORY_WORDS, type BuWord, type WordSet } from "../words";
+import {
+  pickOthers,
+  STORY_LINES,
+  STORY_POOL,
+  STORY_SETS,
+  storyLineId,
+  type BuWord,
+  type StorySetId,
+} from "../words";
 import { useNarration } from "./useNarration";
 import { Caption, primaryBtn, RevealCard, secondaryBtn, SKILL } from "./ui";
 
@@ -27,7 +35,7 @@ export function UnlockMemory({
   lang,
   muted,
   before,
-  wordSet,
+  storySet,
   continueLabel,
   onDone,
 }: {
@@ -35,7 +43,7 @@ export function UnlockMemory({
   lang: "en" | "hi";
   muted: boolean;
   before: number;
-  wordSet: WordSet;
+  storySet: StorySetId;
   continueLabel: string;
   onDone: (r: MemoryResult) => void;
 }): React.JSX.Element {
@@ -46,10 +54,11 @@ export function UnlockMemory({
   const [forward, setForward] = useState<string[]>([]);
   const [backward, setBackward] = useState<string[]>([]);
   const voice = useNarration(lang, muted);
-  const targets = STORY_WORDS[wordSet].targets;
+  const targets = STORY_SETS[storySet];
+  // The 5 story words + 5 others drawn at random from the pool.
   const chips = useMemo(
-    () => shuffle([...targets, ...STORY_WORDS[wordSet].others]),
-    [targets, wordSet],
+    () => shuffle([...targets, ...pickOthers(STORY_POOL, 5)]),
+    [targets],
   );
   const ids = targets.map((t) => t.id);
   const fwd = scoreInOrder(forward, ids);
@@ -60,8 +69,8 @@ export function UnlockMemory({
     setShown(0);
     const lines = [
       { id: "memory-teach", text: c.memory.teach },
-      ...STORY_LINES[wordSet][lang].map((text, i) => ({
-        id: `story${wordSet}-${i + 1}`,
+      ...STORY_LINES[storySet][lang].map((text, i) => ({
+        id: storyLineId(storySet, i + 1),
         text,
       })),
       {
@@ -84,7 +93,11 @@ export function UnlockMemory({
 
   const good = fwd > before;
   return (
-    <section className="flex flex-col gap-5" data-bu-memory={phase}>
+    <section
+      className="flex flex-col gap-5"
+      data-bu-memory={phase}
+      data-bu-story-set={storySet}
+    >
       <h2 className="text-2xl text-foreground">{c.memory.title}</h2>
 
       {phase === "recap" && (

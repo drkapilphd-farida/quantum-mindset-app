@@ -1,5 +1,6 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
 import { headers } from "next/headers";
 import { after } from "next/server";
 import { z } from "zod";
@@ -17,8 +18,11 @@ import { queueFollowups } from "./followups";
 import { factsFrom, type ReportFacts } from "./messages";
 import { countCorrect, passageById } from "./passages";
 import { getBrainUnlockSettings } from "./settingsServer";
+import { chooseSessionSets, mergeHistory, type SessionSets } from "./sets";
+import { setHistoryFor } from "./setsServer";
 import {
   CLASS_BANDS,
+  DeviceIdSchema,
   FUNNEL_EVENTS,
   RawRunSchema,
   ROLES,
@@ -71,6 +75,50 @@ export async function gradeReading(
       sharpCorrect: countCorrect(sharp, parsed.data.sharpAnswers),
       sharpTotal: sharp.questions.length,
     },
+  };
+}
+
+// ── This session's word sets and passages ───────────────────────────────────
+const SeenList = z.array(z.string().max(40)).max(80);
+const ChooseSchema = z.object({
+  deviceId: DeviceIdSchema,
+  retakeOf: z.string().uuid().nullable(),
+  seen: z.object({ check: SeenList, story: SeenList, passages: SeenList }),
+  role: z.enum(ROLES),
+  lang: z.enum(["en", "hi"]),
+  duo: z.boolean(),
+});
+
+/**
+ * Picks sets this person has not had yet (device, phone or email history on
+ * the server + this browser's memory); the +30-day retake never repeats the
+ * last session's sets; the Duo child never gets the parent's.
+ */
+export async function chooseBrainUnlockSets(
+  input: unknown,
+): Promise<{ ok: true; sets: SessionSets[] } | { ok: false }> {
+  const parsed = ChooseSchema.safeParse(input);
+  if (!parsed.success) return { ok: false };
+  const ip = await getClientIp();
+  if (
+    !checkRateLimit(`brain-unlock-sets:${ip}`, { max: 30, windowMs: 60_000 })
+      .allowed
+  )
+    return { ok: false };
+  const d = parsed.data;
+  const { history, last } = await setHistoryFor({
+    deviceId: d.deviceId,
+    retakeOf: d.retakeOf,
+  });
+  return {
+    ok: true,
+    sets: chooseSessionSets({
+      role: d.role,
+      lang: d.lang,
+      duo: d.duo,
+      history: mergeHistory(history, d.seen),
+      exclude: last,
+    }),
   };
 }
 
@@ -139,6 +187,8 @@ const LeadSchema = z.object({
   duo: z.boolean(),
   runs: z.array(RawRunSchema).min(1).max(2),
   utm: UtmSchema.optional(),
+  /** This browser's device id (to match earlier sessions when choosing sets). */
+  deviceId: DeviceIdSchema.optional(),
   /** Absolute page URL, for the report links in WhatsApp and email (same site only). */
   pageUrl: z.string().url().max(2000),
 });
@@ -226,21 +276,35 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
     };
     const utm = d.utm ?? {};
     const report = new URL("/reading-memory-test", page);
+    // The id is made here so the +30-day retake link can carry it (new sets next time).
+    const leadId = randomUUID();
     const links = {
       report: withUtm(report, utm, { view: "offer" }),
       selfPaced: withUtm(report, utm, { view: "offer", plan: "self" }),
       live: withUtm(report, utm, { view: "offer", plan: "live" }),
-      retake: withUtm(report, {
-        utm_source: "whatsapp",
-        utm_medium: "followup",
-        utm_campaign: "bu_retake_d30",
-      }),
+      retake: withUtm(
+        report,
+        {
+          utm_source: "whatsapp",
+          utm_medium: "followup",
+          utm_campaign: "bu_retake_d30",
+        },
+        { retake: leadId },
+      ),
     };
+    // Which sets and passages each player got (no repeats next time; per-set averages in admin).
+    const sets: SessionSets[] = d.runs.map((r) => ({
+      checkSet: r.checkSet,
+      storySet: r.storySet,
+      checkPassageId: r.checkPassageId,
+      sharpPassageId: r.sharpPassageId,
+    }));
     const sharp = passageById(d.runs[0]!.sharpPassageId);
     const comprehension = Math.round(
       (main.speedAfter.correct / Math.max(main.speedAfter.total, 1)) * 100,
     );
     const row = {
+      id: leadId,
       whatsapp_number: phone,
       first_name: d.firstName,
       email: d.email === undefined || d.email === "" ? null : d.email,
@@ -265,6 +329,8 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
           links,
           childClassBand: d.childClassBand ?? null,
           runs: reports,
+          sets,
+          deviceId: d.deviceId ?? null,
         }),
       ) as Json,
       utm_source: utm.utm_source ?? null,

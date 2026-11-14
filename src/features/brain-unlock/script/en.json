@@ -12,51 +12,131 @@
     },
     {
       "id": "speed-teach",
-      "text": "Most people read at the speed they speak. ... Your eyes can move much faster. ... Let them follow the light."
+      "text": "Your eyes usually jump around while reading. ... Now the words will come to your eyes. ... Just keep looking at the red letter."
     },
     {
       "id": "memory-teach",
       "text": "Here is the secret. ... Your brain loves pictures and stories. ... Let's link five new words into one crazy story. ... See each picture in your mind."
     },
     {
-      "id": "storyA-1",
+      "id": "s1-1",
       "text": "A huge gorilla..."
     },
     {
-      "id": "storyA-2",
+      "id": "s1-2",
       "text": "opens a giant suitcase."
     },
     {
-      "id": "storyA-3",
+      "id": "s1-3",
       "text": "Instead of clothes, curd pours out of the suitcase!"
     },
     {
-      "id": "storyA-4",
+      "id": "s1-4",
       "text": "The curd soaks a flying drone..."
     },
     {
-      "id": "storyA-5",
+      "id": "s1-5",
       "text": "and the heavy drone falls right into your tiffin."
     },
     {
-      "id": "storyB-1",
-      "text": "A cheeky squirrel..."
+      "id": "s2-1",
+      "text": "A big green crocodile..."
     },
     {
-      "id": "storyB-2",
-      "text": "jumps into a big cooker."
+      "id": "s2-2",
+      "text": "sits down and plays the piano."
     },
     {
-      "id": "storyB-3",
-      "text": "The cooker whistles and shoots out popcorn!"
+      "id": "s2-3",
+      "text": "Out of the piano jumps a giant burger!"
     },
     {
-      "id": "storyB-4",
-      "text": "The popcorn lands on a sleeping buffalo..."
+      "id": "s2-4",
+      "text": "The burger rides away on a skateboard..."
     },
     {
-      "id": "storyB-5",
-      "text": "and the buffalo sits right on your T.V. remote."
+      "id": "s2-5",
+      "text": "and crashes right into a whistling cooker."
+    },
+    {
+      "id": "s3-1",
+      "text": "A sleepy panda..."
+    },
+    {
+      "id": "s3-2",
+      "text": "puts on big headphones."
+    },
+    {
+      "id": "s3-3",
+      "text": "The music is so loud that ice cream shoots out of the headphones!"
+    },
+    {
+      "id": "s3-4",
+      "text": "The ice cream lands on a tall crane..."
+    },
+    {
+      "id": "s3-5",
+      "text": "and the crane drops it right into your sandal."
+    },
+    {
+      "id": "s4-1",
+      "text": "A smiling shark..."
+    },
+    {
+      "id": "s4-2",
+      "text": "sings loudly into a microphone."
+    },
+    {
+      "id": "s4-3",
+      "text": "The microphone fills up with hot biryani!"
+    },
+    {
+      "id": "s4-4",
+      "text": "The biryani is so spicy that it charges a battery..."
+    },
+    {
+      "id": "s4-5",
+      "text": "and the battery flies off and puts on a funny mask!"
+    },
+    {
+      "id": "s5-1",
+      "text": "A tiny lizard..."
+    },
+    {
+      "id": "s5-2",
+      "text": "kicks a huge football."
+    },
+    {
+      "id": "s5-3",
+      "text": "The football bursts and popcorn rains everywhere!"
+    },
+    {
+      "id": "s5-4",
+      "text": "The popcorn falls into a printer..."
+    },
+    {
+      "id": "s5-5",
+      "text": "and the printer prints a giant lipstick."
+    },
+    {
+      "id": "s6-1",
+      "text": "A fluffy sheep..."
+    },
+    {
+      "id": "s6-2",
+      "text": "drives a bullock cart."
+    },
+    {
+      "id": "s6-3",
+      "text": "The bullock cart is full of long, wiggly noodles!"
+    },
+    {
+      "id": "s6-4",
+      "text": "The sheep eats all the noodles and wins a shiny medal..."
+    },
+    {
+      "id": "s6-5",
+      "text": "and the medal starts singing like a loud speaker."
     },
     {
       "id": "memory-replay",

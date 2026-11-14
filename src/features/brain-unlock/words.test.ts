@@ -10,10 +10,49 @@ import { NUMBER_PICTURES } from "@/features/memory-studio/numberCode";
 import { KEYWORD_CARDS } from "@/features/memory-studio/keyword";
 import {
   ALL_BRAIN_UNLOCK_WORDS,
-  CHECK_WORDS,
+  CHECK_POOL,
+  CHECK_SET_IDS,
+  CHECK_SETS,
+  pickOthers,
   STORY_LINES,
-  STORY_WORDS,
+  STORY_POOL,
+  STORY_SET_IDS,
+  STORY_SETS,
 } from "./words";
+
+// Dr. Kapil's demo video words (founder, 14 Nov 2026): never used by Brain Unlock.
+const DEMO_VIDEO_WORDS = [
+  "कुर्सी",
+  "बादल",
+  "घड़ी",
+  "नदी",
+  "किताब",
+  "बिल्ली",
+  "चाबी",
+  "पहाड़",
+  "जूता",
+  "दीया",
+  "कप",
+  "पेड़",
+  "बस",
+  "फूल",
+  "तकिया",
+  "जंगल",
+  "शादी",
+  "आम",
+  "कैंची",
+  "सोने का सिक्का",
+  "गला",
+  "डॉक्टर",
+  "ऊँट",
+  "अख़बार",
+  "राजा",
+  "बंदर",
+  "लड़की",
+  "पुलिस",
+  "टॉर्च",
+  "धमाका",
+];
 
 type ScriptLine = { id: string; text: string };
 const palaceObjectText = (lang: "en" | "hi"): string =>
@@ -26,13 +65,15 @@ const palaceObjectText = (lang: "en" | "hi"): string =>
     .map((l) => l.text.toLowerCase())
     .join(" | ");
 
-describe("Brain Unlock words never overlap the app’s memory words", () => {
+const forms = (x: { en: string; hi: string }): string[] => [
+  x.en.toLowerCase(),
+  x.hi,
+];
+
+describe("Brain Unlock words never overlap the app’s memory words or the demo video", () => {
   const app = new Set<string>([
-    ...ALL_MEMORY_WORDS.flatMap((x) => [x.en, x.hi]),
-    ...[...STORY_ITEMS, ...RHYME_PEGS, ...SHAPE_PEGS].flatMap((x) => [
-      x.en,
-      x.hi,
-    ]),
+    ...ALL_MEMORY_WORDS.flatMap(forms),
+    ...[...STORY_ITEMS, ...RHYME_PEGS, ...SHAPE_PEGS].flatMap(forms),
     ...NUMBER_PICTURES.en.flatMap((p) => p.word.toLowerCase().split(/[\s-]+/)),
     ...NUMBER_PICTURES.hi.flatMap((p) => p.word.split(/[\s-]+/)),
     ...[...KEYWORD_CARDS.en, ...KEYWORD_CARDS.hi].flatMap((c) => [
@@ -42,11 +83,8 @@ describe("Brain Unlock words never overlap the app’s memory words", () => {
   ]);
 
   it("no Memory Check, Memory Studio, number-picture or keyword word", () => {
-    const clashes = ALL_BRAIN_UNLOCK_WORDS.flatMap((x) => [
-      x.en.toLowerCase(),
-      x.hi,
-    ]).filter(
-      (t) => t.split(/\s+/).some((part) => app.has(part)) || app.has(t),
+    const clashes = ALL_BRAIN_UNLOCK_WORDS.flatMap(forms).filter(
+      (t) => app.has(t) || t.split(/\s+/).some((part) => app.has(part)),
     );
     expect(clashes).toEqual([]);
   });
@@ -62,86 +100,93 @@ describe("Brain Unlock words never overlap the app’s memory words", () => {
     expect(clashes.map((x) => x.id)).toEqual([]);
   });
 
-  it("the spec’s original words (memory-check / palace words) are not used", () => {
-    const ids = new Set(ALL_BRAIN_UNLOCK_WORDS.map((x) => x.id));
-    for (const old of [
-      "ring",
-      "train",
-      "lion",
-      "soap",
-      "elephant",
-      "umbrella",
-      "milk",
-      "kite",
-      "phone",
+  it("none of Dr. Kapil's demo video words", () => {
+    const demo = new Set(DEMO_VIDEO_WORDS);
+    expect(
+      ALL_BRAIN_UNLOCK_WORDS.filter((x) => demo.has(x.hi)).map((x) => x.id),
+    ).toEqual([]);
+    // English forms of the demo words too.
+    for (const en of [
       "chair",
+      "cloud",
+      "clock",
       "river",
+      "book",
+      "cat",
       "key",
-      "bus",
-      "mango",
-      "camel",
-      "flower",
+      "mountain",
       "shoe",
+      "lamp",
+      "cup",
+      "tree",
+      "bus",
+      "flower",
+      "pillow",
+      "jungle",
+      "wedding",
+      "mango",
+      "scissors",
+      "coin",
+      "throat",
+      "doctor",
+      "camel",
+      "newspaper",
+      "king",
       "monkey",
+      "girl",
+      "police",
+      "torch",
+      "blast",
     ])
-      expect(ids.has(old), old).toBe(false);
+      expect(
+        ALL_BRAIN_UNLOCK_WORDS.some((x) => x.en.toLowerCase() === en),
+        en,
+      ).toBe(false);
   });
 });
 
-describe('"after" content is always different from "before"', () => {
-  it("the story words share nothing with the Brain Check words, in both sets and both languages", () => {
-    for (const s of ["A", "B"] as const) {
-      const before = new Set(
-        [...CHECK_WORDS[s].targets, ...CHECK_WORDS[s].others].flatMap((x) => [
-          x.id,
-          x.en,
-          x.hi,
-        ]),
-      );
-      const after = STORY_WORDS[s].targets.flatMap((x) => [x.id, x.en, x.hi]);
-      expect(after.filter((t) => before.has(t))).toEqual([]);
+describe("6 + 6 sets, equally easy, never mixed up", () => {
+  it("6 Brain Check sets and 6 story sets of 5 words; 15-word pools for the others", () => {
+    expect(CHECK_SET_IDS).toHaveLength(6);
+    expect(STORY_SET_IDS).toHaveLength(6);
+    for (const id of CHECK_SET_IDS) expect(CHECK_SETS[id]).toHaveLength(5);
+    for (const id of STORY_SET_IDS) expect(STORY_SETS[id]).toHaveLength(5);
+    expect(CHECK_POOL).toHaveLength(15);
+    expect(STORY_POOL).toHaveLength(15);
+  });
+  it("every word appears once only (no set shares a word with another set or a pool)", () => {
+    const ids = ALL_BRAIN_UNLOCK_WORDS.map((x) => x.id);
+    const hi = ALL_BRAIN_UNLOCK_WORDS.map((x) => x.hi);
+    const en = ALL_BRAIN_UNLOCK_WORDS.map((x) => x.en.toLowerCase());
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(new Set(hi).size).toBe(hi.length);
+    expect(new Set(en).size).toBe(en.length);
+  });
+  it("short, everyday words: at most 2 English words and 12 letters, Hindi in Devanagari", () => {
+    for (const x of ALL_BRAIN_UNLOCK_WORDS) {
+      expect(x.en.split(" ").length, x.id).toBeLessThanOrEqual(2);
+      expect(x.en.replace(/\s/g, "").length, x.id).toBeLessThanOrEqual(12);
+      expect(x.hi, x.id).toMatch(/^[ऀ-ॿ\s-]+$/);
     }
   });
-  it("Duo Mode: the child’s set (B) shares no word with the parent’s set (A)", () => {
-    const a = new Set(
-      [
-        ...CHECK_WORDS.A.targets,
-        ...CHECK_WORDS.A.others,
-        ...STORY_WORDS.A.targets,
-        ...STORY_WORDS.A.others,
-      ].map((x) => x.id),
-    );
-    const b = [
-      ...CHECK_WORDS.B.targets,
-      ...CHECK_WORDS.B.others,
-      ...STORY_WORDS.B.targets,
-      ...STORY_WORDS.B.others,
-    ].map((x) => x.id);
-    expect(b.filter((id) => a.has(id))).toEqual([]);
+  it("every story word has a picture; the pick-screen others are drawn from the pool", () => {
+    for (const id of STORY_SET_IDS)
+      for (const x of STORY_SETS[id]) expect(x.emoji, x.id).not.toBe("");
+    const others = pickOthers(CHECK_POOL, 5, () => 0.3);
+    expect(others).toHaveLength(5);
+    expect(others.every((x) => CHECK_POOL.includes(x))).toBe(true);
   });
-  it("each set has 5 targets + 5 others, all different; Hindi is Devanagari", () => {
-    for (const list of [
-      CHECK_WORDS.A,
-      CHECK_WORDS.B,
-      STORY_WORDS.A,
-      STORY_WORDS.B,
-    ]) {
-      expect(list.targets).toHaveLength(5);
-      expect(list.others).toHaveLength(5);
-      const all = [...list.targets, ...list.others];
-      expect(new Set(all.map((x) => x.hi)).size).toBe(10);
-      for (const x of all) expect(x.hi).toMatch(/[ऀ-ॿ]/);
-    }
-  });
-  it("each story line contains its word, in order, in both languages", () => {
-    for (const s of ["A", "B"] as const)
-      for (const lang of ["en", "hi"] as const)
-        STORY_WORDS[s].targets.forEach((x, i) => {
-          const line = STORY_LINES[s][lang][i]!.toLowerCase();
+  it("each story has 5 lines, each containing its word, in order, in both languages", () => {
+    for (const id of STORY_SET_IDS)
+      for (const lang of ["en", "hi"] as const) {
+        expect(STORY_LINES[id][lang]).toHaveLength(5);
+        STORY_SETS[id].forEach((x, i) => {
+          const line = STORY_LINES[id][lang][i]!.toLowerCase();
           expect(
-            line.includes(x[lang].toLowerCase()) || line.includes(x.id),
-            `${s} ${lang} ${x.id}`,
+            line.includes(x[lang].toLowerCase()),
+            `${id} ${lang} ${x.id}`,
           ).toBe(true);
         });
+      }
   });
 });

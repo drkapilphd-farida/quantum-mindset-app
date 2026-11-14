@@ -5,7 +5,13 @@ import { Check } from "lucide-react";
 import type { BuCopy } from "../copy";
 import type { PublicPassage } from "../passages";
 import { MEMORY_TOTAL, shuffledGrid, type FocusRun } from "../scoring";
-import { CHECK_WORDS, type BuWord, type WordSet } from "../words";
+import {
+  CHECK_POOL,
+  CHECK_SETS,
+  pickOthers,
+  type BuWord,
+  type CheckSetId,
+} from "../words";
 import { FocusGrid } from "./FocusGrid";
 import { Questions } from "./Questions";
 import { primaryBtn, SKILL } from "./ui";
@@ -38,14 +44,14 @@ export function BrainCheck({
   c,
   lang,
   passage,
-  wordSet,
+  checkSet,
   muted,
   onDone,
 }: {
   c: BuCopy;
   lang: "en" | "hi";
   passage: PublicPassage;
-  wordSet: WordSet;
+  checkSet: CheckSetId;
   muted: boolean;
   onDone: (r: CheckResult) => void;
 }): React.JSX.Element {
@@ -62,7 +68,14 @@ export function BrainCheck({
   const result = useRef<Partial<CheckResult>>({});
   const readStart = useRef(0);
   const grid = useMemo(() => shuffledGrid(), []);
-  const words = CHECK_WORDS[wordSet];
+  // This session's 5 words + 5 others drawn at random from the pool.
+  const words = useMemo(
+    () => ({
+      targets: CHECK_SETS[checkSet],
+      others: pickOthers(CHECK_POOL, 5),
+    }),
+    [checkSet],
+  );
   const pickList = useMemo(
     () => shuffle([...words.targets, ...words.others]),
     [words],
@@ -77,7 +90,11 @@ export function BrainCheck({
   }, [phase]);
 
   return (
-    <section className="flex flex-col gap-5" data-bu-check={phase}>
+    <section
+      className="flex flex-col gap-5"
+      data-bu-check={phase}
+      data-bu-check-set={checkSet}
+    >
       {phase === "intro" && (
         <div className="play-card flex flex-col gap-4 p-6 text-center">
           <span

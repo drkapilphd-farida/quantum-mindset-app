@@ -3,7 +3,7 @@
   "lang": "en",
   "voice": "shubh",
   "model": "bulbul:v3",
-  "createdAt": "2026-11-14T03:11:44.792Z",
+  "createdAt": "2026-11-14T03:57:48.101Z",
   "lines": {
     "hook": {
       "file": "hook.mp3",
@@ -19,75 +19,15 @@
     },
     "speed-teach": {
       "file": "speed-teach.mp3",
-      "durationMs": 5291,
-      "text": "Most people read at the speed they speak. ... Your eyes can move much faster. ... Let them follow the light.",
-      "heard": "Most people read at the speed they speak. Your eyes can move much faster. Let them follow the light."
+      "durationMs": 5717,
+      "text": "Your eyes usually jump around while reading. ... Now the words will come to your eyes. ... Just keep looking at the red letter.",
+      "heard": "Your eyes usually jump around while reading. Now the words will come to your eyes. Just keep looking at the red letter."
     },
     "memory-teach": {
       "file": "memory-teach.mp3",
       "durationMs": 9382,
       "text": "Here is the secret. ... Your brain loves pictures and stories. ... Let's link five new words into one crazy story. ... See each picture in your mind.",
       "heard": "Here is the secret. Your brain loves pictures and stories. Let's link five new words into one crazy story. See each picture in your mind."
-    },
-    "storyA-1": {
-      "file": "storyA-1.mp3",
-      "durationMs": 1332,
-      "text": "A huge gorilla...",
-      "heard": "A huge gorilla"
-    },
-    "storyA-2": {
-      "file": "storyA-2.mp3",
-      "durationMs": 1546,
-      "text": "opens a giant suitcase.",
-      "heard": "Opens a giant suitcase"
-    },
-    "storyA-3": {
-      "file": "storyA-3.mp3",
-      "durationMs": 3465,
-      "text": "Instead of clothes, curd pours out of the suitcase!",
-      "heard": "Instead of clothes, curd pours out of the suitcase."
-    },
-    "storyA-4": {
-      "file": "storyA-4.mp3",
-      "durationMs": 1913,
-      "text": "The curd soaks a flying drone...",
-      "heard": "The curd soaks a flying drone."
-    },
-    "storyA-5": {
-      "file": "storyA-5.mp3",
-      "durationMs": 2303,
-      "text": "and the heavy drone falls right into your tiffin.",
-      "heard": "And the heavy drone falls right into your tiffin."
-    },
-    "storyB-1": {
-      "file": "storyB-1.mp3",
-      "durationMs": 1234,
-      "text": "A cheeky squirrel...",
-      "heard": "A cheeky squirrel"
-    },
-    "storyB-2": {
-      "file": "storyB-2.mp3",
-      "durationMs": 1526,
-      "text": "jumps into a big cooker.",
-      "heard": "Jumps into a big cooker"
-    },
-    "storyB-3": {
-      "file": "storyB-3.mp3",
-      "durationMs": 2494,
-      "text": "The cooker whistles and shoots out popcorn!",
-      "heard": "The cooker whistles and shoots out popcorn."
-    },
-    "storyB-4": {
-      "file": "storyB-4.mp3",
-      "durationMs": 2310,
-      "text": "The popcorn lands on a sleeping buffalo...",
-      "heard": "The popcorn lands on a sleeping buffalo."
-    },
-    "storyB-5": {
-      "file": "storyB-5.mp3",
-      "durationMs": 2301,
-      "text": "and the buffalo sits right on your T.V. remote.",
-      "heard": "And the buffalo sits right on your TV remote."
     },
     "memory-replay": {
       "file": "memory-replay.mp3",
@@ -136,6 +76,186 @@
       "durationMs": 4096,
       "text": "Here is your Brain Unlock report. ... These are your own, real numbers.",
       "heard": "Here is your brain unlock report. These are your own real numbers."
+    },
+    "s1-1": {
+      "file": "s1-1.mp3",
+      "durationMs": 1332,
+      "text": "A huge gorilla...",
+      "heard": "A huge gorilla"
+    },
+    "s1-2": {
+      "file": "s1-2.mp3",
+      "durationMs": 1546,
+      "text": "opens a giant suitcase.",
+      "heard": "Opens a giant suitcase"
+    },
+    "s1-3": {
+      "file": "s1-3.mp3",
+      "durationMs": 3465,
+      "text": "Instead of clothes, curd pours out of the suitcase!",
+      "heard": "Instead of clothes, curd pours out of the suitcase."
+    },
+    "s1-4": {
+      "file": "s1-4.mp3",
+      "durationMs": 1913,
+      "text": "The curd soaks a flying drone...",
+      "heard": "The curd soaks a flying drone."
+    },
+    "s1-5": {
+      "file": "s1-5.mp3",
+      "durationMs": 2303,
+      "text": "and the heavy drone falls right into your tiffin.",
+      "heard": "And the heavy drone falls right into your tiffin."
+    },
+    "s2-1": {
+      "file": "s2-1.mp3",
+      "durationMs": 1340,
+      "text": "A big green crocodile...",
+      "heard": "A big green crocodile"
+    },
+    "s2-2": {
+      "file": "s2-2.mp3",
+      "durationMs": 2011,
+      "text": "sits down and plays the piano.",
+      "heard": "Sits down and plays the piano."
+    },
+    "s2-3": {
+      "file": "s2-3.mp3",
+      "durationMs": 2399,
+      "text": "Out of the piano jumps a giant burger!",
+      "heard": "Out of the piano jumps a giant burger."
+    },
+    "s2-4": {
+      "file": "s2-4.mp3",
+      "durationMs": 1917,
+      "text": "The burger rides away on a skateboard...",
+      "heard": "The burger rides away on a skateboard."
+    },
+    "s2-5": {
+      "file": "s2-5.mp3",
+      "durationMs": 2384,
+      "text": "and crashes right into a whistling cooker.",
+      "heard": "and crashes right into a whistling cooker."
+    },
+    "s3-1": {
+      "file": "s3-1.mp3",
+      "durationMs": 1332,
+      "text": "A sleepy panda...",
+      "heard": "A sleepy panda"
+    },
+    "s3-2": {
+      "file": "s3-2.mp3",
+      "durationMs": 1536,
+      "text": "puts on big headphones.",
+      "heard": "puts on big headphones."
+    },
+    "s3-3": {
+      "file": "s3-3.mp3",
+      "durationMs": 3090,
+      "text": "The music is so loud that ice cream shoots out of the headphones!",
+      "heard": "The music is so loud that ice cream shoots out of the headphones."
+    },
+    "s3-4": {
+      "file": "s3-4.mp3",
+      "durationMs": 2314,
+      "text": "The ice cream lands on a tall crane...",
+      "heard": "The ice cream lands on a tall crane"
+    },
+    "s3-5": {
+      "file": "s3-5.mp3",
+      "durationMs": 2098,
+      "text": "and the crane drops it right into your sandal.",
+      "heard": "And the crane drops it right into your sandal."
+    },
+    "s4-1": {
+      "file": "s4-1.mp3",
+      "durationMs": 1035,
+      "text": "A smiling shark...",
+      "heard": "A smiling shark"
+    },
+    "s4-2": {
+      "file": "s4-2.mp3",
+      "durationMs": 1818,
+      "text": "sings loudly into a microphone.",
+      "heard": "Sings loudly into a microphone."
+    },
+    "s4-3": {
+      "file": "s4-3.mp3",
+      "durationMs": 3078,
+      "text": "The microphone fills up with hot biryani!",
+      "heard": "The microphone fills up with hot biryani."
+    },
+    "s4-4": {
+      "file": "s4-4.mp3",
+      "durationMs": 3257,
+      "text": "The biryani is so spicy that it charges a battery...",
+      "heard": "The biryani is so spicy that it charges a battery."
+    },
+    "s4-5": {
+      "file": "s4-5.mp3",
+      "durationMs": 2795,
+      "text": "and the battery flies off and puts on a funny mask!",
+      "heard": "and the battery flies off and puts on a funny mask."
+    },
+    "s5-1": {
+      "file": "s5-1.mp3",
+      "durationMs": 1138,
+      "text": "A tiny lizard...",
+      "heard": "a tiny lizard."
+    },
+    "s5-2": {
+      "file": "s5-2.mp3",
+      "durationMs": 1430,
+      "text": "kicks a huge football.",
+      "heard": "Kicks a huge football"
+    },
+    "s5-3": {
+      "file": "s5-3.mp3",
+      "durationMs": 3554,
+      "text": "The football bursts and popcorn rains everywhere!",
+      "heard": "The football bursts and popcorn rains everywhere."
+    },
+    "s5-4": {
+      "file": "s5-4.mp3",
+      "durationMs": 2095,
+      "text": "The popcorn falls into a printer...",
+      "heard": "The popcorn falls into a printer"
+    },
+    "s5-5": {
+      "file": "s5-5.mp3",
+      "durationMs": 2122,
+      "text": "and the printer prints a giant lipstick.",
+      "heard": "And the printer prints a giant lipstick."
+    },
+    "s6-1": {
+      "file": "s6-1.mp3",
+      "durationMs": 1138,
+      "text": "A fluffy sheep...",
+      "heard": "a fluffy sheep"
+    },
+    "s6-2": {
+      "file": "s6-2.mp3",
+      "durationMs": 1428,
+      "text": "drives a bullock cart.",
+      "heard": "Drives a bullock cart"
+    },
+    "s6-3": {
+      "file": "s6-3.mp3",
+      "durationMs": 3235,
+      "text": "The bullock cart is full of long, wiggly noodles!",
+      "heard": "The bullock cart is full of long, wiggly noodles."
+    },
+    "s6-4": {
+      "file": "s6-4.mp3",
+      "durationMs": 2604,
+      "text": "The sheep eats all the noodles and wins a shiny medal...",
+      "heard": "The sheep eats all the noodles and wins a shiny medal."
+    },
+    "s6-5": {
+      "file": "s6-5.mp3",
+      "durationMs": 2212,
+      "text": "and the medal starts singing like a loud speaker.",
+      "heard": "and the medal starts singing like a loudspeaker."
     }
   }
 }

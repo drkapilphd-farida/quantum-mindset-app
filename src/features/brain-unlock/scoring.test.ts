@@ -5,7 +5,6 @@ import {
   buildReport,
   focusSeconds,
   MAX_SAME_POSITIONS,
-  pacerStartWpm,
   samePositions,
   scoreBand,
   scoreInOrder,
@@ -37,12 +36,7 @@ describe("speed", () => {
     expect(wpmFrom(60, 22_500)).toBe(160);
     expect(wpmFrom(120, 0)).toBe(1500); // capped, never Infinity
   });
-  it("the pacer starts at 1.6 × baseline, between 200 and 450", () => {
-    expect(pacerStartWpm(160)).toBe(260);
-    expect(pacerStartWpm(80)).toBe(200);
-    expect(pacerStartWpm(400)).toBe(450);
-  });
-  it("the pacer speed counts only with at least 50 % of the questions right", () => {
+  it("the Word Flash speed counts only with at least 50 % of the questions right", () => {
     expect(speedCounted({ wpm: 290, correct: 1, total: 2 })).toBe(true);
     expect(speedCounted({ wpm: 290, correct: 0, total: 2 })).toBe(false);
     expect(
@@ -221,24 +215,50 @@ describe("Brain Type", () => {
 });
 
 describe("passages", () => {
-  it("every role × language has a ~60-word check (1 question) and a different ~120-word sharp passage (2 questions)", () => {
+  it("every role × language has 3 Brain Check passages (~60 words, 1 question) and 3 different RSVP passages (80–100 words, 2 questions)", () => {
     for (const role of ["parent", "student", "professional"] as const)
       for (const lang of ["en", "hi"] as const) {
-        const check = BU_PASSAGES.find(
-          (p) => p.role === role && p.lang === lang && p.kind === "check",
-        )!;
-        const sharp = BU_PASSAGES.find(
-          (p) => p.role === role && p.lang === lang && p.kind === "sharp",
-        )!;
-        expect(check.questions).toHaveLength(1);
-        expect(sharp.questions).toHaveLength(2);
-        expect(toPublic(check).wordCount).toBeGreaterThanOrEqual(50);
-        expect(toPublic(check).wordCount).toBeLessThanOrEqual(80);
-        expect(toPublic(sharp).wordCount).toBeGreaterThanOrEqual(105);
-        expect(toPublic(sharp).wordCount).toBeLessThanOrEqual(160);
-        expect(sharp.text).not.toBe(check.text);
-        expect(sharp.text.slice(0, 40)).not.toBe(check.text.slice(0, 40));
+        const of = (kind: "check" | "sharp"): typeof BU_PASSAGES =>
+          BU_PASSAGES.filter(
+            (p) => p.role === role && p.lang === lang && p.kind === kind,
+          );
+        expect(of("check")).toHaveLength(3);
+        expect(of("sharp")).toHaveLength(3);
+        for (const check of of("check")) {
+          expect(check.questions).toHaveLength(1);
+          expect(toPublic(check).wordCount).toBeGreaterThanOrEqual(50);
+          expect(toPublic(check).wordCount).toBeLessThanOrEqual(80);
+        }
+        for (const sharp of of("sharp")) {
+          expect(sharp.questions).toHaveLength(2);
+          // Short for RSVP: about 80–100 words (Hindi needs a few more words for the same text).
+          expect(toPublic(sharp).wordCount).toBeGreaterThanOrEqual(80);
+          expect(toPublic(sharp).wordCount).toBeLessThanOrEqual(
+            lang === "hi" ? 100 : 95,
+          );
+        }
+        const texts = [...of("check"), ...of("sharp")].map((p) =>
+          p.text.slice(0, 40),
+        );
+        expect(new Set(texts).size).toBe(6);
       }
+  });
+  it("ids are unique, answer keys point at a real option, EN and HI match one to one", () => {
+    expect(new Set(BU_PASSAGES.map((p) => p.id)).size).toBe(BU_PASSAGES.length);
+    for (const p of BU_PASSAGES)
+      for (const q of p.questions) {
+        expect(q.options.length).toBe(3);
+        expect(q.correctIndex).toBeGreaterThanOrEqual(0);
+        expect(q.correctIndex).toBeLessThan(q.options.length);
+      }
+    for (const p of BU_PASSAGES.filter((x) => x.lang === "en")) {
+      const hi = BU_PASSAGES.find(
+        (x) => x.id === p.id.replace("-en-", "-hi-"),
+      )!;
+      expect(hi.questions.map((q) => q.correctIndex)).toEqual(
+        p.questions.map((q) => q.correctIndex),
+      );
+    }
   });
   it("the browser copy has no answer key", () => {
     for (const p of BU_PASSAGES)

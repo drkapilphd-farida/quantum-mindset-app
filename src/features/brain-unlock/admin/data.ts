@@ -70,3 +70,24 @@ export async function paidSessions(
   }
   return paid;
 }
+
+/** Saved leads' details in [fromIso, toIso) — for the per-set averages. */
+export async function readLeadDetails(
+  fromIso: string,
+  toIso: string,
+): Promise<unknown[]> {
+  const { data, error } = await createServiceClient()
+    .from("speed_test_results")
+    .select("details")
+    .eq("test_kind", "brain_unlock")
+    .gte("created_at", fromIso)
+    .lt("created_at", toIso)
+    .limit(5000);
+  if (error) {
+    logger.warn("brain-unlock admin: lead details read failed", {
+      code: error.code,
+    });
+    return [];
+  }
+  return (data ?? []).map((r) => r.details);
+}

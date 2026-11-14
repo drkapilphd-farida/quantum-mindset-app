@@ -10,7 +10,7 @@ import {
 } from "./scoring";
 import type { BuScoring } from "./settings";
 import type { RawRun } from "./types";
-import { CHECK_WORDS, STORY_WORDS } from "./words";
+import { CHECK_POOL, CHECK_SETS, STORY_POOL, STORY_SETS } from "./words";
 
 export type EvaluatedRun = PlayerReport & {
   who: RawRun["who"];
@@ -27,11 +27,21 @@ export function evaluateRun(run: RawRun, scoring: BuScoring): EvaluatedRun {
     sharp === null ||
     check.kind !== "check" ||
     sharp.kind !== "sharp" ||
-    check.lang !== sharp.lang
+    check.lang !== sharp.lang ||
+    check.role !== run.role ||
+    sharp.role !== run.role
   )
     throw new InvalidRunError("unknown passage");
-  const checkIds = CHECK_WORDS[run.wordSet].targets.map((w) => w.id);
-  const storyIds = STORY_WORDS[run.wordSet].targets.map((w) => w.id);
+  const checkIds = CHECK_SETS[run.checkSet].map((w) => w.id);
+  const storyIds = STORY_SETS[run.storySet].map((w) => w.id);
+  // Only words from this set's pick screen (its 5 + the pool) are accepted.
+  const checkOk = new Set([...checkIds, ...CHECK_POOL.map((w) => w.id)]);
+  const storyOk = new Set([...storyIds, ...STORY_POOL.map((w) => w.id)]);
+  if (
+    !run.memoryPicked.every((id) => checkOk.has(id)) ||
+    ![...run.storyForward, ...run.storyBackward].every((id) => storyOk.has(id))
+  )
+    throw new InvalidRunError("unknown word");
   const report = buildReport(
     {
       speedBefore: {

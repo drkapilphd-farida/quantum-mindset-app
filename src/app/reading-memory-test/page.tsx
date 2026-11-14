@@ -3,7 +3,7 @@ import SharpBrainNav from '@/components/sharp-brain/SharpBrainNav'
 import Footer from '@/components/Footer'
 import dynamic from 'next/dynamic'
 import BrainUnlock, { type BuContent } from '@/features/brain-unlock/components/BrainUnlock'
-import { findPassage, toPublic } from '@/features/brain-unlock/passages'
+import { passagesFor, toPublic } from '@/features/brain-unlock/passages'
 import { getBrainUnlockSettings } from '@/features/brain-unlock/settingsServer'
 import { langFromCampaign, ROLES } from '@/features/brain-unlock/types'
 import { pricingSnapshot } from '@/features/sharp-brain-enrol/server'
@@ -36,10 +36,12 @@ export default async function ReadingMemoryTestPage({ searchParams }: { searchPa
     body = <ReadingMemoryTest />
   } else {
     const settings = await getBrainUnlockSettings()
-    // Passages without their answer keys (the server checks answers).
-    const content = Object.fromEntries(
-      ROLES.map((role) => [role, { en: { check: toPublic(findPassage(role, 'en', 'check')), sharp: toPublic(findPassage(role, 'en', 'sharp')) }, hi: { check: toPublic(findPassage(role, 'hi', 'check')), sharp: toPublic(findPassage(role, 'hi', 'sharp')) } }]),
-    ) as BuContent
+    // Every passage a session may get, without the answer keys (the server checks answers).
+    const pub = (role: (typeof ROLES)[number], lang: 'en' | 'hi'): BuContent[(typeof ROLES)[number]]['en'] => ({ check: passagesFor(role, lang, 'check').map(toPublic), sharp: passagesFor(role, lang, 'sharp').map(toPublic) })
+    const content = Object.fromEntries(ROLES.map((role) => [role, { en: pub(role, 'en'), hi: pub(role, 'hi') }])) as BuContent
+    // The +30-day retake link carries the earlier lead's id: the new session gets new sets.
+    const retake = one(sp.retake)
+    const retakeOf = retake !== undefined && /^[0-9a-f-]{36}$/i.test(retake) ? retake : null
     const langParam = one(sp.lang)
     const initialLang = langParam === 'hi' || langParam === 'en' ? langParam : (langFromCampaign(one(sp.utm_campaign)) ?? 'en')
     const plan = one(sp.plan)
@@ -51,6 +53,7 @@ export default async function ReadingMemoryTestPage({ searchParams }: { searchPa
         initialLang={initialLang}
         initialView={one(sp.view) === 'offer' ? 'offer' : 'flow'}
         initialPlan={plan === 'self' || plan === 'live' ? plan : null}
+        retakeOf={retakeOf}
       />
     )
   }

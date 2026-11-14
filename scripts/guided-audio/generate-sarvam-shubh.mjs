@@ -32,7 +32,7 @@ if (!['en', 'hi'].includes(lang) || !scriptFile || !out || !work) throw new Erro
 const CODE = lang === 'hi' ? 'hi-IN' : 'en-IN'
 const MAX_TAKES = 8
 
-const SLOW = /^(story[AB]-\d|memory-teach|memory-replay|focus-)/
+const SLOW = /^(s\d-\d|memory-teach|memory-replay|focus-)/
 const pace = (id) => (SLOW.test(id) ? 0.88 : 1.0)
 export const ttsText = (t) => t.replace(/\s*\.\.\.\s*/g, ' ').replace(/\s+/g, ' ').trim()
 

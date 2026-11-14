@@ -7,9 +7,6 @@ import type { BrainTypeId, BuScoring } from "./settings";
 
 export const MIN_WPM = 0;
 export const MAX_WPM = 1500;
-export const PACER_MIN_WPM = 200;
-export const PACER_MAX_WPM = 450;
-export const PACER_MULTIPLIER = 1.6;
 export const MEMORY_TOTAL = 5;
 export const GRID_SIZE = 16;
 /** The sharp-reading speed counts only with at least this share of the questions right. */
@@ -20,17 +17,6 @@ export function wpmFrom(wordCount: number, elapsedMs: number): number {
   return Math.min(MAX_WPM, Math.max(MIN_WPM, Math.round(wordCount / minutes)));
 }
 
-/** The pacer's first speed: 1.6 × the reader's own baseline, between 200 and 450 WPM. */
-export function pacerStartWpm(baselineWpm: number): number {
-  return Math.min(
-    PACER_MAX_WPM,
-    Math.max(
-      PACER_MIN_WPM,
-      Math.round((baselineWpm * PACER_MULTIPLIER) / 10) * 10,
-    ),
-  );
-}
-
 export type SpeedBefore = { wpm: number; correct: number; total: number };
 export type SpeedAfter = { wpm: number; correct: number; total: number };
 
@@ -39,7 +25,7 @@ export function speedCounted(after: SpeedAfter): boolean {
   return after.total > 0 && after.correct / after.total >= MIN_COMPREHENSION;
 }
 
-/** The speed the report uses as "after": the pacer speed when it counts, otherwise the reader's own baseline. */
+/** The speed the report uses as "after": the Word Flash speed when it counts, otherwise the reader's own baseline. */
 export function speedAfterWpm(before: SpeedBefore, after: SpeedAfter): number {
   return speedCounted(after) ? after.wpm : before.wpm;
 }

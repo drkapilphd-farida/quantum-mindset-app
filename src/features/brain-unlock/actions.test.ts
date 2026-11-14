@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { findPassage } from "./passages";
-import { CHECK_WORDS, STORY_WORDS } from "./words";
+import { CHECK_POOL, CHECK_SETS, STORY_SETS } from "./words";
 import type { RawRun } from "./types";
 
 type Inserted = { table: string; row: Record<string, unknown> };
@@ -58,21 +58,24 @@ async function load(): Promise<{
 }
 
 function run(who: RawRun["who"], role: RawRun["role"], set: "A" | "B"): RawRun {
+  const checkSet = set === "A" ? "c1" : "c2";
+  const storySet = set === "A" ? "s1" : "s2";
   const check = findPassage(role, "en", "check");
   const sharp = findPassage(role, "en", "sharp");
-  const checkIds = CHECK_WORDS[set].targets.map((w) => w.id);
-  const story = STORY_WORDS[set].targets.map((w) => w.id);
+  const checkIds = CHECK_SETS[checkSet].map((w) => w.id);
+  const story = STORY_SETS[storySet].map((w) => w.id);
   return {
     who,
     role,
-    wordSet: set,
+    checkSet,
+    storySet,
     checkPassageId: check.id,
     checkMs: 22_500, // ≈ 60 words → ~160 WPM
     checkAnswers: check.questions.map((q) => q.correctIndex),
     sharpPassageId: sharp.id,
     sharpMs: 27_000,
     sharpAnswers: sharp.questions.map((q) => q.correctIndex),
-    memoryPicked: [checkIds[0]!, checkIds[1]!, CHECK_WORDS[set].others[0]!.id],
+    memoryPicked: [checkIds[0]!, checkIds[1]!, CHECK_POOL[0]!.id],
     storyForward: story,
     storyBackward: [...story].reverse(),
     focusBefore: { ms: 18_000, errors: 1 },
@@ -142,6 +145,44 @@ describe("saveBrainUnlockLead", () => {
     expect(typeof row.brain_type).toBe("string");
     expect(queued).toEqual(["lead-uuid"]);
     expect(afterTasks).toHaveLength(1);
+  });
+
+  it("saves which sets each player got, the device id, and a retake link carrying the lead id", async () => {
+    const { actions, inserted } = await load();
+    const device = "11111111-2222-4333-8444-555555555555";
+    const res = await actions.saveBrainUnlockLead({
+      ...base,
+      role: "parent",
+      duo: true,
+      deviceId: device,
+      runs: [run("parent", "parent", "A"), run("child", "student", "B")],
+    });
+    expect(res.ok).toBe(true);
+    const row = inserted[0]!.row;
+    const details = row.details as {
+      sets: { checkSet: string; storySet: string; checkPassageId: string }[];
+      deviceId: string;
+      links: { retake: string };
+    };
+    expect(details.sets.map((x) => `${x.checkSet}.${x.storySet}`)).toEqual([
+      "c1.s1",
+      "c2.s2",
+    ]);
+    expect(details.sets[1]!.checkPassageId).toContain("bu-student-en-check");
+    expect(details.deviceId).toBe(device);
+    expect(details.links.retake).toContain(`retake=${String(row.id)}`);
+    expect(details.links.retake).toContain("utm_campaign=bu_retake_d30");
+  });
+
+  it("refuses words that were never on this set's pick screen", async () => {
+    const { actions } = await load();
+    const res = await actions.saveBrainUnlockLead({
+      ...base,
+      role: "student",
+      duo: false,
+      runs: [{ ...run("me", "student", "A"), memoryPicked: ["gorilla"] }],
+    });
+    expect(res.ok).toBe(false);
   });
 
   it("Duo Mode saves both results under one lead (the parent’s number)", async () => {

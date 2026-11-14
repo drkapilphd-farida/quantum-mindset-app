@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { currentAdminEmail } from "@/features/live-classes/admin/data";
-import { paidSessions, readEvents } from "@/features/brain-unlock/admin/data";
+import {
+  paidSessions,
+  readEvents,
+  readLeadDetails,
+} from "@/features/brain-unlock/admin/data";
+import {
+  buildSetStats,
+  type SetStatRow,
+} from "@/features/brain-unlock/setStats";
 import {
   buildFunnel,
   type Breakdown,
@@ -136,6 +144,61 @@ function BreakdownTable({
   );
 }
 
+function SetTable({
+  title,
+  unit,
+  rows,
+}: {
+  title: string;
+  unit: string;
+  rows: SetStatRow[];
+}): React.JSX.Element {
+  const withWpm = rows.some((r) => r.wpm !== null);
+  return (
+    <div className="overflow-x-auto rounded-md border border-border">
+      <table className="w-full text-sm" data-set-table={title}>
+        <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
+          <tr>
+            <th className="p-2">{title}</th>
+            <th className="p-2">People</th>
+            <th className="p-2">Average {unit}</th>
+            {withWpm && <th className="p-2">Avg WPM</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.length === 0 && (
+            <tr>
+              <td className="p-2 text-muted-foreground" colSpan={4}>
+                No data yet.
+              </td>
+            </tr>
+          )}
+          {rows.map((r) => (
+            <tr
+              key={r.id}
+              className={`border-t border-border ${r.harder ? "bg-amber-50" : ""}`}
+            >
+              <td className="p-2 font-medium">
+                {r.id}
+                {r.harder && (
+                  <span className="ml-2 text-xs font-semibold text-amber-800">
+                    ⚠ looks harder
+                  </span>
+                )}
+              </td>
+              <td className="p-2 tabular-nums">{r.n}</td>
+              <td className="p-2 tabular-nums">
+                {unit === "/5" ? `${r.avg}/5` : `${Math.round(r.avg)}%`}
+              </td>
+              {withWpm && <td className="p-2 tabular-nums">{r.wpm ?? "—"}</td>}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default async function BrainUnlockFunnelPage({
   searchParams,
 }: {
@@ -157,10 +220,12 @@ export default async function BrainUnlockFunnelPage({
     new Date(`${to}T00:00:00+05:30`).getTime() + 86_400_000,
   ).toISOString();
 
-  const [{ rows, truncated }, paid] = await Promise.all([
+  const [{ rows, truncated }, paid, leadDetails] = await Promise.all([
     readEvents(fromIso, toIso),
     paidSessions(fromIso, toIso),
+    readLeadDetails(fromIso, toIso),
   ]);
+  const sets = buildSetStats(leadDetails);
   const f = buildFunnel(rows, paid, { campaign, role });
   const campaigns = [
     ...new Set(rows.map((r) => r.utm_campaign ?? "(none)")),
@@ -302,6 +367,28 @@ export default async function BrainUnlockFunnelPage({
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="space-y-2" data-set-stats>
+        <h2 className="text-lg font-semibold">Word sets and passages</h2>
+        <p className="text-xs text-muted-foreground">
+          Average score per set (leads in this date range). A set with at least
+          5 people and 15% or more below the overall average is marked.
+        </p>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <SetTable title="Brain Check set" unit="/5" rows={sets.check} />
+          <SetTable title="Story set" unit="/5" rows={sets.story} />
+          <SetTable
+            title="Brain Check passage"
+            unit="% right"
+            rows={sets.checkPassage}
+          />
+          <SetTable
+            title="Speed (RSVP) passage"
+            unit="% right"
+            rows={sets.sharpPassage}
+          />
+        </div>
       </section>
 
       <BreakdownTable title="By campaign" rows={f.byCampaign} />

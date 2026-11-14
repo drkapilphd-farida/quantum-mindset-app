@@ -9,7 +9,7 @@ import { logger } from "@/lib/logger";
 
 /** Memory story and focus lines a little slower and calmer; the rest natural. */
 export const linePace = (id: string): number =>
-  /^(story[AB]-\d|memory-teach|memory-replay|focus-)/.test(id) ? 0.88 : 1.0;
+  /^(s\d-\d|memory-teach|memory-replay|focus-)/.test(id) ? 0.88 : 1.0;
 
 /** "..." is the caption's pause mark: removed before voicing (punctuation gives the pauses). */
 export const ttsText = (text: string): string =>

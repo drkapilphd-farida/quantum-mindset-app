@@ -27,7 +27,10 @@ import {
   type RawRun,
   type RunSetup,
 } from "../types";
-import { CHECK_WORDS, STORY_WORDS } from "../words";
+import { CHECK_SETS, STORY_SETS } from "../words";
+import { chooseBrainUnlockSets } from "../actions";
+import { addSeen, deviceId, loadSeen } from "../deviceMemory";
+import { chooseSessionSets, type SessionSets } from "../sets";
 import { BrainCheck, type CheckResult } from "./BrainCheck";
 import { OfferBlock } from "./OfferBlock";
 import { Report } from "./Report";
@@ -42,9 +45,10 @@ import { VoiceCue, VoiceOverrides } from "./useNarration";
 // page. Duo Mode: parent and child take turns on one phone at every step
 // (the child gets different words and the student passages).
 
+/** Every passage a session may get (no answer keys), per role and language. */
 export type BuContent = Record<
   BuRole,
-  Record<"en" | "hi", { check: PublicPassage; sharp: PublicPassage }>
+  Record<"en" | "hi", { check: PublicPassage[]; sharp: PublicPassage[] }>
 >;
 
 type Stage = "role" | "pain" | "promise" | "play" | "report";
@@ -81,6 +85,7 @@ export default function BrainUnlock({
   initialLang,
   initialView,
   initialPlan,
+  retakeOf,
 }: {
   content: BuContent;
   settings: BuSettings;
@@ -88,6 +93,8 @@ export default function BrainUnlock({
   initialLang: "en" | "hi";
   initialView: "flow" | "offer";
   initialPlan: "self" | "live" | null;
+  /** The earlier lead this +30-day retake comes from (WhatsApp link), or null. */
+  retakeOf: string | null;
 }): React.JSX.Element {
   const [lang, setLang] = useState<"en" | "hi">(initialLang);
   const c = buCopy[lang];
@@ -104,6 +111,8 @@ export default function BrainUnlock({
   const [checkDone, setCheckDone] = useState(false);
   const [parts, setParts] = useState<RunParts[]>([{}, {}]);
   const [facts, setFacts] = useState<ReportFacts | null>(null);
+  const [sessionSets, setSessionSets] = useState<SessionSets[] | null>(null);
+  const [starting, setStarting] = useState(false);
   const top = useRef<HTMLDivElement>(null);
 
   const track: TrackContext = { role, lang, duo };
@@ -134,28 +143,47 @@ export default function BrainUnlock({
       });
   }, [screenKey]);
 
-  const setups: RunSetup[] = useMemo(
-    () =>
-      duo
-        ? [
-            { who: "parent", role: "parent", wordSet: "A" },
-            { who: "child", role: "student", wordSet: "B" },
-          ]
-        : [{ who: "me", role: role ?? "student", wordSet: "A" }],
-    [duo, role],
-  );
-  const setup = setups[player]!;
-  const passages = content[setup.role][lang];
+  // This session's word sets and passages (chosen when Start is pressed).
+  const setups: RunSetup[] = useMemo(() => {
+    const sets =
+      sessionSets ??
+      chooseSessionSets({
+        role: role ?? "student",
+        lang,
+        duo,
+        history: { check: [], story: [], passages: [] },
+        rng: () => 0,
+      });
+    return sets.map((x, i) => ({
+      who: duo ? (i === 0 ? "parent" : "child") : "me",
+      role: duo ? (i === 0 ? "parent" : "student") : (role ?? "student"),
+      ...x,
+    }));
+  }, [sessionSets, duo, role, lang]);
+  const passageFor = (
+    s: RunSetup,
+  ): { check: PublicPassage; sharp: PublicPassage } => {
+    const pool = content[s.role][lang];
+    return {
+      check:
+        pool.check.find((x) => x.id === s.checkPassageId) ?? pool.check[0]!,
+      sharp:
+        pool.sharp.find((x) => x.id === s.sharpPassageId) ?? pool.sharp[0]!,
+    };
+  };
+  const setup = setups[Math.min(player, setups.length - 1)]!;
+  const passages = passageFor(setup);
   const part = parts[player]!;
 
   const runFor = (i: number, ps: RunParts[]): RawRun => {
     const s = setups[i]!;
     const pp = ps[i]!;
-    const pass = content[s.role][lang];
+    const pass = passageFor(s);
     return {
       who: s.who,
       role: s.role,
-      wordSet: s.wordSet,
+      checkSet: s.checkSet,
+      storySet: s.storySet,
       checkPassageId: pass.check.id,
       checkMs: pp.check?.checkMs ?? 0,
       checkAnswers: pp.check?.checkAnswers ?? [],
@@ -173,7 +201,7 @@ export default function BrainUnlock({
   const reportFor = (i: number, ps: RunParts[]): PlayerReport => {
     const s = setups[i]!;
     const pp = ps[i]!;
-    const pass = content[s.role][lang];
+    const pass = passageFor(s);
     const run = runFor(i, ps);
     return buildReport(
       {
@@ -244,6 +272,43 @@ export default function BrainUnlock({
     advance(next);
   };
 
+  /** Start: this person's sets (server: device/phone/email history; else this browser's memory). */
+  async function start(): Promise<void> {
+    if (role === null) return;
+    setStarting(true);
+    if (role === "parent") trackBu("duo_chosen", { ...track, duo }, { duo });
+    const seen = loadSeen();
+    let sets: SessionSets[] | null = null;
+    try {
+      const res = await chooseBrainUnlockSets({
+        deviceId: deviceId(),
+        retakeOf,
+        seen,
+        role,
+        lang,
+        duo,
+      });
+      if (res.ok) sets = res.sets;
+    } catch {
+      sets = null;
+    }
+    sets ??= chooseSessionSets({ role, lang, duo, history: seen });
+    addSeen(sets);
+    setSessionSets(sets);
+    trackBu(
+      "started",
+      { ...track, duo },
+      { sets: sets.map((x) => `${x.checkSet}.${x.storySet}`).join("+") },
+    );
+    setParts([{}, {}]);
+    setPhase(0);
+    setPlayer(0);
+    setCheckDone(false);
+    setHandoff(null);
+    setStarting(false);
+    setStage("play");
+  }
+
   const continueLabel =
     phase === PHASES - 1 && player === setups.length - 1
       ? c.seeReport
@@ -262,6 +327,11 @@ export default function BrainUnlock({
               className="mx-auto flex w-full max-w-xl flex-col gap-5"
               data-bu-stage={view === "offer" ? "offer" : stage}
               data-bu-lang={lang}
+              data-bu-sets={
+                sessionSets
+                  ?.map((x) => `${x.checkSet}.${x.storySet}`)
+                  .join("+") ?? ""
+              }
             >
               <div className="flex items-center justify-between gap-2">
                 <p className="text-xs font-bold tracking-wider text-primary uppercase">
@@ -493,17 +563,8 @@ export default function BrainUnlock({
                   <button
                     type="button"
                     className={primaryBtn}
-                    onClick={() => {
-                      if (role === "parent")
-                        trackBu("duo_chosen", { ...track, duo }, { duo });
-                      trackBu("started", { ...track, duo });
-                      setParts([{}, {}]);
-                      setPhase(0);
-                      setPlayer(0);
-                      setCheckDone(false);
-                      setHandoff(null);
-                      setStage("play");
-                    }}
+                    disabled={starting}
+                    onClick={() => void start()}
                     data-bu-start
                   >
                     {c.promise.start}
@@ -589,7 +650,7 @@ export default function BrainUnlock({
                           c={c}
                           lang={lang}
                           passage={passages.check}
-                          wordSet={setup.wordSet}
+                          checkSet={setup.checkSet}
                           muted={muted}
                           onDone={(check) => finishPart({ check })}
                         />
@@ -625,7 +686,7 @@ export default function BrainUnlock({
                           lang={lang}
                           muted={muted}
                           before={scorePickedFor(runFor(player, parts))}
-                          wordSet={setup.wordSet}
+                          storySet={setup.storySet}
                           continueLabel={continueLabel}
                           onDone={(r) => finishPart(r)}
                         />
@@ -703,19 +764,19 @@ export default function BrainUnlock({
 function scorePickedFor(run: RawRun): number {
   return scorePicked(
     run.memoryPicked,
-    CHECK_WORDS[run.wordSet].targets.map((w) => w.id),
+    CHECK_SETS[run.checkSet].map((w) => w.id),
   );
 }
 function scoreForward(run: RawRun): number {
   return scoreInOrder(
     run.storyForward,
-    STORY_WORDS[run.wordSet].targets.map((w) => w.id),
+    STORY_SETS[run.storySet].map((w) => w.id),
   );
 }
 function scoreBackward(run: RawRun): number {
   return scoreInOrder(
     run.storyBackward,
-    STORY_WORDS[run.wordSet].targets.map((w) => w.id),
+    STORY_SETS[run.storySet].map((w) => w.id),
     true,
   );
 }
