@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { cloneUrl, VOICE_LINES } from "../voiceLines";
+import { lineUrl, VOICE_LINES } from "../voiceLines";
 import {
   applyUploadedVoice,
   regenerateVoiceLine,
@@ -11,8 +11,8 @@ import {
 } from "./voiceActions";
 
 // Every Brain Unlock voice line, one row each: the text, ▶ play (what visitors
-// hear now), "Replace with my own recording" (MP3), "Regenerate" (his cloned
-// voice again) and "Use standard" (back to the bundled clone file).
+// hear now), "Replace with my own recording" (MP3), "Regenerate" (the shubh
+// voice again, one piece) and "Use standard" (back to the bundled file).
 
 const MAX_BYTES = 2 * 1024 * 1024; // the guided-audio bucket's limit
 const btn =
@@ -35,7 +35,7 @@ function Row({
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const file = useRef<HTMLInputElement>(null);
   const audio = useRef<HTMLAudioElement | null>(null);
-  const src = override ?? cloneUrl(lang, id);
+  const src = override ?? lineUrl(lang, id);
 
   async function upload(f: File): Promise<void> {
     if (!/\.mp3$/i.test(f.name) && f.type !== "audio/mpeg")
@@ -92,7 +92,7 @@ function Row({
         >
           {override !== undefined
             ? "Your upload / new take"
-            : "Dr. Kapil clone (standard)"}
+            : "Sarvam shubh (standard)"}
         </span>
       </div>
       <p className="text-sm" lang={lang}>
@@ -169,12 +169,12 @@ export function VoiceLinesPanel({
   const [overrides, setOverrides] = useState(initial);
   return (
     <section className="space-y-3" data-voice-panel>
-      <h2 className="text-lg font-semibold">Voice lines (Dr. Kapil’s voice)</h2>
+      <h2 className="text-lg font-semibold">Voice lines</h2>
       <p className="text-xs text-muted-foreground">
-        Every line visitors hear, in your Sarvam voice clone. Changes go live at
-        once. Your own recording: MP3, up to 2 MB. If a file ever fails to load,
-        the page falls back to the older Sarvam “shubh” voice, then to on-screen
-        text.
+        Every line visitors hear, in the Sarvam “shubh” voice. Replace any line
+        with your own recording; changes go live at once. Your own recording:
+        MP3, up to 2 MB. If a file ever fails to load, the page shows the line
+        as on-screen text.
       </p>
       <div className="flex gap-2">
         {(["hi", "en"] as const).map((l) => (

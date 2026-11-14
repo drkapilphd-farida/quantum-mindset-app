@@ -1,118 +1,141 @@
 {
   "exercise": "brain-unlock",
   "lang": "en",
-  "voice": "clone:svc-0457f3df-1b84-4269-894c-39bb8bcd4a91",
-  "createdAt": "2026-11-14T02:03:26.440Z",
+  "voice": "shubh",
+  "model": "bulbul:v3",
+  "createdAt": "2026-11-14T03:11:44.792Z",
   "lines": {
     "hook": {
       "file": "hook.mp3",
-      "durationMs": 18406,
-      "text": "Namaste! I am Dr. Kapil. ... In the next four minutes, you will unlock three superpowers: speed, memory and focus. ... And you will see the change yourself."
+      "durationMs": 9131,
+      "text": "Namaste! I am Dr. Kapil. ... In the next four minutes, you will unlock three superpowers: speed, memory and focus. ... And you will see the change yourself.",
+      "heard": "Namaste, I am Dr. Kapil. In the next four minutes, you will unlock three superpowers: speed, memory, and focus, and you will see the change yourself."
     },
     "check-intro": {
       "file": "check-intro.mp3",
-      "durationMs": 11231,
-      "text": "First, a quick Brain Check, so we know where you start today. ... Relax, and do your natural best."
+      "durationMs": 6229,
+      "text": "First, a quick Brain Check, so we know where you start today. ... Relax, and do your natural best.",
+      "heard": "First, a quick brain check. So we know where you start today. Relax and do your natural best."
     },
     "speed-teach": {
       "file": "speed-teach.mp3",
-      "durationMs": 11499,
-      "text": "Most people read at the speed they speak. ... Your eyes can move much faster. ... Let them follow the light."
+      "durationMs": 5291,
+      "text": "Most people read at the speed they speak. ... Your eyes can move much faster. ... Let them follow the light.",
+      "heard": "Most people read at the speed they speak. Your eyes can move much faster. Let them follow the light."
     },
     "memory-teach": {
       "file": "memory-teach.mp3",
-      "durationMs": 17506,
-      "text": "Here is the secret. ... Your brain loves pictures and stories. ... Let's link five new words into one crazy story. ... See each picture in your mind."
+      "durationMs": 9382,
+      "text": "Here is the secret. ... Your brain loves pictures and stories. ... Let's link five new words into one crazy story. ... See each picture in your mind.",
+      "heard": "Here is the secret. Your brain loves pictures and stories. Let's link five new words into one crazy story. See each picture in your mind."
     },
     "storyA-1": {
       "file": "storyA-1.mp3",
-      "durationMs": 4638,
-      "text": "A huge gorilla..."
+      "durationMs": 1332,
+      "text": "A huge gorilla...",
+      "heard": "A huge gorilla"
     },
     "storyA-2": {
       "file": "storyA-2.mp3",
-      "durationMs": 3773,
-      "text": "opens a giant suitcase."
+      "durationMs": 1546,
+      "text": "opens a giant suitcase.",
+      "heard": "Opens a giant suitcase"
     },
     "storyA-3": {
       "file": "storyA-3.mp3",
-      "durationMs": 7118,
-      "text": "Instead of clothes, curd pours out of the suitcase!"
+      "durationMs": 3465,
+      "text": "Instead of clothes, curd pours out of the suitcase!",
+      "heard": "Instead of clothes, curd pours out of the suitcase."
     },
     "storyA-4": {
       "file": "storyA-4.mp3",
-      "durationMs": 3994,
-      "text": "The curd soaks a flying drone..."
+      "durationMs": 1913,
+      "text": "The curd soaks a flying drone...",
+      "heard": "The curd soaks a flying drone."
     },
     "storyA-5": {
       "file": "storyA-5.mp3",
-      "durationMs": 5360,
-      "text": "and the heavy drone falls right into your tiffin."
+      "durationMs": 2303,
+      "text": "and the heavy drone falls right into your tiffin.",
+      "heard": "And the heavy drone falls right into your tiffin."
     },
     "storyB-1": {
       "file": "storyB-1.mp3",
-      "durationMs": 3026,
-      "text": "A cheeky squirrel..."
+      "durationMs": 1234,
+      "text": "A cheeky squirrel...",
+      "heard": "A cheeky squirrel"
     },
     "storyB-2": {
       "file": "storyB-2.mp3",
-      "durationMs": 4021,
-      "text": "jumps into a big cooker."
+      "durationMs": 1526,
+      "text": "jumps into a big cooker.",
+      "heard": "Jumps into a big cooker"
     },
     "storyB-3": {
       "file": "storyB-3.mp3",
-      "durationMs": 6246,
-      "text": "The cooker whistles and shoots out popcorn!"
+      "durationMs": 2494,
+      "text": "The cooker whistles and shoots out popcorn!",
+      "heard": "The cooker whistles and shoots out popcorn."
     },
     "storyB-4": {
       "file": "storyB-4.mp3",
-      "durationMs": 5701,
-      "text": "The popcorn lands on a sleeping buffalo..."
+      "durationMs": 2310,
+      "text": "The popcorn lands on a sleeping buffalo...",
+      "heard": "The popcorn lands on a sleeping buffalo."
     },
     "storyB-5": {
       "file": "storyB-5.mp3",
-      "durationMs": 6034,
-      "text": "and the buffalo sits right on your T.V. remote."
+      "durationMs": 2301,
+      "text": "and the buffalo sits right on your T.V. remote.",
+      "heard": "And the buffalo sits right on your TV remote."
     },
     "memory-replay": {
       "file": "memory-replay.mp3",
-      "durationMs": 5286,
-      "text": "Now see the whole story once more in your mind."
+      "durationMs": 2104,
+      "text": "Now see the whole story once more in your mind.",
+      "heard": "Now see the whole story once more in your mind."
     },
     "focus-intro": {
       "file": "focus-intro.mp3",
-      "durationMs": 7261,
-      "text": "Sit comfortably. ... Look softly at the glowing dot."
+      "durationMs": 3272,
+      "text": "Sit comfortably. ... Look softly at the glowing dot.",
+      "heard": "Sit comfortably. Look softly at the glowing dot."
     },
     "focus-in": {
       "file": "focus-in.mp3",
-      "durationMs": 1530,
-      "text": "Breathe in."
+      "durationMs": 945,
+      "text": "Breathe in.",
+      "heard": "Breathe in"
     },
     "focus-out": {
       "file": "focus-out.mp3",
-      "durationMs": 2932,
-      "text": "And slowly breathe out."
+      "durationMs": 1913,
+      "text": "And slowly breathe out.",
+      "heard": "and slowly breathe out."
     },
     "focus-done": {
       "file": "focus-done.mp3",
-      "durationMs": 5523,
-      "text": "Beautiful. ... Your mind is calm and sharp."
+      "durationMs": 2797,
+      "text": "Beautiful. ... Your mind is calm and sharp.",
+      "heard": "Beautiful. Your mind is calm and sharp."
     },
     "reveal-up": {
       "file": "reveal-up.mp3",
-      "durationMs": 5524,
-      "text": "Wow! ... You just saw it yourself."
+      "durationMs": 2048,
+      "text": "Wow! ... You just saw it yourself.",
+      "heard": "Wow, you just saw it yourself."
     },
     "reveal-kind": {
       "file": "reveal-kind.mp3",
-      "durationMs": 8246,
-      "text": "Great effort! ... In thirty days of practice, this grows step by step."
+      "durationMs": 4267,
+      "text": "Great effort! ... In thirty days of practice, this grows step by step.",
+      "heard": "Great effort. In 30 days of practice, this grows step by step."
     },
     "report-ready": {
       "file": "report-ready.mp3",
-      "durationMs": 7620,
-      "text": "Here is your Brain Unlock report. ... These are your own, real numbers."
+      "durationMs": 4096,
+      "text": "Here is your Brain Unlock report. ... These are your own, real numbers.",
+      "heard": "Here is your brain unlock report. These are your own real numbers."
     }
   }
 }

@@ -93,7 +93,7 @@ export const SettingsSchema = z.object({
   /**
    * Per-line voice overrides (public audio URLs), keyed by voice line id
    * (voiceLines.ts): Dr. Kapil's own upload, or a "Regenerate" from the admin
-   * page. A line without one plays the bundled cloned-voice file.
+   * page. A line without one plays the bundled shubh file.
    */
   voiceLines: z.object({
     en: z.record(

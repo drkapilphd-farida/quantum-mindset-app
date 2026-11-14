@@ -3,11 +3,12 @@ import hi from "./script/hi.json";
 import type { BuLangCode } from "./types";
 
 // Every Brain Unlock voice line (script/<lang>.json, the text each recording
-// was voiced from). Active audio: Dr. Kapil's own cloned voice (Sarvam Instant
-// Voice Cloning, 14 Nov 2026) at /audio/brain-unlock/<lang>/<id>.mp3. Order of
-// sources for a line: his own upload / regenerate from the admin page → the
-// bundled clone file → the older Sarvam "shubh" file (fallback) → a timed
-// caption (muted, blocked or missing audio never stops the flow).
+// was voiced from). Go-live voice (founder, 14 Nov 2026): Sarvam "shubh", one
+// clean recording per line at /audio/brain-unlock/<lang>/<id>.mp3. Dr. Kapil's
+// voice-clone recordings are kept in /audio/brain-unlock/clone/ but are not
+// played. Sources for a line: his own upload / regenerate from the admin page
+// → the bundled shubh file → a timed caption (muted, blocked or missing audio
+// never stops the flow).
 
 export type VoiceLine = { id: string; text: string };
 
@@ -25,10 +26,8 @@ export function voiceText(lang: BuLangCode, id: string): string {
   );
 }
 
-export const cloneUrl = (lang: BuLangCode, id: string): string =>
+export const lineUrl = (lang: BuLangCode, id: string): string =>
   `/audio/brain-unlock/${lang}/${id}.mp3`;
-export const shubhUrl = (lang: BuLangCode, id: string): string =>
-  `/audio/brain-unlock/shubh/${lang}/${id}.mp3`;
 
 /** The files to try for a line, in order. */
 export function voiceSources(
@@ -37,9 +36,5 @@ export function voiceSources(
   overrides: Readonly<Record<string, string>>,
 ): string[] {
   const own = overrides[id];
-  return [
-    ...(own !== undefined && own !== "" ? [own] : []),
-    cloneUrl(lang, id),
-    shubhUrl(lang, id),
-  ];
+  return [...(own !== undefined && own !== "" ? [own] : []), lineUrl(lang, id)];
 }

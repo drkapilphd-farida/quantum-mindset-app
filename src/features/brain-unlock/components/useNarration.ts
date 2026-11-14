@@ -10,9 +10,9 @@ import {
 } from "react";
 import { voiceSources, voiceText } from "../voiceLines";
 
-// Plays Brain Unlock voice lines with captions, in Dr. Kapil's own cloned
-// voice. Each line tries its sources in order (voiceLines.ts): his admin
-// upload/regenerate → the bundled clone file → the older "shubh" file. If none
+// Plays Brain Unlock voice lines with captions (Sarvam "shubh" voice). Each
+// line tries its sources in order (voiceLines.ts): Dr. Kapil's admin
+// upload/regenerate → the bundled file. If none
 // plays (muted, blocked, missing) the caption simply stays for a reading-length
 // pause: the flow never stops. Never uses the phone's robot voice.
 
@@ -35,6 +35,8 @@ export function useNarration(
   play: (
     lines: readonly NarrationLine[],
     onLine?: (index: number) => void,
+    /** A calm pause between lines (e.g. memory-story steps). */
+    gapMs?: number,
   ) => Promise<void>;
   /** One line, fire-and-forget (round intros, reveals); text from the script. */
   cue: (id: string, delayMs?: number) => void;
@@ -116,6 +118,7 @@ export function useNarration(
     async (
       lines: readonly NarrationLine[],
       onLine?: (index: number) => void,
+      gapMs = 0,
     ): Promise<void> => {
       run.current += 1;
       const id = run.current;
@@ -128,6 +131,7 @@ export function useNarration(
           msForText(lines[i]!.text),
           id,
         );
+        if (gapMs > 0 && i < lines.length - 1) await wait(gapMs, id);
       }
       if (run.current === id) setPlaying(false);
     },

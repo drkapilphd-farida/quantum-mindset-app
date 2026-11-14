@@ -7,11 +7,11 @@ import { logger } from "@/lib/logger";
 import { currentAdminEmail } from "@/features/live-classes/admin/data";
 import { getBrainUnlockSettings } from "../settingsServer";
 import { VOICE_LINES } from "../voiceLines";
-import { cloneVoiceMp3, isSarvamConfigured } from "../voiceClone";
+import { isSarvamConfigured, shubhVoiceMp3 } from "../voiceTts";
 
 // /admin/brain-unlock-settings → "Voice lines": per line, replace with
 // Dr. Kapil's own recording (MP3 straight to the public guided-audio bucket via
-// a signed upload URL), regenerate in his cloned voice, or go back to the
+// a signed upload URL), regenerate in the shubh voice, or go back to the
 // bundled file. Each change saves at once (settings.voiceLines). Admin only.
 
 type Result =
@@ -107,7 +107,7 @@ export async function applyUploadedVoice(input: unknown): Promise<Result> {
     : { ok: false, error: "Could not save. Please try again." };
 }
 
-/** Voice the line again in Dr. Kapil's cloned voice (Sarvam) and make it live. */
+/** Voice the line again in the Sarvam shubh voice (one piece, checked) and make it live. */
 export async function regenerateVoiceLine(input: unknown): Promise<Result> {
   const admin = await currentAdminEmail();
   if (admin === null) return { ok: false, error: "Not authorized." };
@@ -121,7 +121,7 @@ export async function regenerateVoiceLine(input: unknown): Promise<Result> {
     };
   const { lang, id } = parsed.data;
   const text = VOICE_LINES[lang].find((l) => l.id === id)!.text;
-  const mp3 = await cloneVoiceMp3(lang, id, text);
+  const mp3 = await shubhVoiceMp3(lang, id, text);
   if (mp3 === null)
     return {
       ok: false,
@@ -147,7 +147,7 @@ export async function regenerateVoiceLine(input: unknown): Promise<Result> {
     : { ok: false, error: "Could not save. Please try again." };
 }
 
-/** Back to the bundled cloned-voice file. */
+/** Back to the bundled shubh file. */
 export async function resetVoiceLine(input: unknown): Promise<Result> {
   const admin = await currentAdminEmail();
   if (admin === null) return { ok: false, error: "Not authorized." };

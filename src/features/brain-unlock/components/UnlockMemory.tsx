@@ -72,8 +72,11 @@ export function UnlockMemory({
             : "Now see the whole story once more in your mind.",
       },
     ];
-    await voice.play(lines, (i) =>
-      setShown(Math.min(Math.max(i, 0), MEMORY_TOTAL)),
+    // A short calm pause after each story step, so each picture can form.
+    await voice.play(
+      lines,
+      (i) => setShown(Math.min(Math.max(i, 0), MEMORY_TOTAL)),
+      500,
     );
     setShown(MEMORY_TOTAL);
     setPhase("told");
