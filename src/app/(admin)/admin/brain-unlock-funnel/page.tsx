@@ -10,8 +10,11 @@ import {
   type SetStatRow,
 } from "@/features/brain-unlock/setStats";
 import {
+  buildDropOff,
   buildFunnel,
   type Breakdown,
+  type DropOff,
+  type DropStage,
   type StepRow,
 } from "@/features/brain-unlock/funnel";
 import { DEFAULT_SETTINGS } from "@/features/brain-unlock/settings";
@@ -35,6 +38,8 @@ const LABELS: Record<string, string> = {
   unlock_focus_done: "🎯 Focus unlocked",
   report_view: "Saw the report",
   whatsapp_submitted: "Sent WhatsApp number (lead)",
+  lead_submit_tried: "Tapped “send” on the report",
+  lead_save_failed: "Send failed",
   share_clicked: "Shared",
   plan_clicked: "Clicked a plan",
   payment_success: "Paid for Sharp Brain",
@@ -199,6 +204,96 @@ function SetTable({
   );
 }
 
+const STAGE_LABELS: Record<DropStage, string> = {
+  check: "Brain Check (reading + questions + words)",
+  speed: "⚡ Speed (RSVP)",
+  memory: "🧠 Memory story",
+  focus: "🎯 Focus grid",
+  report: "Between Focus and the report",
+};
+
+const mmss = (sec: number | null): string =>
+  sec === null ? "—" : `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
+
+function DropOffSection({ d }: { d: DropOff }): React.JSX.Element {
+  const left = d.started - d.reachedReport;
+  return (
+    <section className="space-y-3" data-drop-off>
+      <h2 className="text-lg font-semibold">Where people left mid-challenge</h2>
+      <p className="max-w-3xl text-xs text-muted-foreground">
+        {d.started} started · {d.reachedReport} reached the report · {left} left
+        on the way. &ldquo;Played before leaving&rdquo; = from Start to the last
+        step they finished (the exact moment someone closes the page is not
+        recorded, so they played at least this long; 0:00 = left during the
+        Brain Check). &ldquo;Finishers took&rdquo; = how long people who
+        finished that stage needed for it.
+      </p>
+      <div className="overflow-x-auto rounded-md border border-border">
+        <table className="w-full min-w-[640px] text-sm">
+          <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
+            <tr>
+              <th className="p-2">Left during</th>
+              <th className="p-2">Reached it</th>
+              <th className="p-2">Left</th>
+              <th className="p-2">Left %</th>
+              <th className="p-2">Played before leaving (avg)</th>
+              <th className="p-2">Finishers took (avg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.rows.map((r) => (
+              <tr key={r.stage} className="border-t border-border" data-drop-stage={r.stage}>
+                <td className="p-2 font-medium">{STAGE_LABELS[r.stage]}</td>
+                <td className="p-2 tabular-nums">{r.reached}</td>
+                <td className={`p-2 tabular-nums ${r.left > 0 ? "font-semibold text-destructive" : ""}`}>{r.left}</td>
+                <td className="p-2 tabular-nums">
+                  {r.reached === 0 ? "—" : `${Math.round((r.left / r.reached) * 100)}%`}
+                </td>
+                <td className="p-2 tabular-nums">{mmss(r.avgPlayedSeconds)}</td>
+                <td className="p-2 tabular-nums">{mmss(r.avgStageSeconds)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {d.sessions.length > 0 && (
+        <details className="rounded-md border border-border p-3 text-sm">
+          <summary className="cursor-pointer font-medium">Each person who left ({d.sessions.length})</summary>
+          <div className="mt-2 overflow-x-auto">
+            <table className="w-full min-w-[560px] text-sm" data-drop-sessions>
+              <thead className="text-left text-xs text-muted-foreground">
+                <tr>
+                  <th className="p-1.5">Started (IST)</th>
+                  <th className="p-1.5">Visit</th>
+                  <th className="p-1.5">Who</th>
+                  <th className="p-1.5">Left during</th>
+                  <th className="p-1.5">Played</th>
+                </tr>
+              </thead>
+              <tbody>
+                {d.sessions.map((x) => (
+                  <tr key={x.session + x.startedAt} className="border-t border-border">
+                    <td className="p-1.5 tabular-nums">
+                      {new Date(x.startedAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
+                    </td>
+                    <td className="p-1.5 font-mono text-xs">{x.session}</td>
+                    <td className="p-1.5">
+                      {x.lang === "hi" ? "HI" : "EN"} · {x.role ?? "—"}
+                      {x.duo ? " · Duo" : ""}
+                    </td>
+                    <td className="p-1.5">{STAGE_LABELS[x.stage]}</td>
+                    <td className="p-1.5 tabular-nums">{mmss(x.playedSeconds)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      )}
+    </section>
+  );
+}
+
 export default async function BrainUnlockFunnelPage({
   searchParams,
 }: {
@@ -227,6 +322,7 @@ export default async function BrainUnlockFunnelPage({
   ]);
   const sets = buildSetStats(leadDetails);
   const f = buildFunnel(rows, paid, { campaign, role });
+  const drop = buildDropOff(rows, { campaign, role });
   const campaigns = [
     ...new Set(rows.map((r) => r.utm_campaign ?? "(none)")),
   ].sort();
@@ -323,6 +419,8 @@ export default async function BrainUnlockFunnelPage({
           Duo sessions {f.duoSessions}
         </p>
       </section>
+
+      <DropOffSection d={drop} />
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-md border border-border p-4">

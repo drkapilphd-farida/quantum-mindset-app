@@ -10,7 +10,7 @@ import {
   openPendingWhatsAppTab,
 } from "@/lib/whatsapp/handoff";
 import { shareOrDownload } from "@/features/reading-speed-test/shareCard";
-import { saveBrainUnlockLead } from "../actions";
+import { saveBrainUnlockLead, type SavedLead } from "../actions";
 import type { BuCopy } from "../copy";
 import {
   factsFrom,
@@ -289,6 +289,7 @@ function LeadForm({
     const tab = openPendingWhatsAppTab();
     setState("saving");
     setError(null);
+    trackBu("lead_submit_tried", track, { email: email.trim() !== "" });
     const res = await saveBrainUnlockLead({
       sessionId: sessionId(),
       firstName: name,
@@ -303,8 +304,9 @@ function LeadForm({
       utm: readUtmParams(),
       deviceId: deviceId(),
       pageUrl: window.location.href,
-    });
+    }).catch((): SavedLead => ({ ok: false, error: c.error, reason: "network" }));
     if (!res.ok) {
+      trackBu("lead_save_failed", track, { reason: res.reason });
       cancelWhatsAppHandoff(tab);
       setState("idle");
       setError(res.error);

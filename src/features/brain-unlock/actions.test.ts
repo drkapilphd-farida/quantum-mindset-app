@@ -237,28 +237,25 @@ describe("saveBrainUnlockLead", () => {
         duo: false,
         runs: [run("me", "student", "A")],
       }),
-    ).toEqual({ ok: false, error: "Enter a valid WhatsApp number." });
+    ).toEqual({ ok: false, error: "Enter a valid WhatsApp number.", reason: "phone" });
+    // Each failure carries a reason for the "lead_save_failed" event.
     expect(
-      (
-        await actions.saveBrainUnlockLead({
-          ...base,
-          role: "student",
-          duo: false,
-          runs: [{ ...run("me", "student", "A"), sharpPassageId: "nope" }],
-        })
-      ).ok,
-    ).toBe(false);
+      await actions.saveBrainUnlockLead({
+        ...base,
+        role: "student",
+        duo: false,
+        runs: [{ ...run("me", "student", "A"), sharpPassageId: "nope" }],
+      }),
+    ).toMatchObject({ ok: false, reason: "run" });
     expect(
-      (
-        await actions.saveBrainUnlockLead({
-          ...base,
-          pageUrl: "https://evil.test/x",
-          role: "student",
-          duo: false,
-          runs: [run("me", "student", "A")],
-        })
-      ).ok,
-    ).toBe(false);
+      await actions.saveBrainUnlockLead({
+        ...base,
+        pageUrl: "https://evil.test/x",
+        role: "student",
+        duo: false,
+        runs: [run("me", "student", "A")],
+      }),
+    ).toMatchObject({ ok: false, reason: "host" });
     expect(inserted).toHaveLength(0);
   });
 });

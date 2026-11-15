@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { buildFunnel, type EventRow } from "./funnel";
+import fs from "node:fs";
+import { buildDropOff, buildFunnel, type EventRow } from "./funnel";
+import { FUNNEL_EVENTS } from "./types";
 
 const ev = (
   session: string,
@@ -94,5 +96,65 @@ describe("Brain Unlock funnel", () => {
       paid: 1,
     });
     expect(f.byRole.find((b) => b.key === "student")?.landed).toBe(1);
+  });
+});
+
+describe("where people left mid-challenge", () => {
+  const t = (min: number, sec = 0): string => new Date(Date.UTC(2026, 10, 14, 6, min, sec)).toISOString();
+  const path = (session: string, steps: [string, number][], extra: Partial<EventRow> = {}): EventRow[] =>
+    steps.map(([event, min]) => ev(session, event, { created_at: t(min), role: "student", lang: "en", ...extra }));
+  const rows: EventRow[] = [
+    // left in the Brain Check
+    ...path("checkLeaver1", [["landing", 0], ["role_picked", 0], ["started", 1]]),
+    ...path("checkLeaver2", [["landing", 0], ["started", 0]], { lang: "hi", role: "parent" }),
+    // left in the memory story after 3 minutes (started 1, check 3, speed 4)
+    ...path("memLeaver", [["landing", 0], ["started", 1], ["check_done", 3], ["unlock_speed_done", 4]]),
+    // left in the focus grid
+    ...path("focusLeaver", [["started", 0], ["check_done", 2], ["unlock_speed_done", 3], ["unlock_memory_done", 5]]),
+    // finished
+    ...path("done", [["started", 0], ["check_done", 2], ["unlock_speed_done", 4], ["unlock_memory_done", 6], ["unlock_focus_done", 7], ["report_view", 7]]),
+    // started twice in the same tab: counts once, from the second start (left in Speed)
+    ...path("restart", [["started", 0], ["started", 10], ["check_done", 12]]),
+    // never started: not counted
+    ...path("browser", [["landing", 0], ["role_picked", 0]]),
+  ];
+
+  it("puts each person at the stage they were in, with the time played", () => {
+    const d = buildDropOff(rows, { campaign: null, role: null });
+    expect(d.started).toBe(6);
+    expect(d.reachedReport).toBe(1);
+    const left = Object.fromEntries(d.rows.map((r) => [r.stage, r.left]));
+    expect(left).toEqual({ check: 2, speed: 1, memory: 1, focus: 1, report: 0 });
+    const by = Object.fromEntries(d.sessions.map((x) => [x.session, x]));
+    expect(by.memLea?.playedSeconds).toBe(180);
+    expect(by.focusL?.playedSeconds).toBe(300);
+    expect(by.restar?.playedSeconds).toBe(120);
+    expect(by.checkL).toBeDefined();
+    expect(d.rows.find((r) => r.stage === "check")?.avgPlayedSeconds).toBe(0);
+    expect(d.rows.find((r) => r.stage === "check")?.reached).toBe(6);
+    expect(d.rows.find((r) => r.stage === "focus")?.reached).toBe(2);
+  });
+
+  it("averages how long finishers took per stage", () => {
+    const d = buildDropOff(rows, { campaign: null, role: null });
+    // Brain Check finishers: memLeaver 2 min, focusLeaver 2, done 2, restart 2.
+    expect(d.rows.find((r) => r.stage === "check")?.avgStageSeconds).toBe(120);
+    // Memory finishers: focusLeaver 2 min, done 2 min.
+    expect(d.rows.find((r) => r.stage === "memory")?.avgStageSeconds).toBe(120);
+  });
+
+  it("follows the role filter", () => {
+    const d = buildDropOff(rows, { campaign: null, role: "parent" });
+    expect(d.started).toBe(1);
+    expect(d.sessions[0]?.lang).toBe("hi");
+  });
+});
+
+describe("funnel events", () => {
+  it("the database allows exactly the events the code sends (latest migration)", () => {
+    const sql = fs.readFileSync("supabase/migrations/20261115000002_brain_unlock_submit_events.sql", "utf8");
+    const list = /CHECK \(event IN \(([\s\S]*?)\)\)/.exec(sql)?.[1] ?? "";
+    const allowed = [...list.matchAll(/'([a-z_]+)'/g)].map((m) => m[1]).sort();
+    expect(allowed).toEqual([...FUNNEL_EVENTS].sort());
   });
 });

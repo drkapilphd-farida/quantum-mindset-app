@@ -13,6 +13,7 @@ export type EventRow = {
   data: unknown;
   utm_campaign: string | null;
   created_at: string;
+  lang?: string | null;
 };
 
 /** The main path, in order; drop % is against the previous main step. */
@@ -32,6 +33,8 @@ export const MAIN_STEPS: readonly FunnelEvent[] = [
 /** Side steps: shown with their count, no drop. */
 export const SIDE_STEPS: readonly FunnelEvent[] = [
   "duo_chosen",
+  "lead_submit_tried",
+  "lead_save_failed",
   "share_clicked",
 ];
 
@@ -76,11 +79,15 @@ const pct = (a: number, b: number): number | null =>
 const avg = (xs: number[]): number =>
   xs.length === 0 ? 0 : Math.round(xs.reduce((s, x) => s + x, 0) / xs.length);
 
-export function buildFunnel(
+/** Each session's campaign (the one it landed with) and role (the one it picked), and the filter on them. */
+function sessionFilter(
   events: readonly EventRow[],
-  paidSessions: ReadonlySet<string>,
   filter: FunnelFilter,
-): FunnelReport {
+): {
+  campaignOf: Map<string, string>;
+  roleOf: Map<string, string>;
+  keep: (s: string) => boolean;
+} {
   const campaignOf = new Map<string, string>();
   const roleOf = new Map<string, string>();
   for (const e of events) {
@@ -96,6 +103,15 @@ export function buildFunnel(
     (filter.campaign === null ||
       (campaignOf.get(s) ?? "(none)") === filter.campaign) &&
     (filter.role === null || roleOf.get(s) === filter.role);
+  return { campaignOf, roleOf, keep };
+}
+
+export function buildFunnel(
+  events: readonly EventRow[],
+  paidSessions: ReadonlySet<string>,
+  filter: FunnelFilter,
+): FunnelReport {
+  const { campaignOf, roleOf, keep } = sessionFilter(events, filter);
   const rows = events.filter((e) => keep(e.session_id));
 
   const sessionsBy = new Map<string, Set<string>>();
@@ -213,5 +229,128 @@ export function buildFunnel(
       .sort((a, b) => b.count - a.count),
     duoSessions: new Set(rows.filter((e) => e.duo).map((e) => e.session_id))
       .size,
+  };
+}
+
+// ── Where people left mid-challenge (founder, 15 Nov 2026) ──────────────────
+// For every session that started but never saw the report: the stage it was
+// in when it stopped (the one after its last finished step), and the time
+// from "started" to that last finished step. The exact moment someone left is
+// not recorded, so this is how long they had played at least. A session that
+// started again (same tab) counts from its last start.
+
+export const DROP_STAGES = ["check", "speed", "memory", "focus", "report"] as const;
+export type DropStage = (typeof DROP_STAGES)[number];
+
+/** The event that ends each stage. */
+const STAGE_END: Record<DropStage, FunnelEvent> = {
+  check: "check_done",
+  speed: "unlock_speed_done",
+  memory: "unlock_memory_done",
+  focus: "unlock_focus_done",
+  report: "report_view",
+};
+
+export type DroppedSession = {
+  session: string;
+  lang: string | null;
+  role: string | null;
+  duo: boolean;
+  startedAt: string;
+  stage: DropStage;
+  /** From "started" to the last finished step (0 = left in the Brain Check). */
+  playedSeconds: number;
+};
+
+export type DropRow = {
+  stage: DropStage;
+  /** People who left during this stage. */
+  left: number;
+  /** People who reached this stage (finished the one before). */
+  reached: number;
+  /** Average time played before leaving (start → last finished step). */
+  avgPlayedSeconds: number | null;
+  /** How long the people who finished this stage took for it, on average. */
+  avgStageSeconds: number | null;
+};
+
+export type DropOff = {
+  started: number;
+  reachedReport: number;
+  rows: DropRow[];
+  sessions: DroppedSession[];
+};
+
+export function buildDropOff(
+  events: readonly EventRow[],
+  filter: FunnelFilter,
+): DropOff {
+  const { roleOf, keep } = sessionFilter(events, filter);
+  const bySession = new Map<string, EventRow[]>();
+  for (const e of events) {
+    if (!keep(e.session_id)) continue;
+    const list = bySession.get(e.session_id) ?? [];
+    list.push(e);
+    bySession.set(e.session_id, list);
+  }
+  const ms = (iso: string): number => Date.parse(iso);
+  const stageTimes = new Map<DropStage, number[]>(DROP_STAGES.map((st) => [st, []]));
+  const reached = new Map<DropStage, number>(DROP_STAGES.map((st) => [st, 0]));
+  const dropped: DroppedSession[] = [];
+  let started = 0;
+  let reachedReport = 0;
+  for (const [session, list] of bySession) {
+    const sorted = [...list].sort((a, b) => ms(a.created_at) - ms(b.created_at));
+    const lastStart = sorted.map((e) => e.event).lastIndexOf("started");
+    if (lastStart === -1) continue;
+    started += 1;
+    const run = sorted.slice(lastStart);
+    const t0 = ms(run[0]!.created_at);
+    const at = (ev: FunnelEvent): number | null => {
+      const e = run.find((x) => x.event === ev);
+      return e === undefined ? null : ms(e.created_at);
+    };
+    let prev = t0;
+    let stage: DropStage | null = null;
+    for (const st of DROP_STAGES) {
+      reached.set(st, (reached.get(st) ?? 0) + 1);
+      const end = at(STAGE_END[st]);
+      if (end === null) {
+        stage = st;
+        break;
+      }
+      stageTimes.get(st)!.push((end - prev) / 1000);
+      prev = end;
+    }
+    if (stage === null) {
+      reachedReport += 1;
+      continue;
+    }
+    dropped.push({
+      session: session.slice(0, 6),
+      lang: run.find((e) => e.lang)?.lang ?? sorted.find((e) => e.lang)?.lang ?? null,
+      role: roleOf.get(session) ?? null,
+      duo: sorted.some((e) => e.duo || e.event === "duo_chosen"),
+      startedAt: run[0]!.created_at,
+      stage,
+      playedSeconds: Math.round((prev - t0) / 1000),
+    });
+  }
+  const mean = (xs: number[]): number | null =>
+    xs.length === 0 ? null : Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
+  return {
+    started,
+    reachedReport,
+    rows: DROP_STAGES.map((stage) => {
+      const left = dropped.filter((d) => d.stage === stage);
+      return {
+        stage,
+        left: left.length,
+        reached: reached.get(stage) ?? 0,
+        avgPlayedSeconds: mean(left.map((d) => d.playedSeconds)),
+        avgStageSeconds: mean(stageTimes.get(stage) ?? []),
+      };
+    }),
+    sessions: dropped.sort((a, b) => ms(a.startedAt) - ms(b.startedAt)),
   };
 }

@@ -17,7 +17,7 @@ export async function readEvents(
   for (let offset = 0; offset < MAX_ROWS; offset += PAGE) {
     const { data, error } = await client
       .from("brain_unlock_events")
-      .select("session_id, event, role, duo, data, utm_campaign, created_at")
+      .select("session_id, event, role, lang, duo, data, utm_campaign, created_at")
       .gte("created_at", fromIso)
       .lt("created_at", toIso)
       .order("id")

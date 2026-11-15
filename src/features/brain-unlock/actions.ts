@@ -195,7 +195,10 @@ const LeadSchema = z.object({
 
 export type SavedLead =
   | { ok: true; reports: EvaluatedRun[]; facts: ReportFacts }
-  | { ok: false; error: string };
+  | { ok: false; error: string; reason: LeadFailReason };
+
+/** Why a lead was not saved — sent with the "lead_save_failed" funnel event (no personal data). "network" = the call itself failed (set in the browser). */
+export type LeadFailReason = "phone" | "email" | "name" | "invalid" | "rate" | "host" | "run" | "server" | "network";
 
 /** Stores the phone as digits with country code ("91…"), the leads table's format. */
 function phoneDigits(raw: string): string | null {
@@ -240,6 +243,7 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
           : nameIssue
             ? "Please enter your name."
             : GENERIC_ERROR,
+      reason: phoneIssue ? "phone" : emailIssue ? "email" : nameIssue ? "name" : "invalid",
     };
   }
   const ip = await getClientIp();
@@ -250,17 +254,18 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
     return {
       ok: false,
       error: "Too many attempts. Please wait a minute and try again.",
+      reason: "rate",
     };
   const d = parsed.data;
   const phone = phoneDigits(d.phone);
   if (phone === null)
-    return { ok: false, error: "Enter a valid WhatsApp number." };
+    return { ok: false, error: "Enter a valid WhatsApp number.", reason: "phone" };
 
   // Report links point at this site only.
   const host = (await headers()).get("host") ?? "";
   const page = new URL(d.pageUrl);
   if (host !== "" && page.host !== host)
-    return { ok: false, error: GENERIC_ERROR };
+    return { ok: false, error: GENERIC_ERROR, reason: "host" };
 
   try {
     const settings = await getBrainUnlockSettings();
@@ -347,7 +352,7 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
       .single();
     if (error || saved === null) {
       logger.error("saveBrainUnlockLead: insert failed", { code: error?.code });
-      return { ok: false, error: GENERIC_ERROR };
+      return { ok: false, error: GENERIC_ERROR, reason: "server" };
     }
     await queueFollowups(saved.id, Date.parse(saved.created_at), settings);
     const email = row.email;
@@ -385,6 +390,6 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
       logger.error("saveBrainUnlockLead failed", {
         error: e instanceof Error ? e.message : "unknown",
       });
-    return { ok: false, error: GENERIC_ERROR };
+    return { ok: false, error: GENERIC_ERROR, reason: e instanceof InvalidRunError ? "run" : "server" };
   }
 }

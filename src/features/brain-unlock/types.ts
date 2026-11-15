@@ -85,6 +85,10 @@ export const FUNNEL_EVENTS = [
   "unlock_focus_done",
   "report_view",
   "whatsapp_submitted",
+  // Founder (15 Nov 2026): every tap on the report's submit button, and every
+  // save that failed (with a reason, no personal data).
+  "lead_submit_tried",
+  "lead_save_failed",
   "share_clicked",
   "plan_clicked",
   "payment_success",
