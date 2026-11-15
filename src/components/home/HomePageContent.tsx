@@ -9,7 +9,7 @@ import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
 import HomeHero from '@/components/home/HomeHero'
 import HomePodcastFeature from '@/components/HomePodcastFeature'
 import HomeFaq from '@/components/home/HomeFaq'
-import { HomeFinalCta, HomeFranchiseStrip, HomeFreeTools, HomeHowSessions, HomeMeetKapil, HomePaths, HomeSharpBrainReviews, HomeTrustStrip } from '@/components/home/HomeV2Sections'
+import { HomeFinalCta, HomeFranchiseStrip, HomeSchoolsCard, HomeFreeTools, HomeHowSessions, HomeMeetKapil, HomePaths, HomeSharpBrainReviews, HomeTrustStrip } from '@/components/home/HomeV2Sections'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 
@@ -19,7 +19,7 @@ import Footer from '@/components/Footer'
 // Order (owner's homepage upgrade, Nov 2026): hero → trust strip → two
 // paths → how Personal Sessions work → reviews (Sharp Brain, Personal
 // Sessions) → meet Dr. Kapil → free tools → podcast → FAQ → final call to
-// action → partner strip → footer.
+// action → For Schools card → partner strip → footer.
 export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Element {
   const organizationSchema = buildOrganizationSchema()
   const personSchema = buildPersonSchema()
@@ -44,6 +44,7 @@ export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Ele
           <HomePodcastFeature />
           <HomeFaq />
           <HomeFinalCta />
+          <HomeSchoolsCard />
           <HomeFranchiseStrip />
         </main>
         <Footer />

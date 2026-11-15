@@ -256,7 +256,7 @@ const programsData = {
     format: 'In-school programs and talks',
     prices: [] as ProgramPrice[],
     checkout: [{ label: 'Enquire on WhatsApp', href: waLink('Hi Dr. Kapil, I want to bring Sharp Brain to our school.') }],
-    url: '/corporate#schools',
+    url: '/schools',
     status: 'active',
     pillar: 'brain',
   },

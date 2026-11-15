@@ -17,7 +17,7 @@ export const FREE_TEST_LINKS = {
 } as const
 
 export const ORGANISATIONS_HREF = '/corporate'
-export const SCHOOLS_HREF = '/corporate#schools'
+export const SCHOOLS_HREF = '/schools'
 export const CONTACT_EMAIL = contact.email
 export const TALK_TO_US_HREF = WHATSAPP_GENERAL_INQUIRY_LINK
 
@@ -98,13 +98,19 @@ function sharpBrainUrl(lang: Lang, hash = ''): string {
   return lang === 'hi' ? `${programs.sharpBrain.url}?lang=hi${hash}` : `${programs.sharpBrain.url}${hash}`
 }
 
-/** Main nav: Sharp Brain · Personal Sessions · Reviews · Become a Partner · Contact. */
+/** /schools in the visitor's language (its Hindi version is ?lang=hi). */
+function schoolsUrl(lang: Lang): string {
+  return lang === 'hi' ? `${SCHOOLS_HREF}?lang=hi` : SCHOOLS_HREF
+}
+
+/** Main nav: Sharp Brain · Personal Sessions · Reviews · For Schools · Become a Partner · Contact. */
 export function siteNavLinks(lang: Lang): NavLink[] {
   const hi = lang === 'hi'
   return [
     { label: 'Sharp Brain', href: sharpBrainUrl(lang) },
     { label: hi ? 'पर्सनल सेशन' : 'Personal Sessions', href: programs.oneOnOneCoaching.url },
     { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
+    { label: hi ? 'स्कूलों के लिए' : 'For Schools', href: schoolsUrl(lang) },
     { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
     { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
   ]
@@ -138,6 +144,7 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
         { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
         { label: hi ? 'गैलरी' : 'Gallery', href: '/gallery' },
         { label: hi ? 'मेरी कहानी' : 'My story', href: '/about' },
+        { label: hi ? 'स्कूलों के लिए' : 'For Schools', href: schoolsUrl(lang) },
         { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
         { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
       ],

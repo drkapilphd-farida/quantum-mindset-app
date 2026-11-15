@@ -112,6 +112,16 @@ export const homeV2 = {
     sessionsHeading: { hi: 'पर्सनल सेशन — क्लाइंट्स के अपने शब्दों में', en: "Personal Sessions — in clients' own words" },
     more: { hi: 'सारे रिव्यू देखिए →', en: 'See all reviews →' },
   },
+  // Owner (schools page brief, 15 Nov 2026): a "For Schools" card on the home page.
+  schools: {
+    eyebrow: { hi: 'स्कूलों के लिए', en: 'For Schools' },
+    lead: { hi: 'Principal या school management में हैं?', en: 'Principal or school management?' },
+    body: {
+      hi: 'EEG Brain & Focus Assessment से अपने students का focus, memory और reading speed देखिए, और 30 दिन में बढ़ाइए। एक class के लिए pilot मुफ़्त।',
+      en: "See your students' focus, memory and reading speed with an EEG Brain & Focus Assessment, and grow them in 30 days. The pilot for one class is free.",
+    },
+    button: { hi: 'Sharp Brain for Schools देखिए', en: 'See Sharp Brain for Schools' },
+  },
   franchise: {
     lead: { hi: 'टीचर, ट्यूशन या एजुप्रेन्योर हैं?', en: 'Teacher, tutor or edupreneur?' },
     body: { hi: 'अपने इलाके में Sharp Brain चलाइए — ट्रेनिंग, ऐप, डैशबोर्ड और मार्केटिंग किट के साथ।', en: 'Bring Sharp Brain to your area — with training, the app, a dashboard and a marketing kit.' },

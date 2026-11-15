@@ -19,6 +19,7 @@ import {
   PartnerPackages,
   PartnerProblem,
   PartnerProof,
+  PartnerSchoolsCard,
   PartnerWhatYouGet,
 } from '@/features/partner/components/PartnerSections'
 
@@ -51,6 +52,7 @@ export default function PartnerPage(): React.JSX.Element {
             <PartnerAbout />
             <PartnerApply />
             <PartnerFaq />
+            <PartnerSchoolsCard />
           </main>
         </PartnerCalculatorProvider>
         <Footer />

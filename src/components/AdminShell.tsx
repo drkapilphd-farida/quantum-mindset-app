@@ -29,6 +29,8 @@ const NAV_ITEMS = [
   { href: '/admin/brain-unlock-funnel', label: 'Brain Unlock funnel', icon: ClipboardList, exact: false },
   { href: '/admin/brain-unlock-settings', label: 'Brain Unlock settings', icon: ClipboardList, exact: false },
   { href: '/admin/franchise-leads', label: 'Franchise Leads', icon: ClipboardList, exact: false },
+  { href: '/admin/school-leads', label: 'School leads', icon: ClipboardList, exact: false },
+  { href: '/admin/school-page', label: 'Schools page settings', icon: ClipboardList, exact: false },
   { href: '/admin/calm-mind-batch', label: 'Calm Mind Batch', icon: ClipboardList, exact: false },
   { href: '/admin/partner-resources', label: 'Partner Resources', icon: BookOpen, exact: false },
   { href: '/admin/leaderboard', label: 'Leaderboard', icon: Trophy, exact: false },

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { programs } from "@/config/site.config";
+import { SCHOOLS_HREF } from "@/config/navigation";
 import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/sharpBrainVideoReviews";
 import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
 import { GROUPS } from "@/features/programs/common";
@@ -137,6 +138,26 @@ export function HomeSharpBrainReviews(): React.JSX.Element {
 }
 
 // Partner strip → /partner.
+// Owner (schools page brief, 15 Nov 2026): "For Schools" card → /schools.
+export function HomeSchoolsCard(): React.JSX.Element {
+  const { lang } = useLanguage();
+  const c = homeV2.schools;
+  return (
+    <section className="border-b border-line px-4 py-12 sm:px-8 sm:py-14" data-home-schools>
+      <div className="mx-auto flex max-w-content flex-col gap-5 rounded-sm border border-teal/30 bg-panel p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+        <div className="max-w-2xl">
+          <Eyebrow color="text-teal">{say(c.eyebrow, lang)}</Eyebrow>
+          <p className="mt-3 text-[20px] font-extrabold leading-snug sm:text-[24px]">{say(c.lead, lang)}</p>
+          <p className="mt-2 text-[15.5px] leading-relaxed text-ink-dim">{say(c.body, lang)}</p>
+        </div>
+        <Link href={lang === "hi" ? `${SCHOOLS_HREF}?lang=hi` : SCHOOLS_HREF} className="inline-flex min-h-11 flex-none items-center justify-center rounded-sm bg-teal px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-teal-light">
+          {say(c.button, lang)} →
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 export function HomeFranchiseStrip(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.franchise;

@@ -24,6 +24,7 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/refund-policy', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/partner', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/schools', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/executive-brain-workshop', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/prefrontal-power-mumbai', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/mind-assessment', changeFrequency: 'monthly', priority: 0.7 },

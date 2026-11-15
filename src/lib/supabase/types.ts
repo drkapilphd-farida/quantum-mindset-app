@@ -3163,6 +3163,75 @@ export type Database = {
           },
         ]
       }
+      school_leads: {
+        Row: {
+          city: string
+          contact_name: string
+          created_at: string
+          email: string | null
+          id: string
+          lang: string
+          message: string | null
+          notes: string | null
+          phone: string
+          preferred_month: string | null
+          role: string
+          school_name: string
+          status: string
+          students: number | null
+          updated_at: string
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          city: string
+          contact_name: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          lang?: string
+          message?: string | null
+          notes?: string | null
+          phone: string
+          preferred_month?: string | null
+          role: string
+          school_name: string
+          status?: string
+          students?: number | null
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          city?: string
+          contact_name?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          lang?: string
+          message?: string | null
+          notes?: string | null
+          phone?: string
+          preferred_month?: string | null
+          role?: string
+          school_name?: string
+          status?: string
+          students?: number | null
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
       school_members: {
         Row: {
           created_at: string
@@ -3206,6 +3275,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      school_page_settings: {
+        Row: {
+          id: number
+          settings: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          id?: number
+          settings?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          id?: number
+          settings?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
       }
       schools: {
         Row: {

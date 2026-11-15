@@ -206,4 +206,11 @@ export const partnerCopy = {
       { question: 'Is EMI available?', answer: `Yes, ${emi}.` },
     ],
   },
+  // Owner (schools page brief, 15 Nov 2026): a "For Schools" card on this page.
+  schools: {
+    eyebrow: "For Schools",
+    title: "Run a school, or know one?",
+    text: "Sharp Brain for Schools brings an EEG Brain & Focus Assessment, a Brain Passport for every student and a 30-day program into the school. The pilot for one class is free.",
+    button: "See Sharp Brain for Schools",
+  },
 } as const

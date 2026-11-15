@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { SCHOOLS_HREF } from "@/config/navigation";
 import { PAGE_VIDEOS } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
 import { Check } from "lucide-react";
@@ -290,6 +292,24 @@ export function PartnerFaq(): React.JSX.Element {
             <p className="px-5 pb-5 text-[17px] leading-relaxed text-ink-dim">{item.answer}</p>
           </details>
         ))}
+      </div>
+    </section>
+  );
+}
+
+export function PartnerSchoolsCard(): React.JSX.Element {
+  const c = partnerCopy.schools;
+  return (
+    <section className={`${section} bg-panel`} data-partner-schools>
+      <div className={`${wrap} flex flex-col gap-5 rounded-lg border border-line bg-void p-6 sm:p-8 md:flex-row md:items-center md:justify-between`}>
+        <div className="max-w-2xl">
+          <p className="text-[13px] font-semibold tracking-[0.06em] text-[#1F3A8A] sm:text-[14px]">{c.eyebrow}</p>
+          <h2 className="mt-2 text-[24px] font-extrabold leading-tight sm:text-[28px]">{c.title}</h2>
+          <p className="mt-2 text-[16.5px] leading-relaxed text-ink-dim">{c.text}</p>
+        </div>
+        <Link href={SCHOOLS_HREF} className={`${goldButton} flex-none`}>
+          {c.button} →
+        </Link>
       </div>
     </section>
   );
