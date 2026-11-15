@@ -277,3 +277,51 @@ describe("gradeReading", () => {
     });
   });
 });
+
+describe("report form: number required, name optional (founder, 15 Nov 2026)", () => {
+  afterEach(() => vi.resetModules());
+
+  it("saves a lead without a name (stored as empty, the number is what matters)", async () => {
+    const { actions, inserted } = await load();
+    const res = await actions.saveBrainUnlockLead({
+      ...base,
+      firstName: "",
+      role: "student",
+      duo: false,
+      runs: [run("me", "student", "A")],
+    });
+    expect(res.ok).toBe(true);
+    expect(inserted[0]!.row).toMatchObject({ first_name: null, whatsapp_number: "919812345678" });
+    const noField = await actions.saveBrainUnlockLead({
+      ...base,
+      firstName: undefined,
+      role: "student",
+      duo: false,
+      runs: [run("me", "student", "A")],
+    });
+    expect(noField.ok).toBe(true);
+  });
+
+  it("the browser and the server agree on what a valid WhatsApp number is", async () => {
+    const { leadPhoneDigits } = await import("./leadPhone");
+    expect(leadPhoneDigits("98123 45678")).toBe("919812345678");
+    expect(leadPhoneDigits("+91 98123-45678")).toBe("919812345678");
+    expect(leadPhoneDigits("098123 45678")).toBe("919812345678");
+    expect(leadPhoneDigits("+44 7700 900123")).toBe("447700900123");
+    expect(leadPhoneDigits("1234567890")).toBeNull();
+    expect(leadPhoneDigits("")).toBeNull();
+    expect(leadPhoneDigits("98123")).toBeNull();
+  });
+
+  it("every report-form message has a Hindi version for the Hindi page", async () => {
+    const { buCopy } = await import("./copy");
+    for (const m of Object.values(buCopy.hi.lead.errors)) expect(m).toMatch(/[ऀ-ॿ]/);
+    expect(buCopy.hi.error).toMatch(/[ऀ-ॿ]/);
+    expect(buCopy.en.lead.title).toBe(
+      "Get your personal 30-day plan from Dr. Kapil + your biggest gap and how to fix it, on WhatsApp",
+    );
+    expect(buCopy.en.lead.name).toContain("optional");
+    expect(buCopy.hi.lead.name).toContain("ज़रूरी नहीं");
+    expect(buCopy.en.lead.retest).toContain("Day-30 re-test");
+  });
+});

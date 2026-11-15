@@ -48,11 +48,11 @@ export async function sendBrainUnlockFounderEmail(lead: {
     const { error } = await c.resend.emails.send({
       from: c.from,
       to: process.env.TEST_LEAD_NOTIFY_EMAIL ?? DEFAULT_NOTIFY_EMAIL,
-      subject: `New Brain Unlock lead — ${lead.firstName} · ${typeLabel(lead.settings, f, "en")} · ${f.score}/100`,
+      subject: `New Brain Unlock lead — ${lead.firstName || "(no name)"} · ${typeLabel(lead.settings, f, "en")} · ${f.score}/100`,
       text: [
         `New Brain Unlock lead:`,
         ``,
-        `Name: ${lead.firstName}`,
+        `Name: ${lead.firstName || "(not given)"}`,
         `WhatsApp: +${lead.whatsappNumber}  (https://wa.me/${lead.whatsappNumber})`,
         lead.email !== null ? `Email: ${lead.email}` : null,
         `Role: ${lead.role}${lead.classBand !== null ? ` · class ${lead.classBand}` : ""} · language ${lead.lang}`,
@@ -101,7 +101,8 @@ export async function sendBrainUnlockReportEmail(input: {
         ? `आपकी Brain Unlock Report: ${t.emoji} ${t.hi.name}`
         : `Your Brain Unlock Report: ${t.emoji} ${t.en.name}`,
       text: [
-        hi ? `नमस्ते ${f.firstName},` : `Hi ${f.firstName},`,
+        // The name is optional (15 Nov 2026).
+        hi ? `नमस्ते${f.firstName ? ` ${f.firstName}` : ""},` : `Hi${f.firstName ? ` ${f.firstName}` : ""},`,
         ``,
         hi
           ? `ये रहा आपका Brain Unlock — आपने बदलाव खुद देखा:`

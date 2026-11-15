@@ -196,7 +196,8 @@ export function UnlockSpeed({
       sharpAnswers: answers,
     });
     setPending(false);
-    if (!res.ok) return setError(res.error);
+    // The server's lines are English; show the page's own language.
+    if (!res.ok) return setError(c.error);
     const afterWpm = wpmFrom(passage.wordCount, runMs.current);
     const before = {
       wpm: baselineWpm,

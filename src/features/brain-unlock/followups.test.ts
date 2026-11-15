@@ -392,3 +392,37 @@ describe("markFollowup (Done / Skip / Stop)", () => {
     );
   });
 });
+
+describe("biggest gap + free Day-30 re-test in the Instant message (founder, 15 Nov 2026)", () => {
+  it("picks the area furthest from its Day-30 goal start", async () => {
+    const { biggestGap } = await import("./messages");
+    const base = { ...facts };
+    // 290 WPM (1.16), 5/5 (1.0), 11.4 s (1.05) → memory is the lowest.
+    expect(biggestGap(base)).toBe("memory");
+    expect(biggestGap({ ...base, memory: { before: 2, forward: 4, backward: 0 }, speed: { before: 150, after: 180, counted: true } })).toBe("speed");
+    // A speed run that did not count uses the "before" number.
+    expect(biggestGap({ ...base, speed: { before: 140, after: 400, counted: false } })).toBe("speed");
+    expect(biggestGap({ ...base, focus: { before: 25, after: 24 } })).toBe("focus");
+  });
+
+  it("the Instant message carries the gap, how to fix it and the re-test link, in both languages", async () => {
+    const { GAP_FIX } = await import("./messages");
+    const en = followupText("instant", ctx)!;
+    expect(en).toContain(`Your biggest gap: ${GAP_FIX.memory.en.name}`);
+    expect(en).toContain(`How to fix it: ${GAP_FIX.memory.en.fix}`);
+    expect(en).toContain(`🔁 Your free Day-30 re-test: ${ctx.links.retake}`);
+    const hi = followupText("instant", hiCtx)!;
+    expect(hi).toContain(`आपकी सबसे बड़ी कमी: ${GAP_FIX.memory.hi.name}`);
+    expect(hi).toContain(`ठीक करने का तरीका: ${GAP_FIX.memory.hi.fix}`);
+    expect(hi).toContain(`🔁 30वें दिन का मुफ़्त re-test: ${ctx.links.retake}`);
+    for (const area of ["speed", "memory", "focus"] as const) expect(GAP_FIX[area].hi.fix).toMatch(/[ऀ-ॿ]/);
+  });
+
+  it("Duo Mode: the child's gap, labelled", () => {
+    const duo = followupText("instant", {
+      ...ctx,
+      facts: { ...facts, child: { ...facts, label: "Child", focus: { before: 30, after: 28 } } },
+    })!;
+    expect(duo).toContain("Your biggest gap (Child): 🎯 Focus");
+  });
+});

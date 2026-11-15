@@ -17,9 +17,10 @@ import { Questions } from "./Questions";
 import { primaryBtn, SKILL } from "./ui";
 import { useNarration } from "./useNarration";
 
-// Step 2: the ≈60-second baseline. Read a short passage (timed in the
-// browser, Done when finished) + 1 question; 5 words for 2 s each, then pick
-// them from 10; a 4×4 grid, 1–16. No score is shown (keeps the curiosity).
+// Step 2: the ≈60-second baseline, fun part first (founder, 15 Nov 2026):
+// a 4×4 grid, 1–16 → 5 words for 2 s each, then pick them from 10 → read a
+// ~40-word passage (timed in the browser, Done when finished) + 1 question.
+// No score is shown (keeps the curiosity).
 
 export type CheckResult = {
   checkMs: number;
@@ -57,13 +58,13 @@ export function BrainCheck({
 }): React.JSX.Element {
   type Phase =
     | "intro"
-    | "read"
-    | "question"
+    | "focus"
     | "memIntro"
     | "memShow"
     | "memPick"
-    | "focusIntro"
-    | "focus";
+    | "readIntro"
+    | "read"
+    | "question";
   const [phase, setPhase] = useState<Phase>("intro");
   const result = useRef<Partial<CheckResult>>({});
   const readStart = useRef(0);
@@ -107,6 +108,39 @@ export function BrainCheck({
           <p className="text-lg font-semibold text-foreground">
             {c.check.intro}
           </p>
+          <div>
+            <h2 className="text-2xl text-foreground">{c.check.focusTitle}</h2>
+            <p className="text-base text-muted-foreground">
+              {c.check.focusHint}
+            </p>
+          </div>
+          <button
+            type="button"
+            className={primaryBtn}
+            onClick={() => setPhase("focus")}
+            data-bu-go
+          >
+            {c.check.go}
+          </button>
+        </div>
+      )}
+
+      {phase === "focus" && (
+        <FocusGrid
+          grid={grid}
+          nextLabel={c.check.next}
+          muted={muted}
+          onDone={(run) => {
+            result.current.focusBefore = run;
+            setPhase("memIntro");
+          }}
+        />
+      )}
+
+      {phase === "readIntro" && (
+        <div className="play-card flex flex-col gap-4 p-6 text-center">
+          <h2 className="text-2xl text-foreground">{c.check.readTitle}</h2>
+          <p className="text-base text-muted-foreground">{c.check.readHint}</p>
           <button
             type="button"
             className={primaryBtn}
@@ -140,8 +174,14 @@ export function BrainCheck({
           nextLabel={c.speed.next}
           finalLabel={c.speed.next}
           onSubmit={(answers) => {
-            result.current.checkAnswers = answers;
-            setPhase("memIntro");
+            const r = result.current;
+            onDone({
+              checkMs: r.checkMs ?? 0,
+              checkAnswers: answers,
+              memoryPicked: r.memoryPicked ?? [],
+              focusBefore: r.focusBefore ?? { ms: 0, errors: 0 },
+              gridBefore: grid,
+            });
           }}
         />
       )}
@@ -178,40 +218,7 @@ export function BrainCheck({
           lang={lang}
           onCheck={(picked) => {
             result.current.memoryPicked = picked;
-            setPhase("focusIntro");
-          }}
-        />
-      )}
-
-      {phase === "focusIntro" && (
-        <div className="play-card flex flex-col gap-4 p-6 text-center">
-          <h2 className="text-2xl text-foreground">{c.check.focusTitle}</h2>
-          <p className="text-base text-muted-foreground">{c.check.focusHint}</p>
-          <button
-            type="button"
-            className={primaryBtn}
-            onClick={() => setPhase("focus")}
-            data-bu-go
-          >
-            {c.check.go}
-          </button>
-        </div>
-      )}
-
-      {phase === "focus" && (
-        <FocusGrid
-          grid={grid}
-          nextLabel={c.check.next}
-          muted={muted}
-          onDone={(run) => {
-            const r = result.current;
-            onDone({
-              checkMs: r.checkMs ?? 0,
-              checkAnswers: r.checkAnswers ?? [],
-              memoryPicked: r.memoryPicked ?? [],
-              focusBefore: run,
-              gridBefore: grid,
-            });
+            setPhase("readIntro");
           }}
         />
       )}

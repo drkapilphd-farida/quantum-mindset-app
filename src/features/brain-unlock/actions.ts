@@ -8,7 +8,7 @@ import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { createServiceClient } from "@/lib/supabase/service";
 import type { Json } from "@/lib/supabase/types";
 import { logger } from "@/lib/logger";
-import { normalizeIndianMobile } from "@/lib/phone/indianMobile";
+import { leadPhoneDigits } from "./leadPhone";
 import {
   sendBrainUnlockFounderEmail,
   sendBrainUnlockReportEmail,
@@ -175,7 +175,8 @@ export async function logBrainUnlockEvent(input: unknown): Promise<void> {
 // ── The lead ─────────────────────────────────────────────────────────────────
 const LeadSchema = z.object({
   sessionId: SessionIdSchema,
-  firstName: z.string().trim().min(1).max(60),
+  // Founder (15 Nov 2026): the name is optional, the number required.
+  firstName: z.string().trim().max(60).default(""),
   phone: z.string().trim().min(10).max(20),
   email: z
     .union([z.literal(""), z.string().trim().toLowerCase().email().max(254)])
@@ -201,16 +202,7 @@ export type SavedLead =
 export type LeadFailReason = "phone" | "email" | "name" | "invalid" | "rate" | "host" | "run" | "server" | "network";
 
 /** Stores the phone as digits with country code ("91…"), the leads table's format. */
-function phoneDigits(raw: string): string | null {
-  const indian = normalizeIndianMobile(raw);
-  if (indian !== null) return indian.slice(1);
-  const digits = raw.replace(/\D/g, "");
-  return /^[0-9]{10,15}$/.test(digits) &&
-    !raw.trim().startsWith("0") &&
-    raw.trim().startsWith("+")
-    ? digits
-    : null;
-}
+const phoneDigits = leadPhoneDigits;
 
 function withUtm(
   url: URL,
@@ -311,7 +303,7 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
     const row = {
       id: leadId,
       whatsapp_number: phone,
-      first_name: d.firstName,
+      first_name: d.firstName === "" ? null : d.firstName,
       email: d.email === undefined || d.email === "" ? null : d.email,
       passage_id: sharp?.id ?? d.runs[0]!.sharpPassageId,
       lang: d.lang,

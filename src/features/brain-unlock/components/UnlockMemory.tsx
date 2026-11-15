@@ -16,8 +16,10 @@ import { useNarration } from "./useNarration";
 import { Caption, primaryBtn, RevealCard, secondaryBtn, SKILL } from "./ui";
 
 // Unlock 2: "Earlier you remembered X of 5" → the linking/story method with 5
-// NEW words (voice + one picture per step) → recall in order → bonus: say
-// them backwards → the real before → after.
+// NEW words (voice + one big picture per step) → recall in order → bonus: say
+// them backwards → the real before → after. Founder (15 Nov 2026): under a
+// minute of audio, short pauses, no replay line or wait at the end, and
+// "I've got it → Recall" as soon as the story has played once.
 
 export type MemoryResult = { storyForward: string[]; storyBackward: string[] };
 
@@ -64,28 +66,23 @@ export function UnlockMemory({
   const fwd = scoreInOrder(forward, ids);
   const back = scoreInOrder(backward, ids, true);
 
-  async function playStory(): Promise<void> {
+  async function playStory(withTeach: boolean): Promise<void> {
     setPhase("story");
     setShown(0);
-    const lines = [
-      { id: "memory-teach", text: c.memory.teach },
-      ...STORY_LINES[storySet][lang].map((text, i) => ({
-        id: storyLineId(storySet, i + 1),
-        text,
-      })),
-      {
-        id: "memory-replay",
-        text:
-          lang === "hi"
-            ? "अब पूरी कहानी एक बार फिर मन में देखिए।"
-            : "Now see the whole story once more in your mind.",
-      },
-    ];
-    // A short calm pause after each story step, so each picture can form.
+    const storyLines = STORY_LINES[storySet][lang].map((text, i) => ({
+      id: storyLineId(storySet, i + 1),
+      text,
+    }));
+    // The teach line once (the first time); "Hear it again" plays the story only.
+    const lines = withTeach
+      ? [{ id: "memory-teach", text: c.memory.teach }, ...storyLines]
+      : storyLines;
+    const offset = withTeach ? 0 : 1;
+    // A short pause after each story step, so each picture can form.
     await voice.play(
       lines,
-      (i) => setShown(Math.min(Math.max(i, 0), MEMORY_TOTAL)),
-      500,
+      (i) => setShown(Math.min(Math.max(i + offset, 0), MEMORY_TOTAL)),
+      250,
     );
     setShown(MEMORY_TOTAL);
     setPhase("told");
@@ -109,7 +106,7 @@ export function UnlockMemory({
           <button
             type="button"
             className={primaryBtn}
-            onClick={() => void playStory()}
+            onClick={() => void playStory(true)}
             data-bu-go
           >
             {c.memory.play}
@@ -119,6 +116,17 @@ export function UnlockMemory({
 
       {(phase === "story" || phase === "told") && (
         <>
+          {/* The current step's picture, big, with its line under it. */}
+          {phase === "story" && shown > 0 && (
+            <div
+              key={shown}
+              className="bu-pop play-card flex min-h-32 items-center justify-center text-[4.5rem]"
+              aria-hidden="true"
+              data-bu-story-step={shown}
+            >
+              {targets[shown - 1]?.emoji}
+            </div>
+          )}
           <div className="grid grid-cols-5 gap-1.5" aria-hidden="true">
             {targets.map((t, i) => (
               <div
@@ -131,14 +139,24 @@ export function UnlockMemory({
           </div>
           <Caption text={voice.caption} />
           {phase === "told" && (
-            <button
-              type="button"
-              className={primaryBtn}
-              onClick={() => setPhase("forward")}
-              data-bu-go
-            >
-              {c.memory.replay}
-            </button>
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                className={primaryBtn}
+                onClick={() => setPhase("forward")}
+                data-bu-go
+              >
+                {c.memory.replay}
+              </button>
+              <button
+                type="button"
+                className={secondaryBtn}
+                onClick={() => void playStory(false)}
+                data-bu-story-again
+              >
+                {c.memory.again}
+              </button>
+            </div>
           )}
         </>
       )}

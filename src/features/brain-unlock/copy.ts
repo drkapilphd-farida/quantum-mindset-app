@@ -34,6 +34,10 @@ export type BuCopy = {
     check: string;
     superpower: (n: number) => string;
     labels: [string, string, string, string];
+    /** The time-left line over the bar (seconds left, an estimate). */
+    timeLeft: (seconds: number) => string;
+    /** Between unlocks: "2 of 3 done! 🔥". */
+    cheer: (done: number) => string;
   };
   handoff: {
     toChild: string;
@@ -47,6 +51,8 @@ export type BuCopy = {
     speedTitle: string;
     speedHint: string;
     startReading: string;
+    readTitle: string;
+    readHint: string;
     done: string;
     oneQuestion: string;
     memoryTitle: string;
@@ -86,6 +92,7 @@ export type BuCopy = {
     teach: string;
     play: string;
     replay: string;
+    again: string;
     recallTitle: string;
     recallHint: string;
     backTitle: string;
@@ -128,6 +135,7 @@ export type BuCopy = {
   };
   lead: {
     title: string;
+    retest: string;
     name: string;
     phone: string;
     email: string;
@@ -137,6 +145,12 @@ export type BuCopy = {
     sent: string;
     sentSub: string;
     again: string;
+    errors: {
+      phoneMissing: string;
+      phoneInvalid: string;
+      email: string;
+      tooMany: string;
+    };
   };
   share: { title: string; image: string; download: string; whatsapp: string };
   offer: {
@@ -207,6 +221,13 @@ const en: BuCopy = {
     check: "Brain Check",
     superpower: (n) => `Superpower ${n} of 3`,
     labels: ["Check", "⚡ Speed", "🧠 Memory", "🎯 Focus"],
+    timeLeft: (sec) =>
+      sec < 45
+        ? "Almost done!"
+        : sec < 90
+          ? "About 1 minute left"
+          : `About ${Math.round(sec / 60)} minutes left`,
+    cheer: (done) => (done >= 2 ? `${done} of 3 done! 🔥` : `${done} of 3 done! 💪`),
   },
   handoff: {
     toChild: "Now hand the phone to your child 👉",
@@ -220,6 +241,8 @@ const en: BuCopy = {
     speedTitle: "Read this at your normal speed",
     speedHint: "Read it once, like you usually do. Then tap Done.",
     startReading: "Start reading",
+    readTitle: "Last one: read a short text",
+    readHint: "Read it once at your normal speed, then tap Done. One quick question after.",
     done: "Done ✓",
     oneQuestion: "One quick question",
     memoryTitle: "Remember 5 words",
@@ -262,7 +285,8 @@ const en: BuCopy = {
     teach:
       "The secret: your brain loves pictures and stories. Let’s link 5 NEW words into one crazy story. See each picture in your mind.",
     play: "Play the story ▶",
-    replay: "I can see it! Test me →",
+    replay: "I’ve got it → Recall",
+    again: "Hear it again",
     recallTitle: "Tap the words in story order",
     recallHint: "First word first.",
     backTitle: "Bonus: now say them backwards! 🔄",
@@ -316,11 +340,13 @@ const en: BuCopy = {
     notCounted: "today",
   },
   lead: {
-    title: "Get your full Brain Unlock Report + your 30-day plan on WhatsApp",
-    name: "Your name",
+    title:
+      "Get your personal 30-day plan from Dr. Kapil + your biggest gap and how to fix it, on WhatsApp",
+    retest: "🔁 Plus a free Day-30 re-test link, to see how far you’ve come",
+    name: "Your name (optional)",
     phone: "WhatsApp number",
     email: "Email (optional)",
-    submit: "Get my report on WhatsApp",
+    submit: "Get my plan on WhatsApp",
     saving: "Opening WhatsApp…",
     privacy:
       "We use your number only to send your report and Sharp Brain updates. Reply STOP any time.",
@@ -328,6 +354,12 @@ const en: BuCopy = {
     sentSub:
       "WhatsApp opened with your report typed in. Just tap Send and Dr. Kapil will send your 30-day plan. Your plans are just below.",
     again: "Open WhatsApp again",
+    errors: {
+      phoneMissing: "Please enter your WhatsApp number, so Dr. Kapil can send your plan.",
+      phoneInvalid: "That number doesn’t look right. Please check the 10 digits.",
+      email: "That email doesn’t look right. Fix it or leave it empty.",
+      tooMany: "Too many tries. Please wait a minute and try again.",
+    },
   },
   share: {
     title: "Share your Brain Type",
@@ -427,6 +459,13 @@ const hi: BuCopy = {
     check: "Brain Check",
     superpower: (n) => `Superpower ${n} / 3`,
     labels: ["Check", "⚡ Speed", "🧠 Memory", "🎯 Focus"],
+    timeLeft: (sec) =>
+      sec < 45
+        ? "बस हो गया!"
+        : sec < 90
+          ? "लगभग 1 मिनट बाकी"
+          : `लगभग ${Math.round(sec / 60)} मिनट बाकी`,
+    cheer: (done) => (done >= 2 ? `3 में से ${done} पूरे! 🔥` : `3 में से ${done} पूरा! 💪`),
   },
   handoff: {
     toChild: "अब फ़ोन अपने बच्चे को दीजिए 👉",
@@ -440,6 +479,8 @@ const hi: BuCopy = {
     speedTitle: "इसे अपनी normal speed से पढ़िए",
     speedHint: "जैसे आप हमेशा पढ़ते हैं, एक बार पढ़िए। फिर Done दबाइए।",
     startReading: "पढ़ना शुरू करें",
+    readTitle: "आख़िरी: एक छोटा text पढ़िए",
+    readHint: "अपनी normal speed से एक बार पढ़िए, फिर Done दबाइए। उसके बाद एक छोटा सवाल।",
     done: "Done ✓",
     oneQuestion: "एक छोटा-सा सवाल",
     memoryTitle: "5 शब्द याद रखिए",
@@ -482,7 +523,8 @@ const hi: BuCopy = {
     teach:
       "राज़ यह है: दिमाग़ को तस्वीरें और कहानियाँ पसंद हैं। चलिए 5 नए शब्दों को एक मज़ेदार कहानी में जोड़ते हैं। हर तस्वीर को मन में देखिए।",
     play: "कहानी चलाइए ▶",
-    replay: "मुझे दिख रहा है! अब पूछिए →",
+    replay: "याद हो गया → Recall",
+    again: "फिर से सुनिए",
     recallTitle: "कहानी के क्रम में शब्दों पर tap कीजिए",
     recallHint: "पहला शब्द सबसे पहले।",
     backTitle: "Bonus: अब उल्टे क्रम में! 🔄",
@@ -535,11 +577,13 @@ const hi: BuCopy = {
     notCounted: "आज",
   },
   lead: {
-    title: "अपनी पूरी Brain Unlock Report + 30-दिन का plan WhatsApp पर पाइए",
-    name: "आपका नाम",
+    title:
+      "Dr. Kapil से अपना personal 30-दिन का plan + आपकी सबसे बड़ी कमी और उसे ठीक करने का तरीका, WhatsApp पर पाइए",
+    retest: "🔁 साथ में 30वें दिन का मुफ़्त re-test link, ताकि आप अपनी बढ़त देख सकें",
+    name: "आपका नाम (ज़रूरी नहीं)",
     phone: "WhatsApp नंबर",
     email: "Email (ज़रूरी नहीं)",
-    submit: "मेरी report WhatsApp पर पाइए",
+    submit: "मेरा plan WhatsApp पर पाइए",
     saving: "WhatsApp खोल रहे हैं…",
     privacy:
       "आपका नंबर सिर्फ़ report और Sharp Brain updates भेजने के लिए। कभी भी STOP लिखकर बंद करें।",
@@ -547,6 +591,12 @@ const hi: BuCopy = {
     sentSub:
       "WhatsApp में आपकी report लिखी हुई खुल गई है। बस Send दबाइए, Dr. Kapil आपका 30-दिन का plan भेजेंगे। आपके plans नीचे हैं।",
     again: "WhatsApp फिर से खोलें",
+    errors: {
+      phoneMissing: "कृपया अपना WhatsApp नंबर लिखिए, ताकि Dr. Kapil आपका plan भेज सकें।",
+      phoneInvalid: "यह नंबर सही नहीं लग रहा। कृपया 10 अंक जाँचिए।",
+      email: "यह email सही नहीं लग रहा। ठीक कीजिए या ख़ाली छोड़िए।",
+      tooMany: "बहुत बार कोशिश हुई। एक मिनट रुककर फिर कोशिश कीजिए।",
+    },
   },
   share: {
     title: "अपना Brain Type share कीजिए",

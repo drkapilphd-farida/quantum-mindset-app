@@ -4,19 +4,20 @@ import { useEffect, useMemo, useState } from "react";
 import type { BuCopy } from "../copy";
 import { focusSeconds, shuffledGrid, type FocusRun } from "../scoring";
 import { voiceText } from "../voiceLines";
+import { BREATH_IN_MS, BREATH_OUT_MS, FOCUS_ROUNDS } from "../timing";
 import { FocusGrid } from "./FocusGrid";
 import { useNarration } from "./useNarration";
 import { Caption, primaryBtn, RevealCard, SKILL } from "./ui";
 
-// Unlock 3: a 30-second guided focus exercise — gaze softly at a glowing dot
-// that grows on the in-breath (4 s) and shrinks on the out-breath (6 s), three
-// rounds — then a NEW reshuffled 4×4 grid and the real before → after time.
+// Unlock 3: a 20-second guided focus exercise (founder, 15 Nov 2026; was 30)
+// — gaze softly at a glowing dot that grows on the in-breath (4 s) and shrinks
+// on the out-breath (6 s), two rounds — then a NEW reshuffled 4×4 grid and the
+// real before → after time.
 
 export type FocusResult = { focusAfter: FocusRun };
 
-const IN_MS = 4000;
-const OUT_MS = 6000;
-const ROUNDS = 3;
+const IN_MS = BREATH_IN_MS;
+const OUT_MS = BREATH_OUT_MS;
 
 export function UnlockFocus({
   c,
@@ -55,7 +56,7 @@ export function UnlockFocus({
       await voice.play([
         { id: "focus-intro", text: voiceText(lang, "focus-intro") },
       ]);
-      for (let r = 0; r < ROUNDS && !cancelled; r++) {
+      for (let r = 0; r < FOCUS_ROUNDS && !cancelled; r++) {
         setBreath("in");
         void voice.play([{ id: "focus-in", text: c.focus.breatheIn }]);
         await sleep(IN_MS);

@@ -215,7 +215,7 @@ describe("Brain Type", () => {
 });
 
 describe("passages", () => {
-  it("every role × language has 3 Brain Check passages (~60 words, 1 question) and 3 different RSVP passages (80–100 words, 2 questions)", () => {
+  it("every role × language has 3 Brain Check passages (~40 words, 1 question) and 3 different RSVP passages (at most 80 words, 2 questions)", () => {
     for (const role of ["parent", "student", "professional"] as const)
       for (const lang of ["en", "hi"] as const) {
         const of = (kind: "check" | "sharp"): typeof BU_PASSAGES =>
@@ -226,16 +226,17 @@ describe("passages", () => {
         expect(of("sharp")).toHaveLength(3);
         for (const check of of("check")) {
           expect(check.questions).toHaveLength(1);
-          expect(toPublic(check).wordCount).toBeGreaterThanOrEqual(50);
-          expect(toPublic(check).wordCount).toBeLessThanOrEqual(80);
+          // Founder (15 Nov 2026): ~40 words (Hindi needs a few more words for the same text).
+          expect(toPublic(check).wordCount).toBeGreaterThanOrEqual(34);
+          expect(toPublic(check).wordCount).toBeLessThanOrEqual(
+            lang === "hi" ? 52 : 46,
+          );
         }
         for (const sharp of of("sharp")) {
           expect(sharp.questions).toHaveLength(2);
-          // Short for RSVP: about 80–100 words (Hindi needs a few more words for the same text).
-          expect(toPublic(sharp).wordCount).toBeGreaterThanOrEqual(80);
-          expect(toPublic(sharp).wordCount).toBeLessThanOrEqual(
-            lang === "hi" ? 100 : 95,
-          );
+          // Founder (15 Nov 2026): RSVP passages at most 80 words.
+          expect(toPublic(sharp).wordCount).toBeGreaterThanOrEqual(60);
+          expect(toPublic(sharp).wordCount).toBeLessThanOrEqual(80);
         }
         const texts = [...of("check"), ...of("sharp")].map((p) =>
           p.text.slice(0, 40),

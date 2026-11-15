@@ -47,6 +47,57 @@ export function factsFrom(
 const typeName = (s: BuSettings, id: BrainTypeId, lang: BuLangCode): string =>
   `${s.brainTypes[id].emoji} ${s.brainTypes[id][lang].name}`;
 
+// ── Biggest gap (founder, 15 Nov 2026) ──────────────────────────────────────
+// The lead form promises "your biggest gap and how to fix it" on WhatsApp; the
+// Instant follow-up carries it. The gap is the area furthest from its Day-30
+// practice goal start (250 WPM, 5/5 in order, the grid in 12 s), measured on
+// today's "after" number. Pure — tested.
+
+export type GapArea = "speed" | "memory" | "focus";
+
+export function biggestGap(f: Omit<ReportFacts, "firstName" | "child">): GapArea {
+  const speedNow = f.speed.counted ? f.speed.after : f.speed.before;
+  const reach: Record<GapArea, number> = {
+    memory: f.memory.forward / MEMORY_TOTAL,
+    speed: speedNow / 250,
+    focus: f.focus.after > 0 ? 12 / f.focus.after : 1,
+  };
+  return (["memory", "speed", "focus"] as const).reduce((a, b) => (reach[b] < reach[a] ? b : a));
+}
+
+export const GAP_FIX: Record<GapArea, Record<BuLangCode, { name: string; fix: string }>> = {
+  speed: {
+    en: {
+      name: "⚡ Reading speed",
+      fix: "Read 10 minutes a day with a pen moving under the line, a little faster than comfortable, then say in one line what you read.",
+    },
+    hi: {
+      name: "⚡ Reading speed",
+      fix: "रोज़ 10 मिनट लाइन के नीचे पेन चलाते हुए, आराम से थोड़ा तेज़ पढ़िए, फिर एक लाइन में बताइए कि क्या पढ़ा।",
+    },
+  },
+  memory: {
+    en: {
+      name: "🧠 Memory",
+      fix: "Turn each new point into a silly picture, link the pictures into one story, then recall it once without looking.",
+    },
+    hi: {
+      name: "🧠 Memory",
+      fix: "हर नई बात को एक मज़ेदार तस्वीर बनाइए, तस्वीरों को एक कहानी में जोड़िए, फिर बिना देखे एक बार दोहराइए।",
+    },
+  },
+  focus: {
+    en: {
+      name: "🎯 Focus",
+      fix: "Study in 25-minute blocks with the phone in another room, with 1 minute of slow breathing (in 4, out 6) before each block.",
+    },
+    hi: {
+      name: "🎯 Focus",
+      fix: "फ़ोन दूसरे कमरे में रखकर 25-25 मिनट के blocks में पढ़िए, और हर block से पहले 1 मिनट धीमी साँस (4 अंदर, 6 बाहर) लीजिए।",
+    },
+  },
+};
+
 /** The three before → after lines, in the user's language. */
 export function numberLines(
   f: Omit<ReportFacts, "firstName" | "child">,
@@ -192,6 +243,9 @@ export function followupText(
         f.child === undefined
           ? ""
           : `\n\n${f.child.label}: ${typeName(c.settings, f.child.brainType, c.lang)} · ${f.child.score}/100\n${numberLines(f.child, c.lang).join("\n")}`;
+      // Duo Mode: the child's gap (that is what the parent came for).
+      const gap = GAP_FIX[biggestGap(f.child ?? f)][hi ? "hi" : "en"];
+      const gapWho = f.child === undefined ? "" : ` (${f.child.label})`;
       return (
         hi
           ? [
@@ -202,10 +256,15 @@ export function followupText(
               ``,
               `ये सिर्फ़ 4 मिनट थे, और बदलाव आपने खुद देखा। Sharp Brain में यही practice 30 दिन रोज़ होती है, Dr. Kapil के साथ।`,
               ``,
+              `आपकी सबसे बड़ी कमी${gapWho}: ${gap.name}`,
+              `ठीक करने का तरीका: ${gap.fix}`,
+              ``,
               `आपका 30-दिन का plan:`,
               `⚡ ${g.speed.hi}`,
               `🧠 ${g.memory.hi}`,
               `🎯 ${g.focus.hi}`,
+              ``,
+              `🔁 30वें दिन का मुफ़्त re-test: ${c.links.retake}`,
               ``,
               `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
               `▶ Live batch ₹8,999: ${c.links.live}`,
@@ -220,10 +279,15 @@ export function followupText(
               ``,
               `ये सिर्फ़ 4 मिनट थे, and you saw the change yourself. In Sharp Brain, this practice happens every day for 30 days, with Dr. Kapil.`,
               ``,
+              `Your biggest gap${gapWho}: ${gap.name}`,
+              `How to fix it: ${gap.fix}`,
+              ``,
               `Your 30-day plan:`,
               `⚡ ${g.speed.en}`,
               `🧠 ${g.memory.en}`,
               `🎯 ${g.focus.en}`,
+              ``,
+              `🔁 Your free Day-30 re-test: ${c.links.retake}`,
               ``,
               `▶ Self-paced ₹2,999: ${c.links.selfPaced}`,
               `▶ Live batch ₹8,999: ${c.links.live}`,

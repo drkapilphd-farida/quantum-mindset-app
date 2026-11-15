@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Confetti } from "@/components/play/Confetti";
 import { playSfx } from "../sound";
 import { useNarration } from "./useNarration";
@@ -23,33 +23,83 @@ export const SKILL = {
 } as const;
 
 /** "Brain Check" → "Superpower 1 of 3" … with four segments. */
+/**
+ * The top bar during the challenge (founder, 15 Nov 2026): which step, an
+ * honest "About 2 minutes left" estimate with a time bar, and a cheer between
+ * unlocks ("2 of 3 done! 🔥").
+ */
 export function Progress({
   step,
   label,
   labels,
+  timeLeft,
+  fraction,
+  cheer,
 }: {
   step: 0 | 1 | 2 | 3;
   label: string;
   labels: readonly [string, string, string, string];
+  timeLeft: string;
+  fraction: number;
+  cheer: string | null;
 }): React.JSX.Element {
+  const pct = Math.round(Math.min(1, Math.max(0, fraction)) * 100);
   return (
-    <div data-bu-progress={step}>
-      <p className="text-sm font-bold text-muted-foreground">{label}</p>
-      <div className="mt-2 grid grid-cols-4 gap-1.5" aria-hidden="true">
+    <div className="flex flex-col gap-2" data-bu-progress={step}>
+      <div className="flex items-baseline justify-between gap-3">
+        <p className="text-sm font-bold text-muted-foreground">{label}</p>
+        <p
+          className="shrink-0 text-sm font-bold text-foreground tabular-nums"
+          data-bu-time-left
+        >
+          ⏱ {timeLeft}
+        </p>
+      </div>
+      <div
+        className="h-3 overflow-hidden rounded-full bg-muted"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={pct}
+        aria-label={timeLeft}
+      >
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-[#7c3aed] to-[#2563eb] transition-[width] duration-700"
+          style={{ width: `${Math.max(pct, 4)}%` }}
+        />
+      </div>
+      <div className="grid grid-cols-4 gap-1.5" aria-hidden="true">
         {labels.map((l, i) => (
-          <div key={l}>
-            <div
-              className={`h-2.5 rounded-full transition-colors duration-500 ${i <= step ? "bg-primary" : "bg-muted"}`}
-            />
-            <p
-              className={`mt-1 truncate text-[11px] ${i === step ? "font-bold text-foreground" : "text-muted-foreground"}`}
-            >
-              {l}
-            </p>
-          </div>
+          <p
+            key={l}
+            className={`truncate text-[11px] ${i === step ? "font-bold text-foreground" : i < step ? "text-primary" : "text-muted-foreground"}`}
+          >
+            {i < step ? "✓ " : ""}
+            {l}
+          </p>
         ))}
       </div>
+      {cheer !== null && <Cheer key={cheer} text={cheer} />}
     </div>
+  );
+}
+
+/** "2 of 3 done! 🔥" — pops in at the start of the next unlock, gone after 4 s. */
+function Cheer({ text }: { text: string }): React.JSX.Element | null {
+  const [on, setOn] = useState(true);
+  useEffect(() => {
+    const t = window.setTimeout(() => setOn(false), 4000);
+    return () => window.clearTimeout(t);
+  }, []);
+  if (!on) return null;
+  return (
+    <p
+      className="bu-pop w-fit self-center rounded-full bg-[var(--play-good-bg)] px-4 py-1.5 font-heading text-lg text-[var(--play-good)]"
+      role="status"
+      data-bu-cheer
+    >
+      {text}
+    </p>
   );
 }
 

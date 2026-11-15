@@ -38,6 +38,7 @@ import { UnlockFocus } from "./UnlockFocus";
 import { UnlockMemory } from "./UnlockMemory";
 import { UnlockSpeed } from "./UnlockSpeed";
 import { chipBtn, primaryBtn, Progress, secondaryBtn, SoundToggle } from "./ui";
+import { cheerCount, progressFraction, secondsLeft } from "../timing";
 import { VoiceCue, VoiceOverrides } from "./useNarration";
 
 // Brain Unlock (founder spec, 13 Nov 2026): hook → Brain Check → 3 unlocks,
@@ -585,6 +586,15 @@ export default function BrainUnlock({
                         : c.progress.superpower(phase)
                     }
                     labels={c.progress.labels}
+                    timeLeft={c.progress.timeLeft(
+                      secondsLeft(phase, player, setups.length),
+                    )}
+                    fraction={progressFraction(phase, player, setups.length)}
+                    cheer={
+                      handoff === null && cheerCount(phase) !== null
+                        ? c.progress.cheer(cheerCount(phase)!)
+                        : null
+                    }
                   />
                   {duo && handoff === null && (
                     <p className="text-sm font-bold text-primary">

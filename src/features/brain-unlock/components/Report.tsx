@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Download, Share2 } from "lucide-react";
 import { SITE_CONFIG_WHATSAPP_NUMBER } from "@/config/site.config";
 import { readUtmParams } from "@/lib/analytics/utm";
@@ -10,7 +10,8 @@ import {
   openPendingWhatsAppTab,
 } from "@/lib/whatsapp/handoff";
 import { shareOrDownload } from "@/features/reading-speed-test/shareCard";
-import { saveBrainUnlockLead, type SavedLead } from "../actions";
+import { saveBrainUnlockLead, type LeadFailReason, type SavedLead } from "../actions";
+import { leadPhoneDigits } from "../leadPhone";
 import type { BuCopy } from "../copy";
 import {
   factsFrom,
@@ -34,9 +35,12 @@ import { trackBu, sessionId, type TrackContext } from "../tracking";
 import type { ClassBand, RawRun } from "../types";
 import { secondaryBtn, SKILL } from "./ui";
 
-// The reveal: three Before → After cards per player, the Brain Unlock Score,
-// the Brain Type (with its "fun, not a test" line), the main + role line,
-// then the lead form — "Get my report on WhatsApp" saves the lead and opens
+// The reveal: three Before → After cards per player, then straight away the
+// WhatsApp ask (founder, 15 Nov 2026: on the first report screen, with a new
+// reason — Dr. Kapil's 30-day plan + your biggest gap + a free Day-30 re-test;
+// number required, name optional, friendly checks in the page's language),
+// then the Brain Unlock Score and Brain Type (always free and visible), the
+// main + role line. "Get my plan on WhatsApp" saves the lead and opens
 // wa.me to Dr. Kapil's WhatsApp Business number with the report typed in, so
 // the visitor starts the chat (founder, 14 Nov 2026: no WhatsApp API) — and
 // sharing / the report image. Duo Mode: both side by side and a Team Score.
@@ -59,9 +63,9 @@ function Card({
   note: string;
 }): React.JSX.Element {
   return (
-    <div className="rounded-2xl p-4 text-white" style={{ background: colour }}>
+    <div className="rounded-2xl px-4 py-3 text-white" style={{ background: colour }}>
       <p className="text-sm font-semibold opacity-90">{label}</p>
-      <p className="font-heading text-[1.6rem] leading-tight tabular-nums">
+      <p className="font-heading text-[1.5rem] leading-tight tabular-nums">
         {before} → {after}
         {unit !== "" && <span className="ml-1 text-base">{unit}</span>}
       </p>
@@ -70,7 +74,8 @@ function Card({
   );
 }
 
-function PlayerCards({
+/** The three big Before → After cards for one player. */
+function MetricCards({
   c,
   lang,
   r,
@@ -83,13 +88,8 @@ function PlayerCards({
   s: BuSettings;
   heading?: string;
 }): React.JSX.Element {
-  const t = s.brainTypes[r.brainType];
   return (
-    <div
-      className="flex flex-col gap-3"
-      data-bu-player-report={r.brainType}
-      data-bu-score={r.score.total}
-    >
+    <div className="flex flex-col gap-2.5" data-bu-metrics>
       {heading !== undefined && (
         <p className="text-sm font-bold tracking-wider text-muted-foreground uppercase">
           {heading}
@@ -121,6 +121,36 @@ function PlayerCards({
         unit=""
         note={s.goals.focus[lang]}
       />
+    </div>
+  );
+}
+
+/** The Brain Unlock Score and Brain Type for one player (free, always shown). */
+function ScoreTypeCards({
+  c,
+  lang,
+  r,
+  s,
+  heading,
+}: {
+  c: BuCopy;
+  lang: "en" | "hi";
+  r: PlayerReport;
+  s: BuSettings;
+  heading?: string;
+}): React.JSX.Element {
+  const t = s.brainTypes[r.brainType];
+  return (
+    <div
+      className="flex flex-col gap-3"
+      data-bu-player-report={r.brainType}
+      data-bu-score={r.score.total}
+    >
+      {heading !== undefined && (
+        <p className="text-sm font-bold tracking-wider text-muted-foreground uppercase">
+          {heading}
+        </p>
+      )}
       <div className="play-card flex flex-col gap-1 p-4">
         <p className="text-xs font-bold tracking-wider text-muted-foreground uppercase">
           {c.report.score}
@@ -179,15 +209,55 @@ export function Report({
 }): React.JSX.Element {
   const main = reports[0]!;
   const child = duo ? reports[1] : undefined;
+  const lead = (
+    <LeadForm
+      c={c}
+      lang={lang}
+      role={role}
+      classBand={classBand}
+      childClassBand={childClassBand}
+      duo={duo}
+      runs={runs}
+      settings={settings}
+      track={track}
+      onSaved={onSaved}
+    />
+  );
   return (
     <section className="flex flex-col gap-5" data-bu-report>
-      <h2 className="text-[1.9rem] leading-tight text-foreground">
+      <h2 className="text-[1.6rem] leading-tight text-foreground">
         {c.report.title}
       </h2>
       {child === undefined ? (
-        <PlayerCards c={c} lang={lang} r={main} s={settings} />
+        <>
+          <MetricCards c={c} lang={lang} r={main} s={settings} />
+          {lead}
+          <ScoreTypeCards c={c} lang={lang} r={main} s={settings} />
+        </>
       ) : (
         <>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <MetricCards
+              c={c}
+              lang={lang}
+              r={main}
+              s={settings}
+              heading={c.report.you}
+            />
+            <MetricCards
+              c={c}
+              lang={lang}
+              r={child}
+              s={settings}
+              heading={c.report.child}
+            />
+          </div>
+          {child.memoryForward > child.memoryBefore && (
+            <p className="text-lg font-bold text-foreground">
+              {c.report.duoLine(child.memoryBefore, child.memoryForward)}
+            </p>
+          )}
+          {lead}
           <div
             className="play-card p-4 text-center"
             data-bu-team={teamScore(main.score, child.score)}
@@ -201,14 +271,14 @@ export function Report({
             </p>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <PlayerCards
+            <ScoreTypeCards
               c={c}
               lang={lang}
               r={main}
               s={settings}
               heading={c.report.you}
             />
-            <PlayerCards
+            <ScoreTypeCards
               c={c}
               lang={lang}
               r={child}
@@ -216,11 +286,6 @@ export function Report({
               heading={c.report.child}
             />
           </div>
-          {child.memoryForward > child.memoryBefore && (
-            <p className="text-lg font-bold text-foreground">
-              {c.report.duoLine(child.memoryBefore, child.memoryForward)}
-            </p>
-          )}
         </>
       )}
       <p className="text-xs text-muted-foreground">{c.report.disclaimer}</p>
@@ -231,18 +296,6 @@ export function Report({
         <p className="font-heading text-xl leading-snug">{c.report.main}</p>
         <p className="mt-2 text-base opacity-95">{c.report.roleLine[role]}</p>
       </div>
-      <LeadForm
-        c={c}
-        lang={lang}
-        role={role}
-        classBand={classBand}
-        childClassBand={childClassBand}
-        duo={duo}
-        runs={runs}
-        settings={settings}
-        track={track}
-        onSaved={onSaved}
-      />
       <ShareBlock
         c={c}
         lang={lang}
@@ -283,13 +336,40 @@ function LeadForm({
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "saving" | "saved">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [badField, setBadField] = useState<"phone" | "email" | null>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  /** A server reason → a friendly line in the page's language. */
+  const messageFor = (reason: LeadFailReason): string =>
+    reason === "phone"
+      ? c.lead.errors.phoneInvalid
+      : reason === "email"
+        ? c.lead.errors.email
+        : reason === "rate"
+          ? c.lead.errors.tooMany
+          : c.error;
+
+  function fail(field: "phone" | "email" | null, text: string, reason: string): void {
+    setError(text);
+    setBadField(field);
+    trackBu("lead_save_failed", track, { reason, where: "browser" });
+    (field === "email" ? emailRef : phoneRef).current?.focus();
+  }
 
   async function save(): Promise<void> {
+    if (state === "saving") return; // a second tap while saving does nothing
+    trackBu("lead_submit_tried", track, { email: email.trim() !== "" });
+    // Friendly checks first (the button is always active): number required, name optional.
+    if (phone.trim() === "") return fail("phone", c.lead.errors.phoneMissing, "phone_missing");
+    if (leadPhoneDigits(phone) === null) return fail("phone", c.lead.errors.phoneInvalid, "phone");
+    if (email.trim() !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      return fail("email", c.lead.errors.email, "email");
     // Phones only allow a new tab during the tap: open it now, point it at wa.me once saved.
     const tab = openPendingWhatsAppTab();
     setState("saving");
     setError(null);
-    trackBu("lead_submit_tried", track, { email: email.trim() !== "" });
+    setBadField(null);
     const res = await saveBrainUnlockLead({
       sessionId: sessionId(),
       firstName: name,
@@ -309,7 +389,8 @@ function LeadForm({
       trackBu("lead_save_failed", track, { reason: res.reason });
       cancelWhatsAppHandoff(tab);
       setState("idle");
-      setError(res.error);
+      setError(messageFor(res.reason));
+      setBadField(res.reason === "phone" ? "phone" : res.reason === "email" ? "email" : null);
       return;
     }
     const url = waLink(
@@ -348,11 +429,32 @@ function LeadForm({
       ) : (
         <form
           className="flex flex-col gap-2"
+          noValidate
           onSubmit={(e) => {
             e.preventDefault();
             void save();
           }}
         >
+          <p className="text-sm font-semibold text-foreground" data-bu-retest>
+            {c.lead.retest}
+          </p>
+          <label className="sr-only" htmlFor="bu-phone">
+            {c.lead.phone}
+          </label>
+          <input
+            id="bu-phone"
+            ref={phoneRef}
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            maxLength={20}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder={c.lead.phone}
+            aria-invalid={badField === "phone"}
+            aria-describedby={error !== null ? "bu-lead-error" : undefined}
+            className={`min-h-12 rounded-xl border-2 bg-background px-4 text-base text-foreground ${badField === "phone" ? "border-[var(--play-warn)]" : "border-border"}`}
+          />
           <label className="sr-only" htmlFor="bu-name">
             {c.lead.name}
           </label>
@@ -366,25 +468,12 @@ function LeadForm({
             placeholder={c.lead.name}
             className="min-h-12 rounded-xl border-2 border-border bg-background px-4 text-base text-foreground"
           />
-          <label className="sr-only" htmlFor="bu-phone">
-            {c.lead.phone}
-          </label>
-          <input
-            id="bu-phone"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            maxLength={20}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder={c.lead.phone}
-            className="min-h-12 rounded-xl border-2 border-border bg-background px-4 text-base text-foreground"
-          />
           <label className="sr-only" htmlFor="bu-email">
             {c.lead.email}
           </label>
           <input
             id="bu-email"
+            ref={emailRef}
             type="email"
             inputMode="email"
             autoComplete="email"
@@ -392,26 +481,29 @@ function LeadForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={c.lead.email}
-            className="min-h-12 rounded-xl border-2 border-border bg-background px-4 text-base text-foreground"
+            aria-invalid={badField === "email"}
+            className={`min-h-12 rounded-xl border-2 bg-background px-4 text-base text-foreground ${badField === "email" ? "border-[var(--play-warn)]" : "border-border"}`}
           />
+          {error !== null && (
+            <p
+              id="bu-lead-error"
+              role="alert"
+              className="rounded-xl bg-[var(--play-warn-bg)] px-3 py-2 text-sm font-semibold text-[var(--play-warn)]"
+              data-bu-lead-error
+            >
+              {error}
+            </p>
+          )}
+          {/* Always bright and tappable; a wrong or missing number gets a friendly line. */}
           <button
             type="submit"
-            className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-lg font-bold text-white disabled:opacity-50"
-            disabled={
-              name.trim() === "" ||
-              phone.trim().length < 10 ||
-              state === "saving"
-            }
+            className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-lg font-bold text-white shadow-[0_4px_0_#065f2e] active:translate-y-0.5"
+            aria-busy={state === "saving"}
             data-bu-lead-submit
           >
             {state === "saving" ? c.lead.saving : c.lead.submit}
           </button>
           <p className="text-xs text-muted-foreground">{c.lead.privacy}</p>
-          {error !== null && (
-            <p role="alert" className="text-sm font-semibold text-foreground">
-              {error}
-            </p>
-          )}
         </form>
       )}
     </section>
