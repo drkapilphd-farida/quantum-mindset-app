@@ -121,8 +121,8 @@ export async function sendBrainUnlockReportEmail(input: {
         `🎯 ${s.goals.focus[lang]}`,
         ``,
         hi
-          ? `ये सिर्फ़ 4 मिनट थे। Sharp Brain में यही 30 दिन रोज़ होता है, Dr. Kapil के साथ।`
-          : `This was just 4 minutes. In Sharp Brain, this happens every day for 30 days, with Dr. Kapil.`,
+          ? `ये सिर्फ़ 5 मिनट थे। Sharp Brain में यही 30 दिन रोज़ होता है, Dr. Kapil के साथ।`
+          : `This was just 5 minutes. In Sharp Brain, this happens every day for 30 days, with Dr. Kapil.`,
         ``,
         `Self-paced ₹2,999: ${input.links.selfPaced}`,
         `Live batch ₹8,999: ${input.links.live}`,

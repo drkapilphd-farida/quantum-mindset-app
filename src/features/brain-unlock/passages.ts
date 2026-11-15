@@ -4,7 +4,7 @@
 //
 // Per role and language: 3 Brain Check passages (~40 words, 1 question) and 3
 // different RSVP passages for the Speed unlock (at most 80 words, 2 questions)
-// — shortened 15 Nov 2026 so the whole challenge takes about 4 minutes.
+// — shortened 15 Nov 2026 so the whole challenge stays short (about 5 minutes).
 // One of each is picked per session (never the same one twice for a person
 // until all are used — sets.ts), so any "after" gain comes from the
 // technique, never from reading the same text twice. Positive brain facts and

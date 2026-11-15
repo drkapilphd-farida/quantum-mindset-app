@@ -172,13 +172,13 @@ export function shareText(
   const speed = f.speed.counted && f.speed.after > f.speed.before;
   if (lang === "hi") {
     const line = speed
-      ? `4 मिनट में मेरी reading speed ${f.speed.before} → ${f.speed.after} हो गई।`
-      : `4 मिनट में मेरी memory ${f.memory.before}/5 → ${f.memory.forward}/5 हो गई।`;
+      ? `5 मिनट में मेरी reading speed ${f.speed.before} → ${f.speed.after} हो गई।`
+      : `5 मिनट में मेरी memory ${f.memory.before}/5 → ${f.memory.forward}/5 हो गई।`;
     return `मैं ${t.emoji} ${t.hi.name} हूँ! ${line} आपका Brain Type क्या है? ${url}`;
   }
   const line = speed
-    ? `My reading speed went ${f.speed.before} → ${f.speed.after} in 4 minutes.`
-    : `My memory went ${f.memory.before}/5 → ${f.memory.forward}/5 in 4 minutes.`;
+    ? `My reading speed went ${f.speed.before} → ${f.speed.after} in 5 minutes.`
+    : `My memory went ${f.memory.before}/5 → ${f.memory.forward}/5 in 5 minutes.`;
   return `I’m a ${t.emoji} ${t.en.name}! ${line} What’s your Brain Type? ${url}`;
 }
 
@@ -254,7 +254,7 @@ export function followupText(
               `आपका Brain Type: ${type} · Score ${f.score}/100`,
               nums + child,
               ``,
-              `ये सिर्फ़ 4 मिनट थे, और बदलाव आपने खुद देखा। Sharp Brain में यही practice 30 दिन रोज़ होती है, Dr. Kapil के साथ।`,
+              `ये सिर्फ़ 5 मिनट थे, और बदलाव आपने खुद देखा। Sharp Brain में यही practice 30 दिन रोज़ होती है, Dr. Kapil के साथ।`,
               ``,
               `आपकी सबसे बड़ी कमी${gapWho}: ${gap.name}`,
               `ठीक करने का तरीका: ${gap.fix}`,
@@ -277,7 +277,7 @@ export function followupText(
               `Your Brain Type: ${type} · Score ${f.score}/100`,
               nums + child,
               ``,
-              `ये सिर्फ़ 4 मिनट थे, and you saw the change yourself. In Sharp Brain, this practice happens every day for 30 days, with Dr. Kapil.`,
+              `ये सिर्फ़ 5 मिनट थे, and you saw the change yourself. In Sharp Brain, this practice happens every day for 30 days, with Dr. Kapil.`,
               ``,
               `Your biggest gap${gapWho}: ${gap.name}`,
               `How to fix it: ${gap.fix}`,

@@ -181,7 +181,7 @@ const en: BuCopy = {
   sound: { on: "Sound on", off: "Sound off" },
   hook: {
     title: "Who is this for?",
-    sub: "One tap — then 4 minutes of brain play.",
+    sub: "One tap — then 5 minutes of brain play.",
     roles: {
       parent: "👩‍👧 Parent (for my child)",
       student: "👨‍🎓 Student",
@@ -204,7 +204,7 @@ const en: BuCopy = {
   },
   yes: "Yes, that’s me",
   promise: {
-    title: "In 4 minutes, let’s unlock 3 hidden superpowers of your brain.",
+    title: "In 5 minutes, let’s unlock 3 hidden superpowers of your brain.",
     trust: [
       "10,000+ learners",
       "500+ workshops",
@@ -324,7 +324,7 @@ const en: BuCopy = {
     yourType: "Your Brain Type",
     disclaimer:
       "Brain Types are a fun way to show your result, not a medical or psychological test.",
-    main: "This was just 4 minutes. In Sharp Brain, this happens every day for 30 days, with Dr. Kapil.",
+    main: "This was just 5 minutes. In Sharp Brain, this happens every day for 30 days, with Dr. Kapil.",
     roleLine: {
       parent:
         "Your child doesn’t need more hours. They need the right method. You just saw it work.",
@@ -419,7 +419,7 @@ const hi: BuCopy = {
   sound: { on: "आवाज़ चालू", off: "आवाज़ बंद" },
   hook: {
     title: "यह किसके लिए है?",
-    sub: "एक tap — फिर 4 मिनट का brain play.",
+    sub: "एक tap — फिर 5 मिनट का brain play.",
     roles: {
       parent: "👩‍👧 Parent (अपने बच्चे के लिए)",
       student: "👨‍🎓 Student",
@@ -442,7 +442,7 @@ const hi: BuCopy = {
   },
   yes: "हाँ, बिल्कुल",
   promise: {
-    title: "4 मिनट में आपके दिमाग़ की 3 छुपी शक्तियाँ unlock करते हैं।",
+    title: "5 मिनट में आपके दिमाग़ की 3 छुपी शक्तियाँ unlock करते हैं।",
     trust: [
       "10,000+ learners",
       "500+ workshops",
@@ -562,7 +562,7 @@ const hi: BuCopy = {
     yourType: "आपका Brain Type",
     disclaimer:
       "Brain Types नतीजा दिखाने का एक मज़ेदार तरीका हैं, कोई medical या psychological test नहीं।",
-    main: "ये सिर्फ़ 4 मिनट थे। Sharp Brain में यही 30 दिन रोज़ होता है, Dr. Kapil के साथ।",
+    main: "ये सिर्फ़ 5 मिनट थे। Sharp Brain में यही 30 दिन रोज़ होता है, Dr. Kapil के साथ।",
     roleLine: {
       parent:
         "आपके बच्चे को ज़्यादा घंटों की नहीं, सही तरीके की ज़रूरत है। आपने उसे काम करते देखा।",

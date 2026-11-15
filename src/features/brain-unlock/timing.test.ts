@@ -9,16 +9,16 @@ import {
   secondsLeft,
 } from "./timing";
 
-// Founder (15 Nov 2026): the whole challenge ≈ 4 minutes.
+// Founder (15 Nov 2026): shorter steps; the promise is "5 minutes".
 describe("Brain Unlock timing", () => {
   it("the focus exercise is 20 seconds (was 30)", () => {
     expect(FOCUS_EXERCISE_MS).toBe(20_000);
   });
 
-  it("the time-left estimate adds up to about 4 minutes for one player, twice that for Duo", () => {
+  it("the time-left estimate adds up to about 5 minutes for one player, twice that for Duo", () => {
     const total = PHASE_SECONDS.reduce((a, b) => a + b, 0);
-    expect(total).toBeGreaterThanOrEqual(210);
-    expect(total).toBeLessThanOrEqual(270);
+    expect(total).toBeGreaterThanOrEqual(270);
+    expect(total).toBeLessThanOrEqual(330);
     expect(secondsLeft(0, 0, 1)).toBe(total);
     expect(secondsLeft(0, 0, 2)).toBe(total * 2);
     // Duo, Memory, child's turn: the child's Memory + both players' Focus.
@@ -34,7 +34,8 @@ describe("Brain Unlock timing", () => {
   });
 
   it("time-left lines read naturally in both languages", () => {
-    expect(buCopy.en.progress.timeLeft(secondsLeft(0, 0, 1))).toBe("About 4 minutes left");
+    expect(buCopy.en.progress.timeLeft(secondsLeft(0, 0, 1))).toBe("About 5 minutes left");
+    expect(buCopy.hi.progress.timeLeft(secondsLeft(0, 0, 1))).toBe("लगभग 5 मिनट बाकी");
     expect(buCopy.en.progress.timeLeft(120)).toBe("About 2 minutes left");
     expect(buCopy.en.progress.timeLeft(60)).toBe("About 1 minute left");
     expect(buCopy.en.progress.timeLeft(30)).toBe("Almost done!");
@@ -64,5 +65,26 @@ describe("Brain Unlock timing", () => {
         expect(total, `${lang} ${set}`).toBeLessThan(60);
       }
     }
+  });
+});
+
+describe("the promise is “5 minutes” everywhere (founder, 15 Nov 2026)", () => {
+  it("no Brain Unlock text, message, email, voice line or SEO says 4 minutes", () => {
+    const files = [
+      "src/features/brain-unlock/copy.ts",
+      "src/features/brain-unlock/messages.ts",
+      "src/features/brain-unlock/script/en.json",
+      "src/features/brain-unlock/script/hi.json",
+      "public/audio/brain-unlock/en/manifest.json",
+      "public/audio/brain-unlock/hi/manifest.json",
+      "src/lib/email/sendBrainUnlockEmails.ts",
+      "src/app/reading-memory-test/page.tsx",
+    ];
+    for (const f of files) {
+      const text = fs.readFileSync(f, "utf8").replace(/"heard": "[^"]*"/g, "");
+      expect(text, f).not.toMatch(/\b4[ -]?min|four min|चार मिनट|4 मिनट/i);
+    }
+    expect(buCopy.en.promise.title).toContain("5 minutes");
+    expect(buCopy.hi.promise.title).toContain("5 मिनट");
   });
 });

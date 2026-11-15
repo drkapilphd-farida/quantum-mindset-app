@@ -14,9 +14,9 @@ const ReadingMemoryTest = dynamic(() => import('@/features/reading-memory-test/c
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/reading-memory-test',
-  title: 'Brain Unlock — 3 Superpowers in 4 Minutes | Mind Ur Mind',
+  title: 'Brain Unlock — 3 Superpowers in 5 Minutes | Mind Ur Mind',
   description:
-    'Free, 4 minutes, no sign-up: unlock your reading speed, memory and focus and see your own Before → After on screen. Get your Brain Type. English or Hindi.',
+    'Free, 5 minutes, no sign-up: unlock your reading speed, memory and focus and see your own Before → After on screen. Get your Brain Type. English or Hindi.',
 })
 
 // Brain Unlock (founder spec, 13 Nov 2026) replaced the Free Reading & Memory

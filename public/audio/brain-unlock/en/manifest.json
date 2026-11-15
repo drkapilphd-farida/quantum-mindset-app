@@ -3,13 +3,13 @@
   "lang": "en",
   "voice": "shubh",
   "model": "bulbul:v3",
-  "createdAt": "2026-11-14T03:57:48.101Z",
+  "createdAt": "2026-11-15T11:20:35.376Z",
   "lines": {
     "hook": {
       "file": "hook.mp3",
-      "durationMs": 9131,
-      "text": "Namaste! I am Dr. Kapil. ... In the next four minutes, you will unlock three superpowers: speed, memory and focus. ... And you will see the change yourself.",
-      "heard": "Namaste, I am Dr. Kapil. In the next four minutes, you will unlock three superpowers: speed, memory, and focus, and you will see the change yourself."
+      "durationMs": 8875,
+      "text": "Namaste! I am Dr. Kapil. ... In the next five minutes, you will unlock three superpowers: speed, memory and focus. ... And you will see the change yourself.",
+      "heard": "Namaste. I am Dr. Kapil. In the next 5 minutes, you will unlock 3 superpowers: speed, memory, and focus, and you will see the change yourself."
     },
     "check-intro": {
       "file": "check-intro.mp3",
