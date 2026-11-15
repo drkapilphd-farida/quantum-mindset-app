@@ -4,14 +4,16 @@ import { useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { normalizeIndianMobile } from "@/lib/phone/indianMobile";
 import { readUtmParams } from "@/lib/analytics/utm";
-import { trackLead } from "@/lib/analytics/conversions";
+import { trackCustom } from "@/lib/fbq";
+import { trackGaEvent } from "@/lib/analytics/ga4";
 import { SITE_CONFIG_WHATSAPP_NUMBER } from "@/config/site.config";
 import { SCHOOL_ROLES, SCHOOLS_COPY, type SchoolRole, type SchoolsLang } from "../copy";
 import { monthLabel } from "../leadSchema";
 import { submitSchoolLead } from "../actions";
 
 // "Book a free pilot" (/schools). Saved by a Server Action (RLS insert-only
-// table); on success: thank-you message + a WhatsApp button.
+// table); on success: thank-you message + a WhatsApp button, and the custom
+// Meta/GA4 event "SchoolLead" (never the standard Lead).
 
 type FormState = {
   schoolName: string;
@@ -82,7 +84,10 @@ export function SchoolLeadForm({ lang, months }: { lang: SchoolsLang; months: st
     const result = await submitSchoolLead({ ...form, lang, utm: readUtmParams() }).catch(() => ({ success: false as const, error: c.errors.generic }));
     setPending(false);
     if (result.success) {
-      trackLead("Sharp Brain for Schools", "form");
+      // Founder (15 Nov 2026): a custom "SchoolLead" event, not the standard
+      // Lead, so school bookings never mix with the learner ad campaigns.
+      trackCustom("SchoolLead", { content_name: "Sharp Brain for Schools", lang });
+      trackGaEvent("school_lead", { content_name: "Sharp Brain for Schools", lang });
       setDoneSchool(form.schoolName.trim());
     } else {
       setError(result.error);

@@ -36,6 +36,8 @@ export type GaEventName =
   | 'signup_cta_click'
   | 'watch_training_click'
   | 'corporate_enquiry_submit'
+  // /schools "Book a free pilot" (custom, never generate_lead — founder, 15 Nov 2026).
+  | 'school_lead'
   // Site-wide conversion events (src/lib/analytics/conversions.ts), mirroring
   // the Meta Pixel standard events ViewContent / InitiateCheckout / Lead.
   | 'view_item'
