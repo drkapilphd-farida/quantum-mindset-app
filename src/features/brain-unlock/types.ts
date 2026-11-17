@@ -84,6 +84,8 @@ export const FUNNEL_EVENTS = [
   "unlock_memory_done",
   "unlock_focus_done",
   "report_view",
+  // Founder (17 Nov 2026): "Get my plan on WhatsApp" tapped and WhatsApp opened (no number needed).
+  "whatsapp_opened",
   "whatsapp_submitted",
   // Founder (15 Nov 2026): every tap on the report's submit button, and every
   // save that failed (with a reason, no personal data).

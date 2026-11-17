@@ -152,7 +152,7 @@ describe("where people left mid-challenge", () => {
 
 describe("funnel events", () => {
   it("the database allows exactly the events the code sends (latest migration)", () => {
-    const sql = fs.readFileSync("supabase/migrations/20261115000002_brain_unlock_submit_events.sql", "utf8");
+    const sql = fs.readFileSync("supabase/migrations/20261117000001_brain_unlock_whatsapp_first.sql", "utf8");
     const list = /CHECK \(event IN \(([\s\S]*?)\)\)/.exec(sql)?.[1] ?? "";
     const allowed = [...list.matchAll(/'([a-z_]+)'/g)].map((m) => m[1]).sort();
     expect(allowed).toEqual([...FUNNEL_EVENTS].sort());

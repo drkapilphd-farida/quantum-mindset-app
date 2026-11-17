@@ -136,6 +136,12 @@ export type BuCopy = {
   lead: {
     title: string;
     retest: string;
+    /** Under the main button: what happens on tap. */
+    chatHint: string;
+    orNumber: string;
+    sendToNumber: string;
+    savingNumber: string;
+    numberSaved: string;
     name: string;
     phone: string;
     email: string;
@@ -343,6 +349,11 @@ const en: BuCopy = {
     title:
       "Get your personal 30-day plan from Dr. Kapil + your biggest gap and how to fix it, on WhatsApp",
     retest: "🔁 Plus a free Day-30 re-test link, to see how far you’ve come",
+    chatHint: "Opens WhatsApp with your results typed in. Just tap Send, no form to fill.",
+    orNumber: "Or get it on your number",
+    sendToNumber: "Send it to my number",
+    savingNumber: "Saving…",
+    numberSaved: "Saved ✅ Dr. Kapil will send your plan to your WhatsApp number.",
     name: "Your name (optional)",
     phone: "WhatsApp number",
     email: "Email (optional)",
@@ -580,6 +591,11 @@ const hi: BuCopy = {
     title:
       "Dr. Kapil से अपना personal 30-दिन का plan + आपकी सबसे बड़ी कमी और उसे ठीक करने का तरीका, WhatsApp पर पाइए",
     retest: "🔁 साथ में 30वें दिन का मुफ़्त re-test link, ताकि आप अपनी बढ़त देख सकें",
+    chatHint: "WhatsApp आपके results लिखे हुए खुलेगा। बस Send दबाइए, कोई form नहीं भरना।",
+    orNumber: "या अपने नंबर पर पाइए",
+    sendToNumber: "मेरे नंबर पर भेजिए",
+    savingNumber: "Save हो रहा है…",
+    numberSaved: "Save हो गया ✅ Dr. Kapil आपका plan आपके WhatsApp नंबर पर भेजेंगे।",
     name: "आपका नाम (ज़रूरी नहीं)",
     phone: "WhatsApp नंबर",
     email: "Email (ज़रूरी नहीं)",

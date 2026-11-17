@@ -1,6 +1,7 @@
 import { trackGaEvent } from "@/lib/analytics/ga4";
 import { trackLead } from "@/lib/analytics/conversions";
 import { readUtmParams } from "@/lib/analytics/utm";
+import { currentDevice } from "./device";
 import { logBrainUnlockEvent } from "./actions";
 import type { BuRole } from "./passages";
 import type { FunnelEvent } from "./types";
@@ -55,7 +56,8 @@ export function trackBu(
     role: ctx.role,
     lang: ctx.lang,
     duo: ctx.duo,
-    ...(data !== undefined ? { data } : {}),
+    // Device type on every event (founder, 17 Nov 2026).
+    data: { ...(data ?? {}), device: currentDevice() },
     utm,
   }).catch(() => undefined);
   const params: Record<string, string | number> = {

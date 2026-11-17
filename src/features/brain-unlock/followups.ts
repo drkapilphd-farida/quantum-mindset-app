@@ -121,7 +121,8 @@ export type PaymentRow = {
 };
 export type LeadContact = {
   id: string;
-  whatsapp_number: string;
+  /** null = WhatsApp-only Brain Unlock lead (no number yet). */
+  whatsapp_number: string | null;
   email: string | null;
   created_at: string;
 };
@@ -133,7 +134,7 @@ export function boughtLeadIds(
 ): Set<string> {
   const out = new Set<string>();
   for (const lead of leads) {
-    const digits = last10(lead.whatsapp_number);
+    const digits = last10(lead.whatsapp_number ?? "");
     const email = lead.email?.toLowerCase() ?? null;
     const hit = payments.some(
       (p) =>

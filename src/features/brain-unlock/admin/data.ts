@@ -58,12 +58,12 @@ export async function paidSessions(
     .limit(5000);
   const paid = new Set<string>();
   for (const lead of list) {
-    const digits = last10(lead.whatsapp_number);
+    const digits = last10(lead.whatsapp_number ?? "");
     const email = lead.email?.toLowerCase() ?? null;
     const hit = (payments ?? []).some(
       (p) =>
         p.created_at >= lead.created_at &&
-        ((p.phone !== null && last10(p.phone) === digits) ||
+        ((digits.length === 10 && p.phone !== null && last10(p.phone) === digits) ||
           (email !== null && p.email?.toLowerCase() === email)),
     );
     if (hit) paid.add(lead.session_id);

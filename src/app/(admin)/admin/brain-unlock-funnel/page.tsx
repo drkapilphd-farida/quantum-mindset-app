@@ -37,6 +37,7 @@ const LABELS: Record<string, string> = {
   unlock_memory_done: "🧠 Memory unlocked",
   unlock_focus_done: "🎯 Focus unlocked",
   report_view: "Saw the report",
+  whatsapp_opened: "Opened WhatsApp from the report",
   whatsapp_submitted: "Sent WhatsApp number (lead)",
   lead_submit_tried: "Tapped “send” on the report",
   lead_save_failed: "Send failed",
@@ -491,6 +492,7 @@ export default async function BrainUnlockFunnelPage({
 
       <BreakdownTable title="By campaign" rows={f.byCampaign} />
       <BreakdownTable title="By role" rows={f.byRole} />
+      <BreakdownTable title="By device" rows={f.byDevice} />
     </div>
   );
 }

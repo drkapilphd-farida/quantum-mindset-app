@@ -325,3 +325,35 @@ describe("report form: number required, name optional (founder, 15 Nov 2026)", (
     expect(buCopy.en.lead.retest).toContain("Day-30 re-test");
   });
 });
+
+describe("“Get my plan on WhatsApp”: saved with no number (founder, 17 Nov 2026)", () => {
+  afterEach(() => vi.resetModules());
+
+  it("saves the lead with scores and UTM but no phone, returns its Ref, keeps the device", async () => {
+    const { actions, inserted, queued } = await load();
+    const res = await actions.saveBrainUnlockLead({
+      ...base,
+      firstName: "",
+      phone: "",
+      device: "mobile",
+      role: "student",
+      duo: false,
+      runs: [run("me", "student", "A")],
+    });
+    expect(res.ok).toBe(true);
+    if (!res.ok) return;
+    expect(res.ref).toMatch(/^BU-[0-9A-F]{6}$/);
+    const row = inserted[0]!.row;
+    expect(row).toMatchObject({ whatsapp_number: null, first_name: null, test_kind: "brain_unlock", utm_campaign: "sb_free_test_en", session_id: "sess_12345678" });
+    expect(res.ref).toBe(`BU-${String(row.id).replace(/-/g, "").slice(0, 6).toUpperCase()}`);
+    expect(row.details).toMatchObject({ device: "mobile", via: "whatsapp_chat" });
+    expect(queued).toHaveLength(1); // the Instant follow-up still shows in /admin/followups
+  });
+
+  it("a typed number is still checked (the “Or get it on your number” option)", async () => {
+    const { actions, inserted } = await load();
+    const res = await actions.saveBrainUnlockLead({ ...base, phone: "12345", role: "student", duo: false, runs: [run("me", "student", "A")] });
+    expect(res).toMatchObject({ ok: false, reason: "phone" });
+    expect(inserted).toHaveLength(0);
+  });
+});

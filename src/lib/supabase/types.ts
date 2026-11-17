@@ -3571,7 +3571,7 @@ export type Database = {
           lang: string
           passage_id: string
           status: string
-          whatsapp_number: string
+          whatsapp_number: string | null
           wpm: number
         }
         Insert: {
@@ -3602,7 +3602,7 @@ export type Database = {
           lang: string
           passage_id: string
           status: string
-          whatsapp_number: string
+          whatsapp_number?: string | null
           wpm: number
         }
         Update: {
@@ -3633,7 +3633,7 @@ export type Database = {
           lang?: string
           passage_id?: string
           status?: string
-          whatsapp_number?: string
+          whatsapp_number?: string | null
           wpm?: number
         }
         Relationships: []

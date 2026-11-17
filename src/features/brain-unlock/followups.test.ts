@@ -426,3 +426,25 @@ describe("biggest gap + free Day-30 re-test in the Instant message (founder, 15 
     expect(duo).toContain("Your biggest gap (Child): 🎯 Focus");
   });
 });
+
+describe("WhatsApp-only leads (founder, 17 Nov 2026)", () => {
+  it("the visitor's message carries a short Ref to match the chat to the lead", async () => {
+    const { leadRef } = await import("./messages");
+    expect(leadRef("7f3a2c91-1111-4222-8333-444455556666")).toBe("BU-7F3A2C");
+    const text = reportChatText(facts, DEFAULT_SETTINGS, "hi", "BU-7F3A2C");
+    expect(text.split("\n").at(-1)).toBe("Ref: BU-7F3A2C");
+    expect(reportChatText(facts, DEFAULT_SETTINGS, "en")).not.toContain("Ref:");
+  });
+
+  it("a lead without a number never matches a payment by phone (email still matches)", () => {
+    const leads = [
+      { id: "chat", whatsapp_number: null, email: null, created_at: "2026-11-17T06:00:00Z" },
+      { id: "chatEmail", whatsapp_number: null, email: "a@b.in", created_at: "2026-11-17T06:00:00Z" },
+    ];
+    const payments = [
+      { phone: "", email: null, created_at: "2026-11-17T07:00:00Z" },
+      { phone: "9876543210", email: "a@b.in", created_at: "2026-11-17T07:00:00Z" },
+    ];
+    expect([...boughtLeadIds(leads, payments)]).toEqual(["chatEmail"]);
+  });
+});

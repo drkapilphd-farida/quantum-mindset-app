@@ -5,7 +5,6 @@ import { Download, Share2 } from "lucide-react";
 import { SITE_CONFIG_WHATSAPP_NUMBER } from "@/config/site.config";
 import { readUtmParams } from "@/lib/analytics/utm";
 import {
-  cancelWhatsAppHandoff,
   finishWhatsAppHandoff,
   openPendingWhatsAppTab,
 } from "@/lib/whatsapp/handoff";
@@ -32,6 +31,7 @@ import type { BuSettings } from "../settings";
 import { drawBrainUnlockCard } from "../shareImage";
 import { deviceId } from "../deviceMemory";
 import { trackBu, sessionId, type TrackContext } from "../tracking";
+import { currentDevice } from "../device";
 import type { ClassBand, RawRun } from "../types";
 import { secondaryBtn, SKILL } from "./ui";
 
@@ -221,6 +221,7 @@ export function Report({
       settings={settings}
       track={track}
       onSaved={onSaved}
+      preview={{ ...factsFrom("", main), ...(child !== undefined ? { child: { ...factsFrom("", child), label: c.report.child } } : {}) }}
     />
   );
   return (
@@ -318,6 +319,7 @@ function LeadForm({
   settings,
   track,
   onSaved,
+  preview,
 }: {
   c: BuCopy;
   lang: "en" | "hi";
@@ -329,12 +331,18 @@ function LeadForm({
   settings: BuSettings;
   track: TrackContext;
   onSaved: (facts: ReportFacts) => void;
+  /** This browser's own numbers: the WhatsApp message if the save failed. */
+  preview: ReportFacts;
 }): React.JSX.Element {
+  // Founder (17 Nov 2026): the main button opens WhatsApp at once, no number
+  // needed — the lead is saved first (scores, Brain Type, UTM, session, no
+  // phone) and the message carries its Ref so Dr. Kapil can match the chat.
+  // "Or get it on your number" stays as a small option below.
   const [waUrl, setWaUrl] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [state, setState] = useState<"idle" | "saving" | "saved">("idle");
+  const [state, setState] = useState<"idle" | "saving" | "chat" | "number">("idle");
   const [error, setError] = useState<string | null>(null);
   const [badField, setBadField] = useState<"phone" | "email" | null>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
@@ -350,31 +358,12 @@ function LeadForm({
           ? c.lead.errors.tooMany
           : c.error;
 
-  function fail(field: "phone" | "email" | null, text: string, reason: string): void {
-    setError(text);
-    setBadField(field);
-    trackBu("lead_save_failed", track, { reason, where: "browser" });
-    (field === "email" ? emailRef : phoneRef).current?.focus();
-  }
-
-  async function save(): Promise<void> {
-    if (state === "saving") return; // a second tap while saving does nothing
-    trackBu("lead_submit_tried", track, { email: email.trim() !== "" });
-    // Friendly checks first (the button is always active): number required, name optional.
-    if (phone.trim() === "") return fail("phone", c.lead.errors.phoneMissing, "phone_missing");
-    if (leadPhoneDigits(phone) === null) return fail("phone", c.lead.errors.phoneInvalid, "phone");
-    if (email.trim() !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
-      return fail("email", c.lead.errors.email, "email");
-    // Phones only allow a new tab during the tap: open it now, point it at wa.me once saved.
-    const tab = openPendingWhatsAppTab();
-    setState("saving");
-    setError(null);
-    setBadField(null);
-    const res = await saveBrainUnlockLead({
+  const save = (withNumber: boolean): Promise<SavedLead> =>
+    saveBrainUnlockLead({
       sessionId: sessionId(),
-      firstName: name,
-      phone,
-      email,
+      firstName: withNumber ? name : "",
+      phone: withNumber ? phone : "",
+      email: withNumber ? email : "",
       lang,
       role,
       classBand,
@@ -383,35 +372,77 @@ function LeadForm({
       runs,
       utm: readUtmParams(),
       deviceId: deviceId(),
+      device: currentDevice(),
       pageUrl: window.location.href,
     }).catch((): SavedLead => ({ ok: false, error: c.error, reason: "network" }));
+
+  /** The main button: save (no number), then open WhatsApp with the report typed in. */
+  async function openWhatsApp(): Promise<void> {
+    if (state === "saving") return; // a second tap while saving does nothing
+    // Phones only allow a new tab during the tap: open it now, point it at wa.me once saved.
+    const tab = openPendingWhatsAppTab();
+    setState("saving");
+    setError(null);
+    trackBu("whatsapp_opened", track, { via: "chat" });
+    const res = await save(false);
+    if (res.ok) {
+      trackBu("whatsapp_submitted", track, { via: "chat", score: res.facts.score, type: res.facts.brainType });
+      onSaved(res.facts);
+    } else trackBu("lead_save_failed", track, { reason: res.reason, via: "chat" });
+    // WhatsApp opens either way: the visitor is never stuck (without a Ref if the save failed).
+    const url = waLink(
+      SITE_CONFIG_WHATSAPP_NUMBER,
+      res.ok
+        ? reportChatText(res.facts, settings, lang, res.ref)
+        : reportChatText(preview, settings, lang),
+    );
+    setWaUrl(url);
+    setState("chat");
+    finishWhatsAppHandoff(tab, url);
+  }
+
+  function fail(field: "phone" | "email" | null, text: string, reason: string): void {
+    setError(text);
+    setBadField(field);
+    trackBu("lead_save_failed", track, { reason, where: "browser", via: "number" });
+    (field === "email" ? emailRef : phoneRef).current?.focus();
+  }
+
+  /** "Or get it on your number": friendly checks, save with the number, no WhatsApp opened. */
+  async function saveNumber(): Promise<void> {
+    if (state === "saving") return;
+    trackBu("lead_submit_tried", track, { email: email.trim() !== "", via: "number" });
+    if (phone.trim() === "") return fail("phone", c.lead.errors.phoneMissing, "phone_missing");
+    if (leadPhoneDigits(phone) === null) return fail("phone", c.lead.errors.phoneInvalid, "phone");
+    if (email.trim() !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      return fail("email", c.lead.errors.email, "email");
+    setState("saving");
+    setError(null);
+    setBadField(null);
+    const res = await save(true);
     if (!res.ok) {
-      trackBu("lead_save_failed", track, { reason: res.reason });
-      cancelWhatsAppHandoff(tab);
+      trackBu("lead_save_failed", track, { reason: res.reason, via: "number" });
       setState("idle");
       setError(messageFor(res.reason));
       setBadField(res.reason === "phone" ? "phone" : res.reason === "email" ? "email" : null);
       return;
     }
-    const url = waLink(
-      SITE_CONFIG_WHATSAPP_NUMBER,
-      reportChatText(res.facts, settings, lang),
-    );
-    setWaUrl(url);
-    setState("saved");
-    trackBu("whatsapp_submitted", track, {
-      score: res.facts.score,
-      type: res.facts.brainType,
-    });
+    trackBu("whatsapp_submitted", track, { via: "number", score: res.facts.score, type: res.facts.brainType });
     onSaved(res.facts);
-    finishWhatsAppHandoff(tab, url);
+    setState("number");
   }
+
+  const field = (bad: boolean): string =>
+    `min-h-12 rounded-xl border-2 bg-background px-4 text-base text-foreground ${bad ? "border-[var(--play-warn)]" : "border-border"}`;
 
   return (
     <section className="play-card flex flex-col gap-3 p-5" data-bu-lead={state}>
       <h3 className="text-xl leading-snug text-foreground">{c.lead.title}</h3>
-      {state === "saved" ? (
-        <div className="flex flex-col gap-2" data-bu-lead-saved>
+      <p className="text-sm font-semibold text-foreground" data-bu-retest>
+        {c.lead.retest}
+      </p>
+      {state === "chat" ? (
+        <div className="flex flex-col gap-2" data-bu-lead-saved="chat">
           <p className="text-lg font-bold text-foreground">{c.lead.sent}</p>
           <p className="text-base text-muted-foreground">{c.lead.sentSub}</p>
           {waUrl !== null && (
@@ -426,85 +457,102 @@ function LeadForm({
             </a>
           )}
         </div>
+      ) : state === "number" ? (
+        <p className="text-lg font-bold text-foreground" data-bu-lead-saved="number">
+          {c.lead.numberSaved}
+        </p>
       ) : (
-        <form
-          className="flex flex-col gap-2"
-          noValidate
-          onSubmit={(e) => {
-            e.preventDefault();
-            void save();
-          }}
-        >
-          <p className="text-sm font-semibold text-foreground" data-bu-retest>
-            {c.lead.retest}
-          </p>
-          <label className="sr-only" htmlFor="bu-phone">
-            {c.lead.phone}
-          </label>
-          <input
-            id="bu-phone"
-            ref={phoneRef}
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            maxLength={20}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder={c.lead.phone}
-            aria-invalid={badField === "phone"}
-            aria-describedby={error !== null ? "bu-lead-error" : undefined}
-            className={`min-h-12 rounded-xl border-2 bg-background px-4 text-base text-foreground ${badField === "phone" ? "border-[var(--play-warn)]" : "border-border"}`}
-          />
-          <label className="sr-only" htmlFor="bu-name">
-            {c.lead.name}
-          </label>
-          <input
-            id="bu-name"
-            type="text"
-            autoComplete="given-name"
-            maxLength={60}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={c.lead.name}
-            className="min-h-12 rounded-xl border-2 border-border bg-background px-4 text-base text-foreground"
-          />
-          <label className="sr-only" htmlFor="bu-email">
-            {c.lead.email}
-          </label>
-          <input
-            id="bu-email"
-            ref={emailRef}
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            maxLength={254}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={c.lead.email}
-            aria-invalid={badField === "email"}
-            className={`min-h-12 rounded-xl border-2 bg-background px-4 text-base text-foreground ${badField === "email" ? "border-[var(--play-warn)]" : "border-border"}`}
-          />
-          {error !== null && (
-            <p
-              id="bu-lead-error"
-              role="alert"
-              className="rounded-xl bg-[var(--play-warn-bg)] px-3 py-2 text-sm font-semibold text-[var(--play-warn)]"
-              data-bu-lead-error
-            >
-              {error}
-            </p>
-          )}
-          {/* Always bright and tappable; a wrong or missing number gets a friendly line. */}
+        <>
+          {/* Always bright: one tap opens WhatsApp with the report typed in. */}
           <button
-            type="submit"
+            type="button"
+            onClick={() => void openWhatsApp()}
             className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#0b7a3e] px-5 text-lg font-bold text-white shadow-[0_4px_0_#065f2e] active:translate-y-0.5"
             aria-busy={state === "saving"}
             data-bu-lead-submit
           >
             {state === "saving" ? c.lead.saving : c.lead.submit}
           </button>
-          <p className="text-xs text-muted-foreground">{c.lead.privacy}</p>
-        </form>
+          <p className="text-xs text-muted-foreground">{c.lead.chatHint}</p>
+          <details className="rounded-xl border border-border px-3 py-2" data-bu-number-option>
+            <summary className="cursor-pointer text-sm font-semibold text-foreground">
+              {c.lead.orNumber}
+            </summary>
+            <form
+              className="mt-2 flex flex-col gap-2"
+              noValidate
+              onSubmit={(e) => {
+                e.preventDefault();
+                void saveNumber();
+              }}
+            >
+              <label className="sr-only" htmlFor="bu-phone">
+                {c.lead.phone}
+              </label>
+              <input
+                id="bu-phone"
+                ref={phoneRef}
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                maxLength={20}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder={c.lead.phone}
+                aria-invalid={badField === "phone"}
+                aria-describedby={error !== null ? "bu-lead-error" : undefined}
+                className={field(badField === "phone")}
+              />
+              <label className="sr-only" htmlFor="bu-name">
+                {c.lead.name}
+              </label>
+              <input
+                id="bu-name"
+                type="text"
+                autoComplete="given-name"
+                maxLength={60}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={c.lead.name}
+                className={field(false)}
+              />
+              <label className="sr-only" htmlFor="bu-email">
+                {c.lead.email}
+              </label>
+              <input
+                id="bu-email"
+                ref={emailRef}
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                maxLength={254}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={c.lead.email}
+                aria-invalid={badField === "email"}
+                className={field(badField === "email")}
+              />
+              {error !== null && (
+                <p
+                  id="bu-lead-error"
+                  role="alert"
+                  className="rounded-xl bg-[var(--play-warn-bg)] px-3 py-2 text-sm font-semibold text-[var(--play-warn)]"
+                  data-bu-lead-error
+                >
+                  {error}
+                </p>
+              )}
+              <button
+                type="submit"
+                className="flex min-h-12 w-full items-center justify-center rounded-2xl border-2 border-[#0b7a3e] px-5 text-base font-bold text-[#0b7a3e]"
+                data-bu-number-submit
+              >
+                {state === "saving" ? c.lead.savingNumber : c.lead.sendToNumber}
+              </button>
+              <p className="text-xs text-muted-foreground">{c.lead.privacy}</p>
+            </form>
+          </details>
+        </>
       )}
     </section>
   );

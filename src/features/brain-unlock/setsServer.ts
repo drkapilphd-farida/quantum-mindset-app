@@ -13,7 +13,7 @@ import {
 
 type Row = {
   id: string;
-  whatsapp_number: string;
+  whatsapp_number: string | null;
   email: string | null;
   details: unknown;
 };
@@ -48,7 +48,11 @@ export async function setHistoryFor(input: {
       }
     }
     const phones = [
-      ...new Set([...rows.values()].map((r) => r.whatsapp_number)),
+      ...new Set(
+        [...rows.values()]
+          .map((r) => r.whatsapp_number)
+          .filter((n): n is string => n !== null),
+      ),
     ];
     const emails = [
       ...new Set(

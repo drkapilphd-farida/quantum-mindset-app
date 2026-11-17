@@ -15,7 +15,7 @@ import {
 } from "@/lib/email/sendBrainUnlockEmails";
 import { evaluateRun, InvalidRunError, type EvaluatedRun } from "./evaluate";
 import { queueFollowups } from "./followups";
-import { factsFrom, type ReportFacts } from "./messages";
+import { factsFrom, type ReportFacts, leadRef } from "./messages";
 import { countCorrect, passageById } from "./passages";
 import { getBrainUnlockSettings } from "./settingsServer";
 import { chooseSessionSets, mergeHistory, type SessionSets } from "./sets";
@@ -177,7 +177,11 @@ const LeadSchema = z.object({
   sessionId: SessionIdSchema,
   // Founder (15 Nov 2026): the name is optional, the number required.
   firstName: z.string().trim().max(60).default(""),
-  phone: z.string().trim().min(10).max(20),
+  // Founder (17 Nov 2026): empty = "Get my plan on WhatsApp" (the visitor
+  // starts the chat; Dr. Kapil adds the number by hand). A typed number is
+  // still checked.
+  phone: z.string().trim().max(20).default(""),
+  device: z.enum(["mobile", "tablet", "desktop"]).optional(),
   email: z
     .union([z.literal(""), z.string().trim().toLowerCase().email().max(254)])
     .optional(),
@@ -195,7 +199,13 @@ const LeadSchema = z.object({
 });
 
 export type SavedLead =
-  | { ok: true; reports: EvaluatedRun[]; facts: ReportFacts }
+  | {
+      ok: true;
+      reports: EvaluatedRun[];
+      facts: ReportFacts;
+      /** "BU-7F3A2C": in the WhatsApp message, so the chat can be matched to the lead. */
+      ref: string;
+    }
   | { ok: false; error: string; reason: LeadFailReason };
 
 /** Why a lead was not saved — sent with the "lead_save_failed" funnel event (no personal data). "network" = the call itself failed (set in the browser). */
@@ -249,8 +259,8 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
       reason: "rate",
     };
   const d = parsed.data;
-  const phone = phoneDigits(d.phone);
-  if (phone === null)
+  const phone = d.phone === "" ? null : phoneDigits(d.phone);
+  if (d.phone !== "" && phone === null)
     return { ok: false, error: "Enter a valid WhatsApp number.", reason: "phone" };
 
   // Report links point at this site only.
@@ -328,6 +338,8 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
           runs: reports,
           sets,
           deviceId: d.deviceId ?? null,
+          device: d.device ?? null,
+          via: phone === null ? "whatsapp_chat" : "number",
         }),
       ) as Json,
       utm_source: utm.utm_source ?? null,
@@ -355,6 +367,7 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
         sendBrainUnlockFounderEmail({
           firstName: d.firstName,
           whatsappNumber: phone,
+          ref: leadRef(leadId),
           email,
           lang: d.lang,
           role: d.role,
@@ -376,7 +389,7 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
             }),
       ]);
     });
-    return { ok: true, reports, facts };
+    return { ok: true, reports, facts, ref: leadRef(leadId) };
   } catch (e) {
     if (!(e instanceof InvalidRunError))
       logger.error("saveBrainUnlockLead failed", {

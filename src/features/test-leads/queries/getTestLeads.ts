@@ -1,5 +1,6 @@
 import { createServiceClient } from '@/lib/supabase/service'
 import { logger } from '@/lib/logger'
+import { leadRef } from '@/features/brain-unlock/messages'
 
 export type TestLeadStatus = 'new' | 'contacted' | 'enrolled'
 
@@ -7,7 +8,10 @@ export type TestLeadRow = {
   id: string
   createdAt: string
   firstName: string | null
-  whatsappNumber: string
+  /** null = WhatsApp-only Brain Unlock lead (the visitor started the chat; number added by hand). */
+  whatsappNumber: string | null
+  /** Brain Unlock reference in the visitor's WhatsApp message ("BU-7F3A2C"). */
+  ref: string | null
   lang: string
   testKind: string
   effectiveWpm: number
@@ -46,12 +50,13 @@ export async function getTestLeads(): Promise<TestLeadRow[]> {
   }
   const offerFor = new Map((offers ?? []).map((o) => [o.whatsapp_number, o]))
   return (rows ?? []).map((r) => {
-    const offer = offerFor.get(r.whatsapp_number)
+    const offer = r.whatsapp_number === null ? undefined : offerFor.get(r.whatsapp_number)
     return {
       id: r.id,
       createdAt: r.created_at,
       firstName: r.first_name,
       whatsappNumber: r.whatsapp_number,
+      ref: r.test_kind === 'brain_unlock' ? leadRef(r.id) : null,
       lang: r.lang,
       testKind: r.test_kind,
       effectiveWpm: r.effective_wpm,

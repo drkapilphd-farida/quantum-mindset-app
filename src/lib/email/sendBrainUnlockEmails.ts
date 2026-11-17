@@ -31,7 +31,9 @@ const typeLabel = (
 
 export async function sendBrainUnlockFounderEmail(lead: {
   firstName: string;
-  whatsappNumber: string;
+  /** null = WhatsApp-only lead: the visitor starts the chat; match it by `ref`. */
+  whatsappNumber: string | null;
+  ref: string;
   email: string | null;
   lang: string;
   role: string;
@@ -53,7 +55,10 @@ export async function sendBrainUnlockFounderEmail(lead: {
         `New Brain Unlock lead:`,
         ``,
         `Name: ${lead.firstName || "(not given)"}`,
-        `WhatsApp: +${lead.whatsappNumber}  (https://wa.me/${lead.whatsappNumber})`,
+        lead.whatsappNumber === null
+          ? `WhatsApp: via WhatsApp chat — look for the message with "Ref: ${lead.ref}" and add the number in /admin/followups`
+          : `WhatsApp: +${lead.whatsappNumber}  (https://wa.me/${lead.whatsappNumber})`,
+        `Ref: ${lead.ref}`,
         lead.email !== null ? `Email: ${lead.email}` : null,
         `Role: ${lead.role}${lead.classBand !== null ? ` · class ${lead.classBand}` : ""} · language ${lead.lang}`,
         `Brain Type: ${typeLabel(lead.settings, f, "en")} · Score ${f.score}/100`,

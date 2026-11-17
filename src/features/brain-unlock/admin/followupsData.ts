@@ -4,6 +4,7 @@ import { createServiceClient } from "@/lib/supabase/service";
 import { logger } from "@/lib/logger";
 import {
   followupText,
+  leadRef,
   waLink,
   type FollowupContext,
   type FollowupStep,
@@ -26,7 +27,10 @@ export type FollowupItem = {
   step: FollowupStep;
   dueAt: string;
   name: string;
-  phone: string;
+  /** null = WhatsApp-only lead: the visitor started the chat; add the number by hand. */
+  phone: string | null;
+  /** "BU-7F3A2C", the reference in the visitor's WhatsApp message. */
+  ref: string;
   role: string;
   lang: "en" | "hi";
   brainType: string;
@@ -38,7 +42,7 @@ export type FollowupItem = {
 };
 
 type LeadRow = LeadContact & {
-  first_name: string;
+  first_name: string | null;
   role: string | null;
   lang: string;
   brain_type: string | null;
@@ -112,7 +116,13 @@ export async function loadFollowups(nowMs: number = Date.now()): Promise<{
   const leads = (leadData ?? []) as LeadRow[];
   const byId = new Map(leads.map((l) => [l.id, l]));
 
-  const numbers = [...new Set(leads.map((l) => l.whatsapp_number))];
+  const numbers = [
+    ...new Set(
+      leads
+        .map((l) => l.whatsapp_number)
+        .filter((n): n is string => n !== null),
+    ),
+  ];
   const { data: optOuts } = await client
     .from("whatsapp_opt_outs")
     .select("whatsapp_number")
@@ -136,7 +146,12 @@ export async function loadFollowups(nowMs: number = Date.now()): Promise<{
   await stopFor([...bought], "purchased");
   await stopFor(
     leads
-      .filter((l) => !bought.has(l.id) && optedOut.has(l.whatsapp_number))
+      .filter(
+        (l) =>
+          !bought.has(l.id) &&
+          l.whatsapp_number !== null &&
+          optedOut.has(l.whatsapp_number),
+      )
       .map((l) => l.id),
     "stop_requested",
   );
@@ -149,7 +164,7 @@ export async function loadFollowups(nowMs: number = Date.now()): Promise<{
       lead === undefined ||
       !isFollowupStep(r.step) ||
       bought.has(lead.id) ||
-      optedOut.has(lead.whatsapp_number)
+      (lead.whatsapp_number !== null && optedOut.has(lead.whatsapp_number))
     )
       continue;
     const ctx = contextFrom(lead, settings);
@@ -160,8 +175,11 @@ export async function loadFollowups(nowMs: number = Date.now()): Promise<{
       leadId: lead.id,
       step: r.step,
       dueAt: r.due_at,
-      name: lead.first_name,
+      name:
+        lead.first_name ??
+        (lead.whatsapp_number === null ? "WhatsApp chat" : "(no name)"),
       phone: lead.whatsapp_number,
+      ref: leadRef(lead.id),
       role: lead.role ?? "",
       lang: lead.lang === "hi" ? "hi" : "en",
       brainType:
@@ -179,7 +197,10 @@ export async function loadFollowups(nowMs: number = Date.now()): Promise<{
             ],
       campaign: lead.utm_campaign,
       text,
-      wa: text === null ? null : waLink(lead.whatsapp_number, text),
+      wa:
+        text === null || lead.whatsapp_number === null
+          ? null
+          : waLink(lead.whatsapp_number, text),
     });
   }
   const campaigns = [

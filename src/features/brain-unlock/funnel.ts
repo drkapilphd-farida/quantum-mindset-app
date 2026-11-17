@@ -33,6 +33,7 @@ export const MAIN_STEPS: readonly FunnelEvent[] = [
 /** Side steps: shown with their count, no drop. */
 export const SIDE_STEPS: readonly FunnelEvent[] = [
   "duo_chosen",
+  "whatsapp_opened",
   "lead_submit_tried",
   "lead_save_failed",
   "share_clicked",
@@ -63,6 +64,8 @@ export type FunnelReport = {
   side: StepRow[];
   byCampaign: Breakdown[];
   byRole: Breakdown[];
+  /** Mobile / tablet / desktop (recorded from 17 Nov 2026). */
+  byDevice: Breakdown[];
   averages: Averages;
   brainTypes: { type: string; count: number }[];
   duoSessions: number;
@@ -113,6 +116,11 @@ export function buildFunnel(
 ): FunnelReport {
   const { campaignOf, roleOf, keep } = sessionFilter(events, filter);
   const rows = events.filter((e) => keep(e.session_id));
+  const deviceOf = new Map<string, string>();
+  for (const e of rows) {
+    const d = field(e.data, "device");
+    if (typeof d === "string" && !deviceOf.has(e.session_id)) deviceOf.set(e.session_id, d);
+  }
 
   const sessionsBy = new Map<string, Set<string>>();
   const add = (event: string, s: string): void => {
@@ -205,6 +213,7 @@ export function buildFunnel(
     side,
     byCampaign: breakdown((s) => campaignOf.get(s) ?? "(none)"),
     byRole: breakdown((s) => roleOf.get(s) ?? "(not picked)"),
+    byDevice: breakdown((s) => deviceOf.get(s) ?? "(not recorded)"),
     averages: {
       speed: { n: speedB.length, before: avg(speedB), after: avg(speedA) },
       memory: {

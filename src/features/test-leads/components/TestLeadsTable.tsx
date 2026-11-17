@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { AddLeadNumber } from '@/features/brain-unlock/admin/AddLeadNumber'
 import { updateTestLeadStatus } from '../actions/updateTestLeadStatus'
 import type { TestLeadRow, TestLeadStatus } from '../queries/getTestLeads'
 import { leadMagnetCopy } from '@/features/reading-speed-test/leadMagnetCopy'
@@ -70,10 +71,18 @@ export function TestLeadsTable({ rows }: { rows: TestLeadRow[] }): React.JSX.Ele
                 <TableCell className="whitespace-nowrap">{ist(lead.createdAt)}</TableCell>
                 <TableCell>{lead.firstName ?? '—'}</TableCell>
                 <TableCell className="whitespace-nowrap">
-                  <div>+{lead.whatsappNumber}</div>
-                  <a href={`https://wa.me/${lead.whatsappNumber}?text=${encodeURIComponent(followUp(lead))}`} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-primary underline">
-                    Message on WhatsApp
-                  </a>
+                  {lead.whatsappNumber === null ? (
+                    // WhatsApp-only Brain Unlock lead: match the chat by its Ref, then add the number.
+                    <AddLeadNumber leadId={lead.id} refCode={lead.ref ?? ''} />
+                  ) : (
+                    <>
+                      <div>+{lead.whatsappNumber}</div>
+                      {lead.ref !== null && <div className="text-xs text-muted-foreground">Ref {lead.ref}</div>}
+                      <a href={`https://wa.me/${lead.whatsappNumber}?text=${encodeURIComponent(followUp(lead))}`} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-primary underline">
+                        Message on WhatsApp
+                      </a>
+                    </>
+                  )}
                 </TableCell>
                 {lead.testKind === 'brain_unlock' ? (
                   <TableCell className="whitespace-nowrap" data-lead-kind="brain_unlock">

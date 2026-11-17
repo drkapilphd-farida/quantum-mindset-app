@@ -129,10 +129,16 @@ function cardLines(f: Omit<ReportFacts, "firstName" | "child">): {
  * "Get my report on WhatsApp": the visitor starts the chat with Dr. Kapil's
  * WhatsApp Business number, everything typed in (founder spec, 14 Nov 2026).
  */
+/** A short reference for a lead ("BU-7F3A2C"), from its id: in the visitor's WhatsApp message and in admin, to match chats to leads. */
+export function leadRef(leadId: string): string {
+  return `BU-${leadId.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
+}
+
 export function reportChatText(
   f: ReportFacts,
   s: BuSettings,
   lang: BuLangCode,
+  ref?: string,
 ): string {
   const hi = lang === "hi";
   const n = cardLines(f);
@@ -155,6 +161,7 @@ export function reportChatText(
   lines.push(
     hi ? "मुझे मेरा 30-day plan भेजिए।" : "Please send me my 30-day plan.",
   );
+  if (ref !== undefined) lines.push(`Ref: ${ref}`);
   return lines.join("\n");
 }
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { STEP_LABELS } from "../followups";
 import type { FollowupItem } from "./followupsData";
 import { markFollowup } from "./followupActions";
+import { AddLeadNumber } from "./AddLeadNumber";
 
 // One follow-up: who, their numbers, the step, the message — and the buttons.
 // "Send on WhatsApp" opens wa.me/<their number> with the message typed in
@@ -40,7 +41,7 @@ export function FollowupRow({
   const act = async (action: "done" | "skip" | "stop"): Promise<void> => {
     if (
       action === "stop" &&
-      !window.confirm(`Stop all follow-ups to ${item.name}?`)
+      !window.confirm(`Stop all follow-ups to ${item.name}${item.phone === null ? ` (${item.ref})` : ""}?`)
     )
       return;
     setPending(true);
@@ -108,7 +109,30 @@ export function FollowupRow({
           Nothing to send for this step (e.g. no video set) — tap Skip.
         </p>
       )}
+      {item.phone === null && (
+        <div className="flex flex-col gap-2 rounded border border-dashed border-border p-2">
+          <AddLeadNumber leadId={item.leadId} refCode={item.ref} />
+          <p className="text-xs text-muted-foreground">
+            They messaged you first: reply in that chat (copy the message
+            below), or add the number to use “Send on WhatsApp”.
+          </p>
+        </div>
+      )}
       <div className="flex flex-wrap gap-2">
+        {item.phone === null && item.text !== null && (
+          <button
+            type="button"
+            className={btn}
+            onClick={() => {
+              void navigator.clipboard?.writeText(item.text ?? "");
+              setOpened(true);
+              setMsg("Message copied — paste it in their chat, then tap Done.");
+            }}
+            data-followup-copy
+          >
+            Copy message
+          </button>
+        )}
         {item.wa !== null && (
           <a
             href={item.wa}
