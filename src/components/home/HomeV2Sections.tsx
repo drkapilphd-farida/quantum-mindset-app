@@ -17,6 +17,7 @@ import type { GroupId } from "@/features/programs/types";
 const GROUP_ORDER: GroupId[] = ["mind", "rel", "perf", "spirit", "deep"];
 import VideoReviewGrid from "../VideoReviewGrid";
 import { Eyebrow } from "../ui";
+import { Tilt } from "../fx/Tilt";
 
 // Trust strip and Meet Dr. Kapil live in HomeTrustMeet.tsx (small, so other pages can reuse them cheaply).
 export { HomeMeetKapil, HomeTrustStrip } from "./HomeTrustMeet";
@@ -30,7 +31,7 @@ const GOLD = "inline-flex min-h-11 items-center justify-center rounded-sm bg-gol
 // 2. Three programs (owner's offer ladder, 23 Nov 2026): Sharp Brain (4
 // prices), 21-Day Online Retreat, Personal Sessions — then the "more ways"
 // strip (Telepathy workshop, Rishikesh retreat, organisations).
-const CARD = "flex flex-col rounded-sm bg-panel p-6 sm:p-7";
+const CARD = "flex h-full flex-col rounded-xl bg-white p-6 shadow-[0_18px_40px_-26px_rgba(19,32,59,0.4)] sm:p-7";
 export function HomePaths(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.paths;
@@ -39,13 +40,14 @@ export function HomePaths(): React.JSX.Element {
   const ps = c.sessions;
   const hiQ = (href: string): string => (lang === "hi" ? `${href}?lang=hi` : href);
   return (
-    <section id="paths" className={SECTION} aria-labelledby="home-paths">
+    <section id="paths" className={`${SECTION} band-blue`} aria-labelledby="home-paths">
       <div className="mx-auto max-w-content">
         <h2 id="home-paths" className="text-[26px] font-extrabold leading-tight sm:text-[34px]">
           {say(c.heading, lang)}
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
-          <article className={`${CARD} border-2 border-[#2b57e8]/35`} data-home-path="sharp-brain">
+          <Tilt className="h-full rounded-xl" max={5}>
+          <article className={`${CARD} border-2 border-[#2b57e8]/35 border-t-[6px] border-t-[#2b57e8]`} data-home-path="sharp-brain">
             <Eyebrow color="text-[#2b57e8]">{say(sb.eyebrow, lang)}</Eyebrow>
             <h3 className="mt-3 text-[24px] font-extrabold leading-snug">{say(sb.title, lang)}</h3>
             <p className="mt-2 text-[15.5px] leading-relaxed text-ink-dim">{say(sb.line, lang)}</p>
@@ -64,8 +66,10 @@ export function HomePaths(): React.JSX.Element {
               <FreeTestButton test="reading" lang={lang} />
             </div>
           </article>
+          </Tilt>
 
-          <article className={`${CARD} border-2 border-teal/45`} data-home-path="online-retreat">
+          <Tilt className="h-full rounded-xl" max={5}>
+          <article className={`${CARD} border-2 border-teal/45 border-t-[6px] border-t-[#11a197]`} data-home-path="online-retreat">
             <Eyebrow color="text-teal">{say(rt.eyebrow, lang)}</Eyebrow>
             <h3 className="mt-3 text-[24px] font-extrabold leading-snug">{say(rt.title, lang)}</h3>
             <ul className="mt-3 space-y-2 text-[15.5px] leading-relaxed">
@@ -90,8 +94,10 @@ export function HomePaths(): React.JSX.Element {
               <FreeTestButton test="overthinking" lang={lang} />
             </div>
           </article>
+          </Tilt>
 
-          <article className={`${CARD} border border-line-strong`} data-home-path="sessions">
+          <Tilt className="h-full rounded-xl" max={5}>
+          <article className={`${CARD} border border-line-strong border-t-[6px] border-t-[#f2a33a]`} data-home-path="sessions">
             <Eyebrow color="text-gold">{say(ps.eyebrow, lang)}</Eyebrow>
             <h3 className="mt-3 text-[24px] font-extrabold leading-snug">{say(ps.title, lang)}</h3>
             <p className="mt-2 text-[15.5px] leading-relaxed text-ink-dim">{say(ps.line, lang)}</p>
@@ -123,6 +129,7 @@ export function HomePaths(): React.JSX.Element {
               <p className="text-[13px] text-ink-dim">{say(ps.note, lang)}</p>
             </div>
           </article>
+          </Tilt>
         </div>
 
         <div className="mt-10" data-home-more>
@@ -268,7 +275,7 @@ export function HomeFreeTools(): React.JSX.Element {
   const card = "flex flex-col items-start gap-4 rounded-sm border border-t-4 border-line-strong border-t-[#0F766E] bg-panel px-6 py-6";
   const icon = "flex h-11 w-11 items-center justify-center rounded-full bg-[#DDF3EF] text-[#0F766E]";
   return (
-    <section className={`${SECTION} bg-panel2`} data-home-free-tools>
+    <section className={`${SECTION} band-mint`} data-home-free-tools>
       <div className="mx-auto grid max-w-content grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
         <div className={card} data-free-tool="overthinking">
           <span className={icon} aria-hidden="true">
@@ -292,7 +299,7 @@ export function HomeFinalCta(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.finalCta;
   return (
-    <section className="bg-gradient-to-br from-[#0a1630] via-[#0b3a5c] to-[#0b7a74] px-4 py-16 text-center text-white sm:px-8 sm:py-20" data-home-final-cta>
+    <section className="hero-vivid px-4 py-16 text-center text-white sm:px-8 sm:py-20" data-home-final-cta>
       <div className="mx-auto flex max-w-2xl flex-col items-center gap-7">
         <h2 className="text-[30px] font-extrabold leading-tight sm:text-[40px]">{say(c.heading, lang)}</h2>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">

@@ -5,6 +5,7 @@ import SiteNav from "@/components/site/SiteNav";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { HomeMeetKapil, HomeTrustStrip } from "@/components/home/HomeTrustMeet";
+import { NeuralOrb } from "@/components/fx/NeuralOrb";
 import { WhatsAppGlyph } from "@/features/programs/components/WhatsAppGlyph";
 import type { EventCopy, EventLang } from "./types";
 
@@ -35,8 +36,9 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
       <div className="warm-light min-h-screen font-sans antialiased" lang={lang}>
         <SiteNav languageLink={languageLink} cta={{ label: say(copy.book, lang), href: "#price", external: false }} />
         <main>
-          <section className="relative overflow-hidden border-b border-line bg-gradient-to-br from-[#0a1630] via-[#0b3a5c] to-[#0b7a74] px-4 pb-14 pt-12 text-white sm:px-8 sm:pb-20 sm:pt-16" data-event-hero>
-            <div className={`${WRAP} max-w-3xl`}>
+          <section className="hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-12 text-white sm:px-8 sm:pb-20 sm:pt-16" data-event-hero>
+            <NeuralOrb className="-right-40 -top-20 opacity-60 lg:right-[-60px]" />
+            <div className={`${WRAP} relative max-w-3xl`}>
               <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-[12.5px] font-bold tracking-[0.06em] text-white ring-1 ring-white/25">{say(copy.pill, lang)}</span>
               <h1 className="mt-5 text-balance text-[32px] font-extrabold leading-[1.12] tracking-tight sm:text-[46px]">{say(copy.h1, lang)}</h1>
               <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/85 sm:text-[19px]">{say(copy.sub, lang)}</p>
@@ -53,7 +55,7 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
           </section>
           <HomeTrustStrip />
 
-          <section className={SECTION} data-event-for>
+          <section className={`${SECTION} band-mint`} data-event-for>
             <div className={WRAP}>
               <h2 className={H2}>{say(copy.forWhom.heading, lang)}</h2>
               <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -82,7 +84,7 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
             </div>
           </section>
 
-          <section id="price" className={`scroll-mt-20 ${SECTION}`} data-event-price>
+          <section id="price" className={`scroll-mt-20 ${SECTION} band-blue`} data-event-price>
             <div className="mx-auto max-w-lg rounded-sm border-[3px] border-gold bg-panel p-6 text-center shadow-[0_18px_40px_-18px_rgba(19,32,59,0.35)] sm:p-8">
               <h2 className="text-[22px] font-extrabold leading-snug sm:text-[26px]">{say(copy.price.title, lang)}</h2>
               <p className="mt-4 text-[52px] font-extrabold leading-none tracking-tight">{copy.price.amount}</p>
@@ -116,7 +118,7 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
             </div>
           </section>
 
-          <section className="bg-[#0a1630] px-4 py-16 text-center text-white sm:px-8 sm:py-20" data-event-final>
+          <section className="hero-vivid px-4 py-16 text-center text-white sm:px-8 sm:py-20" data-event-final>
             <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
               <h2 className="text-[28px] font-extrabold leading-tight sm:text-[38px]">{say(copy.finalHeading, lang)}</h2>
               <BookButton copy={copy} lang={lang} />

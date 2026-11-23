@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { Brain, CheckCircle2, Eye, Flag, GraduationCap, MicOff, Sparkles, Trophy, type LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { PAGE_VIDEOS, programs } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
@@ -16,6 +16,8 @@ import { sharpBrainCopy, type OfferCell, type SharpBrainPlan } from "@/lib/sharp
 import { waLink } from "@/data/links";
 import { PriceLine, useEnrolLabel } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import { Eyebrow } from "../ui";
+import { Tilt } from "../fx/Tilt";
+import { NeuralOrb } from "../fx/NeuralOrb";
 import TrainerBio from "../TrainerBio";
 import VideoReviewGrid from "../VideoReviewGrid";
 
@@ -60,7 +62,7 @@ function EnrolAndTestButtons({ location, className = "" }: { location: string; c
 export function SharpBrainProblems(): React.JSX.Element {
   const c = useCopy().problems;
   return (
-    <section id="sound-familiar" className={`${sectionClass} bg-panel`}>
+    <section id="sound-familiar" className={`${sectionClass} band-mint`}>
       <div className="mx-auto max-w-content">
         <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
         <h2 className={h2Class}>{c.title}</h2>
@@ -194,23 +196,45 @@ export function SharpBrainApp(): React.JSX.Element {
   );
 }
 
+const CLASS_STEPS: { icon: LucideIcon; color: string }[] = [
+  { icon: Flag, color: "#2b57e8" },
+  { icon: Eye, color: "#1d7fd8" },
+  { icon: MicOff, color: "#0b9488" },
+  { icon: Brain, color: "#7c3aed" },
+  { icon: Sparkles, color: "#c026d3" },
+  { icon: GraduationCap, color: "#ea7a12" },
+  { icon: Trophy, color: "#16a34a" },
+];
+
+// The 7 live classes as one colourful journey (owner, 23 Nov 2026: less
+// text, easy to grasp at a glance).
 export function SharpBrainClasses(): React.JSX.Element {
   const c = useCopy().classes;
   return (
-    <section id="live-classes" className={`${sectionClass} bg-panel`}>
+    <section id="live-classes" className="border-b border-line bg-gradient-to-br from-[#0a1630] via-[#10306b] to-[#0b6f6a] px-4 py-16 text-white sm:px-8 sm:py-20">
       <div className="mx-auto max-w-content">
-        <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
-        <h2 className={h2Class}>{c.title}</h2>
-        <ol className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {c.items.map((item, index) => (
-            <li key={item.title} className="rounded-sm border border-line bg-void p-5">
-              <span className="font-mono text-[12px] font-semibold text-teal">{index + 1}</span>
-              <h3 className="mt-1 text-[16.5px] font-bold leading-snug text-ink">{item.title}</h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-ink-dim">{item.desc}</p>
-            </li>
-          ))}
+        <p className="font-mono text-[12.5px] font-semibold uppercase tracking-[0.1em] text-[#7ee0d4]">{c.eyebrow}</p>
+        <h2 className="mt-3 text-[28px] font-extrabold leading-tight sm:text-[38px]">{c.title}</h2>
+        <ol className="relative mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-7 lg:gap-3">
+          <span className="pointer-events-none absolute left-[8%] right-[8%] top-8 hidden h-1 rounded-full bg-gradient-to-r from-[#2b57e8] via-[#c026d3] to-[#16a34a] opacity-70 lg:block" aria-hidden="true" />
+          {c.items.map((item, index) => {
+            const step = CLASS_STEPS[index] ?? CLASS_STEPS[0];
+            const Icon = step?.icon ?? Flag;
+            return (
+              <li key={item.title} className="relative flex items-center gap-4 rounded-2xl bg-white/[0.07] p-4 ring-1 ring-white/15 lg:flex-col lg:bg-transparent lg:p-0 lg:text-center lg:ring-0">
+                <span className="relative flex h-16 w-16 flex-none items-center justify-center rounded-full shadow-[0_10px_24px_-8px_rgba(0,0,0,0.5)] ring-4 ring-[#0d2450]" style={{ background: step?.color }}>
+                  <Icon className="h-7 w-7 text-white" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-gold text-[12px] font-black text-[#1B1508]">{index + 1}</span>
+                </span>
+                <span>
+                  <span className="block text-[17px] font-extrabold leading-tight lg:mt-1">{item.title}</span>
+                  <span className="mt-1 block text-[14px] leading-snug text-white/75">{item.desc}</span>
+                </span>
+              </li>
+            );
+          })}
         </ol>
-        <p className="mt-6 text-[15px] font-semibold text-ink">{c.note}</p>
+        <p className="mt-10 inline-flex rounded-full bg-white/10 px-4 py-2 text-[14.5px] font-semibold ring-1 ring-white/20">{c.note}</p>
       </div>
     </section>
   );
@@ -271,7 +295,7 @@ export function SharpBrainCertificate(): React.JSX.Element {
   const { lang } = useLanguage();
   const samples = CERT_SAMPLES[lang === "hi" ? "hi" : "en"];
   return (
-    <section id="certificate" className={sectionClass}>
+    <section id="certificate" className={`${sectionClass} band-mint`}>
       <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
         <div className="min-w-0">
           <Eyebrow color="text-teal">{c.eyebrow}</Eyebrow>
@@ -362,7 +386,7 @@ export function SharpBrainTrainer(): React.JSX.Element {
 export function SharpBrainFaq(): React.JSX.Element {
   const c = useCopy().faq;
   return (
-    <section id="faq" className={`${sectionClass} bg-panel`}>
+    <section id="faq" className={`${sectionClass} band-blue`}>
       <div className="mx-auto max-w-3xl">
         <Eyebrow>{c.eyebrow}</Eyebrow>
         <h2 className={h2Class}>{c.title}</h2>
@@ -462,7 +486,7 @@ function OfferButtons({ location, className = "" }: { location: string; classNam
       </a>
       <a
         href="/reading-memory-test"
-        className="inline-flex items-center justify-center rounded-sm border border-line-strong px-7 py-[15px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
+        className="inline-flex items-center justify-center rounded-sm border border-white/40 px-7 py-[15px] text-[15px] font-semibold text-white transition-colors hover:bg-white/10"
         data-offer-self
       >
         {c.heroTestButton}
@@ -475,12 +499,14 @@ export function SharpBrainOffersHero(): React.JSX.Element {
   const c = useCopy().offers.hero;
   const { lang } = useLanguage();
   return (
-    <section id="top" className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
-      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+    <section id="top" className="warm-dark hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
+      <NeuralOrb className="-left-40 -top-24 opacity-60 sm:-left-24 lg:left-[30%] lg:top-[-140px] lg:opacity-70" />
+      <div className="relative mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         <div>
-          <h1 className="text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px] lg:text-[50px]">{c.h1}</h1>
+          <p className="font-mono text-[12.5px] font-semibold uppercase tracking-[0.1em] text-[#7ee0d4]">Sharp Brain™ · Focus · Memory · Smart Reading</p>
+          <h1 className="mt-4 text-[34px] font-extrabold leading-[1.08] tracking-tight sm:text-[48px] lg:text-[56px]">{c.h1}</h1>
           {/* Owner (Nov 2026): the Sharp Brain page video — under the headline on phones, beside it on desktop. */}
-          <PageVideo video={PAGE_VIDEOS.sharpBrain} lang={lang} tone="light" priority className="mt-6 lg:hidden" />
+          <PageVideo video={PAGE_VIDEOS.sharpBrain} lang={lang} tone="dark" priority className="mt-6 lg:hidden" />
           <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
           <OfferButtons location="sharp_brain_hero" className="mt-8" />
           <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint" data-seats-line>
@@ -488,7 +514,7 @@ export function SharpBrainOffersHero(): React.JSX.Element {
           </p>
         </div>
         <div className="hidden lg:block">
-          <PageVideo video={PAGE_VIDEOS.sharpBrain} lang={lang} tone="light" priority />
+          <PageVideo video={PAGE_VIDEOS.sharpBrain} lang={lang} tone="dark" priority />
         </div>
       </div>
     </section>
@@ -521,7 +547,7 @@ export function SharpBrainCompare(): React.JSX.Element {
   const c = useCopy().offers;
   const t = c.plansTable;
   return (
-    <section id="compare" className={sectionClass}>
+    <section id="compare" className={`${sectionClass} band-blue`}>
       <div className="mx-auto max-w-content">
         <h2 className={h2Class}>{t.title}</h2>
         <div className="relative mt-8 overflow-x-auto rounded-sm border border-line bg-panel" data-compare-scroll>
@@ -561,6 +587,8 @@ export function SharpBrainCompare(): React.JSX.Element {
   );
 }
 
+const PLAN_COLORS: Record<SharpBrainPlan["id"], string> = { workshop: "#11a197", self: "#2b57e8", live: "#f2a33a", offline: "#7c3aed" };
+
 function planHref(plan: SharpBrainPlan): string {
   return plan.href.kind === "whatsapp" ? waLink(plan.href.message) : plan.href.url;
 }
@@ -575,10 +603,11 @@ export function SharpBrainOffers(): React.JSX.Element {
         <p className="mt-3 max-w-2xl text-[16px] text-ink-dim">{c.plansSub}</p>
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {c.plans.map((plan) => (
+            <Tilt key={plan.id} className="h-full rounded-xl" max={5}>
             <article
-              key={plan.id}
               id={plan.id === "live" ? "live-batch" : plan.id === "self" ? "self-paced" : `plan-${plan.id}`}
-              className={`flex scroll-mt-20 flex-col rounded-sm p-6 ${plan.featured ? "warm-dark border-[3px] border-gold shadow-[0_18px_40px_-18px_rgba(10,22,48,0.55)]" : "border border-line-strong bg-void"}`}
+              className={`flex h-full scroll-mt-20 flex-col overflow-hidden rounded-xl p-6 ${plan.featured ? "warm-dark hero-vivid border-[3px] border-gold shadow-[0_24px_48px_-18px_rgba(10,22,48,0.6)]" : "border border-line-strong bg-white shadow-[0_14px_34px_-22px_rgba(19,32,59,0.35)]"}`}
+              style={plan.featured ? undefined : { borderTop: `5px solid ${PLAN_COLORS[plan.id]}` }}
               data-offer-block={plan.id}
             >
               {plan.badge !== null ? (
@@ -612,6 +641,7 @@ export function SharpBrainOffers(): React.JSX.Element {
                 {plan.cta}
               </a>
             </article>
+            </Tilt>
           ))}
         </div>
       </div>
