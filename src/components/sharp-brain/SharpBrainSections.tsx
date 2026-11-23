@@ -12,7 +12,7 @@ import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/s
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { trackGaEvent } from "@/lib/analytics/ga4";
-import { sharpBrainCopy, type ExerciseGroup, type OfferCell } from "@/lib/sharpBrainCopy";
+import { sharpBrainCopy, type OfferCell } from "@/lib/sharpBrainCopy";
 import { LINKS, waLink } from "@/data/links";
 import { enrolT } from "@/lib/app-i18n/enrol";
 import { useUiLang } from "@/lib/app-i18n/client";
@@ -146,15 +146,9 @@ export function SharpBrainOutcomes(): React.JSX.Element {
   );
 }
 
-// Short silent screen-recording loops of the real app (Nov 2026), one per
-// skill card. Poster frames keep the card filled before the video plays.
-const APP_CLIPS: Record<ExerciseGroup["id"], string> = {
-  focus: "/assets/sharp-brain/app/clip-focus",
-  reading: "/assets/sharp-brain/app/clip-rsvp",
-  memory: "/assets/sharp-brain/app/clip-memory",
-  visual: "/assets/sharp-brain/app/clip-studio",
-  calm: "/assets/sharp-brain/app/clip-calm",
-};
+// The 34-second app demo video (Nov 2026, cut from real screen recordings),
+// beside a compact list of the skills it trains.
+const APP_DEMO = "/assets/sharp-brain/app/sharp-brain-app-demo";
 
 export function SharpBrainApp(): React.JSX.Element {
   const c = useCopy().app;
@@ -164,17 +158,18 @@ export function SharpBrainApp(): React.JSX.Element {
         <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
         <h2 className={h2Class}>{c.title}</h2>
         <p className="mt-3 text-[16px] text-ink-dim">{c.note}</p>
-        <div className="mt-10 grid grid-cols-1 items-center gap-8 rounded-sm border border-line bg-panel p-6 sm:grid-cols-[minmax(0,240px)_1fr] sm:p-8">
-          <div className="relative mx-auto aspect-[9/16] w-full max-w-[240px] overflow-hidden rounded-sm border border-line bg-panel2">
+        <div className="mt-10 grid grid-cols-1 items-center gap-10 md:grid-cols-[minmax(0,340px)_1fr]">
+          <div className="mx-auto w-full max-w-[340px] overflow-hidden rounded-sm border border-line bg-panel2 shadow-[0_10px_30px_rgba(20,32,56,0.14)]">
             <video
-              className="absolute inset-0 h-full w-full object-cover object-top"
-              src="/assets/sharp-brain/app/clip-plan.mp4"
-              poster="/assets/sharp-brain/app/clip-plan.jpg"
+              className="block aspect-[9/16] h-auto w-full"
+              src={`${APP_DEMO}.mp4`}
+              poster={`${APP_DEMO}.jpg`}
               aria-label={c.plan.alt}
               autoPlay
               muted
               loop
               playsInline
+              controls
               preload="metadata"
             />
           </div>
@@ -188,34 +183,15 @@ export function SharpBrainApp(): React.JSX.Element {
                 </li>
               ))}
             </ul>
+            <dl className="mt-8 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+              {c.groups.map((group) => (
+                <div key={group.id}>
+                  <dt className="text-[15px] font-bold text-ink">{group.skill}</dt>
+                  <dd className="mt-1 text-[13.5px] leading-relaxed text-ink-dim">{group.exercises.join(" · ")}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-        </div>
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {c.groups.map((group) => (
-            <article key={group.id} className="flex flex-col overflow-hidden rounded-sm border border-line bg-panel">
-              <div className="relative aspect-[9/16] w-full border-b border-line bg-panel2 sm:aspect-[3/4] lg:aspect-[9/16]">
-                <video
-                  className="absolute inset-0 h-full w-full object-cover object-top"
-                  src={`${APP_CLIPS[group.id]}.mp4`}
-                  poster={`${APP_CLIPS[group.id]}.jpg`}
-                  aria-label={c.shotAlt[group.id]}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                />
-              </div>
-              <div className="p-5">
-                <h3 className="text-[16px] font-bold text-ink">{group.skill}</h3>
-                <ul className="mt-2 space-y-1 text-[13.5px] leading-relaxed text-ink-dim">
-                  {group.exercises.map((exercise) => (
-                    <li key={exercise}>{exercise}</li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
         </div>
       </div>
     </section>

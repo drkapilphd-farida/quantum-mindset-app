@@ -142,7 +142,7 @@ const en: SharpBrainCopy = {
     plan: {
       title: 'Your 30-day plan, one day at a time',
       points: ['Open the app and today’s steps are ready: about 12 minutes.', 'All 30 days on one screen, with stars for every day you finish.', 'Miss a day? Restart where you left off. Nothing is lost.'],
-      alt: 'The Mind Ur Mind App dashboard showing today’s steps and all 30 days',
+      alt: 'A 34-second tour of the Mind Ur Mind App: the 30-day plan, focus, memory, speed reading and calm breathing',
     },
     groups: [
       { id: 'focus', skill: 'Focus', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
@@ -373,7 +373,7 @@ const hi: SharpBrainCopy = {
     plan: {
       title: 'आपका 30 दिन का प्लान, रोज़ एक दिन',
       points: ['ऐप खोलते ही आज के steps तैयार: लगभग 12 मिनट।', 'सारे 30 दिन एक ही screen पर, हर पूरे दिन के लिए stars।', 'कोई दिन छूट गया? वहीं से फिर शुरू करें, कुछ नहीं खोता।'],
-      alt: 'Mind Ur Mind App का dashboard: आज के steps और सारे 30 दिन',
+      alt: 'Mind Ur Mind App की 34 सेकंड की झलक: 30 दिन का प्लान, फ़ोकस, याददाश्त, स्पीड रीडिंग और शांत साँस',
     },
     groups: [
       { id: 'focus', skill: 'फोकस', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
