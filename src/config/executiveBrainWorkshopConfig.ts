@@ -115,7 +115,7 @@ export const executiveBrainWorkshopConfig = {
 
   // ── Contact / links ─────────────────────────────────────────────────
   // E.164 without '+', used to build wa.me links.
-  whatsappNumber: '919540123161', // TODO: confirm this is the right number for this workshop
+  whatsappNumber: '919173943555',
   contactEmail: 'info@mindurmind.org.in', // TODO: confirm
   brochurePdfUrl: '', // TODO: e.g. '/downloads/executive-brain-workshop-brochure.pdf' — button hides when empty
 

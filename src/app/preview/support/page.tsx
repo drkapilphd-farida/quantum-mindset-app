@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 }
 
 const SUPPORT_EMAIL = 'info@mindurmind.org.in'
-const SUPPORT_PHONE_DISPLAY = '+91-9540123161'
-const SUPPORT_PHONE_TEL = '+919540123161'
+const SUPPORT_PHONE_DISPLAY = '+91-9173943555'
+const SUPPORT_PHONE_TEL = '+919173943555'
 
 // Real Support Contact™ — replaces the Sprint 0 ModulePlaceholder this
 // route used to render ("Coming soon"). No ticketing system or help

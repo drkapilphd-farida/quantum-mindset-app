@@ -51,6 +51,6 @@ describe('links', () => {
     expect(linkOrWhatsApp('waGroupOverthinking', 'ग्रुप में जुड़िए')).toBe(waLink('ग्रुप में जुड़िए'))
     expect(linkOrWhatsApp('rzpOnline3999', 'x')).toBe('https://rzp.io/rzp/NIZqolHs')
     expect(linkOrWhatsApp('rzpTelepathyDeposit1000', 'x')).toBe('https://rzp.io/rzp/elNaxRB')
-    expect(waLink('a b')).toBe('https://wa.me/919540123161?text=a%20b')
+    expect(waLink('a b')).toBe('https://wa.me/919173943555?text=a%20b')
   })
 })

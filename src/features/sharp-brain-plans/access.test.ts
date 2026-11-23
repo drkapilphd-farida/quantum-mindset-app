@@ -138,7 +138,7 @@ describe('Live Classes page by plan', () => {
     expect(html).not.toContain('data-session-register')
     expect(html).not.toContain('upcoming-classes')
     expect(html).toContain('data-upgrade-card')
-    expect(html).toContain('wa.me/919540123161')
+    expect(html).toContain('wa.me/919173943555')
     expect(html).toContain(encodeURIComponent('asha@example.com'))
   })
 

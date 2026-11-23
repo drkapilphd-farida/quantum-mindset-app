@@ -29,6 +29,6 @@ describe('lead WhatsApp messages', () => {
   })
 
   it('opens the owner’s WhatsApp number', () => {
-    expect(waLink('x')).toBe('https://wa.me/919540123161?text=x')
+    expect(waLink('x')).toBe('https://wa.me/919173943555?text=x')
   })
 })

@@ -190,7 +190,7 @@ export default function PrivacyPolicyPage(): React.JSX.Element {
             rel="noopener noreferrer"
             className="text-foreground underline underline-offset-2"
           >
-            +91 95401 23161
+            +91 91739 43555
           </a>
           .
         </p>

@@ -5,7 +5,7 @@
 // A LINKS value still written as '[[...]]' is not known yet: a button that
 // would use it must point to waLink(<that button's text>) instead.
 
-export const WHATSAPP_NUMBER = '919540123161'
+export const WHATSAPP_NUMBER = '919173943555'
 export const waLink = (text: string): string => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
 
 export const DEMO_WA_TEXT = 'मुफ्त डेमो 12 नवंबर - सीट रोकिए'

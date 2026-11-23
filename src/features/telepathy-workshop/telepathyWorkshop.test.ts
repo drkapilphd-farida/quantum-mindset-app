@@ -123,9 +123,9 @@ describe('batches', () => {
 
 describe('WhatsApp', () => {
   const text = (message: string): string | null => new URL(telepathyWhatsAppHref(message)).searchParams.get('text')
-  it('goes to +91 95401 23161 with the message exactly as written', () => {
+  it('goes to +91 91739 43555 with the message exactly as written', () => {
     const href = telepathyWhatsAppHref(telepathyWhatsAppMessage('question', 'mumbai'))
-    expect(href.startsWith('https://wa.me/919540123161?text=')).toBe(true)
+    expect(href.startsWith('https://wa.me/919173943555?text=')).toBe(true)
     expect(text(telepathyWhatsAppMessage('question', 'mumbai'))).toBe(telepathyWhatsAppMessage('question', 'mumbai'))
   })
   it('questions: TELEPATHY keyword, the workshop and the batch', () => {

@@ -41,7 +41,7 @@ export const EXPERIENCE_LINE = {
   hi: `अंग्रेज़ी साहित्य में PhD · ${YEARS_PROFESSOR} साल प्रोफ़ेसर · ${YEARS_TOTAL} साल माइंड कोचिंग`,
 } as const
 
-export const SITE_CONFIG_WHATSAPP_NUMBER = '919540123161'
+export const SITE_CONFIG_WHATSAPP_NUMBER = '919173943555'
 
 /** wa.me click-to-chat link with a pre-filled message. */
 export function waLink(message: string): string {
@@ -516,8 +516,8 @@ export const verifiedTestimonialNames: readonly string[] = []
 const contactData = {
   email: 'info@mindurmind.org.in',
   /** Same number for calls and WhatsApp. */
-  phoneDisplay: '+91 95401 23161',
-  phoneHref: 'tel:+919540123161',
+  phoneDisplay: '+91 91739 43555',
+  phoneHref: 'tel:+919173943555',
   address: {
     en: 'Gitanjali Duplex, Novino–Tarsali Road, Vadodara, Gujarat, India',
     hi: 'गीतांजलि डुप्लेक्स, नोविनो–तरसाली रोड, वडोदरा, गुजरात, भारत',

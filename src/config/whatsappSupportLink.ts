@@ -27,7 +27,7 @@ export function buildOfflineEegWorkshopWhatsAppLink(city: string, status: 'waitl
     status === 'confirmed'
       ? `I want to register for the 2-day Sharp Brain Workshop in ${city}`
       : `I want to join the waitlist for the 2-day Sharp Brain Workshop in ${city}`
-  return `https://wa.me/919540123161?text=${encodeURIComponent(`Hi Dr. Kapil, ${intent}`)}`
+  return `https://wa.me/919173943555?text=${encodeURIComponent(`Hi Dr. Kapil, ${intent}`)}`
 }
 
 // Same number, program-agnostic message — for the homepage's floating
@@ -35,7 +35,7 @@ export function buildOfflineEegWorkshopWhatsAppLink(city: string, status: 'waitl
 // the five offers (Masterclass, Retreats, Mentoring, Course, Habit App),
 // not specifically the Masterclass.
 export const WHATSAPP_GENERAL_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20have%20a%20question%20about%20your%20programs'
+  'https://wa.me/919173943555?text=Hi%20Dr.%20Kapil,%20I%20have%20a%20question%20about%20your%20programs'
 
 // Same number, 11-Day Online Retreat-specific message — for the
 // dedicated /retreats/online-11-day landing page. No Razorpay payment
@@ -69,7 +69,7 @@ export const WHATSAPP_MENTORING_INQUIRY_LINK =
 // on /franchise-individual who wants to ask a question first, not a
 // substitute for the instant-apply link below.
 export const WHATSAPP_FRANCHISE_TEAM_INQUIRY_LINK =
-  'https://wa.me/919540123161?text=Hi%20Dr.%20Kapil,%20I%20have%20a%20question%20about%20the%20Trainer%20Partner%20Program'
+  'https://wa.me/919173943555?text=Hi%20Dr.%20Kapil,%20I%20have%20a%20question%20about%20the%20Trainer%20Partner%20Program'
 
 // Same number, the actual primary conversion path on /franchise-individual —
 // a single-tap "Apply Instantly via WhatsApp" CTA with no typed fields
@@ -106,7 +106,7 @@ export function buildFranchiseApplicationWhatsAppLink(details: {
   if (details.whyInterested.trim().length > 0) {
     lines.push(`Why interested: ${details.whyInterested.trim()}`)
   }
-  return `https://wa.me/919540123161?text=${encodeURIComponent(lines.join('\n'))}`
+  return `https://wa.me/919173943555?text=${encodeURIComponent(lines.join('\n'))}`
 }
 
 // Same number, used by the Personal Class application form to hand off
@@ -128,7 +128,7 @@ export function buildMentoringApplicationWhatsAppLink(details: {
   if (details.situation.trim().length > 0) {
     lines.push(`What I'm dealing with: ${details.situation.trim()}`)
   }
-  return `https://wa.me/919540123161?text=${encodeURIComponent(lines.join('\n'))}`
+  return `https://wa.me/919173943555?text=${encodeURIComponent(lines.join('\n'))}`
 }
 
 // Same number, Overthinking Mastery Course-specific message — for the
@@ -165,7 +165,7 @@ export function buildOverthinkingTestWhatsAppLink(details: {
     `Stress Score: ${details.stressBand}`,
     `कृपया मुझे ${programs.overthinkingReset.name} के बारे में जानकारी भेजें।`,
   ]
-  return `https://wa.me/919540123161?text=${encodeURIComponent(lines.join('\n'))}`
+  return `https://wa.me/919173943555?text=${encodeURIComponent(lines.join('\n'))}`
 }
 
 // Same number, for placements on /retreats/residential that know which
@@ -174,7 +174,7 @@ export function buildOverthinkingTestWhatsAppLink(details: {
 // removes a step for the visitor and gives Dr. Kapil's team useful
 // context before the conversation even starts.
 export function buildResidentialWhatsAppLink(detail: string): string {
-  return `https://wa.me/919540123161?text=${encodeURIComponent(`Hi Dr. Kapil, I want to secure my seat — ${detail}`)}`
+  return `https://wa.me/919173943555?text=${encodeURIComponent(`Hi Dr. Kapil, I want to secure my seat — ${detail}`)}`
 }
 
 
@@ -188,4 +188,4 @@ export function buildResidentialWhatsAppLink(detail: string): string {
 // change — every component importing it (hero, nav, mobile sticky bar,
 // final CTA, and the homepage teaser section) updates automatically.
 export const PREFRONTAL_POWER_REGISTRATION_URL =
-  "https://wa.me/919540123161?text=Hi,%20I'm%20interested%20in%20attending%20PREfrontal%20POWER%20on%2027%20September%20in%20Mumbai.%20Please%20share%20the%20registration%20details."
+  "https://wa.me/919173943555?text=Hi,%20I'm%20interested%20in%20attending%20PREfrontal%20POWER%20on%2027%20September%20in%20Mumbai.%20Please%20share%20the%20registration%20details."

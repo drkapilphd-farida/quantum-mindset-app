@@ -30,7 +30,7 @@ export const CONSENT: Record<"en" | "hi", ConsentText> = {
       "I allow an anonymous photo/video of the session for Mind Ur Mind's educational material (optional).",
     ],
     fields: ["Student name", "Class & section", "Age", "Parent/guardian name", "WhatsApp number", "Signature", "Date"],
-    footer: "Mind Ur Mind · mindurmind.org.in · info@mindurmind.org.in · +91 95401 23161",
+    footer: "Mind Ur Mind · mindurmind.org.in · info@mindurmind.org.in · +91 91739 43555",
   },
   hi: {
     title: "Sharp Brain EEG Brain & Focus Assessment, Mind Ur Mind: अभिभावक की सहमति",
@@ -49,6 +49,6 @@ export const CONSENT: Record<"en" | "hi", ConsentText> = {
       "मैं Mind Ur Mind की शैक्षिक सामग्री के लिए session की बिना पहचान वाली photo/video की अनुमति देता/देती हूँ (ज़रूरी नहीं)।",
     ],
     fields: ["Student का नाम", "Class और section", "उम्र", "अभिभावक का नाम", "WhatsApp number", "हस्ताक्षर", "तारीख़"],
-    footer: "Mind Ur Mind · mindurmind.org.in · info@mindurmind.org.in · +91 95401 23161",
+    footer: "Mind Ur Mind · mindurmind.org.in · info@mindurmind.org.in · +91 91739 43555",
   },
 };

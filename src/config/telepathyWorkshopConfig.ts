@@ -43,9 +43,9 @@ export const TELEPATHY_PRICE = {
 
 // ── WhatsApp ────────────────────────────────────────────────────────
 // Number in international format, no "+" or spaces. Same number as the rest of the site.
-export const TELEPATHY_WHATSAPP_NUMBER = SITE_CONFIG_WHATSAPP_NUMBER // '919540123161'
+export const TELEPATHY_WHATSAPP_NUMBER = SITE_CONFIG_WHATSAPP_NUMBER // '919173943555'
 // Shown on the final button.
-export const TELEPATHY_WHATSAPP_DISPLAY = '+91 95401 23161'
+export const TELEPATHY_WHATSAPP_DISPLAY = '+91 91739 43555'
 
 export type TelepathyBatchId = 'mumbai' | 'ahmedabad' | 'vadodara' | 'pune'
 

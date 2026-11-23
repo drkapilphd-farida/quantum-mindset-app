@@ -1,5 +1,5 @@
 // Pre-filled WhatsApp messages for the lead forms: every answer, labelled,
-// one per line (sent to wa.me/919540123161 via waLink).
+// one per line (sent to wa.me/919173943555 via waLink).
 
 export type ClarityRequest = { programName: string; planName?: string; retreatNotify?: boolean; name: string; phone: string; city: string; change: string }
 
