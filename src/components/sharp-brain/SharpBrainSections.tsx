@@ -146,12 +146,14 @@ export function SharpBrainOutcomes(): React.JSX.Element {
   );
 }
 
-const APP_SHOTS: Record<ExerciseGroup["id"], string> = {
-  focus: "/assets/sharp-brain/app/focus-color-word-sync.webp",
-  reading: "/assets/sharp-brain/app/reading-phrase-reading.webp",
-  memory: "/assets/sharp-brain/app/memory-dot-memory-grid.webp",
-  visual: "/assets/sharp-brain/app/visual-sensory-imagery-builder.webp",
-  calm: "/assets/sharp-brain/app/calm-breath-balance.webp",
+// Short silent screen-recording loops of the real app (Nov 2026), one per
+// skill card. Poster frames keep the card filled before the video plays.
+const APP_CLIPS: Record<ExerciseGroup["id"], string> = {
+  focus: "/assets/sharp-brain/app/clip-focus",
+  reading: "/assets/sharp-brain/app/clip-rsvp",
+  memory: "/assets/sharp-brain/app/clip-memory",
+  visual: "/assets/sharp-brain/app/clip-studio",
+  calm: "/assets/sharp-brain/app/clip-calm",
 };
 
 export function SharpBrainApp(): React.JSX.Element {
@@ -166,7 +168,17 @@ export function SharpBrainApp(): React.JSX.Element {
           {c.groups.map((group) => (
             <article key={group.id} className="flex flex-col overflow-hidden rounded-sm border border-line bg-panel">
               <div className="relative aspect-[9/16] w-full border-b border-line bg-panel2 sm:aspect-[3/4] lg:aspect-[9/16]">
-                <Image src={APP_SHOTS[group.id]} alt={c.shotAlt[group.id]} fill sizes="(min-width: 1024px) 220px, (min-width: 640px) 45vw, 92vw" className="object-cover object-top" />
+                <video
+                  className="absolute inset-0 h-full w-full object-cover object-top"
+                  src={`${APP_CLIPS[group.id]}.mp4`}
+                  poster={`${APP_CLIPS[group.id]}.jpg`}
+                  aria-label={c.shotAlt[group.id]}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
               </div>
               <div className="p-5">
                 <h3 className="text-[16px] font-bold text-ink">{group.skill}</h3>
