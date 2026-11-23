@@ -4,33 +4,17 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 
-// Auto-hides the day after the event — no manual cleanup needed once
-// 18 Oct 2026 has passed; the strip simply stops rendering. Previously
-// promoted the PREfrontal POWER Mumbai workshop (see the "Executive
-// Brain Performance Workshop: page fixes + homepage positioning" task,
-// section 2.1/2.2) — that workshop's own page and every other link to
-// it elsewhere on the site are untouched; only this top-of-homepage
-// highlight was replaced. A new DISMISS_STORAGE_KEY (not reused from
-// the old PFC strip) so a visitor who already dismissed that one still
-// sees this new, different announcement.
-const EVENT_EXPIRY = new Date("2026-10-19T00:00:00+05:30");
-const DISMISS_STORAGE_KEY = "mum_executive_workshop_strip_dismissed";
+// Top strip (owner, 23 Nov 2026): the 21-Day Online Retreat early-bird.
+// Hides itself after the early-bird ends (20 Dec, 23:59 IST).
+const EVENT_EXPIRY = new Date("2026-12-21T00:00:00+05:30");
+const DISMISS_STORAGE_KEY = "mum_online_retreat_jan27_strip_dismissed";
 
-// Slim, non-sticky top strip — sits in normal document flow above the
-// (sticky) Navbar, so once a visitor scrolls even slightly it scrolls
-// away with the rest of the page rather than permanently eating into the
-// viewport. Dismissal persists via localStorage (wrapped in try/catch —
-// a private window, cleared site data, or a browser blocking storage
-// must never crash this strip) so a visitor who closes it doesn't see
-// it again on their next visit.
-export default function HomeAnnouncementStrip(): React.JSX.Element | null {
+export default function HomeAnnouncementStrip({ lang = "en" }: { lang?: "en" | "hi" }): React.JSX.Element | null {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     try {
-      if (window.localStorage.getItem(DISMISS_STORAGE_KEY) === "1") {
-        setDismissed(true);
-      }
+      if (window.localStorage.getItem(DISMISS_STORAGE_KEY) === "1") setDismissed(true);
     } catch {
       // Storage unavailable — never block the strip from showing.
     }
@@ -47,22 +31,18 @@ export default function HomeAnnouncementStrip(): React.JSX.Element | null {
     }
   }
 
+  const hi = lang === "hi";
   return (
-    <div className="border-b border-line bg-[#12162a] px-4 py-2.5 text-center text-[12.5px] text-[#f5f1e6] sm:px-8">
+    <div className="border-b border-line bg-[#0a1630] px-4 py-2.5 text-center text-[12.5px] text-white sm:px-8" data-home-strip>
       <div className="mx-auto flex max-w-content items-center justify-center gap-3">
-        <Link href="/executive-brain-workshop#pricing" className="min-w-0 truncate hover:underline">
-          <span className="font-semibold text-gold">NEW IN MUMBAI</span>
-          <span className="text-[#8b8fa8]"> · </span>
-          Executive Brain Performance Workshop
-          <span className="text-[#8b8fa8]"> · Sun, 18 Oct 2026 · Andheri East</span>
-          <span className="ml-1.5 font-semibold text-gold">Reserve Seat →</span>
+        <Link href={hi ? "/online-retreat?lang=hi" : "/online-retreat"} className="min-w-0 truncate hover:underline">
+          <span className="font-semibold text-gold">{hi ? "नया" : "NEW"}</span>
+          <span className="text-white/50"> · </span>
+          {hi ? "21 दिन का ऑनलाइन रिट्रीट · 1 जनवरी से" : "21-Day Online Retreat · starts 1 Jan"}
+          <span className="text-white/60">{hi ? " · अर्ली-बर्ड ₹3,999, 20 दिसंबर तक" : " · early-bird ₹3,999 till 20 Dec"}</span>
+          <span className="ml-1.5 font-semibold text-gold">{hi ? "सीट पक्की करें →" : "Reserve →"}</span>
         </Link>
-        <button
-          type="button"
-          onClick={handleDismiss}
-          aria-label="Dismiss announcement"
-          className="flex h-5 w-5 flex-none items-center justify-center rounded-full text-[#8b8fa8] transition-colors hover:text-[#f5f1e6]"
-        >
+        <button type="button" onClick={handleDismiss} aria-label={hi ? "बंद करें" : "Dismiss announcement"} className="flex h-5 w-5 flex-none items-center justify-center rounded-full text-white/60 transition-colors hover:text-white">
           <X className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
       </div>

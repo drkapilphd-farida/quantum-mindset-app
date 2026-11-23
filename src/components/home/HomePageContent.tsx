@@ -9,15 +9,15 @@ import HomeAnnouncementStrip from '@/components/HomeAnnouncementStrip'
 import HomeHero from '@/components/home/HomeHero'
 import HomePodcastFeature from '@/components/HomePodcastFeature'
 import HomeFaq from '@/components/home/HomeFaq'
-import { HomeFinalCta, HomeFranchiseStrip, HomeSchoolsCard, HomeFreeTools, HomeHowSessions, HomeMeetKapil, HomePaths, HomeSharpBrainReviews, HomeTrustStrip } from '@/components/home/HomeV2Sections'
+import { HomeFinalCta, HomeFranchiseStrip, HomeSchoolsCard, HomeFreeTools, HomeMeetKapil, HomePaths, HomeSharpBrainReviews, HomeTrustStrip } from '@/components/home/HomeV2Sections'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import Footer from '@/components/Footer'
 
 // The homepage, shared by `/` (English) and `/hi` (Hindi) — positioning
 // rework. LanguageOverride fixes the page's language whatever language is
 // stored (the stored choice, shared with the app, is left alone).
-// Order (owner's homepage upgrade, Nov 2026): hero → trust strip → two
-// paths → how Personal Sessions work → reviews (Sharp Brain, Personal
+// Order (owner's offer ladder, 23 Nov 2026): hero with two doors → trust
+// strip → three programs + "more ways" strip → reviews (Sharp Brain, Personal
 // Sessions) → meet Dr. Kapil → free tools → podcast → FAQ → final call to
 // action → For Schools card → partner strip → footer.
 export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Element {
@@ -31,13 +31,12 @@ export default function HomePageContent({ lang }: { lang: Lang }): React.JSX.Ele
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationSchema }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personSchema }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
-        <HomeAnnouncementStrip />
+        <HomeAnnouncementStrip lang={lang} />
         <SiteNav />
         <main>
           <HomeHero />
           <HomeTrustStrip />
           <HomePaths />
-          <HomeHowSessions />
           <HomeSharpBrainReviews />
           <HomeMeetKapil />
           <HomeFreeTools />

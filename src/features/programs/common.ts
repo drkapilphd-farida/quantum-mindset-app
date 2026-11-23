@@ -132,7 +132,7 @@ export const WHAT_YOU_GET = {
   items: [
     {
       lead: { en: 'Live 1-on-1 sessions with Dr. Kapil', hi: 'डॉ. कपिल के साथ लाइव 1-on-1 सेशन' },
-      rest: { en: 'online, or in person in Vadodara', hi: 'ऑनलाइन, या वडोदरा में आमने-सामने' },
+      rest: { en: 'online on Zoom, from wherever you are', hi: 'Zoom पर ऑनलाइन, आप जहाँ भी हों' },
     },
     {
       lead: { en: 'Your personal meditation / therapy session recordings', hi: 'आपके अपने मेडिटेशन / थेरेपी सेशन की रिकॉर्डिंग' },

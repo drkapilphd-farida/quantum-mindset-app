@@ -1,12 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import { batchState, buildBatchIcs, classStartMs, formatBatchDate, istToday } from './batch'
-import { calmMindBatch } from '@/config/site.config'
+import { calmBatchPriceInr, calmMindBatch } from '@/config/site.config'
 
-describe('21-Day Calm Mind batch', () => {
+describe('21-Day Online Retreat batch', () => {
   it('uses the owner’s config', () => {
-    expect(calmMindBatch.price).toBe(2999)
-    expect(calmMindBatch.seatsTotal).toBe(25)
-    expect(calmMindBatch.nextBatch.classDates).toEqual(['2026-12-01', '2026-12-04', '2026-12-08', '2026-12-11', '2026-12-15', '2026-12-18'])
+    expect(calmMindBatch.earlyBirdPrice).toBe(3999)
+    expect(calmMindBatch.regularPrice).toBe(4999)
+    expect(calmMindBatch.seatsTotal).toBe(50)
+    expect(calmMindBatch.nextBatch.classDates).toEqual(['2027-01-01', '2027-01-03', '2027-01-06', '2027-01-10', '2027-01-13', '2027-01-17', '2027-01-21'])
+  })
+
+  it('charges the early-bird price until 23:59 IST on 20 December, then the regular price', () => {
+    expect(calmBatchPriceInr(Date.parse('2026-12-20T23:59:00+05:30'))).toBe(3999)
+    expect(calmBatchPriceInr(Date.parse('2026-12-21T00:00:30+05:30'))).toBe(4999)
   })
 
   it('formats dates in both languages', () => {
@@ -16,27 +22,27 @@ describe('21-Day Calm Mind batch', () => {
 
   it('counts real seats, shows them only at 10 or fewer, and closes when full', () => {
     const before = Date.parse('2026-11-20T10:00:00+05:30')
-    expect(batchState(before, 3)).toEqual({ status: 'open', seatsLeft: 22, showSeats: false })
-    expect(batchState(before, 15)).toEqual({ status: 'open', seatsLeft: 10, showSeats: true })
-    expect(batchState(before, 25)).toEqual({ status: 'full', seatsLeft: 0, showSeats: false })
-    expect(batchState(before, 30)).toEqual({ status: 'full', seatsLeft: 0, showSeats: false })
+    expect(batchState(before, 3)).toEqual({ status: 'open', seatsLeft: 47, showSeats: false })
+    expect(batchState(before, 40)).toEqual({ status: 'open', seatsLeft: 10, showSeats: true })
+    expect(batchState(before, 50)).toEqual({ status: 'full', seatsLeft: 0, showSeats: false })
+    expect(batchState(before, 60)).toEqual({ status: 'full', seatsLeft: 0, showSeats: false })
     expect(batchState(before, null)).toEqual({ status: 'open', seatsLeft: null, showSeats: false })
   })
 
   it('switches to the waitlist once the start date has passed (IST)', () => {
-    expect(batchState(Date.parse('2026-12-01T23:30:00+05:30'), 3).status).toBe('open')
-    expect(batchState(Date.parse('2026-12-02T00:10:00+05:30'), 3).status).toBe('ended')
+    expect(batchState(Date.parse('2027-01-01T23:30:00+05:30'), 3).status).toBe('open')
+    expect(batchState(Date.parse('2027-01-02T00:10:00+05:30'), 3).status).toBe('ended')
     expect(istToday(Date.parse('2026-12-01T19:00:00Z'))).toBe('2026-12-02')
   })
 
-  it('builds a calendar with the 6 classes at 8:00–9:00 PM IST', () => {
+  it('builds a calendar with the 7 classes at 8:00–9:15 PM IST', () => {
     const ics = buildBatchIcs({ nowMs: 0 })
-    expect(ics.match(/BEGIN:VEVENT/g)).toHaveLength(6)
-    expect(ics).toContain('DTSTART:20261201T143000Z')
-    expect(ics).toContain('DTEND:20261201T153000Z')
+    expect(ics.match(/BEGIN:VEVENT/g)).toHaveLength(7)
+    expect(ics).toContain('DTSTART:20270101T143000Z')
+    expect(ics).toContain('DTEND:20270101T154500Z')
     expect(ics).not.toContain('zoom.us')
     expect(buildBatchIcs({ zoomLink: 'https://zoom.us/j/1', nowMs: 0 })).toContain('LOCATION:https://zoom.us/j/1')
-    expect(classStartMs('2026-12-18')).toBe(Date.parse('2026-12-18T14:30:00Z'))
+    expect(classStartMs('2027-01-21')).toBe(Date.parse('2027-01-21T14:30:00Z'))
   })
 })
 
@@ -55,13 +61,13 @@ describe('calm batch registrations (saved in franchise_leads)', () => {
 describe('calm batch reminder windows', () => {
   it('opens the day-before window at 8 PM the evening before and the class window 60–30 minutes before', async () => {
     const { dueReminders } = await import('./batch')
-    expect(dueReminders(Date.parse('2026-11-30T20:05:00+05:30'))).toEqual([{ kind: 'day-before', classNumber: 1 }])
-    expect(dueReminders(Date.parse('2026-12-01T07:59:00+05:30'))).toEqual([{ kind: 'day-before', classNumber: 1 }])
-    expect(dueReminders(Date.parse('2026-12-01T08:00:00+05:30'))).toEqual([])
-    expect(dueReminders(Date.parse('2026-12-01T19:00:00+05:30'))).toEqual([{ kind: 'hour-before', classNumber: 1 }])
-    expect(dueReminders(Date.parse('2026-12-18T19:29:00+05:30'))).toEqual([{ kind: 'hour-before', classNumber: 6 }])
-    expect(dueReminders(Date.parse('2026-12-18T19:30:00+05:30'))).toEqual([])
-    expect(dueReminders(Date.parse('2026-12-02T19:00:00+05:30'))).toEqual([])
+    expect(dueReminders(Date.parse('2026-12-31T20:05:00+05:30'))).toEqual([{ kind: 'day-before', classNumber: 1 }])
+    expect(dueReminders(Date.parse('2027-01-01T07:59:00+05:30'))).toEqual([{ kind: 'day-before', classNumber: 1 }])
+    expect(dueReminders(Date.parse('2027-01-01T08:00:00+05:30'))).toEqual([])
+    expect(dueReminders(Date.parse('2027-01-01T19:00:00+05:30'))).toEqual([{ kind: 'hour-before', classNumber: 1 }])
+    expect(dueReminders(Date.parse('2027-01-21T19:29:00+05:30'))).toEqual([{ kind: 'hour-before', classNumber: 7 }])
+    expect(dueReminders(Date.parse('2027-01-21T19:30:00+05:30'))).toEqual([])
+    expect(dueReminders(Date.parse('2027-01-02T19:00:00+05:30'))).toEqual([])
   })
 })
 
@@ -87,7 +93,7 @@ describe('calm batch reminder sent-log', () => {
         return true
       },
     }
-    const t1 = Date.parse('2026-12-01T19:00:00+05:30')
+    const t1 = Date.parse('2027-01-01T19:00:00+05:30')
     expect(await sendCalmBatchReminders(t1, deps)).toEqual({ due: 1, sent: 1, skipped: 0, failed: 1 })
     // Next cron run inside the same window: pay_1 is skipped (already sent), pay_2 is retried.
     expect(await sendCalmBatchReminders(t1 + 15 * 60_000, deps)).toEqual({ due: 1, sent: 1, skipped: 1, failed: 0 })

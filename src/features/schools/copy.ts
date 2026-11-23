@@ -281,7 +281,7 @@ const en: SchoolsCopy = {
       },
       {
         q: "Do you come to our city?",
-        a: "We are based in Vadodara, Gujarat, and we travel to schools in other cities. Tell us your city in the form below and we will plan the dates with you.",
+        a: "Yes — we travel to schools across India. Tell us your city in the form below and we will plan the dates with you.",
       },
     ],
   },
@@ -510,7 +510,7 @@ const hi: SchoolsCopy = {
       },
       {
         q: "क्या आप हमारे शहर आते हैं?",
-        a: "हम वडोदरा, गुजरात में हैं और दूसरे शहरों के schools में भी जाते हैं। नीचे form में अपना शहर लिखिए, हम आपके साथ तारीख़ें तय करेंगे।",
+        a: "हाँ — हम पूरे भारत के schools में जाते हैं। नीचे form में अपना शहर लिखिए, हम आपके साथ तारीख़ें तय करेंगे।",
       },
     ],
   },

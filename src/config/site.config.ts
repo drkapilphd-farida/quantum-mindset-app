@@ -1,6 +1,5 @@
 import { LINKS } from '@/data/links'
 import { CLASSPLUS_OVERTHINKING_COURSE_LINK } from './overthinkingCoursePaymentLink'
-import { RAZORPAY_RETREAT_PAYMENT_LINK } from './retreatPaymentLink'
 
 // Single source of truth for everything public-facing that used to be
 // retyped by hand across pages: brand name and tagline, the trainer's
@@ -75,7 +74,7 @@ const brandData = {
   /** Razorpay/legal account name — the only place "Mind Ur Mind Academy" may still appear. */
   legalAccountName: 'Mind Ur Mind Academy',
   foundedYear: FOUNDED,
-  city: 'Vadodara',
+  city: 'India',
 } as const
 
 export const brand: Widen<typeof brandData> = brandData
@@ -205,8 +204,10 @@ const programsData = {
     // Owner (Nov 2026): two offers, one price each, the same everywhere
     // (SHARP_BRAIN_PRICES below): Self-paced ₹2,999 · Live batch ₹8,999.
     prices: [
-      { label: 'Live batch', amountInr: 8999 },
+      { label: '2-day online workshop', amountInr: 499 },
       { label: 'Self-paced', amountInr: 2999 },
+      { label: 'Live online', amountInr: 4999 },
+      { label: 'Offline workshop + EEG', amountInr: 8999 },
     ],
     // Every "Enrol" button leads to the batch picker on the program page;
     // the price (early-bird / regular / test offer) and the Razorpay link
@@ -297,8 +298,8 @@ const programsData = {
       { label: '6-month access + 2 live sessions', amountInr: 999 },
     ],
     checkout: [{ label: 'Classplus', href: CLASSPLUS_OVERTHINKING_COURSE_LINK }],
-    url: '/mentoring/overthinking-course',
-    status: 'active',
+    url: '/online-retreat', // replaced by the 21-Day Online Retreat (Nov 2026)
+    status: 'closed',
     pillar: 'mind',
   },
   oneOnOneCoaching: {
@@ -323,32 +324,32 @@ const programsData = {
   },
   onlineRetreat: {
     id: 'onlineRetreat',
-    name: '11-Day Online Deep Meditation Retreat',
-    nameHi: '11-दिवसीय ऑनलाइन डीप मेडिटेशन रिट्रीट',
-    outcome: 'An intensive, live, nightly meditation journey in authentic Kriya Yoga and Prana practice.',
-    audience: 'Adults ready for a deep, guided meditation practice',
-    format: 'Online · 11 nights, monthly (10th–20th) · 7:30–10:30 PM IST',
-    prices: [{ label: 'Per person', amountInr: 6999 }] as ProgramPrice[],
-    checkout: [{ label: 'Razorpay', href: RAZORPAY_RETREAT_PAYMENT_LINK }],
-    url: '/retreats/online-11-day',
+    name: '21-Day Online Retreat',
+    nameHi: '21 दिन का ऑनलाइन रिट्रीट',
+    outcome: 'A calmer mind, better sleep and less overthinking — a live morning meditation every day, 7 live classes and a private WhatsApp group.',
+    audience: 'Adults dealing with stress, overthinking and poor sleep',
+    format: 'Online · 21 days · daily live meditation 6:30–7:00 AM + 7 live evening classes · monthly batches',
+    prices: [
+      { label: 'Early-bird (till 20 Dec)', amountInr: 3999 },
+      { label: 'Regular', amountInr: 4999 },
+    ] as ProgramPrice[],
+    checkout: [{ label: 'Reserve', href: '/online-retreat#calm-price' }],
+    url: '/online-retreat',
     status: 'active',
-    pillar: 'meditation',
+    pillar: 'mind',
   },
   residentialRetreat: {
     id: 'residentialRetreat',
-    name: 'Residential Meditation Retreats — Lonavala & Rishikesh',
-    nameHi: 'रेजिडेंशियल मेडिटेशन रिट्रीट्स — लोनावला व ऋषिकेश',
-    outcome: 'A small-group, fully immersive in-person retreat guided by Dr. Kapil Dev Sharma.',
+    name: 'Rishikesh Meditation Retreat',
+    nameHi: 'ऋषिकेश मेडिटेशन रिट्रीट',
+    outcome: '4 days of deep meditation by the Ganga, guided in person by Dr. Kapil Dev Sharma.',
     audience: 'Adults wanting a fully in-person meditation retreat',
-    format: 'Residential · Lonavala & Rishikesh · 3–4 batches a year',
-    prices: [
-      { label: 'Sharing room', amountInr: 35000 },
-      { label: 'Private room', amountInr: 45000 },
-    ],
-    checkout: [{ label: 'Reserve on WhatsApp', href: waLink('Hi Dr. Kapil, I want to secure my seat in the Residential Meditation Retreats — Lonavala & Rishikesh') }],
-    url: '/retreats/residential',
+    format: 'Residential · Rishikesh · 26–29 March 2027 · stay and food included',
+    prices: [{ label: 'Per person (stay + food)', amountInr: 24999 }],
+    checkout: [{ label: 'Reserve on WhatsApp', href: waLink('Hi Dr. Kapil, I want to reserve a place in the Rishikesh Retreat (26–29 March 2027, ₹24,999).') }],
+    url: '/rishikesh-retreat',
     status: 'active',
-    durationDays: 7 as number | null,
+    durationDays: 4 as number | null,
     pillar: 'meditation',
   },
   executiveWorkshop: {
@@ -415,7 +416,7 @@ const programsData = {
     nameHi: 'The Telepathy Workshop',
     outcome: 'Telepathy, Intuition Development, Cosmic Fusion and Heart-Brain Coherence in a 2-day experiential workshop.',
     audience: 'Anyone drawn to meditation, energy and the power of the mind',
-    format: 'In person · Mumbai, Ahmedabad, Vadodara, Pune · 2 days, 9:30 AM – 6:00 PM',
+    format: 'In person · Mumbai, Ahmedabad, Pune · 2 days, 9:30 AM – 6:00 PM',
     prices: [{ label: 'Per person', amountInr: TELEPATHY_WORKSHOP_FEE.currentInr }],
     checkout: [
       { label: 'Book on WhatsApp', href: waLink('TELEPATHY - Hi Dr. Kapil, I want to know about the Telepathy Workshop.') },
@@ -519,8 +520,8 @@ const contactData = {
   phoneDisplay: '+91 91739 43555',
   phoneHref: 'tel:+919173943555',
   address: {
-    en: 'Gitanjali Duplex, Novino–Tarsali Road, Vadodara, Gujarat, India',
-    hi: 'गीतांजलि डुप्लेक्स, नोविनो–तरसाली रोड, वडोदरा, गुजरात, भारत',
+    en: 'Online across India',
+    hi: 'पूरे भारत में ऑनलाइन',
   },
   // TODO(content): working hours not provided yet — do not invent. Pages
   // hide this when null (a preview-only TODO marker shows instead).
@@ -687,29 +688,44 @@ export const PAGE_VIDEOS: Readonly<Record<PageVideoKey, PageVideoEntry>> = {
 }
 
 /**
- * 21-Day Calm Mind — live online batch (owner's brief, Nov 2026). The one
- * place its price, seats and dates live. Seats left = seatsTotal minus the
- * verified paid registrations for this batch (never faked). The WhatsApp and
- * Zoom links are server-only env vars, shown only after a verified payment.
+ * 21-Day Online Retreat (owner, 23 Nov 2026) — runs on the former 21-Day
+ * Calm Mind batch system (same page /calm-mind-batch, seats, payment,
+ * WhatsApp group and calendar). The one place its price, seats and dates
+ * live. Early-bird ₹3,999 until `earlyBirdUntil` (23:59 IST), then ₹4,999 —
+ * decided on the server at checkout time (calmBatchPriceInr). Seats left =
+ * seatsTotal minus verified paid registrations (never faked). The WhatsApp
+ * and Zoom links are server-only env vars, shown only after payment.
  */
 export const calmMindBatch = {
   slug: 'calm-mind-batch',
-  price: 2999,
-  seatsTotal: 25,
+  /** Early-bird price (charged until earlyBirdUntil). */
+  price: 3999,
+  earlyBirdPrice: 3999,
+  regularPrice: 4999,
+  earlyBirdUntil: '2026-12-20',
+  seatsTotal: 50,
   nextBatch: {
-    startDate: '2026-12-01',
-    endDate: '2026-12-21',
-    classDates: ['2026-12-01', '2026-12-04', '2026-12-08', '2026-12-11', '2026-12-15', '2026-12-18'],
-    days: { en: 'Tuesday & Friday', hi: 'मंगलवार और शुक्रवार' },
-    time: { en: '8:00–9:00 PM IST', hi: 'रात 8:00–9:00 बजे (IST)' },
+    startDate: '2027-01-01',
+    endDate: '2027-01-21',
+    // 7 live evening classes: opening (Fri 1 Jan), Sun & Wed, closing (Thu 21 Jan).
+    classDates: ['2027-01-01', '2027-01-03', '2027-01-06', '2027-01-10', '2027-01-13', '2027-01-17', '2027-01-21'],
+    days: { en: 'Sun & Wed + opening and closing', hi: 'रवि और बुध + शुरुआत और समापन' },
+    time: { en: '8:00–9:15 PM IST', hi: 'रात 8:00–9:15 बजे (IST)' },
+    morning: { en: 'Daily live meditation 6:30–7:00 AM IST', hi: 'रोज़ सुबह 6:30–7:00 बजे लाइव मेडिटेशन (IST)' },
   },
-  /** ₹2,999 adjusted in a 1-on-1 plan within 14 days of batch end. */
+  /** Fee adjusted in a 1-on-1 plan within 14 days of the retreat ending. */
   upgradeAdjust: true,
   /** Shown ONLY after payment. */
   whatsappGroupLink: process.env.CALM_BATCH_WHATSAPP_LINK,
   /** Shown ONLY after payment + in the email. */
   zoomLink: process.env.CALM_BATCH_ZOOM_LINK,
 } as const
+
+/** The 21-Day Online Retreat price right now: early-bird until 23:59 IST on earlyBirdUntil, then regular. */
+export function calmBatchPriceInr(nowMs: number): number {
+  const ends = Date.parse(`${calmMindBatch.earlyBirdUntil}T23:59:59+05:30`)
+  return nowMs <= ends ? calmMindBatch.earlyBirdPrice : calmMindBatch.regularPrice
+}
 
 /**
  * Clarity Session pay-and-book flow (owner's conversion brief, Nov 2026).

@@ -18,16 +18,16 @@ describe('Sharp Brain Live — EEG brain test', () => {
 
   it('uses the owner’s wording', () => {
     expect(sharpBrainCopy.hi.offers.table.rows[1]?.card).toEqual({
-      text: '🧠 EEG ब्रेन टेस्ट — Day 1 और Day 30 पर (Muse EEG हेडबैंड से) — अपने फ़ोकस का बदलाव ग्राफ़ में देखें',
-      note: 'ऑफ़लाइन — वडोदरा / वर्कशॉप सेंटर पर। ऑनलाइन छात्रों के लिए Day 1 और Day 30 का Sharp Brain टेस्ट।',
+      text: '🧠 EEG ब्रेन टेस्ट — Day 1 और Day 30 पर (EEG हेडबैंड से) — अपने फ़ोकस का बदलाव ग्राफ़ में देखें',
+      note: 'ऑफ़लाइन — आमने-सामने की वर्कशॉप में। ऑनलाइन छात्रों के लिए Day 1 और Day 30 का Sharp Brain टेस्ट।',
     })
     expect(sharpBrainCopy.en.offers.table.rows[1]?.card).toEqual({
-      text: '🧠 EEG Brain Test on Day 1 & Day 30 (Muse EEG headband) — see your focus change on a graph',
-      note: 'Offline at Vadodara / workshop centres. Online students take the regular Day 1 & Day 30 Sharp Brain test.',
+      text: '🧠 EEG Brain Test on Day 1 & Day 30 (EEG headband) — see your focus change on a graph',
+      note: 'Offline, at in-person workshops. Online students take the regular Day 1 & Day 30 Sharp Brain test.',
     })
     const faq = sharpBrainCopy.hi.faq.items.find((item) => item.question === 'EEG ब्रेन टेस्ट क्या है?')
     expect(faq?.answer).toBe(
-      'यह Muse EEG हेडबैंड से किया जाने वाला एक आसान टेस्ट है, जो पढ़ते और ध्यान करते समय आपके फ़ोकस का संकेत (indicator) ग्राफ़ में दिखाता है। Day 1 और Day 30 की तुलना से आप अपना बदलाव ख़ुद देख सकते हैं। यह कोई मेडिकल जाँच नहीं है। यह टेस्ट ऑफ़लाइन (वडोदरा / वर्कशॉप सेंटर) पर होता है।',
+      'यह EEG हेडबैंड से किया जाने वाला एक आसान टेस्ट है, जो पढ़ते और ध्यान करते समय आपके फ़ोकस का संकेत (indicator) ग्राफ़ में दिखाता है। Day 1 और Day 30 की तुलना से आप अपना बदलाव ख़ुद देख सकते हैं। यह कोई मेडिकल जाँच नहीं है। यह टेस्ट ऑफ़लाइन वर्कशॉप में आमने-सामने होता है।',
     )
     expect(sharpBrainCopy.en.faq.items.some((item) => item.question === 'What is the EEG brain test?')).toBe(true)
   })

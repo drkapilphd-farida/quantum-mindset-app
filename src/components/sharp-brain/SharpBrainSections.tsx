@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { PAGE_VIDEOS, SHARP_BRAIN_PRICES, programs, qsrGuarantee } from "@/config/site.config";
+import { PAGE_VIDEOS, programs } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
 import { FreeTestButton } from "../FreeTestButton";
 import { WHATSAPP_MASTERCLASS_INQUIRY_LINK } from "@/config/whatsappSupportLink";
@@ -12,15 +12,11 @@ import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/s
 import { YOUTUBE_CHANNEL_URL } from "@/config/reviewsPlaylist";
 import { useProgramTestimonials } from "@/hooks/useTestimonials";
 import { trackGaEvent } from "@/lib/analytics/ga4";
-import { sharpBrainCopy, type OfferCell } from "@/lib/sharpBrainCopy";
-import { LINKS, waLink } from "@/data/links";
-import { enrolT } from "@/lib/app-i18n/enrol";
-import { useUiLang } from "@/lib/app-i18n/client";
-import { inr, istDayMonth, istDeadline } from "@/features/sharp-brain-enrol/copy";
-import { BatchCheckout, Countdown, PriceLine, useEnrolLabel, useNextBatch } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
+import { sharpBrainCopy, type OfferCell, type SharpBrainPlan } from "@/lib/sharpBrainCopy";
+import { waLink } from "@/data/links";
+import { PriceLine, useEnrolLabel } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import { Eyebrow } from "../ui";
 import TrainerBio from "../TrainerBio";
-import GuaranteeBadge from "./GuaranteeBadge";
 import VideoReviewGrid from "../VideoReviewGrid";
 
 // Sections of /programs/sharp-brain. Page order (Phase 6B): hero → sound
@@ -405,28 +401,22 @@ export function SharpBrainFinal(): React.JSX.Element {
   );
 }
 
-export function SharpBrainStickyBar({ enrolHref = ENROL_HREF, hideRegularPrice = false }: { enrolHref?: string; hideRegularPrice?: boolean } = {}): React.JSX.Element {
+export function SharpBrainStickyBar({ enrolHref = ENROL_HREF }: { enrolHref?: string; hideRegularPrice?: boolean } = {}): React.JSX.Element {
   const { lang } = useLanguage();
-  const c = useCopy().sticky;
-  const next = useNextBatch();
+  const all = useCopy();
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line-strong bg-void/95 backdrop-blur-md sm:hidden">
       <div className="mx-auto flex max-w-content items-center justify-between gap-3 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="min-w-0">
           <p className="truncate text-[13.5px] font-semibold text-ink">{lang === "hi" ? programs.sharpBrain.nameHi : programs.sharpBrain.name}</p>
-          {next !== null && (
-            <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
-              {next.offer !== "regular" && !hideRegularPrice && <s className="mr-1">₹{next.regularInr.toLocaleString("en-IN")}</s>}₹{next.amountInr.toLocaleString("en-IN")}
-              {/* Rolling admission (owner, Nov 2026): no batch date. */}
-            </p>
-          )}
+          <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">{all.offers.stickyFrom}</p>
         </div>
         <a
           href={enrolHref}
           onClick={() => trackGaEvent("sharp_brain_enrol_click", { location: "sharp_brain_sticky" })}
           className="inline-flex flex-none items-center rounded-sm bg-gold px-5 py-2.5 text-[13.5px] font-semibold text-[#1B1508]"
         >
-          {c.cta}
+          {all.sticky.cta}
         </a>
       </div>
     </div>
@@ -454,39 +444,28 @@ export function SharpBrainReviewsHero(): React.JSX.Element {
 }
 
 // ─── Phase 6B — two offers on one page ─────────────────────────────────────
-// Live batch (existing checkout, price from the server) and Self-paced
-// (₹2,999 Razorpay payment link). Hero → comparison table → live block →
-// self-paced block → FAQ → final two buttons. Links are same-page hashes
-// so ?lang=hi is kept.
-
-const LIVE_HASH = "#live-batch";
-const SELF_HASH = "#self-paced";
-
-/** The live batch price shown on the page: the next batch's server price. */
-function useLivePrice(): string {
-  const next = useNextBatch();
-  return inr(next?.amountInr ?? SHARP_BRAIN_PRICES.liveInr);
-}
+// Four plans (owner, Nov 2026): ₹499 workshop · ₹2,999 self-paced ·
+// ₹4,999 live online · ₹8,999 offline workshop with EEG. Copy and links
+// live in sharpBrainCopy.ts (offers.plans).
 
 function OfferButtons({ location, className = "" }: { location: string; className?: string }): React.JSX.Element {
-  const c = useCopy().offers.hero;
-  const price = useLivePrice();
+  const c = useCopy().offers;
   return (
     <div className={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${className}`}>
       <a
-        href={LIVE_HASH}
+        href={ENROL_HREF}
         onClick={() => trackGaEvent("sharp_brain_enrol_click", { location })}
-        className="inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]"
+        className="inline-flex items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:brightness-95"
         data-offer-live
       >
-        {c.liveButton(price)}
+        {c.heroPlansButton}
       </a>
       <a
-        href={SELF_HASH}
+        href="/reading-memory-test"
         className="inline-flex items-center justify-center rounded-sm border border-line-strong px-7 py-[15px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
         data-offer-self
       >
-        {c.selfButton}
+        {c.heroTestButton}
       </a>
     </div>
   );
@@ -505,7 +484,7 @@ export function SharpBrainOffersHero(): React.JSX.Element {
           <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink sm:text-[18.5px]">{c.sub}</p>
           <OfferButtons location="sharp_brain_hero" className="mt-8" />
           <p className="mt-5 text-[13.5px] leading-relaxed text-ink-faint" data-seats-line>
-            {c.seats}
+            {useCopy().offers.heroLine}
           </p>
         </div>
         <div className="hidden lg:block">
@@ -540,25 +519,25 @@ function CellMark({ value, included, notIncluded }: { value: OfferCell; included
 
 export function SharpBrainCompare(): React.JSX.Element {
   const c = useCopy().offers;
-  const t = c.table;
+  const t = c.plansTable;
   return (
     <section id="compare" className={sectionClass}>
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-content">
         <h2 className={h2Class}>{t.title}</h2>
-        <div className="relative mt-8 overflow-x-auto rounded-sm border border-line" data-compare-scroll>
-          <table className="w-full min-w-[480px] border-collapse text-left text-[15px]" data-compare-table>
+        <div className="relative mt-8 overflow-x-auto rounded-sm border border-line bg-panel" data-compare-scroll>
+          <table className="w-full min-w-[720px] border-collapse text-left text-[15px]" data-compare-table>
             <caption className="sr-only">{t.title}</caption>
             <thead>
               <tr className="border-b border-line-strong">
                 <th scope="col" className="sticky left-0 z-10 bg-panel px-4 py-3 font-mono text-[11.5px] font-semibold uppercase tracking-[0.08em] text-ink-faint">
                   {t.feature}
                 </th>
-                <th scope="col" className="bg-panel px-4 py-3 text-[15px] font-bold text-ink">
-                  {c.self.name}
-                </th>
-                <th scope="col" className="bg-gold-soft px-4 py-3 text-[15px] font-bold text-ink">
-                  {c.live.name}
-                </th>
+                {c.plans.map((plan) => (
+                  <th key={plan.id} scope="col" className={`px-4 py-3 text-[15px] font-bold text-ink ${plan.featured ? "bg-gold-soft" : "bg-panel"}`}>
+                    {plan.name}
+                    <span className="mt-0.5 block text-[14px] font-extrabold text-teal">{plan.price}</span>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -567,12 +546,11 @@ export function SharpBrainCompare(): React.JSX.Element {
                   <th scope="row" className="sticky left-0 z-10 bg-panel px-4 py-3.5 font-semibold text-ink">
                     {row.feature}
                   </th>
-                  <td className="bg-panel px-4 py-3.5">
-                    <CellMark value={row.self} included={t.included} notIncluded={t.notIncluded} />
-                  </td>
-                  <td className="bg-gold-soft px-4 py-3.5">
-                    <CellMark value={row.live} included={t.included} notIncluded={t.notIncluded} />
-                  </td>
+                  {row.cells.map((cell, i) => (
+                    <td key={c.plans[i]?.id ?? i} className={`px-4 py-3.5 ${c.plans[i]?.featured ? "bg-gold-soft" : "bg-panel"}`}>
+                      <CellMark value={cell} included={t.included} notIncluded={t.notIncluded} />
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
@@ -583,132 +561,65 @@ export function SharpBrainCompare(): React.JSX.Element {
   );
 }
 
-/** ✓ / — list for one offer, from the comparison table rows. */
-function OfferFeatureList({ side }: { side: "self" | "live" }): React.JSX.Element {
-  const t = useCopy().offers.table;
-  return (
-    <ul className="space-y-2.5">
-      {t.rows.map((row) => {
-        const value = row[side];
-        // A plan card lists only what that plan includes (owner: no EEG line on Self-paced).
-        if (value === false) return null;
-        if (row.card !== undefined) {
-          // Highlighted feature (the Live batch's EEG brain test), with its small note.
-          return (
-            <li key={row.feature} className="-mx-1 flex items-start gap-3 rounded-sm border border-gold/50 bg-gold/10 px-3 py-3 text-[15.5px] leading-relaxed text-ink" data-offer-highlight>
-              <span className="w-5 flex-none text-center font-bold text-teal" aria-hidden="true">
-                ✓
-              </span>
-              <span>
-                <span className="font-semibold">{row.card.text}</span>
-                <span className="mt-1 block text-[13px] leading-snug text-ink-dim">{row.card.note}</span>
-              </span>
-            </li>
-          );
-        }
-        return (
-          <li key={row.feature} className="flex items-start gap-3 text-[15.5px] leading-relaxed text-ink">
-            <span className="w-5 flex-none text-center font-bold text-teal" aria-hidden="true">
-              ✓
-            </span>
-            <span>
-              {row.feature}
-              {typeof value === "string" && <span className="font-semibold"> — {value}</span>}
-              {typeof value === "object" && <span className="font-semibold"> — {value.note}</span>}
-            </span>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-/** The existing early-bird countdown (server clock), without the struck-through price. */
-function LiveEarlyBirdTimer(): React.JSX.Element | null {
-  const lang = useUiLang();
-  const next = useNextBatch();
-  if (next === null || next.offer === "regular" || next.endsAtMs === null) return null;
-  const t = enrolT(lang);
-  const label = next.offer === "test1000" ? t("offerTag") : t("earlyBirdFor", { date: istDayMonth(next.startsAtMs, lang) });
-  return (
-    <div className="mt-4 rounded-sm border border-line-strong px-4 py-3 text-[14px] leading-relaxed" data-early-bird-timer>
-      <p className="font-semibold text-gold">{label}</p>
-      <p className="text-ink-dim">
-        {t("endsIn")} <Countdown endsAtMs={next.endsAtMs} className="font-semibold text-ink" />
-        <span className="ml-1">({t("endsOn", { deadline: istDeadline(next.endsAtMs, lang) })})</span>
-      </p>
-    </div>
-  );
+function planHref(plan: SharpBrainPlan): string {
+  return plan.href.kind === "whatsapp" ? waLink(plan.href.message) : plan.href.url;
 }
 
 export function SharpBrainOffers(): React.JSX.Element {
   const all = useCopy();
   const c = all.offers;
-  const { lang } = useLanguage();
-  const next = useNextBatch();
-  const price = useLivePrice();
-  const perDay = inr(Math.round((next?.amountInr ?? SHARP_BRAIN_PRICES.liveInr) / 30));
   return (
     <section id="enrol" className={`scroll-mt-20 ${sectionClass} bg-panel`}>
-      <div className="mx-auto grid max-w-content grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-10">
-        {/* Live batch — primary */}
-        <article id="live-batch" className="warm-dark scroll-mt-20 rounded-sm border-[3px] border-gold p-6 shadow-[0_18px_40px_-18px_rgba(20,32,56,0.45)] sm:p-8" data-offer-block="live">
-          <span className="inline-flex rounded-sm bg-gold px-3 py-1 font-mono text-[11.5px] font-semibold uppercase tracking-[0.08em] text-[#1B1508]">{c.live.badge}</span>
-          <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[32px]">{c.live.name}</h2>
-          <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="text-[44px] font-extrabold leading-none tracking-tight sm:text-[52px]" data-live-price>
-              {price}
-            </span>
-            <span className="text-[15px] font-semibold text-ink-dim">{c.live.perDay(perDay)}</span>
-          </p>
-          <div className="mt-6">
-            <OfferFeatureList side="live" />
-          </div>
-          <div className="mt-7 border-t border-line pt-6">
-            <BatchCheckout location="sharp_brain_offer" buttonLabel={c.live.cta} hideRegularPrice hidePicker />
-            <LiveEarlyBirdTimer />
-          </div>
-          <p className="mt-4 text-[12.5px] leading-relaxed text-ink-dim" data-guarantee-short>
-            {qsrGuarantee[lang].short}{" "}
-            <a href="#guarantee" className="font-medium text-ink underline underline-offset-2">
-              {qsrGuarantee[lang].fullTerms}
-            </a>
-          </p>
-        </article>
-
-        {/* Self-paced — secondary */}
-        <article id="self-paced" className="scroll-mt-20 rounded-sm border border-line-strong bg-void p-6 sm:p-8" data-offer-block="self">
-          <h2 className="text-[24px] font-extrabold leading-tight sm:text-[28px]">{c.self.name}</h2>
-          <p className="mt-2 text-[15px] font-semibold text-teal" data-no-live>
-            {c.self.noLive}
-          </p>
-          <p className="mt-1 text-[14px] text-ink-dim" data-recordings-note>
-            {c.self.recordings}
-          </p>
-          <p className="mt-4 text-[38px] font-extrabold leading-none tracking-tight sm:text-[44px]">{c.self.price}</p>
-          <div className="mt-6">
-            <OfferFeatureList side="self" />
-          </div>
-          <a
-            href={LINKS.rzpSharpBrainSelfPaced2999}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-7 inline-flex w-full items-center justify-center rounded-sm border-2 border-ink px-7 py-[14px] text-[15px] font-semibold text-ink transition-colors hover:bg-panel2"
-            data-self-paced-pay
-          >
-            {c.self.cta}
-          </a>
-          <p className="mt-4 text-[14px] leading-relaxed text-ink-dim">
-            <a href={waLink(c.self.upgrade)} target="_blank" rel="noopener noreferrer" className="underline decoration-gold/60 underline-offset-4 hover:text-ink" data-upgrade-line>
-              {c.self.upgrade}
-            </a>
-          </p>
-        </article>
+      <div className="mx-auto max-w-content">
+        <h2 className={h2Class}>{c.plansTitle}</h2>
+        <p className="mt-3 max-w-2xl text-[16px] text-ink-dim">{c.plansSub}</p>
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {c.plans.map((plan) => (
+            <article
+              key={plan.id}
+              id={plan.id === "live" ? "live-batch" : plan.id === "self" ? "self-paced" : `plan-${plan.id}`}
+              className={`flex scroll-mt-20 flex-col rounded-sm p-6 ${plan.featured ? "warm-dark border-[3px] border-gold shadow-[0_18px_40px_-18px_rgba(10,22,48,0.55)]" : "border border-line-strong bg-void"}`}
+              data-offer-block={plan.id}
+            >
+              {plan.badge !== null ? (
+                <span className={`inline-flex self-start rounded-sm px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] ${plan.featured ? "bg-gold text-[#1B1508]" : "bg-teal-soft text-teal"}`}>{plan.badge}</span>
+              ) : (
+                <span className="h-[26px]" aria-hidden="true" />
+              )}
+              <h3 className="mt-4 text-[22px] font-extrabold leading-tight">{plan.name}</h3>
+              <p className="mt-3 text-[40px] font-extrabold leading-none tracking-tight" data-plan-price>
+                {plan.price}
+              </p>
+              <p className="mt-2 text-[13.5px] font-semibold text-ink-dim">{plan.note}</p>
+              <ul className="mt-6 flex-1 space-y-2.5">
+                {plan.points.map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink">
+                    <span className="w-5 flex-none text-center font-bold text-teal" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={planHref(plan)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackGaEvent("sharp_brain_enrol_click", { location: `sharp_brain_plan_${plan.id}` })}
+                className={`mt-7 inline-flex w-full items-center justify-center rounded-sm px-5 py-[14px] text-center text-[15px] font-semibold transition-transform hover:-translate-y-0.5 ${plan.featured || plan.id === "workshop" ? "bg-gold text-[#1B1508]" : "border-2 border-ink text-ink hover:bg-panel2"}`}
+                data-plan-cta={plan.id}
+              >
+                {plan.cta}
+              </a>
+            </article>
+          ))}
+        </div>
       </div>
 
       <div className="mx-auto mt-8 flex max-w-content flex-col gap-6">
-        <div className="max-w-3xl">
-          <GuaranteeBadge id="guarantee" />
+        <div id="guarantee" className="max-w-3xl rounded-sm border border-line-strong bg-void p-5" data-refund-policy>
+          <p className="text-[16px] font-bold text-ink">{c.refund.title}</p>
+          <p className="mt-1.5 text-[14.5px] leading-relaxed text-ink-dim">{c.refund.text}</p>
         </div>
         <a
           href={WHATSAPP_MASTERCLASS_INQUIRY_LINK}

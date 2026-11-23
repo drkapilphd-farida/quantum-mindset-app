@@ -18,13 +18,13 @@ describe('Razorpay payment.captured (owner, Nov 2026)', () => {
   })
 
   it('saves a Calm Mind batch payment (from the webhook) with the buyer details from the notes', async () => {
-    const outcome = await handlePaymentCaptured(event({ amount: 299900, notes: { product: 'calm-mind-batch', batch: '2026-12-01', name: 'Asha', email: 'asha@x.in', phone: '+919811111111', utm_source: 'meta' } }), noOrderNotes)
+    const outcome = await handlePaymentCaptured(event({ amount: 399900, notes: { product: 'calm-mind-batch', batch: '2027-01-01', name: 'Asha', email: 'asha@x.in', phone: '+919811111111', utm_source: 'meta' } }), noOrderNotes)
     expect(outcome).toBe('calm')
-    expect(calmCalls[0]).toEqual([{ name: 'Asha', phone: '+919811111111', email: 'asha@x.in', paymentId: 'pay_1', orderId: 'order_1', batch: '2026-12-01', utm: 'utm_source=meta' }, 'webhook'])
+    expect(calmCalls[0]).toEqual([{ name: 'Asha', phone: '+919811111111', email: 'asha@x.in', paymentId: 'pay_1', orderId: 'order_1', batch: '2027-01-01', utm: 'utm_source=meta' }, 'webhook'])
   })
 
   it('falls back to the order notes when the payment has none', async () => {
-    const outcome = await handlePaymentCaptured(event({ amount: 299900, notes: [] }), async () => ({ product: 'calm-mind-batch', batch: '2026-12-01', name: 'Ravi' }))
+    const outcome = await handlePaymentCaptured(event({ amount: 399900, notes: [] }), async () => ({ product: 'calm-mind-batch', batch: '2027-01-01', name: 'Ravi' }))
     expect(outcome).toBe('calm')
     expect((calmCalls[0]?.[0] as { name: string }).name).toBe('Ravi')
   })

@@ -1,5 +1,6 @@
 import { SHARP_BRAIN_PRICES, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
+import { LINKS } from '@/data/links'
 
 // Copy for /programs/sharp-brain, EN + HI (rewritten 1 Oct 2026: one
 // universal positioning, one offer). Sharp Brain™ is a 30-day brain-skills
@@ -59,6 +60,31 @@ export type OffersCopy = {
   }
   live: { name: string; badge: string; perDay: (price: string) => string; cta: string }
   self: { name: string; price: string; noLive: string; recordings: string; cta: string; upgrade: string }
+  /** Owner (Nov 2026): four ways to join, cheapest first. */
+  plansTitle: string
+  plansSub: string
+  plans: SharpBrainPlan[]
+  /** Comparison table across the four plans (columns follow `plans`). */
+  plansTable: { title: string; feature: string; included: string; notIncluded: string; rows: { feature: string; cells: OfferCell[] }[] }
+  refund: { title: string; text: string }
+  heroPlansButton: string
+  heroTestButton: string
+  heroLine: string
+  stickyFrom: string
+}
+
+export type SharpBrainPlan = {
+  id: 'workshop' | 'self' | 'live' | 'offline'
+  name: string
+  price: string
+  /** Short line under the price. */
+  note: string
+  badge: string | null
+  points: string[]
+  cta: string
+  /** A WhatsApp message (opens WhatsApp) or a direct payment link. */
+  href: { kind: 'whatsapp'; message: string } | { kind: 'link'; url: string }
+  featured: boolean
 }
 
 // Self-paced price (Razorpay payment link LINKS.rzpSharpBrainSelfPaced2999).
@@ -241,7 +267,7 @@ const en: SharpBrainCopy = {
       {
         question: 'What is the EEG brain test?',
         answer:
-          'It is a simple test done with a Muse EEG headband. It shows an indicator of your focus on a graph while you read and meditate. Comparing Day 1 and Day 30, you can see your own change. It is not a medical test. The test is done offline (Vadodara / workshop centres).',
+          'It is a simple test done with an EEG headband. It shows an indicator of your focus on a graph while you read and meditate. Comparing Day 1 and Day 30, you can see your own change. It is not a medical test. The test is done in person, at the offline workshop.',
       },
     ],
   },
@@ -276,8 +302,8 @@ const en: SharpBrainCopy = {
           self: false,
           live: { included: true, note: 'offline' },
           card: {
-            text: '🧠 EEG Brain Test on Day 1 & Day 30 (Muse EEG headband) — see your focus change on a graph',
-            note: 'Offline at Vadodara / workshop centres. Online students take the regular Day 1 & Day 30 Sharp Brain test.',
+            text: '🧠 EEG Brain Test on Day 1 & Day 30 (EEG headband) — see your focus change on a graph',
+            note: 'Offline, at in-person workshops. Online students take the regular Day 1 & Day 30 Sharp Brain test.',
           },
         },
         { feature: '30 days of app practice', self: true, live: true },
@@ -293,6 +319,91 @@ const en: SharpBrainCopy = {
       cta: 'Start self-paced',
       upgrade: 'Upgrade to the live batch within 7 days by paying ₹6,000 — message us on WhatsApp.',
     },
+
+    plansTitle: 'Choose how you want to join',
+    plansSub: 'Start small with the 2-day workshop, or go straight to the full 30-day program.',
+    plans: [
+      {
+        id: 'workshop',
+        name: '2-Day Online Workshop',
+        price: '₹499',
+        note: '2 live online sessions · max 50 per batch',
+        badge: 'Start here',
+        points: [
+          '2 live online sessions with Dr. Kapil Dev Sharma',
+          'Focus, memory and smart-reading techniques you can use the same day',
+          'See how the full program works before you decide',
+        ],
+        cta: 'Book my seat · ₹499',
+        href: { kind: 'whatsapp', message: 'Hi Dr. Kapil, I want to book the ₹499 Sharp Brain 2-Day Online Workshop.' },
+        featured: false,
+      },
+      {
+        id: 'self',
+        name: 'Self-paced',
+        price: selfPacedPrice,
+        note: 'Learn on your own time',
+        badge: null,
+        points: ['All 7 classes, recorded — unlock instantly', '30 days of guided app practice', 'Day 1 & Day 30 test + certificate'],
+        cta: `Start self-paced · ${selfPacedPrice}`,
+        href: { kind: 'link', url: LINKS.rzpSharpBrainSelfPaced2999 },
+        featured: false,
+      },
+      {
+        id: 'live',
+        name: 'Live Online',
+        price: '₹4,999',
+        note: 'Next batch: Mon 14 Dec 2026 · then 11 Jan 2027',
+        badge: 'Most popular',
+        points: [
+          '7 live classes on Zoom with Dr. Kapil — Mon & Wed, 8 PM',
+          'Missed a class? Watch the recording',
+          '30 days of guided app practice',
+          'Day 1 & Day 30 test + certificate',
+          'Not satisfied after the first 2 classes? Full refund.',
+        ],
+        cta: 'Book Live Online · ₹4,999',
+        href: { kind: 'whatsapp', message: 'Hi Dr. Kapil, I want to join the ₹4,999 Sharp Brain Live Online batch (starts 14 Dec).' },
+        featured: true,
+      },
+      {
+        id: 'offline',
+        name: 'Offline Workshop + EEG',
+        price: '₹8,999',
+        note: 'In person · city and dates on WhatsApp',
+        badge: 'With EEG brain test',
+        points: [
+          '2-day in-person workshop, 10 AM – 4 PM, lunch included',
+          'Live EEG brain test before and after — see your focus on a graph',
+          'The remaining 5 classes live online',
+          '30 days of guided app practice + certificate',
+        ],
+        cta: 'Ask for the next workshop',
+        href: { kind: 'whatsapp', message: 'Hi Dr. Kapil, I want to join the ₹8,999 Sharp Brain Offline Workshop with EEG. Please share the next city and dates.' },
+        featured: false,
+      },
+    ],
+    plansTable: {
+      title: 'Compare the plans',
+      feature: 'What you get',
+      included: 'Included',
+      notIncluded: 'Not included',
+      rows: [
+        { feature: 'Classes with Dr. Kapil', cells: ['2 live', '7 recorded', '7 live', '2 days in person + 5 live'] },
+        { feature: '30 days of app practice', cells: [false, true, true, true] },
+        { feature: 'Day 1 & Day 30 test + certificate', cells: [false, true, true, true] },
+        { feature: 'EEG brain test', cells: [false, false, false, { included: true, note: 'in person' }] },
+        { feature: 'Refund after first 2 classes', cells: [false, false, true, false] },
+      ],
+    },
+    refund: {
+      title: 'Refund policy — Live Online',
+      text: 'Join the first 2 live classes. If you are not satisfied, message us on WhatsApp before the 3rd class and we refund your full fee.',
+    },
+    heroPlansButton: 'See plans — from ₹499',
+    heroTestButton: 'Take the free Brain Test',
+    heroLine: '4 ways to join · Start with the ₹499 workshop or go straight to the 30-day program.',
+    stickyFrom: 'from ₹499',
   },
 }
 
@@ -472,7 +583,7 @@ const hi: SharpBrainCopy = {
       {
         question: 'EEG ब्रेन टेस्ट क्या है?',
         answer:
-          'यह Muse EEG हेडबैंड से किया जाने वाला एक आसान टेस्ट है, जो पढ़ते और ध्यान करते समय आपके फ़ोकस का संकेत (indicator) ग्राफ़ में दिखाता है। Day 1 और Day 30 की तुलना से आप अपना बदलाव ख़ुद देख सकते हैं। यह कोई मेडिकल जाँच नहीं है। यह टेस्ट ऑफ़लाइन (वडोदरा / वर्कशॉप सेंटर) पर होता है।',
+          'यह EEG हेडबैंड से किया जाने वाला एक आसान टेस्ट है, जो पढ़ते और ध्यान करते समय आपके फ़ोकस का संकेत (indicator) ग्राफ़ में दिखाता है। Day 1 और Day 30 की तुलना से आप अपना बदलाव ख़ुद देख सकते हैं। यह कोई मेडिकल जाँच नहीं है। यह टेस्ट ऑफ़लाइन वर्कशॉप में आमने-सामने होता है।',
       },
     ],
   },
@@ -507,8 +618,8 @@ const hi: SharpBrainCopy = {
           self: false,
           live: { included: true, note: 'ऑफ़लाइन' },
           card: {
-            text: '🧠 EEG ब्रेन टेस्ट — Day 1 और Day 30 पर (Muse EEG हेडबैंड से) — अपने फ़ोकस का बदलाव ग्राफ़ में देखें',
-            note: 'ऑफ़लाइन — वडोदरा / वर्कशॉप सेंटर पर। ऑनलाइन छात्रों के लिए Day 1 और Day 30 का Sharp Brain टेस्ट।',
+            text: '🧠 EEG ब्रेन टेस्ट — Day 1 और Day 30 पर (EEG हेडबैंड से) — अपने फ़ोकस का बदलाव ग्राफ़ में देखें',
+            note: 'ऑफ़लाइन — आमने-सामने की वर्कशॉप में। ऑनलाइन छात्रों के लिए Day 1 और Day 30 का Sharp Brain टेस्ट।',
           },
         },
         { feature: '30 दिन ऐप अभ्यास', self: true, live: true },
@@ -524,6 +635,91 @@ const hi: SharpBrainCopy = {
       cta: 'सेल्फ़-पेस्ड शुरू करें',
       upgrade: '7 दिन के भीतर ₹6,000 देकर लाइव बैच में बदल सकते हैं — वॉट्सऐप पर बताइए।',
     },
+
+    plansTitle: 'जुड़ने का तरीक़ा चुनिए',
+    plansSub: '₹499 की 2 दिन की वर्कशॉप से शुरू करें, या सीधे 30 दिन का पूरा प्रोग्राम लें।',
+    plans: [
+      {
+        id: 'workshop',
+        name: '2 दिन की ऑनलाइन वर्कशॉप',
+        price: '₹499',
+        note: '2 लाइव ऑनलाइन सेशन · हर बैच में अधिकतम 50',
+        badge: 'यहाँ से शुरू करें',
+        points: [
+          'डॉ. कपिल देव शर्मा के साथ 2 लाइव ऑनलाइन सेशन',
+          'फ़ोकस, याददाश्त और स्मार्ट रीडिंग की तकनीकें, जो उसी दिन काम आएँ',
+          'फ़ैसला लेने से पहले देखें कि पूरा प्रोग्राम कैसे चलता है',
+        ],
+        cta: 'मेरी सीट बुक करें · ₹499',
+        href: { kind: 'whatsapp', message: 'नमस्ते डॉ. कपिल, मुझे ₹499 वाली Sharp Brain 2 दिन की ऑनलाइन वर्कशॉप बुक करनी है।' },
+        featured: false,
+      },
+      {
+        id: 'self',
+        name: 'सेल्फ़-पेस्ड',
+        price: selfPacedPrice,
+        note: 'अपने समय पर सीखें',
+        badge: null,
+        points: ['सातों क्लास रिकॉर्डेड — तुरंत खुल जाती हैं', '30 दिन का गाइडेड ऐप अभ्यास', 'Day 1 और Day 30 टेस्ट + सर्टिफ़िकेट'],
+        cta: `सेल्फ़-पेस्ड शुरू करें · ${selfPacedPrice}`,
+        href: { kind: 'link', url: LINKS.rzpSharpBrainSelfPaced2999 },
+        featured: false,
+      },
+      {
+        id: 'live',
+        name: 'लाइव ऑनलाइन',
+        price: '₹4,999',
+        note: 'अगला बैच: सोम 14 दिसंबर 2026 · फिर 11 जनवरी 2027',
+        badge: 'सबसे लोकप्रिय',
+        points: [
+          'डॉ. कपिल के साथ Zoom पर 7 लाइव क्लास — सोम और बुध, रात 8 बजे',
+          'क्लास छूटी? रिकॉर्डिंग देख लें',
+          '30 दिन का गाइडेड ऐप अभ्यास',
+          'Day 1 और Day 30 टेस्ट + सर्टिफ़िकेट',
+          'पहली 2 क्लास के बाद संतुष्ट नहीं? पूरी फ़ीस वापस।',
+        ],
+        cta: 'लाइव ऑनलाइन बुक करें · ₹4,999',
+        href: { kind: 'whatsapp', message: 'नमस्ते डॉ. कपिल, मुझे ₹4,999 वाले Sharp Brain लाइव ऑनलाइन बैच (14 दिसंबर) में जुड़ना है।' },
+        featured: true,
+      },
+      {
+        id: 'offline',
+        name: 'ऑफ़लाइन वर्कशॉप + EEG',
+        price: '₹8,999',
+        note: 'आमने-सामने · शहर और तारीख़ WhatsApp पर',
+        badge: 'EEG ब्रेन टेस्ट के साथ',
+        points: [
+          '2 दिन की आमने-सामने वर्कशॉप, सुबह 10 से शाम 4, लंच शामिल',
+          'पहले और बाद में लाइव EEG ब्रेन टेस्ट — अपना फ़ोकस ग्राफ़ पर देखें',
+          'बाक़ी 5 क्लास लाइव ऑनलाइन',
+          '30 दिन का गाइडेड ऐप अभ्यास + सर्टिफ़िकेट',
+        ],
+        cta: 'अगली वर्कशॉप की जानकारी लें',
+        href: { kind: 'whatsapp', message: 'नमस्ते डॉ. कपिल, मुझे ₹8,999 वाली Sharp Brain ऑफ़लाइन वर्कशॉप (EEG के साथ) में जुड़ना है। अगला शहर और तारीख़ बताइए।' },
+        featured: false,
+      },
+    ],
+    plansTable: {
+      title: 'प्लान की तुलना',
+      feature: 'आपको क्या मिलता है',
+      included: 'शामिल',
+      notIncluded: 'शामिल नहीं',
+      rows: [
+        { feature: 'डॉ. कपिल के साथ क्लास', cells: ['2 लाइव', '7 रिकॉर्डेड', '7 लाइव', '2 दिन आमने-सामने + 5 लाइव'] },
+        { feature: '30 दिन ऐप अभ्यास', cells: [false, true, true, true] },
+        { feature: 'Day 1 और Day 30 टेस्ट + सर्टिफ़िकेट', cells: [false, true, true, true] },
+        { feature: 'EEG ब्रेन टेस्ट', cells: [false, false, false, { included: true, note: 'आमने-सामने' }] },
+        { feature: 'पहली 2 क्लास के बाद रिफ़ंड', cells: [false, false, true, false] },
+      ],
+    },
+    refund: {
+      title: 'रिफ़ंड नीति — लाइव ऑनलाइन',
+      text: 'पहली 2 लाइव क्लास में शामिल हों। संतुष्ट न हों तो तीसरी क्लास से पहले WhatsApp पर बता दें, हम पूरी फ़ीस लौटा देंगे।',
+    },
+    heroPlansButton: 'प्लान देखें — ₹499 से',
+    heroTestButton: 'मुफ़्त Brain Test दें',
+    heroLine: 'जुड़ने के 4 तरीक़े · ₹499 की वर्कशॉप से शुरू करें या सीधे 30 दिन का प्रोग्राम लें।',
+    stickyFrom: '₹499 से',
   },
 }
 

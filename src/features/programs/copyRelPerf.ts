@@ -5,7 +5,7 @@ import type { ProgramCopy } from './copyTypes'
 
 const ONLINE = {
   q: { en: 'Is it online?', hi: 'क्या यह ऑनलाइन है?' },
-  a: { en: 'Yes, online or in person in Vadodara.', hi: 'हाँ, ऑनलाइन या वडोदरा में आमने-सामने।' },
+  a: { en: 'Yes, all sessions are online on Zoom.', hi: 'हाँ, सभी सेशन Zoom पर ऑनलाइन होते हैं।' },
 }
 
 export const TELEPATHY: ProgramCopy = {
@@ -55,7 +55,7 @@ export const TELEPATHY: ProgramCopy = {
     },
     {
       q: { en: 'Is it taught online?', hi: 'क्या यह ऑनलाइन सिखाया जाता है?' },
-      a: { en: 'Yes, online or in person in Vadodara, always 1-on-1.', hi: 'हाँ, ऑनलाइन या वडोदरा में आमने-सामने, हमेशा 1-on-1।' },
+      a: { en: 'Yes, online on Zoom, always 1-on-1.', hi: 'हाँ, Zoom पर ऑनलाइन, हमेशा 1-on-1।' },
     },
     {
       q: { en: 'Is there a group workshop?', hi: 'क्या कोई ग्रुप वर्कशॉप है?' },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { calmMindBatch } from "@/config/site.config";
+import { calmBatchPriceInr, calmMindBatch } from "@/config/site.config";
 import { waLink } from "@/data/links";
 import { normalizeIndianMobile } from "@/lib/phone/indianMobile";
 import { trackInitiateCheckout, trackViewContent } from "@/lib/analytics/conversions";
@@ -10,14 +10,14 @@ import { confirmCalmPayment, startCalmCheckout } from "@/app/calm-mind-batch/act
 import type { BatchState, Lang } from "../batch";
 import { CALM_COPY } from "../copy";
 
-// "Reserve my seat — ₹2,999" (owner's brief): a short details form (name,
+// "Reserve my seat" (owner's brief): a short details form (name,
 // email, WhatsApp — prefilled into Razorpay Checkout), then Checkout, then the
 // joined page. A full or past batch → WhatsApp waitlist instead; no Razorpay
 // keys yet → a WhatsApp message to reserve.
 
 const say = (text: { en: string; hi: string }, lang: Lang): string => text[lang];
 const GOLD = "inline-flex min-h-12 items-center justify-center rounded-sm bg-gold px-7 py-[15px] text-center text-[16px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]";
-const RESERVE_MESSAGE = "Hi Dr. Kapil, I want to reserve a seat in the 21-Day Calm Mind batch.";
+const RESERVE_MESSAGE = "Hi Dr. Kapil, I want to reserve a seat in the 21-Day Online Retreat.";
 
 type RazorpayResponse = { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string };
 type RazorpayInstance = { open: () => void };
@@ -39,7 +39,7 @@ function loadCheckout(): Promise<RazorpayConstructor | null> {
 }
 
 export function CalmViewContent(): null {
-  useEffect(() => trackViewContent("Calm Mind Batch", calmMindBatch.price), []);
+  useEffect(() => trackViewContent("Calm Mind Batch", calmBatchPriceInr(Date.now())), []);
   return null;
 }
 
@@ -57,7 +57,7 @@ export function CalmReserveButton({ state, checkout, lang, label, className = ""
   const text = label ?? say(CALM_COPY.hero.reserve, lang);
   if (!checkout) {
     return (
-      <a href={waLink(RESERVE_MESSAGE)} target="_blank" rel="noopener noreferrer" onClick={() => trackInitiateCheckout("Calm Mind Batch", calmMindBatch.price)} className={`${GOLD} ${width} ${className}`} data-calm-reserve="whatsapp" data-checkout-tracked>
+      <a href={waLink(RESERVE_MESSAGE)} target="_blank" rel="noopener noreferrer" onClick={() => trackInitiateCheckout("Calm Mind Batch", calmBatchPriceInr(Date.now()))} className={`${GOLD} ${width} ${className}`} data-calm-reserve="whatsapp" data-checkout-tracked>
         {text}
       </a>
     );
@@ -67,7 +67,7 @@ export function CalmReserveButton({ state, checkout, lang, label, className = ""
       <button
         type="button"
         onClick={() => {
-          trackInitiateCheckout("Calm Mind Batch", calmMindBatch.price);
+          trackInitiateCheckout("Calm Mind Batch", calmBatchPriceInr(Date.now()));
           setOpen(true);
         }}
         className={`${GOLD} ${width} ${className}`}

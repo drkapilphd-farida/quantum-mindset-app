@@ -144,7 +144,7 @@ describe('plans (owner’s plans brief)', () => {
     expect(PLAN_COPY.rules.map((r) => r.en)).toEqual([
       'Your ₹1,100 Clarity Session fee is fully adjusted if you join any plan within 7 days.',
       'EMI available on the 1-month, 3-month and 6-month plans.',
-      'All sessions are 1-on-1 with Dr. Kapil, online or in person in Vadodara.',
+      'All sessions are 1-on-1 with Dr. Kapil, online on Zoom.',
     ])
   })
 

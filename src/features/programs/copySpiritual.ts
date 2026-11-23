@@ -6,7 +6,7 @@ import type { ProgramCopy } from './copyTypes'
 
 const ONLINE = {
   q: { en: 'Is it online?', hi: 'क्या यह ऑनलाइन है?' },
-  a: { en: 'Yes, online or in person in Vadodara.', hi: 'हाँ, ऑनलाइन या वडोदरा में आमने-सामने।' },
+  a: { en: 'Yes, all sessions are online on Zoom.', hi: 'हाँ, सभी सेशन Zoom पर ऑनलाइन होते हैं।' },
 }
 
 export const COSMIC_FUSION: ProgramCopy = {

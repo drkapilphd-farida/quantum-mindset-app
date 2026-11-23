@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { LegalPageShell, legalStyles } from '@/features/legal/components/LegalPageShell'
 import { buildPageMetadata } from '@/lib/seo/metadata'
-import { programs, qsrGuarantee, waLink } from '@/config/site.config'
+import { programs, waLink } from '@/config/site.config'
 
 // New, dedicated Refund & Cancellation Policy (see the "Pre-Launch Audit
 // Fix Pass" task, Phase 3) — this page didn't exist before. The only
@@ -33,74 +33,63 @@ export default function RefundPolicyPage(): React.JSX.Element {
   return (
     <LegalPageShell title="Refund & Cancellation Policy" lastUpdated={LAST_UPDATED} brandName="Mind Ur Mind">
       <p className="text-muted-foreground leading-relaxed">
-        This policy explains how refunds and cancellations work across Mind Ur Mind&rsquo;s programs. It&rsquo;s
-        organized by program, since our {programs.sharpBrain.name} carries a specific results
-        guarantee that our other programs don&rsquo;t.
+        This policy explains how refunds and cancellations work across Mind Ur Mind&rsquo;s programs, organized
+        by program.
       </p>
 
       <section>
-        <h2 className={legalStyles.h2}>{programs.sharpBrain.name} — {qsrGuarantee.en.title}</h2>
-        <p className={legalStyles.p}>{qsrGuarantee.en.intro}</p>
-        <ol className={`${legalStyles.p} list-decimal space-y-1 pl-6`}>
-          {qsrGuarantee.en.conditions.map((condition) => (
-            <li key={condition}>{condition}</li>
-          ))}
-        </ol>
-        <p className={legalStyles.p}>{qsrGuarantee.en.retest}</p>
+        <h2 className={legalStyles.h2}>{programs.sharpBrain.name}</h2>
         <ul className={legalStyles.list}>
           <li>
-            <strong>Eligibility:</strong> you must have completed all 30 days, all 7 classes (live, or a recording Dr. Kapil approves) and both reading tests. Partial
-            completion, or stopping partway through, isn&rsquo;t covered by this guarantee — see &ldquo;Cancelling
-            before finishing&rdquo; below for that case instead.
+            <strong>Live online (₹4,999):</strong> join the first 2 live classes. If you are not satisfied, message us
+            on WhatsApp before the 3rd class and we refund your full fee.
           </li>
           <li>
-            <strong>What &ldquo;results&rdquo; means:</strong> your own effective reading speed and retention
-            (comprehension in the fair reading test), recorded by the app in your Day 1 and Day 30 reading tests. We
-            use this real, recorded data to evaluate every guarantee claim — not a subjective judgment call.
+            <strong>2-day online workshop (₹499) and offline workshop with EEG (₹8,999):</strong> full refund if you
+            cancel at least 3 days before the workshop starts. After that the fee isn&rsquo;t refundable, but you can
+            move once to a later date where one is available.
           </li>
           <li>
-            <strong>How to request it:</strong> message us on WhatsApp or email{' '}
-            <a href="mailto:info@mindurmind.org.in" className="text-foreground underline underline-offset-2">
-              info@mindurmind.org.in
-            </a>{' '}
-            within 7 days of completing Day 30, referencing the email or phone number you enrolled with. We&rsquo;ll
-            verify your checkpoint data and confirm the outcome within 3 business days.
-          </li>
-          <li>
-            <strong>Processing time:</strong> once approved, refunds are issued to your original payment method via
-            Razorpay within 5-10 business days.
+            <strong>Self-paced (₹2,999):</strong> refundable within 7 days of purchase if you haven&rsquo;t watched more
+            than 2 recorded classes.
           </li>
         </ul>
+      </section>
+
+      <section>
+        <h2 className={legalStyles.h2}>{programs.onlineRetreat.name}</h2>
         <p className={legalStyles.p}>
-          <strong>Cancelling before finishing:</strong> if you stop before completing all 30 days and 7 classes, the
-          results guarantee above doesn&rsquo;t apply. Message us — we handle these on a case-by-case basis and may
-          offer a partial refund or credit toward a future batch, depending on how much of the program you&rsquo;ve
-          used.
+          Full refund if you cancel before the first class begins. After the first class, refunds aren&rsquo;t
+          available — but you can move once to the next batch.
         </p>
       </section>
 
       <section>
-        <h2 className={legalStyles.h2}>Other programs (Retreats, 1-on-1 Coaching, Courses)</h2>
-        <p className={legalStyles.p}>
-          These programs don&rsquo;t carry the {programs.sharpBrain.name}&rsquo;s results guarantee, since they&rsquo;re not
-          structured around a measurable WPM/comprehension checkpoint the way Sharp Brain is.
-        </p>
+        <h2 className={legalStyles.h2}>Other programs</h2>
         <ul className={legalStyles.list}>
           <li>
-            <strong>Retreats (online and residential):</strong> cancel at least 7 days before the retreat&rsquo;s
-            start date for a full refund. Cancellations within 7 days of the start date aren&rsquo;t refundable, but
-            we&rsquo;ll offer to move your seat to a future batch where one is available.
+            <strong>{programs.residentialRetreat.name}:</strong> cancel at least 30 days before the start date for a
+            full refund. Within 30 days the fee isn&rsquo;t refundable, but you can move your place to a future retreat
+            where one is available.
+          </li>
+          <li>
+            <strong>Telepathy &amp; Intuition online workshop:</strong> full refund if you cancel before the first
+            evening; after that you can move once to the next month&rsquo;s batch.
           </li>
           <li>
             <strong>{programs.oneOnOneCoaching.name}:</strong> refundable in full if canceled before your first session. Once your
             first session has taken place, remaining unused sessions in a package may be refunded on a pro-rated
             basis at our discretion — message us to discuss your specific situation.
           </li>
-          <li>
-            <strong>Self-paced courses (e.g. the {programs.overthinkingReset.name}):</strong> refundable within 7 days of
-            purchase if you haven&rsquo;t completed more than 20% of the course content.
-          </li>
         </ul>
+        <p className={legalStyles.p}>
+          <strong>How to request a refund:</strong> message us on WhatsApp or email{' '}
+          <a href="mailto:info@mindurmind.org.in" className="text-foreground underline underline-offset-2">
+            info@mindurmind.org.in
+          </a>{' '}
+          with the email or phone number you paid with. Approved refunds go back to your original payment method via
+          Razorpay within 5–10 business days.
+        </p>
       </section>
 
       <section>

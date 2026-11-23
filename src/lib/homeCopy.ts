@@ -1,4 +1,4 @@
-import { brand, programs, qsrGuarantee, SHARP_BRAIN_PRICES, trainer } from '@/config/site.config'
+import { programs, trainer } from '@/config/site.config'
 import type { Lang } from '@/lib/i18n'
 
 // Copy for the problem-first homepage (site-rebuild Phase 4), EN + HI.
@@ -154,7 +154,7 @@ const en: HomeCopy = {
       },
       {
         question: 'Which program is right for me?',
-        answer: `Reading, focus and memory → Sharp Brain: Self-paced (₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}) or the Live batch (₹${SHARP_BRAIN_PRICES.liveInr.toLocaleString('en-IN')}). Stress, anxiety, mindset, performance or a spiritual practice → ${programs.oneOnOneCoaching.name}. Not sure? Take the free Reading & Memory Test or message us on WhatsApp.`,
+        answer: `Reading, focus and memory → Sharp Brain (from ₹499: 2-day online workshop ₹499, Self-paced ₹2,999, Live online ₹4,999, Offline workshop with EEG ₹8,999). Stress, overthinking and sleep → the 21-Day Online Retreat (early-bird ₹3,999). Something personal — anxiety, mindset, performance or a spiritual practice → ${programs.oneOnOneCoaching.name}, starting with a ₹1,100 Clarity Session. Not sure? Take a free test or message us on WhatsApp.`,
       },
       {
         question: 'Is this science-based or spiritual?',
@@ -171,11 +171,11 @@ const en: HomeCopy = {
       },
       {
         question: 'What about refunds?',
-        answer: `Each program’s terms are on our Refund & Cancellation Policy page. The Sharp Brain Live batch also carries a results guarantee: ${qsrGuarantee.en.statement}`,
+        answer: `Each program’s terms are on our Refund & Cancellation Policy page. Sharp Brain Live online: if you are not satisfied after the first 2 classes, you get a full refund. 21-Day Online Retreat: full refund if you cancel before the first class.`,
       },
       {
         question: 'How do I contact you?',
-        answer: `WhatsApp is fastest — tap “Talk to us”. You can also email info@mindurmind.org.in. ${brand.name} is based in ${brand.city}, Gujarat.`,
+        answer: `WhatsApp is fastest — tap “Talk to us”. You can also email info@mindurmind.org.in.`,
       },
     ],
   },
@@ -293,7 +293,7 @@ const hi: HomeCopy = {
       },
       {
         question: 'मेरे लिए कौन सा प्रोग्राम सही है?',
-        answer: `पढ़ना, ध्यान और याददाश्त → Sharp Brain: सेल्फ़-पेस्ड (₹${SHARP_BRAIN_PRICES.selfPacedInr.toLocaleString('en-IN')}) या लाइव बैच (₹${SHARP_BRAIN_PRICES.liveInr.toLocaleString('en-IN')})। तनाव, एंग्ज़ायटी, माइंडसेट, परफ़ॉर्मेंस या कोई आध्यात्मिक साधना → ${programs.oneOnOneCoaching.nameHi}। तय नहीं? मुफ़्त Reading & Memory Test दें या हमें WhatsApp पर संदेश भेजें।`,
+        answer: `पढ़ना, ध्यान और याददाश्त → Sharp Brain (₹499 से: 2 दिन ऑनलाइन वर्कशॉप ₹499, सेल्फ़-पेस्ड ₹2,999, लाइव ऑनलाइन ₹4,999, EEG के साथ ऑफ़लाइन वर्कशॉप ₹8,999)। तनाव, ओवरथिंकिंग और नींद → 21 दिन का ऑनलाइन रिट्रीट (अर्ली-बर्ड ₹3,999)। कुछ निजी — एंग्ज़ायटी, माइंडसेट, परफ़ॉर्मेंस या आध्यात्मिक साधना → ${programs.oneOnOneCoaching.nameHi}, शुरुआत ₹1,100 के क्लैरिटी सेशन से। पक्का नहीं? मुफ़्त टेस्ट दीजिए या WhatsApp पर मैसेज कीजिए।`,
       },
       {
         question: 'यह विज्ञान-आधारित है या आध्यात्मिक?',
@@ -310,11 +310,11 @@ const hi: HomeCopy = {
       },
       {
         question: 'रिफंड के बारे में?',
-        answer: `हर प्रोग्राम की शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर हैं। Sharp Brain लाइव बैच के साथ एक रिज़ल्ट गारंटी भी है: ${qsrGuarantee.hi.statement}`,
+        answer: `हर प्रोग्राम की शर्तें हमारी रिफंड व कैंसिलेशन नीति पेज पर हैं। Sharp Brain लाइव ऑनलाइन: पहली 2 क्लास के बाद संतुष्ट न हों तो पूरा पैसा वापस। 21 दिन का ऑनलाइन रिट्रीट: पहली क्लास से पहले रद्द करने पर पूरा पैसा वापस।`,
       },
       {
         question: 'आपसे संपर्क कैसे करें?',
-        answer: `WhatsApp सबसे तेज़ है — “हमसे बात करें” पर टैप करें। आप info@mindurmind.org.in पर ईमेल भी कर सकते हैं। ${brand.name} वडोदरा, गुजरात में स्थित है।`,
+        answer: `WhatsApp सबसे तेज़ है — “हमसे बात करें” पर टैप करें। आप info@mindurmind.org.in पर ईमेल भी कर सकते हैं।`,
       },
     ],
   },

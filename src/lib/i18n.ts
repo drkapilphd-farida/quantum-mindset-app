@@ -300,7 +300,7 @@ export const translations = {
       body: [
         "Mind Ur Mind was founded in 2014 by Dr. Kapil Dev Sharma, bringing together academic research and hands-on coaching into a single practice focused on how people read, think, and manage their own minds.",
         `What began as in-person workshops has grown into a full range of programs — Sharp Brain™ (focus, memory and smart reading), meditation retreats, one-on-one coaching, and the ${brand.appName} — while staying rooted in the same principle: real cognitive and personal change comes from structured, sustained practice, not quick fixes.`,
-        "Mind Ur Mind is a proprietorship led by Dr. Kapil Dev Sharma, based in Vadodara, Gujarat, and works with students, professionals, and lifelong learners across India.",
+        "Mind Ur Mind is a proprietorship led by Dr. Kapil Dev Sharma, and works with students, professionals, and lifelong learners across India.",
       ],
       guide: {
         eyebrow: "The Founder",
@@ -1565,7 +1565,7 @@ export const translations = {
       body: [
         "माइंड उर माइंड की स्थापना 2014 में डॉ. कपिल देव शर्मा ने की थी, जिन्होंने शैक्षणिक शोध और प्रत्यक्ष कोचिंग को एक ही प्रैक्टिस में जोड़ा — इस पर केंद्रित कि लोग कैसे पढ़ते हैं, सोचते हैं, और अपने मन को कैसे संभालते हैं।",
         `जो व्यक्तिगत वर्कशॉप्स के रूप में शुरू हुआ, वह अब प्रोग्राम्स की एक पूरी रेंज बन चुका है — Sharp Brain™ (फोकस, मेमोरी और स्मार्ट रीडिंग), मेडिटेशन रिट्रीट्स, वन-ऑन-वन कोचिंग, और ${brand.appName} — फिर भी एक ही सिद्धांत में जड़ें जमाए हुए: असली संज्ञानात्मक और व्यक्तिगत बदलाव संरचित, निरंतर अभ्यास से आता है, त्वरित उपायों से नहीं।`,
-        "माइंड उर माइंड डॉ. कपिल देव शर्मा के नेतृत्व में एक प्रोप्राइटरशिप है, जो वडोदरा, गुजरात में स्थित है, और पूरे भारत में विद्यार्थियों, पेशेवरों, और आजीवन सीखने वालों के साथ काम करती है।",
+        "माइंड उर माइंड डॉ. कपिल देव शर्मा के नेतृत्व में एक प्रोप्राइटरशिप है, जो पूरे भारत में विद्यार्थियों, पेशेवरों, और आजीवन सीखने वालों के साथ काम करती है।",
       ],
       guide: {
         eyebrow: "संस्थापक",

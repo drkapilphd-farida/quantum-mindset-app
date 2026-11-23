@@ -107,11 +107,17 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: '/telepathy-workshop', destination: '/telepathy', statusCode: 301 },
   { source: '/telepathy-workshop/en', destination: '/telepathy', statusCode: 301 },
   { source: '/telepathy-workshop/hi', destination: '/telepathy?lang=hi', statusCode: 301 },
-  { source: '/telepathy-workshop/online', destination: '/telepathy', statusCode: 301 },
+  { source: '/telepathy-workshop/online', destination: '/telepathy-online-workshop', statusCode: 301 },
   { source: '/telepathy-workshop/booked', destination: '/telepathy', statusCode: 301 },
   { source: '/telepathy-workshop/traders', destination: '/intuition-for-traders', statusCode: 301 },
-  { source: '/vadodara', destination: '/telepathy', statusCode: 301 },
-  { source: '/retreats', destination: '/personal-retreat', statusCode: 301 },
-  { source: '/retreats/online-11-day', destination: '/personal-retreat', statusCode: 301 },
-  { source: '/retreats/residential', destination: '/personal-retreat', statusCode: 301 },
+  { source: '/vadodara', destination: '/', statusCode: 301 },
+  // Offer ladder (owner, 23 Nov 2026): one name per program. The 21-Day
+  // Online Retreat replaces the Calm Mind batch and the Mind Reset course;
+  // Rishikesh is the residential retreat.
+  { source: '/retreats', destination: '/online-retreat', statusCode: 301 },
+  { source: '/retreats/online-11-day', destination: '/online-retreat', statusCode: 301 },
+  { source: '/retreats/residential', destination: '/rishikesh-retreat', statusCode: 301 },
+  { source: '/mentoring/overthinking-course', destination: '/online-retreat', statusCode: 301 },
+  { source: '/mentoring/mind-reset-system', destination: '/online-retreat', statusCode: 301 },
+  { source: '/calm-mind', destination: '/online-retreat', statusCode: 301 },
 ]

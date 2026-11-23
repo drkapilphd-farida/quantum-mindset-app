@@ -213,24 +213,28 @@
   --font-sans: var(--font-homepage-sans), var(--font-homepage-devanagari), var(--font-sans);
   --font-mono: var(--font-homepage-mono, var(--font-mono));
 
-  --color-void: #efeae2;
+  /* Brand palette (Nov 2026), taken from the Mind Ur Mind logo: royal blue →
+     teal → green on a cool, calm off-white. Deep navy text for trust,
+     teal for "included / calm" accents, and saffron ONLY for action buttons
+     so the eye learns "orange = next step". Every text colour meets WCAG AA
+     4.5:1 on void, panel and panel-2. Token names stay the same (gold =
+     action accent, teal = calm accent) so no component had to change. */
+  --color-void: #f3f6fb;
   --color-panel: #ffffff;
-  --color-panel-2: #f5f1ea;
-  --color-ink: #221f1d;
-  --color-ink-dim: #6e6660;
-  /* ink-faint and teal darkened (Phase 7 accessibility): every small
-     label now meets WCAG AA 4.5:1 on void, panel and panel-2. */
-  --color-ink-faint: #6b6259;
-  --color-gold: #b8862e;
-  --color-gold-dim: #8f6820;
-  --color-gold-soft: rgba(184, 134, 46, 0.12);
-  --color-teal: #94491c;
-  --color-teal-light: #a85a2a;
-  --color-teal-soft: rgba(168, 90, 42, 0.08);
-  --color-rose: #9c4a4a;
-  --color-rose-soft: rgba(156, 74, 74, 0.08);
-  --color-line: rgba(34, 31, 29, 0.1);
-  --color-line-strong: rgba(34, 31, 29, 0.18);
+  --color-panel-2: #eaf0f8;
+  --color-ink: #13203b;
+  --color-ink-dim: #4a5874;
+  --color-ink-faint: #56637d;
+  --color-gold: #f2a33a;
+  --color-gold-dim: #c97d12;
+  --color-gold-soft: rgba(242, 163, 58, 0.14);
+  --color-teal: #0b7a74;
+  --color-teal-light: #11a197;
+  --color-teal-soft: rgba(17, 161, 151, 0.1);
+  --color-rose: #a3414e;
+  --color-rose-soft: rgba(163, 65, 78, 0.08);
+  --color-line: rgba(19, 32, 59, 0.1);
+  --color-line-strong: rgba(19, 32, 59, 0.18);
 
   background-color: var(--color-void);
   color: var(--color-ink);
@@ -241,7 +245,7 @@
    gold (4.85:1+). Same layer as Tailwind's utilities, higher specificity. */
 @layer utilities {
   .warm-light .text-gold {
-    color: #835f16;
+    color: #8a5300;
   }
 
   /* /executive-brain-workshop: teal text on its white / slate-50 sections
@@ -254,14 +258,16 @@
 /* Phase 6B — a dark panel inside a .warm-light page (Sharp Brain live batch
    block): the site's own dark palette values from @theme above. */
 .warm-light .warm-dark {
-  --color-void: #0b0f17;
-  --color-panel: #121826;
-  --color-panel-2: #171f33;
-  --color-ink: #edeef3;
-  --color-ink-dim: #9ca3b8;
-  --color-ink-faint: #9ca3b8;
-  --color-gold: #d4af37;
-  --color-gold-soft: rgba(212, 175, 55, 0.1);
+  /* Deep brand navy (logo blue, darkened) for the highlighted offer panel. */
+  --color-void: #0a1630;
+  --color-panel: #0f1f42;
+  --color-panel-2: #16295a;
+  --color-ink: #f1f5fc;
+  --color-ink-dim: #b3c0db;
+  --color-ink-faint: #b3c0db;
+  --color-gold: #f6b24e;
+  --color-gold-soft: rgba(246, 178, 78, 0.12);
+  --color-teal: #4fd1c5;
   --color-line: rgba(237, 238, 243, 0.09);
   --color-line-strong: rgba(237, 238, 243, 0.2);
 
@@ -276,7 +282,7 @@
 }
 
 .warm-light ::selection {
-  background-color: rgba(184, 134, 46, 0.22);
+  background-color: rgba(43, 87, 232, 0.18);
   color: var(--color-ink);
 }
 

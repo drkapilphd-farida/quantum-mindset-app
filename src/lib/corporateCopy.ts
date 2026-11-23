@@ -97,7 +97,7 @@ const en: CorporateCopy = {
       {
         question: 'Who pays for the trainer’s travel?',
         answer:
-          'For in-person sessions outside Vadodara, the trainer’s travel and stay are paid by the organisation, in addition to the program fee. We will show this separately in the quote.',
+          'For in-person sessions, the trainer’s travel and stay are paid by the organisation, in addition to the program fee. We will show this separately in the quote.',
       },
       {
         question: 'What group size works?',
@@ -178,7 +178,7 @@ const hi: CorporateCopy = {
       { question: 'क्या हमें GST इनवॉइस मिल सकता है?', answer: 'हां। अपनी पूछताछ के साथ संस्था की बिलिंग और GST जानकारी भेजें, हम GST इनवॉइस जारी करेंगे।' },
       {
         question: 'ट्रेनर की यात्रा का खर्च कौन देता है?',
-        answer: 'वडोदरा से बाहर इन-पर्सन सेशन के लिए ट्रेनर की यात्रा और ठहरने का खर्च संस्था देती है, जो प्रोग्राम फीस के अलावा है। हम इसे कोटेशन में अलग से दिखाएंगे।',
+        answer: 'इन-पर्सन सेशन के लिए ट्रेनर की यात्रा और ठहरने का खर्च संस्था देती है, जो प्रोग्राम फीस के अलावा है। हम इसे कोटेशन में अलग से दिखाएंगे।',
       },
       { question: 'समूह कितना बड़ा हो सकता है?', answer: 'लगभग 10 लोगों से 100+ तक। फॉर्म में समूह का आकार बताएं, हम सही फॉर्मेट सुझाएंगे।' },
       {

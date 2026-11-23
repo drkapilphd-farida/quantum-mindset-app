@@ -1,6 +1,6 @@
-import { BedDouble, BookOpenCheck, CalendarCheck, Check, FileText, Heart, HeartPulse, LineChart, MessageCircle, MoonStar, Repeat, Video, Zap } from "lucide-react";
+import { Award, BedDouble, Check, Heart, HeartPulse, LineChart, MessageCircle, MoonStar, Repeat, Sun, Video, Zap } from "lucide-react";
 import Link from "next/link";
-import { calmMindBatch, PAGE_VIDEOS } from "@/config/site.config";
+import { calmBatchPriceInr, calmMindBatch, PAGE_VIDEOS } from "@/config/site.config";
 import { waLink } from "@/data/links";
 import { LanguageOverride } from "@/context/LanguageContext";
 import SiteNav from "@/components/site/SiteNav";
@@ -14,10 +14,12 @@ import { calmReviewVideos } from "../reviews";
 import { reviewFrameSrc } from "@/lib/video/reviewFrames";
 import { WhatsAppGlyph } from "@/features/programs/components/WhatsAppGlyph";
 import { formatBatchDate, formatClassDate, type BatchState, type Lang } from "../batch";
-import { CALM_COPY } from "../copy";
+import { CALM_COPY, CALM_REGULAR_LABEL } from "../copy";
+
+const inr = (n: number): string => `₹${n.toLocaleString("en-IN")}`;
 import { CalmReserveButton, CalmStickyBar, CalmViewContent } from "./CalmReserve";
 
-// /calm-mind-batch — 21-Day Calm Mind live online batch (owner's brief,
+// /calm-mind-batch — 21-Day Online Retreat (former Calm Mind batch) (owner's brief,
 // Nov 2026), in the site's cream/gold style. Sections in the brief's order.
 
 const say = (text: { en: string; hi: string }, lang: Lang): string => text[lang];
@@ -26,7 +28,7 @@ const WRAP = "mx-auto max-w-content";
 const H2 = "text-[26px] font-extrabold leading-tight sm:text-[34px]";
 
 const FAMILIAR_ICONS = [MoonStar, HeartPulse, Repeat, BedDouble];
-const GET_ICONS = [Video, CalendarCheck, MessageCircle, FileText, LineChart, BookOpenCheck];
+const GET_ICONS = [Sun, Video, MessageCircle, Repeat, LineChart, Award];
 
 function Disclaimer({ lang, className = "" }: { lang: Lang; className?: string }): React.JSX.Element {
   return (
@@ -50,6 +52,8 @@ export function CalmBatchPage({ lang, state, checkout }: { lang: Lang; state: Ba
   const start = formatBatchDate(b.startDate, lang);
   const batchLine = say(CALM_COPY.hero.batchLine(start, say(b.days, lang), say(b.time, lang)), lang);
   const ended = state.status === "ended";
+  const priceNow = calmBatchPriceInr(Date.now());
+  const earlyBird = priceNow < calmMindBatch.regularPrice;
   const seatsLine = state.showSeats && state.seatsLeft !== null ? say(CALM_COPY.hero.seatsLeft(state.seatsLeft), lang) : null;
   const reviews = calmReviewVideos().map((video) => ({ videoId: video.id, thumbnailSrc: reviewFrameSrc(video.id, video.thumbFrame), frameShape: video.type, title: `“${say(video.caption, lang)}”`, alt: say(video.caption, lang) }));
   const c = CALM_COPY;
@@ -62,7 +66,7 @@ export function CalmBatchPage({ lang, state, checkout }: { lang: Lang; state: Ba
     c.faq.links,
     { q: c.faq.after.q, a: { en: c.faq.after.a.en + (calmMindBatch.upgradeAdjust ? c.faq.after.adjust.en : ""), hi: c.faq.after.a.hi + (calmMindBatch.upgradeAdjust ? c.faq.after.adjust.hi : "") } },
   ];
-  const languageLink = lang === "hi" ? { label: "English", href: "/calm-mind-batch" } : { label: "हिंदी", href: "/calm-mind-batch?lang=hi" };
+  const languageLink = lang === "hi" ? { label: "English", href: "/online-retreat" } : { label: "हिंदी", href: "/online-retreat?lang=hi" };
 
   return (
     <LanguageOverride lang={lang}>
@@ -85,6 +89,7 @@ export function CalmBatchPage({ lang, state, checkout }: { lang: Lang; state: Ba
                 <p className="mt-4 text-[15.5px] font-semibold text-ink" data-calm-batch-line>
                   {ended ? say(c.ended, lang) : batchLine}
                 </p>
+                {!ended && <p className="mt-1 text-[15px] text-ink-dim" data-calm-morning>☀ {say(b.morning, lang)}</p>}
                 <div className="mt-6 flex flex-col items-start gap-2">
                   <CalmReserveButton state={state} checkout={checkout} lang={lang} />
                   {seatsLine !== null && <p className="text-[14px] font-semibold text-[#B45309]" data-calm-seats>{seatsLine}</p>}
@@ -203,7 +208,10 @@ export function CalmBatchPage({ lang, state, checkout }: { lang: Lang; state: Ba
           <section id="calm-price" className={`scroll-mt-20 ${SECTION}`} data-calm-price>
             <div className="mx-auto max-w-lg rounded-sm border-[3px] border-gold bg-panel p-6 text-center shadow-[0_18px_40px_-18px_rgba(20,32,56,0.35)] sm:p-8">
               <h2 className="text-[22px] font-extrabold leading-snug sm:text-[26px]">{say(c.price.title, lang)}</h2>
-              <p className="mt-4 text-[52px] font-extrabold leading-none tracking-tight">₹2,999</p>
+              <p className="mt-4 flex items-baseline justify-center gap-3" data-calm-price-now>
+                {earlyBird && <span className="text-[24px] font-bold text-ink-faint line-through">{CALM_REGULAR_LABEL}</span>}
+                <span className="text-[52px] font-extrabold leading-none tracking-tight">{inr(priceNow)}</span>
+              </p>
               <p className="mt-1.5 text-[14px] text-ink-dim">{say(c.price.sub, lang)}</p>
               <p className="mt-4 text-[15px] font-semibold">{ended ? say(c.ended, lang) : batchLine}</p>
               <p className="mt-1 text-[14px] text-ink-dim">

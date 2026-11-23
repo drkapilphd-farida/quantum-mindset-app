@@ -132,7 +132,7 @@ export default function TermsOfServicePage(): React.JSX.Element {
       <section>
         <h2 className={legalStyles.h2}>9. Governing law &amp; contact</h2>
         <p className={legalStyles.p}>
-          These Terms are governed by the laws of India, with courts in Vadodara, Gujarat having jurisdiction.
+          These Terms are governed by the laws of India, with courts in India having jurisdiction.
           Questions about these Terms can be sent to{' '}
           <a href="mailto:info@mindurmind.org.in" className="text-foreground underline underline-offset-2">
             info@mindurmind.org.in

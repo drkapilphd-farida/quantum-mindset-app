@@ -1,6 +1,6 @@
 import { calmMindBatch } from '@/config/site.config'
 
-// 21-Day Calm Mind batch — dates, seats and the calendar file (pure functions,
+// 21-Day Online Retreat (former Calm Mind batch) — dates, seats and the calendar file (pure functions,
 // tested). All times are IST (UTC+5:30); classes run 8:00–9:00 PM IST.
 
 export type Lang = 'en' | 'hi'
@@ -9,7 +9,7 @@ export type BatchState = { status: BatchStatus; seatsLeft: number | null; showSe
 
 const IST_OFFSET_MS = 330 * 60_000
 export const CLASS_START_IST = { hour: 20, minute: 0 }
-export const CLASS_MINUTES = 60
+export const CLASS_MINUTES = 75
 /** "Only X seats left" shows only when X is 10 or fewer (owner). */
 export const SHOW_SEATS_AT = 10
 
@@ -52,7 +52,7 @@ export function batchState(nowMs: number, paidCount: number | null, startDate: s
 const icsDate = (ms: number): string => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
 const icsText = (text: string): string => text.replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')
 
-/** An .ics calendar with the 6 classes (8:00–9:00 PM IST). The Zoom link is added only in the email copy. */
+/** An .ics calendar with the 7 classes (8:00–9:15 PM IST). The Zoom link is added only in the email copy. */
 export function buildBatchIcs(options: { zoomLink?: string | undefined; nowMs?: number } = {}): string {
   const stamp = icsDate(options.nowMs ?? Date.now())
   const description = options.zoomLink !== undefined && options.zoomLink !== '' ? `Zoom: ${options.zoomLink}` : 'Your Zoom link is in your confirmation email and on WhatsApp.'
@@ -64,13 +64,13 @@ export function buildBatchIcs(options: { zoomLink?: string | undefined; nowMs?: 
       `DTSTAMP:${stamp}`,
       `DTSTART:${icsDate(start)}`,
       `DTEND:${icsDate(start + CLASS_MINUTES * 60_000)}`,
-      `SUMMARY:${icsText(`21-Day Calm Mind — Live class ${index + 1} of 6 (Dr. Kapil)`)}`,
+      `SUMMARY:${icsText(`21-Day Online Retreat — Live class ${index + 1} of 7 (Dr. Kapil)`)}`,
       `DESCRIPTION:${icsText(description)}`,
       ...(options.zoomLink !== undefined && options.zoomLink !== '' ? [`LOCATION:${icsText(options.zoomLink)}`] : []),
       'BEGIN:VALARM',
       'TRIGGER:-PT1H',
       'ACTION:DISPLAY',
-      `DESCRIPTION:${icsText('Calm Mind class in 1 hour')}`,
+      `DESCRIPTION:${icsText('Online Retreat class in 1 hour')}`,
       'END:VALARM',
       'END:VEVENT',
     ].join('\r\n')
