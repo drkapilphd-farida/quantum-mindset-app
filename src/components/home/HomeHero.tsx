@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { PAGE_VIDEOS } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
-import { NeuralOrb } from "@/components/fx/NeuralOrb";
+import { Brain3D } from "@/components/fx/Brain3D";
 import { Tilt } from "@/components/fx/Tilt";
 import { useLanguage } from "@/context/LanguageContext";
 import { homeV2, say } from "@/lib/homeV2Copy";
@@ -21,19 +21,23 @@ export default function HomeHero(): React.JSX.Element {
 
   return (
     <section id="top" className="warm-dark hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
-      <NeuralOrb className="-left-48 -top-28 opacity-50 lg:left-[28%] lg:top-[-150px] lg:opacity-70" />
       {/* One video only (owner: it showed twice): under the headline on phones,
           beside the text on desktop — placed by the grid, not by a second copy. */}
-      <div className="relative mx-auto grid max-w-content grid-cols-1 gap-y-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-x-14 lg:gap-y-0">
+      <div className="relative mx-auto grid max-w-content grid-cols-1 gap-y-6 lg:grid-cols-[minmax(0,1fr)_400px_250px] lg:gap-x-8 lg:gap-y-0">
         <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
           <p className="font-mono text-[12.5px] uppercase tracking-[0.08em] text-[#7ee0d4]">{say(c.strip, lang)}</p>
-          <h1 className="mt-4 text-balance text-[34px] font-extrabold leading-[1.1] tracking-tight sm:text-[50px] lg:text-[58px]">{say(c.h1, lang)}</h1>
+          <h1 className="mt-4 text-balance text-[34px] font-extrabold leading-[1.1] tracking-tight sm:text-[50px] lg:text-[50px]">{say(c.h1, lang)}</h1>
         </div>
-        <PageVideo video={PAGE_VIDEOS.intro} lang={lang} tone="dark" priority caption={HERO_VIDEO_CAPTION} className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center" />
+        {/* Interactive 3D brain (owner, 23 Nov 2026): drag or swipe to turn it, tap a region. */}
+        <div className="relative order-none h-[270px] sm:h-[380px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-[470px] lg:self-center" data-home-brain>
+          <Brain3D lang={lang} className="inset-0 h-full w-full" />
+          <p className="pointer-events-none absolute inset-x-0 bottom-0 text-center font-mono text-[11px] uppercase tracking-[0.12em] text-white/55">{lang === "hi" ? "घुमाइए · टैप कीजिए" : "Drag to turn · tap a region"}</p>
+        </div>
+        <PageVideo video={PAGE_VIDEOS.intro} lang={lang} tone="dark" priority caption={HERO_VIDEO_CAPTION} className="order-last lg:order-none lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:!max-w-[250px] lg:self-center" />
         <div className="lg:col-start-1 lg:row-start-2 lg:self-start">
           <p className="max-w-xl text-[16.5px] leading-relaxed text-ink-dim sm:text-[18px] lg:mt-5">{say(c.sub, lang)}</p>
           {/* Owner (23 Nov 2026): two doors — Sharp Brain and the 21-Day Online Retreat. */}
-          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2" data-home-doors>
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2" data-home-doors>
             {c.doors.map((door, i) => (
               <Tilt key={door.id} className="rounded-xl">
               <Link
