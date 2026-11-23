@@ -22,8 +22,6 @@ export function buildOrganizationSchema(): string {
     sameAs: [contact.youtube.url],
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Vadodara',
-      addressRegion: 'Gujarat',
       addressCountry: 'IN',
     },
   }

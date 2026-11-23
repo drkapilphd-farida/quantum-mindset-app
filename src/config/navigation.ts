@@ -21,10 +21,6 @@ export const SCHOOLS_HREF = '/schools'
 export const CONTACT_EMAIL = contact.email
 export const TALK_TO_US_HREF = WHATSAPP_GENERAL_INQUIRY_LINK
 
-function n(id: keyof typeof programs, lang: Lang): string {
-  return lang === 'hi' ? programs[id].nameHi : programs[id].name
-}
-
 /** Programs dropdown, grouped by pillar. */
 export function programGroups(lang: Lang): NavGroup[] {
   const hi = lang === 'hi'
@@ -39,15 +35,15 @@ export function programGroups(lang: Lang): NavGroup[] {
     {
       heading: hi ? 'शांत मन' : 'Calm Mind',
       links: [
-        { label: n('overthinkingReset', lang), href: programs.overthinkingReset.url },
+        { label: hi ? '21 दिन का ऑनलाइन रिट्रीट' : '21-Day Online Retreat', href: programs.onlineRetreat.url },
         { label: hi ? 'पर्सनल सेशन (1-on-1)' : 'Personal Sessions (1-on-1)', href: programs.oneOnOneCoaching.url },
       ],
     },
     {
       heading: hi ? 'मेडिटेशन' : 'Meditation',
       links: [
-        { label: hi ? 'ऑनलाइन रिट्रीट' : 'Online Retreat', href: programs.onlineRetreat.url },
-        { label: hi ? 'रेजिडेंशियल रिट्रीट्स' : 'Residential Retreats', href: programs.residentialRetreat.url },
+        { label: hi ? 'टेलीपैथी और इनट्यूशन वर्कशॉप' : 'Telepathy & Intuition Workshop', href: '/telepathy-online-workshop' },
+        { label: hi ? 'ऋषिकेश रिट्रीट' : 'Rishikesh Retreat', href: programs.residentialRetreat.url },
       ],
     },
   ]
@@ -103,15 +99,15 @@ function schoolsUrl(lang: Lang): string {
   return lang === 'hi' ? `${SCHOOLS_HREF}?lang=hi` : SCHOOLS_HREF
 }
 
-/** Main nav: Sharp Brain · Personal Sessions · Reviews · For Schools · Become a Partner · Contact. */
+/** Main nav (owner's offer ladder, Nov 2026): the three main programs first, then trust and organisations. */
 export function siteNavLinks(lang: Lang): NavLink[] {
   const hi = lang === 'hi'
   return [
     { label: 'Sharp Brain', href: sharpBrainUrl(lang) },
+    { label: hi ? 'ऑनलाइन रिट्रीट' : 'Online Retreat', href: hi ? `${programs.onlineRetreat.url}?lang=hi` : programs.onlineRetreat.url },
     { label: hi ? 'पर्सनल सेशन' : 'Personal Sessions', href: programs.oneOnOneCoaching.url },
     { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
-    { label: hi ? 'स्कूलों के लिए' : 'For Schools', href: schoolsUrl(lang) },
-    { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
+    { label: hi ? 'संस्थाओं के लिए' : 'For Organisations', href: ORGANISATIONS_HREF },
     { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
   ]
 }
@@ -129,13 +125,11 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
       heading: hi ? 'प्रोग्राम' : null,
       links: [
         { label: 'Sharp Brain', href: sharpBrainUrl(lang) },
+        { label: hi ? '21 दिन का ऑनलाइन रिट्रीट' : '21-Day Online Retreat', href: programs.onlineRetreat.url },
         { label: hi ? 'पर्सनल सेशन' : 'Personal Sessions', href: programs.oneOnOneCoaching.url },
-        // Owner (Calm Mind brief): under Personal Sessions; not in the top navigation.
-        { label: hi ? '21 दिन का शांत मन बैच' : '21-Day Calm Mind Batch', href: '/calm-mind-batch' },
-        { label: hi ? '21 दिन ओवरथिंकिंग' : '21-Day Overthinking', href: programs.overthinkingReset.url },
-        // Owner (conversion brief, Nov 2026): the old retreats out; Personal Retreat and Clarity Session in.
-        { label: hi ? 'पर्सनल रिट्रीट' : 'Personal Retreat', href: '/personal-retreat' },
         { label: hi ? 'क्लैरिटी सेशन' : 'Clarity Session', href: '/clarity-session' },
+        { label: hi ? 'टेलीपैथी वर्कशॉप' : 'Telepathy Workshop', href: '/telepathy-online-workshop' },
+        { label: hi ? 'ऋषिकेश रिट्रीट' : 'Rishikesh Retreat', href: programs.residentialRetreat.url },
       ],
     },
     {
@@ -144,6 +138,7 @@ export function footerColumns(lang: Lang): { heading: string | null; links: NavL
         { label: hi ? 'रिव्यू' : 'Reviews', href: '/reviews' },
         { label: hi ? 'गैलरी' : 'Gallery', href: '/gallery' },
         { label: hi ? 'मेरी कहानी' : 'My story', href: '/about' },
+        { label: hi ? 'संस्थाओं के लिए' : 'For Organisations', href: ORGANISATIONS_HREF },
         { label: hi ? 'स्कूलों के लिए' : 'For Schools', href: schoolsUrl(lang) },
         { label: hi ? 'पार्टनर बनिए' : 'Become a Partner', href: programs.franchise.url },
         { label: hi ? 'संपर्क' : 'Contact', href: '/contact' },
@@ -157,7 +152,7 @@ export function footerAddress(lang: Lang): { heading: string | null; address: st
   const hi = lang === 'hi'
   return {
     heading: hi ? 'पता' : null,
-    address: hi ? 'Gitanjali Duplex, Novino–Tarsali Road, वडोदरा, गुजरात' : contact.address.en,
+    address: hi ? contact.address.hi : contact.address.en,
     whatsappSuffix: hi ? '(वॉट्सऐप)' : '(WhatsApp)',
     googleReviews: hi ? 'Google पर रिव्यू' : 'Reviews on Google',
   }

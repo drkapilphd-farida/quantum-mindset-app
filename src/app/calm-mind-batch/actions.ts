@@ -2,7 +2,7 @@
 
 import { cookies, headers } from 'next/headers'
 import { z } from 'zod'
-import { calmMindBatch } from '@/config/site.config'
+import { calmBatchPriceInr, calmMindBatch } from '@/config/site.config'
 import { normalizeIndianMobile } from '@/lib/phone/indianMobile'
 import { createOrder, isValidPaymentSignature } from '@/lib/razorpay/ordersApi'
 import { sendMetaCapiEvent } from '@/lib/analytics/metaCapi'
@@ -40,7 +40,7 @@ export async function startCalmCheckout(input: unknown): Promise<StartCalmChecko
   const keyId = process.env.RAZORPAY_KEY_ID ?? ''
   const notes: Record<string, string> = { product: 'calm-mind-batch', batch: calmMindBatch.nextBatch.startDate, name: parsed.data.name, email: parsed.data.email, phone }
   for (const [key, value] of Object.entries(parsed.data.utm ?? {})) if (key.startsWith('utm_') && value !== '') notes[key] = value
-  const order = await createOrder({ amountInr: calmMindBatch.price, receipt: `calm-${Date.now()}`, notes })
+  const order = await createOrder({ amountInr: calmBatchPriceInr(Date.now()), receipt: `calm-${Date.now()}`, notes })
   if (!order.ok || keyId === '') {
     logger.warn('[calm-batch] could not create the Razorpay order')
     return { ok: false, reason: 'error' }
@@ -79,7 +79,7 @@ export async function confirmCalmPayment(input: unknown): Promise<{ ok: true; hr
     eventName: 'Purchase',
     eventId: paymentId,
     eventSourceUrl: new URL('/calm-mind-batch/joined', url).toString(),
-    customData: { value: calmMindBatch.price, currency: 'INR', content_name: 'Calm Mind Batch' },
+    customData: { value: calmBatchPriceInr(Date.now()), currency: 'INR', content_name: 'Calm Mind Batch' },
     phone,
     ...(ip !== undefined && ip !== '' ? { clientIp: ip } : {}),
     ...(userAgent !== undefined ? { userAgent } : {}),

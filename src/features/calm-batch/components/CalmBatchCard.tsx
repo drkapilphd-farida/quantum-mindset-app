@@ -22,7 +22,7 @@ export function CalmBatchCard({ lang: pageLang, className = "" }: { lang?: Lang;
   useEffect(() => setEnded(batchState(Date.now(), null).status === "ended"), []);
   const c = CALM_COPY.card;
   const start = formatBatchDate(calmMindBatch.nextBatch.startDate, lang);
-  const href = lang === "hi" ? "/calm-mind-batch?lang=hi" : "/calm-mind-batch";
+  const href = lang === "hi" ? "/online-retreat?lang=hi" : "/online-retreat";
   return (
     <div className={`flex flex-col gap-4 rounded-[14px] border-2 border-[#F2A93B] bg-[#FFF8EC] p-5 text-[#0E1B2C] sm:flex-row sm:items-center sm:justify-between sm:p-6 ${className}`} data-calm-card>
       <div className="min-w-0">

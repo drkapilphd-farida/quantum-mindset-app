@@ -25,10 +25,10 @@ import {
   SharpBrainProof,
   SharpBrainStickyBar,
   SharpBrainTrainer,
-  SharpBrainWhy,
 } from '@/components/sharp-brain/SharpBrainSections'
 import Footer from '@/components/Footer'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
+import { SkillsPlayground } from '@/components/sharp-brain/SkillsPlayground'
 
 const description =
   'A 30-day brain-skills program for students, exam aspirants and working professionals: 7 live classes with Dr. Kapil Dev Sharma + 10–15 minutes of daily app practice, with your progress measured from Day 1 to Day 30.'
@@ -76,7 +76,7 @@ export default async function SharpBrainPage({ searchParams }: Props): Promise<R
           <main>
             <SharpBrainOffersHero />
             <SharpBrainProblems />
-            <SharpBrainWhy />
+            <SkillsPlayground />
             <SharpBrainApp />
             <SharpBrainClasses />
             <SharpBrainCompare />

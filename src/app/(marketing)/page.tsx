@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     'competitive exam study techniques',
     'reading and memory test India',
     'memory test India',
-    'sharp brain program Vadodara',
+    'sharp brain program online',
     'Dr. Kapil Dev Sharma',
-    'brain and mind coach Vadodara',
+    '21 day online meditation retreat',
   ],
 }
 

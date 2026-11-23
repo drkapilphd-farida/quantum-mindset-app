@@ -44,10 +44,11 @@ describe('Results Guarantee wording (approved 8 Oct 2026)', () => {
     expect(qsrGuarantee.en.title).toBe('Results Guarantee')
   })
 
-  it('the live-class list uses the new class names and the recording rule', () => {
-    expect(sharpBrainCopy.en.classes.items.map((i) => i.title)).toEqual(['Foundation', 'Eye & Focus Training', 'Inner Voice Control', 'Memory Systems', 'Visualisation & Imagination', 'Study & Work Application', 'Day 30 Review & Your Next Plan'])
-    expect(sharpBrainCopy.en.classes.note).toMatch(/Classplus/)
-    expect(sharpBrainCopy.hi.classes.note).toMatch(/Classplus/)
+  it('the live-class journey uses short class names, the Mon & Wed 8 PM time and the recording rule', () => {
+    expect(sharpBrainCopy.en.classes.items.map((i) => i.title)).toEqual(['Start', 'Eyes & Focus', 'Inner Voice', 'Memory Tricks', 'Visualise', 'Use It', 'Day 30 Result'])
+    expect(sharpBrainCopy.hi.classes.items).toHaveLength(7)
+    expect(sharpBrainCopy.en.classes.note).toMatch(/Mon & Wed, 8 PM.*recording/)
+    expect(sharpBrainCopy.hi.classes.note).toMatch(/सोम और बुध.*रिकॉर्डिंग/)
     expect(JSON.stringify(sharpBrainCopy)).not.toMatch(/not recordings|रिकॉर्डिंग नहीं/)
   })
 })

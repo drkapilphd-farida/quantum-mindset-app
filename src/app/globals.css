@@ -213,24 +213,28 @@
   --font-sans: var(--font-homepage-sans), var(--font-homepage-devanagari), var(--font-sans);
   --font-mono: var(--font-homepage-mono, var(--font-mono));
 
-  --color-void: #efeae2;
+  /* Brand palette (Nov 2026), taken from the Mind Ur Mind logo: royal blue →
+     teal → green on a cool, calm off-white. Deep navy text for trust,
+     teal for "included / calm" accents, and saffron ONLY for action buttons
+     so the eye learns "orange = next step". Every text colour meets WCAG AA
+     4.5:1 on void, panel and panel-2. Token names stay the same (gold =
+     action accent, teal = calm accent) so no component had to change. */
+  --color-void: #f3f6fb;
   --color-panel: #ffffff;
-  --color-panel-2: #f5f1ea;
-  --color-ink: #221f1d;
-  --color-ink-dim: #6e6660;
-  /* ink-faint and teal darkened (Phase 7 accessibility): every small
-     label now meets WCAG AA 4.5:1 on void, panel and panel-2. */
-  --color-ink-faint: #6b6259;
-  --color-gold: #b8862e;
-  --color-gold-dim: #8f6820;
-  --color-gold-soft: rgba(184, 134, 46, 0.12);
-  --color-teal: #94491c;
-  --color-teal-light: #a85a2a;
-  --color-teal-soft: rgba(168, 90, 42, 0.08);
-  --color-rose: #9c4a4a;
-  --color-rose-soft: rgba(156, 74, 74, 0.08);
-  --color-line: rgba(34, 31, 29, 0.1);
-  --color-line-strong: rgba(34, 31, 29, 0.18);
+  --color-panel-2: #eaf0f8;
+  --color-ink: #13203b;
+  --color-ink-dim: #4a5874;
+  --color-ink-faint: #56637d;
+  --color-gold: #f2a33a;
+  --color-gold-dim: #c97d12;
+  --color-gold-soft: rgba(242, 163, 58, 0.14);
+  --color-teal: #0b7a74;
+  --color-teal-light: #11a197;
+  --color-teal-soft: rgba(17, 161, 151, 0.1);
+  --color-rose: #a3414e;
+  --color-rose-soft: rgba(163, 65, 78, 0.08);
+  --color-line: rgba(19, 32, 59, 0.1);
+  --color-line-strong: rgba(19, 32, 59, 0.18);
 
   background-color: var(--color-void);
   color: var(--color-ink);
@@ -241,7 +245,7 @@
    gold (4.85:1+). Same layer as Tailwind's utilities, higher specificity. */
 @layer utilities {
   .warm-light .text-gold {
-    color: #835f16;
+    color: #8a5300;
   }
 
   /* /executive-brain-workshop: teal text on its white / slate-50 sections
@@ -254,14 +258,16 @@
 /* Phase 6B — a dark panel inside a .warm-light page (Sharp Brain live batch
    block): the site's own dark palette values from @theme above. */
 .warm-light .warm-dark {
-  --color-void: #0b0f17;
-  --color-panel: #121826;
-  --color-panel-2: #171f33;
-  --color-ink: #edeef3;
-  --color-ink-dim: #9ca3b8;
-  --color-ink-faint: #9ca3b8;
-  --color-gold: #d4af37;
-  --color-gold-soft: rgba(212, 175, 55, 0.1);
+  /* Deep brand navy (logo blue, darkened) for the highlighted offer panel. */
+  --color-void: #0a1630;
+  --color-panel: #0f1f42;
+  --color-panel-2: #16295a;
+  --color-ink: #f1f5fc;
+  --color-ink-dim: #b3c0db;
+  --color-ink-faint: #b3c0db;
+  --color-gold: #f6b24e;
+  --color-gold-soft: rgba(246, 178, 78, 0.12);
+  --color-teal: #4fd1c5;
   --color-line: rgba(237, 238, 243, 0.09);
   --color-line-strong: rgba(237, 238, 243, 0.2);
 
@@ -275,8 +281,110 @@
   }
 }
 
+/* Vivid brand hero (owner, 23 Nov 2026: "colours feeke hai"): logo blue →
+   teal glow on deep navy. Use together with .warm-dark for light text. */
+.warm-light .hero-vivid {
+  background:
+    radial-gradient(55% 75% at 88% 8%, rgba(17, 161, 151, 0.5), transparent 62%),
+    radial-gradient(50% 70% at 0% 100%, rgba(43, 87, 232, 0.6), transparent 62%),
+    radial-gradient(35% 45% at 45% 55%, rgba(124, 58, 237, 0.18), transparent 70%),
+    linear-gradient(135deg, #071230 0%, #0d2a66 52%, #0a4f5c 100%);
+}
+
+/* 3D tilt cards (components/fx/Tilt.tsx). */
+.fx-tilt {
+  position: relative;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.18s ease-out, box-shadow 0.25s ease-out;
+  will-change: transform;
+}
+.fx-tilt:hover {
+  box-shadow: 0 28px 50px -24px rgba(13, 42, 102, 0.45);
+}
+.fx-tilt-glare {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: var(--glare, 0);
+  transition: opacity 0.25s ease-out;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.35), transparent 55%);
+  mix-blend-mode: soft-light;
+}
+
+/* Turning 3D brain orb (components/fx/NeuralOrb.tsx). */
+.fx-orb {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  perspective: 900px;
+}
+.fx-orb-glow {
+  position: absolute;
+  inset: 18%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(17, 161, 151, 0.45), rgba(43, 87, 232, 0.2) 55%, transparent 72%);
+  filter: blur(18px);
+  animation: fx-pulse 6s ease-in-out infinite;
+}
+.fx-orb-ring {
+  position: absolute;
+  inset: 8%;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(126, 224, 212, 0.35);
+  box-shadow: 0 0 24px rgba(126, 224, 212, 0.15) inset;
+  transform-style: preserve-3d;
+}
+.fx-orb-ring-1 { animation: fx-spin-a 18s linear infinite; }
+.fx-orb-ring-2 { inset: 14%; border-color: rgba(169, 188, 255, 0.35); animation: fx-spin-b 24s linear infinite; }
+.fx-orb-ring-3 { inset: 20%; border-color: rgba(246, 178, 78, 0.3); animation: fx-spin-c 30s linear infinite; }
+.fx-orb-net {
+  position: absolute;
+  inset: 22%;
+  animation: fx-float 7s ease-in-out infinite;
+}
+.fx-orb-node { animation: fx-blink 2.4s ease-in-out infinite; }
+@keyframes fx-spin-a { from { transform: rotateX(68deg) rotateZ(0deg); } to { transform: rotateX(68deg) rotateZ(360deg); } }
+@keyframes fx-spin-b { from { transform: rotateY(62deg) rotateZ(0deg); } to { transform: rotateY(62deg) rotateZ(-360deg); } }
+@keyframes fx-spin-c { from { transform: rotateX(40deg) rotateY(40deg) rotateZ(0deg); } to { transform: rotateX(40deg) rotateY(40deg) rotateZ(360deg); } }
+@keyframes fx-float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(4deg); } }
+@keyframes fx-pulse { 0%, 100% { opacity: 0.75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes fx-blink { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+/* Scroll reveal (components/fx/Reveal.tsx). */
+.fx-reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+.fx-reveal.fx-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-orb *, .fx-orb-node { animation: none !important; }
+  .fx-tilt { transform: none !important; }
+  .fx-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Section bands — soft brand tints instead of flat white/grey. */
+.warm-light .band-blue {
+  background: linear-gradient(180deg, #eef3ff 0%, #f5f8ff 100%);
+}
+.warm-light .band-mint {
+  background: linear-gradient(180deg, #e8f8f4 0%, #f3fbf9 100%);
+}
+
+/* Saffron call-to-action buttons get a warm gradient and a soft glow. */
+@layer utilities {
+  .warm-light a.bg-gold,
+  .warm-light button.bg-gold {
+    background-image: linear-gradient(135deg, #ffbb4d 0%, #f28c1c 100%);
+    box-shadow: 0 10px 22px -12px rgba(242, 140, 28, 0.85);
+  }
+  .warm-light a.bg-gold:hover,
+  .warm-light button.bg-gold:hover {
+    filter: brightness(1.05);
+  }
+}
+
 .warm-light ::selection {
-  background-color: rgba(184, 134, 46, 0.22);
+  background-color: rgba(43, 87, 232, 0.18);
   color: var(--color-ink);
 }
 

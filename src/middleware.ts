@@ -104,6 +104,12 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     else target.searchParams.delete('lang')
     return NextResponse.redirect(target, 308)
   }
+  // 21-Day Online Retreat (Nov 2026): its public address is /online-retreat,
+  // served from the /calm-mind-batch page and its pre-built copies.
+  if (pathname === '/online-retreat') {
+    const retreatPath = prebuiltRewritePath('/calm-mind-batch', request.nextUrl.searchParams.get('lang')) ?? '/calm-mind-batch'
+    return NextResponse.rewrite(new URL(`${retreatPath}${request.nextUrl.search}`, request.url))
+  }
   const prebuiltPath = prebuiltRewritePath(pathname, request.nextUrl.searchParams.get('lang'))
   if (prebuiltPath !== null) {
     return NextResponse.rewrite(new URL(`${prebuiltPath}${request.nextUrl.search}`, request.url))

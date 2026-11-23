@@ -73,7 +73,7 @@ export function BookedPage({ renderedAt }: { renderedAt: number }): React.JSX.El
                     key={batch.id}
                     className={`tw-card flex min-h-[64px] cursor-pointer items-center gap-3 px-4 py-3 transition-colors ${selected ? '!border-gold bg-gold-soft' : 'hover:!border-gold/60'}`}
                   >
-                    <input type="radio" name="batch" value={batch.id} checked={selected} onChange={() => setBatchId(batch.id)} className="size-5 flex-none accent-[#b8862e]" />
+                    <input type="radio" name="batch" value={batch.id} checked={selected} onChange={() => setBatchId(batch.id)} className="size-5 flex-none accent-[#f2a33a]" />
                     <span>
                       <span className="block text-[16.5px] font-bold text-ink">{pick(city.city, lang)}</span>
                       <span className="block text-[14px] text-ink-dim">{batchDatesText(batch.id, lang)}</span>

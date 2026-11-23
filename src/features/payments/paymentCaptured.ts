@@ -50,7 +50,7 @@ export async function handlePaymentCaptured(json: unknown, getOrderNotes: (order
   const phone = normalizeIndianMobile(notes.phone ?? p.contact ?? '') ?? (notes.phone ?? p.contact ?? '')
 
   if (product === CALM_PRODUCT) {
-    if (p.amount !== calmMindBatch.price * 100 || p.currency !== 'INR') {
+    if (![calmMindBatch.earlyBirdPrice, calmMindBatch.regularPrice].some((inr) => p.amount === inr * 100) || p.currency !== 'INR') {
       logger.warn('[payment-captured] Calm Mind amount mismatch', { amount: p.amount })
       return 'amount-mismatch'
     }

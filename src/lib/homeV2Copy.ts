@@ -1,71 +1,114 @@
-import { CLARITY_SESSION, EXPERIENCE_LINE, SHARP_BRAIN_PRICES } from '@/config/site.config'
+import { CLARITY_SESSION, EXPERIENCE_LINE, calmMindBatch, programs } from '@/config/site.config'
 
 // Homepage wording for `/` (English) and `/hi` (Hindi).
-// Nov 2026 (owner): the business focus is (1) Sharp Brain with two offers —
-// Self-paced and Live batch — and (2) 1-on-1 Personal Sessions. The
-// telepathy workshop is on hold and is not on the homepage. Lines reuse the
-// approved Sharp Brain (Phase 6B) and Personal Sessions wording.
+// Owner's offer ladder (23 Nov 2026): two doors in the hero — Sharp Brain
+// (students & professionals) and the 21-Day Online Retreat (stress &
+// overthinking) — then the 3 main programs (Sharp Brain, Online Retreat,
+// Personal Sessions), then a "more ways" strip (Telepathy workshop,
+// Rishikesh retreat, organisations). Prices come from site.config.ts.
 
 type Bi = { hi: string; en: string }
 
 const inr = (n: number): string => `₹${n.toLocaleString('en-IN')}`
-const selfPacedPrice = inr(SHARP_BRAIN_PRICES.selfPacedInr)
-const livePrice = inr(SHARP_BRAIN_PRICES.liveInr)
+const sbPrice = (i: number): string => inr(programs.sharpBrain.prices[i]?.amountInr ?? 0)
+const fromPrice = sbPrice(0)
 const clarityPrice = inr(CLARITY_SESSION.priceInr)
+const retreatEarly = inr(calmMindBatch.earlyBirdPrice)
+const retreatRegular = inr(calmMindBatch.regularPrice)
+const rishikeshPrice = inr(programs.residentialRetreat.prices[0]?.amountInr ?? 0)
 
 export const homeV2 = {
   meta: {
     title: {
-      hi: 'Sharp Brain और डॉ. कपिल के साथ पर्सनल सेशन | मन उर मन',
-      en: 'Sharp Brain & Personal Sessions with Dr. Kapil Dev Sharma | Mind Ur Mind',
+      hi: 'Sharp Brain, 21 दिन का ऑनलाइन रिट्रीट और पर्सनल सेशन — डॉ. कपिल देव शर्मा | मन उर मन',
+      en: 'Sharp Brain, 21-Day Online Retreat & Personal Sessions — Dr. Kapil Dev Sharma | Mind Ur Mind',
     },
     description: {
-      hi: `Sharp Brain — पढ़ने की रफ़्तार, ध्यान और याददाश्त, 30 दिन में, नाप कर (सेल्फ़-पेस्ड ${selfPacedPrice} · लाइव बैच ${livePrice})। और डॉ. कपिल देव शर्मा के साथ 1-on-1 पर्सनल सेशन।`,
-      en: `Sharp Brain — reading speed, focus and memory in 30 days, measured (Self-paced ${selfPacedPrice} · Live batch ${livePrice}). And 1-on-1 Personal Sessions with Dr. Kapil Dev Sharma.`,
+      hi: `Sharp Brain — फ़ोकस, याददाश्त और स्मार्ट रीडिंग (${fromPrice} से)। 21 दिन का ऑनलाइन रिट्रीट — शांत मन, बेहतर नींद (अर्ली-बर्ड ${retreatEarly})। डॉ. कपिल देव शर्मा के साथ 1-on-1 पर्सनल सेशन (क्लैरिटी सेशन ${clarityPrice})।`,
+      en: `Sharp Brain — focus, memory and smart reading (from ${fromPrice}). 21-Day Online Retreat — a calmer mind and better sleep (early-bird ${retreatEarly}). 1-on-1 Personal Sessions with Dr. Kapil Dev Sharma (Clarity Session ${clarityPrice}).`,
     },
   },
   hero: {
     strip: { hi: `डॉ. कपिल देव शर्मा · ${EXPERIENCE_LINE.hi}`, en: `Dr. Kapil Dev Sharma · ${EXPERIENCE_LINE.en}` },
     h1: { hi: 'तेज़ दिमाग़। शांत मन।', en: 'A sharper brain. A calmer mind.' },
     sub: {
-      hi: 'Sharp Brain — पढ़ने की रफ़्तार, ध्यान और याददाश्त, 30 दिन में, नाप कर। और डॉ. कपिल के साथ 1-on-1 पर्सनल सेशन — मन, परफ़ॉर्मेंस और साधना के लिए।',
-      en: 'Sharp Brain — reading speed, focus and memory in 30 days, measured. And 1-on-1 Personal Sessions with Dr. Kapil — for your mind, your performance and your practice.',
+      hi: 'PhD, 15 साल प्रोफ़ेसर और 12+ साल माइंड कोच, डॉ. कपिल के साथ — विज्ञान और ध्यान का मेल। आप किस लिए आए हैं?',
+      en: 'With Dr. Kapil — PhD, 15 years a professor and 12+ years a mind coach — science and meditation together. What brings you here?',
     },
-    ctaPrimary: { hi: 'Sharp Brain देखिए', en: 'Explore Sharp Brain' },
-    ctaSecondary: { hi: 'पर्सनल सेशन', en: 'Personal Sessions' },
-    smallLine: { hi: `सेल्फ़-पेस्ड ${selfPacedPrice} · लाइव बैच ${livePrice}`, en: `Self-paced ${selfPacedPrice} · Live batch ${livePrice}` },
+    doors: [
+      {
+        id: 'sharp-brain',
+        who: { hi: 'विद्यार्थी और प्रोफ़ेशनल', en: 'Students & professionals' },
+        title: { hi: 'Sharp Brain', en: 'Sharp Brain' },
+        line: { hi: 'फ़ोकस, याददाश्त और पढ़ने की रफ़्तार — 30 दिन में, नाप कर।', en: 'Focus, memory and reading speed — in 30 days, measured.' },
+        price: { hi: `${fromPrice} से`, en: `from ${fromPrice}` },
+        hrefEn: '/programs/sharp-brain',
+        hrefHi: '/programs/sharp-brain?lang=hi',
+      },
+      {
+        id: 'online-retreat',
+        who: { hi: 'तनाव और ओवरथिंकिंग', en: 'Stress & overthinking' },
+        title: { hi: '21 दिन का ऑनलाइन रिट्रीट', en: '21-Day Online Retreat' },
+        line: { hi: 'हर सुबह लाइव मेडिटेशन + 7 लाइव क्लास। 1 जनवरी से।', en: 'A live meditation every morning + 7 live classes. Starts 1 January.' },
+        price: { hi: `${retreatEarly} अर्ली-बर्ड`, en: `${retreatEarly} early-bird` },
+        hrefEn: '/online-retreat',
+        hrefHi: '/online-retreat?lang=hi',
+      },
+    ],
+    smallLine: {
+      hi: `Sharp Brain ${fromPrice} से · ऑनलाइन रिट्रीट ${retreatEarly} अर्ली-बर्ड · क्लैरिटी सेशन ${clarityPrice}`,
+      en: `Sharp Brain from ${fromPrice} · Online Retreat ${retreatEarly} early-bird · Clarity Session ${clarityPrice}`,
+    },
   },
   paths: {
-    heading: { hi: 'आप किसके लिए आए हैं?', en: 'What are you here for?' },
+    heading: { hi: 'तीन रास्ते — अपना चुनिए', en: 'Three ways to work with Dr. Kapil' },
     sharpBrain: {
       eyebrow: { hi: 'पढ़ाई और काम के लिए', en: 'For study and work' },
-      title: { hi: 'Sharp Brain — 30 दिन, नाप कर', en: 'Sharp Brain — 30 days, measured' },
-      points: [
-        { hi: 'ऐप पर रोज़ 10–15 मिनट अभ्यास', en: '10–15 minutes of app practice a day' },
-        { hi: 'Day 1 / Day 30 टेस्ट + सर्टिफ़िकेट', en: 'Day 1 / Day 30 test + certificate' },
-        { hi: 'सातों क्लास — सेल्फ़-पेस्ड में रिकॉर्डेड, लाइव बैच में लाइव', en: 'The 7 classes — recorded in Self-paced, live in the Live batch' },
-      ],
+      title: { hi: 'Sharp Brain', en: 'Sharp Brain' },
+      line: { hi: 'फ़ोकस · याददाश्त · स्मार्ट रीडिंग — ऐप पर रोज़ 10–15 मिनट, Day 1 / Day 30 टेस्ट और सर्टिफ़िकेट।', en: 'Focus · Memory · Smart Reading — 10–15 minutes of app practice a day, a Day 1 / Day 30 test and a certificate.' },
       prices: [
-        { label: { hi: 'सेल्फ़-पेस्ड', en: 'Self-paced' }, price: selfPacedPrice },
-        { label: { hi: 'लाइव बैच', en: 'Live batch' }, price: livePrice },
+        { label: { hi: '2 दिन ऑनलाइन वर्कशॉप', en: '2-day online workshop' }, price: sbPrice(0) },
+        { label: { hi: 'सेल्फ़-पेस्ड', en: 'Self-paced' }, price: sbPrice(1) },
+        { label: { hi: 'लाइव ऑनलाइन', en: 'Live online' }, price: sbPrice(2) },
+        { label: { hi: 'ऑफ़लाइन + EEG', en: 'Offline + EEG' }, price: sbPrice(3) },
       ],
-      button: { hi: 'Sharp Brain देखिए', en: 'See Sharp Brain' },
-      test: { hi: 'मुफ़्त Reading & Memory Test →', en: 'Free Reading & Memory Test →' },
+      button: { hi: 'चारों प्लान देखिए', en: 'See all 4 plans' },
+    },
+    retreat: {
+      eyebrow: { hi: 'तनाव, नींद और ओवरथिंकिंग के लिए', en: 'For stress, sleep and overthinking' },
+      title: { hi: '21 दिन का ऑनलाइन रिट्रीट', en: '21-Day Online Retreat' },
+      points: [
+        { hi: 'हर सुबह 6:30 बजे लाइव मेडिटेशन', en: 'Live meditation every morning at 6:30' },
+        { hi: 'डॉ. कपिल के साथ 7 लाइव शाम की क्लास', en: '7 live evening classes with Dr. Kapil' },
+        { hi: 'प्राइवेट WhatsApp ग्रुप + 3 महीने रिकॉर्डिंग', en: 'Private WhatsApp group + 3 months of recordings' },
+        { hi: 'Calm · Clear · Connect — हर हफ़्ता एक चरण', en: 'Calm · Clear · Connect — one week each' },
+      ],
+      price: retreatEarly,
+      regular: retreatRegular,
+      priceNote: { hi: 'अर्ली-बर्ड 20 दिसंबर तक · 1 जनवरी से · 50 सीटें', en: 'Early-bird till 20 Dec · starts 1 Jan · 50 seats' },
+      button: { hi: 'रिट्रीट देखिए', en: 'See the retreat' },
     },
     sessions: {
       eyebrow: { hi: 'डॉ. कपिल के साथ 1-on-1', en: '1-on-1 with Dr. Kapil' },
       title: { hi: 'पर्सनल सेशन', en: 'Personal Sessions' },
-      // Owner (plans brief, Nov 2026): the main program first, before the groups.
-      first: { hi: 'तनाव, एंग्ज़ायटी, पैनिक और डिप्रेशन सपोर्ट →', en: 'Stress, Anxiety, Panic & Depression Support →' },
-      groups: [
-        { title: { hi: 'मन और भावनाएँ', en: 'Mind & emotions' }, topics: { hi: 'तनाव, एंग्ज़ायटी, पैनिक, माइंडसेट कोचिंग, सबकॉन्शियस रीप्रोग्रामिंग', en: 'Stress, anxiety, panic, mindset coaching, subconscious reprogramming' } },
-        { title: { hi: 'परफ़ॉर्मेंस', en: 'Performance' }, topics: { hi: 'ट्रेडर्स के लिए इनट्यूशन ट्रेनिंग, डर के लिए हार्ट-ब्रेन कोहेरेंस', en: 'Intuition training for traders, heart-brain coherence for fear' } },
-        { title: { hi: 'आध्यात्मिक साधना (सिर्फ़ 1-on-1)', en: 'Spiritual practices (1-on-1 only)' }, topics: { hi: 'टेलीपैथी और इनट्यूशन, ऑरा रीडिंग, चक्र एक्टिवेशन, समाधि मेडिटेशन, कुंडलिनी मेडिटेशन, एस्ट्रल प्रोजेक्शन', en: 'Telepathy & intuition, aura reading, chakra activation, samadhi meditation, kundalini meditation, astral projection' } },
+      line: { hi: 'आपकी अपनी स्थिति पर निजी काम — मन, परफ़ॉर्मेंस और आध्यात्मिक साधना (साधना सिर्फ़ 1-on-1)।', en: 'Private work on your own situation — mind, performance and spiritual practice (spiritual practices are 1-on-1 only).' },
+      steps: [
+        { hi: `क्लैरिटी सेशन — ${clarityPrice}, 60 मिनट`, en: `Clarity Session — ${clarityPrice}, 60 minutes` },
+        { hi: 'फिर आपका प्लान: 2 दिन से 6 महीने', en: 'Then your plan: 2 days to 6 months' },
+        { hi: `7 दिन में प्लान लेने पर ${clarityPrice} एडजस्ट`, en: `${clarityPrice} adjusted if you join within 7 days` },
       ],
+      book: { hi: `क्लैरिटी सेशन बुक करें — ${clarityPrice}`, en: `Book Clarity Session — ${clarityPrice}` },
       button: { hi: 'सारे प्रोग्राम देखिए →', en: 'See all programs →' },
-      price: { hi: `क्लैरिटी सेशन — ₹${CLARITY_SESSION.priceInr.toLocaleString('en-IN')} (${CLARITY_SESSION.minutes} मिनट)`, en: `Clarity Session — ₹${CLARITY_SESSION.priceInr.toLocaleString('en-IN')} (${CLARITY_SESSION.minutes} minutes)` },
       note: { hi: 'कोचिंग और सपोर्ट — मेडिकल इलाज नहीं।', en: 'Coaching and support — not medical care.' },
     },
+  },
+  more: {
+    heading: { hi: 'और भी', en: 'More ways to join' },
+    items: [
+      { id: 'telepathy', title: { hi: 'टेलीपैथी और इनट्यूशन वर्कशॉप', en: 'Telepathy & Intuition Workshop' }, line: { hi: '3 लाइव शाम, ऑनलाइन · हर महीने', en: '3 live evenings online · every month' }, price: '₹999', href: '/telepathy-online-workshop' },
+      { id: 'rishikesh', title: { hi: 'ऋषिकेश रिट्रीट', en: 'Rishikesh Retreat' }, line: { hi: '26–29 मार्च 2027 · रहना और खाना शामिल', en: '26–29 March 2027 · stay and food included' }, price: rishikeshPrice, href: '/rishikesh-retreat' },
+      { id: 'organisations', title: { hi: 'संस्थाओं के लिए', en: 'For Organisations' }, line: { hi: 'कंपनियों और स्कूलों के लिए वर्कशॉप', en: 'Workshops for companies and schools' }, price: null, href: '/corporate' },
+    ] as { id: string; title: Bi; line: Bi; price: string | null; href: string }[],
   },
   // Owner (homepage upgrade, Nov 2026): one line of 4 facts under the hero.
   trust: [
@@ -106,6 +149,7 @@ export const homeV2 = {
     heading: { hi: 'आपका पहला कदम आज।', en: 'Your first step, today.' },
     clarity: { hi: `क्लैरिटी सेशन बुक करें — ${clarityPrice}`, en: `Book Clarity Session — ${clarityPrice}` },
     sharpBrain: { hi: 'Sharp Brain देखिए', en: 'Explore Sharp Brain' },
+    retreat: { hi: 'ऑनलाइन रिट्रीट देखिए', en: 'See the Online Retreat' },
   },
   reviews: {
     heading: { hi: 'Sharp Brain — विद्यार्थियों के अपने शब्दों में', en: "Sharp Brain — in students' own words" },

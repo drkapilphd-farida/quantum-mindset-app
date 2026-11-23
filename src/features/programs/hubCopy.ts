@@ -172,7 +172,7 @@ export const HUB = {
       FULL_RECORDINGS_FAQ,
       {
         q: { en: 'Online or in person?', hi: 'ऑनलाइन या आमने-सामने?' },
-        a: { en: 'Both. Most sessions are online; in-person sessions are in Vadodara.', hi: 'दोनों। ज़्यादातर सेशन ऑनलाइन होते हैं; आमने-सामने सेशन वडोदरा में होते हैं।' },
+        a: { en: 'All Personal Sessions are online on Zoom, so you can join from anywhere.', hi: 'सभी पर्सनल सेशन Zoom पर ऑनलाइन होते हैं, इसलिए आप कहीं से भी जुड़ सकते हैं।' },
       },
       {
         q: { en: 'Do I need any experience for the spiritual practices?', hi: 'क्या आध्यात्मिक अभ्यासों के लिए अनुभव ज़रूरी है?' },

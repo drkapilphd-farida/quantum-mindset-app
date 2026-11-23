@@ -13,7 +13,7 @@ export function buildSchoolsSchema(): string {
     url: SITE_URL,
     email: contact.email,
     founder: { "@type": "Person", name: trainer.name },
-    address: { "@type": "PostalAddress", addressLocality: "Vadodara", addressRegion: "Gujarat", addressCountry: "IN" },
+    address: { "@type": "PostalAddress", addressCountry: "IN" },
   };
   const service = {
     "@type": "Service",

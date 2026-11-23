@@ -8,7 +8,6 @@ import { SHARP_BRAIN_REVIEW_GRID_CLASS, sharpBrainReviewCards } from "@/config/s
 import { HOME_SESSION_REVIEW_IDS, homeV2, say, sharpBrainHref } from "@/lib/homeV2Copy";
 import { GROUPS } from "@/features/programs/common";
 import { reviewVideo } from "@/features/programs/reviewVideos";
-import { sharpBrainCopy } from "@/lib/sharpBrainCopy";
 import { CALM_COPY } from "@/features/calm-batch/copy";
 import { reviewFrameSrc } from "@/lib/video/reviewFrames";
 import { BookOpen, Brain, CalendarClock, Headphones, Route } from "lucide-react";
@@ -18,6 +17,7 @@ import type { GroupId } from "@/features/programs/types";
 const GROUP_ORDER: GroupId[] = ["mind", "rel", "perf", "spirit", "deep"];
 import VideoReviewGrid from "../VideoReviewGrid";
 import { Eyebrow } from "../ui";
+import { Tilt } from "../fx/Tilt";
 
 // Trust strip and Meet Dr. Kapil live in HomeTrustMeet.tsx (small, so other pages can reuse them cheaply).
 export { HomeMeetKapil, HomeTrustStrip } from "./HomeTrustMeet";
@@ -26,83 +26,130 @@ export { HomeMeetKapil, HomeTrustStrip } from "./HomeTrustMeet";
 // homepage's existing look (border-b sections, cards, gold buttons).
 
 const SECTION = "border-b border-line px-4 py-16 sm:px-8 sm:py-20";
-const GOLD = "inline-flex min-h-11 items-center justify-center rounded-sm bg-gold px-6 py-3 text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]";
+const GOLD = "inline-flex min-h-11 items-center justify-center rounded-sm bg-gold px-6 py-3 text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-gold-dim";
 
-// 2. Two paths: Sharp Brain (two prices) and Personal Sessions (three groups).
+// 2. Three programs (owner's offer ladder, 23 Nov 2026): Sharp Brain (4
+// prices), 21-Day Online Retreat, Personal Sessions — then the "more ways"
+// strip (Telepathy workshop, Rishikesh retreat, organisations).
+const CARD = "flex h-full flex-col rounded-xl bg-white p-6 shadow-[0_18px_40px_-26px_rgba(19,32,59,0.4)] sm:p-7";
 export function HomePaths(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.paths;
   const sb = c.sharpBrain;
-  const eeg = sharpBrainCopy[lang].offers.table.rows.find((row) => row.card !== undefined)?.card;
+  const rt = c.retreat;
   const ps = c.sessions;
+  const hiQ = (href: string): string => (lang === "hi" ? `${href}?lang=hi` : href);
   return (
-    <section id="paths" className={SECTION} aria-labelledby="home-paths">
+    <section id="paths" className={`${SECTION} band-blue`} aria-labelledby="home-paths">
       <div className="mx-auto max-w-content">
         <h2 id="home-paths" className="text-[26px] font-extrabold leading-tight sm:text-[34px]">
           {say(c.heading, lang)}
         </h2>
-        <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <article className="flex flex-col rounded-sm border-2 border-gold bg-panel p-6 sm:p-8" data-home-path="sharp-brain">
-            <Eyebrow color="text-gold">{say(sb.eyebrow, lang)}</Eyebrow>
-            <h3 className="mt-3 text-[24px] font-extrabold leading-snug sm:text-[28px]">{say(sb.title, lang)}</h3>
-            <ul className="mt-4 space-y-2 text-[16px] leading-relaxed">
-              {sb.points.map((point) => (
+        <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+          <Tilt className="h-full rounded-xl" max={5}>
+          <article className={`${CARD} border-2 border-[#2b57e8]/35 border-t-[6px] border-t-[#2b57e8]`} data-home-path="sharp-brain">
+            <Eyebrow color="text-[#2b57e8]">{say(sb.eyebrow, lang)}</Eyebrow>
+            <h3 className="mt-3 text-[24px] font-extrabold leading-snug">{say(sb.title, lang)}</h3>
+            <p className="mt-2 text-[15.5px] leading-relaxed text-ink-dim">{say(sb.line, lang)}</p>
+            <div className="mt-5 grid grid-cols-2 gap-2.5" data-home-sb-prices>
+              {sb.prices.map((item) => (
+                <div key={item.price} className="rounded-sm border border-line-strong bg-void px-3 py-2.5 text-center">
+                  <p className="text-[12.5px] leading-tight text-ink-dim">{say(item.label, lang)}</p>
+                  <p className="mt-0.5 text-[20px] font-extrabold">{item.price}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 flex flex-col items-start gap-3 lg:mt-auto lg:pt-6">
+              <Link href={sharpBrainHref(lang, "#enrol")} className={`${GOLD} min-h-12 w-full`}>
+                {say(sb.button, lang)}
+              </Link>
+              <FreeTestButton test="reading" lang={lang} />
+            </div>
+          </article>
+          </Tilt>
+
+          <Tilt className="h-full rounded-xl" max={5}>
+          <article className={`${CARD} border-2 border-teal/45 border-t-[6px] border-t-[#11a197]`} data-home-path="online-retreat">
+            <Eyebrow color="text-teal">{say(rt.eyebrow, lang)}</Eyebrow>
+            <h3 className="mt-3 text-[24px] font-extrabold leading-snug">{say(rt.title, lang)}</h3>
+            <ul className="mt-3 space-y-2 text-[15.5px] leading-relaxed">
+              {rt.points.map((point) => (
                 <li key={point.en} className="flex items-start gap-2.5">
                   <span className="font-bold text-teal" aria-hidden="true">✓</span>
                   {say(point, lang)}
                 </li>
               ))}
             </ul>
-            {/* Owner (Nov 2026): the Live batch's EEG brain test — the same wording as the Sharp Brain page (sharpBrainCopy). */}
-            {eeg !== undefined && (
-              <div className="mt-3 rounded-sm border border-gold/50 bg-gold-soft px-3.5 py-3" data-home-eeg>
-                <span className="inline-flex rounded-sm bg-gold px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-[#1B1508]">{say(sb.prices[1]?.label ?? { en: "Live batch", hi: "लाइव बैच" }, lang)}</span>
-                <p className="mt-2 text-[15.5px] font-semibold leading-relaxed text-ink">{eeg.text}</p>
-                <p className="mt-1 text-[13px] leading-snug text-ink-dim">{eeg.note}</p>
-              </div>
-            )}
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              {sb.prices.map((item) => (
-                <div key={item.price} className="rounded-sm border border-line-strong bg-void px-4 py-3 text-center">
-                  <p className="text-[13.5px] text-ink-dim">{say(item.label, lang)}</p>
-                  <p className="text-[24px] font-extrabold">{item.price}</p>
-                </div>
-              ))}
+            <div className="mt-5 rounded-sm border border-teal/35 bg-teal-soft px-4 py-3" data-home-retreat-price>
+              <p className="flex items-baseline gap-2.5">
+                <span className="text-[28px] font-extrabold">{rt.price}</span>
+                <span className="text-[16px] font-semibold text-ink-faint line-through">{rt.regular}</span>
+              </p>
+              <p className="text-[13px] text-ink-dim">{say(rt.priceNote, lang)}</p>
             </div>
-            <div className="mt-6 flex flex-wrap items-start gap-x-4 gap-y-3 lg:mt-auto lg:pt-6">
-              <Link href={sharpBrainHref(lang)} className={`${GOLD} min-h-12`}>
-                {say(sb.button, lang)}
+            <div className="mt-6 flex flex-col items-start gap-3 lg:mt-auto lg:pt-6">
+              <Link href={hiQ(programs.onlineRetreat.url)} className={`${GOLD} min-h-12 w-full`} data-home-retreat>
+                {say(rt.button, lang)}
               </Link>
-              <FreeTestButton test="reading" lang={lang} />
+              <FreeTestButton test="overthinking" lang={lang} />
             </div>
           </article>
-          <article className="flex flex-col rounded-sm border border-line-strong bg-panel p-6 sm:p-8" data-home-path="sessions">
-            <Eyebrow color="text-teal">{say(ps.eyebrow, lang)}</Eyebrow>
-            <h3 className="mt-3 text-[24px] font-extrabold leading-snug sm:text-[28px]">{say(ps.title, lang)}</h3>
-            <Link href={lang === "hi" ? "/stress-anxiety-support?lang=hi" : "/stress-anxiety-support"} className="mt-4 inline-flex min-h-11 items-center self-start rounded-sm border-2 border-[#0F766E] bg-[#DDF3EF] px-4 py-2 text-[16px] font-extrabold text-[#0B5E57]" data-home-stress>
-              {say(ps.first, lang)}
-            </Link>
-            {/* Owner (Nov 2026): the 5 program groups as coloured tags (same colours as /personal-sessions). */}
+          </Tilt>
+
+          <Tilt className="h-full rounded-xl" max={5}>
+          <article className={`${CARD} border border-line-strong border-t-[6px] border-t-[#f2a33a]`} data-home-path="sessions">
+            <Eyebrow color="text-gold">{say(ps.eyebrow, lang)}</Eyebrow>
+            <h3 className="mt-3 text-[24px] font-extrabold leading-snug">{say(ps.title, lang)}</h3>
+            <p className="mt-2 text-[15.5px] leading-relaxed text-ink-dim">{say(ps.line, lang)}</p>
             <ul className="mt-4 flex flex-wrap gap-2" data-home-groups>
               {GROUP_ORDER.map((id) => {
                 const g = GROUPS[id];
                 return (
-                  <li key={id} className="rounded-full px-3 py-1 text-[14px] font-extrabold" style={{ background: g.tagBg, color: g.tagFg }}>
+                  <li key={id} className="rounded-full px-3 py-1 text-[13.5px] font-extrabold" style={{ background: g.tagBg, color: g.tagFg }}>
                     {say(g.label, lang)}
                   </li>
                 );
               })}
             </ul>
-            <p className="mt-5 text-[15.5px] font-semibold" data-home-clarity>
-              {say(ps.price, lang)}
-            </p>
-            <div className="mt-5 flex flex-col items-start gap-3 lg:mt-auto lg:pt-6">
-              <Link href={lang === "hi" ? `${programs.oneOnOneCoaching.url}?lang=hi` : programs.oneOnOneCoaching.url} className={GOLD} data-home-all-programs>
+            <ol className="mt-5 space-y-1.5 text-[15px]" data-home-clarity>
+              {ps.steps.map((step, i) => (
+                <li key={step.en} className="flex gap-2.5">
+                  <span className="font-mono font-semibold text-gold-dim">{i + 1}.</span>
+                  {say(step, lang)}
+                </li>
+              ))}
+            </ol>
+            <div className="mt-6 flex flex-col items-start gap-3 lg:mt-auto lg:pt-6">
+              <Link href={clarityHref(lang)} className={`${GOLD} min-h-12 w-full`} data-home-clarity-book>
+                {say(ps.book, lang)}
+              </Link>
+              <Link href={hiQ(programs.oneOnOneCoaching.url)} className="inline-flex min-h-11 items-center text-[15px] font-semibold text-ink underline decoration-gold/60 underline-offset-4" data-home-all-programs>
                 {say(ps.button, lang)}
               </Link>
               <p className="text-[13px] text-ink-dim">{say(ps.note, lang)}</p>
             </div>
           </article>
+          </Tilt>
+        </div>
+
+        <div className="mt-10" data-home-more>
+          <p className="font-mono text-[12.5px] font-semibold uppercase tracking-[0.08em] text-ink-faint">{say(homeV2.more.heading, lang)}</p>
+          <ul className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-3">
+            {homeV2.more.items.map((item) => (
+              <li key={item.id}>
+                <Link href={hiQ(item.href)} className="group flex h-full items-center justify-between gap-4 rounded-sm border border-line-strong bg-void px-5 py-4 transition-colors hover:border-teal/50 hover:bg-panel" data-home-more-item={item.id}>
+                  <span>
+                    <span className="block text-[16.5px] font-extrabold text-ink">{say(item.title, lang)}</span>
+                    <span className="mt-0.5 block text-[13.5px] text-ink-dim">{say(item.line, lang)}</span>
+                  </span>
+                  <span className="flex flex-none items-center gap-2 text-[16px] font-extrabold text-ink">
+                    {item.price}
+                    <span className="text-teal transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
@@ -212,7 +259,7 @@ export function HomeHowSessions(): React.JSX.Element {
         </Link>
         {/* Owner (Calm Mind brief): one line for the live group batch — no new section. */}
         <p className="mt-4">
-          <Link href={lang === "hi" ? "/calm-mind-batch?lang=hi" : "/calm-mind-batch"} className="inline-flex min-h-11 items-center text-[15.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4" data-home-calm-line>
+          <Link href={lang === "hi" ? "/online-retreat?lang=hi" : "/online-retreat"} className="inline-flex min-h-11 items-center text-[15.5px] font-semibold text-ink underline decoration-gold/60 underline-offset-4" data-home-calm-line>
             {say(CALM_COPY.homeLine, lang)}
           </Link>
         </p>
@@ -228,7 +275,7 @@ export function HomeFreeTools(): React.JSX.Element {
   const card = "flex flex-col items-start gap-4 rounded-sm border border-t-4 border-line-strong border-t-[#0F766E] bg-panel px-6 py-6";
   const icon = "flex h-11 w-11 items-center justify-center rounded-full bg-[#DDF3EF] text-[#0F766E]";
   return (
-    <section className={`${SECTION} bg-panel2`} data-home-free-tools>
+    <section className={`${SECTION} band-mint`} data-home-free-tools>
       <div className="mx-auto grid max-w-content grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
         <div className={card} data-free-tool="overthinking">
           <span className={icon} aria-hidden="true">
@@ -252,15 +299,18 @@ export function HomeFinalCta(): React.JSX.Element {
   const { lang } = useLanguage();
   const c = homeV2.finalCta;
   return (
-    <section className="bg-[#14161c] px-4 py-16 text-center text-[#f5f1e6] sm:px-8 sm:py-20" data-home-final-cta>
+    <section className="hero-vivid px-4 py-16 text-center text-white sm:px-8 sm:py-20" data-home-final-cta>
       <div className="mx-auto flex max-w-2xl flex-col items-center gap-7">
         <h2 className="text-[30px] font-extrabold leading-tight sm:text-[40px]">{say(c.heading, lang)}</h2>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <Link href={clarityHref(lang)} className={GOLD}>
             {say(c.clarity, lang)}
           </Link>
-          <Link href={sharpBrainHref(lang)} className="inline-flex min-h-11 items-center justify-center rounded-sm border border-white/30 px-6 py-3 text-[15px] font-semibold text-[#f5f1e6] transition-colors hover:bg-white/10">
+          <Link href={sharpBrainHref(lang)} className="inline-flex min-h-11 items-center justify-center rounded-sm border border-white/40 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-white/10">
             {say(c.sharpBrain, lang)}
+          </Link>
+          <Link href={lang === "hi" ? "/online-retreat?lang=hi" : "/online-retreat"} className="inline-flex min-h-11 items-center justify-center rounded-sm border border-white/40 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-white/10">
+            {say(c.retreat, lang)}
           </Link>
         </div>
       </div>

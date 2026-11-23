@@ -129,7 +129,7 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
   },
-  description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma, Vadodara.',
+  description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma.',
   metadataBase: new URL(SITE_URL),
   manifest: '/manifest.json',
   appleWebApp: {
@@ -160,13 +160,13 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: SITE_NAME,
     title: SITE_NAME,
-    description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma, Vadodara.',
+    description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma.',
     url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
-    description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma, Vadodara.',
+    description: 'Mind Ur Mind — brain, mind and meditation coaching by Dr. Kapil Dev Sharma.',
   },
 }
 

@@ -229,7 +229,7 @@ export default function OverthinkingTestExperience(): React.JSX.Element {
 
         {/* Owner (Calm Mind brief): after the score, two next steps side by side (stacked on narrow phones). */}
         <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2" data-test-next-steps>
-          <Link href={lang === "hi" ? "/calm-mind-batch?lang=hi" : "/calm-mind-batch"} className="inline-flex min-h-12 items-center justify-center rounded-sm bg-gold px-4 py-3 text-center text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]" data-test-calm-batch>
+          <Link href={lang === "hi" ? "/online-retreat?lang=hi" : "/online-retreat"} className="inline-flex min-h-12 items-center justify-center rounded-sm bg-gold px-4 py-3 text-center text-[15px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-[#cb9a44]" data-test-calm-batch>
             {CALM_COPY.testOptions.batch[lang]}
           </Link>
           <Link href={lang === "hi" ? "/clarity-session?lang=hi" : "/clarity-session"} className="inline-flex min-h-12 items-center justify-center rounded-sm border-2 border-gold px-4 py-3 text-center text-[15px] font-semibold text-ink transition-colors hover:bg-gold-soft" data-test-clarity>

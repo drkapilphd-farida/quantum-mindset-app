@@ -86,7 +86,7 @@ export const PLAN_COPY = {
       hi: `अगर आप 7 दिन के भीतर कोई भी प्लान जॉइन करते हैं, तो आपकी ${clarityFee} की क्लैरिटी सेशन फ़ीस पूरी तरह एडजस्ट हो जाती है।`,
     },
     { en: 'EMI available on the 1-month, 3-month and 6-month plans.', hi: '1 महीने, 3 महीने और 6 महीने के प्लान पर EMI उपलब्ध है।' },
-    { en: 'All sessions are 1-on-1 with Dr. Kapil, online or in person in Vadodara.', hi: 'सभी सेशन डॉ. कपिल के साथ 1-on-1 होते हैं, ऑनलाइन या वडोदरा में आमने-सामने।' },
+    { en: 'All sessions are 1-on-1 with Dr. Kapil, online on Zoom.', hi: 'सभी सेशन डॉ. कपिल के साथ 1-on-1 होते हैं, Zoom पर ऑनलाइन।' },
   ] as Bi[],
   afterFoundation: {
     en: 'These practices are taught only after the foundation level, so they are offered in the 3- and 6-month plans.',
