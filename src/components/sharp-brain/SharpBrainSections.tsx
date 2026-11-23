@@ -164,7 +164,33 @@ export function SharpBrainApp(): React.JSX.Element {
         <Eyebrow color="text-gold">{c.eyebrow}</Eyebrow>
         <h2 className={h2Class}>{c.title}</h2>
         <p className="mt-3 text-[16px] text-ink-dim">{c.note}</p>
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-10 grid grid-cols-1 items-center gap-8 rounded-sm border border-line bg-panel p-6 sm:grid-cols-[minmax(0,240px)_1fr] sm:p-8">
+          <div className="relative mx-auto aspect-[9/16] w-full max-w-[240px] overflow-hidden rounded-sm border border-line bg-panel2">
+            <video
+              className="absolute inset-0 h-full w-full object-cover object-top"
+              src="/assets/sharp-brain/app/clip-plan.mp4"
+              poster="/assets/sharp-brain/app/clip-plan.jpg"
+              aria-label={c.plan.alt}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+          </div>
+          <div>
+            <h3 className="text-[20px] font-bold leading-snug text-ink">{c.plan.title}</h3>
+            <ul className="mt-4 space-y-3 text-[15px] leading-relaxed text-ink-dim">
+              {c.plan.points.map((point) => (
+                <li key={point} className="flex gap-3">
+                  <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-teal" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {c.groups.map((group) => (
             <article key={group.id} className="flex flex-col overflow-hidden rounded-sm border border-line bg-panel">
               <div className="relative aspect-[9/16] w-full border-b border-line bg-panel2 sm:aspect-[3/4] lg:aspect-[9/16]">

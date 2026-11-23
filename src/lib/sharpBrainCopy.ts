@@ -25,7 +25,7 @@ export type SharpBrainCopy = {
     footer: string
   }
   outcomes: { eyebrow: string; title: string; items: string[] }
-  app: { eyebrow: string; title: string; note: string; groups: ExerciseGroup[]; shotAlt: Record<ExerciseGroup['id'], string> }
+  app: { eyebrow: string; title: string; note: string; plan: { title: string; points: string[]; alt: string }; groups: ExerciseGroup[]; shotAlt: Record<ExerciseGroup['id'], string> }
   classes: { eyebrow: string; title: string; items: { title: string; desc: string }[]; note: string }
   audiences: { eyebrow: string; title: string; cards: { title: string; desc: string }[]; line: string }
   how: { eyebrow: string; title: string; steps: { title: string; desc: string }[] }
@@ -139,6 +139,11 @@ const en: SharpBrainCopy = {
     eyebrow: 'Inside the app',
     title: 'Your daily practice in the Mind Ur Mind App',
     note: '10–15 minutes a day. Progress tracked automatically.',
+    plan: {
+      title: 'Your 30-day plan, one day at a time',
+      points: ['Open the app and today’s steps are ready: about 12 minutes.', 'All 30 days on one screen, with stars for every day you finish.', 'Miss a day? Restart where you left off. Nothing is lost.'],
+      alt: 'The Mind Ur Mind App dashboard showing today’s steps and all 30 days',
+    },
     groups: [
       { id: 'focus', skill: 'Focus', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
       { id: 'reading', skill: 'Smart Reading', exercises: ['Word Flash (one word at a time)', 'Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Progressive Chunk Reading'] },
@@ -365,6 +370,11 @@ const hi: SharpBrainCopy = {
     eyebrow: 'ऐप के अंदर',
     title: 'Mind Ur Mind App में आपका रोज़ का अभ्यास',
     note: 'रोज़ 10–15 मिनट। प्रगति अपने-आप ट्रैक होती है।',
+    plan: {
+      title: 'आपका 30 दिन का प्लान, रोज़ एक दिन',
+      points: ['ऐप खोलते ही आज के steps तैयार: लगभग 12 मिनट।', 'सारे 30 दिन एक ही screen पर, हर पूरे दिन के लिए stars।', 'कोई दिन छूट गया? वहीं से फिर शुरू करें, कुछ नहीं खोता।'],
+      alt: 'Mind Ur Mind App का dashboard: आज के steps और सारे 30 दिन',
+    },
     groups: [
       { id: 'focus', skill: 'फोकस', exercises: ['Color-Word Sync Grid', 'Peripheral Vision Activator'] },
       { id: 'reading', skill: 'स्मार्ट रीडिंग', exercises: ['Word Flash (एक बार में एक शब्द)', 'Phrase Reading', 'Sentence Reading', 'Inner Voice Control', 'Progressive Chunk Reading'] },
