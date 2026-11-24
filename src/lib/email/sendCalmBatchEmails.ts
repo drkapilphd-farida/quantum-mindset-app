@@ -4,7 +4,7 @@ import { logger } from '@/lib/logger'
 import { buildBatchIcs, formatBatchDate } from '@/features/calm-batch/batch'
 import type { CalmRegistration } from '@/features/calm-batch/registrations'
 
-// 21-Day Calm Mind batch emails (owner's brief): confirmation with the .ics,
+// 21-Day Online Retreat emails (former Calm Mind batch): confirmation with the .ics,
 // the owner's "payment came in" notice when the joining links are missing,
 // and class reminders. Same Resend setup and "unconfigured = skip, never
 // throw" rule as the other emails.
@@ -25,11 +25,13 @@ const schedule = (): string => `${calmMindBatch.nextBatch.days.en} · ${calmMind
 
 /** Plain-text body of the confirmation email (exported for tests). */
 export function confirmationText(name: string, links: { zoom: string | undefined; whatsapp: string | undefined }): string {
-  const classes = calmMindBatch.nextBatch.classDates.map((iso, i) => `  Class ${i + 1}: ${formatBatchDate(iso, 'en')}, 8:00–9:00 PM IST`).join('\n')
+  const classes = calmMindBatch.nextBatch.classDates.map((iso, i) => `  Class ${i + 1}: ${formatBatchDate(iso, 'en')}, 8:00–9:15 PM IST`).join('\n')
   return [
     `Namaste ${name},`,
     ``,
-    `You're in! Welcome to the 21-Day Calm Mind batch with Dr. Kapil Dev Sharma.`,
+    `You're in! Welcome to the 21-Day Online Retreat with Dr. Kapil Dev Sharma.`,
+    ``,
+    `Every morning: live guided meditation, 6:30–7:00 AM IST (same Zoom link).`,
     ``,
     `Starts: ${start()} · ${schedule()}`,
     classes,
@@ -37,7 +39,7 @@ export function confirmationText(name: string, links: { zoom: string | undefined
     `Zoom link: ${links.zoom ?? 'reaches you on WhatsApp within 2 hours'}`,
     `WhatsApp group: ${links.whatsapp ?? 'reaches you on WhatsApp within 2 hours'}`,
     ``,
-    `The attached calendar file adds all 6 classes to your calendar.`,
+    `The attached calendar file adds all 7 evening classes to your calendar.`,
     ``,
     `Before class 1: a quiet place · headphones · write in one line what you want to feel on day 21.`,
     ``,
@@ -52,7 +54,7 @@ export async function sendCalmConfirmation(reg: CalmRegistration): Promise<void>
   const { error } = await c.resend.emails.send({
     from: c.from,
     to: reg.email,
-    subject: `You're in: 21-Day Calm Mind batch starts ${start()}`,
+    subject: `You're in: 21-Day Online Retreat starts ${start()}`,
     text: confirmationText(reg.name, links),
     attachments: [{ filename: 'calm-mind-classes.ics', content: Buffer.from(buildBatchIcs({ zoomLink: links.zoom })).toString('base64') }],
   })
@@ -66,9 +68,9 @@ export async function sendCalmAdminNotice(reg: CalmRegistration, context: { sour
   const { error } = await c.resend.emails.send({
     from: c.from,
     to: process.env.FRANCHISE_LEAD_NOTIFY_EMAIL ?? DEFAULT_NOTIFY_EMAIL,
-    subject: `[Calm Mind batch] Payment received — ${reg.name}${context.linksMissing ? ' — send joining details' : ''}`,
+    subject: `[Online Retreat] Payment received — ${reg.name}${context.linksMissing ? ' — send joining details' : ''}`,
     text: [
-      `A payment for the 21-Day Calm Mind batch (${start()}) came in.`,
+      `A payment for the 21-Day Online Retreat (${start()}) came in.`,
       ...(context.source === 'webhook' ? [`It came through the Razorpay webhook: the buyer did not return to the website after paying. The confirmation email (with the links and calendar) has been sent to them.`] : []),
       ...(context.linksMissing ? [`The Zoom / WhatsApp links are not set (CALM_BATCH_ZOOM_LINK / CALM_BATCH_WHATSAPP_LINK). The buyer was told the joining details reach them on WhatsApp within 2 hours.`] : []),
       ...(context.saved ? [] : [`The registration could not be saved to the database — please add it by hand.`]),
@@ -87,7 +89,7 @@ export async function sendCalmAdminNotice(reg: CalmRegistration, context: { sour
 export type CalmReminder = { kind: 'day-before' | 'hour-before'; classNumber: number }
 
 export function reminderSubject(r: CalmReminder): string {
-  return r.kind === 'day-before' ? `Tomorrow: your 21-Day Calm Mind batch starts (8:00 PM IST)` : `Today 8:00 PM IST: Calm Mind live class ${r.classNumber} of 6`
+  return r.kind === 'day-before' ? `Tomorrow: your 21-Day Online Retreat starts (8:00 PM IST)` : `Today 8:00 PM IST: Online Retreat live class ${r.classNumber} of 7`
 }
 
 /** One reminder to one person. false when email is not configured or the send failed. */
@@ -99,7 +101,7 @@ export async function sendCalmReminderTo(r: CalmReminder, reg: CalmRegistration)
     from: c.from,
     to: reg.email,
     subject: reminderSubject(r),
-    text: [`Namaste ${reg.name},`, ``, r.kind === 'day-before' ? `Your 21-Day Calm Mind batch starts tomorrow, 8:00–9:00 PM IST.` : `Live class ${r.classNumber} of 6 starts at 8:00 PM IST — in under an hour.`, ``, `Zoom: ${zoom}`, ``, `A quiet place and headphones help. See you there!`].join('\n'),
+    text: [`Namaste ${reg.name},`, ``, r.kind === 'day-before' ? `Your 21-Day Online Retreat starts tomorrow, 8:00–9:15 PM IST.` : `Live class ${r.classNumber} of 7 starts at 8:00 PM IST — in under an hour.`, ``, `Zoom: ${zoom}`, ``, `A quiet place and headphones help. See you there!`].join('\n'),
   })
   return !error
 }

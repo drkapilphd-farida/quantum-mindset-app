@@ -11,6 +11,8 @@ import { normalizeIndianMobile } from '@/lib/phone/indianMobile'
 import { utmToLine } from '@/lib/analytics/utmLine'
 import { finalizeCalmRegistration } from '@/features/calm-batch/finalize'
 import { finalizeClarityPayment } from '@/features/clarity-session/paidRecords'
+import { linkProductForAmount } from './linkProducts'
+import { followUpLinkPayment, type LinkPayment } from './linkPaymentFollowup'
 
 export const CALM_PRODUCT = 'calm-mind-batch'
 /** Clarity Session orders carry product "Clarity Session (60 min)" (order notes) or "clarity-session" (Checkout notes). */
@@ -33,11 +35,15 @@ const Payload = z.object({
   }),
 })
 
-export type CapturedOutcome = 'calm' | 'clarity' | 'ignored' | 'amount-mismatch'
+export type CapturedOutcome = 'calm' | 'clarity' | 'link' | 'ignored' | 'amount-mismatch'
 
 const utmFrom = (notes: Record<string, string>): string | null => utmToLine(Object.fromEntries(Object.entries(notes).filter(([key]) => key.startsWith('utm_'))))
 
-export async function handlePaymentCaptured(json: unknown, getOrderNotes: (orderId: string) => Promise<Record<string, string>> = fetchOrderNotes): Promise<CapturedOutcome> {
+export async function handlePaymentCaptured(
+  json: unknown,
+  getOrderNotes: (orderId: string) => Promise<Record<string, string>> = fetchOrderNotes,
+  followUp: (payment: LinkPayment) => Promise<void> = followUpLinkPayment,
+): Promise<CapturedOutcome> {
   const parsed = Payload.safeParse(json)
   if (!parsed.success) return 'ignored'
   const p = parsed.data.payload.payment.entity
@@ -64,6 +70,16 @@ export async function handlePaymentCaptured(json: unknown, getOrderNotes: (order
     }
     await finalizeClarityPayment({ paymentId: p.id, orderId, email, phone, program: notes.program ?? null, utm: utmFrom(notes) }, 'webhook')
     return 'clarity'
+  }
+  // Razorpay payment links (Sharp Brain ₹499 / ₹4,999 / ₹3,000 registration,
+  // Telepathy ₹999) carry no product note: match them by amount.
+  if (product === '') {
+    const linkProduct = linkProductForAmount(p.amount, p.currency)
+    if (linkProduct !== null) {
+      const name = notes.name ?? notes.full_name ?? notes.customer_name ?? ''
+      await followUp({ product: linkProduct, paymentId: p.id, amountInr: linkProduct.amountInr, name, email, phone })
+      return 'link'
+    }
   }
   return 'ignored'
 }

@@ -43,6 +43,23 @@ describe('Razorpay payment.captured (owner, Nov 2026)', () => {
     expect(clarityCalls).toHaveLength(0)
   })
 
+  it('follows up Razorpay payment-link payments, matched by amount (owner, 24 Nov 2026)', async () => {
+    const seen: { id: string; email: string; phone: string; amountInr: number }[] = []
+    const followUp = async (pay: { product: { id: string }; email: string; phone: string; amountInr: number }): Promise<void> => {
+      seen.push({ id: pay.product.id, email: pay.email, phone: pay.phone, amountInr: pay.amountInr })
+    }
+    expect(await handlePaymentCaptured(event({ amount: 49900, order_id: null }), noOrderNotes, followUp)).toBe('link')
+    expect(await handlePaymentCaptured(event({ amount: 499900, order_id: null }), noOrderNotes, followUp)).toBe('link')
+    expect(await handlePaymentCaptured(event({ amount: 300000, order_id: null }), noOrderNotes, followUp)).toBe('link')
+    expect(await handlePaymentCaptured(event({ amount: 99900, order_id: null }), noOrderNotes, followUp)).toBe('link')
+    expect(seen.map((x) => x.id)).toEqual(['sb-workshop-499', 'sb-live-4999', 'sb-offline-registration', 'telepathy-999'])
+    expect(seen[0]).toMatchObject({ email: 'a@b.in', phone: '+919999999999', amountInr: 499 })
+    // An unknown amount, or a product-tagged payment, is not a payment-link product.
+    expect(await handlePaymentCaptured(event({ amount: 12300, order_id: null }), noOrderNotes, followUp)).toBe('ignored')
+    expect(await handlePaymentCaptured(event({ amount: 499900, notes: { product: 'sharp-brain' } }), noOrderNotes, followUp)).toBe('ignored')
+    expect(seen).toHaveLength(4)
+  })
+
   it('derives one stable row id per payment, so the database refuses a duplicate', () => {
     expect(idFromKey('calm-batch:pay_1')).toBe(idFromKey('calm-batch:pay_1'))
     expect(idFromKey('calm-batch:pay_1')).not.toBe(idFromKey('calm-batch:pay_2'))

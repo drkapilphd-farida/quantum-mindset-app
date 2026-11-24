@@ -21,6 +21,7 @@ export const LINKS = {
   rzpSharpBrainWorkshop499: 'https://rzp.io/rzp/sharpbrain499', // Sharp Brain 2-day online workshop ₹499
   rzpSharpBrainLiveOnline4999: 'https://rzp.io/rzp/sharpbrainlive', // Sharp Brain Live online (30 days, 7 live classes) ₹4,999
   rzpSharpBrainOffline8999: 'https://rzp.io/rzp/Sharpbrainoffline', // Sharp Brain offline workshop + EEG ₹8,999
+  rzpSharpBrainOfflineReg3000: 'https://rzp.io/rzp/YU12KPq', // Sharp Brain offline workshop registration ₹3,000 (Vadodara / Ahmedabad)
   rzpTelepathyOnline999: 'https://rzp.io/rzp/intuition999', // Telepathy & Intuition online workshop ₹999
   rzpSharpBrainSelfPaced2999: 'https://rzp.io/rzp/9RmomzjS', // Sharp Brain self-paced ₹2,999 (owner, Phase 4.2 → 6B)
   rzpRetreat11Discount: '[[RZP_RETREAT11_5999]]',
