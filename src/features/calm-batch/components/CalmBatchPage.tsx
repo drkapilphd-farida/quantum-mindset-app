@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Award, BedDouble, Check, Heart, HeartPulse, LineChart, MessageCircle, MoonStar, Repeat, Sun, Video, Zap } from "lucide-react";
 import Link from "next/link";
 import { calmBatchPriceInr, calmMindBatch, PAGE_VIDEOS } from "@/config/site.config";
@@ -18,6 +19,13 @@ import { formatBatchDate, formatClassDate, type BatchState, type Lang } from "..
 import { CALM_COPY, CALM_REGULAR_LABEL } from "../copy";
 
 const inr = (n: number): string => `₹${n.toLocaleString("en-IN")}`;
+
+const MOMENTS: { src: string; alt: { en: string; hi: string } }[] = [
+  { src: "/gallery/retreats/retreat-meditation-hall.jpg", alt: { en: "Guided group meditation", hi: "गाइडेड ग्रुप मेडिटेशन" } },
+  { src: "/gallery/retreats/academy-relaxation.jpg", alt: { en: "Deep relaxation with Dr. Kapil", hi: "डॉ. कपिल के साथ गहरा आराम" } },
+  { src: "/gallery/retreats/academy-pranayama.jpg", alt: { en: "Pranayama session", hi: "प्राणायाम सेशन" } },
+  { src: "/gallery/retreats/academy-meditation.jpg", alt: { en: "Silent sitting practice", hi: "मौन बैठने का अभ्यास" } },
+];
 import { CalmReserveButton, CalmStickyBar, CalmViewContent } from "./CalmReserve";
 
 // /calm-mind-batch — 21-Day Online Retreat (former Calm Mind batch) (owner's brief,
@@ -207,6 +215,24 @@ export function CalmBatchPage({ lang, state, checkout }: { lang: Lang; state: Ba
           </section>
 
           {/* 2.9 PRICE CARD */}
+          {/* Real sessions (owner's own photos and clips, 24 Nov 2026). */}
+          <section className={SECTION} data-calm-moments>
+            <div className={WRAP}>
+              <h2 className={H2}>{lang === "hi" ? "असली सेशन की झलक" : "A glimpse of real sessions"}</h2>
+              <p className="mt-2 text-[16.5px] text-ink-dim">{lang === "hi" ? "डॉ. कपिल के साथ मेडिटेशन, प्राणायाम और गहरा आराम — रिट्रीट में आप यही रोज़ करेंगे, अपने घर से।" : "Meditation, pranayama and deep rest with Dr. Kapil — what you will do every day in the retreat, from home."}</p>
+              <div className="mt-8 grid grid-cols-1 gap-3 lg:grid-cols-[1.4fr_1fr]">
+                <video className="aspect-[4/3] w-full rounded-2xl object-cover shadow-[0_24px_50px_-28px_rgba(19,32,59,0.6)]" src="/assets/retreat/sessions-montage.mp4" poster="/assets/retreat/sessions-montage.jpg" autoPlay muted loop playsInline preload="none" aria-label={lang === "hi" ? "मेडिटेशन सेशन के छोटे वीडियो" : "Short clips from meditation sessions"} />
+                <div className="grid grid-cols-2 gap-3 lg:grid-rows-[1fr_1fr]">
+                  {MOMENTS.map((photo) => (
+                    <div key={photo.src} className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-auto">
+                      <Image src={photo.src} alt={photo.alt[lang]} fill sizes="(min-width: 1024px) 20vw, 50vw" className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section id="calm-price" className={`scroll-mt-20 ${SECTION} band-mint`} data-calm-price>
             <div className="mx-auto max-w-lg rounded-sm border-[3px] border-gold bg-panel p-6 text-center shadow-[0_18px_40px_-18px_rgba(20,32,56,0.35)] sm:p-8">
               <h2 className="text-[22px] font-extrabold leading-snug sm:text-[26px]">{say(c.price.title, lang)}</h2>

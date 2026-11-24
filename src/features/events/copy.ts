@@ -70,6 +70,17 @@ export const TELEPATHY_COPY: EventCopy = {
     { q: { en: 'Can I learn this 1-on-1?', hi: 'क्या इसे 1-on-1 सीख सकते हैं?' }, a: { en: 'Yes — deeper telepathy and intuition work is available in Personal Sessions.', hi: 'हाँ — टेलीपैथी और इनट्यूशन पर गहरा काम पर्सनल सेशन में होता है।' } },
   ],
   finalHeading: { en: 'Your intuition is already there. Learn to hear it.', hi: 'आपका इनट्यूशन पहले से आपके भीतर है। उसे सुनना सीखिए।' },
+  heroImage: '/gallery/retreats/telepathy-card-circle.jpg',
+  photos: {
+    heading: { en: 'From our workshops', hi: 'हमारी वर्कशॉप से' },
+    sub: { en: 'Real participants, real practice — in pairs, in silence, in a circle.', hi: 'असली प्रतिभागी, असली अभ्यास — जोड़ी में, मौन में, घेरे में।' },
+    items: [
+      { src: '/gallery/retreats/telepathy-card-circle.jpg', alt: { en: 'Participants in a circle practising telepathy with cards', hi: 'घेरे में बैठे प्रतिभागी कार्ड से टेलीपैथी का अभ्यास करते हुए' } },
+      { src: '/gallery/retreats/pair-practice-closeup.jpg', alt: { en: 'Two participants practising in silence, facing each other', hi: 'आमने-सामने बैठे दो प्रतिभागी मौन अभ्यास करते हुए' } },
+      { src: '/gallery/retreats/pair-practice-silence.jpg', alt: { en: 'Pair practice in a quiet hall with Dr. Kapil', hi: 'डॉ. कपिल के साथ शांत हॉल में जोड़ी अभ्यास' } },
+      { src: '/gallery/retreats/academy-meditation.jpg', alt: { en: 'Group meditation at the Mind Ur Mind Academy', hi: 'मन उर मन अकादमी में ग्रुप मेडिटेशन' } },
+    ],
+  },
 }
 
 /** Rishikesh residential retreat — 26–29 March 2027, ₹24,999 with stay and food. No venue name on the site (owner). */
@@ -134,5 +145,18 @@ export const RISHIKESH_COPY: EventCopy = {
     { q: { en: 'What language is it in?', hi: 'किस भाषा में है?' }, a: { en: 'Simple Hindi and English.', hi: 'आसान हिंदी और अंग्रेज़ी।' } },
   ],
   finalHeading: { en: '4 days that stay with you for years.', hi: '4 दिन जो सालों तक आपके साथ रहें।' },
+  heroImage: '/gallery/retreats/rishikesh-ganga-group.jpg',
+  photos: {
+    heading: { en: 'From our earlier retreats', hi: 'हमारे पिछले रिट्रीट से' },
+    sub: { en: 'Mornings by the Ganga, yoga under the sky, deep meditation together.', hi: 'गंगा किनारे सुबह, खुले आसमान के नीचे योग, साथ में गहरा मेडिटेशन।' },
+    items: [
+      { src: '/gallery/retreats/rishikesh-ganga-group.jpg', alt: { en: 'Retreat group with Dr. Kapil on the banks of the Ganga', hi: 'गंगा किनारे डॉ. कपिल के साथ रिट्रीट ग्रुप' } },
+      { src: '/gallery/retreats/retreat-meditation-hall.jpg', alt: { en: 'Guided meditation in the retreat hall', hi: 'रिट्रीट हॉल में गाइडेड मेडिटेशन' } },
+      { src: '/gallery/retreats/rishikesh-rooftop-yoga.jpg', alt: { en: 'Morning yoga on the rooftop', hi: 'छत पर सुबह का योग' } },
+      { src: '/gallery/retreats/rishikesh-ganga-morning.jpg', alt: { en: 'Morning by the Ganga in Rishikesh', hi: 'ऋषिकेश में गंगा किनारे सुबह' } },
+      { src: '/gallery/retreats/retreat-hall-session.jpg', alt: { en: 'A session in the retreat hall', hi: 'रिट्रीट हॉल में एक सेशन' } },
+      { src: '/gallery/retreats/meditation-with-monk.jpg', alt: { en: 'Dr. Kapil with a meditating monk', hi: 'ध्यान में बैठे एक साधु के साथ डॉ. कपिल' } },
+    ],
+  },
   disclaimer: { en: 'This is a meditation retreat, not a substitute for medical or psychological treatment.', hi: 'यह मेडिटेशन रिट्रीट है, चिकित्सा या मनोवैज्ञानिक उपचार का विकल्प नहीं।' },
 }
