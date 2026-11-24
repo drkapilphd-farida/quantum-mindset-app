@@ -54,6 +54,8 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      // Deno (Supabase Edge Function) code for the Command Center project.
+      "integrations/**/*.deno.ts",
     ],
   },
 ];

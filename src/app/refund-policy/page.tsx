@@ -45,9 +45,15 @@ export default function RefundPolicyPage(): React.JSX.Element {
             on WhatsApp before the 3rd class and we refund your full fee.
           </li>
           <li>
-            <strong>2-day online workshop (₹499) and offline workshop with EEG (₹8,999):</strong> full refund if you
-            cancel at least 3 days before the workshop starts. After that the fee isn&rsquo;t refundable, but you can
-            move once to a later date where one is available.
+            <strong>2-day online workshop (₹499):</strong> full refund if you cancel at least 3 days before the
+            workshop starts. After that the fee isn&rsquo;t refundable, but you can move once to a later date.
+          </li>
+          <li>
+            <strong>Offline workshop with EEG — ₹3,000 registration (Vadodara / Ahmedabad):</strong> the workshop is
+            held once 10 seats fill in your city, on a date agreed with you on WhatsApp. If no batch is formed within
+            60 days of your registration, you choose: a full refund of ₹3,000, or keep it for the next date. Once your
+            date is confirmed and the remaining ₹5,999 is paid, cancel at least 3 days before the workshop for a full
+            refund; after that you can move once to a later date.
           </li>
           <li>
             <strong>Self-paced (₹2,999):</strong> refundable within 7 days of purchase if you haven&rsquo;t watched more

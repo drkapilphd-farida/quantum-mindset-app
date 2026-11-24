@@ -10,6 +10,9 @@ export type EventCopy = {
   priceLine: Bi
   book: Bi
   bookMessage: string
+  /** Razorpay link: when set, the main button pays directly and WhatsApp becomes the 'ask' link. */
+  payUrl?: string
+  ask?: Bi
   forWhom: { heading: Bi; items: Bi[] }
   plan: { heading: Bi; steps: { title: Bi; line: Bi }[] }
   price: { title: Bi; amount: string; sub: Bi; included: Bi[]; note: Bi }
@@ -17,4 +20,7 @@ export type EventCopy = {
   faq: { q: Bi; a: Bi }[]
   finalHeading: Bi
   disclaimer?: Bi
+  /** Background photo for the hero (owner's own photos). */
+  heroImage?: string
+  photos?: { heading: Bi; sub: Bi; items: { src: string; alt: Bi }[] }
 }

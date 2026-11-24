@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Check } from "lucide-react";
 import { waLink } from "@/data/links";
 import { LanguageOverride } from "@/context/LanguageContext";
@@ -21,10 +22,27 @@ const H2 = "text-[26px] font-extrabold leading-tight sm:text-[34px]";
 const GOLD = "inline-flex min-h-12 items-center justify-center gap-2 rounded-sm bg-gold px-7 py-[15px] text-center text-[16px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-gold-dim";
 
 function BookButton({ copy, lang, className = "" }: { copy: EventCopy; lang: EventLang; className?: string }): React.JSX.Element {
+  if (copy.payUrl !== undefined) {
+    return (
+      <a href={copy.payUrl} target="_blank" rel="noopener noreferrer" className={`${GOLD} ${className}`} data-event-pay>
+        {say(copy.book, lang)}
+      </a>
+    );
+  }
   return (
     <a href={waLink(copy.bookMessage)} target="_blank" rel="noopener noreferrer" className={`${GOLD} ${className}`} data-event-book>
       <WhatsAppGlyph />
       {say(copy.book, lang)}
+    </a>
+  );
+}
+
+function AskLink({ copy, lang, dark = false }: { copy: EventCopy; lang: EventLang; dark?: boolean }): React.JSX.Element | null {
+  if (copy.payUrl === undefined || copy.ask === undefined) return null;
+  return (
+    <a href={waLink(copy.bookMessage)} target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold underline underline-offset-4 ${dark ? "text-white decoration-white/50" : "text-ink decoration-teal/50"}`} data-event-ask>
+      <WhatsAppGlyph />
+      {say(copy.ask, lang)}
     </a>
   );
 }
@@ -36,12 +54,18 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
       <div className="warm-light min-h-screen font-sans antialiased" lang={lang}>
         <SiteNav languageLink={languageLink} cta={{ label: say(copy.book, lang), href: "#price", external: false }} />
         <main>
-          <section className="hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-12 text-white sm:px-8 sm:pb-20 sm:pt-16" data-event-hero>
+          <section className="hero-vivid relative isolate overflow-hidden border-b border-line px-4 pb-14 pt-12 text-white sm:px-8 sm:pb-20 sm:pt-16" data-event-hero>
+            {copy.heroImage !== undefined && (
+              <>
+                <Image src={copy.heroImage} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
+                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-[#071230]/95 via-[#0d2a66]/80 to-[#0a4f5c]/45" aria-hidden="true" />
+              </>
+            )}
             <NeuralOrb className="-right-40 -top-20 opacity-60 lg:right-[-60px]" />
             <div className={`${WRAP} relative max-w-3xl`}>
               <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-[12.5px] font-bold tracking-[0.06em] text-white ring-1 ring-white/25">{say(copy.pill, lang)}</span>
               <h1 className="mt-5 text-balance text-[32px] font-extrabold leading-[1.12] tracking-tight sm:text-[46px]">{say(copy.h1, lang)}</h1>
-              <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/85 sm:text-[19px]">{say(copy.sub, lang)}</p>
+              <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/95 sm:text-[19px]">{say(copy.sub, lang)}</p>
               <ul className="mt-6 flex flex-wrap gap-2 text-[14.5px]">
                 {copy.facts.map((fact) => (
                   <li key={fact.en} className="rounded-full bg-white/10 px-3.5 py-1.5 ring-1 ring-white/20">{say(fact, lang)}</li>
@@ -50,6 +74,9 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
               <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
                 <BookButton copy={copy} lang={lang} />
                 <span className="text-[15px] font-semibold text-white/90">{say(copy.priceLine, lang)}</span>
+              </div>
+              <div className="mt-3">
+                <AskLink copy={copy} lang={lang} dark />
               </div>
             </div>
           </section>
@@ -84,6 +111,22 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
             </div>
           </section>
 
+          {copy.photos !== undefined && (
+            <section className={SECTION} data-event-photos>
+              <div className={WRAP}>
+                <h2 className={H2}>{say(copy.photos.heading, lang)}</h2>
+                <p className="mt-2 text-[16.5px] text-ink-dim">{say(copy.photos.sub, lang)}</p>
+                <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">
+                  {copy.photos.items.map((photo, i) => (
+                    <figure key={photo.src} className={`group relative overflow-hidden rounded-2xl shadow-[0_18px_40px_-24px_rgba(19,32,59,0.5)] ${i === 0 ? "col-span-2 row-span-2 aspect-[4/3] md:aspect-auto" : "aspect-[4/3]"}`}>
+                      <Image src={photo.src} alt={say(photo.alt, lang)} fill sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
           <section id="price" className={`scroll-mt-20 ${SECTION} band-blue`} data-event-price>
             <div className="mx-auto max-w-lg rounded-sm border-[3px] border-gold bg-panel p-6 text-center shadow-[0_18px_40px_-18px_rgba(19,32,59,0.35)] sm:p-8">
               <h2 className="text-[22px] font-extrabold leading-snug sm:text-[26px]">{say(copy.price.title, lang)}</h2>
@@ -95,6 +138,7 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
                 ))}
               </ul>
               <BookButton copy={copy} lang={lang} className="mt-6 w-full" />
+              <div className="mt-3"><AskLink copy={copy} lang={lang} /></div>
               <p className="mt-4 rounded-sm border border-line-strong bg-void px-4 py-3 text-[14px] leading-relaxed text-ink">{say(copy.price.note, lang)}</p>
             </div>
           </section>

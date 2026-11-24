@@ -1,5 +1,6 @@
 "use client";
 
+import { NeuralOrb } from "@/components/fx/NeuralOrb";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
@@ -42,7 +43,8 @@ export default function CorporatePageContent(): React.JSX.Element {
     <div className="warm-light min-h-screen font-sans antialiased">
       <SimplePageNav />
       <main>
-        <section className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
+        <section className="isolate warm-dark hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
+          <NeuralOrb className="-z-10 -right-40 -top-24 opacity-60 lg:right-[-40px]" />
           <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
             <div>
               <Eyebrow color="text-teal">{c.hero.eyebrow}</Eyebrow>
@@ -74,7 +76,7 @@ export default function CorporatePageContent(): React.JSX.Element {
           </div>
         </section>
 
-        <section id="companies" className={`${sectionClass} bg-panel`}>
+        <section id="companies" className={`${sectionClass} band-blue`}>
           <div className="mx-auto max-w-content">
             <Eyebrow color="text-teal">{c.companies.eyebrow}</Eyebrow>
             <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.companies.title}</h2>
@@ -141,7 +143,7 @@ export default function CorporatePageContent(): React.JSX.Element {
           </div>
         </section>
 
-        <section id="enquiry" className={`${sectionClass} scroll-mt-20 bg-panel`}>
+        <section id="enquiry" className={`${sectionClass} scroll-mt-20 band-mint`}>
           <div className="mx-auto max-w-4xl">
             <Eyebrow color="text-teal">{c.enquiry.eyebrow}</Eyebrow>
             <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.enquiry.title}</h2>
