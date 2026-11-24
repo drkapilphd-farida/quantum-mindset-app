@@ -4,6 +4,7 @@ import { TOTAL_CURRICULUM_DAYS } from './curriculumDatabase'
 import { isDayUnlocked } from './dayRules'
 import { dayStepIds } from './paceControl'
 import { getCurriculumDayCompletions } from './actions/getCurriculumDayCompletions'
+import { isOwnerPreviewEmail } from './ownerPreview'
 
 // Founder rule (9 Nov 2026): inside the 30-day plan, the plan's own order is
 // the only order. Some steps (Days 22–30) open an exercise on its own page,
@@ -34,5 +35,7 @@ export async function isExerciseOpenInPlan(exerciseId: string): Promise<boolean>
   } = await supabase.auth.getUser()
   if (!user) return false
   const [completions, hasAccess] = await Promise.all([getCurriculumDayCompletions(), getIsPaidUser(user.id)])
+  // Owner preview (ownerPreview.ts): every plan day is open on the founder's account.
+  if (hasAccess && isOwnerPreviewEmail(user.email)) return true
   return exerciseOpenInPlan(exerciseId, completions.map((c) => c.day), hasAccess)
 }

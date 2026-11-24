@@ -1,0 +1,16 @@
+.git
+.gitignore
+node_modules
+.next
+coverage
+test-results
+qa-recordings
+tests
+archive
+documentation
+docs
+.vercel
+.env
+.env.local
+*.tsbuildinfo
+.env.production.json

@@ -184,6 +184,10 @@ function personalSessionImages(): string {
 }
 
 const nextConfig: NextConfig = {
+  // Google Cloud Run build (Dockerfile sets STANDALONE=1): a self-contained
+  // server.js. Vercel builds leave this unset and are unchanged.
+  ...(process.env.STANDALONE === '1' ? { output: 'standalone' as const } : {}),
+
   // Content TODO markers (src/components/site/SiteTodo.tsx) render on
   // local and preview builds so missing content is visible during review,
   // and never on the production deployment.

@@ -26,6 +26,7 @@ import { features, programs } from '@/config/site.config'
 import { ReminderBanner } from '@/features/reminders/components/ReminderBanner'
 import { NextClassCard } from '@/features/live-classes/components/NextClassCard'
 import { ReviewDueCard } from '@/features/memory-studio/components/ReviewDueCard'
+import { DailyRsvpProgressCard } from '@/features/daily-rsvp/components/DailyRsvpProgressCard'
 
 // Mind Score: weighted blend of 30-day plan progress (60%) and streak
 // consistency (40%), capped at 100. Grows as the student practices more
@@ -145,6 +146,11 @@ export async function QsrDashboard({ view }: QsrDashboardProps): Promise<React.J
           </Suspense>
         </div>
       </div>
+
+      {/* Daily Speed Read: reading speed (WPM) and retention for every plan day, and the growth since the first. */}
+      <Suspense fallback={null}>
+        <DailyRsvpProgressCard showPlanLink />
+      </Suspense>
 
       {/* 3-Tier Value Ladder — Tier 1: My Document Tools. AI Document
           Transformer is the anchor target for Choose Your Path's

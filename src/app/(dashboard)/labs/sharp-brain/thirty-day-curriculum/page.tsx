@@ -9,6 +9,8 @@ import { isCurriculumDayUnlocked } from '@/features/thirty-day-curriculum/curric
 import { NextClassCard } from '@/features/live-classes/components/NextClassCard'
 import { getNextDayOpensAt } from '@/features/thirty-day-curriculum/actions/paceActions'
 import { getSkillProgress } from '@/features/thirty-day-curriculum/actions/getSkillProgress'
+import { getIsOwnerPreview } from '@/features/thirty-day-curriculum/ownerPreview'
+import { DailyRsvpProgressCard } from '@/features/daily-rsvp/components/DailyRsvpProgressCard'
 
 export const metadata: Metadata = {
   title: 'Sharp Brain 30-Day Program Curriculum — Sharp Brain Lab',
@@ -47,13 +49,16 @@ type ThirtyDayCurriculumPageProps = {
 export const maxDuration = 60
 
 export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDayCurriculumPageProps): Promise<React.JSX.Element> {
-  const [isPro, completions, watermarkText, nextDayOpensAt, skillBars] = await Promise.all([
+  const [isPro, completions, watermarkText, nextDayOpensAt, skillBars, ownerPreview] = await Promise.all([
     hasQuantumSpeedReadingProAccess(),
     getCurriculumDayCompletions(),
     getCurriculumWatermarkText(),
     getNextDayOpensAt(),
     getSkillProgress(),
+    getIsOwnerPreview(),
   ])
+  // Owner preview (ownerPreview.ts): every day open, for the founder's demo videos only.
+  const unlockAllDays = ownerPreview && isPro
   const initialServerCompletedDays = completions.map((completion) => completion.day)
 
   // Server check: a day opened by URL (?view=day&day=N) that this learner
@@ -61,15 +66,16 @@ export default async function ThirtyDayCurriculumPage({ searchParams }: ThirtyDa
   // shows the enroll offer or "finish the previous day" as appropriate.
   const params = await searchParams
   const requestedDay = params.view === 'day' ? Number(params.day) : null
-  if (requestedDay !== null && Number.isInteger(requestedDay) && !isCurriculumDayUnlocked(requestedDay, initialServerCompletedDays, isPro, nextDayOpensAt)) {
+  if (requestedDay !== null && Number.isInteger(requestedDay) && !unlockAllDays && !isCurriculumDayUnlocked(requestedDay, initialServerCompletedDays, isPro, nextDayOpensAt)) {
     redirect(`/labs/sharp-brain/thirty-day-curriculum?locked=${requestedDay}`)
   }
   return (
     // The plan page's own Today card replaces the reminder banner here; the next live class sits below the plan.
     <>
-      <ThirtyDayCurriculumExperience isPro={isPro} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} initialNextDayOpensAt={nextDayOpensAt} initialSkillBars={skillBars} />
+      <ThirtyDayCurriculumExperience isPro={isPro} unlockAllDays={unlockAllDays} initialServerCompletedDays={initialServerCompletedDays} watermarkText={watermarkText} initialNextDayOpensAt={nextDayOpensAt} initialSkillBars={skillBars} />
       {requestedDay === null && (
-        <div className="mx-auto mt-4 w-full max-w-3xl">
+        <div className="mx-auto mt-4 flex w-full max-w-3xl flex-col gap-4">
+          <DailyRsvpProgressCard />
           <NextClassCard />
         </div>
       )}

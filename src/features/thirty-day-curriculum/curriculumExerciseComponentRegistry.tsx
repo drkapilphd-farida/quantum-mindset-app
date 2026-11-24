@@ -91,6 +91,7 @@ export const CURRICULUM_EMBEDDABLE_COMPONENTS: Readonly<Record<string, Component
   'calm-breathing': lazyNamed(() => import('@/features/calm-breathing/components/CalmBreathingExperience'), 'CalmBreathingExperience'),
 
   // Reading Hub
+  'daily-rsvp': lazyNamed(() => import('@/features/daily-rsvp/components/DailyRsvpExperience'), 'DailyRsvpExperience'),
   'dynamic-chunk-sliding': lazyNamed(() => import('@/features/dynamic-chunk-sliding/components/DynamicChunkSlidingExperience'), 'DynamicChunkSlidingExperience'),
   'vertical-chunk-sliding': lazyNamed(() => import('@/features/vertical-chunk-sliding/components/VerticalChunkSlidingExperience'), 'VerticalChunkSlidingExperience'),
   'flash-recall-sprint': lazyNamed(() => import('@/features/flash-recall-sprint/components/FlashRecallSprintExperience'), 'FlashRecallSprintExperience'),

@@ -18,6 +18,8 @@ type ThirtyDayCurriculumOverviewProps = {
   /** Opens the enrolment offer (shown only to learners without the program). */
   onStartProgram: () => void
   isPro: boolean
+  /** Owner preview (ownerPreview.ts): every day open. */
+  unlockAllDays?: boolean
   /** Server-recorded finished days — every lock, tick and the Today card come from these. */
   serverCompletedDays: readonly number[]
   /** Pace control: when the next day opens (null = open now). */
@@ -36,14 +38,14 @@ const SKILL_COLOUR: Record<SkillId, string> = {
 // The 30-day plan page (redesign, Oct 2026): what to do today first, then the
 // 30 days at a glance, then skill growth, then the 4 phases (folded). The
 // longer explanation sits behind "About the program".
-export function ThirtyDayCurriculumOverview({ onSelectDay, onLockedDayClick, onStartProgram, isPro, serverCompletedDays, nextDayOpensAt = null, skillBars }: ThirtyDayCurriculumOverviewProps): React.JSX.Element {
+export function ThirtyDayCurriculumOverview({ onSelectDay, onLockedDayClick, onStartProgram, isPro, unlockAllDays = false, serverCompletedDays, nextDayOpensAt = null, skillBars }: ThirtyDayCurriculumOverviewProps): React.JSX.Element {
   const { t, lang } = useAppI18n()
   const [aboutOpen, setAboutOpen] = useState(false)
   const time = (iso: string): string => new Intl.DateTimeFormat(`${LANGUAGES[lang].htmlLang}-IN-u-nu-latn`, { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(iso))
 
   // Today = the first day not yet finished (a learner with gaps from old test data still gets the earliest open day).
   const firstUnfinished = Array.from({ length: TOTAL_CURRICULUM_DAYS }, (_, i) => i + 1).find((d) => !serverCompletedDays.includes(d)) ?? null
-  const todayOpen = firstUnfinished !== null && isCurriculumDayUnlocked(firstUnfinished, serverCompletedDays, isPro, nextDayOpensAt)
+  const todayOpen = firstUnfinished !== null && (unlockAllDays || isCurriculumDayUnlocked(firstUnfinished, serverCompletedDays, isPro, nextDayOpensAt))
   const opensLater = firstUnfinished !== null && isPro && !todayOpen && nextDayOpensAt !== null && serverCompletedDays.includes(firstUnfinished - 1)
 
   return (
@@ -91,7 +93,7 @@ export function ThirtyDayCurriculumOverview({ onSelectDay, onLockedDayClick, onS
         <h2 id="plan-days" className="text-xl text-foreground">{t('curriculum.allDays')}</h2>
         <div className="mt-3 grid grid-cols-5 gap-2 sm:grid-cols-6 md:grid-cols-10">
           {Array.from({ length: TOTAL_CURRICULUM_DAYS }, (_, index) => index + 1).map((day) => (
-            <DayCell key={day} day={day} isToday={day === firstUnfinished} serverCompletedDays={serverCompletedDays} nextDayOpensAt={nextDayOpensAt} isPro={isPro} onSelectDay={onSelectDay} onLockedDayClick={onLockedDayClick} />
+            <DayCell key={day} day={day} isToday={day === firstUnfinished} serverCompletedDays={serverCompletedDays} nextDayOpensAt={nextDayOpensAt} isPro={isPro} unlockAllDays={unlockAllDays} onSelectDay={onSelectDay} onLockedDayClick={onLockedDayClick} />
           ))}
         </div>
         <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
@@ -205,6 +207,7 @@ function DayCell({
   serverCompletedDays,
   nextDayOpensAt,
   isPro,
+  unlockAllDays,
   onSelectDay,
   onLockedDayClick,
 }: {
@@ -213,11 +216,12 @@ function DayCell({
   serverCompletedDays: readonly number[]
   nextDayOpensAt: string | null
   isPro: boolean
+  unlockAllDays: boolean
   onSelectDay: (day: number) => void
   onLockedDayClick: (day: number) => void
 }): React.JSX.Element {
   const { t } = useAppI18n()
-  const unlocked = isCurriculumDayUnlocked(day, serverCompletedDays, isPro, nextDayOpensAt)
+  const unlocked = unlockAllDays || isCurriculumDayUnlocked(day, serverCompletedDays, isPro, nextDayOpensAt)
   const completed = serverCompletedDays.includes(day)
   const isCheckpoint = CHECKPOINT_DAYS.includes(day)
 

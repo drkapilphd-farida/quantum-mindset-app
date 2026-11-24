@@ -191,9 +191,18 @@ describe('buildCurriculumDayPlan', () => {
       expect(plan.exercises.rightBrainIntuition.map((e) => e.id)).toEqual([day <= 6 ? 'story-method' : 'peg-method'])
       expect(plan.exercises.brainGym).toHaveLength(1)
       expect(plan.exercises.visualization).toHaveLength(1)
-      expect(plan.exercises.readingIntelligence).toHaveLength(1)
+      // Reading = the Daily Speed Read (23 Nov 2026) + the day's reading exercise.
+      expect(plan.exercises.readingIntelligence).toHaveLength(2)
     }
     for (const day of [1, 11, 20, 30]) expect(buildCurriculumDayPlan(day).exercises.rightBrainIntuition[0]?.id).not.toMatch(/story|peg-method/)
+  })
+
+  it('every day 1–30 starts its reading with the Daily Speed Read (founder, 23 Nov 2026)', () => {
+    for (let day = 1; day <= 30; day++) {
+      const reading = buildCurriculumDayPlan(day).exercises.readingIntelligence.map((e) => e.id)
+      expect(reading[0], `day ${day}`).toBe('daily-rsvp')
+      expect(reading.length, `day ${day}`).toBeGreaterThanOrEqual(2)
+    }
   })
 
   it('no day mentions eye training, energies, holograms or intuition in its theme', () => {

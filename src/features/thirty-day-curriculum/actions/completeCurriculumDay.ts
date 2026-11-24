@@ -8,6 +8,7 @@ import { createServiceClient } from '@/lib/supabase/service'
 import { TOTAL_CURRICULUM_DAYS } from '../curriculumDatabase'
 import { CHECKPOINT_DAYS, missingRequiredSteps } from '../dayRules'
 import { getCurriculumDayCompletions } from './getCurriculumDayCompletions'
+import { isOwnerPreviewEmail } from '../ownerPreview'
 
 export type CompleteCurriculumDayInput = {
   day: number
@@ -77,7 +78,8 @@ export async function completeCurriculumDay(input: CompleteCurriculumDayInput): 
     const isPro = await getIsPaidUser(user.id)
     if (!isPro) return { ok: false, reason: 'not_pro' }
 
-    if (input.day !== 1 && !completedDaysBefore.includes(input.day - 1)) {
+    // Owner preview (ownerPreview.ts): the founder's account may finish any open day, in any order.
+    if (input.day !== 1 && !completedDaysBefore.includes(input.day - 1) && !isOwnerPreviewEmail(user.email)) {
       return { ok: false, reason: 'previous_day_incomplete' }
     }
 

@@ -111,6 +111,8 @@ const VISUALIZATION_EXERCISES: readonly CurriculumCatalogExercise[] = [
 
 // ---- Core Reading Intelligence (Reading Hub + orphaned standalone) ----
 const READING_HUB_EXERCISES: readonly CurriculumCatalogExercise[] = [
+  // Daily Speed Read (founder, 23 Nov 2026): RSVP + 3 recall questions, a step of every day 1–30.
+  { id: 'daily-rsvp', title: 'Daily Speed Read', href: '/labs/sharp-brain/daily-rsvp', category: 'reading-intelligence' },
   {
     id: 'dynamic-chunk-sliding',
     title: 'Dynamic Chunk Sliding',

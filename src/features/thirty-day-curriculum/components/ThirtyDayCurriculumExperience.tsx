@@ -82,14 +82,17 @@ type ThirtyDayCurriculumExperienceProps = {
   // account) — every other signed-in viewer gets their own email/phone
   // tiled across whichever of the three views below is on screen.
   watermarkText: string | null
+  /** Owner preview (ownerPreview.ts): every day open. Resolved on the server; only the founder's account. */
+  unlockAllDays?: boolean
 }
 
-export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDays, watermarkText, initialNextDayOpensAt = null, initialSkillBars }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
+export function ThirtyDayCurriculumExperience({ isPro, unlockAllDays = false, initialServerCompletedDays, watermarkText, initialNextDayOpensAt = null, initialSkillBars }: ThirtyDayCurriculumExperienceProps): React.JSX.Element {
   const searchParams = useSearchParams()
   const router = useRouter()
   // Practice text is English until a language gets its own passages; WPM is compared only within one language.
   const contentLang = practiceContentLang(useUiLang(), 'reading')
   const initialDay = searchParams.get('view') === 'day' ? parseValidDay(searchParams.get('day')) : null
+  const dayOpen = (day: number, completedDays: readonly number[], pro: boolean, opensAt: string | null): boolean => unlockAllDays || isCurriculumDayUnlocked(day, completedDays, pro, opensAt)
 
   // The locally cached progress (check-in results, streaks) exists only in the
   // browser, so the first render uses the empty cache on both server and client
@@ -109,7 +112,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // landing here with an actually-locked day can never skip straight to
   // real content — it resolves to the overview with the paywall already
   // open instead.
-  const initialDayIsUnlocked = initialDay !== null && isCurriculumDayUnlocked(initialDay, serverCompletedDays, isPro, initialNextDayOpensAt)
+  const initialDayIsUnlocked = initialDay !== null && dayOpen(initialDay, serverCompletedDays, isPro, initialNextDayOpensAt)
 
   // Practising a completed day again (see curriculumReturnRouting.ts): only
   // ever for a day the server already counts as completed.
@@ -128,7 +131,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // `locked` comes from the server redirect when a closed day is opened by URL.
   const lockedParam = Number(searchParams.get('locked'))
   const closedDay = initialDay !== null && !initialDayIsUnlocked ? initialDay : Number.isInteger(lockedParam) && lockedParam >= 1 && lockedParam <= 30 ? lockedParam : null
-  const closedAccess = closedDay === null ? 'open' : curriculumDayAccess(closedDay, initialServerCompletedDays, isPro, initialNextDayOpensAt)
+  const closedAccess = closedDay === null ? 'open' : (unlockAllDays ? 'open' : curriculumDayAccess(closedDay, initialServerCompletedDays, isPro, initialNextDayOpensAt))
   const [paywallDay, setPaywallDay] = useState<number | null>(closedAccess === 'needs_enrolment' ? closedDay : null)
   const [finishPreviousDay, setFinishPreviousDay] = useState<number | null>(closedAccess === 'finish_previous' || closedAccess === 'opens_later' ? closedDay : null)
   const [skillBars, setSkillBars] = useState(initialSkillBars)
@@ -163,7 +166,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
   // the same "never trust the client-side hint alone" discipline this
   // gate itself was built to enforce.
   function handleSelectDay(day: number): void {
-    if (!isCurriculumDayUnlocked(day, serverCompletedDays, isPro, nextDayOpensAt)) {
+    if (!dayOpen(day, serverCompletedDays, isPro, nextDayOpensAt)) {
       handleClosedDay(day)
       return
     }
@@ -324,6 +327,7 @@ export function ThirtyDayCurriculumExperience({ isPro, initialServerCompletedDay
         onLockedDayClick={handleClosedDay}
         onStartProgram={openProgramOffer}
         isPro={isPro}
+        unlockAllDays={unlockAllDays}
         serverCompletedDays={serverCompletedDays}
         nextDayOpensAt={nextDayOpensAt}
         skillBars={skillBars}

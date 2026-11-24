@@ -13,7 +13,7 @@ import type { AppLang } from './languages'
 // is stored with the language of the text that was read (content_lang) and
 // only compared with the learner's own results in that same language.
 
-export type PracticeKind = 'reading' | 'rsvp' | 'wordList' | 'phraseList' | 'readingTest' | 'chunkPassages'
+export type PracticeKind = 'reading' | 'rsvp' | 'wordList' | 'phraseList' | 'readingTest' | 'chunkPassages' | 'dailyRsvp'
 
 export const PRACTICE_CONTENT_LANGS: Record<PracticeKind, readonly AppLang[]> = {
   reading: ['en'],
@@ -23,6 +23,8 @@ export const PRACTICE_CONTENT_LANGS: Record<PracticeKind, readonly AppLang[]> = 
   readingTest: ['en', 'hi'],
   // Short passages of the chunk-reading exercises (src/features/exercise-core/readingPassages.ts).
   chunkPassages: ['en', 'hi'],
+  // Daily Speed Read (src/features/daily-rsvp): 30 passages in each.
+  dailyRsvp: ['en', 'hi'],
 }
 
 /** The language the practice text will actually be in for this learner. */
