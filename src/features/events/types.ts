@@ -20,4 +20,7 @@ export type EventCopy = {
   faq: { q: Bi; a: Bi }[]
   finalHeading: Bi
   disclaimer?: Bi
+  /** Background photo for the hero (owner's own photos). */
+  heroImage?: string
+  photos?: { heading: Bi; sub: Bi; items: { src: string; alt: Bi }[] }
 }

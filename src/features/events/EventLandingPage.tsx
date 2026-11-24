@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Check } from "lucide-react";
 import { waLink } from "@/data/links";
 import { LanguageOverride } from "@/context/LanguageContext";
@@ -53,7 +54,13 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
       <div className="warm-light min-h-screen font-sans antialiased" lang={lang}>
         <SiteNav languageLink={languageLink} cta={{ label: say(copy.book, lang), href: "#price", external: false }} />
         <main>
-          <section className="hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-12 text-white sm:px-8 sm:pb-20 sm:pt-16" data-event-hero>
+          <section className="hero-vivid relative isolate overflow-hidden border-b border-line px-4 pb-14 pt-12 text-white sm:px-8 sm:pb-20 sm:pt-16" data-event-hero>
+            {copy.heroImage !== undefined && (
+              <>
+                <Image src={copy.heroImage} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
+                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-[#071230]/95 via-[#0d2a66]/80 to-[#0a4f5c]/45" aria-hidden="true" />
+              </>
+            )}
             <NeuralOrb className="-right-40 -top-20 opacity-60 lg:right-[-60px]" />
             <div className={`${WRAP} relative max-w-3xl`}>
               <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-[12.5px] font-bold tracking-[0.06em] text-white ring-1 ring-white/25">{say(copy.pill, lang)}</span>
@@ -103,6 +110,22 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
               </ol>
             </div>
           </section>
+
+          {copy.photos !== undefined && (
+            <section className={SECTION} data-event-photos>
+              <div className={WRAP}>
+                <h2 className={H2}>{say(copy.photos.heading, lang)}</h2>
+                <p className="mt-2 text-[16.5px] text-ink-dim">{say(copy.photos.sub, lang)}</p>
+                <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">
+                  {copy.photos.items.map((photo, i) => (
+                    <figure key={photo.src} className={`group relative overflow-hidden rounded-2xl shadow-[0_18px_40px_-24px_rgba(19,32,59,0.5)] ${i === 0 ? "col-span-2 row-span-2 aspect-[4/3] md:aspect-auto" : "aspect-[4/3]"}`}>
+                      <Image src={photo.src} alt={say(photo.alt, lang)} fill sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
           <section id="price" className={`scroll-mt-20 ${SECTION} band-blue`} data-event-price>
             <div className="mx-auto max-w-lg rounded-sm border-[3px] border-gold bg-panel p-6 text-center shadow-[0_18px_40px_-18px_rgba(19,32,59,0.35)] sm:p-8">
