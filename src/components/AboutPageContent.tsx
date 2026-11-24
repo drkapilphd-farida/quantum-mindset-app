@@ -1,5 +1,6 @@
 "use client";
 
+import { NeuralOrb } from "@/components/fx/NeuralOrb";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
@@ -51,7 +52,8 @@ export default function AboutPageContent(): React.JSX.Element {
     <div className="warm-light min-h-screen font-sans antialiased">
       <SimplePageNav />
       <main>
-        <section className="border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
+        <section className="isolate warm-dark hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
+          <NeuralOrb className="-z-10 -right-40 -top-24 opacity-60 lg:right-[-40px]" />
           <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
             <div>
               <Eyebrow color="text-gold">{c.hero.eyebrow}</Eyebrow>
@@ -96,7 +98,7 @@ export default function AboutPageContent(): React.JSX.Element {
 
         <OrganisationsWorkedWith eyebrow={lang === "hi" ? "जिन संस्थाओं के साथ काम किया है" : "Organisations Dr. Kapil has worked with"} />
 
-        <section id="pillars" className={`${sectionClass} bg-panel`}>
+        <section id="pillars" className={`${sectionClass} band-blue`}>
           <div className="mx-auto max-w-content">
             <Eyebrow color="text-gold">{c.pillars.eyebrow}</Eyebrow>
             <h2 className="mt-4 text-[26px] font-extrabold leading-tight sm:text-[34px]">{c.pillars.title}</h2>

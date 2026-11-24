@@ -31,7 +31,6 @@ export default function HomeHero(): React.JSX.Element {
         {/* Interactive 3D brain (owner, 23 Nov 2026): drag or swipe to turn it, tap a region. */}
         <div className="relative order-none h-[270px] sm:h-[380px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-[470px] lg:self-center" data-home-brain>
           <Brain3D lang={lang} className="inset-0 h-full w-full" />
-          <p className="pointer-events-none absolute inset-x-0 bottom-0 text-center font-mono text-[11px] uppercase tracking-[0.12em] text-white/55">{lang === "hi" ? "घुमाइए · टैप कीजिए" : "Drag to turn · tap a region"}</p>
         </div>
         <PageVideo video={PAGE_VIDEOS.intro} lang={lang} tone="dark" priority caption={HERO_VIDEO_CAPTION} className="order-last lg:order-none lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:!max-w-[250px] lg:self-center" />
         <div className="lg:col-start-1 lg:row-start-2 lg:self-start">

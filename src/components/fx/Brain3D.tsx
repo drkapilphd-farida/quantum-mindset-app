@@ -22,6 +22,8 @@ const REGIONS: { id: RegionId; color: [number, number, number]; anchor: [number,
   { id: "calm", color: [0.8, 0.45, 1], anchor: [-0.3, 0.82, -0.25], label: { en: "Calm", hi: "शांति" }, line: { en: "Online Retreat", hi: "ऑनलाइन रिट्रीट" } },
 ];
 
+const TEST_HREF: Record<Lang, string> = { en: "/reading-memory-test", hi: "/reading-memory-test?lang=hi" };
+
 function regionOf(_x: number, y: number, z: number): RegionId {
   if (z > 0.28) return "focus";
   if (y > 0.3) return "calm";
@@ -102,6 +104,16 @@ export function Brain3D({ lang, className = "", showLabels = true }: { lang: Lan
   const highlightRef = useRef<RegionId | null>(null);
   const [mode, setMode] = useState<"pending" | "webgl" | "fallback">("pending");
   const [active, setActive] = useState<RegionId | null>(null);
+  const [woken, setWoken] = useState<RegionId[]>([]);
+  const awakeRef = useRef(false);
+  const onWakeRef = useRef<(id: RegionId) => void>(() => {});
+  onWakeRef.current = (id: RegionId): void => {
+    setWoken((w) => (w.includes(id) ? w : [...w, id]));
+  };
+  const allAwake = woken.length === REGIONS.length;
+  useEffect(() => {
+    awakeRef.current = allAwake;
+  }, [allAwake]);
 
   useEffect(() => {
     highlightRef.current = active;
@@ -158,17 +170,24 @@ export function Brain3D({ lang, className = "", showLabels = true }: { lang: Lan
       const { positions, regions } = buildBrain(COUNT);
       const colors = new Float32Array(COUNT * 3);
       const regionColor = (id: RegionId): [number, number, number] => REGIONS.find((r) => r.id === id)?.color ?? [1, 1, 1];
-      const paint = (highlight: RegionId | null): void => {
+      // Per-point extra glow from taps (fades out), and the all-awake gold mode.
+      const glow = new Float32Array(COUNT);
+      const paint = (highlight: RegionId | null, gold: number): void => {
         for (let i = 0; i < COUNT; i += 1) {
           const id = regions[i] ?? "memory";
           const [r, g, b] = regionColor(id);
           const k = highlight === null ? 0.85 : highlight === id ? 1.35 : 0.35;
-          colors[i * 3] = r * k;
-          colors[i * 3 + 1] = g * k;
-          colors[i * 3 + 2] = b * k;
+          const gl = glow[i] ?? 0;
+          // Blend towards warm gold when the whole brain is awake.
+          const cr = r * (1 - gold) + 1.0 * gold;
+          const cg = g * (1 - gold) + 0.74 * gold;
+          const cb = b * (1 - gold) + 0.32 * gold;
+          colors[i * 3] = cr * k + gl;
+          colors[i * 3 + 1] = cg * k + gl * 0.85;
+          colors[i * 3 + 2] = cb * k + gl * 0.5;
         }
       };
-      paint(null);
+      paint(null, 0);
 
       const pointsGeo = new THREE.BufferGeometry();
       pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
@@ -248,20 +267,71 @@ export function Brain3D({ lang, className = "", showLabels = true }: { lang: Lan
       let velX = 0;
       let velY = 0;
       const el = renderer.domElement;
+      let downX = 0;
+      let downY = 0;
+      let moved = 0;
       const down = (e: PointerEvent): void => {
         dragging = true;
+        downX = e.clientX;
+        downY = e.clientY;
+        moved = 0;
         lastX = e.clientX;
         lastY = e.clientY;
         el.style.cursor = "grabbing";
       };
       const move = (e: PointerEvent): void => {
         if (!dragging) return;
+        moved = Math.max(moved, Math.abs(e.clientX - downX) + Math.abs(e.clientY - downY));
         velY = (e.clientX - lastX) * 0.006;
         velX = (e.clientY - lastY) * 0.004;
         lastX = e.clientX;
         lastY = e.clientY;
       };
-      const up = (): void => {
+      // A tap (not a drag) lights up the neurons under the finger.
+      const tapAt = (clientX: number, clientY: number): void => {
+        const rect = el.getBoundingClientRect();
+        const px = clientX - rect.left;
+        const py = clientY - rect.top;
+        group.updateMatrixWorld();
+        let best = -1;
+        let bestD = 46 * 46;
+        for (let i = 0; i < COUNT; i += 1) {
+          tmp.set(positions[i * 3] ?? 0, positions[i * 3 + 1] ?? 0, positions[i * 3 + 2] ?? 0).applyMatrix4(group.matrixWorld);
+          if (tmp.z < -0.15) continue; // back side
+          tmp.project(camera);
+          const sx = ((tmp.x + 1) / 2) * rect.width;
+          const sy = ((1 - tmp.y) / 2) * rect.height;
+          const d = (sx - px) ** 2 + (sy - py) ** 2;
+          if (d < bestD) {
+            bestD = d;
+            best = i;
+          }
+        }
+        if (best < 0) return;
+        const cx = positions[best * 3] ?? 0;
+        const cy = positions[best * 3 + 1] ?? 0;
+        const cz = positions[best * 3 + 2] ?? 0;
+        for (let i = 0; i < COUNT; i += 1) {
+          const d = Math.hypot((positions[i * 3] ?? 0) - cx, (positions[i * 3 + 1] ?? 0) - cy, (positions[i * 3 + 2] ?? 0) - cz);
+          if (d < 0.45) glow[i] = Math.max(glow[i] ?? 0, 1.6 * (1 - d / 0.45));
+        }
+        // Send a burst of signals along the links around the tapped neuron.
+        const near: [number, number][] = [];
+        for (const pair of pairs) {
+          if ((glow[pair[0]] ?? 0) > 0.6) near.push(pair);
+          if (near.length >= 18) break;
+        }
+        near.forEach((pair, k) => {
+          const p = pulseState[k];
+          if (p === undefined) return;
+          p.pair = pair;
+          p.t = 0;
+        });
+        onWakeRef.current(regions[best] ?? "memory");
+      };
+      const tmp = new THREE.Vector3();
+      const up = (e: PointerEvent): void => {
+        if (dragging && moved < 8 && e.target === el) tapAt(e.clientX, e.clientY);
         dragging = false;
         el.style.cursor = "grab";
       };
@@ -278,6 +348,8 @@ export function Brain3D({ lang, className = "", showLabels = true }: { lang: Lan
 
       const v = new THREE.Vector3();
       let painted: RegionId | null = null;
+      let gold = 0;
+      let wasGlowing = false;
       let last = performance.now();
       let raf = 0;
       const tick = (now: number): void => {
@@ -296,11 +368,27 @@ export function Brain3D({ lang, className = "", showLabels = true }: { lang: Lan
         group.position.y = Math.sin(now / 1600) * 0.04;
 
         const highlight = highlightRef.current;
-        if (highlight !== painted) {
-          paint(highlight);
+        const goldTarget = awakeRef.current ? 1 : 0;
+        gold += (goldTarget - gold) * Math.min(1, dt * 1.5);
+        let glowing = false;
+        for (let i = 0; i < COUNT; i += 1) {
+          const gl = glow[i] ?? 0;
+          if (gl > 0.01) {
+            glow[i] = gl * (1 - dt * 1.6);
+            glowing = true;
+          } else if (gl !== 0) {
+            glow[i] = 0;
+          }
+        }
+        if (highlight !== painted || glowing || Math.abs(goldTarget - gold) > 0.005 || wasGlowing) {
+          paint(highlight, gold);
           colorAttr.needsUpdate = true;
           painted = highlight;
         }
+        wasGlowing = glowing;
+        pulseMat.size = 0.11 + gold * 0.05;
+        lineMat.color.setRGB(1, 1 - 0.15 * gold, 1 - 0.65 * gold);
+        lineMat.opacity = 0.28 + 0.14 * gold;
 
         for (let k = 0; k < PULSES; k += 1) {
           const p = pulseState[k];
@@ -386,7 +474,10 @@ export function Brain3D({ lang, className = "", showLabels = true }: { lang: Lan
               type="button"
               onPointerEnter={() => setActive(region.id)}
               onPointerLeave={() => setActive(null)}
-              onClick={() => setActive((a) => (a === region.id ? null : region.id))}
+              onClick={() => {
+                setActive((a) => (a === region.id ? null : region.id));
+                onWakeRef.current(region.id);
+              }}
               className="absolute left-0 top-0 flex items-center gap-2 whitespace-nowrap rounded-full bg-[#071230]/70 py-1.5 pl-2 pr-3.5 text-left text-white shadow-lg ring-1 backdrop-blur transition-[opacity,box-shadow] duration-200"
               style={{ opacity: 0, boxShadow: on ? `0 0 24px ${rgb}` : undefined, ["--tw-ring-color" as string]: `${rgb}88` }}
               aria-pressed={on}
@@ -399,6 +490,39 @@ export function Brain3D({ lang, className = "", showLabels = true }: { lang: Lan
             </button>
           );
         })}
+      {showLabels && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-2 text-center" data-brain-game>
+          {allAwake ? (
+            <a
+              href={TEST_HREF[lang]}
+              className="pointer-events-auto inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-[14.5px] font-extrabold text-[#1B1508] shadow-[0_0_30px_rgba(246,178,78,0.65)]"
+              data-brain-cta
+            >
+              {lang === "hi" ? "🧠✨ दिमाग़ जाग गया! मुफ़्त Brain Test दीजिए →" : "🧠✨ Brain awake! Take the free Brain Test →"}
+            </a>
+          ) : (
+            <>
+              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/80">
+                {lang === "hi" ? "दिमाग़ को छूकर जगाइए · घुमाइए" : "Tap the brain to wake it · drag to turn"}
+              </p>
+              <ul className="flex gap-1.5">
+                {REGIONS.map((region) => {
+                  const on = woken.includes(region.id);
+                  const [r, g, b] = region.color;
+                  const rgb = `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)})`;
+                  return (
+                    <li key={region.id} className="flex items-center gap-1.5 rounded-full bg-[#071230]/60 px-2.5 py-1 text-[12px] font-bold text-white ring-1 ring-white/15">
+                      <span className="h-2 w-2 rounded-full" style={{ background: on ? rgb : "transparent", border: `1.5px solid ${rgb}`, boxShadow: on ? `0 0 8px ${rgb}` : undefined }} aria-hidden="true" />
+                      {region.label[lang]}
+                      {on && <span aria-hidden="true">✓</span>}
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

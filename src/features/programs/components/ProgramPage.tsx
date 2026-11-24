@@ -1,3 +1,4 @@
+import { NeuralOrb } from "@/components/fx/NeuralOrb";
 import Image from "next/image";
 import { CheckCircle2, Headphones } from "lucide-react";
 import { CHANGE_ICONS } from "../changeIcons";
@@ -58,7 +59,8 @@ export function ProgramPage({ program: p, lang }: { program: Program; lang: Prog
     <>
       <ProgramViewContent name={p.name.en} />
       {/* 1 HERO */}
-      <section className="bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-16">
+      <section className="isolate hero-vivid relative overflow-hidden px-4 py-14 text-white sm:px-6 md:py-16">
+        <NeuralOrb className="-z-10 -right-40 -top-24 opacity-60 lg:right-[-40px]" />
         <div className={`${wrap} flex flex-wrap items-center gap-12`}>
           <div className="flex min-w-0 flex-[999_1_480px] flex-col gap-[18px]">
             <nav aria-label="Breadcrumb" className="text-[14px]">

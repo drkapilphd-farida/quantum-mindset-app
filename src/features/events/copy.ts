@@ -1,3 +1,4 @@
+import { LINKS } from '@/data/links'
 import type { EventCopy } from './types'
 
 // Owner's offer ladder (23 Nov 2026). Content rules: no cure/treat/heal/
@@ -27,9 +28,11 @@ export const TELEPATHY_COPY: EventCopy = {
     { en: 'Practice in pairs', hi: 'जोड़ी में अभ्यास' },
     { en: 'Hindi + English', hi: 'हिंदी + अंग्रेज़ी' },
   ],
-  priceLine: { en: '₹999 · next batch dates on WhatsApp', hi: '₹999 · अगले बैच की तारीख़ WhatsApp पर' },
-  book: { en: 'Book my seat — ₹999', hi: 'मेरी सीट बुक करें — ₹999' },
-  bookMessage: 'Hi Dr. Kapil, I want to book a seat in the Telepathy & Intuition online workshop (₹999). Please share the next dates.',
+  priceLine: { en: '₹999 · a new batch every month', hi: '₹999 · हर महीने नया बैच' },
+  book: { en: 'Pay ₹999 & book my seat', hi: '₹999 पे करें और सीट बुक करें' },
+  bookMessage: 'Hi Dr. Kapil, I have a question about the Telepathy & Intuition online workshop (₹999). Please share the next dates.',
+  payUrl: LINKS.rzpTelepathyOnline999,
+  ask: { en: 'Ask a question on WhatsApp', hi: 'WhatsApp पर सवाल पूछें' },
   forWhom: {
     heading: { en: 'Who it is for', hi: 'यह किसके लिए है' },
     items: [
@@ -57,7 +60,7 @@ export const TELEPATHY_COPY: EventCopy = {
       { en: '10-minute daily plan', hi: '10 मिनट का रोज़ का प्लान' },
       { en: 'Live Q&A', hi: 'लाइव सवाल-जवाब' },
     ],
-    note: { en: 'A new batch every month. Book on WhatsApp — we confirm your seat and send the dates and Zoom link.', hi: 'हर महीने नया बैच। WhatsApp पर बुक कीजिए — हम आपकी सीट पक्की करके तारीख़ और Zoom लिंक भेजेंगे।' },
+    note: { en: 'A new batch every month. After payment we confirm your seat on WhatsApp and send the dates and Zoom link.', hi: 'हर महीने नया बैच। पेमेंट के बाद हम WhatsApp पर आपकी सीट पक्की करके तारीख़ और Zoom लिंक भेजेंगे।' },
   },
   faqHeading: { en: 'Questions', hi: 'सवाल' },
   faq: [

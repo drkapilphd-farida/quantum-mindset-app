@@ -21,10 +21,27 @@ const H2 = "text-[26px] font-extrabold leading-tight sm:text-[34px]";
 const GOLD = "inline-flex min-h-12 items-center justify-center gap-2 rounded-sm bg-gold px-7 py-[15px] text-center text-[16px] font-semibold text-[#1B1508] transition-transform hover:-translate-y-0.5 hover:bg-gold-dim";
 
 function BookButton({ copy, lang, className = "" }: { copy: EventCopy; lang: EventLang; className?: string }): React.JSX.Element {
+  if (copy.payUrl !== undefined) {
+    return (
+      <a href={copy.payUrl} target="_blank" rel="noopener noreferrer" className={`${GOLD} ${className}`} data-event-pay>
+        {say(copy.book, lang)}
+      </a>
+    );
+  }
   return (
     <a href={waLink(copy.bookMessage)} target="_blank" rel="noopener noreferrer" className={`${GOLD} ${className}`} data-event-book>
       <WhatsAppGlyph />
       {say(copy.book, lang)}
+    </a>
+  );
+}
+
+function AskLink({ copy, lang, dark = false }: { copy: EventCopy; lang: EventLang; dark?: boolean }): React.JSX.Element | null {
+  if (copy.payUrl === undefined || copy.ask === undefined) return null;
+  return (
+    <a href={waLink(copy.bookMessage)} target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold underline underline-offset-4 ${dark ? "text-white decoration-white/50" : "text-ink decoration-teal/50"}`} data-event-ask>
+      <WhatsAppGlyph />
+      {say(copy.ask, lang)}
     </a>
   );
 }
@@ -41,7 +58,7 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
             <div className={`${WRAP} relative max-w-3xl`}>
               <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-[12.5px] font-bold tracking-[0.06em] text-white ring-1 ring-white/25">{say(copy.pill, lang)}</span>
               <h1 className="mt-5 text-balance text-[32px] font-extrabold leading-[1.12] tracking-tight sm:text-[46px]">{say(copy.h1, lang)}</h1>
-              <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/85 sm:text-[19px]">{say(copy.sub, lang)}</p>
+              <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/95 sm:text-[19px]">{say(copy.sub, lang)}</p>
               <ul className="mt-6 flex flex-wrap gap-2 text-[14.5px]">
                 {copy.facts.map((fact) => (
                   <li key={fact.en} className="rounded-full bg-white/10 px-3.5 py-1.5 ring-1 ring-white/20">{say(fact, lang)}</li>
@@ -50,6 +67,9 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
               <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
                 <BookButton copy={copy} lang={lang} />
                 <span className="text-[15px] font-semibold text-white/90">{say(copy.priceLine, lang)}</span>
+              </div>
+              <div className="mt-3">
+                <AskLink copy={copy} lang={lang} dark />
               </div>
             </div>
           </section>
@@ -95,6 +115,7 @@ export function EventLandingPage({ copy, lang, path }: { copy: EventCopy; lang: 
                 ))}
               </ul>
               <BookButton copy={copy} lang={lang} className="mt-6 w-full" />
+              <div className="mt-3"><AskLink copy={copy} lang={lang} /></div>
               <p className="mt-4 rounded-sm border border-line-strong bg-void px-4 py-3 text-[14px] leading-relaxed text-ink">{say(copy.price.note, lang)}</p>
             </div>
           </section>
