@@ -322,10 +322,10 @@ export default function BrainUnlock({
     <LanguageOverride lang={lang}>
       <VoiceOverrides.Provider value={settings.voiceLines[lang]}>
         <div className={dark ? "dark" : ""}>
-          <PlayScope className="min-h-[80vh] bg-background px-4 py-6 text-foreground">
+          <PlayScope className={`min-h-[80vh] px-4 py-8 text-foreground sm:py-12 ${dark ? "bg-background" : ""}`} style={dark ? undefined : { background: "linear-gradient(135deg, #eef3ff 0%, #f3f6ff 45%, #e6f7f3 100%)" }}>
             <div
               ref={top}
-              className="mx-auto flex w-full max-w-xl flex-col gap-5"
+              className={`mx-auto flex w-full max-w-xl flex-col gap-5 ${dark ? "" : "rounded-3xl bg-white p-5 shadow-[0_30px_60px_-30px_rgba(13,42,102,0.45)] ring-1 ring-[#2b57e8]/15 sm:p-8"}`}
               data-bu-stage={view === "offer" ? "offer" : stage}
               data-bu-lang={lang}
               data-bu-sets={
@@ -395,7 +395,8 @@ export default function BrainUnlock({
 
               {view === "flow" && stage === "role" && (
                 <section className="flex flex-col gap-5" data-bu-hook>
-                  <h1 className="text-[2rem] leading-tight text-foreground">
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#2b57e8]/10 px-3 py-1 text-[12.5px] font-bold uppercase tracking-[0.08em] text-[#2b57e8]">🧠 {lang === "hi" ? "मुफ़्त Brain Test · 2 मिनट" : "Free Brain Test · 2 minutes"}</span>
+                  <h1 className={`text-[2rem] font-extrabold leading-tight ${dark ? "text-foreground" : "bg-gradient-to-r from-[#2b57e8] via-[#7c3aed] to-[#11a197] bg-clip-text text-transparent"}`}>
                     {c.hook.title}
                   </h1>
                   <p className="text-base text-muted-foreground">

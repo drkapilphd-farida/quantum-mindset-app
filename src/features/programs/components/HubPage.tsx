@@ -1,3 +1,4 @@
+import { NeuralOrb } from "@/components/fx/NeuralOrb";
 import Image from "next/image";
 import { PAGE_VIDEOS } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
@@ -34,7 +35,8 @@ export function HubPage({ lang }: { lang: ProgramLang }): React.JSX.Element {
   return (
     <HubBookingProvider>
       {/* HERO */}
-      <section className="bg-[#0E1B2C] px-4 pb-16 pt-14 text-white sm:px-6 md:pt-[72px]">
+      <section className="isolate hero-vivid relative overflow-hidden px-4 pb-16 pt-14 text-white sm:px-6 md:pt-[72px]">
+        <NeuralOrb className="-z-10 -right-40 -top-24 opacity-60 lg:right-[-40px]" />
         <div className={`${wrap} flex flex-wrap items-center gap-12`}>
           <div className="flex min-w-0 flex-[999_1_480px] flex-col gap-5">
             <p className="text-[15px] font-semibold tracking-[0.06em] text-[#F2A93B]">{say(h.eyebrow, lang)}</p>

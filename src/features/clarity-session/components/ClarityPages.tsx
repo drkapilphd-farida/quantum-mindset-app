@@ -1,3 +1,4 @@
+import { NeuralOrb } from "@/components/fx/NeuralOrb";
 import { CLARITY_BOOKING, CLARITY_SESSION, PAGE_VIDEOS } from "@/config/site.config";
 import { PageVideo } from "@/components/video/PageVideo";
 import { waLink } from "@/data/links";
@@ -26,7 +27,8 @@ export function ClaritySessionPage({ lang }: { lang: ProgramLang }): React.JSX.E
   const self = lang === "hi" ? "/clarity-session?lang=hi" : "/clarity-session";
   return (
     <ProgramsShell lang={lang} path="/clarity-session" ctaHref={`${self}#pay`} ctaLabel={say(COMMON.bookButton, lang)} schemas={[]}>
-      <section className="bg-[#0E1B2C] px-4 py-14 text-white sm:px-6 md:py-20" data-clarity-page>
+      <section className="isolate hero-vivid relative overflow-hidden px-4 py-14 text-white sm:px-6 md:py-20" data-clarity-page>
+        <NeuralOrb className="-z-10 -right-40 -top-24 opacity-50 lg:right-[-40px]" />
         <div className="mx-auto grid w-full max-w-[1160px] grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="flex min-w-0 flex-col gap-6">
           <p className="text-[15px] font-semibold tracking-[0.06em] text-[#F2A93B]">{say(CLARITY_CARD.eyebrow, lang)}</p>

@@ -228,7 +228,7 @@ export function SharpBrainClasses(): React.JSX.Element {
                 </span>
                 <span>
                   <span className="block text-[17px] font-extrabold leading-tight lg:mt-1">{item.title}</span>
-                  <span className="mt-1 block text-[14px] leading-snug text-white/75">{item.desc}</span>
+                  <span className="mt-1 block text-[14.5px] leading-snug text-white/90">{item.desc}</span>
                 </span>
               </li>
             );
@@ -450,15 +450,15 @@ export function SharpBrainStickyBar({ enrolHref = ENROL_HREF }: { enrolHref?: st
 // /reviews hero: same look as the program page, one H1, live price.
 export function SharpBrainReviewsHero(): React.JSX.Element {
   const c = useCopy();
-  const rolling = c.offers.rolling;
   return (
-    <section id="top" className="border-b border-line px-4 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-16">
+    <section id="top" className="isolate warm-dark hero-vivid relative overflow-hidden border-b border-line px-4 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-16">
+      <NeuralOrb className="-z-10 -right-40 -top-24 opacity-60 lg:right-[-40px]" />
       <div className="mx-auto max-w-content">
         <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-gold">{c.reviews.eyebrow}</p>
         <h1 className="mt-4 max-w-3xl text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px]">{c.reviews.h1}</h1>
         <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-ink">{c.reviews.sub}</p>
-        <EnrolAndTestButtons location="reviews_hero" className="mt-8" />
-        <PriceLine className="mt-4" rollingText={rolling} />
+        <OfferButtons location="reviews_hero" className="mt-8" />
+        <p className="mt-4 text-[14.5px] font-semibold text-ink-dim">{c.offers.heroLine}</p>
         <Link href={programs.sharpBrain.url} className="mt-5 inline-block text-[14px] font-semibold text-gold hover:underline">
           {c.reviews.programLink}
         </Link>
@@ -499,7 +499,7 @@ export function SharpBrainOffersHero(): React.JSX.Element {
   const c = useCopy().offers.hero;
   const { lang } = useLanguage();
   return (
-    <section id="top" className="warm-dark hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
+    <section id="top" className="isolate warm-dark hero-vivid relative overflow-hidden border-b border-line px-4 pb-14 pt-10 sm:px-8 sm:pb-20 sm:pt-16">
       <NeuralOrb className="-left-40 -top-24 opacity-60 sm:-left-24 lg:left-[30%] lg:top-[-140px] lg:opacity-70" />
       <div className="relative mx-auto grid max-w-content grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         <div>

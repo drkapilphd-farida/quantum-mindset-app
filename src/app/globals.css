@@ -263,8 +263,8 @@
   --color-panel: #0f1f42;
   --color-panel-2: #16295a;
   --color-ink: #f1f5fc;
-  --color-ink-dim: #b3c0db;
-  --color-ink-faint: #b3c0db;
+  --color-ink-dim: #dfe7f5;
+  --color-ink-faint: #c9d4e8;
   --color-gold: #f6b24e;
   --color-gold-soft: rgba(246, 178, 78, 0.12);
   --color-teal: #4fd1c5;
@@ -283,7 +283,7 @@
 
 /* Vivid brand hero (owner, 23 Nov 2026: "colours feeke hai"): logo blue →
    teal glow on deep navy. Use together with .warm-dark for light text. */
-.warm-light .hero-vivid {
+.hero-vivid {
   background:
     radial-gradient(55% 75% at 88% 8%, rgba(17, 161, 151, 0.5), transparent 62%),
     radial-gradient(50% 70% at 0% 100%, rgba(43, 87, 232, 0.6), transparent 62%),
@@ -363,10 +363,10 @@
 }
 
 /* Section bands — soft brand tints instead of flat white/grey. */
-.warm-light .band-blue {
+.band-blue {
   background: linear-gradient(180deg, #eef3ff 0%, #f5f8ff 100%);
 }
-.warm-light .band-mint {
+.band-mint {
   background: linear-gradient(180deg, #e8f8f4 0%, #f3fbf9 100%);
 }
 
