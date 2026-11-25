@@ -466,7 +466,7 @@ const en: BuCopy = {
     resultTitle: "Your Brain Test result",
     resultLine:
       "This was just 5 minutes. Get your personal 30-day plan from Dr. Kapil on WhatsApp.",
-    fair: "Both rounds were of the same difficulty.",
+    fair: "Each “after” used new words and a new passage, so the change comes from the technique.",
     qrHint: "On a computer? Scan this with your phone to open WhatsApp.",
   },
   error: "Something went wrong. Please try again.",
@@ -738,7 +738,7 @@ const hi: BuCopy = {
     resultTitle: "आपका Brain Test नतीजा",
     resultLine:
       "ये सिर्फ़ 5 मिनट थे। Dr. Kapil से अपना personal 30-दिन का plan WhatsApp पर पाइए।",
-    fair: "दोनों बार कठिनाई एक जैसी थी।",
+    fair: "हर “अब” में नए शब्द और नया passage थे, ताकि बदलाव सिर्फ़ technique से आए।",
     qrHint: "Computer पर हैं? WhatsApp खोलने के लिए phone से यह scan कीजिए।",
   },
   error: "कुछ गड़बड़ हुई। कृपया फिर कोशिश करें।",
