@@ -48,11 +48,13 @@ function cut(s: string, n: number) { return [...s].length > n ? [...s].slice(0, 
 function firstName(full: string): string {
   const TITLES = ["dr", "dr.", "mr", "mr.", "mrs", "mrs.", "ms", "ms.", "er", "er.", "prof", "prof.", "shri", "smt", "ca", "adv"];
   const w = (full || "").replace(/[^\p{L}\p{M}\s.]/gu, " ").split(/\s+/).filter(Boolean);
-  return w.find((x) => !TITLES.includes(x.toLowerCase())) || "";
+  const n = w.find((x) => !TITLES.includes(x.toLowerCase())) || "";
+  return n ? n.charAt(0).toUpperCase() + n.slice(1) : ""; // "kapil" → "Kapil"
 }
 
 // ---- personal lines from the real numbers ----
 const pct = (a: number, b: number) => (a > 0 ? Math.round(((b - a) / a) * 100) : 0);
+const r1 = (x: number) => Math.round(x * 10) / 10; // 0.3999999 → 0.4
 function lines(f: Facts, hi: boolean) {
   const out: string[] = [];
   const gains: { label: string; text: string; score: number }[] = [];
@@ -75,7 +77,7 @@ function lines(f: Facts, hi: boolean) {
   if (fo) {
     if (fo.after !== undefined) {
       out.push(`🎯 ${hi ? "Focus (grid)" : "Focus (grid)"}: ${fo.before}s → *${fo.after}s*`);
-      if (fo.after < fo.before) gains.push({ label: "focus", score: pct(fo.after, fo.before), text: hi ? `focus grid ${fo.before - fo.after} सेकंड जल्दी हुआ` : `the focus grid got ${fo.before - fo.after}s faster` });
+      if (fo.after < fo.before) gains.push({ label: "focus", score: pct(fo.after, fo.before), text: hi ? `focus grid ${r1(fo.before - fo.after)} सेकंड जल्दी हुआ` : `the focus grid got ${r1(fo.before - fo.after)}s faster` });
     } else out.push(`🎯 Focus: ${fo.before}s ${hi ? "(technique वाला हिस्सा बाकी)" : "(the technique part is left)"}`);
   }
   gains.sort((a, b) => b.score - a.score);

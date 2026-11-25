@@ -84,7 +84,7 @@ export function cardRows(f: ProgressFacts, lang: Lang): Row[] {
   else
     rows.push({
       emoji: "🎯", label: t.focus, main: `${fo.before}s → ${fo.after}s`,
-      badge: fo.after < fo.before ? `${fo.before - fo.after}s ${t.faster}` : null, good: fo.after < fo.before, pending: false,
+      badge: fo.after < fo.before ? `${Math.round((fo.before - fo.after) * 10) / 10}s ${t.faster}` : null, good: fo.after < fo.before, pending: false,
     });
   return rows;
 }

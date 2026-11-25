@@ -54,6 +54,10 @@ describe("cardRows", () => {
     expect(rows[1]?.badge).toBe("+3");
     expect(rows[2]?.badge).toBe("9s faster");
   });
+  it("decimal seconds are rounded (no 0.3999999s)", () => {
+    const rows = cardRows({ focus: { before: 16.7, after: 16.3 } }, "en");
+    expect(rows[2]?.badge).toBe("0.4s faster");
+  });
   it("speed that did not count shows no gain", () => {
     const rows = cardRows({ speed: { before: 180, after: 400, counted: false } }, "en");
     expect(rows[0]?.good).toBe(false);
