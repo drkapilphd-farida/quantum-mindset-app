@@ -684,6 +684,8 @@ export function ResultV2({
   run,
   settings,
   track,
+  auto = "none",
+  firstName = null,
 }: {
   c: BuCopy;
   lang: "en" | "hi";
@@ -692,9 +694,39 @@ export function ResultV2({
   run: RawRun;
   settings: BuSettings;
   track: TrackContext;
+  /** Opened from the bot (?c=…): the card goes to WhatsApp by itself. */
+  auto?: "none" | "sending" | "sent" | "failed";
+  firstName?: string | null;
 }): React.JSX.Element {
   const preview = factsFrom("", report);
   const [state, setState] = useState<"idle" | "saving" | "chat">("idle");
+  const autoOn = auto === "sending" || auto === "sent";
+
+  // Bot visitors: the lead (follow-ups, founder email) is saved without a tap.
+  const leadSaved = useRef(false);
+  useEffect(() => {
+    if (auto !== "sent" || leadSaved.current) return;
+    leadSaved.current = true;
+    trackBu("whatsapp_submitted", track, { via: "auto", v: 2 });
+    void saveBrainUnlockLead({
+      sessionId: sessionId(),
+      firstName: firstName ?? "",
+      phone: "",
+      email: "",
+      lang,
+      role,
+      classBand: null,
+      childClassBand: null,
+      duo: false,
+      runs: [run],
+      utm: readUtmParams(),
+      deviceId: deviceId(),
+      device: currentDevice(),
+      pageUrl: window.location.href,
+    }).catch(() => undefined);
+    // once, when the card has been handed to WhatsApp
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto]);
   const [waUrl, setWaUrl] = useState<string | null>(null);
   const [qrSvg, setQrSvg] = useState<string | null>(null);
 
@@ -767,7 +799,25 @@ export function ResultV2({
       <p className="text-center text-lg font-semibold text-foreground">
         {c.v2.resultLine}
       </p>
-      {state === "chat" ? (
+      {autoOn ? (
+        <div className="flex flex-col gap-3 text-center" data-bu-auto={auto}>
+          <p className="text-lg font-bold text-foreground">
+            {auto === "sending" ? c.v2.autoSending : withName(c.v2.autoSent, firstName)}
+          </p>
+          {auto === "sent" && (
+            <p className="text-base text-muted-foreground">{c.v2.autoSentSub}</p>
+          )}
+          <a
+            href={`https://wa.me/${SITE_CONFIG_WHATSAPP_NUMBER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-16 w-full items-center justify-center gap-2 rounded-2xl bg-[#25d366] px-5 text-xl font-bold text-[#0b2e17] shadow-[0_4px_0_#128c4b] active:translate-y-0.5"
+            data-bu-wa-open
+          >
+            {c.v2.openWhatsApp} →
+          </a>
+        </div>
+      ) : state === "chat" ? (
         <div className="flex flex-col gap-2 text-center" data-bu-lead-saved="chat">
           <p className="text-lg font-bold text-foreground">{c.lead.sent}</p>
           <p className="text-base text-muted-foreground">{c.lead.chatHint}</p>
@@ -799,7 +849,7 @@ export function ResultV2({
           </p>
         </>
       )}
-      {qrSvg !== null && (
+      {qrSvg !== null && !autoOn && (
         <div className="flex flex-col items-center gap-2" data-bu-qr>
           <div
             className="size-44 rounded-xl bg-white p-2"
@@ -813,4 +863,10 @@ export function ResultV2({
       )}
     </section>
   );
+}
+
+/** "{name}" filled in, or the name part left out when the bot did not know it. */
+function withName(text: string, name: string | null): string {
+  if (name !== null && name !== "") return text.replaceAll("{name}", name);
+  return text.replace(/\{name\}( जी)?,?\s*/u, "");
 }

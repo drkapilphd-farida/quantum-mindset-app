@@ -15,6 +15,7 @@ import {
 } from "@/lib/email/sendBrainUnlockEmails";
 import { evaluateRun, InvalidRunError, type EvaluatedRun } from "./evaluate";
 import { queueFollowups } from "./followups";
+import { linkBrainTestRef } from "./progressServer";
 import { factsFrom, type ReportFacts, leadRef } from "./messages";
 import { countCorrect, passageById } from "./passages";
 import { getBrainUnlockSettings } from "./settingsServer";
@@ -359,6 +360,8 @@ export async function saveBrainUnlockLead(input: unknown): Promise<SavedLead> {
       return { ok: false, error: GENERIC_ERROR, reason: "server" };
     }
     await queueFollowups(saved.id, Date.parse(saved.created_at), settings);
+    // The bot sends this session's card when the chat with "Ref: BU-…" arrives.
+    await linkBrainTestRef(d.sessionId, leadRef(leadId));
     const email = row.email;
     // After the response: founder email and the visitor's report email. WhatsApp
     // follow-ups are sent by hand from /admin/followups (first step queued above).

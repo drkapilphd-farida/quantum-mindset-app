@@ -22,6 +22,10 @@ import Image from "next/image";
 import { type RawRun, type RunSetup } from "../types";
 import { CHECK_SETS, STORY_SETS } from "../words";
 import { chooseBrainUnlockSets } from "../actions";
+import { progressFacts, readBtToken } from "../progress";
+import { drawProgressCard } from "../progressCard";
+import { brainTestHello, saveBrainTestProgress } from "../progressActions";
+import { sessionId } from "../tracking";
 import { addSeen, deviceId, loadSeen } from "../deviceMemory";
 import { chooseSessionSets, type SessionSets } from "../sets";
 import { BrainCheck, type CheckResult } from "./BrainCheck";
@@ -95,11 +99,24 @@ export default function BrainUnlock({
   const [sessionSets, setSessionSets] = useState<SessionSets[] | null>(null);
   const [starting, setStarting] = useState(false);
   const top = useRef<HTMLDivElement>(null);
+  // Opened from the WhatsApp bot (?c=token): the result goes to WhatsApp by itself.
+  const [btToken, setBtToken] = useState<string | null>(null);
+  const [btName, setBtName] = useState<string | null>(null);
+  const [auto, setAuto] = useState<"none" | "sending" | "sent" | "failed">("none");
 
   const track: TrackContext = { role, lang, duo };
   useEffect(() => {
     captureUtmParams();
     setMuted(loadMuted());
+    const token = readBtToken(window.location.search);
+    if (token !== null) {
+      setBtToken(token);
+      void brainTestHello(token)
+        .then((r) => {
+          if (r.ok) setBtName(r.firstName);
+        })
+        .catch(() => undefined);
+    }
     trackBu(
       "landing",
       { role: null, lang: initialLang, duo: false },
@@ -206,10 +223,37 @@ export default function BrainUnlock({
     );
   };
 
+  /**
+   * After every step: numbers + card to the server. Bot visitors get the card on
+   * WhatsApp (full, or half-way after 10 quiet minutes); others only at the end,
+   * so their "Ref: BU-…" chat can bring the card.
+   */
+  async function saveProgress(next: RunParts[], phasesDone: number): Promise<void> {
+    if (btToken === null && phasesDone < PHASES) return;
+    const last = phasesDone === PHASES;
+    if (last && btToken !== null) setAuto("sending");
+    try {
+      const facts = progressFacts(reportFor(0, next), phasesDone);
+      const card = await drawProgressCard({ facts, phasesDone, lang, firstName: btName });
+      const res = await saveBrainTestProgress({
+        sessionId: sessionId(),
+        token: btToken,
+        lang,
+        phasesDone,
+        run: runFor(0, next),
+        card,
+      });
+      if (last && btToken !== null) setAuto(res.ok && res.linked ? "sent" : "failed");
+    } catch {
+      if (last && btToken !== null) setAuto("failed");
+    }
+  }
+
   /** The visitor finished the current phase: the next one, or the report. */
   function advance(next: RunParts[]): void {
     const done = phase;
     const r = reportFor(0, next);
+    void saveProgress(next, done + 1);
     if (done === 0) trackBu("check_done", track, { part: "speed" });
     if (done === 2) trackBu("check_done", track, { part: "memory" });
     if (done === 4) trackBu("check_done", track, { part: "focus" });
@@ -388,6 +432,11 @@ export default function BrainUnlock({
                     priority
                     className="size-28 rounded-full border-4 border-primary object-cover"
                   />
+                  {btName !== null && (
+                    <p className="text-xl font-bold text-primary" data-bu-hello>
+                      {c.v2.hello.replaceAll("{name}", btName)}
+                    </p>
+                  )}
                   <h1 className="text-[1.9rem] leading-tight text-foreground">
                     {c.v2.welcomeTitle}
                   </h1>
@@ -514,6 +563,8 @@ export default function BrainUnlock({
                     run={runFor(0, parts)}
                     settings={settings}
                     track={track}
+                    auto={auto}
+                    firstName={btName}
                   />
                 </>
               )}

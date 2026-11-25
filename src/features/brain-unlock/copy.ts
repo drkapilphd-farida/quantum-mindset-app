@@ -195,6 +195,13 @@ export type BuCopy = {
     resultLine: string;
     fair: string;
     qrHint: string;
+    /** Welcome line when the bot link knows the name; {name} is replaced. */
+    hello: string;
+    /** Result page when the bot sends the card by itself ({name} replaced, may be empty). */
+    autoSending: string;
+    autoSent: string;
+    autoSentSub: string;
+    openWhatsApp: string;
   };
   error: string;
 };
@@ -468,6 +475,11 @@ const en: BuCopy = {
       "This was just 5 minutes. Get your personal 30-day plan from Dr. Kapil on WhatsApp.",
     fair: "Each “after” used new words and a new passage, so the change comes from the technique.",
     qrHint: "On a computer? Scan this with your phone to open WhatsApp.",
+    hello: "Namaste {name} 🙏",
+    autoSending: "Sending your report to WhatsApp…",
+    autoSent: "✅ {name}, your report card is on its way to your WhatsApp",
+    autoSentSub: "Open WhatsApp — Dr. Kapil's next step for you is waiting there.",
+    openWhatsApp: "Open WhatsApp",
   },
   error: "Something went wrong. Please try again.",
 };
@@ -740,6 +752,11 @@ const hi: BuCopy = {
       "ये सिर्फ़ 5 मिनट थे। Dr. Kapil से अपना personal 30-दिन का plan WhatsApp पर पाइए।",
     fair: "हर “अब” में नए शब्द और नया passage थे, ताकि बदलाव सिर्फ़ technique से आए।",
     qrHint: "Computer पर हैं? WhatsApp खोलने के लिए phone से यह scan कीजिए।",
+    hello: "नमस्ते {name} जी 🙏",
+    autoSending: "आपका report WhatsApp पर भेजा जा रहा है…",
+    autoSent: "✅ {name} जी, आपका report card आपके WhatsApp पर भेज दिया है",
+    autoSentSub: "WhatsApp खोलिए — Dr. Kapil का आपके लिए अगला कदम वहीं है।",
+    openWhatsApp: "WhatsApp खोलें",
   },
   error: "कुछ गड़बड़ हुई। कृपया फिर कोशिश करें।",
 };
