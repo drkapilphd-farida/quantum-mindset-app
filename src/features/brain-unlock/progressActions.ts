@@ -52,7 +52,9 @@ function firstNameOf(full: string): string | null {
     .split(/\s+/)
     .filter(Boolean);
   const n = w.find((x) => !TITLES.has(x.toLowerCase()));
-  return n === undefined ? null : n.slice(0, 30);
+  if (n === undefined) return null;
+  // "kapil" → "Kapil" (Devanagari has no case and stays as it is)
+  return (n.charAt(0).toUpperCase() + n.slice(1)).slice(0, 30);
 }
 
 const CARD_RE = /^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/;
