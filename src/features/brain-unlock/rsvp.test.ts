@@ -3,6 +3,7 @@ import {
   ActiveClock,
   focusLetterIndex,
   showsFocusLetter,
+  splitAtAkshara,
   rsvpFontPx,
   rsvpStartWpm,
   rsvpWordMs,
@@ -87,5 +88,18 @@ describe("RSVP Word Flash", () => {
     const hi = rsvpFontPx(["विद्यार्थी", "स्मृति", "प्रश्न"], 320, "hi");
     expect(hi).toBeGreaterThanOrEqual(20);
     expect(hi).toBeLessThanOrEqual(44);
+  });
+});
+
+describe("splitAtAkshara (Hindi red letter)", () => {
+  it("keeps whole aksharas and picks the middle one", () => {
+    const r = splitAtAkshara("दिमाग़");
+    expect(r.before + r.focus + r.after).toBe("दिमाग़");
+    expect(r.focus).toBe("मा");
+  });
+  it("skips punctuation", () => {
+    const r = splitAtAkshara("कहानी।");
+    expect(r.before + r.focus + r.after).toBe("कहानी।");
+    expect(r.focus).toBe("हा");
   });
 });

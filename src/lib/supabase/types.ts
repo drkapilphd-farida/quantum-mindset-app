@@ -3527,6 +3527,78 @@ export type Database = {
         }
         Relationships: []
       }
+      bt_progress: {
+        Row: {
+          session_id: string
+          token: string | null
+          contact_id: string | null
+          ref: string | null
+          lang: string
+          role: string | null
+          phases_done: number
+          facts: Json
+          card_url: string | null
+          created_at: string
+          updated_at: string
+          sent_partial_at: string | null
+          sent_full_at: string | null
+          send_result: string | null
+        }
+        Insert: {
+          session_id: string
+          token?: string | null
+          contact_id?: string | null
+          ref?: string | null
+          lang?: string
+          role?: string | null
+          phases_done?: number
+          facts?: Json
+          card_url?: string | null
+          created_at?: string
+          updated_at?: string
+          sent_partial_at?: string | null
+          sent_full_at?: string | null
+          send_result?: string | null
+        }
+        Update: {
+          session_id?: string
+          token?: string | null
+          contact_id?: string | null
+          ref?: string | null
+          lang?: string
+          role?: string | null
+          phases_done?: number
+          facts?: Json
+          card_url?: string | null
+          created_at?: string
+          updated_at?: string
+          sent_partial_at?: string | null
+          sent_full_at?: string | null
+          send_result?: string | null
+        }
+        Relationships: []
+      }
+      wa_contacts: {
+        Row: {
+          id: string
+          wa_id: string
+          name: string | null
+          bt_token: string | null
+        }
+        Insert: {
+          id?: string
+          wa_id: string
+          name?: string | null
+          bt_token?: string | null
+        }
+        Update: {
+          id?: string
+          wa_id?: string
+          name?: string | null
+          bt_token?: string | null
+        }
+        Relationships: []
+      }
       whatsapp_opt_outs: {
         Row: {
           whatsapp_number: string

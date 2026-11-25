@@ -2,9 +2,10 @@
 
 import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { lineUrl, VOICE_LINES } from "../voiceLines";
+import { lineUrl, needsDrKapilVoice, VOICE_LINES } from "../voiceLines";
 import {
   applyUploadedVoice,
+  cloneVoiceLine,
   regenerateVoiceLine,
   resetVoiceLine,
   voiceUploadTarget,
@@ -22,12 +23,14 @@ function Row({
   lang,
   id,
   text,
+  voice,
   override,
   onChanged,
 }: {
   lang: "en" | "hi";
   id: string;
   text: string;
+  voice: string | undefined;
   override: string | undefined;
   onChanged: (url: string | null) => void;
 }): React.JSX.Element {
@@ -67,7 +70,7 @@ function Row({
   }
 
   async function run(
-    kind: "regen" | "reset",
+    kind: "regen" | "reset" | "clone",
     action: typeof regenerateVoiceLine,
   ): Promise<void> {
     setBusy(kind);
@@ -92,7 +95,13 @@ function Row({
         >
           {override !== undefined
             ? "Your upload / new take"
-            : "Sarvam shubh (standard)"}
+            : voice === "dr-kapil"
+              ? "Dr. Kapil (own recording)"
+              : voice === "clone"
+                ? "Dr. Kapil clone"
+                : voice === "none"
+                  ? "No audio yet"
+                  : "Sarvam shubh (standard)"}
         </span>
       </div>
       <p className="text-sm" lang={lang}>
@@ -138,6 +147,15 @@ function Row({
         >
           {busy === "regen" ? "Regenerating… (up to a minute)" : "Regenerate"}
         </button>
+        <button
+          type="button"
+          className={btn}
+          disabled={busy !== null}
+          onClick={() => void run("clone", cloneVoiceLine)}
+          data-voice-clone
+        >
+          {busy === "clone" ? "Voicing… (up to a minute)" : "Dr. Kapil clone"}
+        </button>
         {override !== undefined && (
           <button
             type="button"
@@ -167,6 +185,27 @@ export function VoiceLinesPanel({
 }): React.JSX.Element {
   const [lang, setLang] = useState<"en" | "hi">("hi");
   const [overrides, setOverrides] = useState(initial);
+  const [bulk, setBulk] = useState<string | null>(null);
+  const pending = VOICE_LINES[lang].filter(
+    (l) => needsDrKapilVoice(l) && overrides[lang][l.id] === undefined,
+  );
+
+  /** Brain Test v2: every line still without his voice, one after another, in the clone voice. */
+  async function voiceAll(): Promise<void> {
+    let failed = 0;
+    for (const [i, l] of pending.entries()) {
+      setBulk(`${i + 1} / ${pending.length}: ${l.id}`);
+      const res = await cloneVoiceLine({ lang, id: l.id });
+      if (res.ok && res.url !== null) {
+        setOverrides((o) => ({ ...o, [lang]: { ...o[lang], [l.id]: res.url! } }));
+      } else failed += 1;
+    }
+    setBulk(
+      failed === 0
+        ? `Done: all ${pending.length} lines are in Dr. Kapil's clone voice.`
+        : `Done, but ${failed} line(s) failed. Press the button again for those.`,
+    );
+  }
   return (
     <section className="space-y-3" data-voice-panel>
       <h2 className="text-lg font-semibold">Voice lines</h2>
@@ -188,6 +227,22 @@ export function VoiceLinesPanel({
           </button>
         ))}
       </div>
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          className="rounded bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+          disabled={(bulk !== null && !bulk.startsWith("Done")) || pending.length === 0}
+          onClick={() => void voiceAll()}
+          data-voice-all
+        >
+          Voice all {pending.length} remaining lines in Dr. Kapil&apos;s clone
+        </button>
+        {bulk !== null && (
+          <span className="text-xs text-muted-foreground" data-voice-all-status>
+            {bulk}
+          </span>
+        )}
+      </div>
       <ol>
         {VOICE_LINES[lang].map((line) => (
           <Row
@@ -195,6 +250,7 @@ export function VoiceLinesPanel({
             lang={lang}
             id={line.id}
             text={line.text}
+            voice={line.voice}
             override={overrides[lang][line.id]}
             onChanged={(url) => {
               const next = { ...overrides[lang] };

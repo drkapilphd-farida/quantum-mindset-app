@@ -14,13 +14,15 @@ import {
 } from "../words";
 import { FocusGrid } from "./FocusGrid";
 import { Questions } from "./Questions";
-import { primaryBtn, SKILL } from "./ui";
+import { primaryBtn, useScrollTop } from "./ui";
 import { useNarration } from "./useNarration";
 
-// Step 2: the ≈60-second baseline, fun part first (founder, 15 Nov 2026):
-// a 4×4 grid, 1–16 → 5 words for 2 s each, then pick them from 10 → read a
-// ~40-word passage (timed in the browser, Done when finished) + 1 question.
-// No score is shown (keeps the curiosity).
+// Brain Test v2 (founder, 25 Nov 2026): each superpower measures its own
+// "before" right before it is taught, so the visitor always knows why:
+//   speed  → read a ~40-word passage at normal speed (timed) + 1 question
+//   memory → 5 words for 2 s each, then pick them from 10
+//   focus  → 3-2-1, then a 4×4 grid, 1–16 (the clock starts after the count)
+// No score is shown here; the result comes right after the technique.
 
 export type CheckResult = {
   checkMs: number;
@@ -29,6 +31,8 @@ export type CheckResult = {
   focusBefore: FocusRun;
   gridBefore: number[];
 };
+
+export type CheckPart = "speed" | "memory" | "focus";
 
 const WORD_MS = 2000;
 
@@ -44,6 +48,7 @@ function shuffle<T>(xs: readonly T[]): T[] {
 export function BrainCheck({
   c,
   lang,
+  part,
   passage,
   checkSet,
   muted,
@@ -51,23 +56,24 @@ export function BrainCheck({
 }: {
   c: BuCopy;
   lang: "en" | "hi";
+  part: CheckPart;
   passage: PublicPassage;
   checkSet: CheckSetId;
   muted: boolean;
-  onDone: (r: CheckResult) => void;
+  onDone: (r: Partial<CheckResult>) => void;
 }): React.JSX.Element {
   type Phase =
     | "intro"
+    | "countdown"
     | "focus"
-    | "memIntro"
     | "memShow"
     | "memPick"
-    | "readIntro"
     | "read"
     | "question";
   const [phase, setPhase] = useState<Phase>("intro");
-  const result = useRef<Partial<CheckResult>>({});
+  const [count, setCount] = useState(3);
   const readStart = useRef(0);
+  const readMs = useRef(0);
   const grid = useMemo(() => shuffledGrid(), []);
   // This session's 5 words + 5 others drawn at random from the pool.
   const words = useMemo(
@@ -81,47 +87,84 @@ export function BrainCheck({
     () => shuffle([...words.targets, ...words.others]),
     [words],
   );
-  // Dr. Kapil introduces the Brain Check; silent the moment reading starts
-  // (a voice over the timed reading would change the result).
+  useScrollTop(phase);
+  // Dr. Kapil's "first, let's see where you are today" before the first
+  // reading; silent the moment reading starts (a voice over the timed reading
+  // would change the result). Memory and focus intros have their own line.
   const voice = useNarration(lang, muted);
   useEffect(() => {
-    if (phase === "intro") voice.cue("check-intro", 300);
+    if (phase === "intro")
+      voice.cue(
+        part === "speed"
+          ? "check-intro"
+          : part === "memory"
+            ? "memory-check"
+            : "focus-check",
+        300,
+      );
     else voice.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- once per phase
   }, [phase]);
+
+  // 3-2-1 before the grid, so the clock starts when the visitor is ready.
+  useEffect(() => {
+    if (phase !== "countdown") return undefined;
+    if (count === 0) {
+      setPhase("focus");
+      return undefined;
+    }
+    const t = window.setTimeout(() => setCount((n) => n - 1), 800);
+    return () => window.clearTimeout(t);
+  }, [phase, count]);
+
+  const intro =
+    part === "speed"
+      ? c.v2.speedIntro
+      : part === "memory"
+        ? c.v2.memoryIntro
+        : c.v2.focusIntro;
+  const icon = part === "speed" ? "📖" : part === "memory" ? "🧠" : "🎯";
 
   return (
     <section
       className="flex flex-col gap-5"
       data-bu-check={phase}
+      data-bu-check-part={part}
       data-bu-check-set={checkSet}
     >
       {phase === "intro" && (
         <div className="play-card flex flex-col gap-4 p-6 text-center">
-          <span
-            className="mx-auto flex size-14 items-center justify-center rounded-2xl text-3xl text-white"
-            style={{ background: SKILL.check }}
-            aria-hidden="true"
-          >
-            🧪
+          <span className="text-5xl" aria-hidden="true">
+            {icon}
           </span>
-          <p className="text-lg font-semibold text-foreground">
-            {c.check.intro}
-          </p>
-          <div>
-            <h2 className="text-2xl text-foreground">{c.check.focusTitle}</h2>
-            <p className="text-base text-muted-foreground">
-              {c.check.focusHint}
-            </p>
-          </div>
+          <h2 className="text-2xl text-foreground">{intro.title}</h2>
+          <p className="text-base text-muted-foreground">{intro.hint}</p>
           <button
             type="button"
             className={primaryBtn}
-            onClick={() => setPhase("focus")}
+            onClick={() => {
+              if (part === "speed") setPhase("read");
+              else if (part === "memory") setPhase("memShow");
+              else {
+                setCount(3);
+                setPhase("countdown");
+              }
+            }}
             data-bu-go
           >
-            {c.check.go}
+            {intro.go}
           </button>
+        </div>
+      )}
+
+      {phase === "countdown" && (
+        <div
+          className="play-card flex min-h-64 items-center justify-center"
+          data-bu-countdown={count}
+        >
+          <span className="font-heading text-7xl text-foreground">
+            {count === 0 ? "" : count}
+          </span>
         </div>
       )}
 
@@ -130,26 +173,8 @@ export function BrainCheck({
           grid={grid}
           nextLabel={c.check.next}
           muted={muted}
-          onDone={(run) => {
-            result.current.focusBefore = run;
-            setPhase("memIntro");
-          }}
+          onDone={(run) => onDone({ focusBefore: run, gridBefore: grid })}
         />
-      )}
-
-      {phase === "readIntro" && (
-        <div className="play-card flex flex-col gap-4 p-6 text-center">
-          <h2 className="text-2xl text-foreground">{c.check.readTitle}</h2>
-          <p className="text-base text-muted-foreground">{c.check.readHint}</p>
-          <button
-            type="button"
-            className={primaryBtn}
-            onClick={() => setPhase("read")}
-            data-bu-go
-          >
-            {c.check.startReading}
-          </button>
-        </div>
       )}
 
       {phase === "read" && (
@@ -158,9 +183,7 @@ export function BrainCheck({
           text={passage.text}
           onStart={() => (readStart.current = performance.now())}
           onDone={() => {
-            result.current.checkMs = Math.round(
-              performance.now() - readStart.current,
-            );
+            readMs.current = Math.round(performance.now() - readStart.current);
             setPhase("question");
           }}
         />
@@ -173,34 +196,10 @@ export function BrainCheck({
           counter={c.speed.q}
           nextLabel={c.speed.next}
           finalLabel={c.speed.next}
-          onSubmit={(answers) => {
-            const r = result.current;
-            onDone({
-              checkMs: r.checkMs ?? 0,
-              checkAnswers: answers,
-              memoryPicked: r.memoryPicked ?? [],
-              focusBefore: r.focusBefore ?? { ms: 0, errors: 0 },
-              gridBefore: grid,
-            });
-          }}
+          onSubmit={(answers) =>
+            onDone({ checkMs: readMs.current, checkAnswers: answers })
+          }
         />
-      )}
-
-      {phase === "memIntro" && (
-        <div className="play-card flex flex-col gap-4 p-6 text-center">
-          <h2 className="text-2xl text-foreground">{c.check.memoryTitle}</h2>
-          <p className="text-base text-muted-foreground">
-            {c.check.memoryHint}
-          </p>
-          <button
-            type="button"
-            className={primaryBtn}
-            onClick={() => setPhase("memShow")}
-            data-bu-go
-          >
-            {c.check.show}
-          </button>
-        </div>
       )}
 
       {phase === "memShow" && (
@@ -216,10 +215,7 @@ export function BrainCheck({
           c={c}
           list={pickList}
           lang={lang}
-          onCheck={(picked) => {
-            result.current.memoryPicked = picked;
-            setPhase("readIntro");
-          }}
+          onCheck={(picked) => onDone({ memoryPicked: picked })}
         />
       )}
     </section>

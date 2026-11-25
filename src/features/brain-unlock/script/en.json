@@ -4,171 +4,223 @@
   "lines": [
     {
       "id": "hook",
-      "text": "Namaste! I am Dr. Kapil. ... In the next five minutes, you will unlock three superpowers: speed, memory and focus. ... And you will see the change yourself."
+      "text": "Namaste! I'm Dr. Kapil. ... In the next five minutes, you'll unlock three superpowers of your brain: speed, memory and focus. ... And you'll see the change with your own eyes. Let's begin!",
+      "voice": "dr-kapil"
     },
     {
       "id": "check-intro",
-      "text": "First, a quick Brain Check, so we know where you start today. ... Relax, and do your natural best."
+      "text": "First, let's see where you are today. ... There is no right or wrong here. ... Just relax, and do your natural best.",
+      "voice": "dr-kapil"
     },
     {
       "id": "speed-teach",
-      "text": "Your eyes usually jump around while reading. ... Now the words will come to your eyes. ... Just keep looking at the red letter."
+      "text": "Your eyes usually jump back and forth while reading. ... Now the words will come to your eyes, one at a time. ... Just keep looking at the red letter in the middle.",
+      "voice": "dr-kapil"
+    },
+    {
+      "id": "memory-check",
+      "text": "Now, memory. ... Five words will appear, two seconds each. ... Remember as many as you can.",
+      "voice": "none"
     },
     {
       "id": "memory-teach",
-      "text": "Here is the secret. ... Your brain loves pictures and stories. ... Let's link five new words into one crazy story. ... See each picture in your mind."
+      "text": "Here is the secret: your brain loves pictures and stories. ... Now we'll link five new words into one funny story. ... See each picture clearly in your mind.",
+      "voice": "dr-kapil"
     },
     {
       "id": "s1-1",
-      "text": "A huge gorilla..."
+      "text": "A huge gorilla...",
+      "voice": "clone"
     },
     {
       "id": "s1-2",
-      "text": "opens a giant suitcase."
+      "text": "opens a giant suitcase.",
+      "voice": "clone"
     },
     {
       "id": "s1-3",
-      "text": "Instead of clothes, curd pours out of the suitcase!"
+      "text": "Instead of clothes, curd pours out of the suitcase!",
+      "voice": "clone"
     },
     {
       "id": "s1-4",
-      "text": "The curd soaks a flying drone..."
+      "text": "The curd soaks a flying drone...",
+      "voice": "clone"
     },
     {
       "id": "s1-5",
-      "text": "and the heavy drone falls right into your tiffin."
+      "text": "and the heavy drone falls right into your tiffin.",
+      "voice": "clone"
     },
     {
       "id": "s2-1",
-      "text": "A big green crocodile..."
+      "text": "A big green crocodile...",
+      "voice": "shubh"
     },
     {
       "id": "s2-2",
-      "text": "sits down and plays the piano."
+      "text": "sits down and plays the piano.",
+      "voice": "shubh"
     },
     {
       "id": "s2-3",
-      "text": "Out of the piano jumps a giant burger!"
+      "text": "Out of the piano jumps a giant burger!",
+      "voice": "shubh"
     },
     {
       "id": "s2-4",
-      "text": "The burger rides away on a skateboard..."
+      "text": "The burger rides away on a skateboard...",
+      "voice": "shubh"
     },
     {
       "id": "s2-5",
-      "text": "and crashes right into a whistling cooker."
+      "text": "and crashes right into a whistling cooker.",
+      "voice": "shubh"
     },
     {
       "id": "s3-1",
-      "text": "A sleepy panda..."
+      "text": "A sleepy panda...",
+      "voice": "shubh"
     },
     {
       "id": "s3-2",
-      "text": "puts on big headphones."
+      "text": "puts on big headphones.",
+      "voice": "shubh"
     },
     {
       "id": "s3-3",
-      "text": "The music is so loud that ice cream shoots out of the headphones!"
+      "text": "The music is so loud that ice cream shoots out of the headphones!",
+      "voice": "shubh"
     },
     {
       "id": "s3-4",
-      "text": "The ice cream lands on a tall crane..."
+      "text": "The ice cream lands on a tall crane...",
+      "voice": "shubh"
     },
     {
       "id": "s3-5",
-      "text": "and the crane drops it right into your sandal."
+      "text": "and the crane drops it right into your sandal.",
+      "voice": "shubh"
     },
     {
       "id": "s4-1",
-      "text": "A smiling shark..."
+      "text": "A smiling shark...",
+      "voice": "shubh"
     },
     {
       "id": "s4-2",
-      "text": "sings loudly into a microphone."
+      "text": "sings loudly into a microphone.",
+      "voice": "shubh"
     },
     {
       "id": "s4-3",
-      "text": "The microphone fills up with hot biryani!"
+      "text": "The microphone fills up with hot biryani!",
+      "voice": "shubh"
     },
     {
       "id": "s4-4",
-      "text": "The biryani is so spicy that it charges a battery..."
+      "text": "The biryani is so spicy that it charges a battery...",
+      "voice": "shubh"
     },
     {
       "id": "s4-5",
-      "text": "and the battery flies off and puts on a funny mask!"
+      "text": "and the battery flies off and puts on a funny mask!",
+      "voice": "shubh"
     },
     {
       "id": "s5-1",
-      "text": "A tiny lizard..."
+      "text": "A tiny lizard...",
+      "voice": "shubh"
     },
     {
       "id": "s5-2",
-      "text": "kicks a huge football."
+      "text": "kicks a huge football.",
+      "voice": "shubh"
     },
     {
       "id": "s5-3",
-      "text": "The football bursts and popcorn rains everywhere!"
+      "text": "The football bursts and popcorn rains everywhere!",
+      "voice": "shubh"
     },
     {
       "id": "s5-4",
-      "text": "The popcorn falls into a printer..."
+      "text": "The popcorn falls into a printer...",
+      "voice": "shubh"
     },
     {
       "id": "s5-5",
-      "text": "and the printer prints a giant lipstick."
+      "text": "and the printer prints a giant lipstick.",
+      "voice": "shubh"
     },
     {
       "id": "s6-1",
-      "text": "A fluffy sheep..."
+      "text": "A fluffy sheep...",
+      "voice": "shubh"
     },
     {
       "id": "s6-2",
-      "text": "drives a bullock cart."
+      "text": "drives a bullock cart.",
+      "voice": "shubh"
     },
     {
       "id": "s6-3",
-      "text": "The bullock cart is full of long, wiggly noodles!"
+      "text": "The bullock cart is full of long, wiggly noodles!",
+      "voice": "shubh"
     },
     {
       "id": "s6-4",
-      "text": "The sheep eats all the noodles and wins a shiny medal..."
+      "text": "The sheep eats all the noodles and wins a shiny medal...",
+      "voice": "shubh"
     },
     {
       "id": "s6-5",
-      "text": "and the medal starts singing like a loud speaker."
+      "text": "and the medal starts singing like a loud speaker.",
+      "voice": "shubh"
+    },
+    {
+      "id": "focus-check",
+      "text": "Last one, focus. ... Tap the numbers from one to sixteen, as fast as you can.",
+      "voice": "none"
     },
     {
       "id": "memory-replay",
-      "text": "Now see the whole story once more in your mind."
+      "text": "Now see the whole story once more in your mind.",
+      "voice": "clone"
     },
     {
       "id": "focus-intro",
-      "text": "Sit comfortably. ... Look softly at the glowing dot."
+      "text": "Sit comfortably. ... Look softly at the glowing dot.",
+      "voice": "clone"
     },
     {
       "id": "focus-in",
-      "text": "Breathe in."
+      "text": "Breathe in.",
+      "voice": "clone"
     },
     {
       "id": "focus-out",
-      "text": "And slowly breathe out."
+      "text": "And slowly breathe out.",
+      "voice": "clone"
     },
     {
       "id": "focus-done",
-      "text": "Beautiful. ... Your mind is calm and sharp."
+      "text": "Beautiful. ... Your mind is calm and sharp.",
+      "voice": "clone"
     },
     {
       "id": "reveal-up",
-      "text": "Wow! ... You just saw it yourself."
+      "text": "Wow! ... You just saw it yourself.",
+      "voice": "clone"
     },
     {
       "id": "reveal-kind",
-      "text": "Great effort! ... In thirty days of practice, this grows step by step."
+      "text": "Great effort! ... In thirty days of practice, this grows step by step.",
+      "voice": "clone"
     },
     {
       "id": "report-ready",
-      "text": "Here is your Brain Unlock report. ... These are your own, real numbers."
+      "text": "Here are your real numbers. ... Tap the green button, and I'll send your personal 30-day plan on WhatsApp.",
+      "voice": "none"
     }
   ]
 }

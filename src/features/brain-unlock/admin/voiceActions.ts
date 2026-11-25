@@ -7,7 +7,7 @@ import { logger } from "@/lib/logger";
 import { currentAdminEmail } from "@/features/live-classes/admin/data";
 import { getBrainUnlockSettings } from "../settingsServer";
 import { VOICE_LINES } from "../voiceLines";
-import { isSarvamConfigured, shubhVoiceMp3 } from "../voiceTts";
+import { cloneVoiceMp3, isSarvamConfigured, shubhVoiceMp3 } from "../voiceTts";
 
 // /admin/brain-unlock-settings → "Voice lines": per line, replace with
 // Dr. Kapil's own recording (MP3 straight to the public guided-audio bucket via
@@ -142,6 +142,50 @@ export async function regenerateVoiceLine(input: unknown): Promise<Result> {
         ok: true,
         message:
           "New take is live. Press ▶ to listen; regenerate again if you don't like it.",
+        url,
+      }
+    : { ok: false, error: "Could not save. Please try again." };
+}
+
+/**
+ * Brain Test v2: voice the line in Dr. Kapil's own clone voice (checked by
+ * speech-to-text) and make it live. Same storage and override as Regenerate.
+ */
+export async function cloneVoiceLine(input: unknown): Promise<Result> {
+  const admin = await currentAdminEmail();
+  if (admin === null) return { ok: false, error: "Not authorized." };
+  const parsed = LineInput.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Unknown line." };
+  if (!isSarvamConfigured())
+    return {
+      ok: false,
+      error:
+        "Clone voice needs the Sarvam API key on the live site (SARVAM_API_KEY in Vercel).",
+    };
+  const { lang, id } = parsed.data;
+  const text = VOICE_LINES[lang].find((l) => l.id === id)!.text;
+  const got = await cloneVoiceMp3(lang, id, text);
+  if (got === null)
+    return {
+      ok: false,
+      error: "Sarvam could not voice this line just now. Please try again.",
+    };
+  const path = `brain-unlock/${lang}/${id}-${Date.now()}.mp3`;
+  const { error } = await createServiceClient()
+    .storage.from(BUCKET)
+    .upload(path, got.mp3, { contentType: "audio/mpeg", upsert: false });
+  if (error)
+    return {
+      ok: false,
+      error: "Could not store the new audio. Please try again.",
+    };
+  const url = publicUrl(path);
+  return (await setOverride(lang, id, url, admin))
+    ? {
+        ok: true,
+        message: got.checked
+          ? "Clone take is live (checked). Press ▶ to listen."
+          : "Clone take is live, but please listen: the check was not sure.",
         url,
       }
     : { ok: false, error: "Could not save. Please try again." };
