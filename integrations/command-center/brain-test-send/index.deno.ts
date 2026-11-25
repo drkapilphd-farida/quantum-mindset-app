@@ -191,8 +191,9 @@ async function handle(sessionId: string): Promise<string> {
   };
   if (contact.opted_out) return finish("opted out");
   const lastIn = contact.last_inbound_at ? new Date(contact.last_inbound_at).getTime() : 0;
-  const fep = contact.fep_expires_at ? new Date(contact.fep_expires_at).getTime() : 0;
-  if (!(Date.now() - lastIn < 24 * HOUR || fep > Date.now())) return finish("window closed");
+  // Free-form messages (card + buttons) need the 24-hour window — even inside the ad's
+  // free window, after 24h only templates are allowed.
+  if (!(Date.now() - lastIn < 24 * HOUR)) return finish("window closed");
 
   const settings = await getSettings();
   let flow: Flow | null = null;
