@@ -38,12 +38,22 @@ export function voiceText(lang: BuLangCode, id: string): string {
 export const lineUrl = (lang: BuLangCode, id: string): string =>
   `/audio/brain-unlock/${lang}/${id}.mp3`;
 
-/** The files to try for a line, in order. */
+/**
+ * Founder (25 Nov 2026): only his own recordings are played (hook, check-intro,
+ * speed-teach, memory-teach). Every other line stays silent — its text is on
+ * screen and the step waits a reading-length pause instead.
+ */
+export function speaksAloud(lang: BuLangCode, id: string): boolean {
+  return VOICE_LINES[lang].find((l) => l.id === id)?.voice === "dr-kapil";
+}
+
+/** The files to try for a line, in order (none for a silent line). */
 export function voiceSources(
   lang: BuLangCode,
   id: string,
   overrides: Readonly<Record<string, string>>,
 ): string[] {
+  if (!speaksAloud(lang, id)) return [];
   const own = overrides[id];
   return [...(own !== undefined && own !== "" ? [own] : []), lineUrl(lang, id)];
 }

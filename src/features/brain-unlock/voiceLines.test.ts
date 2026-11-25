@@ -76,6 +76,16 @@ describe("Brain Unlock voice lines (Brain Test v2: Dr. Kapil + his clone)", () =
       voiceSources("en", "hook", { hook: "https://cdn.test/own.mp3" }),
     ).toEqual(["https://cdn.test/own.mp3", "/audio/brain-unlock/en/hook.mp3"]);
   });
+  it("only Dr. Kapil's own 4 recordings play; every other line is silent", () => {
+    for (const lang of ["en", "hi"] as const) {
+      const spoken = VOICE_LINES[lang]
+        .filter((l) => voiceSources(lang, l.id, {}).length > 0)
+        .map((l) => l.id)
+        .sort();
+      expect(spoken, lang).toEqual(["check-intro", "hook", "memory-teach", "speed-teach"]);
+    }
+    expect(voiceSources("en", "focus-in", { "focus-in": "https://cdn.test/clone.mp3" })).toEqual([]);
+  });
   it("captions drop the pause marks", () => {
     expect(voiceText("en", "focus-done")).toBe(
       "Beautiful. Your mind is calm and sharp.",
