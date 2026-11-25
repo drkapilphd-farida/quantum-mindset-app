@@ -13,7 +13,14 @@ import {
   type StorySetId,
 } from "../words";
 import { useNarration } from "./useNarration";
-import { Caption, primaryBtn, RevealCard, secondaryBtn, SKILL } from "./ui";
+import {
+  Caption,
+  primaryBtn,
+  RevealCard,
+  secondaryBtn,
+  SKILL,
+  useScrollTop,
+} from "./ui";
 
 // Unlock 2: "Earlier you remembered X of 5" → the linking/story method with 5
 // NEW words (voice + one big picture per step) → recall in order → bonus: say
@@ -56,6 +63,7 @@ export function UnlockMemory({
   const [forward, setForward] = useState<string[]>([]);
   const [backward, setBackward] = useState<string[]>([]);
   const voice = useNarration(lang, muted);
+  useScrollTop(phase === "told" ? "story" : phase);
   const targets = STORY_SETS[storySet];
   // The 5 story words + 5 others drawn at random from the pool.
   const chips = useMemo(
@@ -100,7 +108,7 @@ export function UnlockMemory({
       {phase === "recap" && (
         <div className="play-card flex flex-col gap-4 p-6 text-center">
           <p className="font-heading text-2xl text-foreground">
-            {c.memory.recap(before)}
+            {c.v2.memoryRecap(before)}
           </p>
           <p className="text-base text-muted-foreground">{c.memory.teach}</p>
           <button
@@ -183,6 +191,11 @@ export function UnlockMemory({
           value={backward}
           onChange={setBackward}
           onCheck={() => setPhase("reveal")}
+          onSkip={() => {
+            setBackward([]);
+            setPhase("reveal");
+          }}
+          skipLabel={c.v2.skipBack}
         />
       )}
 
@@ -225,6 +238,8 @@ function OrderPicker({
   value,
   onChange,
   onCheck,
+  onSkip,
+  skipLabel,
 }: {
   c: BuCopy;
   lang: "en" | "hi";
@@ -234,6 +249,9 @@ function OrderPicker({
   value: string[];
   onChange: (v: string[]) => void;
   onCheck: () => void;
+  /** Bonus rounds only (v2: the backwards round can be skipped). */
+  onSkip?: () => void;
+  skipLabel?: string;
 }): React.JSX.Element {
   const byId = new Map(chips.map((w) => [w.id, w]));
   return (
@@ -293,6 +311,16 @@ function OrderPicker({
           {c.memory.check}
         </button>
       </div>
+      {onSkip !== undefined && (
+        <button
+          type="button"
+          className="min-h-11 text-base font-semibold text-muted-foreground underline underline-offset-4"
+          onClick={onSkip}
+          data-bu-skip
+        >
+          {skipLabel}
+        </button>
+      )}
     </div>
   );
 }

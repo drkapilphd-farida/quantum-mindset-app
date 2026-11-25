@@ -99,7 +99,7 @@ export const STORY_SETS: Readonly<Record<StorySetId, readonly BuWord[]>> = {
     w("gorilla", "gorilla", "गोरिल्ला", "🦍"),
     w("suitcase", "suitcase", "सूटकेस", "🧳"),
     w("curd", "curd", "दही", "🥣"),
-    w("drone", "drone", "ड्रोन", "🛸"),
+    w("drone", "drone", "ड्रोन", "🚁"),
     w("tiffin", "tiffin", "टिफ़िन", "🍱"),
   ],
   s2: [

@@ -1421,6 +1421,19 @@
   .play *, .play *::before, .play *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
 }
 /* A reading step inside the play scope: the light tokens again, even in dark. */
+/* Brain Test v2 (25 Nov 2026): calm deep-navy page, one yellow action colour. */
+.dark .play.bt2 {
+  --background: #0b1533;
+  --card: #15224d;
+  --muted: #1c2b5e;
+  --secondary: #1c2b5e;
+  --accent: #1c2b5e;
+  --primary: #ffc400;
+  --primary-foreground: #14142b;
+  --ring: #ffc400;
+}
+.play.bt2 .btn-finish { background: #ffc400; color: #14142b; box-shadow: 0 4px 0 #b38900; }
+.play.bt2 .btn-finish:active { transform: translateY(2px); box-shadow: 0 2px 0 #b38900; }
 .play .play-paper, .dark .play .play-paper {
   --background: #fffdf6;
   --foreground: #1b1b2f;

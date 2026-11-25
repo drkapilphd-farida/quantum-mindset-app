@@ -11,13 +11,21 @@ import {
   rsvpStartWpm,
   rsvpWordMs,
   rsvpWords,
+  splitAtAkshara,
   splitAtFocus,
   stepWpm,
 } from "../rsvp";
 import { speedOutcome, wpmFrom } from "../scoring";
 import { Questions } from "./Questions";
 import { useNarration } from "./useNarration";
-import { Caption, primaryBtn, RevealCard, secondaryBtn, SKILL } from "./ui";
+import {
+  Caption,
+  primaryBtn,
+  RevealCard,
+  secondaryBtn,
+  SKILL,
+  useScrollTop,
+} from "./ui";
 
 // Unlock 1 (founder, 14 Nov 2026): teach (voice + text) → "Your normal speed
 // → Now" → 3-2-1 → RSVP Word Flash on a NEW passage, one word at a time in a
@@ -49,21 +57,10 @@ function FlashWord({
       aria-hidden="true"
     />
   );
-  if (!showsFocusLetter(lang))
-    // Hindi: the whole word, normal colour, centred on the marker spot.
-    return (
-      <div className="flex flex-col items-center gap-2" data-bu-flash={word}>
-        {marker}
-        <p
-          className="font-heading leading-none whitespace-nowrap text-foreground"
-          style={{ fontSize: fontPx }}
-        >
-          {word}
-        </p>
-        {marker}
-      </div>
-    );
-  const { before, focus, after } = splitAtFocus(word);
+  // English: the red letter ~35% in; Hindi: the middle akshara in red (v2).
+  const { before, focus, after } = showsFocusLetter(lang)
+    ? splitAtFocus(word)
+    : splitAtAkshara(word);
   return (
     <div className="flex w-full flex-col gap-2" data-bu-flash={word}>
       {marker}
@@ -130,6 +127,7 @@ export function UnlockSpeed({
   const runMs = useRef(0);
   const box = useRef<HTMLButtonElement>(null);
   const voice = useNarration(lang, muted);
+  useScrollTop(phase === "run" ? "countdown" : phase);
 
   useEffect(() => {
     if (phase !== "teach") return;

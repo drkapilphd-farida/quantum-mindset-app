@@ -15,21 +15,35 @@ const manifest = (
     fs.readFileSync(pub(`/audio/brain-unlock/${lang}/manifest.json`), "utf8"),
   ) as { voice: string; lines: Record<string, { text: string }> };
 
-describe("Brain Unlock voice lines (go-live voice: Sarvam shubh)", () => {
-  it("every line, EN and HI, has its shubh file — nothing falls back to text", () => {
+describe("Brain Unlock voice lines (Brain Test v2: Dr. Kapil + his clone)", () => {
+  it("every bundled file matches the current script text and says who speaks it", () => {
     for (const lang of ["en", "hi"] as const) {
       expect(VOICE_LINES[lang].length).toBeGreaterThanOrEqual(22);
-      expect(manifest(lang).voice).toBe("shubh");
+      expect(manifest(lang).voice).toBe("mixed");
       for (const l of VOICE_LINES[lang]) {
+        const entry = manifest(lang).lines[l.id] as
+          | { text: string; voice?: string }
+          | undefined;
+        if (l.voice === "none") {
+          // Not bundled yet: voiced from the admin page ("Dr. Kapil clone").
+          expect(entry, `${lang}/${l.id}`).toBeUndefined();
+          continue;
+        }
         expect(fs.existsSync(pub(lineUrl(lang, l.id))), `${lang}/${l.id}`).toBe(
           true,
         );
         // Voiced from the current script text (a changed line must be voiced again).
-        expect(manifest(lang).lines[l.id]?.text, `${lang}/${l.id}`).toBe(
-          l.text,
-        );
+        expect(entry?.text, `${lang}/${l.id}`).toBe(l.text);
+        expect(entry?.voice, `${lang}/${l.id}`).toBe(l.voice);
       }
     }
+  });
+  it("his own recordings are the first four lines a visitor hears", () => {
+    for (const lang of ["en", "hi"] as const)
+      for (const id of ["hook", "check-intro", "speed-teach", "memory-teach"])
+        expect(VOICE_LINES[lang].find((l) => l.id === id)?.voice).toBe(
+          "dr-kapil",
+        );
   });
   it("Dr. Kapil's clone files are stored but never played", () => {
     expect(fs.existsSync(pub("/audio/brain-unlock/clone/hi/hook.mp3"))).toBe(

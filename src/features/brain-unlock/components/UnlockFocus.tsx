@@ -7,7 +7,7 @@ import { voiceText } from "../voiceLines";
 import { BREATH_IN_MS, BREATH_OUT_MS, FOCUS_ROUNDS } from "../timing";
 import { FocusGrid } from "./FocusGrid";
 import { useNarration } from "./useNarration";
-import { Caption, primaryBtn, RevealCard, SKILL } from "./ui";
+import { Caption, primaryBtn, RevealCard, SKILL, useScrollTop } from "./ui";
 
 // Unlock 3: a 20-second guided focus exercise (founder, 15 Nov 2026; was 30)
 // — gaze softly at a glowing dot that grows on the in-breath (4 s) and shrinks
@@ -36,9 +36,10 @@ export function UnlockFocus({
   continueLabel: string;
   onDone: (r: FocusResult) => void;
 }): React.JSX.Element {
-  const [phase, setPhase] = useState<"intro" | "breathe" | "grid" | "reveal">(
-    "intro",
-  );
+  const [phase, setPhase] = useState<
+    "intro" | "breathe" | "countdown" | "grid" | "reveal"
+  >("intro");
+  const [count, setCount] = useState(3);
   const [breath, setBreath] = useState<"in" | "out" | "rest">("rest");
   const [after, setAfter] = useState<FocusRun | null>(null);
   const grid = useMemo(
@@ -46,6 +47,7 @@ export function UnlockFocus({
     [gridBefore],
   );
   const voice = useNarration(lang, muted);
+  useScrollTop(phase);
 
   useEffect(() => {
     if (phase !== "breathe") return undefined;
@@ -70,7 +72,7 @@ export function UnlockFocus({
       await voice.play([
         { id: "focus-done", text: voiceText(lang, "focus-done") },
       ]);
-      if (!cancelled) setPhase("grid");
+      if (!cancelled) setPhase("countdown");
     })();
     return () => {
       cancelled = true;
@@ -79,6 +81,17 @@ export function UnlockFocus({
     // run once per breathe phase
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase]);
+
+  // 3-2-1 before the new grid too (same start as the first grid: a fair after).
+  useEffect(() => {
+    if (phase !== "countdown") return undefined;
+    if (count === 0) {
+      setPhase("grid");
+      return undefined;
+    }
+    const t = window.setTimeout(() => setCount((n) => n - 1), 800);
+    return () => window.clearTimeout(t);
+  }, [phase, count]);
 
   const b = focusSeconds(before);
   const a = after === null ? 0 : focusSeconds(after);
@@ -136,6 +149,22 @@ export function UnlockFocus({
                 : ""}
           </p>
           {breath === "rest" && <Caption text={voice.caption} />}
+        </div>
+      )}
+
+      {phase === "countdown" && (
+        <div className="flex flex-col gap-3">
+          <p className="text-lg font-bold text-foreground">
+            {c.focus.gridTitle}
+          </p>
+          <div
+            className="play-card flex min-h-64 items-center justify-center"
+            data-bu-countdown={count}
+          >
+            <span className="font-heading text-7xl text-foreground">
+              {count === 0 ? "" : count}
+            </span>
+          </div>
         </div>
       )}
 

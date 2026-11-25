@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import qrcode from "qrcode-generator";
 import { Download, Share2 } from "lucide-react";
 import { SITE_CONFIG_WHATSAPP_NUMBER } from "@/config/site.config";
 import { readUtmParams } from "@/lib/analytics/utm";
@@ -664,6 +665,152 @@ function ShareBlock({
       >
         {c.share.whatsapp}
       </button>
+    </section>
+  );
+}
+
+/**
+ * Brain Test v2 result (founder, 25 Nov 2026): the three Before → After cards,
+ * one honest line, and ONE green button that saves the result and opens
+ * WhatsApp with it typed in (the bot then sends the 30-day plan). No plans,
+ * prices, sharing or Brain Type here. On a computer a QR code opens the same
+ * chat on the phone.
+ */
+export function ResultV2({
+  c,
+  lang,
+  role,
+  report,
+  run,
+  settings,
+  track,
+}: {
+  c: BuCopy;
+  lang: "en" | "hi";
+  role: BuRole;
+  report: PlayerReport;
+  run: RawRun;
+  settings: BuSettings;
+  track: TrackContext;
+}): React.JSX.Element {
+  const preview = factsFrom("", report);
+  const [state, setState] = useState<"idle" | "saving" | "chat">("idle");
+  const [waUrl, setWaUrl] = useState<string | null>(null);
+  const [qrSvg, setQrSvg] = useState<string | null>(null);
+
+  // A computer (wide screen, mouse): show a QR of the chat link for the phone.
+  useEffect(() => {
+    const desktop =
+      window.matchMedia("(pointer: fine)").matches && window.innerWidth >= 900;
+    if (!desktop) return;
+    const qr = qrcode(0, "M");
+    qr.addData(
+      waLink(
+        SITE_CONFIG_WHATSAPP_NUMBER,
+        reportChatText(preview, settings, lang),
+      ),
+    );
+    qr.make();
+    setQrSvg(qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true }));
+    // once, on show
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function openWhatsApp(): Promise<void> {
+    if (state === "saving") return;
+    // Phones only allow a new tab during the tap: open it now, point it at wa.me once saved.
+    const tab = openPendingWhatsAppTab();
+    setState("saving");
+    trackBu("whatsapp_opened", track, { via: "chat", v: 2 });
+    const res = await saveBrainUnlockLead({
+      sessionId: sessionId(),
+      firstName: "",
+      phone: "",
+      email: "",
+      lang,
+      role,
+      classBand: null,
+      childClassBand: null,
+      duo: false,
+      runs: [run],
+      utm: readUtmParams(),
+      deviceId: deviceId(),
+      device: currentDevice(),
+      pageUrl: window.location.href,
+    }).catch((): SavedLead => ({ ok: false, error: c.error, reason: "network" }));
+    if (res.ok)
+      trackBu("whatsapp_submitted", track, {
+        via: "chat",
+        score: res.facts.score,
+        type: res.facts.brainType,
+      });
+    else trackBu("lead_save_failed", track, { reason: res.reason, via: "chat" });
+    // WhatsApp opens either way: the visitor is never stuck.
+    const url = waLink(
+      SITE_CONFIG_WHATSAPP_NUMBER,
+      res.ok
+        ? reportChatText(res.facts, settings, lang, res.ref)
+        : reportChatText(preview, settings, lang),
+    );
+    setWaUrl(url);
+    setState("chat");
+    finishWhatsAppHandoff(tab, url);
+  }
+
+  return (
+    <section className="flex flex-col gap-5" data-bu-result-v2={state}>
+      <h1 className="text-center text-[1.8rem] leading-tight text-foreground">
+        {c.v2.resultTitle} 🎉
+      </h1>
+      <MetricCards c={c} lang={lang} r={report} s={settings} />
+      <p className="text-center text-sm text-muted-foreground">{c.v2.fair}</p>
+      <p className="text-center text-lg font-semibold text-foreground">
+        {c.v2.resultLine}
+      </p>
+      {state === "chat" ? (
+        <div className="flex flex-col gap-2 text-center" data-bu-lead-saved="chat">
+          <p className="text-lg font-bold text-foreground">{c.lead.sent}</p>
+          <p className="text-base text-muted-foreground">{c.lead.chatHint}</p>
+          {waUrl !== null && (
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-14 w-full items-center justify-center rounded-2xl bg-[#25d366] px-5 text-lg font-bold text-[#0b2e17]"
+              data-bu-wa-link
+            >
+              {c.lead.again}
+            </a>
+          )}
+        </div>
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() => void openWhatsApp()}
+            className="flex min-h-16 w-full items-center justify-center gap-2 rounded-2xl bg-[#25d366] px-5 text-xl font-bold text-[#0b2e17] shadow-[0_4px_0_#128c4b] active:translate-y-0.5"
+            aria-busy={state === "saving"}
+            data-bu-lead-submit
+          >
+            {state === "saving" ? c.lead.saving : `${c.lead.submit} →`}
+          </button>
+          <p className="text-center text-sm text-muted-foreground">
+            {c.lead.chatHint}
+          </p>
+        </>
+      )}
+      {qrSvg !== null && (
+        <div className="flex flex-col items-center gap-2" data-bu-qr>
+          <div
+            className="size-44 rounded-xl bg-white p-2"
+            // A generated QR image (no user input in the markup).
+            dangerouslySetInnerHTML={{ __html: qrSvg }}
+          />
+          <p className="max-w-xs text-center text-sm text-muted-foreground">
+            {c.v2.qrHint}
+          </p>
+        </div>
+      )}
     </section>
   );
 }

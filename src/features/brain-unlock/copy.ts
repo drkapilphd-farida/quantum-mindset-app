@@ -178,6 +178,24 @@ export type BuCopy = {
     faq: { q: string; a: string }[];
     retake: string;
   };
+  /** Brain Test v2 (founder, 25 Nov 2026): one welcome screen, each superpower before → teach → after, a plain result. */
+  v2: {
+    welcomeTitle: string;
+    welcomeSub: string;
+    trust: string;
+    soundTip: string;
+    start: string;
+    steps: [string, string, string];
+    speedIntro: { title: string; hint: string; go: string };
+    memoryIntro: { title: string; hint: string; go: string };
+    focusIntro: { title: string; hint: string; go: string };
+    memoryRecap: (n: number) => string;
+    skipBack: string;
+    resultTitle: string;
+    resultLine: string;
+    fair: string;
+    qrHint: string;
+  };
   error: string;
 };
 
@@ -267,7 +285,7 @@ const en: BuCopy = {
   speed: {
     title: "⚡ Speed Superpower",
     teach:
-      "Your eyes usually jump around while reading. Now the words will come to your eyes. Just keep looking at the red letter.",
+      "Your eyes usually jump back and forth while reading. Now the words will come to your eyes, one at a time. Just keep looking at the red letter in the middle.",
     modeTitle: "Word Flash: a NEW passage, one word at a time",
     modeHint: (before, now) =>
       `Your normal speed: ${before} WPM → Now: ${now} WPM ⚡`,
@@ -289,7 +307,7 @@ const en: BuCopy = {
     title: "🧠 Memory Superpower",
     recap: (n) => `Earlier you remembered ${n} of 5.`,
     teach:
-      "The secret: your brain loves pictures and stories. Let’s link 5 NEW words into one crazy story. See each picture in your mind.",
+      "Here is the secret: your brain loves pictures and stories. Now we’ll link 5 new words into one funny story. See each picture clearly in your mind.",
     play: "Play the story ▶",
     replay: "I’ve got it → Recall",
     again: "Hear it again",
@@ -421,6 +439,36 @@ const en: BuCopy = {
     ],
     retake: "Take Brain Unlock",
   },
+  v2: {
+    welcomeTitle: "Unlock 3 superpowers of your brain in 5 minutes",
+    welcomeSub: "Speed · Memory · Focus. See your own before → after.",
+    trust: "Dr. Kapil Dev Sharma · 15 years a professor · 12+ years a mind coach",
+    soundTip: "🎧 Keep your sound on",
+    start: "Start",
+    steps: ["⚡ Speed", "🧠 Memory", "🎯 Focus"],
+    speedIntro: {
+      title: "Read this at your normal speed",
+      hint: "Read it once, like you usually do. Then tap Done. One easy question after.",
+      go: "Start reading",
+    },
+    memoryIntro: {
+      title: "Remember 5 words",
+      hint: "Each word shows for 2 seconds. Remember as many as you can.",
+      go: "Show the words",
+    },
+    focusIntro: {
+      title: "Tap 1 to 16 in order",
+      hint: "As fast as you can. The clock starts after 3-2-1.",
+      go: "Go!",
+    },
+    memoryRecap: (n) => `You remembered ${n} of 5. Now the secret.`,
+    skipBack: "Skip the bonus",
+    resultTitle: "Your Brain Test result",
+    resultLine:
+      "This was just 5 minutes. Get your personal 30-day plan from Dr. Kapil on WhatsApp.",
+    fair: "Both rounds were of the same difficulty.",
+    qrHint: "On a computer? Scan this with your phone to open WhatsApp.",
+  },
   error: "Something went wrong. Please try again.",
 };
 
@@ -510,7 +558,7 @@ const hi: BuCopy = {
   speed: {
     title: "⚡ Speed Superpower",
     teach:
-      "आपकी आँखें पढ़ते समय इधर-उधर भटकती हैं। अब शब्द ख़ुद आपकी आँखों तक आएँगे, बस दोनों निशानों के बीच नज़र टिकाइए।",
+      "पढ़ते समय आपकी आँखें आगे-पीछे भटकती रहती हैं। अब शब्द ख़ुद आपकी आँखों तक आएँगे, एक-एक करके। बस बीच के लाल अक्षर पर नज़र टिकाए रखिए।",
     modeTitle: "Word Flash: एक नया passage, एक बार में एक शब्द",
     modeHint: (before, now) =>
       `आपकी सामान्य speed: ${before} WPM → अब: ${now} WPM ⚡`,
@@ -532,7 +580,7 @@ const hi: BuCopy = {
     title: "🧠 Memory Superpower",
     recap: (n) => `पहले आपको 5 में से ${n} याद रहे।`,
     teach:
-      "राज़ यह है: दिमाग़ को तस्वीरें और कहानियाँ पसंद हैं। चलिए 5 नए शब्दों को एक मज़ेदार कहानी में जोड़ते हैं। हर तस्वीर को मन में देखिए।",
+      "राज़ यह है: हमारे दिमाग़ को तस्वीरें और कहानियाँ बहुत पसंद हैं। अब हम 5 नए शब्दों को एक मज़ेदार कहानी में जोड़ेंगे। हर तस्वीर को मन में साफ़-साफ़ देखिए।",
     play: "कहानी चलाइए ▶",
     replay: "याद हो गया → Recall",
     again: "फिर से सुनिए",
@@ -662,6 +710,36 @@ const hi: BuCopy = {
       },
     ],
     retake: "Brain Unlock करें",
+  },
+  v2: {
+    welcomeTitle: "5 मिनट में अपने दिमाग़ की 3 superpowers जगाइए",
+    welcomeSub: "Speed · Memory · Focus. अपना पहले → अब ख़ुद देखिए।",
+    trust: "Dr. Kapil Dev Sharma · 15 साल professor · 12+ साल mind coach",
+    soundTip: "🎧 आवाज़ चालू रखिए",
+    start: "शुरू करें",
+    steps: ["⚡ Speed", "🧠 Memory", "🎯 Focus"],
+    speedIntro: {
+      title: "इसे अपनी सामान्य गति से पढ़िए",
+      hint: "जैसे आप हमेशा पढ़ते हैं, एक बार पढ़िए। फिर 'पढ़ लिया' दबाइए। उसके बाद एक आसान सवाल।",
+      go: "पढ़ना शुरू करें",
+    },
+    memoryIntro: {
+      title: "5 शब्द याद रखिए",
+      hint: "हर शब्द 2 सेकंड दिखेगा। जितने हो सकें, याद रखिए।",
+      go: "शब्द दिखाइए",
+    },
+    focusIntro: {
+      title: "1 से 16 तक क्रम से दबाइए",
+      hint: "जितनी जल्दी हो सके। 3-2-1 के बाद घड़ी चलेगी।",
+      go: "शुरू!",
+    },
+    memoryRecap: (n) => `आपको 5 में से ${n} याद रहे। अब राज़ सुनिए।`,
+    skipBack: "Bonus छोड़ें",
+    resultTitle: "आपका Brain Test नतीजा",
+    resultLine:
+      "ये सिर्फ़ 5 मिनट थे। Dr. Kapil से अपना personal 30-दिन का plan WhatsApp पर पाइए।",
+    fair: "दोनों बार कठिनाई एक जैसी थी।",
+    qrHint: "Computer पर हैं? WhatsApp खोलने के लिए phone से यह scan कीजिए।",
   },
   error: "कुछ गड़बड़ हुई। कृपया फिर कोशिश करें।",
 };

@@ -131,3 +131,62 @@ export async function shubhVoiceMp3(
   }
   return best;
 }
+
+/**
+ * Dr. Kapil's own Sarvam voice clones ("Dr Kapil english" / "Dr Kapil Hindi",
+ * Instant Voice Cloning). The ids are not secrets (GET /voices lists them).
+ * Brain Test v2 (founder, 25 Nov 2026): every line he did not record himself
+ * is voiced with these clones, from the admin page.
+ */
+export const CLONE_VOICES = {
+  en: "svc-0457f3df-1b84-4269-894c-39bb8bcd4a91",
+  hi: "svc-26aff049-8578-4114-b5cf-560109fe6b74",
+} as const;
+
+async function cloneOnce(
+  lang: "en" | "hi",
+  id: string,
+  text: string,
+  key: string,
+): Promise<Buffer | null> {
+  const form = new FormData();
+  form.set("voice_id", CLONE_VOICES[lang]);
+  form.set("text", text);
+  form.set("language_code", code(lang));
+  form.set("pace", String(linePace(id)));
+  form.set("output_audio_codec", "mp3");
+  form.set("speech_sample_rate", "24000");
+  form.set("enable_qc", "true");
+  const res = await fetch("https://api.sarvam.ai/voices/clone", {
+    method: "POST",
+    headers: { "api-subscription-key": key },
+    body: form,
+  });
+  if (!res.ok) {
+    logger.warn("brain-unlock voice: clone tts failed", { status: res.status });
+    return null;
+  }
+  const body = (await res.json()) as { audio_b64?: string; audio?: string };
+  const b64 = body.audio_b64 ?? body.audio;
+  return b64 === undefined ? null : Buffer.from(b64, "base64");
+}
+
+/** The whole line as one MP3 in Dr. Kapil's clone voice, checked against the script (up to 4 takes); or null. */
+export async function cloneVoiceMp3(
+  lang: "en" | "hi",
+  id: string,
+  scriptText: string,
+): Promise<{ mp3: Buffer; checked: boolean } | null> {
+  const key = process.env.SARVAM_API_KEY ?? "";
+  if (key === "") return null;
+  const text = ttsText(scriptText);
+  let best: Buffer | null = null;
+  for (let take = 1; take <= 4; take++) {
+    const mp3 = await cloneOnce(lang, id, text, key);
+    if (mp3 === null) break;
+    best = mp3;
+    const got = await heard(lang, mp3, key);
+    if (got === null || sameWords(text, got)) return { mp3, checked: got !== null };
+  }
+  return best === null ? null : { mp3: best, checked: false };
+}

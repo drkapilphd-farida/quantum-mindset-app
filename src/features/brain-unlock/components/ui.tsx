@@ -22,6 +22,45 @@ export const SKILL = {
   check: "#0f766e",
 } as const;
 
+/**
+ * Brain Test v2: every new screen starts at the top (founder, 25 Nov 2026 —
+ * the old page could stay scrolled down to the footer after "Check").
+ */
+export function useScrollTop(key: unknown): void {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [key]);
+}
+
+/** Brain Test v2: three steps (⚡ Speed · 🧠 Memory · 🎯 Focus), ✓ when done. */
+export function Steps({
+  current,
+  labels,
+}: {
+  current: 0 | 1 | 2;
+  labels: readonly [string, string, string];
+}): React.JSX.Element {
+  return (
+    <ol className="grid grid-cols-3 gap-2" data-bu-steps={current}>
+      {labels.map((l, i) => {
+        const done = i < current;
+        const on = i === current;
+        return (
+          <li
+            key={l}
+            className={`flex min-h-10 items-center justify-center rounded-full px-2 text-sm font-bold whitespace-nowrap transition-colors ${on ? "bg-primary text-primary-foreground" : done ? "bg-[var(--play-good-bg)] text-[var(--play-good)]" : "bg-muted text-muted-foreground"}`}
+            aria-current={on ? "step" : undefined}
+          >
+            {/* Words only: an emoji disappears on the yellow pill and makes "✓ 🧠 Memory" wrap. */}
+            {done ? "✓ " : ""}
+            {l.replace(/^\S+\s+/u, "")}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
 /** "Brain Check" → "Superpower 1 of 3" … with four segments. */
 /**
  * The top bar during the challenge (founder, 15 Nov 2026): which step, an
@@ -132,7 +171,7 @@ export function RevealCard({
       {good && <Confetti />}
       <div
         className="bu-pop rounded-3xl p-6 text-center text-white shadow-lg"
-        style={{ background: `linear-gradient(135deg, ${colour}, #2563eb)` }}
+        style={{ background: colour }}
         data-bu-reveal={good ? "good" : "kind"}
       >
         <p className="font-heading text-[1.65rem] leading-snug tabular-nums">

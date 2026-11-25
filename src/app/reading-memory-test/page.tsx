@@ -45,6 +45,9 @@ export default async function ReadingMemoryTestPage({ searchParams }: { searchPa
     const langParam = one(sp.lang)
     const initialLang = langParam === 'hi' || langParam === 'en' ? langParam : (langFromCampaign(one(sp.utm_campaign)) ?? 'en')
     const plan = one(sp.plan)
+    // Brain Test v2: no "who is this for" screen; the WhatsApp link may say ?role=.
+    const roleParam = one(sp.role)
+    const role = roleParam === 'parent' || roleParam === 'professional' ? roleParam : 'student'
     body = (
       <BrainUnlock
         content={content}
@@ -54,9 +57,13 @@ export default async function ReadingMemoryTestPage({ searchParams }: { searchPa
         initialView={one(sp.view) === 'offer' ? 'offer' : 'flow'}
         initialPlan={plan === 'self' || plan === 'live' ? plan : null}
         retakeOf={retakeOf}
+        initialRole={role}
       />
     )
   }
+  // Brain Test v2 (founder, 25 Nov 2026): only the test on screen, no site
+  // menu or footer. The classic test keeps the site frame.
+  if (!classic) return <main className="min-h-dvh font-sans antialiased">{body}</main>
   return (
     <div className="warm-light min-h-screen font-sans antialiased">
       <SharpBrainNav />

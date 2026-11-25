@@ -3,12 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LanguageOverride } from "@/context/LanguageContext";
 import { PlayScope } from "@/components/PlayScope";
-import { PageVideo } from "@/components/video/PageVideo";
 import { captureUtmParams } from "@/lib/analytics/utm";
 import { SharpBrainPricingProvider } from "@/features/sharp-brain-enrol/components/SharpBrainPricing";
 import type { PricingSnapshot } from "@/features/sharp-brain-enrol/server";
 import { buCopy } from "../copy";
-import { factsFrom, type ReportFacts } from "../messages";
 import type { BuRole, PublicPassage } from "../passages";
 import {
   buildReport,
@@ -20,31 +18,25 @@ import {
 import type { BuSettings } from "../settings";
 import { loadMuted, saveMuted } from "../sound";
 import { trackBu, type TrackContext } from "../tracking";
-import {
-  CLASS_BANDS,
-  ROLES,
-  type ClassBand,
-  type RawRun,
-  type RunSetup,
-} from "../types";
+import Image from "next/image";
+import { type RawRun, type RunSetup } from "../types";
 import { CHECK_SETS, STORY_SETS } from "../words";
 import { chooseBrainUnlockSets } from "../actions";
 import { addSeen, deviceId, loadSeen } from "../deviceMemory";
 import { chooseSessionSets, type SessionSets } from "../sets";
 import { BrainCheck, type CheckResult } from "./BrainCheck";
 import { OfferBlock } from "./OfferBlock";
-import { Report } from "./Report";
+import { ResultV2 } from "./Report";
 import { UnlockFocus } from "./UnlockFocus";
 import { UnlockMemory } from "./UnlockMemory";
 import { UnlockSpeed } from "./UnlockSpeed";
-import { chipBtn, primaryBtn, Progress, secondaryBtn, SoundToggle } from "./ui";
-import { cheerCount, progressFraction, secondsLeft } from "../timing";
+import { primaryBtn, SoundToggle, Steps } from "./ui";
 import { VoiceCue, VoiceOverrides } from "./useNarration";
 
-// Brain Unlock (founder spec, 13 Nov 2026): hook → Brain Check → 3 unlocks,
-// each with its own real Before → After → the report → the offer, all on one
-// page. Duo Mode: parent and child take turns on one phone at every step
-// (the child gets different words and the student passages).
+// Brain Test v2 (founder, 25 Nov 2026): one welcome screen → for each
+// superpower its own Before → technique → After (speed, memory, focus) → a
+// plain result with ONE WhatsApp button. No menu, footer, plans, sharing or
+// Duo Mode on this page: the next step (and the price) happens on WhatsApp.
 
 /** Every passage a session may get (no answer keys), per role and language. */
 export type BuContent = Record<
@@ -52,7 +44,7 @@ export type BuContent = Record<
   Record<"en" | "hi", { check: PublicPassage[]; sharp: PublicPassage[] }>
 >;
 
-type Stage = "role" | "pain" | "promise" | "play" | "report";
+type Stage = "welcome" | "play" | "report";
 type RunParts = {
   check?: CheckResult;
   sharpMs?: number;
@@ -65,19 +57,9 @@ type RunParts = {
   storyBackward?: string[];
   focusAfter?: RawRun["focusAfter"];
 };
-const PHASES = 4; // 0 = Brain Check, 1 = speed, 2 = memory, 3 = focus
-
-function usePrefersDark(): boolean {
-  const [dark, setDark] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    setDark(mq.matches);
-    const on = (e: MediaQueryListEvent): void => setDark(e.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-  return dark;
-}
+// 0 speed before · 1 speed unlock · 2 memory before · 3 memory unlock ·
+// 4 focus before · 5 focus unlock
+const PHASES = 6;
 
 export default function BrainUnlock({
   content,
@@ -87,6 +69,7 @@ export default function BrainUnlock({
   initialView,
   initialPlan,
   retakeOf,
+  initialRole,
 }: {
   content: BuContent;
   settings: BuSettings;
@@ -96,22 +79,19 @@ export default function BrainUnlock({
   initialPlan: "self" | "live" | null;
   /** The earlier lead this +30-day retake comes from (WhatsApp link), or null. */
   retakeOf: string | null;
+  /** Passages for this visitor (?role= from the WhatsApp link); student by default. */
+  initialRole: BuRole;
 }): React.JSX.Element {
   const [lang, setLang] = useState<"en" | "hi">(initialLang);
   const c = buCopy[lang];
-  const dark = usePrefersDark();
   const [muted, setMuted] = useState(false);
   const [view, setView] = useState(initialView);
-  const [stage, setStage] = useState<Stage>("role");
-  const [role, setRole] = useState<BuRole | null>(null);
-  const [classBand, setClassBand] = useState<ClassBand | null>(null);
-  const [duo, setDuo] = useState(false);
+  const [stage, setStage] = useState<Stage>("welcome");
+  const role: BuRole = initialRole;
+  const duo = false;
   const [phase, setPhase] = useState(0);
   const [player, setPlayer] = useState(0);
-  const [handoff, setHandoff] = useState<"toChild" | "toParent" | null>(null);
-  const [checkDone, setCheckDone] = useState(false);
   const [parts, setParts] = useState<RunParts[]>([{}, {}]);
-  const [facts, setFacts] = useState<ReportFacts | null>(null);
   const [sessionSets, setSessionSets] = useState<SessionSets[] | null>(null);
   const [starting, setStarting] = useState(false);
   const top = useRef<HTMLDivElement>(null);
@@ -129,8 +109,8 @@ export default function BrainUnlock({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Each new screen starts at its top (below the sticky header), not on first load.
-  const screenKey = `${view}-${stage}-${phase}-${player}-${handoff ?? ""}-${checkDone}`;
+  // Each new screen starts at the top (no site header on this page), not on first load.
+  const screenKey = `${view}-${stage}-${phase}`;
   const first = useRef(true);
   useEffect(() => {
     if (first.current) {
@@ -140,7 +120,7 @@ export default function BrainUnlock({
     const el = top.current;
     if (el !== null)
       window.scrollTo({
-        top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 72),
+        top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 16),
       });
   }, [screenKey]);
 
@@ -226,45 +206,39 @@ export default function BrainUnlock({
     );
   };
 
-  /** A player finished the current phase: next player (with a handoff), or the next phase. */
+  /** The visitor finished the current phase: the next one, or the report. */
   function advance(next: RunParts[]): void {
-    if (player < setups.length - 1) {
-      setPlayer(player + 1);
-      setHandoff("toChild");
-      return;
-    }
     const done = phase;
-    const before = reportFor(0, next);
-    if (done === 0) trackBu("check_done", track);
+    const r = reportFor(0, next);
+    if (done === 0) trackBu("check_done", track, { part: "speed" });
+    if (done === 2) trackBu("check_done", track, { part: "memory" });
+    if (done === 4) trackBu("check_done", track, { part: "focus" });
     if (done === 1)
       trackBu("unlock_speed_done", track, {
-        before: before.speedBefore.wpm,
-        after: before.speedAfter.wpm,
-        counted: before.speedCounted,
-      });
-    if (done === 2)
-      trackBu("unlock_memory_done", track, {
-        before: before.memoryBefore,
-        after: before.memoryForward,
-        backward: before.memoryBackward,
+        before: r.speedBefore.wpm,
+        after: r.speedAfter.wpm,
+        counted: r.speedCounted,
       });
     if (done === 3)
+      trackBu("unlock_memory_done", track, {
+        before: r.memoryBefore,
+        after: r.memoryForward,
+        backward: r.memoryBackward,
+      });
+    if (done === 5)
       trackBu("unlock_focus_done", track, {
-        before: before.focusBefore.ms,
-        after: before.focusAfter.ms,
+        before: r.focusBefore.ms,
+        after: r.focusAfter.ms,
       });
     if (done === PHASES - 1) {
       setStage("report");
       trackBu("report_view", track, {
-        score: before.score.total,
-        type: before.brainType,
+        score: r.score.total,
+        type: r.brainType,
       });
       return;
     }
-    setPlayer(0);
     setPhase(done + 1);
-    if (duo) setHandoff("toParent");
-    if (done === 0) setCheckDone(true);
   }
 
   const finishPart = (p: RunParts): void => {
@@ -272,12 +246,21 @@ export default function BrainUnlock({
     setParts(next);
     advance(next);
   };
+  /** A "before" step: merge its part of the check result. */
+  const finishCheck = (piece: Partial<CheckResult>): void => {
+    const prev = part.check ?? {
+      checkMs: 0,
+      checkAnswers: [],
+      memoryPicked: [],
+      focusBefore: { ms: 0, errors: 0 },
+      gridBefore: [],
+    };
+    finishPart({ check: { ...prev, ...piece } });
+  };
 
   /** Start: this person's sets (server: device/phone/email history; else this browser's memory). */
   async function start(): Promise<void> {
-    if (role === null) return;
     setStarting(true);
-    if (role === "parent") trackBu("duo_chosen", { ...track, duo }, { duo });
     const seen = loadSeen();
     let sets: SessionSets[] | null = null;
     try {
@@ -298,36 +281,34 @@ export default function BrainUnlock({
     setSessionSets(sets);
     trackBu(
       "started",
-      { ...track, duo },
-      { sets: sets.map((x) => `${x.checkSet}.${x.storySet}`).join("+") },
+      track,
+      { sets: sets.map((x) => `${x.checkSet}.${x.storySet}`).join("+"), v: 2 },
     );
     setParts([{}, {}]);
     setPhase(0);
     setPlayer(0);
-    setCheckDone(false);
-    setHandoff(null);
     setStarting(false);
     setStage("play");
   }
 
-  const continueLabel =
-    phase === PHASES - 1 && player === setups.length - 1
-      ? c.seeReport
-      : player < setups.length - 1
-        ? c.speed.next
-        : c.nextSuperpower;
-  const showLangToggle = view === "offer" || stage === "role";
+  const continueLabel = phase === PHASES - 1 ? c.seeReport : c.nextSuperpower;
+  const step = Math.min(2, Math.floor(phase / 2)) as 0 | 1 | 2;
+  const baselineWpm =
+    part.check === undefined
+      ? 0
+      : wpmFrom(passages.check.wordCount, part.check.checkMs);
 
   return (
     <LanguageOverride lang={lang}>
       <VoiceOverrides.Provider value={settings.voiceLines[lang]}>
-        <div className={dark ? "dark" : ""}>
-          <PlayScope className={`min-h-[80vh] px-4 py-8 text-foreground sm:py-12 ${dark ? "bg-background" : ""}`} style={dark ? undefined : { background: "linear-gradient(135deg, #eef3ff 0%, #f3f6ff 45%, #e6f7f3 100%)" }}>
+        <div className="dark">
+          <PlayScope className="bt2 min-h-dvh bg-background px-4 pt-4 pb-10 text-foreground">
             <div
               ref={top}
-              className={`mx-auto flex w-full max-w-xl flex-col gap-5 ${dark ? "" : "rounded-3xl bg-white p-5 shadow-[0_30px_60px_-30px_rgba(13,42,102,0.45)] ring-1 ring-[#2b57e8]/15 sm:p-8"}`}
+              className="mx-auto flex w-full max-w-md flex-col gap-5"
               data-bu-stage={view === "offer" ? "offer" : stage}
               data-bu-lang={lang}
+              data-bu-v="2"
               data-bu-sets={
                 sessionSets
                   ?.map((x) => `${x.checkSet}.${x.storySet}`)
@@ -335,11 +316,11 @@ export default function BrainUnlock({
               }
             >
               <div className="flex items-center justify-between gap-2">
-                <p className="text-xs font-bold tracking-wider text-primary uppercase">
-                  🧠 {c.pageName}
+                <p className="text-sm font-bold tracking-wide text-primary">
+                  🧠 Sharp Brain™
                 </p>
                 <div className="flex items-center gap-2">
-                  {showLangToggle && (
+                  {(stage === "welcome" || view === "offer") && (
                     <div
                       className="flex rounded-full border-2 border-border p-0.5"
                       role="radiogroup"
@@ -352,10 +333,10 @@ export default function BrainUnlock({
                           role="radio"
                           aria-checked={lang === l}
                           onClick={() => setLang(l)}
-                          className={`min-h-9 rounded-full px-3 text-sm font-bold ${lang === l ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+                          className={`min-h-10 rounded-full px-4 text-base font-bold ${lang === l ? "bg-primary text-primary-foreground" : "text-foreground"}`}
                           data-bu-lang-toggle={l}
                         >
-                          {l === "en" ? "EN" : "हिंदी"}
+                          {l === "en" ? "English" : "हिंदी"}
                         </button>
                       ))}
                     </div>
@@ -393,175 +374,27 @@ export default function BrainUnlock({
                 </SharpBrainPricingProvider>
               )}
 
-              {view === "flow" && stage === "role" && (
-                <section className="flex flex-col gap-5" data-bu-hook>
-                  <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#2b57e8]/10 px-3 py-1 text-[12.5px] font-bold uppercase tracking-[0.08em] text-[#2b57e8]">🧠 {lang === "hi" ? "मुफ़्त Brain Test · 2 मिनट" : "Free Brain Test · 2 minutes"}</span>
-                  <h1 className={`text-[2rem] font-extrabold leading-tight ${dark ? "text-foreground" : "bg-gradient-to-r from-[#2b57e8] via-[#7c3aed] to-[#11a197] bg-clip-text text-transparent"}`}>
-                    {c.hook.title}
-                  </h1>
-                  <p className="text-base text-muted-foreground">
-                    {c.hook.sub}
-                  </p>
-                  <div
-                    className="flex flex-col gap-3"
-                    role="radiogroup"
-                    aria-label={c.hook.title}
-                  >
-                    {ROLES.map((r) => (
-                      <button
-                        key={r}
-                        type="button"
-                        role="radio"
-                        aria-checked={role === r}
-                        onClick={() => {
-                          setRole(r);
-                          if (r === "professional") {
-                            setClassBand(null);
-                            trackBu("role_picked", { ...track, role: r });
-                            setStage("pain");
-                          }
-                        }}
-                        className={`min-h-16 rounded-2xl border-2 px-5 text-left text-xl font-bold ${role === r ? "border-primary bg-primary/15 text-foreground" : "border-border bg-card text-foreground"}`}
-                        data-bu-role={r}
-                      >
-                        {c.hook.roles[r]}
-                      </button>
-                    ))}
-                  </div>
-                  {(role === "parent" || role === "student") && (
-                    <div
-                      className="play-card flex flex-col gap-3 p-4"
-                      data-bu-class
-                    >
-                      <p className="text-base font-bold text-foreground">
-                        {c.hook.classQ}{" "}
-                        <span className="text-sm font-normal text-muted-foreground">
-                          ({c.hook.optional})
-                        </span>
-                      </p>
-                      <div className="grid grid-cols-2 gap-2">
-                        {CLASS_BANDS.map((b) => (
-                          <button
-                            key={b}
-                            type="button"
-                            aria-pressed={classBand === b}
-                            onClick={() =>
-                              setClassBand(classBand === b ? null : b)
-                            }
-                            className={chipBtn(classBand === b)}
-                            data-bu-class-chip={b}
-                          >
-                            {c.hook.classes[b]}
-                          </button>
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        className={primaryBtn}
-                        onClick={() => {
-                          trackBu(
-                            "role_picked",
-                            track,
-                            classBand === null ? {} : { class: classBand },
-                          );
-                          setStage("pain");
-                        }}
-                        data-bu-role-next
-                      >
-                        {c.hook.next}
-                      </button>
-                    </div>
-                  )}
-                </section>
-              )}
-
-              {view === "flow" && stage === "pain" && role !== null && (
+              {view === "flow" && stage === "welcome" && (
                 <section
-                  className="flex flex-col gap-6 py-6 text-center"
-                  data-bu-pain
+                  className="flex flex-col items-center gap-5 pt-4 text-center"
+                  data-bu-welcome
                 >
-                  <p className="font-heading text-[1.9rem] leading-snug text-foreground">
-                    {c.pain[role]}
-                  </p>
-                  <button
-                    type="button"
-                    className={primaryBtn}
-                    onClick={() => setStage("promise")}
-                    data-bu-yes
-                  >
-                    {c.yes}
-                  </button>
-                </section>
-              )}
-
-              {view === "flow" && stage === "promise" && role !== null && (
-                <section className="flex flex-col gap-5" data-bu-promise>
-                  <VoiceCue id="hook" lang={lang} muted={muted} />
-                  <h1 className="text-[1.9rem] leading-snug text-foreground">
-                    {c.promise.title}
+                  <VoiceCue id="hook" lang={lang} muted={muted} delayMs={600} />
+                  <Image
+                    src="/images/bt2-dr-kapil.jpg"
+                    alt="Dr. Kapil Dev Sharma"
+                    width={112}
+                    height={112}
+                    priority
+                    className="size-28 rounded-full border-4 border-primary object-cover"
+                  />
+                  <h1 className="text-[1.9rem] leading-tight text-foreground">
+                    {c.v2.welcomeTitle}
                   </h1>
-                  <ul className="flex flex-wrap gap-2" data-bu-trust>
-                    {c.promise.trust.map((t, i) => (
-                      <li
-                        key={t}
-                        className="rounded-full px-3 py-1 text-sm font-bold text-white"
-                        style={{
-                          background: ["#4338ca", "#0f766e", "#c2410c"][i % 3],
-                        }}
-                      >
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                  {settings.introVideoId !== "" && (
-                    <PageVideo
-                      video={{
-                        id: settings.introVideoId,
-                        name: "Brain Unlock intro",
-                        thumb: null,
-                        caption: {
-                          en: "Dr. Kapil on Brain Unlock",
-                          hi: "Brain Unlock पर Dr. Kapil",
-                        },
-                      }}
-                      lang={lang}
-                      tone="light"
-                      className="mx-auto w-48"
-                    />
-                  )}
-                  {role === "parent" && (
-                    <div
-                      className="play-card flex flex-col gap-3 p-4"
-                      data-bu-duo
-                    >
-                      <p className="text-base font-bold text-foreground">
-                        {c.promise.duoQ}
-                      </p>
-                      <button
-                        type="button"
-                        aria-pressed={duo}
-                        onClick={() => setDuo(true)}
-                        className={chipBtn(duo)}
-                        data-bu-duo-choice="duo"
-                      >
-                        {c.promise.duo}
-                      </button>
-                      <button
-                        type="button"
-                        aria-pressed={!duo}
-                        onClick={() => setDuo(false)}
-                        className={chipBtn(!duo)}
-                        data-bu-duo-choice="solo"
-                      >
-                        {c.promise.solo}
-                      </button>
-                      {duo && (
-                        <p className="text-sm text-muted-foreground">
-                          {c.promise.duoSub}
-                        </p>
-                      )}
-                    </div>
-                  )}
+                  <p className="text-lg text-muted-foreground">
+                    {c.v2.welcomeSub}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{c.v2.trust}</p>
                   <button
                     type="button"
                     className={primaryBtn}
@@ -569,9 +402,12 @@ export default function BrainUnlock({
                     onClick={() => void start()}
                     data-bu-start
                   >
-                    {c.promise.start}
+                    {c.v2.start} →
                   </button>
-                  <p className="text-center text-sm text-muted-foreground">
+                  <p className="text-base font-semibold text-foreground">
+                    {c.v2.soundTip}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
                     {c.promise.noSignup}
                   </p>
                 </section>
@@ -579,191 +415,108 @@ export default function BrainUnlock({
 
               {view === "flow" && stage === "play" && (
                 <>
-                  <Progress
-                    step={phase as 0 | 1 | 2 | 3}
-                    label={
-                      phase === 0
-                        ? c.progress.check
-                        : c.progress.superpower(phase)
-                    }
-                    labels={c.progress.labels}
-                    timeLeft={c.progress.timeLeft(
-                      secondsLeft(phase, player, setups.length),
+                  <Steps current={step} labels={c.v2.steps} />
+                  <div key={phase}>
+                    {phase === 0 && (
+                      <BrainCheck
+                        c={c}
+                        lang={lang}
+                        part="speed"
+                        passage={passages.check}
+                        checkSet={setup.checkSet}
+                        muted={muted}
+                        onDone={finishCheck}
+                      />
                     )}
-                    fraction={progressFraction(phase, player, setups.length)}
-                    cheer={
-                      handoff === null && cheerCount(phase) !== null
-                        ? c.progress.cheer(cheerCount(phase)!)
-                        : null
-                    }
-                  />
-                  {duo && handoff === null && (
-                    <p className="text-sm font-bold text-primary">
-                      {player === 0
-                        ? c.handoff.parentName
-                        : c.handoff.childName}
-                    </p>
-                  )}
-
-                  {handoff !== null ? (
-                    <section
-                      className="play-card flex flex-col items-center gap-5 p-8 text-center"
-                      data-bu-handoff={handoff}
-                    >
-                      {checkDone && phase === 1 && player === 0 && (
-                        <div className="flex flex-col gap-1">
-                          <p className="font-heading text-2xl text-foreground">
-                            {c.check.complete}
-                          </p>
-                          <p className="text-base text-muted-foreground">
-                            {c.check.completeSub}
-                          </p>
-                        </div>
-                      )}
-                      <p className="font-heading text-[1.6rem] leading-snug text-foreground">
-                        {handoff === "toChild"
-                          ? c.handoff.toChild
-                          : c.handoff.toParent}
-                      </p>
-                      <button
-                        type="button"
-                        className={primaryBtn}
-                        onClick={() => (setHandoff(null), setCheckDone(false))}
-                        data-bu-handoff-ready
-                      >
-                        {c.handoff.ready}
-                      </button>
-                    </section>
-                  ) : checkDone && !duo ? (
-                    <section
-                      className="play-card flex flex-col items-center gap-4 p-8 text-center"
-                      data-bu-check-complete
-                    >
-                      <p className="font-heading text-[1.8rem] text-foreground">
-                        {c.check.complete}
-                      </p>
-                      <p className="text-lg text-muted-foreground">
-                        {c.check.completeSub}
-                      </p>
-                      <button
-                        type="button"
-                        className={primaryBtn}
-                        onClick={() => setCheckDone(false)}
-                        data-bu-unlock-now
-                      >
-                        {c.check.unlockNow}
-                      </button>
-                    </section>
-                  ) : (
-                    <div key={`${phase}-${player}`}>
-                      {phase === 0 && (
-                        <BrainCheck
-                          c={c}
-                          lang={lang}
-                          passage={passages.check}
-                          checkSet={setup.checkSet}
-                          muted={muted}
-                          onDone={(check) => finishPart({ check })}
-                        />
-                      )}
-                      {phase === 1 && part.check !== undefined && (
-                        <UnlockSpeed
-                          c={c}
-                          lang={lang}
-                          muted={muted}
-                          baselineWpm={wpmFrom(
-                            passages.check.wordCount,
-                            part.check.checkMs,
-                          )}
-                          checkPassageId={passages.check.id}
-                          checkAnswers={part.check.checkAnswers}
-                          passage={passages.sharp}
-                          continueLabel={continueLabel}
-                          onDone={(r) =>
-                            finishPart({
-                              sharpMs: r.sharpMs,
-                              sharpAnswers: r.sharpAnswers,
-                              checkCorrect: r.grade.checkCorrect,
-                              checkTotal: r.grade.checkTotal,
-                              sharpCorrect: r.grade.sharpCorrect,
-                              sharpTotal: r.grade.sharpTotal,
-                            })
-                          }
-                        />
-                      )}
-                      {phase === 2 && part.check !== undefined && (
-                        <UnlockMemory
-                          c={c}
-                          lang={lang}
-                          muted={muted}
-                          before={scorePickedFor(runFor(player, parts))}
-                          storySet={setup.storySet}
-                          continueLabel={continueLabel}
-                          onDone={(r) => finishPart(r)}
-                        />
-                      )}
-                      {phase === 3 && part.check !== undefined && (
-                        <UnlockFocus
-                          c={c}
-                          lang={lang}
-                          muted={muted}
-                          before={part.check.focusBefore}
-                          gridBefore={part.check.gridBefore}
-                          continueLabel={continueLabel}
-                          onDone={(r) => finishPart(r)}
-                        />
-                      )}
-                    </div>
-                  )}
+                    {phase === 1 && part.check !== undefined && (
+                      <UnlockSpeed
+                        c={c}
+                        lang={lang}
+                        muted={muted}
+                        baselineWpm={baselineWpm}
+                        checkPassageId={passages.check.id}
+                        checkAnswers={part.check.checkAnswers}
+                        passage={passages.sharp}
+                        continueLabel={continueLabel}
+                        onDone={(r) =>
+                          finishPart({
+                            sharpMs: r.sharpMs,
+                            sharpAnswers: r.sharpAnswers,
+                            checkCorrect: r.grade.checkCorrect,
+                            checkTotal: r.grade.checkTotal,
+                            sharpCorrect: r.grade.sharpCorrect,
+                            sharpTotal: r.grade.sharpTotal,
+                          })
+                        }
+                      />
+                    )}
+                    {phase === 2 && (
+                      <BrainCheck
+                        c={c}
+                        lang={lang}
+                        part="memory"
+                        passage={passages.check}
+                        checkSet={setup.checkSet}
+                        muted={muted}
+                        onDone={finishCheck}
+                      />
+                    )}
+                    {phase === 3 && part.check !== undefined && (
+                      <UnlockMemory
+                        c={c}
+                        lang={lang}
+                        muted={muted}
+                        before={scorePickedFor(runFor(player, parts))}
+                        storySet={setup.storySet}
+                        continueLabel={continueLabel}
+                        onDone={(r) => finishPart(r)}
+                      />
+                    )}
+                    {phase === 4 && (
+                      <BrainCheck
+                        c={c}
+                        lang={lang}
+                        part="focus"
+                        passage={passages.check}
+                        checkSet={setup.checkSet}
+                        muted={muted}
+                        onDone={finishCheck}
+                      />
+                    )}
+                    {phase === 5 && part.check !== undefined && (
+                      <UnlockFocus
+                        c={c}
+                        lang={lang}
+                        muted={muted}
+                        before={part.check.focusBefore}
+                        gridBefore={part.check.gridBefore}
+                        continueLabel={continueLabel}
+                        onDone={(r) => finishPart(r)}
+                      />
+                    )}
+                  </div>
                 </>
               )}
 
-              {view === "flow" && stage === "report" && role !== null && (
-                <SharpBrainPricingProvider initial={pricing}>
+              {view === "flow" && stage === "report" && (
+                <>
                   <VoiceCue
                     id="report-ready"
                     lang={lang}
                     muted={muted}
                     delayMs={1200}
                   />
-                  <Report
+                  <ResultV2
                     c={c}
                     lang={lang}
                     role={role}
-                    classBand={classBand}
-                    childClassBand={duo ? classBand : null}
-                    duo={duo}
-                    reports={setups.map((_, i) => reportFor(i, parts))}
-                    runs={setups.map((_, i) => runFor(i, parts))}
+                    report={reportFor(0, parts)}
+                    run={runFor(0, parts)}
                     settings={settings}
                     track={track}
-                    onSaved={setFacts}
                   />
-                  <OfferBlock
-                    c={c}
-                    lang={lang}
-                    settings={settings}
-                    facts={facts ?? factsPreview(reportFor(0, parts))}
-                    track={track}
-                    initialPlan={null}
-                  />
-                </SharpBrainPricingProvider>
+                </>
               )}
-
-              {view === "flow" &&
-                stage !== "role" &&
-                stage !== "report" &&
-                stage !== "play" && (
-                  <button
-                    type="button"
-                    className={secondaryBtn}
-                    onClick={() =>
-                      setStage(stage === "promise" ? "pain" : "role")
-                    }
-                  >
-                    ←
-                  </button>
-                )}
             </div>
           </PlayScope>
         </div>
@@ -790,7 +543,4 @@ function scoreBackward(run: RawRun): number {
     STORY_SETS[run.storySet].map((w) => w.id),
     true,
   );
-}
-function factsPreview(r: PlayerReport): ReportFacts {
-  return factsFrom("", r);
 }

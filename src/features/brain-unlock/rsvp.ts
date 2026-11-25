@@ -63,6 +63,36 @@ export function splitAtFocus(word: string): {
   };
 }
 
+/**
+ * Hindi (Brain Test v2, 25 Nov 2026): the voice says "look at the red letter
+ * in the middle", so a Hindi word gets one red akshara too. Split on whole
+ * grapheme clusters (a consonant with its matra/virama stays together), the
+ * middle cluster in red; punctuation-only clusters are skipped.
+ */
+export function splitAtAkshara(word: string): {
+  before: string;
+  focus: string;
+  after: string;
+} {
+  const seg =
+    typeof Intl !== "undefined" && "Segmenter" in Intl
+      ? Array.from(
+          new Intl.Segmenter("hi", { granularity: "grapheme" }).segment(word),
+          (x) => x.segment,
+        )
+      : Array.from(word);
+  const letters = seg
+    .map((g, i) => (/[\p{L}\p{N}]/u.test(g) ? i : -1))
+    .filter((i) => i >= 0);
+  if (letters.length === 0) return { before: word, focus: "", after: "" };
+  const k = letters[Math.floor((letters.length - 1) / 2)]!;
+  return {
+    before: seg.slice(0, k).join(""),
+    focus: seg[k]!,
+    after: seg.slice(k + 1).join(""),
+  };
+}
+
 export const rsvpWords = (text: string): string[] => words(text);
 
 /** How long one word stays on screen at this speed. */
