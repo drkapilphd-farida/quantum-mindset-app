@@ -1538,3 +1538,17 @@
   .bu-pop, .bu-nudge { animation: none; }
   .bu-dot { transition: none; }
 }
+
+/* Brain Test v3 (?v=3): tap pop, wrong-tap shake, "+1s" float, score pop-in.
+   Nothing moves when the visitor asks for reduced motion. */
+@keyframes v3-pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes v3-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+@keyframes v3-float { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-18px); } }
+@keyframes v3-in { 0% { opacity: 0; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1); } }
+.v3-pop { animation: v3-pop 180ms ease-out; }
+.v3-shake { animation: v3-shake 260ms ease-in-out; }
+.v3-float { animation: v3-float 700ms ease-out forwards; }
+.v3-in { animation: v3-in 320ms ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .v3-pop, .v3-shake, .v3-float, .v3-in { animation: none; }
+}
