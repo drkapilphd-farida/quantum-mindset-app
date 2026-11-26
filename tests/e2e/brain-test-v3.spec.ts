@@ -16,7 +16,9 @@ async function blockServerActions(page: Page): Promise<void> {
 
 async function playGrid(page: Page): Promise<void> {
   await expect(page.locator('[data-v3-grid]')).toBeVisible()
-  for (let n = 1; n <= 25; n++) await page.locator(`[data-v3-cell="${n}"]`).dispatchEvent('pointerdown')
+  // 4 × 4: the numbers 1–16, nothing more.
+  await expect(page.locator('[data-v3-cell]')).toHaveCount(16)
+  for (let n = 1; n <= 16; n++) await page.locator(`[data-v3-cell="${n}"]`).dispatchEvent('pointerdown')
 }
 
 test('v3 plays from round 1 to the Brain Score with one WhatsApp button', async ({ page }) => {
@@ -27,9 +29,13 @@ test('v3 plays from round 1 to the Brain Score with one WhatsApp button', async 
   await expect(page.getByText('Round 1 of 4')).toBeVisible()
   await expect(page.locator('footer, nav')).toHaveCount(0)
 
-  // Round 1: 1 → 25.
+  // Round 1: 1 → 16.
+  await expect(page.getByText('Tap 1 to 16 as fast as you can')).toBeVisible()
   await playGrid(page)
   await expect(page.locator('[data-v3-flash]')).toContainText(/Focus: \d+\.\d sec/)
+  // Score screens never move on by themselves.
+  await page.waitForTimeout(5_000)
+  await expect(page.locator('[data-v3-flash]')).toBeVisible()
   await page.locator('[data-v3-flash-next]').click()
 
   // Name screen: choosing who is playing is required, the name is not.
@@ -39,11 +45,16 @@ test('v3 plays from round 1 to the Brain Score with one WhatsApp button', async 
   await page.locator('[data-v3-player="child"]').click()
   await page.locator('[data-v3-name-continue]').click()
 
-  // 3 breaths (skipped here to keep the test short), then round 2.
+  // One intro screen, then 3 breaths (skipped here to keep the test short), then round 2.
+  await expect(page.locator('[data-v3-breath-intro]')).toContainText('Now take 3 slow breaths')
+  await page.locator('[data-v3-breath-start]').click()
   await expect(page.locator('[data-v3-breath]')).toBeVisible()
   await page.locator('[data-v3-breath-skip]').click()
   await expect(page.getByText('Round 2 of 4')).toBeVisible()
   await playGrid(page)
+  // The round 2 screen (focus faster / compare) also waits for Continue.
+  await page.waitForTimeout(5_000)
+  await expect(page.locator('[data-v3-flash]')).toBeVisible()
   await page.locator('[data-v3-flash-next]').click()
 
   // Round 3: remember the 7, then pick exactly those.
@@ -75,6 +86,9 @@ test('v3 plays from round 1 to the Brain Score with one WhatsApp button', async 
   expect(score).toBeGreaterThanOrEqual(0)
   expect(score).toBeLessThanOrEqual(100)
   await expect(page.locator('[data-v3-bar]')).toHaveCount(4)
+  // Very fast grids (focus 25/25) and 7/7 memory: the two are balanced; Reading is never named.
+  await expect(result).toContainText('Focus and Memory are balanced.')
+  await expect(result).not.toContainText('room to grow: Reading')
   await expect(result.locator('button, a')).toHaveCount(1)
   await expect(page.locator('[data-v3-send]')).toHaveText(/Send my report on WhatsApp/)
   await expect(page.locator('body')).not.toContainText('₹')

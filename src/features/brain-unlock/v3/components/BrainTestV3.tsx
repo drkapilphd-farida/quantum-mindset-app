@@ -19,6 +19,7 @@ import { MemoryRound } from './MemoryRound'
 import { NameStep } from './NameStep'
 import { ResultV3, type AutoState } from './ResultV3'
 import { RsvpRound } from './RsvpRound'
+import { BreathIntro } from './BreathIntro'
 import { ScoreFlash } from './ScoreFlash'
 import { V3Header } from './V3Header'
 
@@ -28,13 +29,13 @@ import { V3Header } from './V3Header'
 // button. Progress is saved after every round (bt_progress), so a bot visitor
 // gets the card on WhatsApp whether they finish or stop half-way.
 
-type Step = 'grid1' | 'flash1' | 'name' | 'breath' | 'grid2' | 'reveal2' | 'memory' | 'flashMem' | 'rsvp' | 'rsvpFeedback' | 'result'
+type Step = 'grid1' | 'flash1' | 'name' | 'breathIntro' | 'breath' | 'grid2' | 'reveal2' | 'memory' | 'flashMem' | 'rsvp' | 'rsvpFeedback' | 'result'
 
 const ROUND: Record<Step, number | null> = {
-  grid1: 1, flash1: 1, name: 1, breath: 2, grid2: 2, reveal2: 2, memory: 3, flashMem: 3, rsvp: 4, rsvpFeedback: 4, result: null,
+  grid1: 1, flash1: 1, name: 1, breathIntro: 2, breath: 2, grid2: 2, reveal2: 2, memory: 3, flashMem: 3, rsvp: 4, rsvpFeedback: 4, result: null,
 }
 const PROGRESS: Record<Step, number> = {
-  grid1: 0.04, flash1: 0.14, name: 0.2, breath: 0.3, grid2: 0.4, reveal2: 0.5, memory: 0.6, flashMem: 0.7, rsvp: 0.8, rsvpFeedback: 0.92, result: 1,
+  grid1: 0.04, flash1: 0.14, name: 0.2, breathIntro: 0.25, breath: 0.3, grid2: 0.4, reveal2: 0.5, memory: 0.6, flashMem: 0.7, rsvp: 0.8, rsvpFeedback: 0.92, result: 1,
 }
 
 type Setup = { order1: number[]; order2: number[]; memorySet: MemorySet; passage: RsvpPassage }
@@ -135,7 +136,7 @@ export function BrainTestV3({ initialLang }: BrainTestV3Props): React.JSX.Elemen
     setFirstName(v.firstName)
     trackV3('v3_name_done', { role: roleForPlayer(v.player), lang }, { player: v.player, named: v.firstName !== null })
     void saveProgress(rawWith({ player: v.player, firstName: v.firstName }), 2)
-    setStep('breath')
+    setStep('breathIntro')
   }
 
   function handleBreath(skipped: boolean): void {
@@ -190,12 +191,13 @@ export function BrainTestV3({ initialLang }: BrainTestV3Props): React.JSX.Elemen
     body = <FocusGridV3 key="g1" order={setup.order1} instruction={c.r1Instruction} nextLabel={c.next} greeting={btName !== null ? withName(c.hello, btName) : null} onDone={handleRound1} />
   else if (step === 'flash1') body = <ScoreFlash line={fill(c.focusScore, { s: formatSeconds(r1s) })} onNext={() => setStep('name')} continueLabel={c.continue} />
   else if (step === 'name') body = <NameStep c={c} defaultName={btName} onDone={handleName} />
+  else if (step === 'breathIntro') body = <BreathIntro c={c} onStart={() => setStep('breath')} />
   else if (step === 'breath') body = <BreathStep c={c} onDone={handleBreath} />
   else if (step === 'grid2') body = <FocusGridV3 key="g2" order={setup.order2} instruction={c.r1Instruction} nextLabel={c.next} greeting={null} onDone={handleRound2} />
   else if (step === 'reveal2') {
     const boost = raw === null ? null : scoreFor(raw).boostPct
     const line = breathsSkipped ? fill(c.focusScore, { s: formatSeconds(r2s) }) : boost !== null && boost > 0 ? fill(c.r2.faster, { pct: boost }) : c.r2.settling
-    body = <ScoreFlash line={line} sub={fill(c.r2.compare, { a: formatSeconds(r1s), b: formatSeconds(r2s) })} ms={3500} onNext={() => setStep('memory')} continueLabel={c.continue} />
+    body = <ScoreFlash line={line} sub={fill(c.r2.compare, { a: formatSeconds(r1s), b: formatSeconds(r2s) })} onNext={() => setStep('memory')} continueLabel={c.continue} />
   } else if (step === 'memory') body = <MemoryRound c={c} lang={lang} set={setup.memorySet} onDone={handleMemory} />
   else if (step === 'flashMem') {
     const m = raw === null ? { memoryHits: 0, memoryFalse: 0 } : checkedResults(raw)
@@ -210,7 +212,7 @@ export function BrainTestV3({ initialLang }: BrainTestV3Props): React.JSX.Elemen
   } else if (step === 'rsvp') body = <RsvpRound c={c} lang={lang} passage={setup.passage} onDone={handleRsvp} />
   else if (step === 'rsvpFeedback') {
     const correct = raw !== null && checkedResults(raw).rsvpCorrect === true
-    body = <ScoreFlash line={correct ? c.rsvp.correct : c.rsvp.wrong} sub={correct ? c.rsvp.correctSub : null} ms={4000} onNext={handleShowResult} continueLabel={c.continue} />
+    body = <ScoreFlash line={correct ? c.rsvp.correct : c.rsvp.wrong} sub={correct ? c.rsvp.correctSub : null} onNext={handleShowResult} continueLabel={c.continue} />
   } else if (raw === null) body = <div />
   else {
     const checked = checkedResults(raw)
