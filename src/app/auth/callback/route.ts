@@ -2,10 +2,13 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { claimActiveSessionOnSignIn } from '@/lib/activeSessions/claimOnSignIn'
+import { publicOrigin } from '@/lib/http/publicOrigin'
 import { resolvePostSignInPath } from '@/features/school-dashboard/queries/resolvePostSignInPath'
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const { searchParams, origin } = new URL(request.url)
+  const { searchParams } = new URL(request.url)
+  // The visitor's own address, not the Cloud Run server's (see publicOrigin.ts).
+  const origin = publicOrigin(request)
   const code = searchParams.get('code')
   const requestedNext = searchParams.get('next')
 

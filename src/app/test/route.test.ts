@@ -13,4 +13,10 @@ describe('/test short link', () => {
     const res = GET(new NextRequest('https://www.example.org/test'))
     expect(res.headers.get('location')).toBe('https://www.example.org/reading-memory-test')
   })
+
+  it('on Cloud Run, redirects to the address the visitor used, not 0.0.0.0:8080', () => {
+    const req = new NextRequest('https://0.0.0.0:8080/test?utm_source=ig')
+    req.headers.set('host', 'www.mindurmind.org.in')
+    expect(GET(req).headers.get('location')).toBe('https://www.mindurmind.org.in/reading-memory-test?utm_source=ig')
+  })
 })

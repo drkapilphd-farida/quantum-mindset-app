@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { publicOrigin } from '@/lib/http/publicOrigin'
 
 // Short, video-friendly link to the Free Reading & Memory Test:
 // /test?utm_source=youtube&utm_campaign=… → the test, with every query
 // parameter (utm_* tags included) kept so the lead stays attributable.
 export function GET(request: NextRequest): NextResponse {
-  const target = new URL('/reading-memory-test', request.url)
+  const target = new URL('/reading-memory-test', publicOrigin(request))
   target.search = request.nextUrl.search
   return NextResponse.redirect(target, 307)
 }
