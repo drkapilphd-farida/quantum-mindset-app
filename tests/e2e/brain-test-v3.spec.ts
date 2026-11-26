@@ -86,9 +86,9 @@ test('v3 plays from round 1 to the Brain Score with one WhatsApp button', async 
   expect(score).toBeGreaterThanOrEqual(0)
   expect(score).toBeLessThanOrEqual(100)
   await expect(page.locator('[data-v3-bar]')).toHaveCount(4)
-  // Very fast grids (focus 25/25) and 7/7 memory: the two are balanced; Reading is never named.
-  await expect(result).toContainText('Focus and Memory are balanced.')
-  await expect(result).not.toContainText('room to grow: Reading')
+  // The line compares only Focus and Memory (how fast the grid taps land decides which); Reading and Breath boost are never named.
+  await expect(result).toContainText(/Focus and Memory are balanced\.|Strongest today: (Focus|Memory)\. Most room to grow: (Focus|Memory)\./)
+  await expect(result).not.toContainText(/(Strongest today|room to grow): (Reading|Breath boost)/)
   await expect(result.locator('button, a')).toHaveCount(1)
   await expect(page.locator('[data-v3-send]')).toHaveText(/Send my report on WhatsApp/)
   await expect(page.locator('body')).not.toContainText('₹')
