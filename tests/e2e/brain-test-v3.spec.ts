@@ -94,9 +94,17 @@ test('v3 plays from round 1 to the Brain Score with one WhatsApp button', async 
   await expect(page.locator('body')).not.toContainText('₹')
 })
 
-test('without ?v=3 the page is still Brain Test v2', async ({ page }) => {
+test('v3 is the default at the same URL; v2 stays at ?v=2 and for its own links', async ({ page }) => {
   await blockServerActions(page)
-  await page.goto('/reading-memory-test?lang=en')
-  await expect(page.locator('[data-bu-v="2"]')).toBeVisible()
-  await expect(page.locator('[data-bu-v="3"]')).toHaveCount(0)
+  await page.goto('/reading-memory-test')
+  await expect(page.locator('[data-bu-v="3"]')).toBeVisible()
+  expect(new URL(page.url()).pathname).toBe('/reading-memory-test')
+  // A WhatsApp bot link (?c=…) opens v3 too.
+  await page.goto('/reading-memory-test?c=zzzz2222test&lang=hi')
+  await expect(page.locator('[data-bu-v="3"]')).toHaveAttribute('data-bu-lang', 'hi')
+  for (const q of ['?v=2', '?view=offer', '?plan=self']) {
+    await page.goto(`/reading-memory-test${q}`)
+    await expect(page.locator('[data-bu-v="2"]')).toBeVisible()
+    await expect(page.locator('[data-bu-v="3"]')).toHaveCount(0)
+  }
 })
