@@ -5,8 +5,6 @@ import type { GridRun } from '../progressV3'
 import { formatSeconds } from '../score'
 import { buzz } from './v3ui'
 
-const SIZE = 25
-
 type FocusGridV3Props = {
   order: readonly number[]
   instruction: string
@@ -16,11 +14,12 @@ type FocusGridV3Props = {
 }
 
 /**
- * Tap 1 → 25 in order. The clock starts on the first correct tap. A wrong tap
+ * Tap 1 → 16 (a 4 × 4 grid) in order. The clock starts on the first correct tap. A wrong tap
  * shakes the tile and adds 1 second ("+1s"). The running time is shown with
  * the penalty included, the same number that is saved.
  */
 export function FocusGridV3({ order, instruction, nextLabel, greeting, onDone }: FocusGridV3Props): React.JSX.Element {
+  const SIZE = order.length
   const [next, setNext] = useState(1)
   const [errors, setErrors] = useState(0)
   const [shake, setShake] = useState<number | null>(null)
@@ -83,7 +82,7 @@ export function FocusGridV3({ order, instruction, nextLabel, greeting, onDone }:
           </span>
         )}
       </div>
-      <div className="mx-auto grid w-full max-w-sm grid-cols-5 gap-1.5">
+      <div className="mx-auto grid w-full max-w-sm grid-cols-4 gap-2.5">
         {order.map((n) => {
           const done = n < next
           return (
@@ -98,7 +97,7 @@ export function FocusGridV3({ order, instruction, nextLabel, greeting, onDone }:
                 if (e.key === 'Enter' || e.key === ' ') handleTap(n)
               }}
               aria-label={String(n)}
-              className={`aspect-square min-h-12 touch-manipulation rounded-xl border-2 font-heading text-xl font-bold select-none sm:text-2xl ${
+              className={`aspect-square min-h-16 touch-manipulation rounded-2xl border-2 font-heading text-3xl font-bold select-none sm:text-4xl ${
                 done ? 'border-primary/20 bg-primary/10 text-primary/40' : 'border-border bg-card text-foreground active:scale-95'
               } ${shake === n ? 'v3-shake border-red-500' : ''} ${popped === n ? 'v3-pop' : ''}`}
               data-v3-cell={n}

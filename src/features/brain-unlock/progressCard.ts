@@ -96,7 +96,7 @@ export function cardRows(f: ProgressFacts, lang: Lang): Row[] {
 const T3 = {
   en: {
     title: (n: string | null) => (n !== null ? `${n}'s Brain Score` : "Your Brain Score"),
-    focus: "Focus",
+    focus: "Focus (1–16)",
     boost: "Breath boost",
     memory: "Memory",
     reading: "Reading",
@@ -107,7 +107,7 @@ const T3 = {
   },
   hi: {
     title: (n: string | null) => (n !== null ? `${n} जी का Brain Score` : "आपका Brain Score"),
-    focus: "Focus",
+    focus: "Focus (1–16)",
     boost: "साँस से boost",
     memory: "याददाश्त",
     reading: "पढ़ना",

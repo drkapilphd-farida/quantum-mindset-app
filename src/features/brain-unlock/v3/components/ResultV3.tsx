@@ -10,7 +10,7 @@ import { saveBrainTestV3Lead } from '../actionsV3'
 import type { V3Copy } from '../copyV3'
 import { fill, withName } from '../copyV3'
 import type { V3Raw } from '../progressV3'
-import { formatSeconds, PART_MAX, RSVP_WPM, type SkillKey, type V3Score } from '../score'
+import { formatSeconds, PART_MAXES, RSVP_WPM, type SkillKey, type V3Score } from '../score'
 import { trackV3 } from '../trackV3'
 import type { BuRole } from '../../passages'
 import { waBtn } from './v3ui'
@@ -91,9 +91,10 @@ export function ResultV3({ c, lang, role, raw, score, round1Seconds, round2Secon
     { key: 'reading', value: `${RSVP_WPM} WPM ${rsvpCorrect ? '✓' : '✗'}`, points: score.reading },
   ]
   const autoOn = auto === 'sending' || auto === 'sent'
+  // Only Focus and Memory are compared; equal → "balanced".
   const strongLine =
-    score.strongest === score.growth
-      ? fill(c.result.strongestOnly, { a: label[score.strongest] })
+    score.strongest === null || score.growth === null
+      ? c.result.balanced
       : fill(c.result.strongestGrowth, { a: label[score.strongest], b: label[score.growth] })
 
   return (
@@ -113,7 +114,7 @@ export function ResultV3({ c, lang, role, raw, score, round1Seconds, round2Secon
               <span className="font-bold text-foreground tabular-nums">{b.value}</span>
             </div>
             <div className="h-3 w-full overflow-hidden rounded-full bg-muted" aria-hidden="true">
-              <div className="h-full rounded-full bg-primary transition-[width] duration-700 ease-out motion-reduce:transition-none" style={{ width: `${Math.round((b.points / PART_MAX) * 100)}%` }} />
+              <div className="h-full rounded-full bg-primary transition-[width] duration-700 ease-out motion-reduce:transition-none" style={{ width: `${Math.round((b.points / PART_MAXES[b.key]) * 100)}%` }} />
             </div>
           </li>
         ))}

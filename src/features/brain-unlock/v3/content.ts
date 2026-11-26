@@ -2,6 +2,7 @@
 // share the item ids, so a set is equally hard in both languages. Easy,
 // neutral topics; every question needs the passage.
 
+import { GRID_SIZE } from './score'
 export type V3Lang = 'en' | 'hi'
 
 export type MemoryItem = { id: string; emoji: string; word: Record<V3Lang, string> }
@@ -134,7 +135,7 @@ export function pickOne<TItem>(list: readonly TItem[], rng: () => number = Math.
   return list[Math.min(list.length - 1, Math.floor(rng() * list.length))]!
 }
 
-/** The 25 numbers of a focus grid in a random order. */
+/** The 16 numbers of a focus grid (4 × 4) in a random order. */
 export function gridOrder(rng: () => number = Math.random): number[] {
-  return shuffled(Array.from({ length: 25 }, (_, i) => i + 1), rng)
+  return shuffled(Array.from({ length: GRID_SIZE }, (_, i) => i + 1), rng)
 }

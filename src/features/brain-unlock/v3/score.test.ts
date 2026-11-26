@@ -22,13 +22,14 @@ describe('seconds', () => {
   })
 })
 
-describe('focus points', () => {
-  it('≤ 20 s is 25, ≥ 90 s is 5, linear in between', () => {
-    expect(focusPoints(12)).toBe(25)
-    expect(focusPoints(20)).toBe(25)
-    expect(focusPoints(55)).toBe(15)
-    expect(focusPoints(90)).toBe(5)
-    expect(focusPoints(300)).toBe(5)
+describe('focus points (16 numbers)', () => {
+  it('≤ 10 s is 25, ≥ 45 s is 5, linear in between', () => {
+    expect(focusPoints(6)).toBe(25)
+    expect(focusPoints(10)).toBe(25)
+    expect(focusPoints(27.5)).toBe(15)
+    expect(focusPoints(17)).toBe(21)
+    expect(focusPoints(45)).toBe(5)
+    expect(focusPoints(120)).toBe(5)
   })
   it('a missing time scores nothing', () => {
     expect(focusPoints(0)).toBe(0)
@@ -75,34 +76,52 @@ describe('memory points', () => {
 })
 
 describe('reading points', () => {
-  it('right is 25, wrong is 12', () => {
-    expect(readingPoints(true)).toBe(25)
-    expect(readingPoints(false)).toBe(12)
+  it('right is 18, wrong is 8', () => {
+    expect(readingPoints(true)).toBe(18)
+    expect(readingPoints(false)).toBe(8)
   })
 })
 
 describe('brain score', () => {
   it('adds the four parts and rounds the total', () => {
-    const s = brainScore({ round1Seconds: 40, round2Seconds: 30, breathsSkipped: false, memoryHits: 5, memoryFalse: 0, rsvpCorrect: true })
-    // focus 22.142…, boost 25 % → 22.5, memory 17.857…, reading 25
-    expect(s.total).toBe(Math.round(25 - (10 / 70) * 20 + 22.5 + (5 / 7) * 25 + 25))
+    const s = brainScore({ round1Seconds: 20, round2Seconds: 15, breathsSkipped: false, memoryHits: 5, memoryFalse: 0, rsvpCorrect: true })
+    // focus 25 − 5/35 × 20 = 22.142…, boost 25 % → 22.5, memory 17.857…, reading 18
+    expect(s.total).toBe(Math.round(25 - (5 / 35) * 20 + 22.5 + (5 / 7) * 25 + 18))
     expect(s.boostPct).toBe(25)
-    expect(s.strongest).toBe('reading')
+    expect(s.strongest).toBe('focus')
     expect(s.growth).toBe('memory')
   })
   it('stays within 0–100 in the worst case', () => {
     const s = brainScore({ round1Seconds: 0, round2Seconds: 0, breathsSkipped: true, memoryHits: 0, memoryFalse: 12, rsvpCorrect: false })
-    expect(s.total).toBe(22) // focus 0 + boost floor 10 + memory 0 + reading 12
+    expect(s.total).toBe(18) // focus 0 + boost floor 10 + memory 0 + reading 8
     expect(s.total).toBeGreaterThanOrEqual(0)
   })
-  it('a perfect run is 100', () => {
-    const s = brainScore({ round1Seconds: 30, round2Seconds: 15, breathsSkipped: false, memoryHits: 7, memoryFalse: 0, rsvpCorrect: true })
-    expect(s.total).toBe(100)
+  it('a perfect run is 93 (Reading gives at most 18)', () => {
+    const s = brainScore({ round1Seconds: 15, round2Seconds: 8, breathsSkipped: false, memoryHits: 7, memoryFalse: 0, rsvpCorrect: true })
+    expect(s.total).toBe(93)
   })
-  it('skipped breaths with a faster round 2 still claim no boost', () => {
-    const s = brainScore({ round1Seconds: 40, round2Seconds: 20, breathsSkipped: true, memoryHits: 7, memoryFalse: 0, rsvpCorrect: true })
+  it('compares only Focus and Memory: a right Reading answer is never named', () => {
+    // focus 30 s → 13.57 (54 %), memory 3/7 → 10.71 (43 %), reading 18 (100 %)
+    const s = brainScore({ round1Seconds: 30, round2Seconds: 30, breathsSkipped: false, memoryHits: 3, memoryFalse: 0, rsvpCorrect: true })
+    expect(s.strongest).toBe('focus')
+    expect(s.growth).toBe('memory')
+  })
+  it('Memory can be the strongest', () => {
+    // focus 17 s → 21 (84 %), memory 6/7 → 21.43 (86 %)
+    const s = brainScore({ round1Seconds: 20, round2Seconds: 17, breathsSkipped: false, memoryHits: 6, memoryFalse: 0, rsvpCorrect: false })
+    expect(s.strongest).toBe('memory')
+    expect(s.growth).toBe('focus')
+  })
+  it('equal Focus and Memory are "balanced": neither is named', () => {
+    const s = brainScore({ round1Seconds: 12, round2Seconds: 9, breathsSkipped: false, memoryHits: 7, memoryFalse: 0, rsvpCorrect: true })
+    expect(s.strongest).toBeNull()
+    expect(s.growth).toBeNull()
+  })
+  it('skipped breaths with a faster round 2 still claim no boost — and boost is never "room to grow"', () => {
+    const s = brainScore({ round1Seconds: 20, round2Seconds: 12, breathsSkipped: true, memoryHits: 6, memoryFalse: 0, rsvpCorrect: false })
     expect(s.boostPct).toBeNull()
     expect(s.boost).toBe(10)
-    expect(s.growth).toBe('boost')
+    expect(s.strongest).toBe('focus')
+    expect(s.growth).toBe('memory')
   })
 })

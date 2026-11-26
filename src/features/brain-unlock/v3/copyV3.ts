@@ -21,6 +21,7 @@ export type V3Copy = {
     pickWho: string
     continue: string
   }
+  breathIntro: { line: string; start: string }
   breath: { in: string; out: string; count: string; skip: string }
   r2: { faster: string; settling: string; compare: string }
   memory: { remember: string; pick: string; picked: string; done: string; score: string; falsePicks: string }
@@ -32,7 +33,7 @@ export type V3Copy = {
     memory: string
     reading: string
     strongestGrowth: string
-    strongestOnly: string
+    balanced: string
     button: string
     saving: string
     chatSent: string
@@ -49,7 +50,7 @@ export type V3Copy = {
 const en: V3Copy = {
   roundOf: 'Round {n} of 4',
   hello: 'Namaste {name} 👋',
-  r1Instruction: 'Tap 1 to 25 as fast as you can',
+  r1Instruction: 'Tap 1 to 16 as fast as you can',
   next: 'Next: {n}',
   penalty: '+1s',
   focusScore: 'Focus: {s} sec ⚡',
@@ -65,6 +66,7 @@ const en: V3Copy = {
     pickWho: 'Please choose who is playing.',
     continue: 'Continue',
   },
+  breathIntro: { line: 'Now take 3 slow breaths… then play the grid again and see if you get faster.', start: 'Start breathing' },
   breath: { in: 'Breathe in…', out: 'Breathe out…', count: 'Breath {n} of 3', skip: 'Skip' },
   r2: {
     faster: 'Just 3 breaths made your focus {pct}% faster!',
@@ -94,7 +96,7 @@ const en: V3Copy = {
     memory: 'Memory',
     reading: 'Reading',
     strongestGrowth: 'Strongest today: {a}. Most room to grow: {b}.',
-    strongestOnly: 'Strongest today: {a}.',
+    balanced: 'Focus and Memory are balanced.',
     button: 'Send my report on WhatsApp',
     saving: 'Opening WhatsApp…',
     chatSent: 'WhatsApp is open — just tap Send.',
@@ -111,7 +113,7 @@ const en: V3Copy = {
 const hi: V3Copy = {
   roundOf: 'राउंड {n} / 4',
   hello: 'नमस्ते {name} जी 👋',
-  r1Instruction: '1 से 25 तक जितनी जल्दी हो सके टैप करें',
+  r1Instruction: '1 से 16 तक जितनी जल्दी हो सके टैप करें',
   next: 'अगला: {n}',
   penalty: '+1s',
   focusScore: 'Focus: {s} सेकंड ⚡',
@@ -127,6 +129,7 @@ const hi: V3Copy = {
     pickWho: 'कृपया चुनें कि कौन खेल रहा है।',
     continue: 'आगे बढ़ें',
   },
+  breathIntro: { line: 'अब 3 गहरी साँसें लें… फिर grid दोबारा खेलें और देखें कि आप तेज़ हुए या नहीं।', start: 'साँस लेना शुरू करें' },
   breath: { in: 'साँस अंदर…', out: 'साँस बाहर…', count: 'साँस {n} / 3', skip: 'छोड़ें' },
   r2: {
     faster: 'सिर्फ़ 3 साँसों से आपका focus {pct}% तेज़ हो गया!',
@@ -156,7 +159,7 @@ const hi: V3Copy = {
     memory: 'याददाश्त',
     reading: 'पढ़ना',
     strongestGrowth: 'आज सबसे मज़बूत: {a}. सबसे ज़्यादा बढ़ने की जगह: {b}.',
-    strongestOnly: 'आज सबसे मज़बूत: {a}.',
+    balanced: 'Focus और याददाश्त बराबर हैं।',
     button: 'मेरा report WhatsApp पर भेजो',
     saving: 'WhatsApp खुल रहा है…',
     chatSent: 'WhatsApp खुल गया है — बस Send दबाइए।',

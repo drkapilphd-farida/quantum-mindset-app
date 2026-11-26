@@ -1,6 +1,8 @@
 // Brain Test v3 (founder spec, 26 Nov 2026) — the Brain Score. Pure functions,
 // used by the page (what the person sees) and the server (what is saved), so
-// both always agree. Four parts of 0–25 each; the total is their rounded sum.
+// both always agree. Focus, Breath boost and Memory are 0–25 each, Reading is
+// 8 or 18 (founder, 26 Nov 2026: so Reading is not automatically the top skill);
+// the total is their rounded sum (a perfect run is 93).
 // No percentiles, no comparisons with other people: only the person's own numbers.
 
 export const PART_MAX = 25;
@@ -22,12 +24,15 @@ export function formatSeconds(seconds: number): string {
   return roundSeconds(seconds).toFixed(1);
 }
 
-/** Focus 0–25 from the round 2 time: ≤ 20 s → 25, ≥ 90 s → 5, linear in between. */
+/** How many numbers a focus grid holds (4 × 4). */
+export const GRID_SIZE = 16;
+
+/** Focus 0–25 from the round 2 time (1 → 16): ≤ 10 s → 25, ≥ 45 s → 5, linear in between. */
 export function focusPoints(round2Seconds: number): number {
   if (!finite(round2Seconds) || round2Seconds <= 0) return 0;
-  if (round2Seconds <= 20) return PART_MAX;
-  if (round2Seconds >= 90) return 5;
-  return clamp(PART_MAX - ((round2Seconds - 20) / 70) * 20, 5, PART_MAX);
+  if (round2Seconds <= 10) return PART_MAX;
+  if (round2Seconds >= 45) return 5;
+  return clamp(PART_MAX - ((round2Seconds - 10) / 35) * 20, 5, PART_MAX);
 }
 
 /**
@@ -55,9 +60,11 @@ export function memoryPoints(hits: number, falsePicks: number): number {
   return clamp((Math.max(0, h - 0.5 * f) / MEMORY_ITEMS) * PART_MAX, 0, PART_MAX);
 }
 
-/** Reading 0–25: the question right → 25, wrong → 12. */
+/** Reading: the question right → 18, wrong → 8. */
+export const READING_RIGHT = 18;
+export const READING_WRONG = 8;
 export function readingPoints(correct: boolean): number {
-  return correct ? PART_MAX : 12;
+  return correct ? READING_RIGHT : READING_WRONG;
 }
 
 export type V3Inputs = {
@@ -79,12 +86,21 @@ export type V3Score = {
   /** Whole number 0–100. */
   total: number;
   boostPct: number | null;
-  /** The part with the most points (0–25 each), and the one with the most room to grow. */
-  strongest: SkillKey;
-  growth: SkillKey;
+  /**
+   * Only Focus and Memory are compared (as a share of their maximum): the
+   * stronger one, and the one with more room to grow. null for both when they
+   * are equal ("Focus and Memory are balanced"). Breath boost and Reading are
+   * never named here.
+   */
+  strongest: CompareKey | null;
+  growth: CompareKey | null;
 };
 
+export type CompareKey = "focus" | "memory";
+
 const ORDER: readonly SkillKey[] = ["focus", "boost", "memory", "reading"];
+/** The most points each part can give. */
+export const PART_MAXES: Record<SkillKey, number> = { focus: PART_MAX, boost: PART_MAX, memory: PART_MAX, reading: READING_RIGHT };
 
 export function brainScore(i: V3Inputs): V3Score {
   const boostPct = boostPercent(i.round1Seconds, i.round2Seconds, i.breathsSkipped);
@@ -94,10 +110,12 @@ export function brainScore(i: V3Inputs): V3Score {
     memory: memoryPoints(i.memoryHits, i.memoryFalse),
     reading: readingPoints(i.rsvpCorrect),
   };
-  const total = Math.round(clamp(ORDER.reduce((sum, k) => sum + parts[k], 0), 0, 4 * PART_MAX));
-  // Ties keep the fixed order, so the same numbers always give the same lines.
-  const strongest = ORDER.reduce((best, k) => (parts[k] > parts[best] ? k : best), ORDER[0]!);
-  const growth = ORDER.reduce((low, k) => (parts[k] < parts[low] ? k : low), ORDER[0]!);
+  const total = Math.round(clamp(ORDER.reduce((sum, k) => sum + parts[k], 0), 0, 100));
+  // Whole percents of each maximum, so a hair's difference counts as balanced.
+  const focusPct = Math.round((parts.focus / PART_MAXES.focus) * 100);
+  const memoryPct = Math.round((parts.memory / PART_MAXES.memory) * 100);
+  const strongest: CompareKey | null = focusPct === memoryPct ? null : focusPct > memoryPct ? "focus" : "memory";
+  const growth: CompareKey | null = strongest === null ? null : strongest === "focus" ? "memory" : "focus";
   return { ...parts, total, boostPct, strongest, growth };
 }
 

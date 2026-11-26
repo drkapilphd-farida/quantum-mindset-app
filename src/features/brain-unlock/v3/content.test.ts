@@ -38,8 +38,8 @@ describe('RSVP passages', () => {
 })
 
 describe('grid and shuffle', () => {
-  it('a grid holds 1–25 once each', () => {
-    expect([...gridOrder()].sort((a, b) => a - b)).toEqual(Array.from({ length: 25 }, (_, i) => i + 1))
+  it('a grid holds 1–16 once each (4 × 4)', () => {
+    expect([...gridOrder()].sort((a, b) => a - b)).toEqual(Array.from({ length: 16 }, (_, i) => i + 1))
   })
   it('shuffle keeps every element', () => {
     expect([...shuffled([1, 2, 3, 4], () => 0.5)].sort()).toEqual([1, 2, 3, 4])
