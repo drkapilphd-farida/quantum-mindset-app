@@ -11,6 +11,8 @@ import { buildPageMetadata } from '@/lib/seo/metadata'
 
 // The classic test (?v=classic, kept two weeks) is its own chunk: Brain Unlock visitors never download it.
 const ReadingMemoryTest = dynamic(() => import('@/features/reading-memory-test/components/ReadingMemoryTest'))
+// Brain Test v3 (founder spec, 26 Nov 2026) opens only with ?v=3 until the founder approves it; its own chunk.
+const BrainTestV3 = dynamic(() => import('@/features/brain-unlock/v3/components/BrainTestV3').then((m) => m.BrainTestV3))
 
 export const metadata: Metadata = buildPageMetadata({
   path: '/reading-memory-test',
@@ -30,6 +32,16 @@ const one = (v: string | string[] | undefined): string | undefined => (Array.isA
 
 export default async function ReadingMemoryTestPage({ searchParams }: { searchParams: Promise<Search> }): Promise<React.JSX.Element> {
   const sp = await searchParams
+  if (one(sp.v) === '3') {
+    const lang = one(sp.lang)
+    const v3Lang = lang === 'hi' || lang === 'en' ? lang : (langFromCampaign(one(sp.utm_campaign)) ?? 'en')
+    // Only the test on screen: no site menu, footer or prices.
+    return (
+      <main className="min-h-dvh font-sans antialiased">
+        <BrainTestV3 initialLang={v3Lang} />
+      </main>
+    )
+  }
   const classic = one(sp.v) === 'classic'
   let body: React.JSX.Element
   if (classic) {
