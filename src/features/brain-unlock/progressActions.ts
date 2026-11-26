@@ -10,6 +10,7 @@ import { evaluateRun, InvalidRunError } from "./evaluate";
 import { BT_TOKEN_RE, progressFacts, TOTAL_PHASES } from "./progress";
 import { getBrainUnlockSettings } from "./settingsServer";
 import { RawRunSchema, SessionIdSchema } from "./types";
+import { progressFactsV3, roleForPlayer, V3_PHASES, V3RawSchema } from "./v3/progressV3";
 
 // Brain Test v2 → WhatsApp (founder, 25 Nov 2026). The page saves its progress
 // after every step; the database sends the card on WhatsApp (edge function
@@ -68,18 +69,48 @@ const ProgressSchema = z.object({
   card: z.string().max(600_000).regex(CARD_RE).nullable(),
 });
 
+/** Brain Test v3 (?v=3): its own measurements; the server derives the facts. */
+const ProgressV3Schema = z.object({
+  v: z.literal(3),
+  sessionId: SessionIdSchema,
+  token: TokenSchema.nullable(),
+  lang: z.enum(["en", "hi"]),
+  phasesDone: z.number().int().min(1).max(V3_PHASES),
+  raw: V3RawSchema,
+  card: z.string().max(600_000).regex(CARD_RE).nullable(),
+});
+
 export type ProgressSaved = { ok: true; linked: boolean } | { ok: false };
 
+type ProgressJob =
+  | { kind: "v2"; data: z.infer<typeof ProgressSchema> }
+  | { kind: "v3"; data: z.infer<typeof ProgressV3Schema> };
+
+function parseProgress(input: unknown): ProgressJob | null {
+  const v3 = ProgressV3Schema.safeParse(input);
+  if (v3.success) return { kind: "v3", data: v3.data };
+  const v2 = ProgressSchema.safeParse(input);
+  return v2.success ? { kind: "v2", data: v2.data } : null;
+}
+
 export async function saveBrainTestProgress(input: unknown): Promise<ProgressSaved> {
-  const parsed = ProgressSchema.safeParse(input);
-  if (!parsed.success) return { ok: false };
-  const d = parsed.data;
+  const job = parseProgress(input);
+  if (job === null) return { ok: false };
+  const d = job.data;
   const ip = await getClientIp();
   if (!checkRateLimit(`bt-progress:${ip}`, { max: 30, windowMs: 60_000 }).allowed)
     return { ok: false };
   try {
-    const settings = await getBrainUnlockSettings();
-    const facts = progressFacts(evaluateRun(d.run, settings.scoring), d.phasesDone);
+    let facts: Json;
+    let role: string;
+    if (job.kind === "v3") {
+      facts = progressFactsV3(job.data.raw, job.data.phasesDone) as Json;
+      role = job.data.raw.player === null ? "student" : roleForPlayer(job.data.raw.player);
+    } else {
+      const settings = await getBrainUnlockSettings();
+      facts = progressFacts(evaluateRun(job.data.run, settings.scoring), job.data.phasesDone) as Json;
+      role = job.data.run.role;
+    }
     const client = createServiceClient();
 
     let contactId: string | null = null;
@@ -119,9 +150,9 @@ export async function saveBrainTestProgress(input: unknown): Promise<ProgressSav
         token: d.token,
         contact_id: contactId ?? prev?.contact_id ?? null,
         lang: d.lang,
-        role: d.run.role,
+        role,
         phases_done: d.phasesDone,
-        facts: facts as Json,
+        facts,
         ...(cardUrl !== null ? { card_url: cardUrl } : {}),
         updated_at: new Date().toISOString(),
       },
