@@ -2,7 +2,7 @@
 // used by the page (what the person sees) and the server (what is saved), so
 // both always agree. Focus, Breath boost and Memory are 0–25 each, Reading is
 // 8 or 18 (founder, 26 Nov 2026: so Reading is not automatically the top skill);
-// the total is their rounded sum (a perfect run is 93).
+// the total is their sum scaled to 100 (the parts add up to at most 93), rounded.
 // No percentiles, no comparisons with other people: only the person's own numbers.
 
 export const PART_MAX = 25;
@@ -83,7 +83,7 @@ export type V3Score = {
   boost: number;
   memory: number;
   reading: number;
-  /** Whole number 0–100. */
+  /** Whole number 0–100: the four parts' sum scaled from 0–93 to 0–100. */
   total: number;
   boostPct: number | null;
   /**
@@ -101,6 +101,8 @@ export type CompareKey = "focus" | "memory";
 const ORDER: readonly SkillKey[] = ["focus", "boost", "memory", "reading"];
 /** The most points each part can give. */
 export const PART_MAXES: Record<SkillKey, number> = { focus: PART_MAX, boost: PART_MAX, memory: PART_MAX, reading: READING_RIGHT };
+/** The most the four parts can add up to (25 + 25 + 25 + 18 = 93): the total is scaled from this to 100. */
+const MAX_SUM = ORDER.reduce((acc, k) => acc + PART_MAXES[k], 0);
 
 export function brainScore(i: V3Inputs): V3Score {
   const boostPct = boostPercent(i.round1Seconds, i.round2Seconds, i.breathsSkipped);
@@ -110,7 +112,8 @@ export function brainScore(i: V3Inputs): V3Score {
     memory: memoryPoints(i.memoryHits, i.memoryFalse),
     reading: readingPoints(i.rsvpCorrect),
   };
-  const total = Math.round(clamp(ORDER.reduce((sum, k) => sum + parts[k], 0), 0, 100));
+  const sum = ORDER.reduce((acc, k) => acc + parts[k], 0);
+  const total = Math.round(clamp((sum / MAX_SUM) * 100, 0, 100));
   // Whole percents of each maximum, so a hair's difference counts as balanced.
   const focusPct = Math.round((parts.focus / PART_MAXES.focus) * 100);
   const memoryPct = Math.round((parts.memory / PART_MAXES.memory) * 100);

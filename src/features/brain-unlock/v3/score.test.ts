@@ -86,19 +86,19 @@ describe('brain score', () => {
   it('adds the four parts and rounds the total', () => {
     const s = brainScore({ round1Seconds: 20, round2Seconds: 15, breathsSkipped: false, memoryHits: 5, memoryFalse: 0, rsvpCorrect: true })
     // focus 25 − 5/35 × 20 = 22.142…, boost 25 % → 22.5, memory 17.857…, reading 18
-    expect(s.total).toBe(Math.round(25 - (5 / 35) * 20 + 22.5 + (5 / 7) * 25 + 18))
+    expect(s.total).toBe(Math.round(((25 - (5 / 35) * 20 + 22.5 + (5 / 7) * 25 + 18) / 93) * 100))
     expect(s.boostPct).toBe(25)
     expect(s.strongest).toBe('focus')
     expect(s.growth).toBe('memory')
   })
   it('stays within 0–100 in the worst case', () => {
     const s = brainScore({ round1Seconds: 0, round2Seconds: 0, breathsSkipped: true, memoryHits: 0, memoryFalse: 12, rsvpCorrect: false })
-    expect(s.total).toBe(18) // focus 0 + boost floor 10 + memory 0 + reading 8
+    expect(s.total).toBe(19) // (focus 0 + boost floor 10 + memory 0 + reading 8) / 93 × 100 = 19.35
     expect(s.total).toBeGreaterThanOrEqual(0)
   })
-  it('a perfect run is 93 (Reading gives at most 18)', () => {
+  it('a perfect run is 100 (the parts add up to 93, scaled to 100)', () => {
     const s = brainScore({ round1Seconds: 15, round2Seconds: 8, breathsSkipped: false, memoryHits: 7, memoryFalse: 0, rsvpCorrect: true })
-    expect(s.total).toBe(93)
+    expect(s.total).toBe(100)
   })
   it('compares only Focus and Memory: a right Reading answer is never named', () => {
     // focus 30 s → 13.57 (54 %), memory 3/7 → 10.71 (43 %), reading 18 (100 %)
